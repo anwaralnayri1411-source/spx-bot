@@ -1,6 +1,7 @@
 """بوت إشارات خيارات SPX -> تليجرام (لا ينفذ أي أوامر تداول)"""
 
 import argparse
+import html
 import math
 import os
 import time
@@ -12,7 +13,8 @@ import yfinance as yf
 
 # ====== الإعدادات ======
 SYMBOL = "^SPX"          # يمكنك تغييره إلى "SPY" إن لم تتوفر بيانات SPX
-WIDTH = 25               # عرض السبريد بالنقاط (استخدم 5 مع SPY)
+WIDTH = 25               # عرض السبريد المستهدف بالنقاط (استخدم 5 مع SPY)
+MAX_WIDTH_FACTOR = 2     # أقصى انحراف مقبول عن العرض المستهدف
 TARGET_DTE = 35          # الأيام المستهدفة حتى الانتهاء
 TARGET_DELTA = 0.18      # دلتا البيع المستهدفة
 MIN_CREDIT_RATIO = 0.15  # أقل نسبة (العائد / العرض) لقبول الصفقة
@@ -22,6 +24,8 @@ LOOP_HOURS = 6
 TOKEN = os.getenv("TELEGRAM_TOKEN")
 CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
 
+LINE = "━━━━━━━━━━━━━━━"
+
 
 def send_telegram(text):
     print(text)
@@ -30,7 +34,11 @@ def send_telegram(text):
         return
     url = f"https://api.telegram.org/bot{TOKEN}/sendMessage"
     try:
-        r = requests.post(url, data={"chat_id": CHAT_ID, "text": text}, timeout=15)
+        r = requests.post(
+            url,
+            data={"chat_id": CHAT_ID, "text": text, "parse_mode": "HTML"},
+            timeout=15,
+        )
         if not r.ok:
             print("خطأ من تليجرام:", r.text)
     except requests.RequestException as e:
@@ -68,6 +76,21 @@ def pick_expiry(ticker):
     return best
 
 
+def no_trade(S, sma50, reason):
+    trend = "صاعد ✅" if S >= sma50 else "غير صاعد ⚠️"
+    return (
+        f"📊 <b>تقرير {html.escape(SYMBOL)}</b>\n"
+        f"{LINE}\n"
+        f"💲 السعر الحالي: <b>{S:,.2f}</b>\n"
+        f"📈 متوسط 50 يوم: {sma50:,.2f}\n"
+        f"🧭 الاتجاه: {trend}\n"
+        f"{LINE}\n"
+        f"🚫 <b>لا توجد صفقة اليوم</b>\n"
+        f"السبب: {reason}\n\n"
+        f"💡 الانتظار قرار سليم، فلا يجب الدخول إلا عند توفر الشروط."
+    )
+
+
 def build_message():
     t = yf.Ticker(SYMBOL)
 
@@ -78,57 +101,91 @@ def build_message():
     S = float(close.iloc[-1])
     sma50 = float(close.rolling(50).mean().iloc[-1])
 
-    header = f"📊 {SYMBOL}\nالسعر: {S:.2f} | متوسط 50 يوم: {sma50:.2f}\n"
-
     if S < sma50:
-        return header + "\nالاتجاه ليس صاعداً (السعر تحت المتوسط). لا توجد صفقة مقترحة اليوم."
+        return no_trade(S, sma50, "السعر تحت متوسط 50 يوم، والاتجاه ليس صاعداً، واستراتيجيتنا تدخل مع الاتجاه الصاعد فقط.")
 
     picked = pick_expiry(t)
     if not picked:
-        return header + "\nلا يوجد تاريخ انتهاء مناسب (21-60 يوماً)."
+        return no_trade(S, sma50, "لا يوجد تاريخ انتهاء مناسب (بين 21 و60 يوماً).")
     exp, dte = picked
 
-    puts = t.option_chain(exp).puts.copy()
+    all_puts = t.option_chain(exp).puts.copy()
     T = dte / 365
-    puts = puts[(puts["strike"] < S) & (puts["impliedVolatility"] > 0.01)]
+    puts = all_puts[(all_puts["strike"] < S) & (all_puts["impliedVolatility"] > 0.01)].copy()
     if puts.empty:
-        return header + "\nلا توجد عقود مناسبة في السلسلة."
+        return no_trade(S, sma50, "لا توجد عقود مناسبة في سلسلة الخيارات.")
 
     puts["delta"] = puts.apply(
         lambda r: abs(put_delta(S, r["strike"], T, r["impliedVolatility"])), axis=1
     )
     puts = puts.dropna(subset=["delta"])
+    if puts.empty:
+        return no_trade(S, sma50, "تعذر حساب الدلتا للعقود المتاحة.")
     short = puts.iloc[(puts["delta"] - TARGET_DELTA).abs().argsort().iloc[0]]
 
-    long_strike = short["strike"] - WIDTH
-    long_rows = t.option_chain(exp).puts
-    long_rows = long_rows[long_rows["strike"] == long_strike]
-    if long_rows.empty:
-        return header + f"\nلا يوجد عقد بسعر تنفيذ {long_strike:.0f} لإكمال السبريد."
-    long = long_rows.iloc[0]
+    # اختيار أقرب سعر تنفيذ متاح للشراء (أدنى من سعر البيع بمقدار العرض المستهدف)
+    target_long = short["strike"] - WIDTH
+    candidates = all_puts[all_puts["strike"] < short["strike"]]
+    if candidates.empty:
+        return no_trade(S, sma50, "لا يوجد عقد أدنى لإكمال السبريد.")
+    long = candidates.iloc[(candidates["strike"] - target_long).abs().argsort().iloc[0]]
+    long_strike = float(long["strike"])
+    short_strike = float(short["strike"])
+    width = short_strike - long_strike
+
+    if width <= 0 or width > WIDTH * MAX_WIDTH_FACTOR:
+        return no_trade(
+            S, sma50,
+            f"لا يوجد سعر تنفيذ قريب من {target_long:,.0f} لإكمال السبريد (أقرب متاح {long_strike:,.0f}).",
+        )
 
     credit = mid_price(short) - mid_price(long)
     if credit <= 0:
-        return header + "\nالأسعار الحالية غير صالحة (قد يكون السوق مغلقاً)."
+        return no_trade(S, sma50, "الأسعار الحالية غير صالحة (قد يكون السوق مغلقاً).")
 
-    max_loss = WIDTH - credit
-    ratio = credit / WIDTH
-    pop = (1 - short["delta"]) * 100
+    max_loss = width - credit
+    ratio = credit / width
+    pop = (1 - float(short["delta"])) * 100
 
     if ratio < MIN_CREDIT_RATIO:
-        return header + (
-            f"\nأفضل سبريد متاح يعطي عائداً ضعيفاً ({ratio:.0%} من العرض). لا صفقة اليوم."
+        return no_trade(
+            S, sma50,
+            f"أفضل سبريد متاح يعطي عائداً ضعيفاً ({ratio:.0%} من عرض السبريد)، والمخاطرة لا تستحق.",
         )
 
-    return header + (
-        f"\n✅ اقتراح: Bull Put Credit Spread\n"
-        f"الانتهاء: {exp} ({dte} يوم)\n"
-        f"بيع Put بسعر تنفيذ {short['strike']:.0f}\n"
-        f"شراء Put بسعر تنفيذ {long_strike:.0f}\n"
-        f"العائد التقريبي: {credit:.2f} نقطة (≈ {credit * 100:.0f}$ للعقد)\n"
-        f"أقصى خسارة: {max_loss:.2f} نقطة (≈ {max_loss * 100:.0f}$ للعقد)\n"
-        f"احتمال الربح التقريبي: {pop:.0f}%\n\n"
-        f"⚠️ تعليمي فقط. تحقق من الأسعار الحية في منصتك قبل أي قرار."
+    dist_pct = (S - short_strike) / S * 100
+    breakeven = short_strike - credit
+    take_profit = credit * 0.5
+    stop_price = min(credit * 2, width * 0.8)
+
+    return (
+        f"📊 <b>إشارة خيارات {html.escape(SYMBOL)}</b>\n"
+        f"{LINE}\n"
+        f"💲 السعر الحالي: <b>{S:,.2f}</b>\n"
+        f"📈 متوسط 50 يوم: {sma50:,.2f}\n"
+        f"{LINE}\n\n"
+        f"🎯 <b>هدف الدخول</b>\n"
+        f"نتوقع أن المؤشر سيبقى <b>فوق {short_strike:,.0f}</b> حتى {exp}. "
+        f"نستلم مبلغاً مقدماً (علاوة)، ونحتفظ به كاملاً إذا لم ينزل المؤشر تحت هذا المستوى.\n\n"
+        f"🧭 <b>لماذا هذه الصفقة الآن؟</b>\n"
+        f"• الاتجاه صاعد: السعر فوق متوسط 50 يوم\n"
+        f"• مسافة أمان: سعر البيع أقل من السعر الحالي بنحو {dist_pct:.1f}%\n"
+        f"• احتمال الربح التقريبي: <b>{pop:.0f}%</b>\n\n"
+        f"🛒 <b>التنفيذ (أمر واحد: Bull Put Credit Spread)</b>\n"
+        f"1️⃣ بيع Put بسعر تنفيذ <b>{short_strike:,.0f}</b>\n"
+        f"2️⃣ شراء Put بسعر تنفيذ <b>{long_strike:,.0f}</b> (حماية من الخسارة الكبيرة)\n"
+        f"📆 الانتهاء: {exp} (بعد {dte} يوم)\n"
+        f"💵 سعر الأمر (Limit): استلام ≈ <b>{credit:.2f}</b> نقطة\n\n"
+        f"💰 <b>الأرقام لكل عقد</b>\n"
+        f"✅ أقصى ربح: <b>{credit * 100:,.0f}$</b>\n"
+        f"❌ أقصى خسارة: <b>{max_loss * 100:,.0f}$</b>\n"
+        f"⚖️ نقطة التعادل: {breakeven:,.0f}\n\n"
+        f"🚪 <b>خطة الخروج (اقتراح)</b>\n"
+        f"• جني الربح: أغلق السبريد عندما يصل سعره إلى ≈ {take_profit:.2f} (ربح نصف العلاوة)\n"
+        f"• وقف الخسارة: أغلقه إذا ارتفع سعره إلى ≈ {stop_price:.2f}\n"
+        f"• لا تنتظر الأيام الأخيرة: أغلقه قبل الانتهاء بنحو 7 أيام\n\n"
+        f"⚠️ <i>للتعلم فقط وليست توصية مالية. الأسعار تقريبية، فتحقق من الأسعار الحية في منصتك قبل أي قرار، "
+        f"ولا تخاطر بأكثر مما تتحمل خسارته.</i>"
     )
 
 
@@ -136,7 +193,7 @@ def run_once():
     try:
         send_telegram(build_message())
     except Exception as e:
-        send_telegram(f"حدث خطأ في البوت: {e}")
+        send_telegram(f"⚠️ حدث خطأ في البوت: {html.escape(str(e))}")
 
 
 if __name__ == "__main__":
