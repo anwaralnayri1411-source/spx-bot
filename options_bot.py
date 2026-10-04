@@ -1,16 +1,20 @@
-"""بوت إشارات خيارات SPX -> تليجرام (لا ينفذ أي أوامر تداول)
+"""بوت إشارات خيارات SPX لنفس اليوم (0DTE): شراء Call أو Put -> تليجرام (لا ينفذ أي أوامر)
 
-يجمع: الاتجاه + VIX + غلاء العلاوة + سيولة العقود + خريطة السيولة (جدران البوت والكول)
-      + الأخبار + الأحداث الكبرى، ويعطي درجة من 10 وتوصية بصفقة Bull Put Credit Spread.
-يسجّل كل إشارة في signals_log.csv ويتابع نتيجتها عند الانتهاء.
+الرسالة الأولى: توصية مختصرة (كول أو بوت) مع عقود الدخول ملونة.
+الرسالة الثانية: كل التفاصيل (الاتجاه، السيولة، الأخبار، الأحداث، خطة الإدارة).
 """
 
 import argparse
 import html
+import json
 import math
 import os
+import re
 import time
-from datetime import date, datetime, timedelta
+import xml.etree.ElementTree as ET
+from datetime import date, datetime, timedelta, timezone
+from email.utils import parsedate_to_datetime
+from zoneinfo import ZoneInfo
 
 import numpy as np
 import pandas as pd
@@ -18,36 +22,45 @@ import requests
 import yfinance as yf
 
 # ====================== الإعدادات ======================
-SYMBOL = "^SPX"            # يمكنك تغييره إلى "SPY" (وغيّر WIDTH إلى 5)
-NEWS_SYMBOL = "SPY"        # لجلب الأخبار إن لم تتوفر لـ SPX
-WIDTH = 25                 # عرض السبريد المستهدف (نقاط)
-MAX_WIDTH_FACTOR = 2       # أقصى انحراف مقبول عن العرض المستهدف
-TARGET_DTE = 35            # الأيام المستهدفة حتى الانتهاء
-DTE_MIN, DTE_MAX = 21, 60
-TARGET_DELTA = 0.18        # دلتا البيع المستهدفة
-DELTA_MIN, DELTA_MAX = 0.10, 0.25
-MIN_CREDIT_RATIO = 0.15    # أقل نسبة (العائد / العرض)
-MIN_SCORE = 7.0            # أقل درجة للتوصية (من 10)
-MIN_OI = 100               # أقل فائدة مفتوحة لكل عقد
-VIX_MAX = 30               # فوقه لا ندخل
-EVENT_BLOCK_DAYS = 1       # لا ندخل إذا كان حدث كبير خلال هذا العدد من الأيام
+SYMBOL = "^SPX"             # يمكنك تغييره إلى "SPY"
+FLOW_SYMBOL = "SPY"         # لحساب VWAP (المؤشر نفسه بلا حجم تداول)
+NEWS_SYMBOL = "SPY"
+CONTRACT_MIN_USD = 100      # أقل سعر للعقد (دولار)
+CONTRACT_MAX_USD = 300      # أعلى سعر للعقد (دولار)
+MIN_OI = 150                # أقل فائدة مفتوحة (أو حجم تداول 200)
+MIN_VOL = 200
+MAX_SPREAD = 0.30           # أقصى فرق مقبول بين الشراء والبيع (نسبة من المتوسط)
+MIN_EDGE = 3.0              # أقل فرق بين نقاط الصعود والهبوط لإعطاء توصية
+MIN_CONTRACT_SCORE = 5.0    # أقل درجة للعقد
+MAX_CONTRACTS = 3           # عدد العقود المعروضة
+TAKE_PROFIT = 0.50          # جني الربح عند +50% من سعر الدخول
+STOP_LOSS = 0.40            # وقف الخسارة عند -40%
+REPEAT_MINUTES = 90         # لا نكرر نفس الاتجاه قبل هذه المدة
+WINDOW_START = (9, 45)      # نافذة التشغيل بتوقيت نيويورك
+WINDOW_END = (15, 30)
+NO_NEW_ENTRY = (15, 0)      # لا دخول جديد بعد هذا الوقت
 RISK_FREE = 0.04
-WALL_RANGE = 0.08          # نطاق خريطة السيولة حول السعر (±8%)
-MAP_MAX_DAYS = 45          # تواريخ الانتهاء المستخدمة في الخريطة
-MAP_MAX_EXPIRIES = 20
-LOG_FILE = "signals_log.csv"
-LOOP_HOURS = 6
+WALL_RANGE = 0.03
+STATE_FILE = "bot_state.json"
+LOG_FILE = "zero_dte_log.csv"
 
-# تواريخ قرار الفيدرالي 2026 (تحقق منها). يمكنك إضافة أحداث أخرى (مثل CPI) هنا:
+NY = ZoneInfo("America/New_York")
+RY = ZoneInfo("Asia/Riyadh")
+
+# تواريخ قرار الفيدرالي 2026 (تحقق منها). أضف أحداثاً أخرى مثل CPI هنا:
 EVENTS = {
     "2026-10-28": "قرار الفيدرالي (FOMC)",
     "2026-12-09": "قرار الفيدرالي (FOMC)",
     # "2026-10-14": "تقرير التضخم CPI",
 }
-
-RISK_WORDS = ["crash", "plunge", "selloff", "sell-off", "tumble", "tariff", "war ",
-              "recession", "default", "shutdown", "downgrade", "panic", "rate hike",
-              "bank failure", "sanction"]
+RISK_WORDS = ["crash", "plunge", "selloff", "sell-off", "tumble", "recession", "default",
+              "shutdown", "downgrade", "panic", "rate hike", "bank failure", "slump", "rout"]
+GEO_RE = re.compile(r"\b(war|missile|missiles|attack|attacks|iran|israel|gaza|ukraine|russia|china|taiwan|"
+                    r"sanction|sanctions|tariff|tariffs|embargo|military|nuclear|ceasefire|troops|houthi|"
+                    r"red sea|opec|strait of hormuz|geopolitical)\b", re.I)
+LEADERS = ["AAPL", "MSFT", "NVDA", "AMZN", "GOOGL", "META", "AVGO"]
+MARKET_QUERIES = ["stock market today", "Wall Street stocks S&P 500", "Nvidia Apple Microsoft stocks"]
+GEO_QUERY = "geopolitical tensions markets"
 
 TOKEN = os.getenv("TELEGRAM_TOKEN")
 CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
@@ -58,11 +71,26 @@ def esc(x):
     return html.escape(str(x))
 
 
+def now_ny():
+    return datetime.now(NY)
+
+
+def in_window(n):
+    return n.weekday() < 5 and WINDOW_START <= (n.hour, n.minute) <= WINDOW_END
+
+
+def ry_time(h, m):
+    """يحوّل وقتاً بتوقيت نيويورك (اليوم) إلى توقيت الرياض للعرض."""
+    t = now_ny().replace(hour=h, minute=m, second=0, microsecond=0)
+    return t.astimezone(RY).strftime("%I:%M %p").replace("AM", "ص").replace("PM", "م")
+
+
 # ====================== تليجرام ======================
 def send_telegram(text):
     print(text)
+    print()
     if not TOKEN or not CHAT_ID:
-        print("\n[تنبيه] لم تُضبط TELEGRAM_TOKEN / TELEGRAM_CHAT_ID، فلم تُرسل الرسالة.")
+        print("[تنبيه] لم تُضبط TELEGRAM_TOKEN / TELEGRAM_CHAT_ID، فلم تُرسل الرسالة.")
         return
     parts, cur = [], ""
     for block in text.split("\n\n"):
@@ -82,7 +110,7 @@ def send_telegram(text):
             print("تعذر الإرسال:", e)
 
 
-# ====================== دوال رياضية ======================
+# ====================== رياضيات ======================
 def norm_cdf(x):
     return 0.5 * (1 + math.erf(x / math.sqrt(2)))
 
@@ -95,48 +123,23 @@ def _d1(S, K, T, s):
     return (math.log(S / K) + (RISK_FREE + 0.5 * s * s) * T) / (s * math.sqrt(T))
 
 
-def put_delta(S, K, T, s):
-    if s <= 0 or T <= 0:
-        return float("nan")
-    return norm_cdf(_d1(S, K, T, s)) - 1
-
-
 def bs_gamma(S, K, T, s):
     if s <= 0 or T <= 0:
         return 0.0
     return norm_pdf(_d1(S, K, T, s)) / (S * s * math.sqrt(T))
 
 
-def mid_price(row):
-    bid, ask = row.get("bid", 0), row.get("ask", 0)
-    if bid and ask and bid > 0 and ask > 0:
-        return (bid + ask) / 2
-    lp = row.get("lastPrice", 0)
-    return 0 if pd.isna(lp) else lp
+def abs_delta(S, K, T, s, side):
+    d1 = _d1(S, K, T, s)
+    return norm_cdf(d1) if side == "CALL" else norm_cdf(-d1)
 
 
-def spread_ratio(row):
-    """فرق السعر بين الشراء والبيع كنسبة من المتوسط (None إذا لا توجد أسعار)."""
-    bid, ask = row.get("bid", 0), row.get("ask", 0)
-    if bid and ask and bid > 0 and ask > 0:
-        return (ask - bid) / ((ask + bid) / 2)
-    return None
+def prob_beyond(S, be, T, s, side):
+    d2 = (math.log(S / be) + (RISK_FREE - 0.5 * s * s) * T) / (s * math.sqrt(T))
+    return norm_cdf(d2) if side == "CALL" else norm_cdf(-d2)
 
 
 # ====================== بيانات السوق ======================
-def pick_expiry(t):
-    today = datetime.now().date()
-    best, best_diff = None, None
-    for exp in t.options:
-        dte = (datetime.strptime(exp, "%Y-%m-%d").date() - today).days
-        if dte < DTE_MIN or dte > DTE_MAX:
-            continue
-        diff = abs(dte - TARGET_DTE)
-        if best is None or diff < best_diff:
-            best, best_diff = (exp, dte), diff
-    return best
-
-
 def vix_info():
     try:
         h = yf.Ticker("^VIX").history(period="1y")["Close"].dropna()
@@ -148,23 +151,7 @@ def vix_info():
         return None, None
 
 
-def get_news():
-    out = []
-    for sym in (SYMBOL, NEWS_SYMBOL):
-        try:
-            items = yf.Ticker(sym).news or []
-        except Exception:
-            items = []
-        for it in items:
-            title = it.get("title") or (it.get("content") or {}).get("title")
-            if title and title not in out:
-                out.append(title)
-        if len(out) >= 3:
-            break
-    return out[:3]
-
-
-def upcoming_events(today, days=14):
+def upcoming_events(today, days=7):
     ev = []
     for d, n in EVENTS.items():
         dd = date.fromisoformat(d)
@@ -180,22 +167,16 @@ def upcoming_events(today, days=14):
     return sorted(ev)
 
 
-def liquidity_map(t, S):
-    """خريطة السيولة من الفائدة المفتوحة: جدار البوت، جدار الكول، وGEX تقريبي."""
-    today = datetime.now().date()
+def liquidity_map(t, S, exps):
+    """جدران السيولة وGEX التقريبي من الفائدة المفتوحة لتواريخ الانتهاء القريبة."""
     calls, puts, gex, used = {}, {}, 0.0, 0
-    exps = []
-    for e in t.options:
-        dte = (datetime.strptime(e, "%Y-%m-%d").date() - today).days
-        if 1 <= dte <= MAP_MAX_DAYS:
-            exps.append((e, dte))
-    for e, dte in exps[:MAP_MAX_EXPIRIES]:
+    for e, dte in exps:
         try:
             ch = t.option_chain(e)
         except Exception:
             continue
         used += 1
-        T = max(dte, 1) / 365
+        T = max(dte, 0.25) / 365
         for side, df in (("c", ch.calls), ("p", ch.puts)):
             for r in df.itertuples():
                 K = float(r.strike)
@@ -207,7 +188,7 @@ def liquidity_map(t, S):
                 book = calls if side == "c" else puts
                 book[K] = book.get(K, 0) + oi
                 iv = 0.0 if pd.isna(r.impliedVolatility) else float(r.impliedVolatility)
-                if iv > 0.01:
+                if iv > 0.03:
                     g = bs_gamma(S, K, T, iv) * oi * 100 * S * S * 0.01
                     gex += g if side == "c" else -g
         time.sleep(0.2)
@@ -215,7 +196,7 @@ def liquidity_map(t, S):
         return None
     pw = max(((k, v) for k, v in puts.items() if k < S), key=lambda x: x[1], default=None)
     cw = max(((k, v) for k, v in calls.items() if k > S), key=lambda x: x[1], default=None)
-    return {"put_wall": pw, "call_wall": cw, "gex": gex, "used": used}
+    return {"put_wall": pw, "call_wall": cw, "gex": gex}
 
 
 def max_pain(calls, puts):
@@ -233,175 +214,255 @@ def max_pain(calls, puts):
     return float(best)
 
 
-# ====================== اختيار الصفقة ======================
-def pick_spread(S, dte, puts, put_wall):
-    T = dte / 365
-    p = puts[(puts["strike"] < S) & (puts["impliedVolatility"] > 0.01)].copy()
-    if p.empty:
-        return None, "لا توجد عقود بيع مناسبة في السلسلة."
-    p["delta"] = p.apply(lambda r: abs(put_delta(S, r["strike"], T, r["impliedVolatility"])), axis=1)
-    p = p.dropna(subset=["delta"])
-    p["oi"] = p["openInterest"].fillna(0)
-    c = p[(p["delta"] >= DELTA_MIN) & (p["delta"] <= DELTA_MAX) & (p["oi"] >= MIN_OI)].copy()
-    if c.empty:
-        return None, "لا يوجد عقد بيع بدلتا مناسبة وسيولة كافية."
-    c["below"] = (c["strike"] <= put_wall) if put_wall else False
-    c["dd"] = (c["delta"] - TARGET_DELTA).abs()
-    short = c.sort_values(["below", "dd"], ascending=[False, True]).iloc[0]
-    ss = float(short["strike"])
-
-    lower = puts[puts["strike"] < ss]
-    liquid = lower[lower["openInterest"].fillna(0) >= MIN_OI]
-    pool = liquid if not liquid.empty else lower
-    if pool.empty:
-        return None, "لا يوجد عقد أدنى لإكمال السبريد."
-    long = pool.iloc[(pool["strike"] - (ss - WIDTH)).abs().argsort().iloc[0]]
-    ls = float(long["strike"])
-    width = ss - ls
-    if width <= 0 or width > WIDTH * MAX_WIDTH_FACTOR:
-        return None, f"لا يوجد سعر تنفيذ قريب من {ss - WIDTH:,.0f} لإكمال السبريد (أقرب متاح {ls:,.0f})."
-
-    credit = mid_price(short) - mid_price(long)
-    if credit <= 0:
-        return None, "الأسعار الحالية غير صالحة (قد يكون السوق مغلقاً)."
-    return {
-        "short": ss, "long": ls, "width": width, "credit": credit,
-        "delta": float(short["delta"]), "iv": float(short["impliedVolatility"]),
-        "oi_s": float(short["oi"]), "oi_l": float(long["openInterest"]) if not pd.isna(long["openInterest"]) else 0.0,
-        "spr_s": spread_ratio(short),
-    }, None
-
-
-# ====================== الدرجة ======================
-def mark(pts, mx):
-    return "✅" if pts >= mx * 0.75 else ("⚠️" if pts >= mx * 0.4 else "❌")
-
-
-def compute_score(c):
-    comps = []
-    # 1) الاتجاه
-    p = 0.0
-    if c["S"] > c["sma50"]:
-        p += 1
-    if c["sma20"] > c["sma50"]:
-        p += 0.5
-    if c["sma50"] > c["sma50_10"]:
-        p += 0.5
-    comps.append(("الاتجاه", p, 2, "السعر فوق المتوسطات والمتوسط صاعد" if p >= 1.5 else "الاتجاه غير قوي"))
-    # 2) حالة التقلب
-    v, vp = c["vix"], c["vpct"]
-    if v is None:
-        p, note = 1.0, "VIX غير متاح"
-    elif v >= VIX_MAX:
-        p, note = 0.0, f"VIX مرتفع ({v:.0f}) والسوق متوتر"
-    elif vp >= 35:
-        p, note = 2.0, f"VIX {v:.0f}، تقلب كافٍ لعلاوة جيدة"
-    else:
-        p, note = 1.0, f"VIX {v:.0f} منخفض نسبياً، علاوة ضعيفة"
-    if c["map"] and c["map"]["gex"] < 0 and p > 0:
-        p = max(p - 0.5, 0)
-        note += "، وتأثير صناع السوق سالب"
-    comps.append(("حالة التقلب", p, 2, note))
-    # 3) غلاء العلاوة
-    sp = c["spread"]
-    ratio = sp["iv"] / c["rv"] if c["rv"] > 0 else 1
-    if ratio >= 1.2:
-        p = 2.0
-    elif ratio >= 1.0:
-        p = 1.5
-    elif ratio >= 0.85:
-        p = 1.0
-    else:
-        p = 0.0
-    comps.append(("غلاء العلاوة", p, 2, f"التقلب الضمني {sp['iv'] * 100:.0f}% مقابل الفعلي {c['rv'] * 100:.0f}%"))
-    # 4) قوة العقد (السيولة)
-    p = 0.0
-    if sp["oi_s"] >= MIN_OI * 5 and sp["oi_l"] >= MIN_OI:
-        p += 1
-    elif sp["oi_s"] >= MIN_OI and sp["oi_l"] >= MIN_OI:
-        p += 0.5
-    r = sp["spr_s"]
-    if r is None:
-        p += 0.5
-        extra = "لا أسعار حية"
-    elif r <= 0.10:
-        p += 1
-        extra = "فرق السعر ضيق"
-    elif r <= 0.25:
-        p += 0.5
-        extra = "فرق السعر متوسط"
-    else:
-        extra = "فرق السعر واسع"
-    comps.append(("قوة العقد", p, 2, f"فائدة مفتوحة {sp['oi_s']:,.0f}/{sp['oi_l']:,.0f}، {extra}"))
-    # 5) دعم جدار البوت
-    pw = c["map"]["put_wall"] if c["map"] else None
-    if pw is None:
-        p, note = 1.0, "خريطة السيولة غير متاحة"
-    elif sp["short"] <= pw[0]:
-        p, note = 2.0, f"سعر البيع تحت جدار البوت {pw[0]:,.0f}"
-    elif (sp["short"] - pw[0]) / c["S"] <= 0.01:
-        p, note = 1.0, f"قريب من جدار البوت {pw[0]:,.0f} لكن فوقه"
-    else:
-        p, note = 0.0, f"سعر البيع أعلى من جدار البوت {pw[0]:,.0f}"
-    comps.append(("دعم السيولة", p, 2, note))
-    return comps
-
-
-# ====================== السجل ======================
-def update_log_summary():
-    if not os.path.exists(LOG_FILE):
-        return "📒 <b>سجل الإشارات</b>: لا توجد إشارات مسجلة بعد."
+# ====================== الأخبار وصدمات السوق ======================
+def fetch_rss(q):
+    out = []
     try:
-        df = pd.read_csv(LOG_FILE)
-        for col in ("result", "pnl"):
-            if col not in df.columns:
-                df[col] = np.nan
-        df["result"] = df["result"].astype(object)
-        df["pnl"] = pd.to_numeric(df["pnl"], errors="coerce")
-        today, changed = datetime.now().date(), False
-        for i, r in df.iterrows():
-            if pd.notna(r["result"]):
+        r = requests.get("https://news.google.com/rss/search",
+                         params={"q": q + " when:1d", "hl": "en-US", "gl": "US", "ceid": "US:en"},
+                         headers={"User-Agent": "Mozilla/5.0"}, timeout=15)
+        if not r.ok:
+            return out
+        root = ET.fromstring(r.content)
+    except Exception:
+        return out
+    cutoff = datetime.now(timezone.utc) - timedelta(hours=30)
+    for it in root.iter("item"):
+        title = (it.findtext("title") or "").strip()
+        if not title:
+            continue
+        try:
+            if parsedate_to_datetime(it.findtext("pubDate")) < cutoff:
                 continue
-            exp = date.fromisoformat(str(r["expiry"]))
-            if exp >= today:
-                continue
-            h = yf.Ticker(str(r["symbol"])).history(start=exp.isoformat(), end=(exp + timedelta(days=5)).isoformat())
-            if h.empty:
-                continue
-            close = float(h["Close"].iloc[0])
-            if close >= r["short"]:
-                pnl = r["credit"]
-            elif close <= r["long"]:
-                pnl = r["credit"] - (r["short"] - r["long"])
-            else:
-                pnl = r["credit"] - (r["short"] - close)
-            df.loc[i, "pnl"] = round(float(pnl), 2)
-            df.loc[i, "result"] = "ربح" if pnl > 0 else "خسارة"
-            changed = True
-        if changed:
-            df.to_csv(LOG_FILE, index=False)
-        total = len(df)
-        closed = df[df["result"].notna()]
-        if closed.empty:
-            return f"📒 <b>سجل الإشارات</b>: {total} إشارة مسجلة، ولم تنتهِ أي منها بعد."
-        wins = int((closed["result"] == "ربح").sum())
-        pnl_sum = float(closed["pnl"].sum()) * 100
-        return (f"📒 <b>سجل الإشارات</b>: {total} إشارة | انتهت {len(closed)} | "
-                f"نسبة الربح {wins / len(closed):.0%} | الصافي {pnl_sum:+,.0f}$ لكل عقد")
+        except Exception:
+            pass
+        out.append(title)
+    return out
+
+
+def fetch_headlines():
+    market, seen = [], set()
+    for q in MARKET_QUERIES:
+        for t in fetch_rss(q):
+            if t not in seen:
+                seen.add(t)
+                market.append(t)
+    geo = [t for t in fetch_rss(GEO_QUERY) if t not in seen]
+    if not market:
+        for sym in (SYMBOL, NEWS_SYMBOL):
+            try:
+                items = yf.Ticker(sym).news or []
+            except Exception:
+                items = []
+            for it in items:
+                title = it.get("title") or (it.get("content") or {}).get("title")
+                if title and title not in seen:
+                    seen.add(title)
+                    market.append(title)
+    return {"market": market, "geo": geo}
+
+
+def _chg(sym, n=1):
+    h = yf.Ticker(sym).history(period="3mo")["Close"].dropna()
+    if len(h) < n + 1:
+        return None
+    return float(h.iloc[-1] / h.iloc[-1 - n] - 1)
+
+
+def market_shock(heads):
+    """نقاط صدمة السوق ومستواه (1 هادئ، 2 متوسط، 3 مرتفع)."""
+    pts, flags = 0, []
+    out = {"vix_ch": None, "oil_ch": None, "gold_ch": None, "leaders": [], "avg1": None, "below": 0}
+    for key, sym in (("vix_ch", "^VIX"), ("oil_ch", "CL=F"), ("gold_ch", "GC=F")):
+        try:
+            out[key] = _chg(sym)
+        except Exception:
+            pass
+    v = out["vix_ch"]
+    if v is not None and v >= 0.20:
+        pts += 2
+        flags.append(f"VIX قفز {v * 100:.0f}% في يوم واحد")
+    elif v is not None and v >= 0.10:
+        pts += 1
+        flags.append(f"VIX ارتفع {v * 100:.0f}% في يوم")
+    o = out["oil_ch"]
+    if o is not None and abs(o) >= 0.04:
+        pts += 1
+        flags.append(f"النفط تحرك {o * 100:+.1f}% في يوم")
+    g = out["gold_ch"]
+    if g is not None and g >= 0.025:
+        pts += 1
+        flags.append(f"الذهب صعد {g * 100:.1f}% (طلب على الملاذ الآمن)")
+    for sym in LEADERS:
+        try:
+            h = yf.Ticker(sym).history(period="3mo")["Close"].dropna()
+            ch1 = float(h.iloc[-1] / h.iloc[-2] - 1)
+            above = bool(h.iloc[-1] > h.rolling(50).mean().iloc[-1])
+            out["leaders"].append((sym, ch1, above))
+        except Exception:
+            continue
+    if out["leaders"]:
+        out["avg1"] = sum(x[1] for x in out["leaders"]) / len(out["leaders"])
+        out["below"] = sum(1 for x in out["leaders"] if not x[2])
+        if out["avg1"] <= -0.035:
+            pts += 2
+            flags.append(f"الشركات القيادية هبطت بمتوسط {out['avg1'] * 100:.1f}% اليوم")
+        elif out["avg1"] <= -0.02:
+            pts += 1
+            flags.append(f"الشركات القيادية تضغط على السوق ({out['avg1'] * 100:.1f}%)")
+        if out["below"] >= 5:
+            pts += 1
+            flags.append(f"{out['below']} من {len(out['leaders'])} شركات قيادية تحت متوسط 50 يوم")
+    geo_driving = [t for t in heads["market"] if GEO_RE.search(t)]
+    risk = [t for t in heads["market"] if any(w in t.lower() for w in RISK_WORDS)]
+    if len(geo_driving) >= 3:
+        pts += 1
+        flags.append(f"أخبار السوق متأثرة بعناوين جيوسياسية ({len(geo_driving)})")
+    if len(risk) >= 3:
+        pts += 1
+        flags.append(f"عناوين فيها كلمات مخاطرة ({len(risk)})")
+    out.update(pts=pts, flags=flags, geo_driving=geo_driving, level=1 if pts <= 1 else (2 if pts == 2 else 3))
+    return out
+
+
+# ====================== اتجاه اليوم ======================
+def direction_points(c):
+    """نقاط الصعود والهبوط من الاتجاه اليومي واللحظي والسيولة. يرجع (bull, bear, تفاصيل)."""
+    rows = []
+    gex = c["map"]["gex"] if c["map"] else 0
+    mult = 1.25 if gex < 0 else (0.75 if gex > 0 else 1.0)
+
+    if c["S"] > c["sma50"] and c["sma20"] > c["sma50"]:
+        rows.append(("الاتجاه اليومي", 1, 0, "صاعد (فوق المتوسطات)"))
+    elif c["S"] < c["sma50"] and c["sma20"] < c["sma50"]:
+        rows.append(("الاتجاه اليومي", 0, 1, "هابط (تحت المتوسطات)"))
+    else:
+        rows.append(("الاتجاه اليومي", 0, 0, "محايد"))
+
+    up = (1 if c["above_vwap"] else -1) + (1 if c["ema9"] > c["ema21"] else -1)
+    vw = "فوق" if c["above_vwap"] else "تحت"
+    em = "صاعد" if c["ema9"] > c["ema21"] else "هابط"
+    if up == 2:
+        rows.append(("الاتجاه اللحظي", 2 * mult, 0, f"{vw} VWAP والمتوسط السريع {em}"))
+    elif up == -2:
+        rows.append(("الاتجاه اللحظي", 0, 2 * mult, f"{vw} VWAP والمتوسط السريع {em}"))
+    else:
+        rows.append(("الاتجاه اللحظي", 0, 0, f"مختلط ({vw} VWAP والمتوسط {em})"))
+
+    r30 = c["r30"]
+    if r30 > 0.001:
+        rows.append(("زخم 30 دقيقة", 1 * mult, 0, f"{r30 * 100:+.2f}%"))
+    elif r30 < -0.001:
+        rows.append(("زخم 30 دقيقة", 0, 1 * mult, f"{r30 * 100:+.2f}%"))
+    else:
+        rows.append(("زخم 30 دقيقة", 0, 0, f"{r30 * 100:+.2f}% (ضعيف)"))
+
+    m = c["map"]
+    if m and m["call_wall"] and (m["call_wall"][0] - c["S"]) / c["S"] <= 0.002:
+        rows.append(("الجدران", 0, 1, f"قريب من جدار الكول {m['call_wall'][0]:,.0f} (مقاومة)"))
+    elif m and m["put_wall"] and (c["S"] - m["put_wall"][0]) / c["S"] <= 0.002:
+        rows.append(("الجدران", 1, 0, f"قريب من جدار البوت {m['put_wall'][0]:,.0f} (دعم)"))
+    else:
+        rows.append(("الجدران", 0, 0, "لا ملامسة لجدار"))
+
+    gap = c["gap"]
+    if gap is not None and gap >= 0.004:
+        rows.append(("فجوة الافتتاح", 0.5, 0, f"{gap * 100:+.2f}% عن الإغلاق السابق"))
+    elif gap is not None and gap <= -0.004:
+        rows.append(("فجوة الافتتاح", 0, 0.5, f"{gap * 100:+.2f}% عن الإغلاق السابق"))
+
+    mp = c["max_pain"]
+    if mp and c["n"].hour >= 13 and abs(c["S"] - mp) / c["S"] > 0.002:
+        if c["S"] > mp:
+            rows.append(("نقطة الألم", 0, 0.5, f"السعر فوق {mp:,.0f} وقد ينجذب إليها"))
+        else:
+            rows.append(("نقطة الألم", 0.5, 0, f"السعر تحت {mp:,.0f} وقد ينجذب إليها"))
+
+    return sum(r[1] for r in rows), sum(r[2] for r in rows), rows
+
+
+# ====================== اختيار العقود ======================
+def pick_contracts(side, df, S, T, vix):
+    cand = df[(df["strike"] > S) & (df["strike"] <= S * 1.025)] if side == "CALL" \
+        else df[(df["strike"] < S) & (df["strike"] >= S * 0.975)]
+    out = []
+    for _, r in cand.iterrows():
+        bid = 0 if pd.isna(r.get("bid")) else float(r["bid"])
+        ask = 0 if pd.isna(r.get("ask")) else float(r["ask"])
+        last = 0 if pd.isna(r.get("lastPrice")) else float(r["lastPrice"])
+        if bid > 0 and ask > 0:
+            price, spr = ask, (ask - bid) / ((ask + bid) / 2)
+        else:
+            price, spr = last, None
+        cost = price * 100
+        if not (CONTRACT_MIN_USD <= cost <= CONTRACT_MAX_USD):
+            continue
+        oi = 0 if pd.isna(r.get("openInterest")) else float(r["openInterest"])
+        vol = 0 if pd.isna(r.get("volume")) else float(r["volume"])
+        if oi < MIN_OI and vol < MIN_VOL:
+            continue
+        if spr is not None and spr > MAX_SPREAD:
+            continue
+        iv = r.get("impliedVolatility")
+        if iv is None or pd.isna(iv) or iv < 0.03:
+            iv = (vix or 18) / 100
+        iv = float(iv)
+        K = float(r["strike"])
+        be = K + price if side == "CALL" else K - price
+        delta = abs_delta(S, K, T, iv, side)
+        prob = prob_beyond(S, be, T, iv, side)
+        z = abs(be - S) / (S * iv * math.sqrt(T))
+        if z > 2.0 or delta < 0.03:
+            continue
+        # درجة العقد: سيولة (3) + دلتا (3) + واقعية الوصول للتعادل (4)
+        liq = 2 if oi >= 1000 else (1.5 if oi >= 300 else (1 if oi >= MIN_OI else 0.5))
+        liq += 0.5 if spr is None else (1 if spr <= 0.10 else (0.5 if spr <= 0.25 else 0))
+        dp = 3 if delta >= 0.20 else (2 if delta >= 0.12 else (1 if delta >= 0.07 else 0.5))
+        rp = 4 if z <= 0.6 else (3 if z <= 1.0 else (2 if z <= 1.5 else 1))
+        # الطلب (تدفق): حجم التداول اليوم نسبة إلى المراكز المفتوحة
+        flow_ratio = vol / max(oi, 1.0)
+        flow = 0.0
+        if vol >= MIN_VOL:
+            flow = 1.0 if flow_ratio >= 0.5 else 0.0
+            flow += 0.5 if flow_ratio >= 1.5 else 0.0
+        score = min(10.0, liq + dp + rp + flow)
+        if score < MIN_CONTRACT_SCORE:
+            continue
+        out.append({"strike": K, "price": price, "cost": cost, "be": be, "delta": delta, "prob": prob,
+                    "z": z, "oi": oi, "vol": vol, "spr": spr, "iv": iv, "score": score,
+                    "flow": flow, "flow_ratio": flow_ratio})
+    out.sort(key=lambda x: -x["score"])
+    return out[:MAX_CONTRACTS]
+
+
+def tier(score):
+    return "🟩" if score >= 7.5 else ("🟨" if score >= 6.0 else "🟧")
+
+
+# ====================== الحالة والسجل ======================
+def load_state():
+    try:
+        with open(STATE_FILE, encoding="utf-8") as f:
+            return json.load(f)
+    except Exception:
+        return {}
+
+
+def save_state(s):
+    try:
+        with open(STATE_FILE, "w", encoding="utf-8") as f:
+            json.dump(s, f, ensure_ascii=False)
     except Exception as e:
-        return f"📒 تعذر قراءة السجل: {esc(e)}"
+        print("تعذر حفظ الحالة:", e)
 
 
-def log_signal(today, exp, c, score):
-    sp = c["spread"]
-    row = {"date": today.isoformat(), "symbol": SYMBOL, "expiry": exp, "short": sp["short"],
-           "long": sp["long"], "credit": round(sp["credit"], 2), "width": sp["width"],
-           "spot": round(c["S"], 2), "score": round(score, 1), "result": "", "pnl": ""}
+def log_signal(n, exp, side, ctr, S, setup):
+    row = {"date": n.date().isoformat(), "time": n.strftime("%H:%M"), "symbol": SYMBOL, "expiry": exp,
+           "side": side, "strike": ctr["strike"], "price": round(ctr["price"], 2), "spot": round(S, 2),
+           "setup": round(setup, 1), "contract_score": round(ctr["score"], 1), "result": "", "pnl": ""}
     try:
         if os.path.exists(LOG_FILE):
             old = pd.read_csv(LOG_FILE)
-            if ((old["date"] == row["date"]) & (old["expiry"] == exp) & (old["symbol"] == SYMBOL)).any():
-                return
             pd.concat([old, pd.DataFrame([row])], ignore_index=True).to_csv(LOG_FILE, index=False)
         else:
             pd.DataFrame([row]).to_csv(LOG_FILE, index=False)
@@ -409,170 +470,273 @@ def log_signal(today, exp, c, score):
         print("تعذر حفظ السجل:", e)
 
 
-# ====================== بناء الرسالة ======================
-def build_message():
-    today = datetime.now().date()
-    log_line = update_log_summary()
-
-    t = yf.Ticker(SYMBOL)
-    hist = t.history(period="1y")
-    if hist.empty or len(hist) < 60:
-        return "لا توجد بيانات كافية حالياً."
-    close = hist["Close"].dropna()
-    c = {
-        "S": float(close.iloc[-1]),
-        "sma20": float(close.rolling(20).mean().iloc[-1]),
-        "sma50": float(close.rolling(50).mean().iloc[-1]),
-        "sma50_10": float(close.rolling(50).mean().iloc[-11]),
-        "rv": float(np.log(close / close.shift(1)).dropna().tail(20).std() * math.sqrt(252)),
-    }
-    c["vix"], c["vpct"] = vix_info()
-    S = c["S"]
-    uptrend = S > c["sma50"]
-
-    news = get_news()
-    events = upcoming_events(today)
-    block_ev = [(d, n) for d, n in events if (d - today).days <= EVENT_BLOCK_DAYS]
-
+def log_summary():
+    if not os.path.exists(LOG_FILE):
+        return "📒 <b>سجل الإشارات</b>: لا توجد إشارات مسجلة بعد."
     try:
-        c["map"] = liquidity_map(t, S)
+        df = pd.read_csv(LOG_FILE)
+        df["result"] = df["result"].astype(object)
+        df["pnl"] = pd.to_numeric(df["pnl"], errors="coerce")
+        n, changed = now_ny(), False
+        for i, r in df.iterrows():
+            if pd.notna(r["result"]):
+                continue
+            exp = date.fromisoformat(str(r["expiry"]))
+            if exp > n.date() or (exp == n.date() and (n.hour, n.minute) < (16, 30)):
+                continue
+            h = yf.Ticker(str(r["symbol"])).history(start=exp.isoformat(), end=(exp + timedelta(days=5)).isoformat())
+            if h.empty:
+                continue
+            close = float(h["Close"].iloc[0])
+            intrinsic = max(close - r["strike"], 0) if r["side"] == "CALL" else max(r["strike"] - close, 0)
+            pnl = intrinsic - r["price"]
+            df.loc[i, "pnl"] = round(float(pnl), 2)
+            df.loc[i, "result"] = "ربح" if pnl > 0 else "خسارة"
+            changed = True
+        if changed:
+            df.to_csv(LOG_FILE, index=False)
+        closed = df[df["result"].notna() & (df["result"] != "")]
+        if closed.empty:
+            return f"📒 <b>سجل الإشارات</b>: {len(df)} إشارة مسجلة ولم تُحسب نتيجتها بعد."
+        wins = int((closed["result"] == "ربح").sum())
+        net = float(closed["pnl"].sum()) * 100
+        return (f"📒 <b>سجل الإشارات</b> (لو أبقيت العقد حتى الانتهاء): {len(df)} إشارة | "
+                f"انتهت {len(closed)} | رابحة {wins / len(closed):.0%} | الصافي {net:+,.0f}$")
+    except Exception as e:
+        return f"📒 تعذر قراءة السجل: {esc(e)}"
+
+
+# ====================== التحليل ======================
+def analyze(force):
+    n = now_ny()
+    today = n.date()
+    t = yf.Ticker(SYMBOL)
+    daily = t.history(period="1y")["Close"].dropna()
+    ix = t.history(period="5d", interval="5m")
+    if daily.empty or ix.empty:
+        raise RuntimeError("لا توجد بيانات كافية حالياً.")
+    closes = ix["Close"].dropna()
+    dates = sorted(set(ix.index.date))
+    last_date = dates[-1]
+    bars = ix[ix.index.date == last_date]["Close"].dropna()
+    S = float(closes.iloc[-1])
+    age = (n - ix.index[-1].to_pydatetime()).total_seconds() / 60
+
+    c = {"n": n, "S": S, "age": age,
+         "sma20": float(daily.rolling(20).mean().iloc[-1]), "sma50": float(daily.rolling(50).mean().iloc[-1]),
+         "ema9": float(closes.ewm(span=9, adjust=False).mean().iloc[-1]),
+         "ema21": float(closes.ewm(span=21, adjust=False).mean().iloc[-1]),
+         "r30": float(bars.iloc[-1] / bars.iloc[-7] - 1) if len(bars) >= 7 else 0.0,
+         "gap": None, "above_vwap": True, "vwap": None}
+    if len(dates) > 1:
+        prev = ix[ix.index.date == dates[-2]]["Close"].dropna()
+        if not prev.empty:
+            c["gap"] = float(bars.iloc[0] / prev.iloc[-1] - 1)
+    try:
+        fl = yf.Ticker(FLOW_SYMBOL).history(period="5d", interval="5m")
+        fl = fl[fl.index.date == last_date]
+        if fl["Volume"].sum() > 0:
+            tp = (fl["High"] + fl["Low"] + fl["Close"]) / 3
+            vwap = float((tp * fl["Volume"]).cumsum().iloc[-1] / fl["Volume"].cumsum().iloc[-1])
+            c["vwap"] = vwap
+            c["above_vwap"] = bool(fl["Close"].iloc[-1] > vwap)
+    except Exception:
+        pass
+
+    c["vix"], c["vpct"] = vix_info()
+    heads = fetch_headlines()
+    shock = market_shock(heads)
+    events = upcoming_events(today)
+
+    # ----- تاريخ الانتهاء (نفس اليوم) -----
+    opts = list(t.options)
+    if not opts:
+        raise RuntimeError("لا توجد سلسلة خيارات حالياً.")
+    today_s = today.isoformat()
+    is_test = today_s not in opts
+    exp = today_s if not is_test else next((e for e in opts if e >= today_s), opts[-1])
+    dte = (date.fromisoformat(exp) - today).days
+    if dte == 0:
+        T = max((n.replace(hour=16, minute=0, second=0, microsecond=0) - n).total_seconds() / 3600, 0.25) / (24 * 365)
+    else:
+        T = max(dte, 1) / 365
+    ch = t.option_chain(exp)
+    c["max_pain"] = max_pain(ch.calls, ch.puts)
+    map_exps = [(e, (date.fromisoformat(e) - today).days) for e in opts
+                if 0 <= (date.fromisoformat(e) - today).days <= 2][:3] or [(exp, dte)]
+    try:
+        c["map"] = liquidity_map(t, S, map_exps)
     except Exception:
         c["map"] = None
 
-    # ----- اختيار الصفقة -----
-    reasons, exp, dte, mp, c["spread"] = [], None, None, None, None
-    picked = pick_expiry(t)
-    if not picked:
-        reasons.append("لا يوجد تاريخ انتهاء مناسب (21-60 يوماً).")
-    else:
-        exp, dte = picked
-        ch = t.option_chain(exp)
-        mp = max_pain(ch.calls, ch.puts)
-        pw = c["map"]["put_wall"][0] if c["map"] and c["map"]["put_wall"] else None
-        c["spread"], err = pick_spread(S, dte, ch.puts, pw)
-        if err:
-            reasons.append(err)
-
-    comps, total = [], None
-    if c["spread"]:
-        comps = compute_score(c)
-        total = sum(x[1] for x in comps)
+    bull, bear, rows = direction_points(c)
+    edge = abs(bull - bear)
+    reasons = []
+    if shock["level"] == 2:
+        edge = max(edge - 1.0, 0)
+    side = "CALL" if bull > bear else "PUT"
+    strength = min(10.0, edge * 2.0)
 
     # ----- شروط المنع -----
-    if not uptrend:
-        reasons.append("السعر تحت متوسط 50 يوم، واستراتيجيتنا تدخل مع الاتجاه الصاعد فقط.")
-    if block_ev:
-        reasons.append(f"حدث كبير قريب: {block_ev[0][1]} بتاريخ {block_ev[0][0]}، والأفضل الانتظار.")
-    if c["vix"] is not None and c["vix"] >= VIX_MAX:
-        reasons.append(f"VIX مرتفع ({c['vix']:.0f})، والمخاطرة عالية.")
-    sp = c["spread"]
-    if sp:
-        ratio = sp["credit"] / sp["width"]
-        if ratio < MIN_CREDIT_RATIO:
-            reasons.append(f"العائد ضعيف ({ratio * 100:.1f}% من عرض السبريد، والحد الأدنى {MIN_CREDIT_RATIO * 100:.0f}%).")
-        if total is not None and total < MIN_SCORE:
-            reasons.append(f"الدرجة {total:.1f}/10 أقل من الحد الأدنى {MIN_SCORE:.0f}.")
-    trade = bool(sp) and not reasons
+    if n.weekday() < 5 and NO_NEW_ENTRY <= (n.hour, n.minute) < (16, 0):
+        reasons.append("بعد وقت آخر دخول (قرب الإغلاق، والزمن يأكل قيمة العقد بسرعة).")
+    if any(d == today for d, _ in events):
+        nm = next(nm for d, nm in events if d == today)
+        reasons.append(f"حدث كبير اليوم: {nm}. التقلب يصعب توقعه.")
+    if shock["level"] >= 3:
+        reasons.append("مخاطر الأخبار والجيوسياسة مرتفعة: " + "، ".join(shock["flags"][:2]) + ".")
+    if edge < MIN_EDGE:
+        reasons.append(f"لا اتجاه واضح (صعود {bull:.1f} مقابل هبوط {bear:.1f}).")
 
-    # ----- الرسالة -----
-    L = [f"📊 <b>تقرير {esc(SYMBOL)}</b> | {today}", LINE,
-         f"💲 السعر: <b>{S:,.2f}</b> | متوسط 50 يوم: {c['sma50']:,.2f}",
-         f"🧭 الاتجاه: {'صاعد ✅' if uptrend else 'غير صاعد ⚠️'}"]
+    contracts = []
+    if not reasons:
+        contracts = pick_contracts(side, ch.calls if side == "CALL" else ch.puts, S, T, c["vix"])
+        if not contracts:
+            reasons.append(f"لا توجد عقود {('Call' if side == 'CALL' else 'Put')} بسعر ${CONTRACT_MIN_USD}-${CONTRACT_MAX_USD} "
+                           "مع سيولة كافية الآن.")
+
+    return {"c": c, "shock": shock, "heads": heads, "events": events, "rows": rows, "bull": bull, "bear": bear,
+            "edge": edge, "side": side, "strength": strength, "reasons": reasons, "contracts": contracts,
+            "exp": exp, "is_test": is_test, "today": today}
+
+
+# ====================== الرسائل ======================
+def signal_message(a):
+    c, side, S = a["c"], a["side"], a["c"]["S"]
+    call = side == "CALL"
+    head = "🟢🟢🟢 <b>CALL (شراء كول)</b>" if call else "🔴🔴🔴 <b>PUT (شراء بوت)</b>"
+    word = "Call" if call else "Put"
+    dot = "🟢" if call else "🔴"
+    L = [head, f"📍 {esc(SYMBOL)}: <b>{S:,.1f}</b> | ⭐ قوة الإشارة <b>{a['strength']:.0f}/10</b>",
+         f"⏳ ينتهي: {'اليوم (0DTE)' if not a['is_test'] else a['exp'] + ' (تجريبي، السوق مغلق)'}", "",
+         "🎯 <b>عقود الدخول:</b>"]
+    for k in a["contracts"]:
+        L.append(f"{tier(k['score'])}{dot} <b>{k['strike']:,.0f} {word}</b> ≈ <b>{k['price']:.2f}</b> (${k['cost']:,.0f}) "
+                 f"| تعادل {k['be']:,.1f} | احتمال ~{k['prob'] * 100:.0f}%"
+                 + (f" | 🔥 طلب عالٍ (حجم {k['vol']:,.0f})" if k.get('flow', 0) >= 1 else ""))
+    L += ["", f"🟩 قوي  🟨 متوسط  🟧 مقبول  🔥 طلب عالٍ على العقد", "",
+          f"✅ جني الربح: +{TAKE_PROFIT * 100:.0f}% | 🛑 وقف الخسارة: -{STOP_LOSS * 100:.0f}%",
+          f"⏰ لا دخول بعد {ry_time(*NO_NEW_ENTRY)} بتوقيتك"]
+    if c["age"] >= 5:
+        L.append(f"⏱️ البيانات متأخرة ~{c['age']:.0f} دقيقة، تحقق من السعر الحي قبل الدخول.")
+    L.append("⚠️ <i>للتعلم فقط وليست توصية مالية. أقصى خسارة هي سعر العقد.</i>")
+    return "\n".join(L)
+
+
+def no_signal_message(a):
+    c = a["c"]
+    L = [f"⚪ <b>لا صفقة الآن</b> | {esc(SYMBOL)} {c['S']:,.1f}"]
+    for r in a["reasons"]:
+        L.append(f"• {esc(r)}")
+    return "\n".join(L)
+
+
+def details_message(a, log_line, has_signal):
+    c, shock, heads, today = a["c"], a["shock"], a["heads"], a["today"]
+    L = [f"📊 <b>تفاصيل التحليل</b> | {today}", LINE,
+         f"💲 {esc(SYMBOL)}: <b>{c['S']:,.2f}</b> | متوسط 20/50 يوم: {c['sma20']:,.0f} / {c['sma50']:,.0f}"]
     if c["vix"] is not None:
         L.append(f"🌡️ VIX: <b>{c['vix']:.1f}</b> (أعلى من {c['vpct']:.0f}% من أيام السنة)")
-    L.append(f"📉 التقلب الفعلي (20 يوم): {c['rv'] * 100:.1f}%")
+    if c["vwap"]:
+        L.append(f"📐 VWAP ({FLOW_SYMBOL}): السعر {'فوقه' if c['above_vwap'] else 'تحته'}")
+    L.append(f"⏱️ عمر آخر بيانات: ~{c['age']:.0f} دقيقة")
+
+    L += ["", f"🧭 <b>اتجاه اليوم</b>: صعود <b>{a['bull']:.1f}</b> مقابل هبوط <b>{a['bear']:.1f}</b>"]
+    for label, b, br, note in a["rows"]:
+        icon = "🟢" if b > br else ("🔴" if br > b else "⚪")
+        L.append(f"{icon} {label}: {esc(note)}")
 
     m = c["map"]
-    L.append("")
-    L.append("🗺️ <b>خريطة السيولة</b> (الفائدة المفتوحة)")
+    L += ["", "🗺️ <b>خريطة السيولة</b> (اليوم وغداً)"]
     if m:
         if m["put_wall"]:
-            L.append(f"🛡️ جدار البوت (دعم محتمل): <b>{m['put_wall'][0]:,.0f}</b> ({m['put_wall'][1]:,.0f} عقد)")
+            L.append(f"🛡️ جدار البوت (دعم): <b>{m['put_wall'][0]:,.0f}</b> ({m['put_wall'][1]:,.0f} عقد)")
         if m["call_wall"]:
-            L.append(f"🧱 جدار الكول (مقاومة محتملة): <b>{m['call_wall'][0]:,.0f}</b> ({m['call_wall'][1]:,.0f} عقد)")
-        if mp:
-            L.append(f"🎯 نقطة الألم القصوى ({exp}): {mp:,.0f}")
-        L.append("⚡ تأثير صناع السوق (تقريبي): " + ("موجب، حركة أهدأ غالباً" if m["gex"] >= 0 else "سالب، تقلب أعلى غالباً"))
+            L.append(f"🧱 جدار الكول (مقاومة): <b>{m['call_wall'][0]:,.0f}</b> ({m['call_wall'][1]:,.0f} عقد)")
+        if c["max_pain"]:
+            L.append(f"🎯 نقطة الألم القصوى: {c['max_pain']:,.0f}")
+        L.append("⚡ صناع السوق (تقريبي): " + ("موجب، يميل السعر للارتداد" if m["gex"] >= 0 else "سالب، تتسع الحركات"))
     else:
         L.append("غير متاحة حالياً.")
 
     L.append("")
-    L.append("📰 <b>الأخبار والأحداث</b>")
-    for n in news:
-        L.append(f"• {esc(n[:90])}")
-    if news:
-        flag = any(w in " ".join(news).lower() for w in RISK_WORDS)
-        L.append("⚠️ بعض العناوين فيها كلمات مخاطرة" if flag else "لا كلمات مخاطرة حادة في العناوين (مؤشر ضعيف)")
+    icon = {1: "🟢 هادئة", 2: "🟠 متوسطة", 3: "🔴 مرتفعة"}[shock["level"]]
+    L.append(f"📰 <b>الأخبار والجيوسياسة</b>: مخاطر {icon}")
+    for f in shock["flags"]:
+        L.append(f"⚠️ {esc(f)}")
+    if not shock["flags"]:
+        L.append("لا مؤشرات صدمة في VIX أو النفط أو الذهب أو الشركات القيادية.")
+    if shock["leaders"]:
+        L.append("🏢 القيادية: " + " | ".join(f"{sy} {ch * 100:+.1f}%" for sy, ch, _ in shock["leaders"]))
+    shown = shock["geo_driving"][:2] + [t for t in heads["geo"] if t not in shock["geo_driving"]][:2]
+    shown += [t for t in heads["market"] if t not in shown][: max(0, 4 - len(shown))]
+    for h in shown[:4]:
+        L.append(f"• {esc(h[:95])}")
+    if a["events"]:
+        for d, nm in a["events"][:3]:
+            L.append(f"📅 {nm}: {d} (بعد {(d - today).days} يوم)")
     else:
-        L.append("لا أخبار متاحة.")
-    if events:
-        for d, n in events[:3]:
-            L.append(f"📅 {n}: {d} (بعد {(d - today).days} يوم)")
-    else:
-        L.append("📅 لا أحداث كبرى معروفة خلال 14 يوماً.")
+        L.append("📅 لا أحداث كبرى معروفة خلال 7 أيام.")
 
-    if comps:
-        L.append("")
-        L.append(f"⭐ <b>الدرجة: {total:.1f}/10</b> (الحد الأدنى {MIN_SCORE:.0f})")
-        for label, pts, mx, note in comps:
-            L.append(f"{mark(pts, mx)} {label} {pts:.1f}/{mx}: {esc(note)}")
-
-    L.append(LINE)
-    if trade:
-        credit, width = sp["credit"], sp["width"]
-        pw = m["put_wall"][0] if m and m["put_wall"] else None
-        max_loss = width - credit
-        dist = (S - sp["short"]) / S * 100
-        L += [
-            "✅ <b>توصية: Bull Put Credit Spread</b>", "",
-            "🎯 <b>هدف الدخول</b>",
-            f"نتوقع أن المؤشر سيبقى <b>فوق {sp['short']:,.0f}</b> حتى {exp}. نستلم علاوة مقدماً ونحتفظ بها كاملة إذا لم ينزل تحت هذا المستوى.", "",
-            "🧭 <b>لماذا الآن؟</b>",
-            f"• الدرجة {total:.1f}/10 والاتجاه صاعد",
-            f"• سعر البيع أقل من السعر الحالي بنحو {dist:.1f}%"
-            + (f"، وتحت جدار البوت {pw:,.0f}" if pw and sp["short"] <= pw else ""),
-            f"• احتمال الربح التقريبي: <b>{(1 - sp['delta']) * 100:.0f}%</b>", "",
-            "🛒 <b>التنفيذ (أمر واحد)</b>",
-            f"1️⃣ بيع Put بسعر تنفيذ <b>{sp['short']:,.0f}</b>",
-            f"2️⃣ شراء Put بسعر تنفيذ <b>{sp['long']:,.0f}</b> (حماية، عرض {width:.0f} نقطة)",
-            f"📆 الانتهاء: {exp} (بعد {dte} يوم)",
-            f"💵 سعر الأمر (Limit): استلام ≈ <b>{credit:.2f}</b> نقطة", "",
-            "💰 <b>الأرقام لكل عقد</b>",
-            f"✅ أقصى ربح: <b>{credit * 100:,.0f}$</b>",
-            f"❌ أقصى خسارة: <b>{max_loss * 100:,.0f}$</b>",
-            f"⚖️ نقطة التعادل: {sp['short'] - credit:,.0f}", "",
-            "🚪 <b>خطة الخروج (اقتراح)</b>",
-            f"• جني الربح: أغلق عندما يصل سعر السبريد إلى ≈ {credit * 0.5:.2f} (نصف العلاوة)",
-            f"• وقف الخسارة: أغلق إذا ارتفع إلى ≈ {min(credit * 2, width * 0.8):.2f}",
-            "• لا تنتظر الأيام الأخيرة: أغلق قبل الانتهاء بنحو 7 أيام",
-        ]
-        log_signal(today, exp, c, total)
-    else:
-        L.append("🚫 <b>لا دخول اليوم</b>")
-        for r in reasons:
-            L.append(f"• {esc(r)}")
-        L.append("")
-        L.append("💡 الانتظار قرار سليم، فلا ندخل إلا عند توفر الشروط.")
-
-    L += ["", log_line, "",
-          "⚠️ <i>للتعلم فقط وليست توصية مالية. الأسعار تقريبية وبيانات مجانية متأخرة، فتحقق من الأسعار الحية في منصتك، ولا تخاطر بأكثر مما تتحمل خسارته.</i>"]
+    L += ["", "🛠️ <b>إدارة الصفقة (اقتراح)</b>",
+          f"• عقد واحد فقط، وأقصى خسارة = سعر العقد",
+          f"• جني الربح عند +{TAKE_PROFIT * 100:.0f}%، ووقف الخسارة عند -{STOP_LOSS * 100:.0f}%",
+          "• لا تضاعف الحجم بعد خسارة، ولا تدخل بعد إشارة فاتتك",
+          "", log_line, "",
+          "⚠️ <i>تنبيه صريح: معظم عقود 0DTE الرخيصة تنتهي بلا قيمة. الاحتمال الظاهر تقدير نظري من نموذج، "
+          "والبيانات مجانية ومتأخرة. جرّب بحساب تجريبي أولاً ولا تخاطر بمال لا تتحمل خسارته.</i>"]
     return "\n".join(L)
 
 
-def run_once():
+# ====================== التشغيل ======================
+def run_once(force=False):
+    n = now_ny()
+    if not force and not in_window(n):
+        print("خارج وقت التداول، لا شيء للتنفيذ.")
+        return
     try:
-        send_telegram(build_message())
+        a = analyze(force)
     except Exception as e:
-        send_telegram(f"⚠️ حدث خطأ في البوت: {esc(e)}")
+        if force:
+            send_telegram(f"⚠️ حدث خطأ في البوت: {esc(e)}")
+        else:
+            print("خطأ:", e)
+        return
+
+    state = load_state()
+    today_s = a["today"].isoformat()
+    has_signal = bool(a["contracts"])
+    log_line = log_summary()
+
+    if force:
+        send_telegram(signal_message(a) if has_signal else no_signal_message(a))
+        send_telegram(details_message(a, log_line, has_signal))
+        return
+
+    last_t = state.get("last_time")
+    recent = False
+    if has_signal and state.get("last_side") == a["side"] and last_t:
+        try:
+            recent = (n - datetime.fromisoformat(last_t)).total_seconds() < REPEAT_MINUTES * 60
+        except Exception:
+            recent = False
+
+    if has_signal and not recent:
+        send_telegram(signal_message(a))
+        send_telegram(details_message(a, log_line, True))
+        log_signal(n, a["exp"], a["side"], a["contracts"][0], a["c"]["S"], a["strength"])
+        state.update(last_side=a["side"], last_time=n.isoformat(), date=today_s, report_sent=True)
+    elif state.get("date") != today_s or not state.get("report_sent"):
+        send_telegram(no_signal_message(a) + "\n\n🔔 سأراقب السوق وأرسل لك إشارة عند توفر الشروط.")
+        send_telegram(details_message(a, log_line, False))
+        state.update(date=today_s, report_sent=True)
+    else:
+        print("لا إشارة جديدة، لا رسالة.")
+    save_state(state)
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--loop", action="store_true")
+    parser.add_argument("--force", action="store_true", help="تشغيل فوري حتى خارج وقت التداول")
     args = parser.parse_args()
-    if args.loop:
-        while True:
-            run_once()
-            time.sleep(LOOP_HOURS * 3600)
-    else:
-        run_once()
+    run_once(force=args.force or os.getenv("FORCE") == "1")
