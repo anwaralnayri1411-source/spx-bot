@@ -1,0 +1,32 @@
+name: Stocks Signals
+on:
+  schedule:
+    - cron: "20 14,15 * * 1-5"
+    - cron: "0 17,19 * * 1-5"
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: stocks-bot
+  cancel-in-progress: false
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install yfinance pandas requests numpy
+      - run: python stocks_bot.py
+        env:
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          FORCE: ${{ github.event_name == 'workflow_dispatch' && '1' || '0' }}
+      - name: Save state and log
+        run: |
+          git config user.name "spx-bot"
+          git config user.email "bot@users.noreply.github.com"
+          git add stocks_log.csv || true
+          git add stocks_state.json || true
+          git diff --cached --quiet || (git commit -m "update stocks state" && git pull --rebase && git push)
