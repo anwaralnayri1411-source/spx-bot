@@ -296,7 +296,18 @@ def pick_contracts(side, chains, S, rv, closes=None):
                         "score": score, "flow": flow, "rich": richness, "need": need, "hist": hs,
                         "em_iv": iv * math.sqrt(max(dte, 0.5) / 365), "em_rv": rv * math.sqrt(tdays / 252)})
     out.sort(key=lambda x: -(x["score"] + 0.15 * min(x["dte"], 5) + (0.5 if x["flow"] >= 1 else 0.0)))
-    return out[:2]
+    picked = []
+    for x in out:   # نفضّل سترايكين مختلفين بدل تكرار نفس السترايك بتاريخين
+        if all(abs(x["strike"] - p["strike"]) > 1e-9 for p in picked):
+            picked.append(x)
+        if len(picked) == 2:
+            break
+    for x in out:
+        if len(picked) == 2:
+            break
+        if x not in picked:
+            picked.append(x)
+    return picked
 
 
 def tier(score):
@@ -484,6 +495,8 @@ def analyze(force):
             continue
         S = intraday_price(t, s["info"]["S"])
         contracts = pick_contracts(side, chains, S, s["info"]["rv"], s["info"]["closes"])
+        if contracts:   # القوة = نصف قوة الاتجاه + نصف درجة أفضل عقد (حتى لا تتشابه كل الفرص)
+            s["strength"] = round(0.5 * min(10.0, abs(edge) * 1.1) + 0.5 * contracts[0]["score"], 1)
         if contracts and dates["earn"] is not None and any(
                 dates["earn"] <= date.fromisoformat(k["exp"]) for k in contracts):
             s["strength"] = max(0.0, s["strength"] - 2)   # إعلان أرباح قبل الانتهاء يرفع عدم اليقين
@@ -498,33 +511,40 @@ def analyze(force):
 
 
 # ====================== الرسائل ======================
+AR_DAYS = ["الاثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة", "السبت", "الأحد"]
+AR_MONTHS = ["يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو", "يوليو", "أغسطس", "سبتمبر", "أكتوبر",
+             "نوفمبر", "ديسمبر"]
+
+
+def date_ar(iso):
+    d = date.fromisoformat(iso)
+    return f"{AR_DAYS[d.weekday()]} {d.day} {AR_MONTHS[d.month - 1]}"
+
+
 def idea_line(i):
+    """سطور مختصرة: أفضل عقد فقط (البديل في الرسالة الثانية)."""
     call = i["side"] == "CALL"
-    dot = "🟢" if call else "🔴"
-    word = "CALL" if call else "PUT"
+    k = i["contracts"][0]
     flags = ""
     ed = i["dates"]["earn"]
-    if ed is not None and any(ed <= date.fromisoformat(k["exp"]) for k in i["contracts"]):
+    if ed is not None and ed <= date.fromisoformat(k["exp"]):
         flags = " 🚨أرباح"
-    L = [f"{dot}{dot} <b>{ob.esc(i['ticker'])}</b> — {word} | ⭐ {i['strength']:.0f}/10{flags}"]
-    for k in i["contracts"]:
-        fl = " 🔥" if k["flow"] >= 1 else ""
-        L.append(f"   {tier(k['score'])} Strike <b>{k['strike']:,.1f}</b> | ينتهي <b>{k['exp']}</b> ({k['dte']} يوم)\n"
-                 f"      ≈ <b>{k['price']:.2f}</b> (${k['cost']:,.0f}) | تعادل {k['be']:,.2f}\n"
-                 f"      📏 يحتاج حركة {'+' if call else '-'}{k['need'] * 100:.1f}% | "
-                 + (f"حدث تاريخياً في {k['hist']['prob'] * 100:.0f}% من الفترات | " if k["hist"] else "")
-                 + f"نموذج ~{k['prob'] * 100:.0f}%{fl}")
-    return "\n".join(L)
+    mark = tier(k["score"]) + (" 🔥" if k["flow"] >= 1 else "")
+    return "\n".join([
+        f"{'🟢' if call else '🔴'} <b>{ob.esc(i['ticker'])}</b> — <b>{'CALL' if call else 'PUT'}</b> | ⭐ {i['strength']:.1f}{flags}",
+        f"🎯 Strike <b>{k['strike']:,.1f}</b> | 📅 <b>{date_ar(k['exp'])}</b>",
+        f"💵 <b>${k['cost']:,.0f}</b> | يحتاج {'+' if call else '-'}{k['need'] * 100:.1f}% | {mark}",
+        f"✅ +${k['cost'] * TAKE_PROFIT:,.0f}  🛑 -${k['cost'] * STOP_LOSS:,.0f}",
+    ])
 
 
 def signal_message(a, ideas):
-    head = "📌 <b>فرص خيارات الشركات</b>" + (" (تجريبي، السوق مغلق)" if a["is_test"] else "")
+    head = "📌 <b>فرص الشركات</b>" + (" (تجريبي، السوق مغلق)" if a["is_test"] else "")
     L = [head, ""]
     for i in ideas:
         L += [idea_line(i), ""]
-    L += ["🟩 قوي  🟨 متوسط  🟧 مقبول  🔥 طلب عالٍ  🚨 أرباح قبل الانتهاء", "",
-          f"✅ جني الربح: +{TAKE_PROFIT * 100:.0f}% | 🛑 وقف الخسارة: -{STOP_LOSS * 100:.0f}%",
-          "⚠️ <i>للتعلم فقط وليست توصية مالية. تحقق من السعر الحي، وأقصى خسارة هي سعر العقد.</i>"]
+    L += ["🟩 قوي  🟨 متوسط  🟧 مقبول  🔥 طلب عالٍ  🚨 أرباح",
+          "⚠️ <i>تعليمي وليست توصية. تحقق من السعر الحي، وأقصى خسارة هي سعر العقد.</i>"]
     return "\n".join(L)
 
 
@@ -560,7 +580,10 @@ def details_message(a, ideas, log_line):
         for k in i["contracts"]:
             rich = "مضخم (IV أعلى من التذبذب الفعلي)" if k["rich"] >= 1.6 else (
                 "غير مضخم" if k["rich"] <= 1.0 else "عادي")
-            L.append(f"🎯 {k['strike']:,.1f} ({k['exp']}) | دلتا {k['delta']:.2f} | OI {k['oi']:,.0f} | حجم {k['vol']:,.0f} | سعر العقد: {rich}")
+            L.append(f"🎯 {k['strike']:,.1f} ({date_ar(k['exp'])}) ≈ {k['price']:.2f} (${k['cost']:,.0f}) | تعادل {k['be']:,.2f} | "
+                     f"نموذج ~{k['prob'] * 100:.0f}%"
+                     + (f" | تاريخياً {k['hist']['prob'] * 100:.0f}%" if k["hist"] else "")
+                     + f" | دلتا {k['delta']:.2f} | OI {k['oi']:,.0f} | حجم {k['vol']:,.0f} | سعر العقد: {rich}")
             mv = f"📏 الحركة المتوقعة حتى الانتهاء: ±{k['em_rv'] * 100:.1f}% (تذبذب فعلي) / ±{k['em_iv'] * 100:.1f}% (ضمني)"
             if k["hist"]:
                 mv += (f" | في نفس المدة تاريخياً: متوسط الصعود +{k['hist']['up'] * 100:.1f}% "
