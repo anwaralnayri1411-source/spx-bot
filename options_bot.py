@@ -23,6 +23,7 @@ import yfinance as yf
 
 # ====================== الإعدادات ======================
 SYMBOL = "^SPX"             # يمكنك تغييره إلى "SPY"
+ALT_SYMBOL = "SPY"          # أداة بديلة: خيارات SPY بنفس الاتجاه (اتركها "" لتعطيلها)
 FLOW_SYMBOL = "SPY"         # لحساب VWAP (المؤشر نفسه بلا حجم تداول)
 NEWS_SYMBOL = "SPY"
 CONTRACT_MIN_USD = 100      # أقل سعر للعقد (دولار)
@@ -37,7 +38,7 @@ TAKE_PROFIT = 0.50          # جني الربح عند +50% من سعر الدخ
 STOP_LOSS = 0.40            # وقف الخسارة عند -40%
 REPEAT_MINUTES = 90         # لا نكرر نفس الاتجاه قبل هذه المدة
 WINDOW_START = (9, 45)      # نافذة التشغيل بتوقيت نيويورك
-WINDOW_END = (15, 30)
+WINDOW_END = (16, 0)
 NO_NEW_ENTRY = (15, 0)      # لا دخول جديد بعد هذا الوقت
 RISK_FREE = 0.04
 WALL_RANGE = 0.03
@@ -378,6 +379,49 @@ def direction_points(c):
         else:
             rows.append(("نقطة الألم", 0.5, 0, f"السعر تحت {mp:,.0f} وقد ينجذب إليها"))
 
+    # ----- مؤشرات إضافية -----
+    es = c.get("es")
+    if es is not None:
+        w = 1.0 if (c["n"].hour, c["n"].minute) < (10, 30) else 0.5   # وزنه أكبر في أول ساعة
+        if es >= 0.004:
+            rows.append(("عقود SPX الآجلة (ES)", w, 0, f"{es * 100:+.2f}% عن إغلاق أمس"))
+        elif es <= -0.004:
+            rows.append(("عقود SPX الآجلة (ES)", 0, w, f"{es * 100:+.2f}% عن إغلاق أمس"))
+        else:
+            rows.append(("عقود SPX الآجلة (ES)", 0, 0, f"{es * 100:+.2f}% (محايد)"))
+    orb = c.get("orb")
+    if orb:
+        if c["S"] > orb[0]:
+            rows.append(("نطاق أول 30 دقيقة", 1.5, 0, f"اخترق الأعلى {orb[0]:,.0f}"))
+        elif c["S"] < orb[1]:
+            rows.append(("نطاق أول 30 دقيقة", 0, 1.5, f"كسر الأدنى {orb[1]:,.0f}"))
+        else:
+            rows.append(("نطاق أول 30 دقيقة", 0, 0, f"داخل النطاق {orb[1]:,.0f} - {orb[0]:,.0f}"))
+    vd = c.get("vix_day")
+    if vd is not None:
+        if vd <= -0.03:
+            rows.append(("VIX اليوم", 1, 0, f"{vd * 100:+.1f}% (الخوف يتراجع)"))
+        elif vd >= 0.03:
+            rows.append(("VIX اليوم", 0, 1, f"{vd * 100:+.1f}% (الخوف يرتفع)"))
+        else:
+            rows.append(("VIX اليوم", 0, 0, f"{vd * 100:+.1f}% (هادئ)"))
+    pc = c.get("pc")
+    if pc is not None:
+        if pc >= 1.3:
+            rows.append(("حجم الكول/البوت", 0.5, 0, f"كول {pc:.2f}× البوت"))
+        elif pc <= 0.77:
+            rows.append(("حجم الكول/البوت", 0, 0.5, f"بوت {1 / pc:.2f}× الكول"))
+        else:
+            rows.append(("حجم الكول/البوت", 0, 0, f"متوازن ({pc:.2f})"))
+    pdh = c.get("pd_hl")
+    if pdh:
+        if c["S"] > pdh[0]:
+            rows.append(("أمس", 1, 0, f"فوق أعلى سعر أمس {pdh[0]:,.0f}"))
+        elif c["S"] < pdh[1]:
+            rows.append(("أمس", 0, 1, f"تحت أدنى سعر أمس {pdh[1]:,.0f}"))
+        else:
+            rows.append(("أمس", 0, 0, f"داخل نطاق أمس {pdh[1]:,.0f} - {pdh[0]:,.0f}"))
+
     return sum(r[1] for r in rows), sum(r[2] for r in rows), rows
 
 
@@ -457,8 +501,8 @@ def save_state(s):
 
 
 def log_signal(n, exp, side, ctr, S, setup):
-    row = {"date": n.date().isoformat(), "time": n.strftime("%H:%M"), "symbol": SYMBOL, "expiry": exp,
-           "side": side, "strike": ctr["strike"], "price": round(ctr["price"], 2), "spot": round(S, 2),
+    row = {"date": n.date().isoformat(), "time": n.strftime("%H:%M"), "symbol": ctr.get("sym", SYMBOL), "expiry": exp,
+           "side": side, "strike": ctr["strike"], "price": round(ctr["price"], 2), "spot": round(ctr.get("spot", S), 2),
            "setup": round(setup, 1), "contract_score": round(ctr["score"], 1), "result": "", "pnl": ""}
     try:
         if os.path.exists(LOG_FILE):
@@ -569,13 +613,47 @@ def analyze(force):
     except Exception:
         c["map"] = None
 
+    # ----- مؤشرات إضافية (كل واحد اختياري: إن فشل جلبه يُتجاهل) -----
+    c["es"] = c["vix_day"] = c["orb"] = c["pd_hl"] = c["pc"] = None
+    try:
+        es = yf.Ticker("ES=F").history(period="5d")["Close"].dropna()
+        if len(es) >= 2:
+            c["es"] = float(es.iloc[-1] / es.iloc[-2] - 1)
+    except Exception:
+        pass
+    try:
+        vx = yf.Ticker("^VIX").history(period="5d", interval="5m")["Close"].dropna()
+        vx = vx[vx.index.date == last_date]
+        if len(vx) >= 3:
+            c["vix_day"] = float(vx.iloc[-1] / vx.iloc[0] - 1)
+    except Exception:
+        pass
+    try:
+        day = ix[ix.index.date == last_date]
+        if len(day) >= 7:   # اكتمل نطاق أول 30 دقيقة
+            first = day.iloc[:6]
+            c["orb"] = (float(first["High"].max()), float(first["Low"].min()))
+        if len(dates) > 1:
+            pdn = ix[ix.index.date == dates[-2]]
+            if not pdn.empty:
+                c["pd_hl"] = (float(pdn["High"].max()), float(pdn["Low"].min()))
+    except Exception:
+        pass
+    try:
+        cv = float(pd.to_numeric(ch.calls["volume"], errors="coerce").fillna(0).sum())
+        pv = float(pd.to_numeric(ch.puts["volume"], errors="coerce").fillna(0).sum())
+        if cv + pv >= 2000 and pv > 0:
+            c["pc"] = cv / pv
+    except Exception:
+        pass
+
     bull, bear, rows = direction_points(c)
     edge = abs(bull - bear)
     reasons = []
     if shock["level"] == 2:
         edge = max(edge - 1.0, 0)
     side = "CALL" if bull > bear else "PUT"
-    strength = min(10.0, edge * 2.0)
+    strength = min(10.0, edge * 1.5)
 
     # ----- شروط المنع -----
     if n.weekday() < 5 and NO_NEW_ENTRY <= (n.hour, n.minute) < (16, 0):
@@ -591,6 +669,23 @@ def analyze(force):
     contracts = []
     if not reasons:
         contracts = pick_contracts(side, ch.calls if side == "CALL" else ch.puts, S, T, c["vix"])
+        for k in contracts:
+            k["sym"], k["spot"] = SYMBOL, S
+        if ALT_SYMBOL:
+            try:
+                ts = yf.Ticker(ALT_SYMBOL)
+                if exp in list(ts.options):
+                    chs = ts.option_chain(exp)
+                    hs = ts.history(period="1d", interval="5m")["Close"].dropna()
+                    Ss = float(hs.iloc[-1]) if len(hs) else float(ts.history(period="5d")["Close"].dropna().iloc[-1])
+                    alt = pick_contracts(side, chs.calls if side == "CALL" else chs.puts, Ss, T, c["vix"])
+                    for k in alt:
+                        k["sym"], k["spot"] = ALT_SYMBOL, Ss
+                    contracts += alt
+            except Exception as e:
+                print("تعذر قراءة خيارات", ALT_SYMBOL, e)
+        contracts.sort(key=lambda x: -x["score"])
+        contracts = contracts[:MAX_CONTRACTS]
         if not contracts:
             reasons.append(f"لا توجد عقود {('Call' if side == 'CALL' else 'Put')} بسعر ${CONTRACT_MIN_USD}-${CONTRACT_MAX_USD} "
                            "مع سيولة كافية الآن.")
@@ -604,28 +699,52 @@ def analyze(force):
 def signal_message(a):
     c, side, S = a["c"], a["side"], a["c"]["S"]
     call = side == "CALL"
-    head = "🟢🟢🟢 <b>CALL (شراء كول)</b>" if call else "🔴🔴🔴 <b>PUT (شراء بوت)</b>"
-    word = "Call" if call else "Put"
     dot = "🟢" if call else "🔴"
-    L = [head, f"📍 {esc(SYMBOL)}: <b>{S:,.1f}</b> | ⭐ قوة الإشارة <b>{a['strength']:.0f}/10</b>",
-         f"⏳ ينتهي: {'اليوم (0DTE)' if not a['is_test'] else a['exp'] + ' (تجريبي، السوق مغلق)'}", "",
-         "🎯 <b>عقود الدخول:</b>"]
+    word = "CALL" if call else "PUT"
+    when = "اليوم نفسه" if not a["is_test"] else f"{a['exp']} (تجريبي، السوق مغلق)"
+    L = [f"🏛️ <b>SPX — المؤشر</b> | {when}",
+         f"{dot} <b>{word}</b> | 📍 {S:,.1f} | ⭐ {a['strength']:.0f}/10", ""]
     for k in a["contracts"]:
-        L.append(f"{tier(k['score'])}{dot} <b>{k['strike']:,.0f} {word}</b> ≈ <b>{k['price']:.2f}</b> (${k['cost']:,.0f}) "
-                 f"| تعادل {k['be']:,.1f} | احتمال ~{k['prob'] * 100:.0f}%"
-                 + (f" | 🔥 طلب عالٍ (حجم {k['vol']:,.0f})" if k.get('flow', 0) >= 1 else ""))
-    L += ["", f"🟩 قوي  🟨 متوسط  🟧 مقبول  🔥 طلب عالٍ على العقد", "",
-          f"✅ جني الربح: +{TAKE_PROFIT * 100:.0f}% | 🛑 وقف الخسارة: -{STOP_LOSS * 100:.0f}%",
-          f"⏰ لا دخول بعد {ry_time(*NO_NEW_ENTRY)} بتوقيتك"]
+        sp = k.get("spot", S)
+        need = abs(k["be"] - sp) / sp * 100
+        L.append(f"{tier(k['score'])}{'🔥' if k.get('flow', 0) >= 1 else ''} <b>{k.get('sym', SYMBOL).lstrip('^')}</b> "
+                 f"Strike <b>{k['strike']:,.0f}</b> | "
+                 f"💵 <b>${k['cost']:,.0f}</b> | يحتاج {'+' if call else '-'}{need:.2f}% | احتمال ~{k['prob'] * 100:.0f}%")
+    if ALT_SYMBOL and any(k.get("sym") == ALT_SYMBOL for k in a["contracts"]):
+        L += ["", f"⚠️ {ALT_SYMBOL}: أغلق العقد قبل نهاية الجلسة، فقد يتحول إلى أسهم إن بقي رابحاً عند الانتهاء."]
+    L += ["", f"✅ +{TAKE_PROFIT * 100:.0f}%  🛑 -{STOP_LOSS * 100:.0f}%  ⏰ لا دخول بعد {ry_time(*NO_NEW_ENTRY)}",
+          "🟩 قوي  🟨 متوسط  🟧 مقبول  🔥 طلب عالٍ"]
     if c["age"] >= 5:
-        L.append(f"⏱️ البيانات متأخرة ~{c['age']:.0f} دقيقة، تحقق من السعر الحي قبل الدخول.")
-    L.append("⚠️ <i>للتعلم فقط وليست توصية مالية. أقصى خسارة هي سعر العقد.</i>")
+        L.append(f"⏱️ البيانات متأخرة ~{c['age']:.0f} دقيقة، تحقق من السعر الحي.")
+    L.append("⚠️ <i>تعليمي وليست توصية. أقصى خسارة هي سعر العقد.</i>")
+    L.append(f"🕒 {now_ny().astimezone(RY).strftime('%H:%M')} الرياض | SPX إصدار 10")
+    return "\n".join(L)
+
+
+def summary_message(state):
+    L = ["🏛️ <b>SPX — ملخص اليوم</b>", "",
+         f"🔎 عدد الفحوصات: <b>{state.get('runs', 0)}</b>"]
+    be = state.get("best_edge", 0.0)
+    if state.get("best_time"):
+        try:
+            bt = datetime.fromisoformat(state["best_time"]).astimezone(RY).strftime("%H:%M")
+        except Exception:
+            bt = "؟"
+        side = "صعود" if state.get("best_side") == "CALL" else "هبوط"
+        L.append(f"📈 أعلى فرق وصل إليه: <b>{be:.1f}</b> ({side}) الساعة {bt} بتوقيتك، والحد المطلوب {MIN_EDGE}")
+    rc = state.get("reason_counts", {})
+    if rc:
+        L.append("🚫 أكثر أسباب عدم الإشارة:")
+        for r, cnt in sorted(rc.items(), key=lambda x: -x[1])[:3]:
+            L.append(f"• {esc(r)} ({cnt} مرة)")
+    L += ["", "💡 لا إشارة = لا صفقة، والانتظار قرار سليم.",
+          f"🕒 {now_ny().astimezone(RY).strftime('%H:%M')} الرياض | SPX إصدار 10"]
     return "\n".join(L)
 
 
 def no_signal_message(a):
     c = a["c"]
-    L = [f"⚪ <b>لا صفقة الآن</b> | {esc(SYMBOL)} {c['S']:,.1f}"]
+    L = [f"🏛️ <b>SPX — لا صفقة الآن</b> | {c['S']:,.1f}"]
     for r in a["reasons"]:
         L.append(f"• {esc(r)}")
     return "\n".join(L)
@@ -633,7 +752,7 @@ def no_signal_message(a):
 
 def details_message(a, log_line, has_signal):
     c, shock, heads, today = a["c"], a["shock"], a["heads"], a["today"]
-    L = [f"📊 <b>تفاصيل التحليل</b> | {today}", LINE,
+    L = [f"🏛️ <b>تحليل SPX (المؤشر)</b> | {today}", LINE,
          f"💲 {esc(SYMBOL)}: <b>{c['S']:,.2f}</b> | متوسط 20/50 يوم: {c['sma20']:,.0f} / {c['sma50']:,.0f}"]
     if c["vix"] is not None:
         L.append(f"🌡️ VIX: <b>{c['vix']:.1f}</b> (أعلى من {c['vpct']:.0f}% من أيام السنة)")
@@ -705,6 +824,10 @@ def run_once(force=False):
 
     state = load_state()
     today_s = a["today"].isoformat()
+    if state.get("date") != today_s:   # يوم جديد: نصفّر عدادات اليوم
+        state = {"date": today_s, "last_side": state.get("last_side"), "last_time": state.get("last_time"),
+                 "report_sent": False, "runs": 0, "best_edge": 0.0, "signals": 0, "summary_sent": False,
+                 "reason_counts": {}}
     has_signal = bool(a["contracts"])
     log_line = log_summary()
 
@@ -713,6 +836,13 @@ def run_once(force=False):
         send_telegram(details_message(a, log_line, has_signal))
         return
 
+    state["runs"] = state.get("runs", 0) + 1
+    if a["edge"] >= state.get("best_edge", 0.0):
+        state.update(best_edge=round(a["edge"], 2), best_time=n.isoformat(), best_side=a["side"])
+    for r in a["reasons"]:
+        key = r.split(" (")[0][:60]
+        rc = state.setdefault("reason_counts", {})
+        rc[key] = rc.get(key, 0) + 1
     last_t = state.get("last_time")
     recent = False
     if has_signal and state.get("last_side") == a["side"] and last_t:
@@ -725,13 +855,17 @@ def run_once(force=False):
         send_telegram(signal_message(a))
         send_telegram(details_message(a, log_line, True))
         log_signal(n, a["exp"], a["side"], a["contracts"][0], a["c"]["S"], a["strength"])
-        state.update(last_side=a["side"], last_time=n.isoformat(), date=today_s, report_sent=True)
+        state.update(last_side=a["side"], last_time=n.isoformat(), date=today_s, report_sent=True,
+                     signals=state.get("signals", 0) + 1)
     elif state.get("date") != today_s or not state.get("report_sent"):
         send_telegram(no_signal_message(a) + "\n\n🔔 سأراقب السوق وأرسل لك إشارة عند توفر الشروط.")
         send_telegram(details_message(a, log_line, False))
         state.update(date=today_s, report_sent=True)
     else:
         print("لا إشارة جديدة، لا رسالة.")
+    if (n.hour, n.minute) >= NO_NEW_ENTRY and not state.get("summary_sent") and state.get("signals", 0) == 0:
+        send_telegram(summary_message(state))   # ملخص نهاية الجلسة عند عدم وجود أي إشارة
+        state["summary_sent"] = True
     save_state(state)
 
 

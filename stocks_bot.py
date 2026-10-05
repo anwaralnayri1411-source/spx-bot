@@ -39,6 +39,7 @@ MAX_SPREAD = 0.30
 MIN_EDGE = 3.5              # أقل فرق بين نقاط الصعود والهبوط لإعطاء فرصة
 MIN_CONTRACT_SCORE = 5.0
 MAX_IDEAS = 3
+MAX_SAME_SIDE = 2           # لا أكثر من فرصتين في نفس الاتجاه (الأسهم مترابطة)
 FINALISTS = 8               # عدد الشركات التي تُفحص بعمق (أخبار + سلسلة الخيارات)
 MIN_DTE, MAX_DTE = 1, 9     # عقود من يوم إلى أسبوع وزيادة
 TAKE_PROFIT = 0.50
@@ -506,6 +507,12 @@ def analyze(force):
         s.update(S=S, contracts=contracts)
         ideas.append(s)
     ideas.sort(key=lambda x: -x["strength"])
+    kept, cnt = [], {"CALL": 0, "PUT": 0}
+    for i in ideas:
+        if cnt[i["side"]] < MAX_SAME_SIDE:
+            kept.append(i)
+            cnt[i["side"]] += 1
+    ideas = kept
     return {"n": n, "today": today, "ideas": ideas[:MAX_IDEAS], "watch": watch, "vix": vix, "vix_pct": vix_pct,
             "spy5": spy5, "spy_up": spy_up, "shock": shock, "is_test": not in_window(n), "scanned": len(scored)}
 
@@ -539,18 +546,18 @@ def idea_line(i):
 
 
 def signal_message(a, ideas):
-    head = "📌 <b>فرص الشركات</b>" + (" (تجريبي، السوق مغلق)" if a["is_test"] else "")
+    head = "🏢 <b>الشركات — فرص الأسبوع</b>" + (" (تجريبي، السوق مغلق)" if a["is_test"] else "")
     L = [head, ""]
     for i in ideas:
         L += [idea_line(i), ""]
     L += ["🟩 قوي  🟨 متوسط  🟧 مقبول  🔥 طلب عالٍ  🚨 أرباح",
           "⚠️ <i>تعليمي وليست توصية. تحقق من السعر الحي، وأقصى خسارة هي سعر العقد.</i>",
-          f"🕒 {ob.now_ny().astimezone(ob.RY).strftime('%H:%M')} الرياض | إصدار 5"]
+          f"🕒 {ob.now_ny().astimezone(ob.RY).strftime('%H:%M')} الرياض | إصدار 6"]
     return "\n".join(L)
 
 
 def no_idea_message(a):
-    L = ["⚪ <b>لا فرص قوية في الشركات الآن</b>", f"تم فحص {a['scanned']} شركة."]
+    L = ["🏢 <b>الشركات — لا فرص قوية الآن</b>", f"تم فحص {a['scanned']} شركة."]
     if a["shock"]:
         L.append("🔴 تحذير: السوق في حالة صدمة (VIX أو S&P).")
     if a["watch"]:
@@ -562,7 +569,7 @@ def no_idea_message(a):
 
 
 def details_message(a, ideas, log_line):
-    L = [f"📊 <b>تفاصيل فرص الشركات</b> | {a['today'].isoformat()}", ob.LINE]
+    L = [f"🏢 <b>تحليل الشركات</b> | {a['today'].isoformat()}", ob.LINE]
     vix = f"{a['vix']:.1f}" if a["vix"] else "غير متاح"
     L.append(f"🌡️ VIX: <b>{vix}</b> | السوق (SPY) 5 أيام: {a['spy5'] * 100:+.1f}% "
              f"({'فوق' if a['spy_up'] else 'تحت'} متوسط 20 يوم)")
