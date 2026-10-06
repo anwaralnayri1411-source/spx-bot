@@ -6,6 +6,7 @@
 """
 
 import argparse
+import copy
 import json
 import math
 import os
@@ -48,6 +49,19 @@ WINDOW_START = (10, 0)      # بتوقيت نيويورك
 WINDOW_END = (15, 30)
 STATE_FILE = "stocks_state.json"
 LOG_FILE = "stocks_log.csv"
+
+# ---- متابعة العقود المفتوحة (تنبيهات بعد التوصية) ----
+POS_FILE = "stocks_positions.json"
+MONITOR_START = (9, 45)     # بتوقيت نيويورك
+MONITOR_END = (16, 0)
+WARN_LOSS = 0.25            # تحذير مبكر عند نزول العقد 25%
+GIVEBACK = 0.50             # بعد بلوغ الهدف: تنبيه إذا تراجع الربح إلى نصف أعلى ربح
+CHANCE_MIN = 0.05           # احتمال الوصول للتعادل أقل من 5% = الفرصة ضعيفة جداً
+MIN_AGE_MIN = 30            # لا تنبيهات خسارة في أول 30 دقيقة (فرق السعر وحده قد يخدع)
+ADVERSE_SHORT = 0.010       # حركة السهم ضدك (عقود تنتهي خلال يومين)
+ADVERSE_LONG = 0.015        # حركة السهم ضدك (عقود أطول)
+MARKET_ADVERSE = 0.010      # حركة SPY ضدك منذ التوصية
+SUMMARY_AT = (15, 20)       # ملخص العقود المفتوحة آخر الجلسة
 
 POS_WORDS = ["upgrade", "upgrades", "beat", "beats", "surge", "surges", "soar", "soars", "rally", "rallies",
              "record", "launch", "launches", "unveil", "unveils", "partnership", "approval", "approved",
@@ -390,6 +404,340 @@ def log_summary():
     return s
 
 
+# ====================== متابعة العقود المفتوحة ======================
+def monitor_window(n):
+    return n.weekday() < 5 and MONITOR_START <= (n.hour, n.minute) <= MONITOR_END
+
+
+def load_positions():
+    """يرجع None إذا لم يُنشأ الملف بعد (فنبنيه من السجل)."""
+    try:
+        with open(POS_FILE, encoding="utf-8") as f:
+            d = json.load(f)
+        d.setdefault("positions", [])
+        d.setdefault("summary_date", "")
+        return d
+    except Exception:
+        return None
+
+
+def save_positions(d):
+    d = {k: v for k, v in d.items() if k != "dirty"}
+    try:
+        with open(POS_FILE, "w", encoding="utf-8") as f:
+            json.dump(d, f, ensure_ascii=False, indent=1)
+    except Exception as e:
+        print("تعذر حفظ المراكز:", e)
+
+
+def pos_id(tk, side, exp, strike):
+    return f"{tk}:{side}:{exp}:{float(strike):g}"
+
+
+def make_pos(tk, side, exp, strike, entry, t_iso, entry_spot=None, entry_spy=None, strength=None, earn=None):
+    return {"id": pos_id(tk, side, exp, strike), "ticker": tk, "side": side, "exp": exp,
+            "strike": float(strike), "entry": round(float(entry), 2), "time": t_iso,
+            "entry_spot": entry_spot, "entry_spy": entry_spy, "strength": strength, "earn": earn,
+            "status": "open", "peak": 0.0, "alerts": {}}
+
+
+def spot_at(tk, t_iso):
+    """سعر السهم وقت التوصية (للعقود المسجلة قبل بدء المتابعة). فاشل = None."""
+    try:
+        t0 = datetime.fromisoformat(t_iso)
+        h = yf.Ticker(tk).history(period="7d", interval="5m")["Close"].dropna()
+        h = h[h.index >= t0]
+        if len(h):
+            return float(h.iloc[0])
+    except Exception:
+        pass
+    return None
+
+
+def bootstrap_positions(n):
+    """أول تشغيل: نبني قائمة العقود المفتوحة من سجل التوصيات (العقود التي لم تنتهِ بعد)."""
+    P = {"positions": [], "summary_date": "", "dirty": True}
+    try:
+        df = pd.read_csv(LOG_FILE, dtype=str).fillna("") if os.path.exists(LOG_FILE) else None
+    except Exception:
+        df = None
+    if df is None:
+        return P
+    for _, r in df.iterrows():
+        try:
+            if r["result"] != "" or date.fromisoformat(r["exp"]) < n.date():
+                continue
+            p = make_pos(r["ticker"], r["side"], r["exp"], float(r["strike"]), float(r["price"]), r["time"],
+                         spot_at(r["ticker"], r["time"]), None, float(r["strength"] or 0))
+            if all(x["id"] != p["id"] for x in P["positions"]):
+                P["positions"].append(p)
+        except Exception as e:
+            print("تخطي سطر من السجل:", e)
+    return P
+
+
+def active_positions(P, n):
+    return [p for p in P["positions"] if date.fromisoformat(p["exp"]) >= n.date()]
+
+
+def prune_positions(P, n):
+    keep = active_positions(P, n)
+    if len(keep) != len(P["positions"]):
+        P["positions"] = keep
+        P["dirty"] = True
+
+
+def add_position(P, n, idea, spy_px):
+    k = idea["contracts"][0]
+    earn = idea["dates"]["earn"]
+    p = make_pos(idea["ticker"], idea["side"], k["exp"], k["strike"], k["price"], n.isoformat(timespec="minutes"),
+                 round(idea["S"], 2), round(spy_px, 2) if spy_px else None, round(idea["strength"], 1),
+                 earn.isoformat() if earn else None)
+    if all(x["id"] != p["id"] for x in P["positions"]):
+        P["positions"].append(p)
+        P["dirty"] = True
+
+
+def spot_now(t):
+    try:
+        h = t.history(period="1d", interval="5m")["Close"].dropna()
+        if len(h):
+            return float(h.iloc[-1])
+    except Exception:
+        pass
+    try:
+        return float(t.history(period="5d")["Close"].dropna().iloc[-1])
+    except Exception:
+        return None
+
+
+def contract_quote(t, p, cache):
+    key = (p["ticker"], p["exp"])
+    try:
+        if key not in cache:
+            cache[key] = t.option_chain(p["exp"])
+        ch = cache[key]
+    except Exception as e:
+        print("تعذر جلب سلسلة الخيارات", key, e)
+        return None
+    df = ch.calls if p["side"] == "CALL" else ch.puts
+    r = df[(df["strike"] - p["strike"]).abs() < 1e-6]
+    if r.empty:
+        return None
+    r = r.iloc[0]
+
+    def num(k):
+        v = r.get(k)
+        return 0.0 if v is None or pd.isna(v) else float(v)
+    bid, ask, last = num("bid"), num("ask"), num("lastPrice")
+    if bid > 0 and ask > 0:
+        val, spr = (bid + ask) / 2, (ask - bid) / ((ask + bid) / 2)
+    elif last > 0:
+        val, spr = last, None
+    else:
+        return None
+    iv = num("impliedVolatility")
+    return {"val": val, "spr": spr, "iv": iv if iv >= 0.05 else None}
+
+
+SEVERITY = ["stop", "exp_final", "broken", "market", "chance", "giveback", "tp", "warn", "exp_today", "overnight"]
+ALERT_ICON = {"stop": "🛑", "exp_final": "⏰", "broken": "⚠️", "market": "🌐", "chance": "📉",
+              "giveback": "🔔", "tp": "✅", "warn": "🟠", "exp_today": "⏳", "overnight": "⏳"}
+
+
+def evaluate(p, n, q, spot, spy_spot):
+    """يقيّم عقداً مفتوحاً. يرجع (info, alerts) حيث alerts تنبيهات جديدة لم تُرسل من قبل.
+    يعدّل p (الحالة وسجل التنبيهات) فيجب تمرير نسخة عند التجربة."""
+    exp = date.fromisoformat(p["exp"])
+    dte = (exp - n.date()).days
+    call = p["side"] == "CALL"
+    d = 1 if call else -1
+    entry, val = p["entry"], q["val"]
+    pnl = val / entry - 1
+    secs = max((datetime(exp.year, exp.month, exp.day, 16, 0, tzinfo=n.tzinfo) - n).total_seconds(), 1800)
+    iv = min(2.0, max(0.1, q["iv"] or 0.4))
+    be = p["strike"] + entry if call else p["strike"] - entry
+    prob = need = None
+    if spot:
+        prob = ob.prob_beyond(spot, be, secs / (365 * 86400), iv, p["side"])
+        need = d * (be / spot - 1)        # موجب: ما زال يحتاج هذه الحركة للتعادل
+    mv = (spot / p["entry_spot"] - 1) * d if (spot and p.get("entry_spot")) else None   # موجب = لصالحك
+    try:
+        age = (n - datetime.fromisoformat(p["time"])).total_seconds() / 60
+    except Exception:
+        age = 9999
+    info = {"val": val, "pnl": pnl, "spot": spot, "mv": mv, "need": need, "prob": prob, "spr": q["spr"],
+            "dte": dte}
+    new, al, hm = [], p["alerts"], (n.hour, n.minute)
+    changed = False
+
+    def fire(kind, text):
+        nonlocal changed
+        if kind not in al:
+            al[kind] = n.isoformat(timespec="minutes")
+            new.append((kind, text))
+            changed = True
+
+    if pnl > p.get("peak", 0.0) + 1e-9:
+        p["peak"] = round(pnl, 3)
+        changed = True
+    live = p["status"] != "stopped"
+    mature = age >= MIN_AGE_MIN
+
+    if live and mature:
+        if pnl <= -STOP_LOSS:
+            fire("stop", f"وصل وقف الخسارة (-{STOP_LOSS * 100:.0f}%). الخروج يحدّ الخسارة. لا تعزّز عقداً خاسراً.")
+            p["status"] = "stopped"
+            changed = True
+        elif pnl <= -WARN_LOSS:
+            fire("warn", f"العقد نزل {abs(pnl) * 100:.0f}%. وقف الخسارة عند -{STOP_LOSS * 100:.0f}%.")
+    if live and pnl >= TAKE_PROFIT:
+        fire("tp", f"وصل هدف الربح (+{TAKE_PROFIT * 100:.0f}%). فكّر بجني الربح أو ارفع وقفك إلى سعر دخولك.")
+        if p["status"] == "open":
+            p["status"] = "tp"
+            changed = True
+    if live and p["status"] == "tp" and p.get("peak", 0) >= TAKE_PROFIT and pnl <= p["peak"] * GIVEBACK:
+        fire("giveback", (f"الربح تبخّر: كان +{p['peak'] * 100:.0f}% وأصبح {pnl * 100:+.0f}%." if pnl < 0 else
+                          f"الربح تراجع من +{p['peak'] * 100:.0f}% إلى {pnl * 100:+.0f}%. احمِ ما تبقى."))
+    if live and mature and mv is not None:
+        thr = ADVERSE_SHORT if dte <= 2 else ADVERSE_LONG
+        if mv <= -thr:
+            fire("broken", f"الفكرة تضعف: السهم تحرك {abs(mv) * 100:.1f}% ضد اتجاهك منذ التوصية.")
+    if live and mature and p.get("entry_spy") and spy_spot:
+        sm = (spy_spot / p["entry_spy"] - 1) * d
+        if sm <= -MARKET_ADVERSE:
+            fire("market", f"السوق (SPY) تحرك {abs(sm) * 100:.1f}% ضدك منذ التوصية.")
+    if live and mature and prob is not None and prob < CHANCE_MIN and pnl < 0:
+        fire("chance", f"الفرصة ضعيفة جداً: احتمال وصول السهم للتعادل في الوقت المتبقي ≈ {prob * 100:.0f}% فقط.")
+    if dte == 0 and live and hm >= (14, 30):
+        fire("exp_today", f"ينتهي اليوم والتآكل الزمني يتسارع. قيمته الآن ≈ ${val * 100:,.0f}.")
+    if dte == 0 and spot and hm >= (15, 30):
+        itm = spot > p["strike"] if call else spot < p["strike"]
+        if itm:
+            fire("exp_final", "آخر 30 دقيقة: العقد داخل المال. إن تركته حتى الانتهاء قد يُنفَّذ تلقائياً ويتحول إلى "
+                              f"100 سهم (≈ ${spot * 100:,.0f}). أغلقه قبل الإغلاق ما لم تقصد ذلك.")
+        else:
+            fire("exp_final", f"آخر 30 دقيقة: العقد خارج المال وسينتهي بلا قيمة إن لم يتحرك السعر. "
+                              f"إن أردت استرداد ما بقي (≈ ${val * 100:,.0f}) فبِعه قبل الإغلاق.")
+    if dte == 1 and live and hm >= (15, 30) and pnl < TAKE_PROFIT:
+        fire("overnight", "ينتهي غداً: إن لم يتحرك السهم لصالحك سيفقد جزءاً من قيمته الليلة.")
+    info["changed"] = changed
+    return info, new
+
+
+def reason_hint(info):
+    mv = info["mv"]
+    if mv is None:
+        return None
+    if mv >= 0.003:
+        return "🔎 السهم تحرك لصالحك لكن التآكل الزمني وهبوط التذبذب الضمني أكلا أكثر من مكسبك."
+    if mv > -0.003:
+        return "🔎 السبب الأرجح: تآكل زمني وهبوط التذبذب الضمني؛ السهم نفسه لم يتحرك تقريباً."
+    return f"🔎 السبب الأرجح: السهم تحرك {abs(mv) * 100:.1f}% ضد اتجاهك."
+
+
+def pos_header(p):
+    return f"<b>{ob.esc(p['ticker'])} {p['side']}</b> | 🎯 {p['strike']:,.1f} | 📅 {date_ar(p['exp'])}"
+
+
+def stock_line(info):
+    if not info["spot"]:
+        return None
+    s = f"📈 السهم {info['spot']:,.2f}"
+    if info["mv"] is not None:
+        s += f" ({'لصالحك' if info['mv'] >= 0 else 'ضدك'} {abs(info['mv']) * 100:.1f}%)"
+    if info["need"] is not None:
+        s += " | تجاوز نقطة التعادل ✅" if info["need"] <= 0 else f" | يحتاج {info['need'] * 100:.1f}% للتعادل"
+    if info["prob"] is not None:
+        s += f" | احتمال ≈ {info['prob'] * 100:.0f}%"
+    return s
+
+
+def alert_block(p, info, alerts):
+    kinds = [k for k, _ in alerts]
+    top = next(k for k in SEVERITY if k in kinds)
+    L = [f"{ALERT_ICON[top]} {pos_header(p)}",
+         f"💵 دخلت ${p['entry'] * 100:,.0f} ← الآن ≈ ${info['val'] * 100:,.0f} (<b>{info['pnl'] * 100:+.0f}%</b>)"]
+    sl = stock_line(info)
+    if sl:
+        L.append(sl)
+    for k in SEVERITY:
+        for kind, text in alerts:
+            if kind == k:
+                L.append(f"{ALERT_ICON[kind]} {ob.esc(text)}")
+    if info["pnl"] <= -WARN_LOSS and "broken" not in kinds:   # لا نكرر نفس المعلومة
+        h = reason_hint(info)
+        if h:
+            L.append(h)
+    if info["spr"] is not None and info["spr"] > 0.40:
+        L.append("⚠️ فرق السعر (bid/ask) واسع، فالقيمة تقريبية.")
+    return "\n".join(L)
+
+
+def footer_line():
+    return ("⚠️ <i>تعليمي وليست توصية. البيانات متأخرة ~15 دقيقة، وقد يختلف سعرك الحي.</i>\n"
+            f"🕒 {ob.now_ny().astimezone(ob.RY).strftime('%H:%M')} الرياض | إصدار 7")
+
+
+def status_message(rows, n):
+    L = ["📋 <b>الشركات — حالة العقود المفتوحة</b>", ""]
+    net = 0.0
+    for p, info in sorted(rows, key=lambda x: -x[1]["pnl"]):
+        pn = info["pnl"]
+        ico = "🟩" if pn >= 0.2 else ("🟢" if pn >= 0 else ("🟠" if pn > -WARN_LOSS else "🔴"))
+        tag = " (سبق تنبيه الوقف)" if p["status"] == "stopped" else (" (بلغ الهدف)" if p["status"] == "tp" else "")
+        L.append(f"{ico} <b>{ob.esc(p['ticker'])} {p['side']}</b> {p['strike']:,.1f} | {date_ar(p['exp'])}: "
+                 f"${p['entry'] * 100:,.0f} ← ${info['val'] * 100:,.0f} (<b>{pn * 100:+.0f}%</b>){tag}")
+        net += (info["val"] - p["entry"]) * 100
+    L += ["", f"المجموع على الورق: <b>{net:+,.0f}$</b> (لو بعت كلها الآن بسعر الوسط)", "", footer_line()]
+    return "\n".join(L)
+
+
+def do_monitor(n, force, P):
+    prune_positions(P, n)
+    act = active_positions(P, n)
+    today_s = n.date().isoformat()
+    state = load_state()
+    sent_today = state.get("date") == today_s and bool(state.get("sent"))
+    rows, blocks = [], []
+    cache, tickers = {}, {}
+    spy_spot = spot_now(yf.Ticker("SPY")) if act else None
+    for p0 in act:
+        p = copy.deepcopy(p0) if force else p0      # التجربة اليدوية لا تغيّر الحالة المحفوظة
+        tk = p["ticker"]
+        try:
+            if tk not in tickers:
+                t = yf.Ticker(tk)
+                tickers[tk] = (t, spot_now(t))
+            t, spot = tickers[tk]
+            q = contract_quote(t, p, cache)
+            if q is None:
+                print("لا سعر حالياً للعقد", p["id"])
+                continue
+            info, new = evaluate(p, n, q, spot, spy_spot)
+        except Exception as e:
+            print("تعذر تقييم", p0.get("id"), e)
+            continue
+        if info["changed"] and not force:
+            P["dirty"] = True
+        rows.append((p, info))
+        if new and not force:
+            blocks.append(alert_block(p, info, new))
+    if blocks:
+        ob.send_telegram("\n\n".join(["🏢 <b>تنبيهات العقود المفتوحة</b>"] + blocks + [footer_line()]))
+    hm = (n.hour, n.minute)
+    if force or (hm >= SUMMARY_AT and P.get("summary_date") != today_s):
+        if rows:
+            ob.send_telegram(status_message(rows, n))
+        elif force:
+            ob.send_telegram("📋 <b>الشركات — حالة العقود المفتوحة</b>\nلا توجد عقود مفتوحة الآن.")
+        elif not sent_today:
+            ob.send_telegram("⚪ <b>الشركات — ملخص اليوم</b>\nلا فرص ولا عقود مفتوحة اليوم.")
+        if not force:
+            P["summary_date"] = today_s
+            P["dirty"] = True
+
+
 # ====================== التحليل الرئيسي ======================
 def completed_volume(df, n):
     """آخر حجم تداول مكتمل: نتجنب شمعة اليوم الجزئية أثناء الجلسة."""
@@ -513,8 +861,10 @@ def analyze(force):
             kept.append(i)
             cnt[i["side"]] += 1
     ideas = kept
+    spy_px = intraday_price(yf.Ticker("SPY"), float(spyc.iloc[-1]))
     return {"n": n, "today": today, "ideas": ideas[:MAX_IDEAS], "watch": watch, "vix": vix, "vix_pct": vix_pct,
-            "spy5": spy5, "spy_up": spy_up, "shock": shock, "is_test": not in_window(n), "scanned": len(scored)}
+            "spy5": spy5, "spy_up": spy_up, "shock": shock, "is_test": not in_window(n), "scanned": len(scored),
+            "spy_px": spy_px}
 
 
 # ====================== الرسائل ======================
@@ -551,8 +901,9 @@ def signal_message(a, ideas):
     for i in ideas:
         L += [idea_line(i), ""]
     L += ["🟩 قوي  🟨 متوسط  🟧 مقبول  🔥 طلب عالٍ  🚨 أرباح",
+          "📡 سأتابع هذه العقود وأنبّهك عند الوقف أو الهدف أو ضعف الفكرة.",
           "⚠️ <i>تعليمي وليست توصية. تحقق من السعر الحي، وأقصى خسارة هي سعر العقد.</i>",
-          f"🕒 {ob.now_ny().astimezone(ob.RY).strftime('%H:%M')} الرياض | إصدار 6"]
+          f"🕒 {ob.now_ny().astimezone(ob.RY).strftime('%H:%M')} الرياض | إصدار 7"]
     return "\n".join(L)
 
 
@@ -621,11 +972,7 @@ def details_message(a, ideas, log_line):
 
 
 # ====================== التشغيل ======================
-def run_once(force=False):
-    n = ob.now_ny()
-    if not force and not in_window(n):
-        print("خارج وقت التداول، لا شيء للتنفيذ.")
-        return
+def do_scan(n, force, P):
     try:
         a = analyze(force)
     except Exception as e:
@@ -649,13 +996,23 @@ def run_once(force=False):
             ob.send_telegram(details_message(a, [], log_line))
         return
 
-    new = [i for i in a["ideas"] if f"{i['ticker']}:{i['side']}" not in state["sent"]]
+    # لا نكرر التوصية على سهم لديك فيه عقد مفتوح بنفس الاتجاه (منعاً لمضاعفة المخاطرة)
+    blocked = {(p["ticker"], p["side"]) for p in active_positions(P, n) if p["status"] in ("open", "tp")}
+    new = []
+    for i in a["ideas"]:
+        if f"{i['ticker']}:{i['side']}" in state["sent"]:
+            continue
+        if (i["ticker"], i["side"]) in blocked:
+            a["watch"].insert(0, (i["ticker"], "لديك عقد مفتوح بنفس الاتجاه، لا نكرر التوصية"))
+            continue
+        new.append(i)
     if new:
         ob.send_telegram(signal_message(a, new))
         ob.send_telegram(details_message(a, new, log_line))
         for i in new:
             state["sent"][f"{i['ticker']}:{i['side']}"] = n.isoformat()
             log_idea(n, i)
+            add_position(P, n, i, a.get("spy_px"))
         state["report_sent"] = True
     elif not state.get("report_sent"):
         ob.send_telegram(no_idea_message(a) + "\n\n🔔 سأواصل الفحص وأرسل لك عند ظهور فرصة.")
@@ -665,8 +1022,31 @@ def run_once(force=False):
     save_state(state)
 
 
+def run_once(force=False, mode="scan"):
+    n = ob.now_ny()
+    scan_ok = force or (mode != "monitor" and in_window(n))
+    mon_ok = force or monitor_window(n)
+    if not (scan_ok or mon_ok):
+        print("خارج وقت التداول، لا شيء للتنفيذ.")
+        return
+    P = load_positions()
+    if P is None:
+        P = bootstrap_positions(n)
+    if scan_ok:
+        do_scan(n, force, P)
+    if mon_ok:
+        try:
+            do_monitor(n, force, P)
+        except Exception as e:
+            print("خطأ في المتابعة:", e)
+            if force:
+                ob.send_telegram(f"⚠️ خطأ في متابعة العقود: {ob.esc(e)}")
+    if P.get("dirty"):
+        save_positions(P)
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--force", action="store_true", help="تشغيل فوري حتى خارج وقت التداول")
     args = parser.parse_args()
-    run_once(force=args.force or os.getenv("FORCE") == "1")
+    run_once(force=args.force or os.getenv("FORCE") == "1", mode=os.getenv("BOT_MODE", "scan"))
