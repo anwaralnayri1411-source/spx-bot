@@ -12,10 +12,12 @@
    "entry_spy": null,
    "strength": 8.8,
    "earn": null,
-   "status": "open",
+   "status": "stopped",
    "peak": 0.0,
    "alerts": {
-    "overnight": "2026-10-06T15:53-04:00"
+    "overnight": "2026-10-06T15:53-04:00",
+    "stop": "2026-10-07T09:55-04:00",
+    "chance": "2026-10-07T09:55-04:00"
    }
   },
   {
@@ -30,10 +32,11 @@
    "entry_spy": null,
    "strength": 8.6,
    "earn": null,
-   "status": "open",
+   "status": "stopped",
    "peak": 0.299,
    "alerts": {
-    "overnight": "2026-10-06T15:53-04:00"
+    "overnight": "2026-10-06T15:53-04:00",
+    "stop": "2026-10-07T09:55-04:00"
    }
   },
   {
@@ -66,10 +69,11 @@
    "entry_spy": null,
    "strength": 8.2,
    "earn": null,
-   "status": "open",
+   "status": "stopped",
    "peak": 0.0,
    "alerts": {
-    "warn": "2026-10-06T15:53-04:00"
+    "warn": "2026-10-06T15:53-04:00",
+    "stop": "2026-10-07T09:55-04:00"
    }
   },
   {
@@ -125,9 +129,13 @@
    "entry_spy": null,
    "strength": 8.9,
    "earn": null,
-   "status": "open",
+   "status": "stopped",
    "peak": 0.068,
-   "alerts": {}
+   "alerts": {
+    "stop": "2026-10-07T09:55-04:00",
+    "broken": "2026-10-07T09:55-04:00",
+    "chance": "2026-10-07T09:55-04:00"
+   }
   },
   {
    "id": "TSLA:CALL:2026-10-07:382.5",
@@ -141,10 +149,12 @@
    "entry_spy": null,
    "strength": 9.1,
    "earn": null,
-   "status": "open",
+   "status": "stopped",
    "peak": 0.098,
    "alerts": {
-    "overnight": "2026-10-06T15:53-04:00"
+    "overnight": "2026-10-06T15:53-04:00",
+    "stop": "2026-10-07T09:55-04:00",
+    "chance": "2026-10-07T09:55-04:00"
    }
   }
  ],
