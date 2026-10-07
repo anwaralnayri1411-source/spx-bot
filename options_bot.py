@@ -40,7 +40,6 @@ REPEAT_MINUTES = 90         # لا نكرر نفس الاتجاه قبل هذه 
 RISK_BUDGET_USD = 150       # أقصى خسارة تقبلها في الصفقة الواحدة عند الوقف (عدّلها حسب حسابك)
 MAX_QTY = 5                 # سقف عدد العقود المقترح
 HOLD_MIN = 30               # افتراض مدة الاحتفاظ بالعقد لحساب مستوى هدف المؤشر (دقيقة)
-SAR_RATE = 3.75             # سعر الريال مقابل الدولار (مربوط)
 WINDOW_START = (9, 45)      # نافذة التشغيل بتوقيت نيويورك
 WINDOW_END = (16, 0)
 NO_NEW_ENTRY = (15, 0)      # لا دخول جديد بعد هذا الوقت
@@ -849,7 +848,7 @@ def signal_message(a):
         mark = tier(k["score"]) + ("🔥" if k.get("flow", 0) >= 1 else "")
         if i == 0:
             L.append(f"{mark} <b>{root_sym(k)} {k['strike']:,.0f} {word}</b> · 💵 <b>${k['cost']:,.0f}</b> "
-                     f"({k['price']:.2f}) ≈ ﷼{k['cost'] * SAR_RATE:,.0f} · ×{q} · يحتاج {sgn}{need:.2f}%")
+                     f"({k['price']:.2f}) · ×{q} · يحتاج {sgn}{need:.2f}%")
         else:
             L.append(f"{mark} {root_sym(k)} {k['strike']:,.0f} · ${k['cost']:,.0f} · {sgn}{need:.2f}%")
     tp_p, sl_p = k0["price"] * (1 + TAKE_PROFIT), k0["price"] * (1 - STOP_LOSS)
@@ -863,7 +862,7 @@ def signal_message(a):
             L.append("⚠️ الهدف والوقف قريبان جداً (أقل من 0.12%): ضوضاء الشارت العادية قد تضرب الوقف أولاً.")
     else:
         L.append(f"✅ <b>{tp_p:.2f}</b> (+{TAKE_PROFIT * 100:.0f}%) | 🛑 <b>{sl_p:.2f}</b> (-{STOP_LOSS * 100:.0f}%)")
-    L.append(f"💰 الخسارة القصوى عند الوقف ≈ ${q * per:,.0f} (﷼{q * per * SAR_RATE:,.0f}) | رأس المال ≈ ${q * k0['cost']:,.0f}"
+    L.append(f"💰 الخسارة القصوى عند الوقف ≈ ${q * per:,.0f} | رأس المال ≈ ${q * k0['cost']:,.0f}"
              f" | ⏰ لا دخول بعد {ry_time(*NO_NEW_ENTRY)}")
     if per > RISK_BUDGET_USD:
         L.append(f"⚠️ عقد واحد يتجاوز ميزانية مخاطرتك (${RISK_BUDGET_USD}).")
