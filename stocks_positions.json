@@ -171,7 +171,9 @@
    "earn": "2026-11-17",
    "status": "open",
    "peak": 0.0,
-   "alerts": {}
+   "alerts": {
+    "warn": "2026-10-07T11:44-04:00"
+   }
   },
   {
    "id": "AAPL:CALL:2026-10-12:340",
@@ -185,6 +187,22 @@
    "entry_spy": 774.41,
    "strength": 7.8,
    "earn": "2026-11-02",
+   "status": "open",
+   "peak": 0.0,
+   "alerts": {}
+  },
+  {
+   "id": "AVGO:CALL:2026-10-09:380",
+   "ticker": "AVGO",
+   "side": "CALL",
+   "exp": "2026-10-09",
+   "strike": 380.0,
+   "entry": 1.92,
+   "time": "2026-10-07T11:44-04:00",
+   "entry_spot": 374.62,
+   "entry_spy": 776.03,
+   "strength": 8.6,
+   "earn": "2026-12-09",
    "status": "open",
    "peak": 0.0,
    "alerts": {}
