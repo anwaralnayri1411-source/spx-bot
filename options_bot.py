@@ -37,6 +37,9 @@ MAX_CONTRACTS = 3           # عدد العقود المعروضة
 TAKE_PROFIT = 0.50          # جني الربح عند +50% من سعر الدخول
 STOP_LOSS = 0.40            # وقف الخسارة عند -40%
 REPEAT_MINUTES = 90         # لا نكرر نفس الاتجاه قبل هذه المدة
+RISK_BUDGET_USD = 150       # أقصى خسارة تقبلها في الصفقة الواحدة عند الوقف (عدّلها حسب حسابك)
+MAX_QTY = 5                 # سقف عدد العقود المقترح
+HOLD_MIN = 30               # افتراض مدة الاحتفاظ بالعقد لحساب مستوى هدف المؤشر (دقيقة)
 WINDOW_START = (9, 45)      # نافذة التشغيل بتوقيت نيويورك
 WINDOW_END = (16, 0)
 NO_NEW_ENTRY = (15, 0)      # لا دخول جديد بعد هذا الوقت
@@ -138,6 +141,15 @@ def abs_delta(S, K, T, s, side):
 def prob_beyond(S, be, T, s, side):
     d2 = (math.log(S / be) + (RISK_FREE - 0.5 * s * s) * T) / (s * math.sqrt(T))
     return norm_cdf(d2) if side == "CALL" else norm_cdf(-d2)
+
+
+def bs_price(S, K, T, s, side):
+    d1 = _d1(S, K, T, s)
+    d2 = d1 - s * math.sqrt(T)
+    disc = math.exp(-RISK_FREE * T)
+    if side == "CALL":
+        return S * norm_cdf(d1) - K * disc * norm_cdf(d2)
+    return K * disc * norm_cdf(-d2) - S * norm_cdf(-d1)
 
 
 # ====================== بيانات السوق ======================
@@ -473,7 +485,7 @@ def pick_contracts(side, df, S, T, vix):
         if score < MIN_CONTRACT_SCORE:
             continue
         out.append({"strike": K, "price": price, "cost": cost, "be": be, "delta": delta, "prob": prob,
-                    "z": z, "oi": oi, "vol": vol, "spr": spr, "iv": iv, "score": score,
+                    "z": z, "oi": oi, "vol": vol, "spr": spr, "iv": iv, "T": T, "score": score,
                     "flow": flow, "flow_ratio": flow_ratio})
     out.sort(key=lambda x: -x["score"])
     return out[:MAX_CONTRACTS]
@@ -571,11 +583,12 @@ def analyze(force):
          "ema9": float(closes.ewm(span=9, adjust=False).mean().iloc[-1]),
          "ema21": float(closes.ewm(span=21, adjust=False).mean().iloc[-1]),
          "r30": float(bars.iloc[-1] / bars.iloc[-7] - 1) if len(bars) >= 7 else 0.0,
-         "gap": None, "above_vwap": True, "vwap": None}
+         "gap": None, "above_vwap": True, "vwap": None, "prev_close": None, "vwap_spx": None}
     if len(dates) > 1:
         prev = ix[ix.index.date == dates[-2]]["Close"].dropna()
         if not prev.empty:
             c["gap"] = float(bars.iloc[0] / prev.iloc[-1] - 1)
+            c["prev_close"] = float(prev.iloc[-1])
     try:
         fl = yf.Ticker(FLOW_SYMBOL).history(period="5d", interval="5m")
         fl = fl[fl.index.date == last_date]
@@ -584,6 +597,7 @@ def analyze(force):
             vwap = float((tp * fl["Volume"]).cumsum().iloc[-1] / fl["Volume"].cumsum().iloc[-1])
             c["vwap"] = vwap
             c["above_vwap"] = bool(fl["Close"].iloc[-1] > vwap)
+            c["vwap_spx"] = vwap * S / float(fl["Close"].iloc[-1])   # VWAP بمستوى المؤشر
     except Exception:
         pass
 
@@ -695,6 +709,122 @@ def analyze(force):
             "exp": exp, "is_test": is_test, "today": today}
 
 
+# ====================== الكمية والمستويات والخطة ======================
+def qty_for(cost):
+    """عدد العقود بحيث لا تتجاوز الخسارة عند الوقف ميزانية المخاطرة (عقد واحد على الأقل)."""
+    per_loss = cost * STOP_LOSS
+    q = int(RISK_BUDGET_USD // per_loss) if per_loss > 0 else 1
+    return max(1, min(MAX_QTY, q)), per_loss
+
+
+def index_levels(k, side):
+    """مستوى الأصل (SPX أو SPY) الذي يعطي هدف العقد (+TAKE_PROFIT بعد HOLD_MIN دقيقة)
+    ومستوى وقفه (-STOP_LOSS فوراً). تقدير من نموذج بلاك-شولز بتذبذب ثابت. يرجع (هدف، وقف) أو None."""
+    S0, T0 = k.get("spot"), k.get("T")
+    if not S0 or not T0 or not k.get("iv"):
+        return None
+    K, iv, P = k["strike"], k["iv"], k["price"]
+    T2 = max(T0 - HOLD_MIN / (365 * 24 * 60), 5 / (365 * 24 * 60))
+    sign = 1 if side == "CALL" else -1
+
+    def solve(target, T, lo, hi):
+        g = lambda x: sign * (bs_price(x, K, T, iv, side) - target)
+        if not (g(lo) < 0 < g(hi)):
+            return None
+        for _ in range(60):
+            mid = (lo + hi) / 2
+            if g(mid) < 0:
+                lo = mid
+            else:
+                hi = mid
+        return (lo + hi) / 2
+    up = (S0, S0 * 1.05)
+    dn = (S0 * 0.95, S0)
+    tp = solve(P * (1 + TAKE_PROFIT), T2, *(up if side == "CALL" else dn))
+    sl = solve(P * (1 - STOP_LOSS), T0, *(dn if side == "CALL" else up))
+    if tp is None or sl is None:
+        return None
+    return tp, sl
+
+
+def build_plan(c, bull, bear):
+    """خطة اليوم: مستويات الدعم والمقاومة من البيانات المتاحة + سيناريوهات دخول مشروطة بأهداف."""
+    S, vix, prev = c["S"], c.get("vix"), c.get("prev_close")
+    em = (prev or S) * (vix / 100) / math.sqrt(252) if vix else S * 0.007   # حركة يومية متوقعة (1σ)
+    lv = []
+    m = c.get("map")
+    if m:
+        if m.get("call_wall"):
+            lv.append((m["call_wall"][0], "جدار الكول"))
+        if m.get("put_wall"):
+            lv.append((m["put_wall"][0], "جدار البوت"))
+    if c.get("pd_hl"):
+        lv += [(c["pd_hl"][0], "أعلى أمس"), (c["pd_hl"][1], "أدنى أمس")]
+    if c.get("orb"):
+        lv += [(c["orb"][0], "أعلى أول 30د"), (c["orb"][1], "أدنى أول 30د")]
+    if c.get("vwap_spx"):
+        lv.append((c["vwap_spx"], "VWAP"))
+    if c.get("max_pain"):
+        lv.append((c["max_pain"], "نقطة الألم"))
+    if prev and vix:
+        lv += [(prev + em, "حد الحركة المتوقعة"), (prev - em, "حد الحركة المتوقعة")]
+    lv = sorted((p_, t) for p_, t in lv if p_ and abs(p_ - S) / S <= 0.011)
+    merged = []                       # ندمج المستويات المتقاربة في مستوى واحد
+    for p_, t in lv:
+        if merged and abs(p_ - merged[-1][0]) / S <= 0.0012:
+            merged[-1] = ((merged[-1][0] + p_) / 2, merged[-1][1] + ([t] if t not in merged[-1][1] else []))
+        else:
+            merged.append((p_, [t]))
+    res = [x for x in merged if x[0] > S * 1.0004][:3]
+    sup = [x for x in merged if x[0] < S * 0.9996][::-1][:3]
+    if not res:
+        res = [(S + 0.5 * em, ["حركة متوقعة"])]
+    if not sup:
+        sup = [(S - 0.5 * em, ["حركة متوقعة"])]
+    R1 = res[0][0]
+    R2 = res[1][0] if len(res) > 1 else R1 + 0.35 * em
+    S1 = sup[0][0]
+    S2 = sup[1][0] if len(sup) > 1 else S1 - 0.35 * em
+    d = bull - bear
+    bias = "CALL" if d >= 2 else ("PUT" if d <= -2 else None)
+    scen = [
+        {"side": "CALL", "txt": f"إغلاق شمعة 5د فوق <b>{R1:,.0f}</b>", "tg": [R2]},
+        {"side": "PUT", "txt": f"رفض عند <b>{R1:,.0f}</b> (شمعة 5د حمراء تغلق تحته)", "tg": [S1, S2]},
+        {"side": "CALL", "txt": f"ارتداد من <b>{S1:,.0f}</b> (شمعة 5د خضراء تغلق فوقه)", "tg": [R1]},
+        {"side": "PUT", "txt": f"إغلاق شمعة 5د تحت <b>{S1:,.0f}</b>", "tg": [S2]},
+    ]
+    if bias:
+        scen.sort(key=lambda x: x["side"] != bias)   # السيناريوهات الموافقة لميل البوت أولاً
+    return {"res": res, "sup": sup, "scen": scen, "bias": bias, "has_orb": bool(c.get("orb")), "d": d}
+
+
+def plan_message(a, plan, update=False):
+    c = a["c"]
+    bias = {"CALL": "صعود 🟢", "PUT": "هبوط 🔴", None: "محايد ⚪"}[plan["bias"]]
+    L = [f"🏛️ <b>SPX — خطة اليوم</b>{' (تحديث: اكتمل نطاق أول 30 دقيقة)' if update else ''}",
+         f"📍 {c['S']:,.1f} | 🧭 الميل: <b>{bias}</b> (صعود {a['bull']:.1f} / هبوط {a['bear']:.1f})", LINE]
+
+    def fmt(lst):
+        return " • ".join(f"<b>{p_:,.0f}</b> ({esc(' + '.join(t[:2]))})" for p_, t in lst)
+    L.append(f"🧱 مقاومة: {fmt(plan['res'])}")
+    L.append(f"🛡️ دعم: {fmt(plan['sup'])}")
+    if not plan["has_orb"]:
+        L.append("⏳ نطاق أول 30 دقيقة لم يكتمل بعد، وسأرسل تحديثاً عند اكتماله.")
+    L.append("")
+    for sc in plan["scen"]:
+        call = sc["side"] == "CALL"
+        tag = ""
+        if plan["bias"]:
+            tag = " 🔥 يوافق ميل البوت" if sc["side"] == plan["bias"] else " ⚠️ عكس ميل البوت"
+        tg = " ثم ".join(f"{x:,.0f}" for x in sc["tg"])
+        L.append(f"{'🟢 CALL' if call else '🔴 PUT'} | {sc['txt']} ← هدف <b>{tg}</b>{tag}")
+    L += ["", "📡 عند توفر إشارة أرسل لك العقد (السترايك والسعر والكمية) مع مستويات المؤشر.",
+          "⚠️ <i>المستويات وشروطها قواعد ثابتة لم تُختبر تاريخياً، والبيانات متأخرة"
+          f" ~{c['age']:.0f} دقيقة. الشرط يُراقَب على الشارت الحي، والبوت يفحص كل نصف ساعة فقط.</i>",
+          f"🕒 {now_ny().astimezone(RY).strftime('%H:%M')} الرياض | SPX إصدار 11"]
+    return "\n".join(L)
+
+
 # ====================== الرسائل ======================
 def signal_message(a):
     c, side, S = a["c"], a["side"], a["c"]["S"]
@@ -710,6 +840,19 @@ def signal_message(a):
         L.append(f"{tier(k['score'])}{'🔥' if k.get('flow', 0) >= 1 else ''} <b>{k.get('sym', SYMBOL).lstrip('^')}</b> "
                  f"Strike <b>{k['strike']:,.0f}</b> | "
                  f"💵 <b>${k['cost']:,.0f}</b> | يحتاج {'+' if call else '-'}{need:.2f}% | احتمال ~{k['prob'] * 100:.0f}%")
+    k0 = a["contracts"][0]
+    q, per = qty_for(k0["cost"])
+    L += ["", f"🧮 الكمية: <b>{q}</b> عقد | الخسارة عند الوقف ≈ ${q * per:,.0f} | رأس المال ≈ ${q * k0['cost']:,.0f}"]
+    if per > RISK_BUDGET_USD:
+        L.append(f"⚠️ حتى عقد واحد يتجاوز ميزانية مخاطرتك (${RISK_BUDGET_USD}).")
+    lv = index_levels(k0, a["side"])
+    if lv:
+        sy = k0.get("sym", SYMBOL).lstrip("^")
+        f = (lambda x: f"{x:,.2f}") if sy == "SPY" else (lambda x: f"{x:,.0f}")
+        L.append(f"📍 {sy}: ✅ هدف ≈ <b>{f(lv[0])}</b> | 🛑 وقف ≈ <b>{f(lv[1])}</b> (تقدير بعد {HOLD_MIN} دقيقة)")
+        sp0 = k0.get("spot", S)
+        if max(abs(lv[0] - sp0), abs(lv[1] - sp0)) / sp0 < 0.0012:
+            L.append("⚠️ الهدف والوقف قريبان جداً (أقل من 0.12%): ضوضاء الشارت العادية قد تضرب الوقف قبل الهدف.")
     if ALT_SYMBOL and any(k.get("sym") == ALT_SYMBOL for k in a["contracts"]):
         L += ["", f"⚠️ {ALT_SYMBOL}: أغلق العقد قبل نهاية الجلسة، فقد يتحول إلى أسهم إن بقي رابحاً عند الانتهاء."]
     L += ["", f"✅ +{TAKE_PROFIT * 100:.0f}%  🛑 -{STOP_LOSS * 100:.0f}%  ⏰ لا دخول بعد {ry_time(*NO_NEW_ENTRY)}",
@@ -717,7 +860,7 @@ def signal_message(a):
     if c["age"] >= 5:
         L.append(f"⏱️ البيانات متأخرة ~{c['age']:.0f} دقيقة، تحقق من السعر الحي.")
     L.append("⚠️ <i>تعليمي وليست توصية. أقصى خسارة هي سعر العقد.</i>")
-    L.append(f"🕒 {now_ny().astimezone(RY).strftime('%H:%M')} الرياض | SPX إصدار 10")
+    L.append(f"🕒 {now_ny().astimezone(RY).strftime('%H:%M')} الرياض | SPX إصدار 11")
     return "\n".join(L)
 
 
@@ -738,7 +881,7 @@ def summary_message(state):
         for r, cnt in sorted(rc.items(), key=lambda x: -x[1])[:3]:
             L.append(f"• {esc(r)} ({cnt} مرة)")
     L += ["", "💡 لا إشارة = لا صفقة، والانتظار قرار سليم.",
-          f"🕒 {now_ny().astimezone(RY).strftime('%H:%M')} الرياض | SPX إصدار 10"]
+          f"🕒 {now_ny().astimezone(RY).strftime('%H:%M')} الرياض | SPX إصدار 11"]
     return "\n".join(L)
 
 
@@ -834,6 +977,7 @@ def run_once(force=False):
     if force:
         send_telegram(signal_message(a) if has_signal else no_signal_message(a))
         send_telegram(details_message(a, log_line, has_signal))
+        send_telegram(plan_message(a, build_plan(a["c"], a["bull"], a["bear"])))
         return
 
     state["runs"] = state.get("runs", 0) + 1
@@ -863,6 +1007,11 @@ def run_once(force=False):
         state.update(date=today_s, report_sent=True)
     else:
         print("لا إشارة جديدة، لا رسالة.")
+    plan = build_plan(a["c"], a["bull"], a["bear"])
+    if (n.hour, n.minute) < NO_NEW_ENTRY and (not state.get("plan_sent") or (plan["has_orb"] and not state.get("plan_orb"))):
+        send_telegram(plan_message(a, plan, update=bool(state.get("plan_sent"))))
+        state["plan_sent"] = True
+        state["plan_orb"] = state.get("plan_orb", False) or plan["has_orb"]
     if (n.hour, n.minute) >= NO_NEW_ENTRY and not state.get("summary_sent") and state.get("signals", 0) == 0:
         send_telegram(summary_message(state))   # ملخص نهاية الجلسة عند عدم وجود أي إشارة
         state["summary_sent"] = True
