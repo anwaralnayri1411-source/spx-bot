@@ -156,6 +156,38 @@
     "stop": "2026-10-07T09:55-04:00",
     "chance": "2026-10-07T09:55-04:00"
    }
+  },
+  {
+   "id": "NVDA:CALL:2026-10-12:240",
+   "ticker": "NVDA",
+   "side": "CALL",
+   "exp": "2026-10-12",
+   "strike": 240.0,
+   "entry": 1.89,
+   "time": "2026-10-07T10:38-04:00",
+   "entry_spot": 237.97,
+   "entry_spy": 774.41,
+   "strength": 8.0,
+   "earn": "2026-11-17",
+   "status": "open",
+   "peak": 0.0,
+   "alerts": {}
+  },
+  {
+   "id": "AAPL:CALL:2026-10-12:340",
+   "ticker": "AAPL",
+   "side": "CALL",
+   "exp": "2026-10-12",
+   "strike": 340.0,
+   "entry": 1.73,
+   "time": "2026-10-07T10:38-04:00",
+   "entry_spot": 335.4,
+   "entry_spy": 774.41,
+   "strength": 7.8,
+   "earn": "2026-11-02",
+   "status": "open",
+   "peak": 0.0,
+   "alerts": {}
   }
  ],
  "summary_date": "2026-10-06"
