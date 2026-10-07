@@ -40,6 +40,7 @@ REPEAT_MINUTES = 90         # لا نكرر نفس الاتجاه قبل هذه 
 RISK_BUDGET_USD = 150       # أقصى خسارة تقبلها في الصفقة الواحدة عند الوقف (عدّلها حسب حسابك)
 MAX_QTY = 5                 # سقف عدد العقود المقترح
 HOLD_MIN = 30               # افتراض مدة الاحتفاظ بالعقد لحساب مستوى هدف المؤشر (دقيقة)
+SAR_RATE = 3.75             # سعر الريال مقابل الدولار (مربوط)
 WINDOW_START = (9, 45)      # نافذة التشغيل بتوقيت نيويورك
 WINDOW_END = (16, 0)
 NO_NEW_ENTRY = (15, 0)      # لا دخول جديد بعد هذا الوقت
@@ -821,46 +822,57 @@ def plan_message(a, plan, update=False):
     L += ["", "📡 عند توفر إشارة أرسل لك العقد (السترايك والسعر والكمية) مع مستويات المؤشر.",
           "⚠️ <i>المستويات وشروطها قواعد ثابتة لم تُختبر تاريخياً، والبيانات متأخرة"
           f" ~{c['age']:.0f} دقيقة. الشرط يُراقَب على الشارت الحي، والبوت يفحص كل نصف ساعة فقط.</i>",
-          f"🕒 {now_ny().astimezone(RY).strftime('%H:%M')} الرياض | SPX إصدار 11"]
+          f"🕒 {now_ny().astimezone(RY).strftime('%H:%M')} الرياض | SPX إصدار 12"]
     return "\n".join(L)
 
 
 # ====================== الرسائل ======================
+def root_sym(k):
+    """جذر العقد كما يظهر عند الوسيط: SPXW لعقود SPX اليومية، وSPY كما هو."""
+    sy = k.get("sym", SYMBOL).lstrip("^")
+    return "SPXW" if sy == "SPX" else sy
+
+
 def signal_message(a):
     c, side, S = a["c"], a["side"], a["c"]["S"]
     call = side == "CALL"
     dot = "🟢" if call else "🔴"
     word = "CALL" if call else "PUT"
-    when = "اليوم نفسه" if not a["is_test"] else f"{a['exp']} (تجريبي، السوق مغلق)"
-    L = [f"🏛️ <b>SPX — المؤشر</b> | {when}",
-         f"{dot} <b>{word}</b> | 📍 {S:,.1f} | ⭐ {a['strength']:.0f}/10", ""]
-    for k in a["contracts"]:
-        sp = k.get("spot", S)
-        need = abs(k["be"] - sp) / sp * 100
-        L.append(f"{tier(k['score'])}{'🔥' if k.get('flow', 0) >= 1 else ''} <b>{k.get('sym', SYMBOL).lstrip('^')}</b> "
-                 f"Strike <b>{k['strike']:,.0f}</b> | "
-                 f"💵 <b>${k['cost']:,.0f}</b> | يحتاج {'+' if call else '-'}{need:.2f}% | احتمال ~{k['prob'] * 100:.0f}%")
+    sgn = "+" if call else "-"
+    when = f" | {a['exp']} (تجريبي، السوق مغلق)" if a["is_test"] else ""
     k0 = a["contracts"][0]
     q, per = qty_for(k0["cost"])
-    L += ["", f"🧮 الكمية: <b>{q}</b> عقد | الخسارة عند الوقف ≈ ${q * per:,.0f} | رأس المال ≈ ${q * k0['cost']:,.0f}"]
-    if per > RISK_BUDGET_USD:
-        L.append(f"⚠️ حتى عقد واحد يتجاوز ميزانية مخاطرتك (${RISK_BUDGET_USD}).")
-    lv = index_levels(k0, a["side"])
+    L = [f"🏛️ <b>SPX | {word} {dot}</b> | 📍 {S:,.1f} | ⭐ {a['strength']:.0f}/10{when}"]
+    for i, k in enumerate(a["contracts"]):
+        sp = k.get("spot", S)
+        need = abs(k["be"] - sp) / sp * 100
+        mark = tier(k["score"]) + ("🔥" if k.get("flow", 0) >= 1 else "")
+        if i == 0:
+            L.append(f"{mark} <b>{root_sym(k)} {k['strike']:,.0f} {word}</b> · 💵 <b>${k['cost']:,.0f}</b> "
+                     f"({k['price']:.2f}) ≈ ﷼{k['cost'] * SAR_RATE:,.0f} · ×{q} · يحتاج {sgn}{need:.2f}%")
+        else:
+            L.append(f"{mark} {root_sym(k)} {k['strike']:,.0f} · ${k['cost']:,.0f} · {sgn}{need:.2f}%")
+    tp_p, sl_p = k0["price"] * (1 + TAKE_PROFIT), k0["price"] * (1 - STOP_LOSS)
+    lv = index_levels(k0, side)
+    sy = k0.get("sym", SYMBOL).lstrip("^")
     if lv:
-        sy = k0.get("sym", SYMBOL).lstrip("^")
         f = (lambda x: f"{x:,.2f}") if sy == "SPY" else (lambda x: f"{x:,.0f}")
-        L.append(f"📍 {sy}: ✅ هدف ≈ <b>{f(lv[0])}</b> | 🛑 وقف ≈ <b>{f(lv[1])}</b> (تقدير بعد {HOLD_MIN} دقيقة)")
+        L.append(f"✅ <b>{tp_p:.2f}</b> ({sy} ≈ {f(lv[0])}) | 🛑 <b>{sl_p:.2f}</b> ({sy} ≈ {f(lv[1])})")
         sp0 = k0.get("spot", S)
         if max(abs(lv[0] - sp0), abs(lv[1] - sp0)) / sp0 < 0.0012:
-            L.append("⚠️ الهدف والوقف قريبان جداً (أقل من 0.12%): ضوضاء الشارت العادية قد تضرب الوقف قبل الهدف.")
+            L.append("⚠️ الهدف والوقف قريبان جداً (أقل من 0.12%): ضوضاء الشارت العادية قد تضرب الوقف أولاً.")
+    else:
+        L.append(f"✅ <b>{tp_p:.2f}</b> (+{TAKE_PROFIT * 100:.0f}%) | 🛑 <b>{sl_p:.2f}</b> (-{STOP_LOSS * 100:.0f}%)")
+    L.append(f"💰 الخسارة القصوى عند الوقف ≈ ${q * per:,.0f} (﷼{q * per * SAR_RATE:,.0f}) | رأس المال ≈ ${q * k0['cost']:,.0f}"
+             f" | ⏰ لا دخول بعد {ry_time(*NO_NEW_ENTRY)}")
+    if per > RISK_BUDGET_USD:
+        L.append(f"⚠️ عقد واحد يتجاوز ميزانية مخاطرتك (${RISK_BUDGET_USD}).")
     if ALT_SYMBOL and any(k.get("sym") == ALT_SYMBOL for k in a["contracts"]):
-        L += ["", f"⚠️ {ALT_SYMBOL}: أغلق العقد قبل نهاية الجلسة، فقد يتحول إلى أسهم إن بقي رابحاً عند الانتهاء."]
-    L += ["", f"✅ +{TAKE_PROFIT * 100:.0f}%  🛑 -{STOP_LOSS * 100:.0f}%  ⏰ لا دخول بعد {ry_time(*NO_NEW_ENTRY)}",
-          "🟩 قوي  🟨 متوسط  🟧 مقبول  🔥 طلب عالٍ"]
+        L.append(f"⚠️ {ALT_SYMBOL}: أغلق العقد قبل نهاية الجلسة، فقد يتحول إلى أسهم إن بقي رابحاً عند الانتهاء.")
     if c["age"] >= 5:
         L.append(f"⏱️ البيانات متأخرة ~{c['age']:.0f} دقيقة، تحقق من السعر الحي.")
     L.append("⚠️ <i>تعليمي وليست توصية. أقصى خسارة هي سعر العقد.</i>")
-    L.append(f"🕒 {now_ny().astimezone(RY).strftime('%H:%M')} الرياض | SPX إصدار 11")
+    L.append(f"🕒 {now_ny().astimezone(RY).strftime('%H:%M')} الرياض | SPX إصدار 12")
     return "\n".join(L)
 
 
@@ -881,7 +893,7 @@ def summary_message(state):
         for r, cnt in sorted(rc.items(), key=lambda x: -x[1])[:3]:
             L.append(f"• {esc(r)} ({cnt} مرة)")
     L += ["", "💡 لا إشارة = لا صفقة، والانتظار قرار سليم.",
-          f"🕒 {now_ny().astimezone(RY).strftime('%H:%M')} الرياض | SPX إصدار 11"]
+          f"🕒 {now_ny().astimezone(RY).strftime('%H:%M')} الرياض | SPX إصدار 12"]
     return "\n".join(L)
 
 
@@ -940,6 +952,11 @@ def details_message(a, log_line, has_signal):
     else:
         L.append("📅 لا أحداث كبرى معروفة خلال 7 أيام.")
 
+    if a["contracts"]:
+        L += ["", "🎯 <b>العقود المقترحة (تفصيل)</b>  🟩 قوي  🟨 متوسط  🟧 مقبول  🔥 طلب عالٍ"]
+        for k in a["contracts"]:
+            L.append(f"{tier(k['score'])} {root_sym(k)} {k['strike']:,.0f} | ${k['cost']:,.0f} | تعادل {k['be']:,.1f} | "
+                     f"احتمال نموذجي ~{k['prob'] * 100:.0f}% | دلتا {k['delta']:.2f} | OI {k['oi']:,.0f} | حجم {k['vol']:,.0f}")
     L += ["", "🛠️ <b>إدارة الصفقة (اقتراح)</b>",
           f"• عقد واحد فقط، وأقصى خسارة = سعر العقد",
           f"• جني الربح عند +{TAKE_PROFIT * 100:.0f}%، ووقف الخسارة عند -{STOP_LOSS * 100:.0f}%",

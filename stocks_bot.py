@@ -657,7 +657,8 @@ def alert_block(p, info, alerts):
     kinds = [k for k, _ in alerts]
     top = next(k for k in SEVERITY if k in kinds)
     L = [f"{ALERT_ICON[top]} {pos_header(p)}",
-         f"💵 دخلت ${p['entry'] * 100:,.0f} ← الآن ≈ ${info['val'] * 100:,.0f} (<b>{info['pnl'] * 100:+.0f}%</b>)"]
+         f"💵 دخلت ${p['entry'] * 100:,.0f} ← الآن ≈ ${info['val'] * 100:,.0f} (<b>{info['pnl'] * 100:+.0f}%</b>) | "
+         f"{(info['val'] - p['entry']) * 100 * ob.SAR_RATE:+,.0f}﷼"]
     sl = stock_line(info)
     if sl:
         L.append(sl)
@@ -676,7 +677,7 @@ def alert_block(p, info, alerts):
 
 def footer_line():
     return ("⚠️ <i>تعليمي وليست توصية. البيانات متأخرة ~15 دقيقة، وقد يختلف سعرك الحي.</i>\n"
-            f"🕒 {ob.now_ny().astimezone(ob.RY).strftime('%H:%M')} الرياض | إصدار 7")
+            f"🕒 {ob.now_ny().astimezone(ob.RY).strftime('%H:%M')} الرياض | إصدار 8")
 
 
 def status_message(rows, n):
@@ -689,7 +690,7 @@ def status_message(rows, n):
         L.append(f"{ico} <b>{ob.esc(p['ticker'])} {p['side']}</b> {p['strike']:,.1f} | {date_ar(p['exp'])}: "
                  f"${p['entry'] * 100:,.0f} ← ${info['val'] * 100:,.0f} (<b>{pn * 100:+.0f}%</b>){tag}")
         net += (info["val"] - p["entry"]) * 100
-    L += ["", f"المجموع على الورق: <b>{net:+,.0f}$</b> (لو بعت كلها الآن بسعر الوسط)", "", footer_line()]
+    L += ["", f"المجموع على الورق: <b>{net:+,.0f}$</b> ({net * ob.SAR_RATE:+,.0f}﷼) لو بعت كلها الآن بسعر الوسط", "", footer_line()]
     return "\n".join(L)
 
 
@@ -890,7 +891,7 @@ def idea_line(i):
     return "\n".join([
         f"{'🟢' if call else '🔴'} <b>{ob.esc(i['ticker'])}</b> — <b>{'CALL' if call else 'PUT'}</b> | ⭐ {i['strength']:.1f}{flags}",
         f"🎯 Strike <b>{k['strike']:,.1f}</b> | 📅 <b>{date_ar(k['exp'])}</b>",
-        f"💵 <b>${k['cost']:,.0f}</b> | يحتاج {'+' if call else '-'}{k['need'] * 100:.1f}% | {mark}",
+        f"💵 <b>${k['cost']:,.0f}</b> ({k['price']:.2f}) ≈ ﷼{k['cost'] * ob.SAR_RATE:,.0f} | يحتاج {'+' if call else '-'}{k['need'] * 100:.1f}% | {mark}",
         f"✅ +${k['cost'] * TAKE_PROFIT:,.0f}  🛑 -${k['cost'] * STOP_LOSS:,.0f}",
     ])
 
@@ -903,7 +904,7 @@ def signal_message(a, ideas):
     L += ["🟩 قوي  🟨 متوسط  🟧 مقبول  🔥 طلب عالٍ  🚨 أرباح",
           "📡 سأتابع هذه العقود وأنبّهك عند الوقف أو الهدف أو ضعف الفكرة.",
           "⚠️ <i>تعليمي وليست توصية. تحقق من السعر الحي، وأقصى خسارة هي سعر العقد.</i>",
-          f"🕒 {ob.now_ny().astimezone(ob.RY).strftime('%H:%M')} الرياض | إصدار 7"]
+          f"🕒 {ob.now_ny().astimezone(ob.RY).strftime('%H:%M')} الرياض | إصدار 8"]
     return "\n".join(L)
 
 
