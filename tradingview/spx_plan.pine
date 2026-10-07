@@ -1,0 +1,373 @@
+//@version=5
+// ============================================================================
+// SPX Plan | خطة SPX  (تعليمي وليس توصية)
+// يعمل على فريم 5 دقائق لمؤشر SPX (مثل SP:SPX أو SPX500). أضفه كمؤشر ثم أنشئ تنبيهاً:
+//   Condition = هذا المؤشر | Any alert() function call
+// ما يفعله: يحدد المستويات، يحسب ميل الاتجاه بنفس منطق البوت، ويعطي إشارة دخول
+// عند تحقق شرط (اختراق / رفض / ارتداد / كسر) بالاتجاه الموافق للميل، ثم يقترح
+// السترايك والكمية ومستوى الهدف والوقف على المؤشر، ويتابع صفقة افتراضية حتى الخروج.
+// تنبيه صريح: أسعار العقود هنا تقدير نظري (بلاك-شولز بتذبذب = VIX × معامل). سعر الدفتر
+// الحقيقي يختلف (انحراف السعر والتذبذب اللحظي)، فتحقق منه قبل أي دخول.
+// ============================================================================
+indicator("SPX Plan | خطة SPX", shorttitle="SPX Plan", overlay=true, max_labels_count=300, max_lines_count=100)
+
+if not timeframe.isintraday
+    runtime.error("استخدم فريماً داخل اليوم (يُفضَّل 5 دقائق).")
+
+// ------------------------------- المدخلات -----------------------------------
+gS = "الإشارات"
+minEdge = input.float(3.0, "أقل فرق بين نقاط الصعود والهبوط", minval=0.5, step=0.5, group=gS)
+allowCounter = input.bool(false, "السماح بإشارات عكس الميل", group=gS)
+noEntryH = input.int(15, "لا دخول بعد (ساعة نيويورك)", minval=10, maxval=16, group=gS)
+noEntryM = input.int(0, "لا دخول بعد (دقيقة)", minval=0, maxval=59, group=gS)
+cooldownMin = input.int(30, "أقل مدة بين إشارتين (دقيقة)", minval=5, group=gS)
+tolPct = input.float(0.02, "هامش لمس المستوى %", minval=0.0, step=0.01, group=gS)
+
+gO = "نموذج العقد"
+ivMult = input.float(1.0, "معامل التذبذب (IV = VIX × المعامل)", minval=0.3, step=0.05, group=gO)
+budMin = input.float(100.0, "أقل سعر للعقد $", minval=10.0, group=gO)
+budMax = input.float(300.0, "أعلى سعر للعقد $", minval=20.0, group=gO)
+strikeStep = input.float(5.0, "خطوة السترايك", minval=1.0, group=gO)
+riskUsd = input.float(150.0, "ميزانية المخاطرة عند الوقف $", minval=10.0, group=gO)
+maxQty = input.int(5, "سقف عدد العقود", minval=1, group=gO)
+tpPct = input.float(50.0, "جني الربح % من سعر العقد", minval=5.0, group=gO)
+slPct = input.float(40.0, "وقف الخسارة % من سعر العقد", minval=5.0, maxval=95.0, group=gO)
+holdMin = input.int(30, "افتراض مدة الاحتفاظ لحساب الهدف (دقيقة)", minval=5, group=gO)
+
+gD = "مصادر البيانات"
+spySym = input.string("AMEX:SPY", "رمز SPY (لحساب VWAP)", group=gD)
+vixSym = input.string("CBOE:VIX", "رمز VIX", group=gD)
+esSym = input.string("CME_MINI:ES1!", "رمز عقود SPX الآجلة", group=gD)
+showTable = input.bool(true, "إظهار اللوحة", group=gD)
+
+// ------------------------------- دوال مساعدة --------------------------------
+f_ncdf(x) =>
+    t = 1.0 / (1.0 + 0.2316419 * math.abs(x))
+    d = 0.3989423 * math.exp(-x * x / 2.0)
+    p = d * t * (0.3193815 + t * (-0.3565638 + t * (1.781478 + t * (-1.821256 + t * 1.330274))))
+    x > 0 ? 1.0 - p : p
+
+f_bs(S, K, T, iv, isCall) =>
+    float res = na
+    if T > 0 and iv > 0 and S > 0 and K > 0
+        d1 = (math.log(S / K) + (0.04 + 0.5 * iv * iv) * T) / (iv * math.sqrt(T))
+        d2 = d1 - iv * math.sqrt(T)
+        disc = math.exp(-0.04 * T)
+        res := isCall ? S * f_ncdf(d1) - K * disc * f_ncdf(d2) : K * disc * f_ncdf(-d2) - S * f_ncdf(-d1)
+    res
+
+f_delta(S, K, T, iv, isCall) =>
+    float res = na
+    if T > 0 and iv > 0 and S > 0 and K > 0
+        d1 = (math.log(S / K) + (0.04 + 0.5 * iv * iv) * T) / (iv * math.sqrt(T))
+        res := isCall ? f_ncdf(d1) : f_ncdf(-d1)
+    res
+
+// أقرب مستوى فوق المرجع بفارق لا يقل عن gap
+f_above(arr, ref, gap) =>
+    float best = na
+    for i = 0 to array.size(arr) - 1
+        v = array.get(arr, i)
+        if not na(v) and v > ref + gap
+            if na(best) or v < best
+                best := v
+    best
+
+// أقرب مستوى تحت المرجع بفارق لا يقل عن gap
+f_below(arr, ref, gap) =>
+    float best = na
+    for i = 0 to array.size(arr) - 1
+        v = array.get(arr, i)
+        if not na(v) and v < ref - gap
+            if na(best) or v > best
+                best := v
+    best
+
+// أول سترايك OTM (من الأقرب للسعر إلى الأبعد) يقع سعره بين الحدين = أعلى دلتا ضمن الميزانية
+f_pick(S, T, iv, isCall, step, pMin, pMax) =>
+    float bestK = na
+    float bestP = na
+    base = math.round(S / step) * step
+    for i = 0 to 60
+        k = isCall ? base + i * step : base - i * step
+        otm = isCall ? k > S : k < S
+        if otm and na(bestK)
+            p = f_bs(S, k, T, iv, isCall) * 100
+            if not na(p) and p >= pMin and p <= pMax
+                bestK := k
+                bestP := p
+    [bestK, bestP]
+
+// مستوى الأصل الذي يعطي سعر العقد = target (تقسيم ثنائي)
+f_solve(K, T, iv, isCall, target, lo0, hi0) =>
+    sg = isCall ? 1.0 : -1.0
+    float lo = lo0
+    float hi = hi0
+    float res = na
+    glo = sg * (f_bs(lo, K, T, iv, isCall) - target)
+    ghi = sg * (f_bs(hi, K, T, iv, isCall) - target)
+    if glo < 0 and ghi > 0
+        for i = 0 to 39
+            mid = (lo + hi) / 2
+            gm = sg * (f_bs(mid, K, T, iv, isCall) - target)
+            if gm < 0
+                lo := mid
+            else
+                hi := mid
+        res := (lo + hi) / 2
+    res
+
+// ------------------------------- الوقت والجلسة -------------------------------
+NYTZ = "America/New_York"
+inSess = not na(time(timeframe.period, "0930-1600:23456", NYTZ))
+newSess = inSess and not inSess[1]
+tfMin = timeframe.in_seconds(timeframe.period) / 60.0
+hmOpen = hour(time, NYTZ) * 60 + minute(time, NYTZ)
+hmClose = hmOpen + tfMin
+minsOpen = hmOpen - 570
+minsToClose = 960 - hmClose
+noEntryMin = noEntryH * 60 + noEntryM
+
+// ------------------------------- البيانات ------------------------------------
+pdH = request.security(syminfo.tickerid, "D", high[1], lookahead=barmerge.lookahead_on)
+pdL = request.security(syminfo.tickerid, "D", low[1], lookahead=barmerge.lookahead_on)
+pdC = request.security(syminfo.tickerid, "D", close[1], lookahead=barmerge.lookahead_on)
+d20 = request.security(syminfo.tickerid, "D", ta.sma(close, 20)[1], lookahead=barmerge.lookahead_on)
+d50 = request.security(syminfo.tickerid, "D", ta.sma(close, 50)[1], lookahead=barmerge.lookahead_on)
+vix = request.security(vixSym, timeframe.period, close)
+spyClose = request.security(spySym, timeframe.period, close)
+spyVwap = request.security(spySym, timeframe.period, ta.vwap(hlc3))
+esNow = request.security(esSym, timeframe.period, close)
+esPrev = request.security(esSym, "D", close[1], lookahead=barmerge.lookahead_on)
+
+vwapSpx = not na(spyVwap) and not na(spyClose) and spyClose > 0 ? spyVwap * close / spyClose : na
+ema9 = ta.ema(close, 9)
+ema21 = ta.ema(close, 21)
+n30 = math.max(1, math.round(30 / tfMin))
+r30 = close / close[n30] - 1
+esChg = not na(esNow) and not na(esPrev) and esPrev > 0 ? esNow / esPrev - 1 : na
+
+// نطاق أول 30 دقيقة، VIX بداية اليوم، سعر الافتتاح
+var float orH = na
+var float orL = na
+var float vixStart = na
+var float dayOpen = na
+if newSess
+    orH := high
+    orL := low
+    vixStart := vix
+    dayOpen := open
+else if inSess and minsOpen < 30
+    orH := math.max(orH, high)
+    orL := math.min(orL, low)
+orDone = inSess and minsOpen >= 30 and not na(orH)
+vixDay = not na(vix) and not na(vixStart) and vixStart > 0 ? vix / vixStart - 1 : na
+gap = not na(dayOpen) and not na(pdC) and pdC > 0 ? dayOpen / pdC - 1 : na
+
+// ------------------------------- نقاط الاتجاه (نفس منطق البوت) ----------------
+float bullP = 0.0
+float bearP = 0.0
+if not na(d20) and not na(d50)
+    if close > d50 and d20 > d50
+        bullP += 1
+    else if close < d50 and d20 < d50
+        bearP += 1
+vwUp = na(vwapSpx) ? 0 : (close > vwapSpx ? 1 : -1)
+emUp = ema9 > ema21 ? 1 : -1
+if vwUp + emUp == 2
+    bullP += 2
+else if vwUp + emUp == -2
+    bearP += 2
+if r30 > 0.001
+    bullP += 1
+else if r30 < -0.001
+    bearP += 1
+if not na(gap)
+    if gap >= 0.004
+        bullP += 0.5
+    else if gap <= -0.004
+        bearP += 0.5
+esW = hmOpen < 10 * 60 + 30 ? 1.0 : 0.5
+if not na(esChg)
+    if esChg >= 0.004
+        bullP += esW
+    else if esChg <= -0.004
+        bearP += esW
+if orDone
+    if close > orH
+        bullP += 1.5
+    else if close < orL
+        bearP += 1.5
+if not na(vixDay)
+    if vixDay <= -0.03
+        bullP += 1
+    else if vixDay >= 0.03
+        bearP += 1
+if not na(pdH) and not na(pdL)
+    if close > pdH
+        bullP += 1
+    else if close < pdL
+        bearP += 1
+edge = bullP - bearP
+strong = math.abs(edge) >= minEdge
+strength = math.min(10.0, math.abs(edge) * 1.5)
+
+// ------------------------------- المستويات -----------------------------------
+ivNow = na(vix) ? na : vix / 100.0 * ivMult
+em = not na(pdC) and not na(vix) ? pdC * (vix / 100.0) / math.sqrt(252.0) : close * 0.007
+rUp = math.floor(close[1] / 50.0) * 50.0 + 50.0
+rDn = math.floor(close[1] / 50.0) * 50.0
+lv = array.from(pdH, pdL, orDone ? orH : na, orDone ? orL : na, vwapSpx, pdC + em, pdC - em, rUp, rDn)
+refP = close[1]
+R1p = f_above(lv, refP, refP * 0.0004)
+S1p = f_below(lv, refP, refP * 0.0004)
+R2p = f_above(lv, na(R1p) ? refP : R1p, refP * 0.0012)
+S2p = f_below(lv, na(S1p) ? refP : S1p, refP * 0.0012)
+
+// ------------------------------- شروط الدخول ---------------------------------
+tol = tolPct / 100.0
+breakoutUp = not na(R1p) and close > R1p and close[1] <= R1p
+bounceUp = not na(S1p) and low <= S1p * (1 + tol) and close > S1p and close > open
+rejectDn = not na(R1p) and high >= R1p * (1 - tol) and close < R1p and close < open
+breakdownDn = not na(S1p) and close < S1p and close[1] >= S1p
+
+var int posSide = 0
+var float posK = na
+var float posPrem = na
+var int posQty = 0
+var int posBar = na
+var float posTpIdx = na
+var float posSlIdx = na
+var int lastSigBar = na
+var int trades = 0
+var int wins = 0
+var float netUsd = 0.0
+
+cooldownBars = math.max(1, math.round(cooldownMin / tfMin))
+cooldownOk = na(lastSigBar) or bar_index - lastSigBar >= cooldownBars
+canEnter = inSess and minsOpen >= 15 and hmOpen < noEntryMin and posSide == 0 and cooldownOk and not na(ivNow) and not na(close[1])
+bullOk = (edge > 0 and strong) or allowCounter
+bearOk = (edge < 0 and strong) or allowCounter
+sigCall = canEnter and (breakoutUp or bounceUp) and bullOk
+sigPut = canEnter and (rejectDn or breakdownDn) and bearOk and not sigCall
+
+// ------------------------------- فتح الصفقة الافتراضية -----------------------
+if sigCall or sigPut
+    isC = sigCall
+    Tn = math.max(minsToClose, 3.0) / 525600.0
+    [kk, pp] = f_pick(close, Tn, ivNow, isC, strikeStep, budMin, budMax)
+    kind = sigCall ? (breakoutUp ? "اختراق" : "ارتداد") : (rejectDn ? "رفض" : "كسر")
+    float tgtIdx = na
+    if breakoutUp and sigCall
+        tgtIdx := na(R2p) ? close + 0.35 * em : R2p
+    else if bounceUp and sigCall
+        tgtIdx := na(R1p) ? close + 0.35 * em : R1p
+    else if rejectDn and sigPut
+        tgtIdx := na(S1p) ? close - 0.35 * em : S1p
+    else
+        tgtIdx := na(S2p) ? close - 0.35 * em : S2p
+    if na(kk)
+        label.new(bar_index, isC ? low : high, "لا سترايك ضمن الميزانية", style=isC ? label.style_label_up : label.style_label_down, color=color.gray, textcolor=color.white, size=size.small)
+    else
+        premSh = pp / 100.0
+        perLoss = pp * slPct / 100.0
+        q = math.max(1, math.min(maxQty, math.floor(riskUsd / perLoss)))
+        T2 = math.max(Tn - holdMin / 525600.0, 3.0 / 525600.0)
+        tpIdx = f_solve(kk, T2, ivNow, isC, premSh * (1 + tpPct / 100.0), isC ? close : close * 0.95, isC ? close * 1.05 : close)
+        slIdx = f_solve(kk, Tn, ivNow, isC, premSh * (1 - slPct / 100.0), isC ? close * 0.95 : close, isC ? close : close * 1.05)
+        dlt = f_delta(close, kk, Tn, ivNow, isC)
+        posSide := isC ? 1 : -1
+        posK := kk
+        posPrem := premSh
+        posQty := int(q)
+        posBar := bar_index
+        posTpIdx := tpIdx
+        posSlIdx := slIdx
+        lastSigBar := bar_index
+        txt = (isC ? "CALL ▲ " : "PUT ▼ ") + kind + " | Strike " + str.tostring(kk, "#") + " ≈ $" + str.tostring(pp, "#") + " ×" + str.tostring(q) + "\n" + "هدف المؤشر " + (na(tpIdx) ? "؟" : str.tostring(tpIdx, "#.0")) + " | وقف " + (na(slIdx) ? "؟" : str.tostring(slIdx, "#.0")) + "\n" + "دلتا " + str.tostring(dlt, "#.00") + " | قوة " + str.tostring(strength, "#.0") + "/10 | هدف الخطة " + str.tostring(tgtIdx, "#")
+        label.new(bar_index, isC ? low : high, txt, style=isC ? label.style_label_up : label.style_label_down, color=isC ? color.new(color.green, 15) : color.new(color.red, 15), textcolor=color.white, size=size.small)
+        alert("SPX " + (isC ? "CALL" : "PUT") + " (" + kind + ") | السعر " + str.tostring(close, "#.0") + " | Strike " + str.tostring(kk, "#") + " ≈ $" + str.tostring(pp, "#") + " ×" + str.tostring(q) + " | هدف المؤشر " + (na(tpIdx) ? "؟" : str.tostring(tpIdx, "#.0")) + " | وقف " + (na(slIdx) ? "؟" : str.tostring(slIdx, "#.0")) + " | السعر تقدير نظري، تحقق من الدفتر", alert.freq_once_per_bar_close)
+
+// ------------------------------- متابعة الصفقة والخروج -----------------------
+float posPnl = na
+if posSide != 0 and bar_index > posBar
+    isCp = posSide == 1
+    Tx = math.max(minsToClose, 3.0) / 525600.0
+    valFav = f_bs(isCp ? high : low, posK, Tx, ivNow, isCp)
+    valAdv = f_bs(isCp ? low : high, posK, Tx, ivNow, isCp)
+    valEnd = f_bs(close, posK, Tx, ivNow, isCp)
+    posPnl := valEnd / posPrem - 1
+    string why = ""
+    float exitVal = na
+    if not na(valAdv) and valAdv <= posPrem * (1 - slPct / 100.0)
+        why := "وقف"
+        exitVal := posPrem * (1 - slPct / 100.0)
+    else if not na(valFav) and valFav >= posPrem * (1 + tpPct / 100.0)
+        why := "هدف"
+        exitVal := posPrem * (1 + tpPct / 100.0)
+    else if hmClose >= 955 or not inSess
+        why := "نهاية الجلسة"
+        exitVal := na(valEnd) ? posPrem : valEnd
+    if why != ""
+        pl = (exitVal - posPrem) * 100 * posQty
+        trades += 1
+        wins += pl > 0 ? 1 : 0
+        netUsd += pl
+        label.new(bar_index, close, "خروج: " + why + " | " + str.tostring(pl, "#") + "$", style=label.style_label_left, color=pl > 0 ? color.new(color.teal, 10) : color.new(color.maroon, 10), textcolor=color.white, size=size.small)
+        alert("SPX خروج (" + why + ") | ربح/خسارة نظرية " + str.tostring(pl, "#") + "$ | السعر " + str.tostring(close, "#.0"), alert.freq_once_per_bar_close)
+        posSide := 0
+        posBar := na
+
+// ------------------------------- الرسم ---------------------------------------
+plot(pdH, "أعلى أمس", color=color.new(color.orange, 30), style=plot.style_linebr)
+plot(pdL, "أدنى أمس", color=color.new(color.orange, 30), style=plot.style_linebr)
+plot(orDone ? orH : na, "أعلى أول 30د", color=color.new(color.aqua, 30), style=plot.style_linebr)
+plot(orDone ? orL : na, "أدنى أول 30د", color=color.new(color.aqua, 30), style=plot.style_linebr)
+plot(vwapSpx, "VWAP", color=color.new(color.yellow, 20), linewidth=2)
+
+var line lnR1 = na
+var line lnR2 = na
+var line lnS1 = na
+var line lnS2 = na
+if barstate.islast
+    line.delete(lnR1)
+    line.delete(lnR2)
+    line.delete(lnS1)
+    line.delete(lnS2)
+    // المستويات الحالية بالنسبة لآخر إغلاق
+    r1 = f_above(lv, close, close * 0.0004)
+    s1 = f_below(lv, close, close * 0.0004)
+    r2 = f_above(lv, na(r1) ? close : r1, close * 0.0012)
+    s2 = f_below(lv, na(s1) ? close : s1, close * 0.0012)
+    if not na(r1)
+        lnR1 := line.new(bar_index - 20, r1, bar_index + 5, r1, extend=extend.right, color=color.red, width=2)
+    if not na(r2)
+        lnR2 := line.new(bar_index - 20, r2, bar_index + 5, r2, extend=extend.right, color=color.new(color.red, 55), style=line.style_dashed)
+    if not na(s1)
+        lnS1 := line.new(bar_index - 20, s1, bar_index + 5, s1, extend=extend.right, color=color.green, width=2)
+    if not na(s2)
+        lnS2 := line.new(bar_index - 20, s2, bar_index + 5, s2, extend=extend.right, color=color.new(color.green, 55), style=line.style_dashed)
+
+// ------------------------------- اللوحة --------------------------------------
+var table tb = table.new(position.top_right, 2, 8, bgcolor=color.new(color.black, 20), border_width=1, border_color=color.new(color.gray, 60))
+if barstate.islast and showTable
+    biasTxt = edge >= minEdge ? "صعود 🟢" : (edge <= -minEdge ? "هبوط 🔴" : "محايد ⚪")
+    rr1 = f_above(lv, close, close * 0.0004)
+    ss1 = f_below(lv, close, close * 0.0004)
+    table.cell(tb, 0, 0, "الميل", text_color=color.white, text_size=size.small, text_halign=text.align_left)
+    table.cell(tb, 1, 0, biasTxt + "  " + str.tostring(bullP, "#.0") + " / " + str.tostring(bearP, "#.0"), text_color=color.white, text_size=size.small, text_halign=text.align_left)
+    table.cell(tb, 0, 1, "مقاومة", text_color=color.new(color.red, 0), text_size=size.small, text_halign=text.align_left)
+    table.cell(tb, 1, 1, na(rr1) ? "-" : str.tostring(rr1, "#"), text_color=color.white, text_size=size.small, text_halign=text.align_left)
+    table.cell(tb, 0, 2, "دعم", text_color=color.new(color.green, 0), text_size=size.small, text_halign=text.align_left)
+    table.cell(tb, 1, 2, na(ss1) ? "-" : str.tostring(ss1, "#"), text_color=color.white, text_size=size.small, text_halign=text.align_left)
+    table.cell(tb, 0, 3, "VIX", text_color=color.white, text_size=size.small, text_halign=text.align_left)
+    table.cell(tb, 1, 3, na(vix) ? "غير متاح" : str.tostring(vix, "#.0") + "  ±" + str.tostring(em, "#") + " نقطة/يوم", text_color=color.white, text_size=size.small, text_halign=text.align_left)
+    posTxt = posSide == 0 ? "لا مركز" : ((posSide == 1 ? "CALL " : "PUT ") + str.tostring(posK, "#") + " ×" + str.tostring(posQty) + (na(posPnl) ? "" : "  " + str.tostring(posPnl * 100, "#") + "%"))
+    table.cell(tb, 0, 4, "المركز", text_color=color.white, text_size=size.small, text_halign=text.align_left)
+    table.cell(tb, 1, 4, posTxt, text_color=color.white, text_size=size.small, text_halign=text.align_left)
+    table.cell(tb, 0, 5, "الصفقات", text_color=color.white, text_size=size.small, text_halign=text.align_left)
+    table.cell(tb, 1, 5, str.tostring(trades) + " | رابحة " + (trades > 0 ? str.tostring(wins * 100.0 / trades, "#") + "%" : "-") + " | صافي " + str.tostring(netUsd, "#") + "$", text_color=color.white, text_size=size.small, text_halign=text.align_left)
+    table.cell(tb, 0, 6, "تنبيه", text_color=color.yellow, text_size=size.small, text_halign=text.align_left)
+    table.cell(tb, 1, 6, "الصافي نظري (نموذج) لا سعر دفتر", text_color=color.yellow, text_size=size.small, text_halign=text.align_left)
+    table.cell(tb, 0, 7, "الفريم", text_color=color.white, text_size=size.small, text_halign=text.align_left)
+    table.cell(tb, 1, 7, tfMin == 5 ? "5 دقائق ✔" : "اضبطه على 5 دقائق", text_color=tfMin == 5 ? color.white : color.orange, text_size=size.small, text_halign=text.align_left)
