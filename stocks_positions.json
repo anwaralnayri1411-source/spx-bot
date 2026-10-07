@@ -188,7 +188,7 @@
    "strength": 7.8,
    "earn": "2026-11-02",
    "status": "open",
-   "peak": 0.0,
+   "peak": 0.006,
    "alerts": {}
   },
   {
@@ -220,7 +220,7 @@
    "strength": 8.6,
    "earn": "2026-10-29",
    "status": "open",
-   "peak": 0.0,
+   "peak": 0.061,
    "alerts": {}
   }
  ],
