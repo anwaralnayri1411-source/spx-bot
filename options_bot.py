@@ -730,14 +730,24 @@ def qty_for(cost):
     return max(1, min(MAX_QTY, q)), per_loss
 
 
-def index_levels(k, side):
+def index_levels(k, side, hold_min=None):
     """مستوى الأصل (SPX أو SPY) الذي يعطي هدف العقد (+TAKE_PROFIT بعد HOLD_MIN دقيقة)
     ومستوى وقفه (-STOP_LOSS فوراً). تقدير من نموذج بلاك-شولز بتذبذب ثابت. يرجع (هدف، وقف) أو None."""
     S0, T0 = k.get("spot"), k.get("T")
     if not S0 or not T0 or not k.get("iv"):
         return None
     K, iv, P = k["strike"], k["iv"], k["price"]
-    T2 = max(T0 - HOLD_MIN / (365 * 24 * 60), 5 / (365 * 24 * 60))
+    # التذبذب الضمني المنقول من البيانات قد يكون قديماً في عقود اليوم نفسه، فنعايره على سعر العقد الفعلي
+    lo_i, hi_i = 0.02, 4.0
+    if bs_price(S0, K, T0, hi_i, side) > P > bs_price(S0, K, T0, lo_i, side):
+        for _ in range(60):
+            mid_i = (lo_i + hi_i) / 2
+            if bs_price(S0, K, T0, mid_i, side) > P:
+                hi_i = mid_i
+            else:
+                lo_i = mid_i
+        iv = (lo_i + hi_i) / 2
+    T2 = max(T0 - (hold_min or HOLD_MIN) / (365 * 24 * 60), 5 / (365 * 24 * 60))
     sign = 1 if side == "CALL" else -1
 
     def solve(target, T, lo, hi):
@@ -834,7 +844,7 @@ def plan_message(a, plan, update=False):
     L += ["", "📡 عند توفر إشارة أرسل لك العقد (السترايك والسعر والكمية) مع مستويات المؤشر.",
           "⚠️ <i>المستويات وشروطها قواعد ثابتة لم تُختبر تاريخياً، والبيانات متأخرة"
           f" ~{c['age']:.0f} دقيقة. الشرط يُراقَب على الشارت الحي، والبوت يفحص كل نصف ساعة فقط.</i>",
-          f"🕒 {now_ny().astimezone(RY).strftime('%H:%M')} الرياض | SPX إصدار 12"]
+          f"🕒 {now_ny().astimezone(RY).strftime('%H:%M')} الرياض | SPX إصدار 13"]
     return "\n".join(L)
 
 
@@ -845,46 +855,64 @@ def root_sym(k):
     return "SPXW" if sy == "SPX" else sy
 
 
+def instrument_block(sym, ks, side, S_idx):
+    """كتلة مستقلة لأداة واحدة (SPX أو SPY): العقد، الدخول، الجني، الوقف، الكمية، أقصى خسارة."""
+    call = side == "CALL"
+    word = "CALL" if call else "PUT"
+    sgn = "+" if call else "-"
+    title = "🅰️ <b>SPX المؤشر</b> (تسوية نقدية)" if sym == "SPX" else "🅱️ <b>SPY صندوق ETF</b> (قد يتحول لأسهم)"
+    if not ks:
+        return [f"{title}", "لا عقد مناسب لميزانيتك وسيولتك الآن."]
+    k0 = ks[0]
+    q, per = qty_for(k0["cost"])
+    sp = k0.get("spot", S_idx)
+    need = abs(k0["be"] - sp) / sp * 100
+    mark = tier(k0["score"]) + ("🔥" if k0.get("flow", 0) >= 1 else "")
+    L = [title,
+         f"{mark} <b>{root_sym(k0)} {k0['strike']:,.0f} {word}</b> · 💵 <b>${k0['cost']:,.0f}</b> · ×{q}",
+         f"▶️ دخول: بسعر حتى <b>{k0['price']:.2f}</b> | يحتاج {sgn}{need:.2f}% في {sym} للتعادل"]
+    tp_p, sl_p = k0["price"] * (1 + TAKE_PROFIT), k0["price"] * (1 - STOP_LOSS)
+    lv = index_levels(k0, side)
+    if lv:
+        f = (lambda x: f"{x:,.2f}") if sym == "SPY" else (lambda x: f"{x:,.0f}")
+        L.append(f"✅ جني: <b>{tp_p:.2f}</b> (+{TAKE_PROFIT * 100:.0f}%) عند {sym} ≈ {f(lv[0])}")
+        L.append(f"🛑 وقف: <b>{sl_p:.2f}</b> (-{STOP_LOSS * 100:.0f}%) عند {sym} ≈ {f(lv[1])}")
+        if max(abs(lv[0] - sp), abs(lv[1] - sp)) / sp < 0.0012:
+            L.append("⚠️ الهدف والوقف قريبان جداً (أقل من 0.12%): الضوضاء العادية قد تضرب الوقف أولاً.")
+    else:
+        L.append(f"✅ جني: <b>{tp_p:.2f}</b> (+{TAKE_PROFIT * 100:.0f}%) | 🛑 وقف: <b>{sl_p:.2f}</b> (-{STOP_LOSS * 100:.0f}%)")
+    L.append(f"💰 الخسارة القصوى عند الوقف ≈ ${q * per:,.0f} | رأس المال ≈ ${q * k0['cost']:,.0f}")
+    if per > RISK_BUDGET_USD:
+        L.append(f"⚠️ عقد واحد يتجاوز ميزانية مخاطرتك (${RISK_BUDGET_USD}).")
+    if len(ks) > 1:
+        alts = " | ".join(f"{k['strike']:,.0f} · ${k['cost']:,.0f}" for k in ks[1:])
+        L.append(f"↳ بدائل: {alts}")
+    return L
+
+
 def signal_message(a):
     c, side, S = a["c"], a["side"], a["c"]["S"]
     call = side == "CALL"
     dot = "🟢" if call else "🔴"
     word = "CALL" if call else "PUT"
-    sgn = "+" if call else "-"
     when = f" | {a['exp']} (تجريبي، السوق مغلق)" if a["is_test"] else ""
-    k0 = a["contracts"][0]
-    q, per = qty_for(k0["cost"])
-    L = [f"🏛️ <b>SPX | {word} {dot}</b> | 📍 {S:,.1f} | ⭐ {a['strength']:.0f}/10{when}"]
-    for i, k in enumerate(a["contracts"]):
-        sp = k.get("spot", S)
-        need = abs(k["be"] - sp) / sp * 100
-        mark = tier(k["score"]) + ("🔥" if k.get("flow", 0) >= 1 else "")
-        if i == 0:
-            L.append(f"{mark} <b>{root_sym(k)} {k['strike']:,.0f} {word}</b> · 💵 <b>${k['cost']:,.0f}</b> "
-                     f"({k['price']:.2f}) · ×{q} · يحتاج {sgn}{need:.2f}%")
-        else:
-            L.append(f"{mark} {root_sym(k)} {k['strike']:,.0f} · ${k['cost']:,.0f} · {sgn}{need:.2f}%")
-    tp_p, sl_p = k0["price"] * (1 + TAKE_PROFIT), k0["price"] * (1 - STOP_LOSS)
-    lv = index_levels(k0, side)
-    sy = k0.get("sym", SYMBOL).lstrip("^")
-    if lv:
-        f = (lambda x: f"{x:,.2f}") if sy == "SPY" else (lambda x: f"{x:,.0f}")
-        L.append(f"✅ <b>{tp_p:.2f}</b> ({sy} ≈ {f(lv[0])}) | 🛑 <b>{sl_p:.2f}</b> ({sy} ≈ {f(lv[1])})")
-        sp0 = k0.get("spot", S)
-        if max(abs(lv[0] - sp0), abs(lv[1] - sp0)) / sp0 < 0.0012:
-            L.append("⚠️ الهدف والوقف قريبان جداً (أقل من 0.12%): ضوضاء الشارت العادية قد تضرب الوقف أولاً.")
-    else:
-        L.append(f"✅ <b>{tp_p:.2f}</b> (+{TAKE_PROFIT * 100:.0f}%) | 🛑 <b>{sl_p:.2f}</b> (-{STOP_LOSS * 100:.0f}%)")
-    L.append(f"💰 الخسارة القصوى عند الوقف ≈ ${q * per:,.0f} | رأس المال ≈ ${q * k0['cost']:,.0f}"
-             f" | ⏰ لا دخول بعد {ry_time(*NO_NEW_ENTRY)}")
-    if per > RISK_BUDGET_USD:
-        L.append(f"⚠️ عقد واحد يتجاوز ميزانية مخاطرتك (${RISK_BUDGET_USD}).")
-    if ALT_SYMBOL and any(k.get("sym") == ALT_SYMBOL for k in a["contracts"]):
-        L.append(f"⚠️ {ALT_SYMBOL}: أغلق العقد قبل نهاية الجلسة، فقد يتحول إلى أسهم إن بقي رابحاً عند الانتهاء.")
+    L = [f"🏛️ <b>SPX | {word} {dot}</b> | ⭐ {a['strength']:.0f}/10 | 📍 SPX {S:,.1f}{when}"]
+    groups = {}
+    for k in a["contracts"]:
+        groups.setdefault(k.get("sym", SYMBOL).lstrip("^"), []).append(k)
+    order = [SYMBOL.lstrip("^")] + ([ALT_SYMBOL] if ALT_SYMBOL else [])
+    for sym in order:
+        if sym not in groups and sym != SYMBOL.lstrip("^") and not ALT_SYMBOL:
+            continue
+        L.append("")
+        L += instrument_block(sym, groups.get(sym, []), side, S)
+    L.append("")
+    L.append("ادخل بسعر العقد المذكور أو أقل، ولا تلاحق السعر إن ارتفع العقد أكثر من 10% قبل دخولك. "
+             f"⏰ لا دخول بعد {ry_time(*NO_NEW_ENTRY)}")
     if c["age"] >= 5:
         L.append(f"⏱️ البيانات متأخرة ~{c['age']:.0f} دقيقة، تحقق من السعر الحي.")
     L.append("⚠️ <i>تعليمي وليست توصية. أقصى خسارة هي سعر العقد.</i>")
-    L.append(f"🕒 {now_ny().astimezone(RY).strftime('%H:%M')} الرياض | SPX إصدار 12")
+    L.append(f"🕒 {now_ny().astimezone(RY).strftime('%H:%M')} الرياض | SPX إصدار 13")
     return "\n".join(L)
 
 
@@ -905,7 +933,7 @@ def summary_message(state):
         for r, cnt in sorted(rc.items(), key=lambda x: -x[1])[:3]:
             L.append(f"• {esc(r)} ({cnt} مرة)")
     L += ["", "💡 لا إشارة = لا صفقة، والانتظار قرار سليم.",
-          f"🕒 {now_ny().astimezone(RY).strftime('%H:%M')} الرياض | SPX إصدار 12"]
+          f"🕒 {now_ny().astimezone(RY).strftime('%H:%M')} الرياض | SPX إصدار 13"]
     return "\n".join(L)
 
 
