@@ -5,6 +5,7 @@
 """
 
 import argparse
+import copy
 import html
 import json
 import math
@@ -47,6 +48,10 @@ NO_NEW_ENTRY = (15, 0)      # لا دخول جديد بعد هذا الوقت
 RISK_FREE = 0.04
 WALL_RANGE = 0.03
 STATE_FILE = "bot_state.json"
+POS_FILE = "spx_positions.json"      # إشارات اليوم المفتوحة للمتابعة
+TRACK_FILE = "spx_track.csv"         # تتبع صامت لكل عقد حتى بعد الوقف
+MIN_AGE_MIN = 15                     # لا تنبيه وقف قبل مرور هذه المدة (فرق السعر وحده قد يخدع)
+GIVEBACK = 0.50                      # بعد بلوغ الهدف: تنبيه إذا تراجع الربح لنصف أعلى ربح
 LOG_FILE = "zero_dte_log.csv"
 
 NY = ZoneInfo("America/New_York")
@@ -844,7 +849,7 @@ def plan_message(a, plan, update=False):
     L += ["", "📡 عند توفر إشارة أرسل لك العقد (السترايك والسعر والكمية) مع مستويات المؤشر.",
           "⚠️ <i>المستويات وشروطها قواعد ثابتة لم تُختبر تاريخياً، والبيانات متأخرة"
           f" ~{c['age']:.0f} دقيقة. الشرط يُراقَب على الشارت الحي، والبوت يفحص كل نصف ساعة فقط.</i>",
-          f"🕒 {now_ny().astimezone(RY).strftime('%H:%M')} الرياض | SPX إصدار 13"]
+          f"🕒 {now_ny().astimezone(RY).strftime('%H:%M')} الرياض | SPX إصدار 14"]
     return "\n".join(L)
 
 
@@ -869,19 +874,23 @@ def instrument_block(sym, ks, side, S_idx):
     need = abs(k0["be"] - sp) / sp * 100
     mark = tier(k0["score"]) + ("🔥" if k0.get("flow", 0) >= 1 else "")
     L = [title,
-         f"{mark} <b>{root_sym(k0)} {k0['strike']:,.0f} {word}</b> · 💵 <b>${k0['cost']:,.0f}</b> · ×{q}",
-         f"▶️ دخول: بسعر حتى <b>{k0['price']:.2f}</b> | يحتاج {sgn}{need:.2f}% في {sym} للتعادل"]
+         f"{mark} <b>{root_sym(k0)} {k0['strike']:,.0f} {word}</b> ×{q} | 💵 ${k0['cost']:,.0f} للعقد",
+         f"├ 🟢 <b>دخول</b> بسعر حتى <b>{k0['price']:.2f}</b> | يحتاج {sgn}{need:.2f}% للتعادل"]
     tp_p, sl_p = k0["price"] * (1 + TAKE_PROFIT), k0["price"] * (1 - STOP_LOSS)
     lv = index_levels(k0, side)
+    warn = None
     if lv:
         f = (lambda x: f"{x:,.2f}") if sym == "SPY" else (lambda x: f"{x:,.0f}")
-        L.append(f"✅ جني: <b>{tp_p:.2f}</b> (+{TAKE_PROFIT * 100:.0f}%) عند {sym} ≈ {f(lv[0])}")
-        L.append(f"🛑 وقف: <b>{sl_p:.2f}</b> (-{STOP_LOSS * 100:.0f}%) عند {sym} ≈ {f(lv[1])}")
+        L.append(f"├ 🎯 <b>خروج بربح</b> <b>{tp_p:.2f}</b> (+{TAKE_PROFIT * 100:.0f}%) ← {sym} ≈ {f(lv[0])}")
+        L.append(f"├ 🛑 <b>خروج بخسارة</b> <b>{sl_p:.2f}</b> (-{STOP_LOSS * 100:.0f}%) ← {sym} ≈ {f(lv[1])}")
         if max(abs(lv[0] - sp), abs(lv[1] - sp)) / sp < 0.0012:
-            L.append("⚠️ الهدف والوقف قريبان جداً (أقل من 0.12%): الضوضاء العادية قد تضرب الوقف أولاً.")
+            warn = "⚠️ الهدف والوقف قريبان جداً (أقل من 0.12%): الضوضاء العادية قد تضرب الوقف أولاً."
     else:
-        L.append(f"✅ جني: <b>{tp_p:.2f}</b> (+{TAKE_PROFIT * 100:.0f}%) | 🛑 وقف: <b>{sl_p:.2f}</b> (-{STOP_LOSS * 100:.0f}%)")
-    L.append(f"💰 الخسارة القصوى عند الوقف ≈ ${q * per:,.0f} | رأس المال ≈ ${q * k0['cost']:,.0f}")
+        L.append(f"├ 🎯 <b>خروج بربح</b> <b>{tp_p:.2f}</b> (+{TAKE_PROFIT * 100:.0f}%)")
+        L.append(f"├ 🛑 <b>خروج بخسارة</b> <b>{sl_p:.2f}</b> (-{STOP_LOSS * 100:.0f}%)")
+    L.append(f"└ 💰 أقصى خسارة ≈ ${q * per:,.0f} | رأس المال ≈ ${q * k0['cost']:,.0f}")
+    if warn:
+        L.append(warn)
     if per > RISK_BUDGET_USD:
         L.append(f"⚠️ عقد واحد يتجاوز ميزانية مخاطرتك (${RISK_BUDGET_USD}).")
     if len(ks) > 1:
@@ -912,7 +921,7 @@ def signal_message(a):
     if c["age"] >= 5:
         L.append(f"⏱️ البيانات متأخرة ~{c['age']:.0f} دقيقة، تحقق من السعر الحي.")
     L.append("⚠️ <i>تعليمي وليست توصية. أقصى خسارة هي سعر العقد.</i>")
-    L.append(f"🕒 {now_ny().astimezone(RY).strftime('%H:%M')} الرياض | SPX إصدار 13")
+    L.append(f"🕒 {now_ny().astimezone(RY).strftime('%H:%M')} الرياض | SPX إصدار 14")
     return "\n".join(L)
 
 
@@ -933,7 +942,7 @@ def summary_message(state):
         for r, cnt in sorted(rc.items(), key=lambda x: -x[1])[:3]:
             L.append(f"• {esc(r)} ({cnt} مرة)")
     L += ["", "💡 لا إشارة = لا صفقة، والانتظار قرار سليم.",
-          f"🕒 {now_ny().astimezone(RY).strftime('%H:%M')} الرياض | SPX إصدار 13"]
+          f"🕒 {now_ny().astimezone(RY).strftime('%H:%M')} الرياض | SPX إصدار 14"]
     return "\n".join(L)
 
 
@@ -1008,11 +1017,178 @@ def details_message(a, log_line, has_signal):
 
 
 # ====================== التشغيل ======================
+def load_positions():
+    try:
+        with open(POS_FILE, encoding="utf-8") as f:
+            d = json.load(f)
+        d.setdefault("positions", [])
+        return d
+    except Exception:
+        return {"positions": []}
+
+
+def save_positions(d):
+    try:
+        with open(POS_FILE, "w", encoding="utf-8") as f:
+            json.dump(d, f, ensure_ascii=False)
+    except Exception as e:
+        print("تعذر حفظ المراكز:", e)
+
+
+def add_positions(n, a):
+    """يسجل العقد الأول من كل أداة (SPX وSPY) في الإشارة للمتابعة."""
+    P = load_positions()
+    seen = set()
+    for k in a["contracts"]:
+        sym = k.get("sym", SYMBOL).lstrip("^")
+        if sym in seen:
+            continue
+        seen.add(sym)
+        q, _ = qty_for(k["cost"])
+        pid = f"{sym}:{a['side']}:{k['strike']:g}:{a['exp']}"
+        if any(p["id"] == pid for p in P["positions"]):
+            continue
+        P["positions"].append({"id": pid, "sym": sym, "root": root_sym(k), "side": a["side"], "strike": float(k["strike"]),
+                               "exp": a["exp"], "entry": round(float(k["price"]), 2), "qty": q,
+                               "time": n.isoformat(timespec="minutes"), "entry_spot": round(k.get("spot", a["c"]["S"]), 2),
+                               "status": "open", "peak": 0.0, "alerts": {}})
+    save_positions(P)
+
+
+def spx_quote(p):
+    """سعر العقد الحالي (الوسط) وسعر الأصل. يرجع (قيمة، فرق السعر، سعر الأصل) أو None."""
+    try:
+        t = yf.Ticker("^SPX" if p["sym"] == "SPX" else p["sym"])
+        ch = t.option_chain(p["exp"])
+        df = ch.calls if p["side"] == "CALL" else ch.puts
+        r = df[(df["strike"] - p["strike"]).abs() < 1e-6]
+        if r.empty:
+            return None
+        r = r.iloc[0]
+        bid = 0 if pd.isna(r.get("bid")) else float(r["bid"])
+        ask = 0 if pd.isna(r.get("ask")) else float(r["ask"])
+        last = 0 if pd.isna(r.get("lastPrice")) else float(r["lastPrice"])
+        if bid > 0 and ask > 0:
+            val, spr = (bid + ask) / 2, (ask - bid) / ((ask + bid) / 2)
+        elif last > 0:
+            val, spr = last, None
+        else:
+            return None
+        spot = None
+        try:
+            spot = float(t.history(period="1d", interval="5m")["Close"].dropna().iloc[-1])
+        except Exception:
+            pass
+        return val, spr, spot
+    except Exception as e:
+        print("تعذر تقييم", p.get("id"), e)
+        return None
+
+
+def eval_position(p, n, val, spot):
+    """يرجع (pnl، قائمة التنبيهات الجديدة) ويعدّل p."""
+    entry = p["entry"]
+    pnl = val / entry - 1
+    try:
+        age = (n - datetime.fromisoformat(p["time"])).total_seconds() / 60
+    except Exception:
+        age = 9999
+    al, new, hm = p["alerts"], [], (n.hour, n.minute)
+
+    def fire(kind, text):
+        if kind not in al:
+            al[kind] = n.isoformat(timespec="minutes")
+            new.append((kind, text))
+    if pnl > p.get("peak", 0.0):
+        p["peak"] = round(pnl, 3)
+    live = p["status"] != "stopped"
+    if live and age >= MIN_AGE_MIN and pnl <= -STOP_LOSS:
+        fire("stop", f"وصل وقف الخسارة (-{STOP_LOSS * 100:.0f}%). الخروج يحدّ الخسارة.")
+        p["status"] = "stopped"
+    if live and pnl >= TAKE_PROFIT:
+        fire("tp", f"وصل هدف الربح (+{TAKE_PROFIT * 100:.0f}%). فكّر بجني الربح أو ارفع وقفك إلى سعر دخولك.")
+        if p["status"] == "open":
+            p["status"] = "tp"
+    if live and p["status"] == "tp" and p.get("peak", 0) >= TAKE_PROFIT and pnl <= p["peak"] * GIVEBACK:
+        fire("giveback", f"الربح تراجع من +{p['peak'] * 100:.0f}% إلى {pnl * 100:+.0f}%. احمِ ما تبقى.")
+    if live and hm >= (15, 30):
+        itm = spot is not None and ((spot > p["strike"]) if p["side"] == "CALL" else (spot < p["strike"]))
+        if p["sym"] == "SPY" and itm:
+            fire("exp_final", "آخر 30 دقيقة: العقد داخل المال. إن تركته قد يتحول إلى 100 سهم. أغلقه قبل الإغلاق.")
+        elif itm:
+            fire("exp_final", "آخر 30 دقيقة: داخل المال، وSPX تسوية نقدية فلا أسهم. بِعه الآن إن أردت تثبيت الربح.")
+        else:
+            fire("exp_final", "آخر 30 دقيقة: خارج المال وسينتهي بلا قيمة إن لم يتحرك السعر. بِعه الآن لاسترداد ما بقي.")
+    # اختصار: عند الوقف تنبيه واحد فقط
+    if any(k == "stop" for k, _ in new):
+        new = [x for x in new if x[0] == "stop"]
+    return pnl, new
+
+
+def position_message(p, val, pnl, spot, text, kind):
+    icon = {"stop": "🛑", "tp": "🟢", "giveback": "📉", "exp_final": "⏰"}.get(kind, "📈")
+    pl = (val - p["entry"]) * 100 * p.get("qty", 1)
+    head = {"stop": "وصل الوقف", "tp": "وصل الهدف", "giveback": "الربح يتراجع", "exp_final": "ينتهي اليوم"}.get(kind, "تحرّك سعر العقد")
+    L = [f"{icon} <b>{head}</b>: {p['root']} {p['strike']:,.0f} {p['side']}",
+         f"💵 دخول {p['entry']:.2f} ← الآن {val:.2f} | <b>{pnl * 100:+.0f}%</b> ({pl:+,.0f}$ على ×{p.get('qty', 1)})"]
+    if spot:
+        fmt = f"{spot:,.2f}" if p["sym"] == "SPY" else f"{spot:,.1f}"
+        L.append(f"📍 {p['sym']} {fmt}")
+    L.append(text)
+    L.append(f"🛑 الوقف {p['entry'] * (1 - STOP_LOSS):.2f} | ✅ الجني {p['entry'] * (1 + TAKE_PROFIT):.2f}")
+    L.append(f"⚠️ القرار قرارك | 🕒 {now_ny().astimezone(RY).strftime('%H:%M')} الرياض | SPX إصدار 14")
+    return "\n".join(L)
+
+
+def monitor_positions(n, force=False):
+    """يتابع إشارات اليوم المفتوحة. تنبيه مختصر عند الهدف أو الوقف أو التراجع أو قرب الانتهاء، وصمت بعد الوقف."""
+    P = load_positions()
+    today = n.date().isoformat()
+    keep = [p for p in P["positions"] if p["exp"] >= today]
+    dirty = len(keep) != len(P["positions"])
+    P["positions"] = keep
+    msgs, track = [], []
+    for p0 in keep:
+        p = copy.deepcopy(p0) if force else p0
+        q = spx_quote(p)
+        if q is None:
+            continue
+        val, spr, spot = q
+        before = json.dumps(p, sort_keys=True)
+        pnl, new = eval_position(p, n, val, spot)
+        if json.dumps(p, sort_keys=True) != before:
+            dirty = True
+        track.append([n.isoformat(timespec="minutes"), p["id"], p["status"], "" if spot is None else round(spot, 2),
+                      round(val, 3), round(pnl, 3)])
+        if new and not force:
+            kind, text = new[0]
+            msgs.append(position_message(p, val, pnl, spot, text, kind))
+    if track and not force:
+        import csv
+        fresh = not os.path.exists(TRACK_FILE)
+        try:
+            with open(TRACK_FILE, "a", encoding="utf-8", newline="") as f:
+                w = csv.writer(f)
+                if fresh:
+                    w.writerow(["time", "id", "status", "spot", "val", "pnl"])
+                w.writerows(track)
+        except Exception as e:
+            print("تعذر تسجيل التتبع:", e)
+    for m in msgs:
+        send_telegram(m)
+    if dirty and not force:
+        save_positions(P)
+
+
 def run_once(force=False):
     n = now_ny()
     if not force and not in_window(n):
         print("خارج وقت التداول، لا شيء للتنفيذ.")
         return
+    try:
+        monitor_positions(n, force)
+    except Exception as e:
+        print("خطأ في متابعة المراكز:", e)
     try:
         a = analyze(force)
     except Exception as e:
@@ -1056,6 +1232,7 @@ def run_once(force=False):
         send_telegram(signal_message(a))
         send_telegram(details_message(a, log_line, True))
         log_signal(n, a["exp"], a["side"], a["contracts"][0], a["c"]["S"], a["strength"])
+        add_positions(n, a)
         state.update(last_side=a["side"], last_time=n.isoformat(), date=today_s, report_sent=True,
                      signals=state.get("signals", 0) + 1)
     elif state.get("date") != today_s or not state.get("report_sent"):

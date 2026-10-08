@@ -736,12 +736,12 @@ def alert_block(p, info, alerts):
 
 
 def short_footer():
-    return f"⚠️ القرار قرارك | 🕒 {ob.now_ny().astimezone(ob.RY).strftime('%H:%M')} الرياض | إصدار 12"
+    return f"⚠️ القرار قرارك | 🕒 {ob.now_ny().astimezone(ob.RY).strftime('%H:%M')} الرياض | إصدار 13"
 
 
 def footer_line():
     return ("⚠️ <i>تعليمي وليست توصية. البيانات متأخرة ~15 دقيقة، وقد يختلف سعرك الحي.</i>\n"
-            f"🕒 {ob.now_ny().astimezone(ob.RY).strftime('%H:%M')} الرياض | إصدار 12")
+            f"🕒 {ob.now_ny().astimezone(ob.RY).strftime('%H:%M')} الرياض | إصدار 13")
 
 
 def status_message(rows, n):
@@ -989,24 +989,23 @@ def idea_line(i):
         f"{'🟢' if call else '🔴'} <b>{ob.esc(i['ticker'])}</b> — <b>{'CALL' if call else 'PUT'}</b> | ⭐ {i['strength']:.1f}{flags}",
         f"🎯 Strike <b>{k['strike']:,.1f}</b> | 📅 <b>{date_ar(k['exp'])}</b>",
         f"💵 <b>${k['cost']:,.0f}</b> ({k['price']:.2f}) | يحتاج {'+' if call else '-'}{k['need'] * 100:.1f}% | {mark}",
-        f"▶️ ادخل بسعر حتى {k['price']:.2f}، ولا تلاحقه إن ارتفع أكثر من 10%",
-        stock_levels(i, k),
-    ])
+        f"├ 🟢 <b>دخول</b> بسعر حتى <b>{k['price']:.2f}</b> (لا تلاحقه فوق +10%)",
+    ] + stock_levels(i, k))
 
 
 def stock_levels(i, k):
-    """هدف ووقف العقد مع مستوى السهم التقريبي (نموذج بلاك-شولز، افتراض احتفاظ يوم واحد)."""
-    base = f"✅ +${k['cost'] * TAKE_PROFIT:,.0f}  🛑 -${k['cost'] * STOP_LOSS:,.0f}"
+    """سطرا الخروج مع مستوى السهم التقريبي (نموذج بلاك-شولز، افتراض احتفاظ يوم واحد)."""
+    tp, sl = f"+${k['cost'] * TAKE_PROFIT:,.0f}", f"-${k['cost'] * STOP_LOSS:,.0f}"
     try:
         kk = {"strike": k["strike"], "price": k["price"], "spot": i["S"], "iv": k["iv"],
               "T": max(k.get("dte", 1), 0.5) / 365}
         lv = ob.index_levels(kk, i["side"], hold_min=1440)
         if lv:
-            return (f"✅ +${k['cost'] * TAKE_PROFIT:,.0f} (السهم ≈ {lv[0]:,.2f})  "
-                    f"🛑 -${k['cost'] * STOP_LOSS:,.0f} (السهم ≈ {lv[1]:,.2f})")
+            return [f"├ 🎯 <b>خروج بربح</b> {tp} ← السهم ≈ {lv[0]:,.2f}",
+                    f"└ 🛑 <b>خروج بخسارة</b> {sl} ← السهم ≈ {lv[1]:,.2f}"]
     except Exception:
         pass
-    return base
+    return [f"├ 🎯 <b>خروج بربح</b> {tp}", f"└ 🛑 <b>خروج بخسارة</b> {sl}"]
 
 
 def signal_message(a, ideas):
@@ -1017,7 +1016,7 @@ def signal_message(a, ideas):
     L += ["🟩 قوي  🟨 متوسط  🟧 مقبول  🔥 طلب عالٍ  🚨 أرباح",
           "📡 سأتابع هذه العقود وأنبّهك عند الوقف أو الهدف أو ضعف الفكرة.",
           "⚠️ <i>تعليمي وليست توصية. تحقق من السعر الحي، وأقصى خسارة هي سعر العقد.</i>",
-          f"🕒 {ob.now_ny().astimezone(ob.RY).strftime('%H:%M')} الرياض | إصدار 12"]
+          f"🕒 {ob.now_ny().astimezone(ob.RY).strftime('%H:%M')} الرياض | إصدار 13"]
     return "\n".join(L)
 
 
