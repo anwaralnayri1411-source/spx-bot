@@ -125,10 +125,11 @@
    "entry_spy": 777.47,
    "strength": 8.6,
    "earn": "2026-10-29",
-   "status": "open",
+   "status": "stopped",
    "peak": 0.146,
    "alerts": {
-    "warn": "2026-10-08T09:56-04:00"
+    "warn": "2026-10-08T09:56-04:00",
+    "stop": "2026-10-08T11:56-04:00"
    }
   },
   {
@@ -144,7 +145,7 @@
    "strength": 7.8,
    "earn": "2026-11-19",
    "status": "open",
-   "peak": 0.202,
+   "peak": 0.298,
    "alerts": {}
   },
   {
@@ -178,7 +179,7 @@
    "strength": 7.5,
    "earn": "2026-10-30",
    "status": "open",
-   "peak": 0.0,
+   "peak": 0.04,
    "alerts": {}
   }
  ],
