@@ -89,9 +89,11 @@
    "entry_spy": 774.41,
    "strength": 7.8,
    "earn": "2026-11-02",
-   "status": "open",
-   "peak": 0.361,
-   "alerts": {}
+   "status": "tp",
+   "peak": 0.561,
+   "alerts": {
+    "tp": "2026-10-08T14:58-04:00"
+   }
   },
   {
    "id": "AVGO:CALL:2026-10-09:380",
