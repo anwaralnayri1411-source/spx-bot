@@ -130,6 +130,38 @@
    "alerts": {
     "warn": "2026-10-08T09:56-04:00"
    }
+  },
+  {
+   "id": "WMT:CALL:2026-10-16:110",
+   "ticker": "WMT",
+   "side": "CALL",
+   "exp": "2026-10-16",
+   "strike": 110.0,
+   "entry": 1.29,
+   "time": "2026-10-08T10:40-04:00",
+   "entry_spot": 109.85,
+   "entry_spy": 776.18,
+   "strength": 7.8,
+   "earn": "2026-11-19",
+   "status": "open",
+   "peak": 0.004,
+   "alerts": {}
+  },
+  {
+   "id": "PLTR:CALL:2026-10-16:212.5",
+   "ticker": "PLTR",
+   "side": "CALL",
+   "exp": "2026-10-16",
+   "strike": 212.5,
+   "entry": 1.77,
+   "time": "2026-10-08T10:40-04:00",
+   "entry_spot": 201.06,
+   "entry_spy": 776.18,
+   "strength": 7.4,
+   "earn": "2026-11-02",
+   "status": "open",
+   "peak": 0.0,
+   "alerts": {}
   }
  ],
  "summary_date": "2026-10-07"
