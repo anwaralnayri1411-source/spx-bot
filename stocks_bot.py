@@ -28,6 +28,8 @@ WATCHLIST = {
     "NFLX": ("Netflix", None), "PLTR": ("Palantir", None), "UBER": ("Uber", None),
     "MA": ("Mastercard", None), "V": ("Visa", None), "JPM": ("JPMorgan", None),
     "BAC": ("Bank of America", None), "DIS": ("Disney", None), "WMT": ("Walmart", None),
+    "INTC": ("Intel", None), "SOFI": ("SoFi", None), "F": ("Ford", None), "PFE": ("Pfizer", None),
+    "SNAP": ("Snap", None), "MU": ("Micron", None), "RIVN": ("Rivian", None), "T": ("AT&T", None),
     "BA": ("Boeing", None), "XOM": ("Exxon Mobil", "oil"), "CVX": ("Chevron", "oil"),
     "COIN": ("Coinbase", "btc"), "MSTR": ("MicroStrategy", "btc"), "HOOD": ("Robinhood", "btc"),
     "LMT": ("Lockheed Martin", "geo"),
@@ -41,8 +43,11 @@ MIN_EDGE = 3.5              # أقل فرق بين نقاط الصعود وال�
 MIN_CONTRACT_SCORE = 5.0
 MAX_IDEAS = 3
 MAX_SAME_SIDE = 2           # لا أكثر من فرصتين في نفس الاتجاه (الأسهم مترابطة)
-FINALISTS = 8               # عدد الشركات التي تُفحص بعمق (أخبار + سلسلة الخيارات)
-MIN_DTE, MAX_DTE = 1, 9     # عقود من يوم إلى أسبوع وزيادة
+FINALISTS = 12              # عدد الشركات التي تُفحص بعمق (أخبار + سلسلة الخيارات)
+MIN_TDAYS = 3               # أقل مدة للعقد بأيام التداول: العقود الأقصر تأكلها سرعة التآكل قبل أن يتحرك السهم
+MAX_DTE = 14                # أبعد انتهاء (أيام تقويمية)
+MAX_Z = 1.0                 # أقصى بُعد للتعادل عن السعر بوحدات الحركة المتوقعة (كان 1.8)
+MIN_HIST_PROB = 0.10        # أقل احتمال تاريخي لبلوغ التعادل خلال مدة العقد
 TAKE_PROFIT = 0.50
 STOP_LOSS = 0.40
 WINDOW_START = (10, 0)      # بتوقيت نيويورك
@@ -205,12 +210,12 @@ def get_chains(t, today):
             dte = (date.fromisoformat(e) - today).days
         except Exception:
             continue
-        if MIN_DTE <= dte <= MAX_DTE:
+        if dte <= MAX_DTE and int(np.busday_count(today, date.fromisoformat(e))) >= MIN_TDAYS:
             exps.append((e, dte))
     if not exps:
         for e in (t.options or []):
             dte = (date.fromisoformat(e) - today).days
-            if dte >= MIN_DTE:
+            if int(np.busday_count(today, date.fromisoformat(e))) >= MIN_TDAYS:
                 exps = [(e, dte)]
                 break
     exps = exps[:3]
@@ -286,7 +291,7 @@ def pick_contracts(side, chains, S, rv, closes=None):
             delta = ob.abs_delta(S, K, T, iv, side)
             prob = ob.prob_beyond(S, be, T, iv, side)
             z = abs(be - S) / (S * iv * math.sqrt(T))
-            if z > 1.8 or delta < 0.12:
+            if z > MAX_Z or delta < 0.12:
                 continue
             liq = 2 if oi >= 1000 else (1.5 if oi >= 300 else (1 if oi >= 150 else 0.5))
             liq += 0.5 if spr is None else (1 if spr <= 0.10 else (0.5 if spr <= 0.20 else 0))
@@ -301,6 +306,8 @@ def pick_contracts(side, chains, S, rv, closes=None):
             tdays = max(1, int(np.busday_count(today, date.fromisoformat(exp))))
             need = abs(be / S - 1)
             hs = hist_stats(closes, tdays, need, side) if closes is not None else None
+            if hs is not None and hs["prob"] < MIN_HIST_PROB:
+                continue
             if hs is not None:
                 adj += 0.5 if hs["prob"] >= 0.25 else (-1.0 if hs["prob"] < 0.08 else 0.0)
             score = max(0.0, min(10.0, liq + dp + rp + flow + adj))
@@ -713,7 +720,7 @@ def alert_block(p, info, alerts):
 
 def footer_line():
     return ("⚠️ <i>تعليمي وليست توصية. البيانات متأخرة ~15 دقيقة، وقد يختلف سعرك الحي.</i>\n"
-            f"🕒 {ob.now_ny().astimezone(ob.RY).strftime('%H:%M')} الرياض | إصدار 8")
+            f"🕒 {ob.now_ny().astimezone(ob.RY).strftime('%H:%M')} الرياض | إصدار 9")
 
 
 def status_message(rows, n):
@@ -940,7 +947,7 @@ def signal_message(a, ideas):
     L += ["🟩 قوي  🟨 متوسط  🟧 مقبول  🔥 طلب عالٍ  🚨 أرباح",
           "📡 سأتابع هذه العقود وأنبّهك عند الوقف أو الهدف أو ضعف الفكرة.",
           "⚠️ <i>تعليمي وليست توصية. تحقق من السعر الحي، وأقصى خسارة هي سعر العقد.</i>",
-          f"🕒 {ob.now_ny().astimezone(ob.RY).strftime('%H:%M')} الرياض | إصدار 8"]
+          f"🕒 {ob.now_ny().astimezone(ob.RY).strftime('%H:%M')} الرياض | إصدار 9"]
     return "\n".join(L)
 
 
