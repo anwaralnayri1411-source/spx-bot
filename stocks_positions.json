@@ -147,7 +147,7 @@
    "strength": 7.8,
    "earn": "2026-11-19",
    "status": "tp",
-   "peak": 0.616,
+   "peak": 0.647,
    "alerts": {
     "tp": "2026-10-08T13:13-04:00"
    }
@@ -185,7 +185,7 @@
    "strength": 7.5,
    "earn": "2026-10-30",
    "status": "open",
-   "peak": 0.04,
+   "peak": 0.052,
    "alerts": {}
   },
   {
@@ -221,5 +221,5 @@
    "alerts": {}
   }
  ],
- "summary_date": "2026-10-07"
+ "summary_date": "2026-10-08"
 }
