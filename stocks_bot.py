@@ -589,6 +589,9 @@ ALERT_ICON = {"stop": "🛑", "exp_final": "⏰", "broken": "⚠️", "market": 
               "giveback": "🔔", "tp": "✅", "warn": "🟠", "exp_today": "⏳", "overnight": "⏳"}
 
 
+DROP_KINDS = {"warn", "broken", "market", "chance"}   # تنبيهات الهبوط والضعف
+
+
 def evaluate(p, n, q, spot, spy_spot):
     """يقيّم عقداً مفتوحاً. يرجع (info, alerts) حيث alerts تنبيهات جديدة لم تُرسل من قبل.
     يعدّل p (الحالة وسجل التنبيهات) فيجب تمرير نسخة عند التجربة."""
@@ -614,6 +617,7 @@ def evaluate(p, n, q, spot, spy_spot):
             "dte": dte}
     new, al, hm = [], p["alerts"], (n.hour, n.minute)
     changed = False
+    prior_drop = any(k in al for k in DROP_KINDS)     # سبق تنبيه هبوط لهذا العقد
 
     def fire(kind, text):
         nonlocal changed
@@ -655,7 +659,7 @@ def evaluate(p, n, q, spot, spy_spot):
         fire("chance", f"الفرصة ضعيفة جداً: احتمال وصول السهم للتعادل في الوقت المتبقي ≈ {prob * 100:.0f}% فقط.")
     if dte == 0 and live and hm >= (14, 30):
         fire("exp_today", f"ينتهي اليوم والتآكل الزمني يتسارع. قيمته الآن ≈ ${val * 100:,.0f}.")
-    if dte == 0 and spot and hm >= (15, 30):
+    if dte == 0 and live and spot and hm >= (15, 30):
         itm = spot > p["strike"] if call else spot < p["strike"]
         if itm:
             fire("exp_final", "آخر 30 دقيقة: العقد داخل المال. إن تركته حتى الانتهاء قد يُنفَّذ تلقائياً ويتحول إلى "
@@ -665,6 +669,15 @@ def evaluate(p, n, q, spot, spy_spot):
                               f"إن أردت استرداد ما بقي (≈ ${val * 100:,.0f}) فبِعه قبل الإغلاق.")
     if dte == 1 and live and hm >= (15, 30) and pnl < TAKE_PROFIT:
         fire("overnight", "ينتهي غداً: إن لم يتحرك السهم لصالحك سيفقد جزءاً من قيمته الليلة.")
+    # اختصار التنبيهات: عند بلوغ الوقف تنبيه واحد فقط، وبعده صمت.
+    # وقبل الوقف لا يصلك أكثر من تنبيه هبوط واحد للعقد (الأشد فقط).
+    if any(k == "stop" for k, _ in new):
+        new = [x for x in new if x[0] == "stop"]
+    else:
+        drops = [x for x in new if x[0] in DROP_KINDS]
+        if drops:
+            keep = None if prior_drop else next((x for k in SEVERITY for x in drops if x[0] == k), None)
+            new = [x for x in new if x[0] not in DROP_KINDS or x is keep]
     info["changed"] = changed
     return info, new
 
@@ -720,7 +733,7 @@ def alert_block(p, info, alerts):
 
 def footer_line():
     return ("⚠️ <i>تعليمي وليست توصية. البيانات متأخرة ~15 دقيقة، وقد يختلف سعرك الحي.</i>\n"
-            f"🕒 {ob.now_ny().astimezone(ob.RY).strftime('%H:%M')} الرياض | إصدار 9")
+            f"🕒 {ob.now_ny().astimezone(ob.RY).strftime('%H:%M')} الرياض | إصدار 10")
 
 
 def status_message(rows, n):
@@ -947,7 +960,7 @@ def signal_message(a, ideas):
     L += ["🟩 قوي  🟨 متوسط  🟧 مقبول  🔥 طلب عالٍ  🚨 أرباح",
           "📡 سأتابع هذه العقود وأنبّهك عند الوقف أو الهدف أو ضعف الفكرة.",
           "⚠️ <i>تعليمي وليست توصية. تحقق من السعر الحي، وأقصى خسارة هي سعر العقد.</i>",
-          f"🕒 {ob.now_ny().astimezone(ob.RY).strftime('%H:%M')} الرياض | إصدار 9"]
+          f"🕒 {ob.now_ny().astimezone(ob.RY).strftime('%H:%M')} الرياض | إصدار 10"]
     return "\n".join(L)
 
 
