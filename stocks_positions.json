@@ -90,7 +90,7 @@
    "strength": 7.8,
    "earn": "2026-11-02",
    "status": "open",
-   "peak": 0.306,
+   "peak": 0.361,
    "alerts": {}
   },
   {
@@ -144,9 +144,11 @@
    "entry_spy": 776.18,
    "strength": 7.8,
    "earn": "2026-11-19",
-   "status": "open",
-   "peak": 0.298,
-   "alerts": {}
+   "status": "tp",
+   "peak": 0.578,
+   "alerts": {
+    "tp": "2026-10-08T13:13-04:00"
+   }
   },
   {
    "id": "PLTR:CALL:2026-10-16:212.5",
@@ -182,6 +184,38 @@
    "earn": "2026-10-30",
    "status": "open",
    "peak": 0.04,
+   "alerts": {}
+  },
+  {
+   "id": "DIS:CALL:2026-10-16:107",
+   "ticker": "DIS",
+   "side": "CALL",
+   "exp": "2026-10-16",
+   "strike": 107.0,
+   "entry": 1.42,
+   "time": "2026-10-08T13:13-04:00",
+   "entry_spot": 106.68,
+   "entry_spy": 773.09,
+   "strength": 8.9,
+   "earn": "2026-11-12",
+   "status": "open",
+   "peak": 0.0,
+   "alerts": {}
+  },
+  {
+   "id": "V:CALL:2026-10-16:385",
+   "ticker": "V",
+   "side": "CALL",
+   "exp": "2026-10-16",
+   "strike": 385.0,
+   "entry": 1.97,
+   "time": "2026-10-08T13:13-04:00",
+   "entry_spot": 378.3,
+   "entry_spy": 773.09,
+   "strength": 8.7,
+   "earn": "2026-10-27",
+   "status": "open",
+   "peak": 0.0,
    "alerts": {}
   }
  ],
