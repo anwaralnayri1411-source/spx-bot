@@ -54,6 +54,7 @@ WINDOW_START = (10, 0)      # بتوقيت نيويورك
 WINDOW_END = (15, 30)
 STATE_FILE = "stocks_state.json"
 LOG_FILE = "stocks_log.csv"
+TRACK_FILE = "stocks_track.csv"   # تتبع كل عقد بعد التوصية (وبعد الوقف أيضاً)
 
 # ---- متابعة العقود المفتوحة (تنبيهات بعد التوصية) ----
 POS_FILE = "stocks_positions.json"
@@ -718,43 +719,70 @@ def stock_line(info):
 
 
 def alert_block(p, info, alerts):
+    """تنبيه مختصر: العقد، القيمة والربح بالدولار، حركة السهم، وسبب واحد."""
     kinds = [k for k, _ in alerts]
     top = next(k for k in SEVERITY if k in kinds)
+    pl = (info["val"] - p["entry"]) * 100
     L = [f"{ALERT_ICON[top]} {pos_header(p)}",
-         f"💵 دخلت ${p['entry'] * 100:,.0f} ← الآن ≈ ${info['val'] * 100:,.0f} (<b>{info['pnl'] * 100:+.0f}%</b>)"]
+         f"💵 ${p['entry'] * 100:,.0f} ← ${info['val'] * 100:,.0f} | <b>{info['pnl'] * 100:+.0f}%</b> ({pl:+,.0f}$)"]
     sl = stock_line(info)
     if sl:
         L.append(sl)
-    for k in SEVERITY:
-        for kind, text in alerts:
-            if kind == k:
-                L.append(f"{ALERT_ICON[kind]} {ob.esc(text)}")
-    if info["pnl"] <= -WARN_LOSS and "broken" not in kinds:   # لا نكرر نفس المعلومة
-        h = reason_hint(info)
-        if h:
-            L.append(h)
+    text = next(t for k in SEVERITY for kind, t in alerts if kind == k)
+    L.append(ob.esc(text))
     if info["spr"] is not None and info["spr"] > 0.40:
-        L.append("⚠️ فرق السعر (bid/ask) واسع، فالقيمة تقريبية.")
+        L.append("⚠️ فرق السعر واسع، فالقيمة تقريبية.")
     return "\n".join(L)
+
+
+def short_footer():
+    return f"⚠️ القرار قرارك | 🕒 {ob.now_ny().astimezone(ob.RY).strftime('%H:%M')} الرياض | إصدار 12"
 
 
 def footer_line():
     return ("⚠️ <i>تعليمي وليست توصية. البيانات متأخرة ~15 دقيقة، وقد يختلف سعرك الحي.</i>\n"
-            f"🕒 {ob.now_ny().astimezone(ob.RY).strftime('%H:%M')} الرياض | إصدار 11")
+            f"🕒 {ob.now_ny().astimezone(ob.RY).strftime('%H:%M')} الرياض | إصدار 12")
 
 
 def status_message(rows, n):
     L = ["📋 <b>الشركات — حالة العقود المفتوحة</b>", ""]
     net = 0.0
-    for p, info in sorted(rows, key=lambda x: -x[1]["pnl"]):
+    live = [(p, i) for p, i in rows if p["status"] != "stopped"]
+    dead = [(p, i) for p, i in rows if p["status"] == "stopped"]
+    for p, info in sorted(live, key=lambda x: -x[1]["pnl"]):
         pn = info["pnl"]
         ico = "🟩" if pn >= 0.2 else ("🟢" if pn >= 0 else ("🟠" if pn > -WARN_LOSS else "🔴"))
-        tag = " (سبق تنبيه الوقف)" if p["status"] == "stopped" else (" (بلغ الهدف)" if p["status"] == "tp" else "")
+        tag = " (بلغ الهدف)" if p["status"] == "tp" else ""
         L.append(f"{ico} <b>{ob.esc(p['ticker'])} {p['side']}</b> {p['strike']:,.1f} | {date_ar(p['exp'])}: "
                  f"${p['entry'] * 100:,.0f} ← ${info['val'] * 100:,.0f} (<b>{pn * 100:+.0f}%</b>){tag}")
+    if not live:
+        L.append("لا عقود نشطة (كلها تحت الوقف).")
+    if dead:
+        L += ["", "🛑 <b>تحت الوقف (متوقفة التنبيهات، ونسجل بياناتها للتعلم):</b> " +
+              "، ".join(f"{ob.esc(p['ticker'])} {i['pnl'] * 100:+.0f}%" for p, i in dead)]
+    for p, info in rows:
         net += (info["val"] - p["entry"]) * 100
-    L += ["", f"المجموع على الورق: <b>{net:+,.0f}$</b> لو بعت كلها الآن بسعر الوسط", "", footer_line()]
+    L += ["", f"المجموع على الورق: <b>{net:+,.0f}$</b> لو بعت كلها الآن بسعر الوسط", "", short_footer()]
     return "\n".join(L)
+
+
+def track_rows(rows, n, spy_spot, vix):
+    """يسجل كل تقييم في stocks_track.csv (حتى بعد الوقف) لدراسة الارتداد حسب السوق والأخبار لاحقاً."""
+    import csv
+    new = not os.path.exists(TRACK_FILE)
+    try:
+        with open(TRACK_FILE, "a", encoding="utf-8", newline="") as f:
+            w = csv.writer(f)
+            if new:
+                w.writerow(["time", "id", "ticker", "side", "status", "spot", "val", "pnl", "stock_move", "prob", "spy", "vix"])
+            for p, info in rows:
+                w.writerow([n.isoformat(timespec="minutes"), p["id"], p["ticker"], p["side"], p["status"],
+                            "" if info["spot"] is None else round(info["spot"], 2), round(info["val"], 3),
+                            round(info["pnl"], 3), "" if info["mv"] is None else round(info["mv"], 4),
+                            "" if info["prob"] is None else round(info["prob"], 3),
+                            "" if not spy_spot else round(spy_spot, 2), "" if vix is None else round(vix, 1)])
+    except Exception as e:
+        print("تعذر تسجيل التتبع:", e)
 
 
 def do_monitor(n, force, P):
@@ -787,8 +815,14 @@ def do_monitor(n, force, P):
         rows.append((p, info))
         if new and not force:
             blocks.append(alert_block(p, info, new))
+    if rows and not force:
+        try:
+            vix_now = ob.vix_info()[0]
+        except Exception:
+            vix_now = None
+        track_rows(rows, n, spy_spot, vix_now)
     if blocks:
-        ob.send_telegram("\n\n".join(["🏢 <b>تنبيهات العقود المفتوحة</b>"] + blocks + [footer_line()]))
+        ob.send_telegram("\n\n".join(blocks + [short_footer()]))
     hm = (n.hour, n.minute)
     if force or (hm >= SUMMARY_AT and P.get("summary_date") != today_s):
         if rows:
@@ -983,7 +1017,7 @@ def signal_message(a, ideas):
     L += ["🟩 قوي  🟨 متوسط  🟧 مقبول  🔥 طلب عالٍ  🚨 أرباح",
           "📡 سأتابع هذه العقود وأنبّهك عند الوقف أو الهدف أو ضعف الفكرة.",
           "⚠️ <i>تعليمي وليست توصية. تحقق من السعر الحي، وأقصى خسارة هي سعر العقد.</i>",
-          f"🕒 {ob.now_ny().astimezone(ob.RY).strftime('%H:%M')} الرياض | إصدار 11"]
+          f"🕒 {ob.now_ny().astimezone(ob.RY).strftime('%H:%M')} الرياض | إصدار 12"]
     return "\n".join(L)
 
 
