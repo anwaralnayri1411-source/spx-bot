@@ -346,7 +346,7 @@ def save_state(s):
         print("تعذر حفظ الحالة:", e)
 
 
-LOG_COLS = ["time", "ticker", "side", "exp", "strike", "price", "strength", "result", "pnl"]
+LOG_COLS = ["time", "ticker", "side", "exp", "strike", "price", "strength", "result", "pnl", "rule", "rule_pnl", "peak"]
 
 
 def log_idea(n, idea):
@@ -397,6 +397,12 @@ def log_summary():
         df.to_csv(LOG_FILE, index=False)
     done = df[df["result"] != ""]
     s = f"{len(df)} فرصة | انتهت {len(done)}"
+    if "rule" in df.columns:
+        rd = df[df["rule"].isin(["tp", "stop", "none"])]
+        if len(rd):
+            tps, sts = (rd["rule"] == "tp").sum(), (rd["rule"] == "stop").sum()
+            net_r = pd.to_numeric(rd["rule_pnl"], errors="coerce").sum()
+            s += f"\n🎯 بقاعدة الهدف والوقف: {tps} هدف | {sts} وقف | {len(rd) - tps - sts} بلا حسم | صافي ≈ {net_r:+,.0f}$ (تقريبي)\n"
     if len(done):
         wins = (done["result"] == "win").sum()
         net = pd.to_numeric(done["pnl"], errors="coerce").sum()
@@ -480,9 +486,40 @@ def active_positions(P, n):
     return [p for p in P["positions"] if date.fromisoformat(p["exp"]) >= n.date()]
 
 
+def record_outcomes(done):
+    """يسجل في السجل نتيجة قاعدة الهدف والوقف لكل عقد انتهت متابعته:
+    tp = لمس +50% قبل الوقف، stop = بلغ الوقف، none = لم يبلغ أياً منهما.
+    القياس كل نصف ساعة فقط، فهو تقريب وليس سعر التنفيذ الفعلي."""
+    if not done or not os.path.exists(LOG_FILE):
+        return
+    try:
+        df = pd.read_csv(LOG_FILE, dtype=str).fillna("")
+        for c in ("rule", "rule_pnl", "peak"):
+            if c not in df.columns:
+                df[c] = ""
+        for p in done:
+            m = (df["time"] == p["time"]) & (df["ticker"] == p["ticker"]) & (df["strike"].astype(float) == float(p["strike"]))
+            if not m.any():
+                continue
+            peak = float(p.get("peak", 0.0))
+            if peak >= TAKE_PROFIT:
+                rule, rp = "tp", TAKE_PROFIT
+            elif p.get("status") == "stopped":
+                rule, rp = "stop", -STOP_LOSS
+            else:
+                rule, rp = "none", None
+            df.loc[m, "rule"] = rule
+            df.loc[m, "rule_pnl"] = "" if rp is None else f"{rp * p['entry'] * 100:.0f}"
+            df.loc[m, "peak"] = f"{peak * 100:.0f}"
+        df.to_csv(LOG_FILE, index=False)
+    except Exception as e:
+        print("تعذر تسجيل نتيجة القاعدة:", e)
+
+
 def prune_positions(P, n):
     keep = active_positions(P, n)
     if len(keep) != len(P["positions"]):
+        record_outcomes([p for p in P["positions"] if p not in keep])
         P["positions"] = keep
         P["dirty"] = True
 
