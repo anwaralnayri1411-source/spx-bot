@@ -10,6 +10,7 @@ import json
 import math
 import os
 import re
+import sys
 import time
 import xml.etree.ElementTree as ET
 from datetime import date, datetime, timedelta, timezone
@@ -90,9 +91,21 @@ def ry_time(h, m):
 
 
 # ====================== تليجرام ======================
+def log_message(text):
+    """يحفظ نص كل رسالة في ملف خاص بكل بوت (لتحليل التوصيات لاحقاً). لا يؤثر على الإرسال إن فشل."""
+    try:
+        src = os.path.basename(sys.argv[0]).replace(".py", "") or "bot"
+        rec = {"t": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S"), "text": text}
+        with open(f"messages_{src}.jsonl", "a", encoding="utf-8") as f:
+            f.write(json.dumps(rec, ensure_ascii=False) + "\n")
+    except Exception as e:
+        print("تعذر حفظ الرسالة:", e)
+
+
 def send_telegram(text):
     print(text)
     print()
+    log_message(text)
     if not TOKEN or not CHAT_ID:
         print("[تنبيه] لم تُضبط TELEGRAM_TOKEN / TELEGRAM_CHAT_ID، فلم تُرسل الرسالة.")
         return
