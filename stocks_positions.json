@@ -1,47 +1,6 @@
 {
  "positions": [
   {
-   "id": "MSFT:CALL:2026-10-07:535",
-   "ticker": "MSFT",
-   "side": "CALL",
-   "exp": "2026-10-07",
-   "strike": 535.0,
-   "entry": 1.71,
-   "time": "2026-10-05T10:40-04:00",
-   "entry_spot": 525.9013061523438,
-   "entry_spy": null,
-   "strength": 8.8,
-   "earn": null,
-   "status": "stopped",
-   "peak": 0.0,
-   "alerts": {
-    "overnight": "2026-10-06T15:53-04:00",
-    "stop": "2026-10-07T09:55-04:00",
-    "chance": "2026-10-07T09:55-04:00",
-    "exp_final": "2026-10-07T15:52-04:00"
-   }
-  },
-  {
-   "id": "NVDA:CALL:2026-10-07:237.5",
-   "ticker": "NVDA",
-   "side": "CALL",
-   "exp": "2026-10-07",
-   "strike": 237.5,
-   "entry": 1.99,
-   "time": "2026-10-05T10:40-04:00",
-   "entry_spot": 236.9499969482422,
-   "entry_spy": null,
-   "strength": 8.6,
-   "earn": null,
-   "status": "stopped",
-   "peak": 0.299,
-   "alerts": {
-    "overnight": "2026-10-06T15:53-04:00",
-    "stop": "2026-10-07T09:55-04:00",
-    "exp_final": "2026-10-07T15:52-04:00"
-   }
-  },
-  {
    "id": "MSTR:CALL:2026-10-09:175",
    "ticker": "MSTR",
    "side": "CALL",
@@ -79,49 +38,6 @@
    }
   },
   {
-   "id": "NVDA:CALL:2026-10-07:242.5",
-   "ticker": "NVDA",
-   "side": "CALL",
-   "exp": "2026-10-07",
-   "strike": 242.5,
-   "entry": 1.5,
-   "time": "2026-10-06T10:36-04:00",
-   "entry_spot": 242.61000061035156,
-   "entry_spy": null,
-   "strength": 9.4,
-   "earn": null,
-   "status": "stopped",
-   "peak": 0.0,
-   "alerts": {
-    "stop": "2026-10-06T15:53-04:00",
-    "broken": "2026-10-06T15:53-04:00",
-    "chance": "2026-10-06T15:53-04:00",
-    "overnight": "2026-10-06T15:53-04:00",
-    "exp_final": "2026-10-07T15:52-04:00"
-   }
-  },
-  {
-   "id": "MSFT:CALL:2026-10-07:540",
-   "ticker": "MSFT",
-   "side": "CALL",
-   "exp": "2026-10-07",
-   "strike": 540.0,
-   "entry": 1.71,
-   "time": "2026-10-06T10:36-04:00",
-   "entry_spot": 534.6300048828125,
-   "entry_spy": null,
-   "strength": 8.7,
-   "earn": null,
-   "status": "stopped",
-   "peak": 0.0,
-   "alerts": {
-    "stop": "2026-10-06T15:53-04:00",
-    "chance": "2026-10-06T15:53-04:00",
-    "overnight": "2026-10-06T15:53-04:00",
-    "exp_final": "2026-10-07T15:52-04:00"
-   }
-  },
-  {
    "id": "AVGO:CALL:2026-10-09:390",
    "ticker": "AVGO",
    "side": "CALL",
@@ -142,27 +58,6 @@
    }
   },
   {
-   "id": "TSLA:CALL:2026-10-07:382.5",
-   "ticker": "TSLA",
-   "side": "CALL",
-   "exp": "2026-10-07",
-   "strike": 382.5,
-   "entry": 2.0,
-   "time": "2026-10-06T15:11-04:00",
-   "entry_spot": 379.6603088378906,
-   "entry_spy": null,
-   "strength": 9.1,
-   "earn": null,
-   "status": "stopped",
-   "peak": 0.098,
-   "alerts": {
-    "overnight": "2026-10-06T15:53-04:00",
-    "stop": "2026-10-07T09:55-04:00",
-    "chance": "2026-10-07T09:55-04:00",
-    "exp_final": "2026-10-07T15:52-04:00"
-   }
-  },
-  {
    "id": "NVDA:CALL:2026-10-12:240",
    "ticker": "NVDA",
    "side": "CALL",
@@ -174,10 +69,12 @@
    "entry_spy": 774.41,
    "strength": 8.0,
    "earn": "2026-11-17",
-   "status": "open",
+   "status": "stopped",
    "peak": 0.0,
    "alerts": {
-    "warn": "2026-10-07T11:44-04:00"
+    "warn": "2026-10-07T11:44-04:00",
+    "stop": "2026-10-08T09:56-04:00",
+    "broken": "2026-10-08T09:56-04:00"
    }
   },
   {
@@ -208,9 +105,13 @@
    "entry_spy": 776.03,
    "strength": 8.6,
    "earn": "2026-12-09",
-   "status": "open",
+   "status": "stopped",
    "peak": 0.339,
-   "alerts": {}
+   "alerts": {
+    "stop": "2026-10-08T09:56-04:00",
+    "broken": "2026-10-08T09:56-04:00",
+    "chance": "2026-10-08T09:56-04:00"
+   }
   },
   {
    "id": "AMZN:CALL:2026-10-09:260",
@@ -226,7 +127,9 @@
    "earn": "2026-10-29",
    "status": "open",
    "peak": 0.146,
-   "alerts": {}
+   "alerts": {
+    "warn": "2026-10-08T09:56-04:00"
+   }
   }
  ],
  "summary_date": "2026-10-07"
