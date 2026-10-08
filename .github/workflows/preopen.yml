@@ -1,0 +1,25 @@
+name: Pre-open Brief
+on:
+  schedule:
+    - cron: "15 13 * * 1-5"    # 9:15 نيويورك صيفاً
+    - cron: "15 14 * * 1-5"    # 9:15 نيويورك شتاءً (الكود يتجاهل الوقت الخاطئ)
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: preopen-bot
+  cancel-in-progress: false
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install yfinance pandas requests numpy
+      - run: python preopen_bot.py
+        env:
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          FORCE: ${{ github.event_name == 'workflow_dispatch' && '1' || '0' }}
