@@ -144,7 +144,7 @@
    "strength": 7.8,
    "earn": "2026-11-19",
    "status": "open",
-   "peak": 0.116,
+   "peak": 0.202,
    "alerts": {}
   },
   {
@@ -164,6 +164,22 @@
    "alerts": {
     "warn": "2026-10-08T11:30-04:00"
    }
+  },
+  {
+   "id": "XOM:CALL:2026-10-16:172.5",
+   "ticker": "XOM",
+   "side": "CALL",
+   "exp": "2026-10-16",
+   "strike": 172.5,
+   "entry": 1.25,
+   "time": "2026-10-08T11:39-04:00",
+   "entry_spot": 168.82,
+   "entry_spy": 774.22,
+   "strength": 7.5,
+   "earn": "2026-10-30",
+   "status": "open",
+   "peak": 0.0,
+   "alerts": {}
   }
  ],
  "summary_date": "2026-10-07"
