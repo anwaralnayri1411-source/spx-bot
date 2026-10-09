@@ -148,18 +148,29 @@ def board_card(title, subtitle, items, sl, tp):
 
 # ------------------------------------------------------------------ الشعار وبطاقة العقد
 def logo_svg(size=84):
-    """شعار أصلي: حلقة ذهبية بعلامات، وعين تحليل زرقاء، وسهما CALL أخضر وPUT أحمر."""
-    ticks = "".join(
-        f'<line x1="50" y1="4" x2="50" y2="{11 if i % 3 else 15}" stroke="#d9ae2f" stroke-width="{2.4 if i % 3 else 3.4}" '
-        f'transform="rotate({i * 15} 50 50)"/>' for i in range(24))
-    return f"""<svg width="{size}" height="{size}" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-<defs><radialGradient id="g" cx="50%" cy="45%" r="55%"><stop offset="0" stop-color="#bff3ff"/><stop offset=".45" stop-color="#2bb3e6"/>
-<stop offset="1" stop-color="#0a2a55"/></radialGradient>
-<linearGradient id="r" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffe27a"/><stop offset="1" stop-color="#b8860b"/></linearGradient></defs>
-<circle cx="50" cy="50" r="46" fill="#0b1226" stroke="url(#r)" stroke-width="3"/>{ticks}
-<path d="M14 50 Q50 20 86 50 Q50 80 14 50Z" fill="#101a38" stroke="url(#r)" stroke-width="2"/>
-<circle cx="50" cy="50" r="15" fill="url(#g)"/><circle cx="50" cy="50" r="6.5" fill="#06122b"/><circle cx="46" cy="46" r="2.4" fill="#fff" opacity=".9"/>
-<path d="M29 82 L38 68 L47 82Z" fill="#2fd27a"/><path d="M53 68 L71 68 L62 82Z" fill="#ff5e66"/>
+    """شعار أصلي: روبوت محلّل داخل سداسي ذهبي، مع شريحتي CALL أخضر وPUT أحمر وخط صعود."""
+    return f"""<svg width="{size}" height="{size}" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffe9a0"/><stop offset=".5" stop-color="#d9a92b"/><stop offset="1" stop-color="#8a6410"/></linearGradient>
+<linearGradient id="steel" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e8eef7"/><stop offset=".55" stop-color="#8d9bb3"/><stop offset="1" stop-color="#46526b"/></linearGradient>
+<radialGradient id="eye" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#ffffff"/><stop offset=".35" stop-color="#4fe0ff"/><stop offset="1" stop-color="#0a5aa8"/></radialGradient>
+<linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#141c3a"/><stop offset="1" stop-color="#070a16"/></linearGradient>
+</defs>
+<polygon points="100,6 182,53 182,147 100,194 18,147 18,53" fill="url(#bg)" stroke="url(#gold)" stroke-width="6" stroke-linejoin="round"/>
+<polygon points="100,18 172,59 172,141 100,182 28,141 28,59" fill="none" stroke="#d9a92b" stroke-opacity=".35" stroke-width="1.5"/>
+<line x1="100" y1="24" x2="100" y2="42" stroke="url(#steel)" stroke-width="4"/><circle cx="100" cy="22" r="6" fill="#ffd75a"/><circle cx="100" cy="22" r="11" fill="#ffd75a" opacity=".22"/>
+<rect x="56" y="42" width="88" height="70" rx="20" fill="url(#steel)" stroke="#2d3a55" stroke-width="3"/>
+<rect x="66" y="58" width="68" height="34" rx="14" fill="#06101f" stroke="#2d3a55" stroke-width="2"/>
+<circle cx="84" cy="75" r="11" fill="url(#eye)"/><circle cx="116" cy="75" r="11" fill="url(#eye)"/>
+<circle cx="84" cy="75" r="16" fill="#4fe0ff" opacity=".16"/><circle cx="116" cy="75" r="16" fill="#4fe0ff" opacity=".16"/>
+<rect x="48" y="62" width="9" height="26" rx="4" fill="#d9a92b"/><rect x="143" y="62" width="9" height="26" rx="4" fill="#d9a92b"/>
+<g stroke="#46526b" stroke-width="3" stroke-linecap="round"><line x1="84" y1="101" x2="116" y2="101"/><line x1="90" y1="106" x2="110" y2="106"/></g>
+<polyline points="50,142 72,132 92,138 112,124 130,130 148,116" fill="none" stroke="#35d07f" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+<polygon points="156,108 158,124 142,118" fill="#35d07f"/>
+<g><rect x="42" y="150" width="38" height="20" rx="10" fill="#17794a" stroke="#35d07f" stroke-width="2"/>
+<path d="M54 163 L61 155 L68 163Z" fill="#eafff3"/></g>
+<g><rect x="120" y="150" width="38" height="20" rx="10" fill="#7a2328" stroke="#ff6b73" stroke-width="2"/>
+<path d="M132 157 L139 165 L146 157Z" fill="#ffecee"/></g>
 </svg>"""
 
 
