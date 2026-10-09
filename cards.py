@@ -60,7 +60,7 @@ td:first-child{{border-radius:0 12px 12px 0;width:44px}} td:last-child{{border-r
 <div class="tiles">{tiles_html}</div>
 <table><tr><th></th>{head}</tr>{body}</table>
 {notes_html}
-<div class="ft">تعليمي وليس توصية. الأسعار تقديرية من بيانات متأخرة، وقد يختلف تنفيذك.</div>
+<div class="ft">تعليمي وليس توصية. الأسعار تقديرية من بيانات متأخرة، وقد يختلف تنفيذك. · عين السوق</div>
 </body></html>"""
 
 
@@ -211,7 +211,7 @@ def _gauge(stop, entry, target, now=None):
 <span style="left:{t:.1f}%;color:#58e39a">هدف<br>{ltr(f"{target:.2f}")}</span></div></div>"""
 
 
-def contract_card_html(kind, name, sub, price, chg, entry, stop, target, now=None, badge="", foot="", brand="Signal Desk"):
+def contract_card_html(kind, name, sub, price, chg, entry, stop, target, now=None, badge="", foot="", brand="👁 عين السوق"):
     """kind: 'entry' (توصية) | 'follow' (متابعة). chg: نسبة التغير بالنسبة لسعر الدخول أو None."""
     up = (chg or 0) >= 0
     col = "#35d07f" if up else "#ff6b73"
@@ -243,7 +243,7 @@ body{{width:{W}px;background:#0b0e16;color:#eef1f8;font-family:'Noto Sans Arabic
 </body></html>"""
 
 
-def contract_card(kind, name, sub, price, chg, entry, stop, target, now=None, badge="", foot="", brand="Signal Desk"):
+def contract_card(kind, name, sub, price, chg, entry, stop, target, now=None, badge="", foot="", brand="👁 عين السوق"):
     return render_png(contract_card_html(kind, name, sub, price, chg, entry, stop, target, now, badge, foot, brand))
 
 
