@@ -71,10 +71,17 @@ def compute(n=None):
     calls, puts = {}, {}
     for side, K, oi, iv, T in rows:
         (calls if side == "c" else puts)[K] = (calls if side == "c" else puts).get(K, 0) + oi
-    above = {k: v for k, v in calls.items() if k > S}
-    below = {k: v for k, v in puts.items() if k < S}
-    resistance = max(above.items(), key=lambda x: x[1])[0] if above else None
-    support = max(below.items(), key=lambda x: x[1])[0] if below else None
+    # الجدار المهم الأقرب: ضمن 1.2% من السعر وبفائدة مفتوحة لا تقل عن 40% من أكبر جدار في النطاق
+    def nearest_wall(book, up):
+        band = {k: v for k, v in book.items() if (k > S if up else k < S) and abs(k - S) / S <= 0.012}
+        if not band:
+            return None
+        top = max(band.values())
+        ok = [k for k, v in band.items() if v >= 0.4 * top]
+        return min(ok, key=lambda k: abs(k - S))
+
+    resistance = nearest_wall(calls, True)
+    support = nearest_wall(puts, False)
 
     # نقطة التحول: أقرب مستوى تتغير عنده إشارة صافي جاما
     flip = None
@@ -108,6 +115,10 @@ def compute(n=None):
             iv_atm = float(near["impliedVolatility"].median())
     except Exception:
         pass
+    vix, _ = ob.vix_info()
+    sig = vix / 100 if vix else None          # التذبذب الضمني للمؤشر (VIX) أوثق من IV المتأخر للعقود
+    if iv_atm is None or iv_atm < 0.08:
+        iv_atm = sig
     close = n.replace(hour=16, minute=0, second=0, microsecond=0)
     rest_h = max((close - n).total_seconds() / 3600, 0.0) if n.weekday() < 5 else 6.5
     rest_h = min(rest_h, 6.5)
