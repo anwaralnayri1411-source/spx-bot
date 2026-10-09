@@ -203,7 +203,7 @@
    "strength": 8.9,
    "earn": "2026-11-12",
    "status": "open",
-   "peak": 0.289,
+   "peak": 0.31,
    "alerts": {}
   },
   {
@@ -238,7 +238,9 @@
    "earn": "2026-11-04",
    "status": "open",
    "peak": 0.004,
-   "alerts": {}
+   "alerts": {
+    "warn": "2026-10-09T13:25-04:00"
+   }
   },
   {
    "id": "AMZN:CALL:2026-10-14:265",
