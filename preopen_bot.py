@@ -95,7 +95,7 @@ def build(n):
     other = [("النفط", "CL=F"), ("الذهب", "GC=F"), ("بيتكوين", "BTC-USD")]
     vix, vix_pct = ob.vix_info()
     tnx = chg_series("^TNX", "7d")
-    L = ["🌅 <b>ملخص ما قبل الافتتاح</b>", f"🕒 {n.astimezone(ob.RY).strftime('%H:%M')} الرياض | الافتتاح بعد ~{max(0, (9 * 60 + 30) - (n.hour * 60 + n.minute))} دقيقة", ""]
+    L = ["🌅 <b>ملخص ما قبل الافتتاح</b> #ملخص", f"🕒 {n.astimezone(ob.RY).strftime('%H:%M')} الرياض | الافتتاح بعد ~{max(0, (9 * 60 + 30) - (n.hour * 60 + n.minute))} دقيقة", ""]
     if gap is None:
         L.append("📊 تعذر حساب فجوة ES الآن.")
     else:

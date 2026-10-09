@@ -107,13 +107,27 @@ def log_message(text):
         print("تعذر حفظ الرسالة:", e)
 
 
-def send_telegram(text):
+def _post(method, data):
+    try:
+        r = requests.post(f"https://api.telegram.org/bot{TOKEN}/{method}", data=data, timeout=15)
+        return r
+    except requests.RequestException as e:
+        print("تعذر الإرسال:", e)
+        return None
+
+
+def _plain(text):
+    return re.sub(r"</?(?:b|i|u|s|code|pre|blockquote)[^>]*>", "", text)
+
+
+def send_telegram(text, reply_to=None, full_text=None):
+    """يرسل رسالة (ويقسمها إن طالت). يرجع رقم أول رسالة (للرد عليها أو تحريرها لاحقاً)."""
     print(text)
     print()
-    log_message(text)
+    log_message(full_text or text)
     if not TOKEN or not CHAT_ID:
         print("[تنبيه] لم تُضبط TELEGRAM_TOKEN / TELEGRAM_CHAT_ID، فلم تُرسل الرسالة.")
-        return
+        return None
     parts, cur = [], ""
     for block in text.split("\n\n"):
         if len(cur) + len(block) + 2 > 3800 and cur:
@@ -122,14 +136,51 @@ def send_telegram(text):
         else:
             cur = f"{cur}\n\n{block}" if cur else block
     parts.append(cur)
-    url = f"https://api.telegram.org/bot{TOKEN}/sendMessage"
-    for p in parts:
-        try:
-            r = requests.post(url, data={"chat_id": CHAT_ID, "text": p, "parse_mode": "HTML"}, timeout=15)
-            if not r.ok:
-                print("خطأ من تليجرام:", r.text)
-        except requests.RequestException as e:
-            print("تعذر الإرسال:", e)
+    first = None
+    for idx, p in enumerate(parts):
+        data = {"chat_id": CHAT_ID, "text": p, "parse_mode": "HTML"}
+        if reply_to and idx == 0:
+            data["reply_to_message_id"] = reply_to
+            data["allow_sending_without_reply"] = "true"
+        r = _post("sendMessage", data)
+        if r is not None and not r.ok and "parse" in r.text.lower():
+            data.pop("parse_mode")
+            data["text"] = _plain(p)                  # لا نخسر الرسالة بسبب خطأ تنسيق
+            r = _post("sendMessage", data)
+        if r is None or not r.ok:
+            print("خطأ من تليجرام:", None if r is None else r.text)
+            continue
+        if first is None:
+            try:
+                first = r.json()["result"]["message_id"]
+            except Exception:
+                pass
+    return first
+
+
+def edit_telegram(mid, text):
+    """يحرر رسالة سابقة بدل إرسال جديدة. يرجع True عند النجاح."""
+    print("[تحرير رسالة]", text)
+    log_message("[تحرير] " + text)
+    if not TOKEN or not CHAT_ID or not mid:
+        return False
+    r = _post("editMessageText", {"chat_id": CHAT_ID, "message_id": mid, "text": text, "parse_mode": "HTML"})
+    return bool(r is not None and r.ok)
+
+
+COLLAPSE_LIMIT = 3300
+
+
+def collapsed(body):
+    """يلف النص في اقتباس قابل للطي (يظهر سطرين ويُفتح بالضغط)."""
+    b = body if len(body) <= COLLAPSE_LIMIT else body[:COLLAPSE_LIMIT].rsplit("\n", 1)[0] + "\n…"
+    return f"<blockquote expandable>{b}</blockquote>"
+
+
+def analysis_wrap(body):
+    """رسالة التحليل: عنوان واضح وتفاصيل مطوية. السجل يحفظ النص كاملاً."""
+    text = "📊 <b>التحليل التفصيلي</b> #تحليل\n⬇️ اضغط على النص لفتحه\n" + collapsed(body)
+    return text, "📊 التحليل التفصيلي\n" + body
 
 
 # ====================== رياضيات ======================
@@ -826,11 +877,14 @@ def build_plan(c, bull, bear):
     return {"res": res, "sup": sup, "scen": scen, "bias": bias, "has_orb": bool(c.get("orb")), "d": d}
 
 
-def plan_message(a, plan, update=False):
+def plan_message(a, plan, update=False, status=None):
     c = a["c"]
     bias = {"CALL": "صعود 🟢", "PUT": "هبوط 🔴", None: "محايد ⚪"}[plan["bias"]]
-    L = [f"🏛️ <b>SPX — خطة اليوم</b>{' (تحديث: اكتمل نطاق أول 30 دقيقة)' if update else ''}",
-         f"📍 {c['S']:,.1f} | 🧭 الميل: <b>{bias}</b> (صعود {a['bull']:.1f} / هبوط {a['bear']:.1f})", LINE]
+    L = [f"🗺️ <b>SPX — خطة اليوم</b>{' (تحديث: اكتمل نطاق أول 30 دقيقة)' if update else ''} #خطة",
+         f"📍 {c['S']:,.1f} | 🧭 الميل: <b>{bias}</b> (صعود {a['bull']:.1f} / هبوط {a['bear']:.1f})"]
+    if status:
+        L.append("⚪ لا توصية الآن: " + " • ".join(esc(x) for x in status[:3]))
+    L.append(LINE)
 
     def fmt(lst):
         return " • ".join(f"<b>{p_:,.0f}</b> ({esc(' + '.join(t[:2]))})" for p_, t in lst)
@@ -849,7 +903,7 @@ def plan_message(a, plan, update=False):
     L += ["", "📡 عند توفر إشارة أرسل لك العقد (السترايك والسعر والكمية) مع مستويات المؤشر.",
           "⚠️ <i>المستويات وشروطها قواعد ثابتة لم تُختبر تاريخياً، والبيانات متأخرة"
           f" ~{c['age']:.0f} دقيقة. الشرط يُراقَب على الشارت الحي، والبوت يفحص كل نصف ساعة فقط.</i>",
-          f"🕒 {now_ny().astimezone(RY).strftime('%H:%M')} الرياض | SPX إصدار 14"]
+          f"🕒 {now_ny().astimezone(RY).strftime('%H:%M')} الرياض | SPX إصدار 15"]
     return "\n".join(L)
 
 
@@ -905,7 +959,7 @@ def signal_message(a):
     dot = "🟢" if call else "🔴"
     word = "CALL" if call else "PUT"
     when = f" | {a['exp']} (تجريبي، السوق مغلق)" if a["is_test"] else ""
-    L = [f"🏛️ <b>SPX | {word} {dot}</b> | ⭐ {a['strength']:.0f}/10 | 📍 SPX {S:,.1f}{when}"]
+    L = [f"🔔 <b>توصية SPX | {word} {dot}</b> | ⭐ {a['strength']:.0f}/10 | 📍 SPX {S:,.1f}{when} #توصية"]
     groups = {}
     for k in a["contracts"]:
         groups.setdefault(k.get("sym", SYMBOL).lstrip("^"), []).append(k)
@@ -921,12 +975,12 @@ def signal_message(a):
     if c["age"] >= 5:
         L.append(f"⏱️ البيانات متأخرة ~{c['age']:.0f} دقيقة، تحقق من السعر الحي.")
     L.append("⚠️ <i>تعليمي وليست توصية. أقصى خسارة هي سعر العقد.</i>")
-    L.append(f"🕒 {now_ny().astimezone(RY).strftime('%H:%M')} الرياض | SPX إصدار 14")
+    L.append(f"🕒 {now_ny().astimezone(RY).strftime('%H:%M')} الرياض | SPX إصدار 15")
     return "\n".join(L)
 
 
 def summary_message(state):
-    L = ["🏛️ <b>SPX — ملخص اليوم</b>", "",
+    L = ["🧾 <b>SPX — ملخص اليوم</b> #ملخص", "",
          f"🔎 عدد الفحوصات: <b>{state.get('runs', 0)}</b>"]
     be = state.get("best_edge", 0.0)
     if state.get("best_time"):
@@ -942,13 +996,13 @@ def summary_message(state):
         for r, cnt in sorted(rc.items(), key=lambda x: -x[1])[:3]:
             L.append(f"• {esc(r)} ({cnt} مرة)")
     L += ["", "💡 لا إشارة = لا صفقة، والانتظار قرار سليم.",
-          f"🕒 {now_ny().astimezone(RY).strftime('%H:%M')} الرياض | SPX إصدار 14"]
+          f"🕒 {now_ny().astimezone(RY).strftime('%H:%M')} الرياض | SPX إصدار 15"]
     return "\n".join(L)
 
 
 def no_signal_message(a):
     c = a["c"]
-    L = [f"🏛️ <b>SPX — لا صفقة الآن</b> | {c['S']:,.1f}"]
+    L = [f"⚪ <b>SPX — لا توصية الآن</b> | {c['S']:,.1f}"]
     for r in a["reasons"]:
         L.append(f"• {esc(r)}")
     return "\n".join(L)
@@ -1129,14 +1183,15 @@ def position_message(p, val, pnl, spot, text, kind):
     icon = {"stop": "🛑", "tp": "🟢", "giveback": "📉", "exp_final": "⏰"}.get(kind, "📈")
     pl = (val - p["entry"]) * 100 * p.get("qty", 1)
     head = {"stop": "وصل الوقف", "tp": "وصل الهدف", "giveback": "الربح يتراجع", "exp_final": "ينتهي اليوم"}.get(kind, "تحرّك سعر العقد")
-    L = [f"{icon} <b>{head}</b>: {p['root']} {p['strike']:,.0f} {p['side']}",
+    L = ["📌 <b>متابعة</b> #متابعة",
+         f"{icon} <b>{head}</b>: {p['root']} {p['strike']:,.0f} {p['side']}",
          f"💵 دخول {p['entry']:.2f} ← الآن {val:.2f} | <b>{pnl * 100:+.0f}%</b> ({pl:+,.0f}$ على ×{p.get('qty', 1)})"]
     if spot:
         fmt = f"{spot:,.2f}" if p["sym"] == "SPY" else f"{spot:,.1f}"
         L.append(f"📍 {p['sym']} {fmt}")
     L.append(text)
     L.append(f"🛑 الوقف {p['entry'] * (1 - STOP_LOSS):.2f} | ✅ الجني {p['entry'] * (1 + TAKE_PROFIT):.2f}")
-    L.append(f"⚠️ القرار قرارك | 🕒 {now_ny().astimezone(RY).strftime('%H:%M')} الرياض | SPX إصدار 14")
+    L.append(f"⚠️ القرار قرارك | 🕒 {now_ny().astimezone(RY).strftime('%H:%M')} الرياض | SPX إصدار 15")
     return "\n".join(L)
 
 
@@ -1208,8 +1263,9 @@ def run_once(force=False):
     log_line = log_summary()
 
     if force:
-        send_telegram(signal_message(a) if has_signal else no_signal_message(a))
-        send_telegram(details_message(a, log_line, has_signal))
+        mid = send_telegram(signal_message(a) if has_signal else no_signal_message(a))
+        shown, full = analysis_wrap(details_message(a, log_line, has_signal))
+        send_telegram(shown, reply_to=mid, full_text=full)
         send_telegram(plan_message(a, build_plan(a["c"], a["bull"], a["bear"])))
         return
 
@@ -1228,22 +1284,34 @@ def run_once(force=False):
         except Exception:
             recent = False
 
+    plan = build_plan(a["c"], a["bull"], a["bear"])
     if has_signal and not recent:
-        send_telegram(signal_message(a))
-        send_telegram(details_message(a, log_line, True))
+        mid = send_telegram(signal_message(a))
+        shown, full = analysis_wrap(details_message(a, log_line, True))
+        send_telegram(shown, reply_to=mid, full_text=full)
         log_signal(n, a["exp"], a["side"], a["contracts"][0], a["c"]["S"], a["strength"])
         add_positions(n, a)
         state.update(last_side=a["side"], last_time=n.isoformat(), date=today_s, report_sent=True,
                      signals=state.get("signals", 0) + 1)
     elif state.get("date") != today_s or not state.get("report_sent"):
-        send_telegram(no_signal_message(a) + "\n\n🔔 سأراقب السوق وأرسل لك إشارة عند توفر الشروط.")
-        send_telegram(details_message(a, log_line, False))
+        if (n.hour, n.minute) < NO_NEW_ENTRY and not state.get("plan_sent"):
+            # أول رسالة اليوم: خطة واحدة تحمل سبب عدم التوصية، والتحليل مطوي تحتها
+            pmid = send_telegram(plan_message(a, plan, status=a["reasons"]))
+            shown, full = analysis_wrap(details_message(a, log_line, False))
+            send_telegram(shown, reply_to=pmid, full_text=full)
+            state.update(plan_sent=True, plan_orb=plan["has_orb"], plan_mid=pmid)
+        else:
+            send_telegram(no_signal_message(a) + "\n\n🔔 سأراقب السوق وأرسل لك إشارة عند توفر الشروط.")
         state.update(date=today_s, report_sent=True)
     else:
         print("لا إشارة جديدة، لا رسالة.")
-    plan = build_plan(a["c"], a["bull"], a["bear"])
     if (n.hour, n.minute) < NO_NEW_ENTRY and (not state.get("plan_sent") or (plan["has_orb"] and not state.get("plan_orb"))):
-        send_telegram(plan_message(a, plan, update=bool(state.get("plan_sent"))))
+        upd = bool(state.get("plan_sent"))
+        txt = plan_message(a, plan, update=upd)
+        if upd and state.get("plan_mid") and edit_telegram(state["plan_mid"], txt):
+            pass                                  # حدّثنا رسالة الخطة نفسها بدل إرسال جديدة
+        else:
+            state["plan_mid"] = send_telegram(txt)
         state["plan_sent"] = True
         state["plan_orb"] = state.get("plan_orb", False) or plan["has_orb"]
     if (n.hour, n.minute) >= NO_NEW_ENTRY and not state.get("summary_sent") and state.get("signals", 0) == 0:

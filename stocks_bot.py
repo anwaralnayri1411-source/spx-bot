@@ -736,16 +736,16 @@ def alert_block(p, info, alerts):
 
 
 def short_footer():
-    return f"⚠️ القرار قرارك | 🕒 {ob.now_ny().astimezone(ob.RY).strftime('%H:%M')} الرياض | إصدار 13"
+    return f"⚠️ القرار قرارك | 🕒 {ob.now_ny().astimezone(ob.RY).strftime('%H:%M')} الرياض | إصدار 14"
 
 
 def footer_line():
     return ("⚠️ <i>تعليمي وليست توصية. البيانات متأخرة ~15 دقيقة، وقد يختلف سعرك الحي.</i>\n"
-            f"🕒 {ob.now_ny().astimezone(ob.RY).strftime('%H:%M')} الرياض | إصدار 13")
+            f"🕒 {ob.now_ny().astimezone(ob.RY).strftime('%H:%M')} الرياض | إصدار 14")
 
 
 def status_message(rows, n):
-    L = ["📋 <b>الشركات — حالة العقود المفتوحة</b>", ""]
+    L = ["📋 <b>الشركات — حالة العقود المفتوحة</b> #حالة", ""]
     net = 0.0
     live = [(p, i) for p, i in rows if p["status"] != "stopped"]
     dead = [(p, i) for p, i in rows if p["status"] == "stopped"]
@@ -822,7 +822,7 @@ def do_monitor(n, force, P):
             vix_now = None
         track_rows(rows, n, spy_spot, vix_now)
     if blocks:
-        ob.send_telegram("\n\n".join(blocks + [short_footer()]))
+        ob.send_telegram("\n\n".join(["📌 <b>متابعة العقود</b> #متابعة"] + blocks + [short_footer()]))
     hm = (n.hour, n.minute)
     if force or (hm >= SUMMARY_AT and P.get("summary_date") != today_s):
         if rows:
@@ -1009,19 +1009,19 @@ def stock_levels(i, k):
 
 
 def signal_message(a, ideas):
-    head = "🏢 <b>الشركات — فرص الأسبوع</b>" + (" (تجريبي، السوق مغلق)" if a["is_test"] else "")
+    head = "🔔 <b>توصية الشركات — فرص الأسبوع</b>" + (" (تجريبي، السوق مغلق)" if a["is_test"] else "") + " #توصية"
     L = [head, ""]
     for i in ideas:
         L += [idea_line(i), ""]
     L += ["🟩 قوي  🟨 متوسط  🟧 مقبول  🔥 طلب عالٍ  🚨 أرباح",
           "📡 سأتابع هذه العقود وأنبّهك عند الوقف أو الهدف أو ضعف الفكرة.",
           "⚠️ <i>تعليمي وليست توصية. تحقق من السعر الحي، وأقصى خسارة هي سعر العقد.</i>",
-          f"🕒 {ob.now_ny().astimezone(ob.RY).strftime('%H:%M')} الرياض | إصدار 13"]
+          f"🕒 {ob.now_ny().astimezone(ob.RY).strftime('%H:%M')} الرياض | إصدار 14"]
     return "\n".join(L)
 
 
 def no_idea_message(a):
-    L = ["🏢 <b>الشركات — لا فرص قوية الآن</b>", f"تم فحص {a['scanned']} شركة."]
+    L = ["⚪ <b>الشركات — لا فرص قوية الآن</b> #خطة", f"تم فحص {a['scanned']} شركة."]
     if a["shock"]:
         L.append("🔴 تحذير: السوق في حالة صدمة (VIX أو S&P).")
     if a["watch"]:
@@ -1102,11 +1102,12 @@ def do_scan(n, force, P):
 
     if force:
         if a["ideas"]:
-            ob.send_telegram(signal_message(a, a["ideas"]))
-            ob.send_telegram(details_message(a, a["ideas"], log_line))
+            mid = ob.send_telegram(signal_message(a, a["ideas"]))
+            shown, full = ob.analysis_wrap(details_message(a, a["ideas"], log_line))
         else:
-            ob.send_telegram(no_idea_message(a))
-            ob.send_telegram(details_message(a, [], log_line))
+            mid = ob.send_telegram(no_idea_message(a))
+            shown, full = ob.analysis_wrap(details_message(a, [], log_line))
+        ob.send_telegram(shown, reply_to=mid, full_text=full)
         return
 
     # لا نكرر التوصية على سهم لديك فيه عقد مفتوح بنفس الاتجاه (منعاً لمضاعفة المخاطرة)
@@ -1120,8 +1121,9 @@ def do_scan(n, force, P):
             continue
         new.append(i)
     if new:
-        ob.send_telegram(signal_message(a, new))
-        ob.send_telegram(details_message(a, new, log_line))
+        mid = ob.send_telegram(signal_message(a, new))
+        shown, full = ob.analysis_wrap(details_message(a, new, log_line))
+        ob.send_telegram(shown, reply_to=mid, full_text=full)
         for i in new:
             state["sent"][f"{i['ticker']}:{i['side']}"] = n.isoformat()
             log_idea(n, i)
