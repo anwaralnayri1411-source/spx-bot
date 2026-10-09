@@ -167,7 +167,7 @@
    "strength": 7.4,
    "earn": "2026-11-02",
    "status": "stopped",
-   "peak": 0.322,
+   "peak": 0.525,
    "alerts": {
     "warn": "2026-10-08T11:30-04:00",
     "stop": "2026-10-08T12:32-04:00",
@@ -188,7 +188,9 @@
    "earn": "2026-10-30",
    "status": "open",
    "peak": 0.108,
-   "alerts": {}
+   "alerts": {
+    "warn": "2026-10-09T15:11-04:00"
+   }
   },
   {
    "id": "DIS:CALL:2026-10-16:107",
@@ -254,6 +256,22 @@
    "entry_spy": 778.04,
    "strength": 8.6,
    "earn": "2026-10-29",
+   "status": "open",
+   "peak": 0.0,
+   "alerts": {}
+  },
+  {
+   "id": "MSFT:CALL:2026-10-14:547.5",
+   "ticker": "MSFT",
+   "side": "CALL",
+   "exp": "2026-10-14",
+   "strike": 547.5,
+   "entry": 1.84,
+   "time": "2026-10-09T15:11-04:00",
+   "entry_spot": 536.16,
+   "entry_spy": 779.08,
+   "strength": 8.2,
+   "earn": "2026-10-28",
    "status": "open",
    "peak": 0.0,
    "alerts": {}
