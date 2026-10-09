@@ -168,6 +168,28 @@ def edit_telegram(mid, text):
     return bool(r is not None and r.ok)
 
 
+def send_photo(png, caption="", reply_to=None):
+    """يرسل صورة PNG مع تعليق قصير. يرجع رقم الرسالة أو None."""
+    print("[صورة]", caption)
+    log_message(f"[صورة] {caption}")
+    if not TOKEN or not CHAT_ID or not png:
+        return None
+    data = {"chat_id": CHAT_ID, "caption": caption, "parse_mode": "HTML"}
+    if reply_to:
+        data["reply_to_message_id"] = reply_to
+        data["allow_sending_without_reply"] = "true"
+    try:
+        r = requests.post(f"https://api.telegram.org/bot{TOKEN}/sendPhoto", data=data,
+                          files={"photo": ("card.png", png, "image/png")}, timeout=40)
+        if not r.ok:
+            print("خطأ من تليجرام:", r.text)
+            return None
+        return r.json()["result"]["message_id"]
+    except Exception as e:
+        print("تعذر إرسال الصورة:", e)
+        return None
+
+
 COLLAPSE_LIMIT = 3300
 
 
@@ -903,7 +925,7 @@ def plan_message(a, plan, update=False, status=None):
     L += ["", "📡 عند توفر إشارة أرسل لك العقد (السترايك والسعر والكمية) مع مستويات المؤشر.",
           "⚠️ <i>المستويات وشروطها قواعد ثابتة لم تُختبر تاريخياً، والبيانات متأخرة"
           f" ~{c['age']:.0f} دقيقة. الشرط يُراقَب على الشارت الحي، والبوت يفحص كل نصف ساعة فقط.</i>",
-          f"🕒 {now_ny().astimezone(RY).strftime('%H:%M')} الرياض | SPX إصدار 15"]
+          f"🕒 {now_ny().astimezone(RY).strftime('%H:%M')} الرياض | SPX إصدار 16"]
     return "\n".join(L)
 
 
@@ -975,7 +997,7 @@ def signal_message(a):
     if c["age"] >= 5:
         L.append(f"⏱️ البيانات متأخرة ~{c['age']:.0f} دقيقة، تحقق من السعر الحي.")
     L.append("⚠️ <i>تعليمي وليست توصية. أقصى خسارة هي سعر العقد.</i>")
-    L.append(f"🕒 {now_ny().astimezone(RY).strftime('%H:%M')} الرياض | SPX إصدار 15")
+    L.append(f"🕒 {now_ny().astimezone(RY).strftime('%H:%M')} الرياض | SPX إصدار 16")
     return "\n".join(L)
 
 
@@ -996,7 +1018,7 @@ def summary_message(state):
         for r, cnt in sorted(rc.items(), key=lambda x: -x[1])[:3]:
             L.append(f"• {esc(r)} ({cnt} مرة)")
     L += ["", "💡 لا إشارة = لا صفقة، والانتظار قرار سليم.",
-          f"🕒 {now_ny().astimezone(RY).strftime('%H:%M')} الرياض | SPX إصدار 15"]
+          f"🕒 {now_ny().astimezone(RY).strftime('%H:%M')} الرياض | SPX إصدار 16"]
     return "\n".join(L)
 
 
@@ -1191,8 +1213,42 @@ def position_message(p, val, pnl, spot, text, kind):
         L.append(f"📍 {p['sym']} {fmt}")
     L.append(text)
     L.append(f"🛑 الوقف {p['entry'] * (1 - STOP_LOSS):.2f} | ✅ الجني {p['entry'] * (1 + TAKE_PROFIT):.2f}")
-    L.append(f"⚠️ القرار قرارك | 🕒 {now_ny().astimezone(RY).strftime('%H:%M')} الرياض | SPX إصدار 15")
+    L.append(f"⚠️ القرار قرارك | 🕒 {now_ny().astimezone(RY).strftime('%H:%M')} الرياض | SPX إصدار 16")
     return "\n".join(L)
+
+
+def daily_report_items(n):
+    """مراكز اليوم بنتيجة قاعدة الخروج (هدف +50% / وقف -40% / بلا حسم)."""
+    P = load_positions()
+    today = n.date().isoformat()
+    todays = [p for p in P["positions"] if p["time"][:10] == today]
+    last = {}
+    try:
+        for r in pd.read_csv(TRACK_FILE).itertuples():
+            last[r.id] = float(r.val)
+    except Exception:
+        pass
+    items = []
+    for p in todays:
+        e, q, pk = p["entry"], p.get("qty", 1), p.get("peak", 0.0)
+        if pk >= TAKE_PROFIT:
+            status, ex, pnl = "tp", e * (1 + TAKE_PROFIT), TAKE_PROFIT * e * 100 * q
+        elif p["status"] == "stopped":
+            status, ex, pnl = "stop", e * (1 - STOP_LOSS), -STOP_LOSS * e * 100 * q
+        else:
+            val = last.get(p["id"], e)
+            status, ex, pnl = "flat", val, (val - e) * 100 * q
+        items.append({"name": f"{p['root']} {p['strike']:,.0f} {p['side']}", "qty": q, "entry": e, "exit": ex,
+                      "status": status, "peak": pk, "pnl": pnl})
+    return items
+
+
+def daily_report_png(n):
+    import cards
+    items = daily_report_items(n)
+    if not items:
+        return None
+    return cards.daily_card(n.strftime("%Y-%m-%d"), items, STOP_LOSS, TAKE_PROFIT)
 
 
 def monitor_positions(n, force=False):
@@ -1314,6 +1370,14 @@ def run_once(force=False):
             state["plan_mid"] = send_telegram(txt)
         state["plan_sent"] = True
         state["plan_orb"] = state.get("plan_orb", False) or plan["has_orb"]
+    if (n.hour, n.minute) >= (15, 30) and not state.get("report_img"):
+        try:
+            png = daily_report_png(n)
+            if png:
+                send_photo(png, "🧾 <b>تقرير SPX اليومي</b> #تقرير")
+        except Exception as e:
+            print("تعذر إنشاء بطاقة التقرير:", e)
+        state["report_img"] = True
     if (n.hour, n.minute) >= NO_NEW_ENTRY and not state.get("summary_sent") and state.get("signals", 0) == 0:
         send_telegram(summary_message(state))   # ملخص نهاية الجلسة عند عدم وجود أي إشارة
         state["summary_sent"] = True

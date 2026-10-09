@@ -736,12 +736,31 @@ def alert_block(p, info, alerts):
 
 
 def short_footer():
-    return f"⚠️ القرار قرارك | 🕒 {ob.now_ny().astimezone(ob.RY).strftime('%H:%M')} الرياض | إصدار 14"
+    return f"⚠️ القرار قرارك | 🕒 {ob.now_ny().astimezone(ob.RY).strftime('%H:%M')} الرياض | إصدار 15"
 
 
 def footer_line():
     return ("⚠️ <i>تعليمي وليست توصية. البيانات متأخرة ~15 دقيقة، وقد يختلف سعرك الحي.</i>\n"
-            f"🕒 {ob.now_ny().astimezone(ob.RY).strftime('%H:%M')} الرياض | إصدار 14")
+            f"🕒 {ob.now_ny().astimezone(ob.RY).strftime('%H:%M')} الرياض | إصدار 15")
+
+
+def board_png(rows):
+    import cards
+    items = [{"name": f"{p['ticker']} {p['side']} {p['strike']:g}", "sub": date_ar(p["exp"]), "entry": p["entry"],
+              "now": info["val"], "pnl": info["pnl"], "status": p["status"]} for p, info in rows]
+    return cards.board_card("لوحة عقود الشركات", ob.now_ny().strftime("%Y-%m-%d %H:%M") + " نيويورك", items,
+                            STOP_LOSS, TAKE_PROFIT)
+
+
+def send_board(rows, n):
+    """لوحة صورة للعقود المفتوحة، وإن تعذرت نرسل النص بدلاً منها."""
+    net = sum((i["val"] - p["entry"]) * 100 for p, i in rows)
+    try:
+        if ob.send_photo(board_png(rows), f"📋 <b>حالة العقود</b> #حالة | المجموع على الورق: <b>{net:+,.0f}$</b>"):
+            return
+    except Exception as e:
+        print("تعذر إنشاء اللوحة:", e)
+    ob.send_telegram(status_message(rows, n))
 
 
 def status_message(rows, n):
@@ -826,7 +845,7 @@ def do_monitor(n, force, P):
     hm = (n.hour, n.minute)
     if force or (hm >= SUMMARY_AT and P.get("summary_date") != today_s):
         if rows:
-            ob.send_telegram(status_message(rows, n))
+            send_board(rows, n)
         elif force:
             ob.send_telegram("📋 <b>الشركات — حالة العقود المفتوحة</b>\nلا توجد عقود مفتوحة الآن.")
         elif not sent_today:
@@ -1016,7 +1035,7 @@ def signal_message(a, ideas):
     L += ["🟩 قوي  🟨 متوسط  🟧 مقبول  🔥 طلب عالٍ  🚨 أرباح",
           "📡 سأتابع هذه العقود وأنبّهك عند الوقف أو الهدف أو ضعف الفكرة.",
           "⚠️ <i>تعليمي وليست توصية. تحقق من السعر الحي، وأقصى خسارة هي سعر العقد.</i>",
-          f"🕒 {ob.now_ny().astimezone(ob.RY).strftime('%H:%M')} الرياض | إصدار 14"]
+          f"🕒 {ob.now_ny().astimezone(ob.RY).strftime('%H:%M')} الرياض | إصدار 15"]
     return "\n".join(L)
 
 

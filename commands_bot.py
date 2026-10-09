@@ -23,6 +23,7 @@ TOKEN = ob.TOKEN
 CHAT_ID = ob.CHAT_ID
 ALIASES = {"update": "company", "تحديث": "company", "شركة": "company", "company": "company",
            "status": "status", "حالة": "status", "positions": "status", "عقود": "status",
+           "لوحة": "board", "board": "board", "تقرير": "report", "report": "report",
            "spx": "spx", "help": "help", "مساعدة": "help", "start": "help", "مساعده": "help"}
 
 
@@ -92,7 +93,9 @@ def eval_positions(plist, n):
 def help_text():
     return ("🤖 <b>أوامر البوت</b>\n"
             "• <code>/تحديث NVDA</code> تحليل الشركة وعقودك المفتوحة عليها\n"
-            "• <code>/حالة</code> كل العقود المفتوحة\n"
+            "• <code>/حالة</code> كل العقود المفتوحة (نص)\n"
+            "• <code>/لوحة</code> العقود المفتوحة بصورة\n"
+            "• <code>/تقرير</code> تقرير SPX اليومي بصورة\n"
             "• <code>/spx</code> حالة SPX وآخر إشارة\n\n"
             "⏱️ أرد عند أول فحص مجدول، وقد يتأخر 15 دقيقة أو أكثر.\n"
             "📉 البيانات مجانية ومتأخرة نحو 15 دقيقة.")
@@ -188,6 +191,23 @@ def handle(cmd, arg, n):
         return status_text(n)
     if cmd == "spx":
         return spx_text(n)
+    if cmd == "board":
+        P = sb.load_positions() or {"positions": []}
+        rows = eval_positions(sb.active_positions(P, n), n)
+        if not rows:
+            return "لا توجد عقود مفتوحة الآن."
+        try:
+            return ("photo", sb.board_png(rows), "📋 <b>لوحة العقود</b> #حالة")
+        except Exception as e:
+            print("تعذر إنشاء اللوحة:", e)
+            return sb.status_message(rows, n)
+    if cmd == "report":
+        try:
+            png = ob.daily_report_png(n)
+        except Exception as e:
+            print("تعذر إنشاء التقرير:", e)
+            return "تعذر إنشاء بطاقة التقرير الآن."
+        return ("photo", png, "🧾 <b>تقرير SPX اليومي</b> #تقرير") if png else "لا توجد إشارات SPX اليوم."
     return company_text(arg, n)
 
 
@@ -206,7 +226,11 @@ def main():
         if cmd is None:
             continue
         try:
-            ob.send_telegram(handle(cmd, arg, n))
+            out = handle(cmd, arg, n)
+            if isinstance(out, tuple):
+                ob.send_photo(out[1], out[2])
+            else:
+                ob.send_telegram(out)
         except Exception as e:
             ob.send_telegram(f"⚠️ تعذر تنفيذ الأمر: {ob.esc(e)}")
     save_state(st)
