@@ -118,13 +118,6 @@ def build(n):
         bits.append(f"عائد 10 سنوات {float(tnx.iloc[-1]):.2f}% ({float(tnx.iloc[-1] - tnx.iloc[-2]):+.2f})")
     if bits:
         L.append(" | ".join(bits))
-    try:
-        import levels
-        d = levels.compute(n)
-        levels.log(d)
-        L += ["", "📐 <b>مستويات SPX</b>", levels.block(d)]
-    except Exception as e:
-        print("تعذر حساب المستويات:", e)
     ev = [(d, nm) for d, nm in ob.upcoming_events(n.date(), 1)]
     if ev:
         L += ["", "📅 <b>أحداث قريبة</b>"] + [f"• {'اليوم' if d == n.date() else 'غداً'}: {nm}" for d, nm in ev]
@@ -133,6 +126,11 @@ def build(n):
         L += ["", "🔥 <b>أبرز تحركات الأسهم قبل الافتتاح</b>"]
         for tk, ch, vol, px in mv[:6]:
             L.append(f"{'🟢' if ch > 0 else '🔴'} {tk} {fmt(ch)} | ${px:,.2f} | حجم {vol:,.0f}")
+    try:
+        import report
+        return report.build("open", n, extras=L[2:])
+    except Exception as e:
+        print("تعذر بناء التقرير الموحد:", e)
     L += ["", "⚠️ <i>تعليمي وليست توصية. البيانات مجانية ومتأخرة، وبوت SPX يعطي التوصيات بعد الافتتاح.</i>"]
     return "\n".join(L)
 

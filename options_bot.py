@@ -1453,6 +1453,20 @@ def run_once(force=False):
             state["plan_mid"] = send_telegram(txt)
         state["plan_sent"] = True
         state["plan_orb"] = state.get("plan_orb", False) or plan["has_orb"]
+    if (n.hour, n.minute) >= (12, 0) and not state.get("rep_mid"):
+        state["rep_mid"] = True
+        try:
+            import report
+            send_telegram(report.build("mid", n))
+        except Exception as e:
+            print("تعذر إرسال تقرير منتصف اليوم:", e)
+    if (n.hour, n.minute) >= (15, 30) and not state.get("rep_close"):
+        state["rep_close"] = True
+        try:
+            import report
+            send_telegram(report.build("close", n))
+        except Exception as e:
+            print("تعذر إرسال تقرير نهاية اليوم:", e)
     if (n.hour, n.minute) >= (15, 30) and not state.get("report_img"):
         try:
             png = daily_report_png(n)
