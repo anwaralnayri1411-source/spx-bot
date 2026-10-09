@@ -219,7 +219,7 @@
    "strength": 8.7,
    "earn": "2026-10-27",
    "status": "tp",
-   "peak": 1.056,
+   "peak": 1.183,
    "alerts": {
     "tp": "2026-10-09T10:57-04:00"
    }
@@ -238,6 +238,22 @@
    "earn": "2026-11-04",
    "status": "open",
    "peak": 0.004,
+   "alerts": {}
+  },
+  {
+   "id": "AMZN:CALL:2026-10-14:265",
+   "ticker": "AMZN",
+   "side": "CALL",
+   "exp": "2026-10-14",
+   "strike": 265.0,
+   "entry": 1.64,
+   "time": "2026-10-09T13:11-04:00",
+   "entry_spot": 260.51,
+   "entry_spy": 778.04,
+   "strength": 8.6,
+   "earn": "2026-10-29",
+   "status": "open",
+   "peak": 0.0,
    "alerts": {}
   }
  ],
