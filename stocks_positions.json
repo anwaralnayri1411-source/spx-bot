@@ -150,7 +150,8 @@
    "status": "tp",
    "peak": 0.647,
    "alerts": {
-    "tp": "2026-10-08T13:13-04:00"
+    "tp": "2026-10-08T13:13-04:00",
+    "giveback": "2026-10-09T10:41-04:00"
    }
   },
   {
@@ -202,7 +203,7 @@
    "strength": 8.9,
    "earn": "2026-11-12",
    "status": "open",
-   "peak": 0.271,
+   "peak": 0.289,
    "alerts": {}
   },
   {
@@ -219,6 +220,22 @@
    "earn": "2026-10-27",
    "status": "open",
    "peak": 0.218,
+   "alerts": {}
+  },
+  {
+   "id": "UBER:CALL:2026-10-16:72",
+   "ticker": "UBER",
+   "side": "CALL",
+   "exp": "2026-10-16",
+   "strike": 72.0,
+   "entry": 1.2,
+   "time": "2026-10-09T10:41-04:00",
+   "entry_spot": 71.86,
+   "entry_spy": 776.24,
+   "strength": 8.6,
+   "earn": "2026-11-04",
+   "status": "open",
+   "peak": 0.0,
    "alerts": {}
   }
  ],
