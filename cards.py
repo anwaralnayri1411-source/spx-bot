@@ -144,3 +144,83 @@ def board_card(title, subtitle, items, sl, tp):
     tiles = [("المجموع على الورق", _money(net_n), "#35d07f" if net_n >= 0 else "#ff6b73"),
              ("نشطة رابحة", f"{up}", "#35d07f"), ("نازلة", f"{down}", "#ffb340"), ("تحت الوقف", f"{stopped}", "#ff6b73")]
     return make_card(title, subtitle, tiles, rows, ["القيمة بسعر الوسط بين العرض والطلب، وقد تختلف عن سعر بيعك."], COLS_BOARD)
+
+
+# ------------------------------------------------------------------ الشعار وبطاقة العقد
+def logo_svg(size=84):
+    """شعار أصلي: حلقة ذهبية بعلامات، وعين تحليل زرقاء، وسهما CALL أخضر وPUT أحمر."""
+    ticks = "".join(
+        f'<line x1="50" y1="4" x2="50" y2="{11 if i % 3 else 15}" stroke="#d9ae2f" stroke-width="{2.4 if i % 3 else 3.4}" '
+        f'transform="rotate({i * 15} 50 50)"/>' for i in range(24))
+    return f"""<svg width="{size}" height="{size}" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+<defs><radialGradient id="g" cx="50%" cy="45%" r="55%"><stop offset="0" stop-color="#bff3ff"/><stop offset=".45" stop-color="#2bb3e6"/>
+<stop offset="1" stop-color="#0a2a55"/></radialGradient>
+<linearGradient id="r" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffe27a"/><stop offset="1" stop-color="#b8860b"/></linearGradient></defs>
+<circle cx="50" cy="50" r="46" fill="#0b1226" stroke="url(#r)" stroke-width="3"/>{ticks}
+<path d="M14 50 Q50 20 86 50 Q50 80 14 50Z" fill="#101a38" stroke="url(#r)" stroke-width="2"/>
+<circle cx="50" cy="50" r="15" fill="url(#g)"/><circle cx="50" cy="50" r="6.5" fill="#06122b"/><circle cx="46" cy="46" r="2.4" fill="#fff" opacity=".9"/>
+<path d="M29 82 L38 68 L47 82Z" fill="#2fd27a"/><path d="M53 68 L71 68 L62 82Z" fill="#ff5e66"/>
+</svg>"""
+
+
+def _gauge(stop, entry, target, now=None):
+    pts = [stop, entry, target] + ([now] if now is not None else [])
+    lo, hi = min(pts), max(pts)
+    pad = (hi - lo) * 0.12 or 0.1
+    lo, hi = lo - pad, hi + pad
+
+    def pos(v):
+        return max(1.0, min(99.0, (v - lo) / (hi - lo) * 100))
+
+    s, e, t = pos(stop), pos(entry), pos(target)
+    mk = ""
+    if now is not None:
+        mk = (f'<div class="mk" style="left:{pos(now):.1f}%"><span>الآن<br>{ltr(f"{now:.2f}")}</span></div>')
+    return f"""<div class="gg"><div class="bar">
+<div class="z red" style="left:{s:.1f}%;width:{e - s:.1f}%"></div><div class="z grn" style="left:{e:.1f}%;width:{t - e:.1f}%"></div>
+<div class="pt" style="left:{s:.1f}%;background:#ff6b73"></div><div class="pt" style="left:{e:.1f}%;background:#fff"></div>
+<div class="pt" style="left:{t:.1f}%;background:#35d07f"></div>{mk}</div>
+<div class="lb"><span style="left:{s:.1f}%;color:#ff8c93">وقف<br>{ltr(f"{stop:.2f}")}</span>
+<span style="left:{e:.1f}%;color:#fff">دخول<br>{ltr(f"{entry:.2f}")}</span>
+<span style="left:{t:.1f}%;color:#58e39a">هدف<br>{ltr(f"{target:.2f}")}</span></div></div>"""
+
+
+def contract_card_html(kind, name, sub, price, chg, entry, stop, target, now=None, badge="", foot="", brand="Signal Desk"):
+    """kind: 'entry' (توصية) | 'follow' (متابعة). chg: نسبة التغير بالنسبة لسعر الدخول أو None."""
+    up = (chg or 0) >= 0
+    col = "#35d07f" if up else "#ff6b73"
+    chg_html = "" if chg is None else f'<div class="chg" style="color:{col}">{ltr(f"{chg * 100:+.0f}%")}</div>'
+    label = "سعر الدخول" if kind == "entry" else "السعر الآن"
+    badge_html = f'<div class="bd">{esc(badge)}</div>' if badge else ""
+    return f"""<!doctype html><html dir="rtl" lang="ar"><meta charset="utf-8"><style>
+*{{box-sizing:border-box;margin:0;padding:0}}
+body{{width:{W}px;background:#0b0e16;color:#eef1f8;font-family:'Noto Sans Arabic','DejaVu Sans',Tahoma,sans-serif}}
+.hd{{display:flex;align-items:center;gap:18px;padding:22px 30px;background:linear-gradient(120deg,#8a6d12,#2a2208 55%,#0b0e16);border-bottom:2px solid #c9a227}}
+.hd h1{{font-size:34px;color:#ffd75a;flex:1}} .hd p{{font-size:18px;color:#e6d9a8;margin-top:4px}}
+.bd{{background:#121726;border:2px solid {col};color:{col};border-radius:12px;padding:6px 16px;font-size:20px;font-weight:700}}
+.mid{{display:flex;align-items:flex-end;gap:26px;padding:28px 36px 6px}}
+.px{{font-size:104px;font-weight:700;line-height:1;color:{col}}} .lab{{font-size:19px;color:#aab2c5;margin-bottom:6px}}
+.chg{{font-size:40px;font-weight:700;margin-bottom:12px}}
+.gg{{padding:46px 56px 8px}} .bar{{position:relative;height:16px;background:#1b2132;border-radius:8px}}
+.z{{position:absolute;top:0;height:16px}} .z.red{{background:#7a2328}} .z.grn{{background:#17794a}}
+.pt{{position:absolute;top:-6px;width:6px;height:28px;border-radius:3px;transform:translateX(-3px)}}
+.mk{{position:absolute;top:-34px;transform:translateX(-50%);text-align:center}}
+.mk:after{{content:"";display:block;margin:2px auto 0;width:0;height:0;border:9px solid transparent;border-top-color:#ffd75a;border-bottom:0}}
+.mk span{{display:block;font-size:17px;color:#ffd75a;font-weight:700;line-height:1.2}}
+.lb{{position:relative;height:60px;margin-top:20px}} .lb span{{position:absolute;transform:translateX(-50%);text-align:center;font-size:19px;line-height:1.3}}
+.ft{{padding:14px 30px 20px;color:#6f7890;font-size:14px;display:flex;justify-content:space-between}}
+</style><body>
+<div class="hd">{logo_svg(76)}<div style="flex:1"><h1>{esc(name)}</h1><p>{esc(sub)}</p></div>{badge_html}</div>
+<div class="mid"><div><div class="lab">{label}</div><div class="px">{ltr(f"{price:.2f}")}</div></div>{chg_html}</div>
+{_gauge(stop, entry, target, now)}
+<div class="ft"><span>{esc(foot)}</span><span>{esc(brand)}</span></div>
+</body></html>"""
+
+
+def contract_card(kind, name, sub, price, chg, entry, stop, target, now=None, badge="", foot="", brand="Signal Desk"):
+    return render_png(contract_card_html(kind, name, sub, price, chg, entry, stop, target, now, badge, foot, brand))
+
+
+def logo_png(size=420):
+    return render_png(f"""<!doctype html><meta charset="utf-8"><body style="margin:0;background:#0b0e16;display:flex;justify-content:center;align-items:center;width:{W}px;height:{size + 80}px">
+{logo_svg(size)}</body>""")

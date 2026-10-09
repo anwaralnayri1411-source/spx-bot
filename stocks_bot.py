@@ -735,13 +735,39 @@ def alert_block(p, info, alerts):
     return "\n".join(L)
 
 
+def send_alerts(blocks):
+    """كل تنبيه بطاقة صورة مع تعليق مختصر (حتى 4 صور) والبقية نص مدموج. الفشل يرجع للنص."""
+    texts = []
+    for idx, (p, info, new) in enumerate(blocks):
+        body = alert_block(p, info, new)
+        if idx >= 4:
+            texts.append(body)
+            continue
+        top = next(k for k in SEVERITY if k in [x for x, _ in new])
+        name = f"{p['ticker']} {p['strike']:,.1f} {p['side']}"
+        stop_p, tp_p = p["entry"] * (1 - STOP_LOSS), p["entry"] * (1 + TAKE_PROFIT)
+        mid = None
+        try:
+            import cards
+            png = cards.contract_card("follow", name, f"انتهاء {date_ar(p['exp'])}", info["val"], info["pnl"],
+                                      p["entry"], stop_p, tp_p, now=info["val"], badge=ALERT_ICON[top],
+                                      foot=f"وقت الرصد {ob.now_ny().astimezone(ob.RY).strftime('%H:%M')} الرياض | الشركات إصدار 16")
+            mid = ob.send_photo(png, "📌 <b>متابعة</b> #متابعة\n" + body + "\n" + short_footer())
+        except Exception as e:
+            print("تعذر إنشاء بطاقة المتابعة:", e)
+        if not mid:
+            texts.append(body)
+    if texts:
+        ob.send_telegram("\n\n".join(["📌 <b>متابعة العقود</b> #متابعة"] + texts + [short_footer()]))
+
+
 def short_footer():
-    return f"⚠️ القرار قرارك | 🕒 {ob.now_ny().astimezone(ob.RY).strftime('%H:%M')} الرياض | إصدار 15"
+    return f"⚠️ القرار قرارك | 🕒 {ob.now_ny().astimezone(ob.RY).strftime('%H:%M')} الرياض | إصدار 16"
 
 
 def footer_line():
     return ("⚠️ <i>تعليمي وليست توصية. البيانات متأخرة ~15 دقيقة، وقد يختلف سعرك الحي.</i>\n"
-            f"🕒 {ob.now_ny().astimezone(ob.RY).strftime('%H:%M')} الرياض | إصدار 15")
+            f"🕒 {ob.now_ny().astimezone(ob.RY).strftime('%H:%M')} الرياض | إصدار 16")
 
 
 def board_png(rows):
@@ -833,7 +859,7 @@ def do_monitor(n, force, P):
             P["dirty"] = True
         rows.append((p, info))
         if new and not force:
-            blocks.append(alert_block(p, info, new))
+            blocks.append((p, info, new))
     if rows and not force:
         try:
             vix_now = ob.vix_info()[0]
@@ -841,7 +867,7 @@ def do_monitor(n, force, P):
             vix_now = None
         track_rows(rows, n, spy_spot, vix_now)
     if blocks:
-        ob.send_telegram("\n\n".join(["📌 <b>متابعة العقود</b> #متابعة"] + blocks + [short_footer()]))
+        send_alerts(blocks)
     hm = (n.hour, n.minute)
     if force or (hm >= SUMMARY_AT and P.get("summary_date") != today_s):
         if rows:
@@ -1027,6 +1053,49 @@ def stock_levels(i, k):
     return [f"├ 🎯 <b>خروج بربح</b> {tp}", f"└ 🛑 <b>خروج بخسارة</b> {sl}"]
 
 
+def idea_caption(i):
+    call = i["side"] == "CALL"
+    k = i["contracts"][0]
+    side = i["side"]
+    flags = ""
+    ed = i["dates"]["earn"]
+    if ed is not None and ed <= date.fromisoformat(k["exp"]):
+        flags = " 🚨أرباح"
+    lv = [x.replace("├ ", "").replace("└ ", "") for x in stock_levels(i, k)]
+    return "\n".join([
+        f"🔔 <b>توصية الشركات | {ob.esc(i['ticker'])} {side} {'🟢' if call else '🔴'}</b> | ⭐ {i['strength']:.1f}{flags} #توصية",
+        f"✅ <b>الدخول:</b> {ob.esc(i['ticker'])} {k['strike']:,.1f} {side} | 📅 {date_ar(k['exp'])}",
+        f"💵 بسعر حتى <b>{k['price']:.2f}</b> | تكلفة <b>${k['cost']:,.0f}</b> للعقد | يحتاج {'+' if call else '-'}{k['need'] * 100:.1f}%",
+        lv[0], lv[1],
+        f"💰 أقصى خسارة ≈ ${k['cost'] * STOP_LOSS:,.0f}",
+        "⚠️ <i>تعليمي وليست توصية. لا تلاحق السعر فوق +10%.</i>"])
+
+
+def send_ideas(a, ideas):
+    """كل فكرة بطاقة صورة وتذكرة مختصرة. يرجع رقم أول رسالة، وعند تعذر الصور نرسل النص الكامل."""
+    first, ok = None, 0
+    for i in ideas:
+        k = i["contracts"][0]
+        side = i["side"]
+        mid = None
+        try:
+            import cards
+            stop_p, tp_p = k["price"] * (1 - STOP_LOSS), k["price"] * (1 + TAKE_PROFIT)
+            png = cards.contract_card("entry", f"{i['ticker']} {k['strike']:,.1f} {side}",
+                                      f"انتهاء {date_ar(k['exp'])} · السهم {i['S']:,.2f}", k["price"], None,
+                                      k["price"], stop_p, tp_p, badge=f"{side} {'🟢' if side == 'CALL' else '🔴'}",
+                                      foot=f"{ob.now_ny().astimezone(ob.RY).strftime('%H:%M')} الرياض | الشركات إصدار 16")
+            mid = ob.send_photo(png, idea_caption(i))
+        except Exception as e:
+            print("تعذر إنشاء بطاقة الفكرة:", e)
+        if mid:
+            ok += 1
+            first = first or mid
+    if ok == 0:
+        return ob.send_telegram(signal_message(a, ideas))
+    return first
+
+
 def signal_message(a, ideas):
     head = "🔔 <b>توصية الشركات — فرص الأسبوع</b>" + (" (تجريبي، السوق مغلق)" if a["is_test"] else "") + " #توصية"
     L = [head, ""]
@@ -1035,7 +1104,7 @@ def signal_message(a, ideas):
     L += ["🟩 قوي  🟨 متوسط  🟧 مقبول  🔥 طلب عالٍ  🚨 أرباح",
           "📡 سأتابع هذه العقود وأنبّهك عند الوقف أو الهدف أو ضعف الفكرة.",
           "⚠️ <i>تعليمي وليست توصية. تحقق من السعر الحي، وأقصى خسارة هي سعر العقد.</i>",
-          f"🕒 {ob.now_ny().astimezone(ob.RY).strftime('%H:%M')} الرياض | إصدار 15"]
+          f"🕒 {ob.now_ny().astimezone(ob.RY).strftime('%H:%M')} الرياض | إصدار 16"]
     return "\n".join(L)
 
 
@@ -1121,7 +1190,7 @@ def do_scan(n, force, P):
 
     if force:
         if a["ideas"]:
-            mid = ob.send_telegram(signal_message(a, a["ideas"]))
+            mid = send_ideas(a, a["ideas"])
             shown, full = ob.analysis_wrap(details_message(a, a["ideas"], log_line))
         else:
             mid = ob.send_telegram(no_idea_message(a))
@@ -1140,7 +1209,7 @@ def do_scan(n, force, P):
             continue
         new.append(i)
     if new:
-        mid = ob.send_telegram(signal_message(a, new))
+        mid = send_ideas(a, new)
         shown, full = ob.analysis_wrap(details_message(a, new, log_line))
         ob.send_telegram(shown, reply_to=mid, full_text=full)
         for i in new:

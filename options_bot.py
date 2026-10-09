@@ -925,7 +925,7 @@ def plan_message(a, plan, update=False, status=None):
     L += ["", "📡 عند توفر إشارة أرسل لك العقد (السترايك والسعر والكمية) مع مستويات المؤشر.",
           "⚠️ <i>المستويات وشروطها قواعد ثابتة لم تُختبر تاريخياً، والبيانات متأخرة"
           f" ~{c['age']:.0f} دقيقة. الشرط يُراقَب على الشارت الحي، والبوت يفحص كل نصف ساعة فقط.</i>",
-          f"🕒 {now_ny().astimezone(RY).strftime('%H:%M')} الرياض | SPX إصدار 16"]
+          f"🕒 {now_ny().astimezone(RY).strftime('%H:%M')} الرياض | SPX إصدار 17"]
     return "\n".join(L)
 
 
@@ -997,8 +997,62 @@ def signal_message(a):
     if c["age"] >= 5:
         L.append(f"⏱️ البيانات متأخرة ~{c['age']:.0f} دقيقة، تحقق من السعر الحي.")
     L.append("⚠️ <i>تعليمي وليست توصية. أقصى خسارة هي سعر العقد.</i>")
-    L.append(f"🕒 {now_ny().astimezone(RY).strftime('%H:%M')} الرياض | SPX إصدار 16")
+    L.append(f"🕒 {now_ny().astimezone(RY).strftime('%H:%M')} الرياض | SPX إصدار 17")
     return "\n".join(L)
+
+
+def ticket_lines(sym, k0, side):
+    """سطور تذكرة الدخول المختصرة لعقد واحد: دخول، تكلفة، هدف، وقف، أقصى خسارة."""
+    call = side == "CALL"
+    q, per = qty_for(k0["cost"])
+    tp_p, sl_p = k0["price"] * (1 + TAKE_PROFIT), k0["price"] * (1 - STOP_LOSS)
+    lv = index_levels(k0, side)
+    f = (lambda x: f"{x:,.2f}") if sym == "SPY" else (lambda x: f"{x:,.0f}")
+    tp_t = f" ← {sym} ≈ {f(lv[0])}" if lv else ""
+    sl_t = f" ← {sym} ≈ {f(lv[1])}" if lv else ""
+    return [f"✅ <b>الدخول:</b> {root_sym(k0)} {k0['strike']:,.0f} {side} ×{q}",
+            f"💵 بسعر حتى <b>{k0['price']:.2f}</b> | تكلفة <b>${k0['cost']:,.0f}</b> للعقد",
+            f"🎯 الهدف <b>{tp_p:.2f}</b> (+{TAKE_PROFIT * 100:.0f}%){tp_t}",
+            f"🛑 الوقف <b>{sl_p:.2f}</b> (-{STOP_LOSS * 100:.0f}%){sl_t}",
+            f"💰 أقصى خسارة ≈ ${q * per:,.0f}"] + (
+        ["⚠️ الهدف والوقف قريبان جداً: الضوضاء قد تضرب الوقف أولاً."]
+        if lv and max(abs(lv[0] - k0.get("spot", lv[0])), abs(lv[1] - k0.get("spot", lv[1]))) / k0.get("spot", lv[0]) < 0.0012 else [])
+
+
+def send_signal(a):
+    """توصية SPX: صورة بطاقة العقد مع تذكرة مختصرة. وعند تعذر الصورة نرسل النص الكامل."""
+    side, S, c = a["side"], a["c"]["S"], a["c"]
+    groups = {}
+    for k in a["contracts"]:
+        groups.setdefault(k.get("sym", SYMBOL).lstrip("^"), []).append(k)
+    main_sym = SYMBOL.lstrip("^")
+    ks = groups.get(main_sym) or next(iter(groups.values()), [])
+    if not ks:
+        return send_telegram(signal_message(a))
+    k0 = ks[0]
+    sym = k0.get("sym", SYMBOL).lstrip("^")
+    dot = "🟢" if side == "CALL" else "🔴"
+    cap = [f"🔔 <b>توصية SPX | {side} {dot}</b> | ⭐ {a['strength']:.0f}/10 #توصية"] + ticket_lines(sym, k0, side)
+    alt = groups.get(ALT_SYMBOL) if ALT_SYMBOL else None
+    if alt:
+        ka = alt[0]
+        cap.append(f"↳ بديل ETF: {root_sym(ka)} {ka['strike']:,.0f} {side} · ${ka['cost']:,.0f}")
+    cap.append(f"⏰ لا دخول بعد {ry_time(*NO_NEW_ENTRY)} | 📍 SPX {S:,.1f}")
+    if c["age"] >= 5:
+        cap.append(f"⏱️ البيانات متأخرة ~{c['age']:.0f} دقيقة، تحقق من السعر الحي.")
+    cap.append("⚠️ <i>تعليمي وليست توصية.</i>")
+    try:
+        import cards
+        sub = (f"انتهاء {a['exp']} (تجريبي)" if a["is_test"] else "انتهاء اليوم") + f" · {sym} {k0.get('spot', S):,.0f}"
+        png = cards.contract_card("entry", f"{root_sym(k0)} {k0['strike']:,.0f} {side}", sub, k0["price"], None,
+                                  k0["price"], k0["price"] * (1 - STOP_LOSS), k0["price"] * (1 + TAKE_PROFIT),
+                                  badge=f"{side} {dot}", foot=f"{now_ny().astimezone(RY).strftime('%H:%M')} الرياض | SPX إصدار 17")
+        mid = send_photo(png, "\n".join(cap))
+        if mid:
+            return mid
+    except Exception as e:
+        print("تعذر إنشاء بطاقة التوصية:", e)
+    return send_telegram(signal_message(a))
 
 
 def summary_message(state):
@@ -1018,7 +1072,7 @@ def summary_message(state):
         for r, cnt in sorted(rc.items(), key=lambda x: -x[1])[:3]:
             L.append(f"• {esc(r)} ({cnt} مرة)")
     L += ["", "💡 لا إشارة = لا صفقة، والانتظار قرار سليم.",
-          f"🕒 {now_ny().astimezone(RY).strftime('%H:%M')} الرياض | SPX إصدار 16"]
+          f"🕒 {now_ny().astimezone(RY).strftime('%H:%M')} الرياض | SPX إصدار 17"]
     return "\n".join(L)
 
 
@@ -1213,8 +1267,26 @@ def position_message(p, val, pnl, spot, text, kind):
         L.append(f"📍 {p['sym']} {fmt}")
     L.append(text)
     L.append(f"🛑 الوقف {p['entry'] * (1 - STOP_LOSS):.2f} | ✅ الجني {p['entry'] * (1 + TAKE_PROFIT):.2f}")
-    L.append(f"⚠️ القرار قرارك | 🕒 {now_ny().astimezone(RY).strftime('%H:%M')} الرياض | SPX إصدار 16")
+    L.append(f"⚠️ القرار قرارك | 🕒 {now_ny().astimezone(RY).strftime('%H:%M')} الرياض | SPX إصدار 17")
     return "\n".join(L)
+
+
+def follow_payload(p, val, pnl, spot, text, kind):
+    """متابعة العقد: بطاقة صورة وتعليق مختصر (ونص كامل احتياطي)."""
+    full = position_message(p, val, pnl, spot, text, kind)
+    pl = (val - p["entry"]) * 100 * p.get("qty", 1)
+    head = {"stop": "🛑 وصل الوقف", "tp": "🎯 وصل الهدف", "giveback": "📉 الربح يتراجع",
+            "exp_final": "⏰ ينتهي اليوم"}.get(kind, "📈 تحرّك سعر العقد")
+    name = f"{p['root']} {p['strike']:,.0f} {p['side']}"
+    stop_p, tp_p = p["entry"] * (1 - STOP_LOSS), p["entry"] * (1 + TAKE_PROFIT)
+    cap = ["📌 <b>متابعة</b> #متابعة", f"{head}: <b>{name}</b>",
+           f"💵 دخول <b>{p['entry']:.2f}</b> ← الآن <b>{val:.2f}</b> | <b>{pnl * 100:+.0f}%</b> ({pl:+,.0f}$ على ×{p.get('qty', 1)})",
+           f"🛑 الوقف {stop_p:.2f} | 🎯 الهدف {tp_p:.2f}", text,
+           f"⚠️ القرار قرارك | 🕒 {now_ny().astimezone(RY).strftime('%H:%M')} الرياض"]
+    args = (("follow", name, ("انتهاء اليوم" + (f" · {p['sym']} {spot:,.0f}" if spot else "")), val, pnl,
+             p["entry"], stop_p, tp_p), {"now": val, "badge": head,
+                                         "foot": f"وقت الرصد {now_ny().astimezone(RY).strftime('%H:%M')} الرياض | SPX إصدار 17"})
+    return (args, "\n".join(cap), full)
 
 
 def daily_report_items(n):
@@ -1273,7 +1345,7 @@ def monitor_positions(n, force=False):
                       round(val, 3), round(pnl, 3)])
         if new and not force:
             kind, text = new[0]
-            msgs.append(position_message(p, val, pnl, spot, text, kind))
+            msgs.append(follow_payload(p, val, pnl, spot, text, kind))
     if track and not force:
         import csv
         fresh = not os.path.exists(TRACK_FILE)
@@ -1286,7 +1358,18 @@ def monitor_positions(n, force=False):
         except Exception as e:
             print("تعذر تسجيل التتبع:", e)
     for m in msgs:
-        send_telegram(m)
+        if isinstance(m, tuple):
+            png_args, cap, text_msg = m
+            mid = None
+            try:
+                import cards
+                mid = send_photo(cards.contract_card(*png_args[0], **png_args[1]), cap)
+            except Exception as e:
+                print("تعذر إنشاء بطاقة المتابعة:", e)
+            if not mid:
+                send_telegram(text_msg)
+        else:
+            send_telegram(m)
     if dirty and not force:
         save_positions(P)
 
@@ -1319,7 +1402,7 @@ def run_once(force=False):
     log_line = log_summary()
 
     if force:
-        mid = send_telegram(signal_message(a) if has_signal else no_signal_message(a))
+        mid = send_signal(a) if has_signal else send_telegram(no_signal_message(a))
         shown, full = analysis_wrap(details_message(a, log_line, has_signal))
         send_telegram(shown, reply_to=mid, full_text=full)
         send_telegram(plan_message(a, build_plan(a["c"], a["bull"], a["bear"])))
@@ -1342,7 +1425,7 @@ def run_once(force=False):
 
     plan = build_plan(a["c"], a["bull"], a["bear"])
     if has_signal and not recent:
-        mid = send_telegram(signal_message(a))
+        mid = send_signal(a)
         shown, full = analysis_wrap(details_message(a, log_line, True))
         send_telegram(shown, reply_to=mid, full_text=full)
         log_signal(n, a["exp"], a["side"], a["contracts"][0], a["c"]["S"], a["strength"])
