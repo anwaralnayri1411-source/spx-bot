@@ -25,6 +25,8 @@ import yfinance as yf
 
 # ====================== الإعدادات ======================
 SYMBOL = "^SPX"             # يمكنك تغييره إلى "SPY"
+NDX_SYMBOL = "^NDX"         # ناسداك 100 (NDXP): نفس اتجاه SPX بعقود أرخص بعيدة عن السعر (اتركها "" لتعطيلها)
+NDX_MIN_OI, NDX_MIN_VOL, NDX_MAX_SPREAD = 20, 50, 0.35   # سيولته أقل من SPX فنخفف الشروط
 ALT_SYMBOL = "SPY"          # أداة بديلة: خيارات SPY بنفس الاتجاه (اتركها "" لتعطيلها)
 FLOW_SYMBOL = "SPY"         # لحساب VWAP (المؤشر نفسه بلا حجم تداول)
 NEWS_SYMBOL = "SPY"
@@ -529,7 +531,10 @@ def direction_points(c):
 
 
 # ====================== اختيار العقود ======================
-def pick_contracts(side, df, S, T, vix):
+def pick_contracts(side, df, S, T, vix, min_oi=None, min_vol=None, max_spr=None):
+    min_oi = MIN_OI if min_oi is None else min_oi
+    min_vol = MIN_VOL if min_vol is None else min_vol
+    max_spr = MAX_SPREAD if max_spr is None else max_spr
     cand = df[(df["strike"] > S) & (df["strike"] <= S * 1.025)] if side == "CALL" \
         else df[(df["strike"] < S) & (df["strike"] >= S * 0.975)]
     out = []
@@ -546,9 +551,9 @@ def pick_contracts(side, df, S, T, vix):
             continue
         oi = 0 if pd.isna(r.get("openInterest")) else float(r["openInterest"])
         vol = 0 if pd.isna(r.get("volume")) else float(r["volume"])
-        if oi < MIN_OI and vol < MIN_VOL:
+        if oi < min_oi and vol < min_vol:
             continue
-        if spr is not None and spr > MAX_SPREAD:
+        if spr is not None and spr > max_spr:
             continue
         iv = r.get("impliedVolatility")
         if iv is None or pd.isna(iv) or iv < 0.03:
@@ -562,14 +567,14 @@ def pick_contracts(side, df, S, T, vix):
         if z > 2.0 or delta < 0.03:
             continue
         # درجة العقد: سيولة (3) + دلتا (3) + واقعية الوصول للتعادل (4)
-        liq = 2 if oi >= 1000 else (1.5 if oi >= 300 else (1 if oi >= MIN_OI else 0.5))
+        liq = 2 if oi >= 1000 else (1.5 if oi >= 300 else (1 if oi >= min_oi else 0.5))
         liq += 0.5 if spr is None else (1 if spr <= 0.10 else (0.5 if spr <= 0.25 else 0))
         dp = 3 if delta >= 0.20 else (2 if delta >= 0.12 else (1 if delta >= 0.07 else 0.5))
         rp = 4 if z <= 0.6 else (3 if z <= 1.0 else (2 if z <= 1.5 else 1))
         # الطلب (تدفق): حجم التداول اليوم نسبة إلى المراكز المفتوحة
         flow_ratio = vol / max(oi, 1.0)
         flow = 0.0
-        if vol >= MIN_VOL:
+        if vol >= min_vol:
             flow = 1.0 if flow_ratio >= 0.5 else 0.0
             flow += 0.5 if flow_ratio >= 1.5 else 0.0
         score = min(10.0, liq + dp + rp + flow)
@@ -791,6 +796,20 @@ def analyze(force):
                 print("تعذر قراءة خيارات", ALT_SYMBOL, e)
         contracts.sort(key=lambda x: -x["score"])
         contracts = contracts[:MAX_CONTRACTS]
+        if NDX_SYMBOL and contracts:
+            try:
+                tn = yf.Ticker(NDX_SYMBOL)
+                if exp in list(tn.options):
+                    chn = tn.option_chain(exp)
+                    hn = tn.history(period="1d", interval="5m")["Close"].dropna()
+                    Sn = float(hn.iloc[-1]) if len(hn) else float(tn.history(period="5d")["Close"].dropna().iloc[-1])
+                    nd = pick_contracts(side, chn.calls if side == "CALL" else chn.puts, Sn, T, c["vix"],
+                                        NDX_MIN_OI, NDX_MIN_VOL, NDX_MAX_SPREAD)
+                    for k in nd[:1]:
+                        k["sym"], k["spot"] = "NDX", Sn
+                        contracts.append(k)
+            except Exception as e:
+                print("تعذر قراءة خيارات", NDX_SYMBOL, e)
         if not contracts:
             reasons.append(f"لا توجد عقود {('Call' if side == 'CALL' else 'Put')} بسعر ${CONTRACT_MIN_USD}-${CONTRACT_MAX_USD} "
                            "مع سيولة كافية الآن.")
@@ -933,7 +952,7 @@ def plan_message(a, plan, update=False, status=None):
 def root_sym(k):
     """جذر العقد كما يظهر عند الوسيط: SPXW لعقود SPX اليومية، وSPY كما هو."""
     sy = k.get("sym", SYMBOL).lstrip("^")
-    return "SPXW" if sy == "SPX" else sy
+    return {"SPX": "SPXW", "NDX": "NDXP"}.get(sy, sy)
 
 
 def instrument_block(sym, ks, side, S_idx):
@@ -1038,6 +1057,7 @@ def send_signal(a):
         ka = alt[0]
         cap.append(f"↳ بديل ETF: {root_sym(ka)} {ka['strike']:,.0f} {side} · ${ka['cost']:,.0f}")
     cap.append(f"⏰ لا دخول بعد {ry_time(*NO_NEW_ENTRY)} | 📍 SPX {S:,.1f}")
+    nd = groups.get("NDX")
     if c["age"] >= 5:
         cap.append(f"⏱️ البيانات متأخرة ~{c['age']:.0f} دقيقة، تحقق من السعر الحي.")
     cap.append("⚠️ <i>تعليمي وليست توصية.</i>")
@@ -1049,10 +1069,28 @@ def send_signal(a):
                                   badge=f"{side} {dot}", foot=f"{now_ny().astimezone(RY).strftime('%H:%M')} الرياض | SPX إصدار 17")
         mid = send_photo(png, "\n".join(cap))
         if mid:
+            if nd:
+                send_ndx_card(a, nd[0], side, dot, reply_to=mid)
             return mid
     except Exception as e:
         print("تعذر إنشاء بطاقة التوصية:", e)
     return send_telegram(signal_message(a))
+
+
+def send_ndx_card(a, kn, side, dot, reply_to=None):
+    """بطاقة NDXP (ناسداك 100): نفس اتجاه SPX بعقد أرخص بعيد عن السعر."""
+    try:
+        import cards
+        cap = [f"🔔 <b>توصية NDXP | {side} {dot}</b> #توصية"] + ticket_lines("NDX", kn, side) + [
+            "ℹ️ الاتجاه مأخوذ من تحليل SPX. NDXP أوسع حركة وأقل سيولة، وفرق السعر أكبر.",
+            "⚠️ <i>تعليمي وليست توصية.</i>"]
+        png = cards.contract_card("entry", f"{root_sym(kn)} {kn['strike']:,.0f} {side}",
+                                  f"انتهاء {a['exp']} · NDX {kn.get('spot', 0):,.0f}", kn["price"], None,
+                                  kn["price"], kn["price"] * (1 - STOP_LOSS), kn["price"] * (1 + TAKE_PROFIT),
+                                  badge=f"NDXP {dot}", foot=f"{now_ny().astimezone(RY).strftime('%H:%M')} الرياض | SPX إصدار 17")
+        send_photo(png, "\n".join(cap), reply_to=reply_to)
+    except Exception as e:
+        print("تعذر إنشاء بطاقة NDXP:", e)
 
 
 def summary_message(state):
@@ -1188,7 +1226,7 @@ def add_positions(n, a):
 def spx_quote(p):
     """سعر العقد الحالي (الوسط) وسعر الأصل. يرجع (قيمة، فرق السعر، سعر الأصل) أو None."""
     try:
-        t = yf.Ticker("^SPX" if p["sym"] == "SPX" else p["sym"])
+        t = yf.Ticker({"SPX": "^SPX", "NDX": "^NDX"}.get(p["sym"], p["sym"]))
         ch = t.option_chain(p["exp"])
         df = ch.calls if p["side"] == "CALL" else ch.puts
         r = df[(df["strike"] - p["strike"]).abs() < 1e-6]

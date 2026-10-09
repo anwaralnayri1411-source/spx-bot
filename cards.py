@@ -148,29 +148,44 @@ def board_card(title, subtitle, items, sl, tp):
 
 # ------------------------------------------------------------------ الشعار وبطاقة العقد
 def logo_svg(size=84):
-    """شعار أصلي: روبوت محلّل داخل سداسي ذهبي، مع شريحتي CALL أخضر وPUT أحمر وخط صعود."""
-    return f"""<svg width="{size}" height="{size}" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+    """شعار أصلي: وجه إنسان آلي نصفه معدن ونصفه شموع سوق، داخل سداسي ذهبي."""
+    return f"""<svg width="{size}" height="{size}" viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg">
 <defs>
-<linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffe9a0"/><stop offset=".5" stop-color="#d9a92b"/><stop offset="1" stop-color="#8a6410"/></linearGradient>
-<linearGradient id="steel" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e8eef7"/><stop offset=".55" stop-color="#8d9bb3"/><stop offset="1" stop-color="#46526b"/></linearGradient>
-<radialGradient id="eye" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#ffffff"/><stop offset=".35" stop-color="#4fe0ff"/><stop offset="1" stop-color="#0a5aa8"/></radialGradient>
-<linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#141c3a"/><stop offset="1" stop-color="#070a16"/></linearGradient>
+<linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffe9a0"/><stop offset=".5" stop-color="#d9a92b"/><stop offset="1" stop-color="#7d5a0c"/></linearGradient>
+<linearGradient id="chrome" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f4f8ff"/><stop offset=".45" stop-color="#9fb0c8"/><stop offset="1" stop-color="#3b4a66"/></linearGradient>
+<radialGradient id="iris" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#fff"/><stop offset=".3" stop-color="#6fe8ff"/><stop offset="1" stop-color="#0b5fb0"/></radialGradient>
+<linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#121a36"/><stop offset="1" stop-color="#060914"/></linearGradient>
+<radialGradient id="halo" cx="50%" cy="45%" r="50%"><stop offset="0" stop-color="#2a6fd0" stop-opacity=".45"/><stop offset="1" stop-color="#2a6fd0" stop-opacity="0"/></radialGradient>
+<clipPath id="face"><path d="M120 28 C82 28 60 56 60 96 C60 132 74 160 97 182 Q120 200 143 182 C166 160 180 132 180 96 C180 56 158 28 120 28Z"/></clipPath>
+<clipPath id="lh"><rect x="0" y="0" width="120" height="240"/></clipPath>
+<clipPath id="rh"><rect x="120" y="0" width="120" height="240"/></clipPath>
 </defs>
-<polygon points="100,6 182,53 182,147 100,194 18,147 18,53" fill="url(#bg)" stroke="url(#gold)" stroke-width="6" stroke-linejoin="round"/>
-<polygon points="100,18 172,59 172,141 100,182 28,141 28,59" fill="none" stroke="#d9a92b" stroke-opacity=".35" stroke-width="1.5"/>
-<line x1="100" y1="24" x2="100" y2="42" stroke="url(#steel)" stroke-width="4"/><circle cx="100" cy="22" r="6" fill="#ffd75a"/><circle cx="100" cy="22" r="11" fill="#ffd75a" opacity=".22"/>
-<rect x="56" y="42" width="88" height="70" rx="20" fill="url(#steel)" stroke="#2d3a55" stroke-width="3"/>
-<rect x="66" y="58" width="68" height="34" rx="14" fill="#06101f" stroke="#2d3a55" stroke-width="2"/>
-<circle cx="84" cy="75" r="11" fill="url(#eye)"/><circle cx="116" cy="75" r="11" fill="url(#eye)"/>
-<circle cx="84" cy="75" r="16" fill="#4fe0ff" opacity=".16"/><circle cx="116" cy="75" r="16" fill="#4fe0ff" opacity=".16"/>
-<rect x="48" y="62" width="9" height="26" rx="4" fill="#d9a92b"/><rect x="143" y="62" width="9" height="26" rx="4" fill="#d9a92b"/>
-<g stroke="#46526b" stroke-width="3" stroke-linecap="round"><line x1="84" y1="101" x2="116" y2="101"/><line x1="90" y1="106" x2="110" y2="106"/></g>
-<polyline points="50,142 72,132 92,138 112,124 130,130 148,116" fill="none" stroke="#35d07f" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
-<polygon points="156,108 158,124 142,118" fill="#35d07f"/>
-<g><rect x="42" y="150" width="38" height="20" rx="10" fill="#17794a" stroke="#35d07f" stroke-width="2"/>
-<path d="M54 163 L61 155 L68 163Z" fill="#eafff3"/></g>
-<g><rect x="120" y="150" width="38" height="20" rx="10" fill="#7a2328" stroke="#ff6b73" stroke-width="2"/>
-<path d="M132 157 L139 165 L146 157Z" fill="#ffecee"/></g>
+<polygon points="120,6 220,63 220,177 120,234 20,177 20,63" fill="url(#bg)" stroke="url(#gold)" stroke-width="7" stroke-linejoin="round"/>
+<polygon points="120,20 208,70 208,170 120,220 32,170 32,70" fill="none" stroke="#d9a92b" stroke-opacity=".3" stroke-width="1.5"/>
+<circle cx="120" cy="110" r="95" fill="url(#halo)"/>
+<path d="M92 190 L84 214 M148 190 L156 214 M104 196 L102 218 M136 196 L138 218" stroke="#5c6b88" stroke-width="5" stroke-linecap="round"/>
+<path d="M120 28 C82 28 60 56 60 96 C60 132 74 160 97 182 Q120 200 143 182 C166 160 180 132 180 96 C180 56 158 28 120 28Z" fill="#0c1428"/>
+<g clip-path="url(#face)">
+<g clip-path="url(#lh)"><rect x="40" y="20" width="90" height="190" fill="url(#chrome)"/>
+<path d="M64 70 L118 62 M62 112 L100 120 M70 150 L112 158" stroke="#2d3a55" stroke-width="1.6" fill="none" opacity=".7"/>
+<circle cx="72" cy="104" r="2.2" fill="#2d3a55"/><circle cx="76" cy="146" r="2.2" fill="#2d3a55"/>
+<path d="M120 28 L120 190" stroke="#2d3a55" stroke-width="1.2" opacity=".6"/></g>
+<g clip-path="url(#rh)"><rect x="120" y="20" width="70" height="190" fill="#0a1226"/>
+<g stroke="#1d2a4a" stroke-width="1"><line x1="120" y1="60" x2="190" y2="60"/><line x1="120" y1="90" x2="190" y2="90"/><line x1="120" y1="120" x2="190" y2="120"/><line x1="120" y1="150" x2="190" y2="150"/></g>
+<rect x="128" y="120" width="5" height="14" fill="#35d07f" opacity=".85"/><line x1="130.5" y1="115" x2="130.5" y2="139" stroke="#35d07f" stroke-width="1.2" opacity=".85"/><rect x="137" y="112" width="5" height="18" fill="#35d07f" opacity=".85"/><line x1="139.5" y1="107" x2="139.5" y2="135" stroke="#35d07f" stroke-width="1.2" opacity=".85"/><rect x="146" y="122" width="5" height="12" fill="#ff6b73" opacity=".85"/><line x1="148.5" y1="117" x2="148.5" y2="139" stroke="#ff6b73" stroke-width="1.2" opacity=".85"/><rect x="155" y="106" width="5" height="20" fill="#35d07f" opacity=".85"/><line x1="157.5" y1="101" x2="157.5" y2="131" stroke="#35d07f" stroke-width="1.2" opacity=".85"/><rect x="164" y="100" width="5" height="16" fill="#35d07f" opacity=".85"/><line x1="166.5" y1="95" x2="166.5" y2="121" stroke="#35d07f" stroke-width="1.2" opacity=".85"/><rect x="173" y="108" width="5" height="14" fill="#ff6b73" opacity=".85"/><line x1="175.5" y1="103" x2="175.5" y2="127" stroke="#ff6b73" stroke-width="1.2" opacity=".85"/><rect x="182" y="92" width="5" height="18" fill="#35d07f" opacity=".85"/><line x1="184.5" y1="87" x2="184.5" y2="115" stroke="#35d07f" stroke-width="1.2" opacity=".85"/>
+<polyline points="124,150 140,140 154,146 170,128 182,132" fill="none" stroke="#ffd75a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></g>
+</g>
+<path d="M120 28 C82 28 60 56 60 96 C60 132 74 160 97 182 Q120 200 143 182 C166 160 180 132 180 96 C180 56 158 28 120 28Z" fill="none" stroke="#1a2440" stroke-width="2.5"/>
+<path d="M74 82 Q94 74 114 80" fill="none" stroke="#1a2440" stroke-width="4" stroke-linecap="round"/>
+<ellipse cx="94" cy="94" rx="14" ry="10" fill="#050b18"/><circle cx="94" cy="94" r="9" fill="url(#iris)"/><circle cx="94" cy="94" r="3.6" fill="#030812"/><circle cx="91" cy="91" r="1.8" fill="#fff"/>
+<circle cx="94" cy="94" r="17" fill="#4fe0ff" opacity=".14"/>
+<ellipse cx="146" cy="94" rx="14" ry="10" fill="#050b18"/><circle cx="146" cy="94" r="9" fill="none" stroke="#4fe0ff" stroke-width="1.6" opacity=".85"/><circle cx="146" cy="94" r="3" fill="#4fe0ff"/>
+<line x1="146" y1="82" x2="146" y2="106" stroke="#4fe0ff" stroke-width="1" opacity=".7"/><line x1="132" y1="94" x2="160" y2="94" stroke="#4fe0ff" stroke-width="1" opacity=".7"/>
+<path d="M120 104 L113 134 L127 134" fill="none" stroke="#1a2440" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M98 156 Q120 164 142 156" fill="none" stroke="#1a2440" stroke-width="3" stroke-linecap="round"/>
+<g stroke="#1a2440" stroke-width="1.6"><line x1="106" y1="158" x2="106" y2="164"/><line x1="113" y1="160" x2="113" y2="166"/><line x1="120" y1="160" x2="120" y2="166"/><line x1="127" y1="160" x2="127" y2="166"/><line x1="134" y1="158" x2="134" y2="164"/></g>
+<circle cx="120" cy="52" r="8" fill="#06101f" stroke="url(#gold)" stroke-width="2.5"/><circle cx="120" cy="52" r="3.2" fill="#6fe8ff"/>
+<polygon points="26,132 38,132 32,122" fill="#35d07f"/><polygon points="202,122 214,122 208,132" fill="#ff6b73"/>
 </svg>"""
 
 
