@@ -218,9 +218,11 @@
    "entry_spy": 773.09,
    "strength": 8.7,
    "earn": "2026-10-27",
-   "status": "open",
-   "peak": 0.218,
-   "alerts": {}
+   "status": "tp",
+   "peak": 0.589,
+   "alerts": {
+    "tp": "2026-10-09T10:57-04:00"
+   }
   },
   {
    "id": "UBER:CALL:2026-10-16:72",
@@ -235,7 +237,7 @@
    "strength": 8.6,
    "earn": "2026-11-04",
    "status": "open",
-   "peak": 0.0,
+   "peak": 0.004,
    "alerts": {}
   }
  ],
