@@ -211,7 +211,7 @@ def _gauge(stop, entry, target, now=None):
 <span style="left:{t:.1f}%;color:#58e39a">هدف<br>{ltr(f"{target:.2f}")}</span></div></div>"""
 
 
-def contract_card_html(kind, name, sub, price, chg, entry, stop, target, now=None, badge="", foot="", brand="👁 عين السوق"):
+def contract_card_html(kind, name, sub, price, chg, entry, stop, target, now=None, badge="", foot="", brand="عين السوق | Market Eye"):
     """kind: 'entry' (توصية) | 'follow' (متابعة). chg: نسبة التغير بالنسبة لسعر الدخول أو None."""
     up = (chg or 0) >= 0
     col = "#35d07f" if up else "#ff6b73"
@@ -243,7 +243,7 @@ body{{width:{W}px;background:#0b0e16;color:#eef1f8;font-family:'Noto Sans Arabic
 </body></html>"""
 
 
-def contract_card(kind, name, sub, price, chg, entry, stop, target, now=None, badge="", foot="", brand="👁 عين السوق"):
+def contract_card(kind, name, sub, price, chg, entry, stop, target, now=None, badge="", foot="", brand="عين السوق | Market Eye"):
     return render_png(contract_card_html(kind, name, sub, price, chg, entry, stop, target, now, badge, foot, brand))
 
 
