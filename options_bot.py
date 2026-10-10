@@ -1476,6 +1476,12 @@ def run_once(force=False):
             send_telegram(f"⛔ <b>توقف إشارات SPX اليوم</b> #خطة\n{MAX_DAILY_STOPS} إشارات بلغت الوقف اليوم. "
                           "نوقف الجديد حمايةً من التوالي في الخسارة، ونواصل متابعة المفتوح.")
     has_signal = bool(a["contracts"])
+    if not force:
+        try:   # إشارات تجريبية صامتة للتعلم (لا تغيّر التوصية)
+            import signals_extra
+            signals_extra.snapshot(n, a["side"] if has_signal else "")
+        except Exception as e:
+            print("تعذر تسجيل الإشارات التجريبية:", e)
     log_line = log_summary()
 
     if force:

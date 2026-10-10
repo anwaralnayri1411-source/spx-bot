@@ -71,6 +71,16 @@ def build(n=None):
     total = na + nb
     if total < MIN_SAMPLE:
         L.append(f"⚠️ <b>العيّنة صغيرة</b> ({total} إشارة، نحتاج {MIN_SAMPLE}+ لنحكم). لا تبنِ قراراً على هذه الأرقام وحدها.")
+    try:
+        import signals_extra
+        rv = signals_extra.review(DAYS)
+        if rv:
+            L += ["🧪 <b>إشارات تجريبية صامتة</b> (لا تؤثر على التوصيات)"]
+            for k, (cnt, m, avg, hit) in rv.items():
+                L.append(f"{k}: {cnt} حالة" + (f" | بعد ساعة: متوسط {avg:+.1f} نقطة بالاتجاه المتوقع، صحيحة {hit * 100:.0f}% (من {m})" if m else " | لا بيانات كافية بعد"))
+            L.append("")
+    except Exception as e:
+        print("تعذر ملخص الإشارات التجريبية:", e)
     L.append("ملاحظة: النتائج تقديرية من بيانات متأخرة، والخروج مقيس بسعر البيع (bid).")
     L.append("👁 <b>عين السوق | Market Eye</b>")
     return "\n".join(L)
