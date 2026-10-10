@@ -1,7 +1,7 @@
 name: Telegram Commands
 on:
   schedule:
-    - cron: "3,18,33,48 13-20 * * 1-5"    # كل ربع ساعة أثناء الجلسة
+    - cron: "3,18,33,48 13-21 * * 1-5"    # كل ربع ساعة أثناء الجلسة
   workflow_dispatch:
 permissions:
   contents: write

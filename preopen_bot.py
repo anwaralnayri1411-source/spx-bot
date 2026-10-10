@@ -137,7 +137,7 @@ def build(n):
 
 def main():
     n = ob.now_ny()
-    ok = n.weekday() < 5 and n.date().isoformat() not in HOLIDAYS and WINDOW[0] <= (n.hour, n.minute) <= WINDOW[1]
+    ok = n.weekday() < 5 and n.date().isoformat() not in HOLIDAYS and ob.market_day(n) and WINDOW[0] <= (n.hour, n.minute) <= WINDOW[1]
     if not ok and not FORCE:
         print("خارج نافذة ما قبل الافتتاح أو يوم إجازة.")
         return

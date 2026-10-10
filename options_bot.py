@@ -87,8 +87,28 @@ def now_ny():
     return datetime.now(NY)
 
 
+# عطلات البورصة الأمريكية (تُراجَع سنوياً) وأيام الإغلاق المبكر 1:00 ظهراً بتوقيت نيويورك
+HOLIDAYS = {"2026-11-26", "2026-12-25", "2027-01-01", "2027-01-18", "2027-02-15", "2027-03-26", "2027-05-31",
+            "2027-06-18", "2027-07-05", "2027-09-06", "2027-11-25", "2027-12-24"}
+EARLY_CLOSE = {"2026-11-27": (13, 0), "2026-12-24": (13, 0)}
+
+
+def market_day(n):
+    return n.weekday() < 5 and n.date().isoformat() not in HOLIDAYS
+
+
+def session_end(n):
+    return EARLY_CLOSE.get(n.date().isoformat(), WINDOW_END)
+
+
+def no_entry(n):
+    """آخر وقت للدخول الجديد: قبل الإغلاق بساعة (وفي الإغلاق المبكر قبل 1:00 بساعة)."""
+    end = session_end(n)
+    return min(NO_NEW_ENTRY, (end[0] - 1, end[1]))
+
+
 def in_window(n):
-    return n.weekday() < 5 and WINDOW_START <= (n.hour, n.minute) <= WINDOW_END
+    return market_day(n) and WINDOW_START <= (n.hour, n.minute) <= session_end(n)
 
 
 def ry_time(h, m):
@@ -766,7 +786,7 @@ def analyze(force):
     strength = min(10.0, edge * 1.5)
 
     # ----- شروط المنع -----
-    if n.weekday() < 5 and NO_NEW_ENTRY <= (n.hour, n.minute) < (16, 0):
+    if market_day(n) and no_entry(n) <= (n.hour, n.minute) < session_end(n):
         reasons.append("بعد وقت آخر دخول (قرب الإغلاق، والزمن يأكل قيمة العقد بسرعة).")
     if any(d == today for d, _ in events):
         nm = next(nm for d, nm in events if d == today)
@@ -1012,7 +1032,7 @@ def signal_message(a):
         L += instrument_block(sym, groups.get(sym, []), side, S)
     L.append("")
     L.append("ادخل بسعر العقد المذكور أو أقل، ولا تلاحق السعر إن ارتفع العقد أكثر من 10% قبل دخولك. "
-             f"⏰ لا دخول بعد {ry_time(*NO_NEW_ENTRY)}")
+             f"⏰ لا دخول بعد {ry_time(*no_entry(now_ny()))}")
     if c["age"] >= 5:
         L.append(f"⏱️ البيانات متأخرة ~{c['age']:.0f} دقيقة، تحقق من السعر الحي.")
     L.append("⚠️ <i>تعليمي وليست توصية. أقصى خسارة هي سعر العقد.</i>")
@@ -1056,7 +1076,7 @@ def send_signal(a):
     if alt:
         ka = alt[0]
         cap.append(f"↳ بديل ETF: {root_sym(ka)} {ka['strike']:,.0f} {side} · ${ka['cost']:,.0f}")
-    cap.append(f"⏰ لا دخول بعد {ry_time(*NO_NEW_ENTRY)} | 📍 SPX {S:,.1f}")
+    cap.append(f"⏰ لا دخول بعد {ry_time(*no_entry(now_ny()))} | 📍 SPX {S:,.1f}")
     nd = groups.get("NDX")
     if c["age"] >= 5:
         cap.append(f"⏱️ البيانات متأخرة ~{c['age']:.0f} دقيقة، تحقق من السعر الحي.")
@@ -1471,7 +1491,7 @@ def run_once(force=False):
         state.update(last_side=a["side"], last_time=n.isoformat(), date=today_s, report_sent=True,
                      signals=state.get("signals", 0) + 1)
     elif state.get("date") != today_s or not state.get("report_sent"):
-        if (n.hour, n.minute) < NO_NEW_ENTRY and not state.get("plan_sent"):
+        if (n.hour, n.minute) < no_entry(n) and not state.get("plan_sent"):
             # أول رسالة اليوم: خطة واحدة تحمل سبب عدم التوصية، والتحليل مطوي تحتها
             pmid = send_telegram(plan_message(a, plan, status=a["reasons"]))
             shown, full = analysis_wrap(details_message(a, log_line, False))
@@ -1482,7 +1502,7 @@ def run_once(force=False):
         state.update(date=today_s, report_sent=True)
     else:
         print("لا إشارة جديدة، لا رسالة.")
-    if (n.hour, n.minute) < NO_NEW_ENTRY and (not state.get("plan_sent") or (plan["has_orb"] and not state.get("plan_orb"))):
+    if (n.hour, n.minute) < no_entry(n) and (not state.get("plan_sent") or (plan["has_orb"] and not state.get("plan_orb"))):
         upd = bool(state.get("plan_sent"))
         txt = plan_message(a, plan, update=upd)
         if upd and state.get("plan_mid") and edit_telegram(state["plan_mid"], txt):
@@ -1498,14 +1518,15 @@ def run_once(force=False):
             send_telegram(report.build("mid", n))
         except Exception as e:
             print("تعذر إرسال تقرير منتصف اليوم:", e)
-    if (n.hour, n.minute) >= (15, 30) and not state.get("rep_close"):
+    close_t = (session_end(n)[0], session_end(n)[1] - 30) if session_end(n)[1] >= 30 else (session_end(n)[0] - 1, session_end(n)[1] + 30)
+    if (n.hour, n.minute) >= close_t and not state.get("rep_close"):
         state["rep_close"] = True
         try:
             import report
             send_telegram(report.build("close", n))
         except Exception as e:
             print("تعذر إرسال تقرير نهاية اليوم:", e)
-    if (n.hour, n.minute) >= (15, 30) and not state.get("report_img"):
+    if (n.hour, n.minute) >= close_t and not state.get("report_img"):
         try:
             png = daily_report_png(n)
             if png:
@@ -1513,7 +1534,7 @@ def run_once(force=False):
         except Exception as e:
             print("تعذر إنشاء بطاقة التقرير:", e)
         state["report_img"] = True
-    if (n.hour, n.minute) >= NO_NEW_ENTRY and not state.get("summary_sent") and state.get("signals", 0) == 0:
+    if (n.hour, n.minute) >= no_entry(n) and not state.get("summary_sent") and state.get("signals", 0) == 0:
         send_telegram(summary_message(state))   # ملخص نهاية الجلسة عند عدم وجود أي إشارة
         state["summary_sent"] = True
     save_state(state)

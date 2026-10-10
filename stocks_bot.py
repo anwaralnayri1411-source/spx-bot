@@ -78,7 +78,15 @@ NEG_WORDS = ["downgrade", "downgrades", "miss", "misses", "plunge", "plunges", "
 
 
 def in_window(n):
-    return n.weekday() < 5 and WINDOW_START <= (n.hour, n.minute) <= WINDOW_END
+    end = session_end_stocks(n)
+    return ob.market_day(n) and WINDOW_START <= (n.hour, n.minute) <= end
+
+
+def session_end_stocks(n):
+    """آخر وقت لفحص الشركات: 30 دقيقة قبل الإغلاق (يتكيف مع الإغلاق المبكر)."""
+    e = ob.session_end(n)
+    m = e[0] * 60 + e[1] - 30
+    return min(WINDOW_END, (m // 60, m % 60))
 
 
 # ====================== التحليل الفني ======================
@@ -869,7 +877,7 @@ def do_monitor(n, force, P):
     if blocks:
         send_alerts(blocks)
     hm = (n.hour, n.minute)
-    if force or (hm >= SUMMARY_AT and P.get("summary_date") != today_s):
+    if force or (hm >= min(SUMMARY_AT, session_end_stocks(n)) and P.get("summary_date") != today_s):
         if rows:
             send_board(rows, n)
         elif force:

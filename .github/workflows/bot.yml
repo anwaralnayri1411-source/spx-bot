@@ -1,7 +1,7 @@
 name: SPX Signals
 on:
   schedule:
-    - cron: "5,35 13-20 * * 1-5"
+    - cron: "5,35 13-21 * * 1-5"
   workflow_dispatch:
 permissions:
   contents: write

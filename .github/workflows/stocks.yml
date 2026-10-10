@@ -3,7 +3,7 @@ on:
   schedule:
     - cron: "20 14,15 * * 1-5"
     - cron: "0 17,19 * * 1-5"
-    - cron: "12,42 13-20 * * 1-5"   # متابعة العقود المفتوحة كل نصف ساعة
+    - cron: "12,42 13-21 * * 1-5"   # متابعة العقود المفتوحة كل نصف ساعة
   workflow_dispatch:
 permissions:
   contents: write
