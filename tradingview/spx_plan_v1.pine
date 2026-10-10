@@ -9,7 +9,7 @@
 // تنبيه صريح: أسعار العقود هنا تقدير نظري (بلاك-شولز بتذبذب = VIX × معامل). سعر الدفتر
 // الحقيقي يختلف (انحراف السعر والتذبذب اللحظي)، فتحقق منه قبل أي دخول.
 // ============================================================================
-indicator("SPX Plan v2", shorttitle="SPX Plan", overlay=true, max_labels_count=300, max_lines_count=100)
+indicator("SPX Plan | خطة SPX", shorttitle="SPX Plan", overlay=true, max_labels_count=300, max_lines_count=100)
 
 if not timeframe.isintraday
     runtime.error("استخدم فريماً داخل اليوم (يُفضَّل 5 دقائق).")
@@ -39,7 +39,6 @@ spySym = input.string("AMEX:SPY", "رمز SPY (لحساب VWAP)", group=gD)
 vixSym = input.string("CBOE:VIX", "رمز VIX", group=gD)
 esSym = input.string("CME_MINI:ES1!", "رمز عقود SPX الآجلة", group=gD)
 showTable = input.bool(true, "إظهار اللوحة", group=gD)
-showStats = input.bool(false, "إظهار إحصاء الصفقات الافتراضية (نظري)", group=gD)
 
 // ------------------------------- دوال مساعدة --------------------------------
 f_ncdf(x) =>
@@ -232,12 +231,6 @@ bounceUp = not na(S1p) and low <= S1p * (1 + tol) and close > S1p and close > op
 rejectDn = not na(R1p) and high >= R1p * (1 - tol) and close < R1p and close < open
 breakdownDn = not na(S1p) and close < S1p and close[1] >= S1p
 
-var line lnEn = na
-var line lnTp = na
-var line lnSl = na
-var label lbEn = na
-var label lbTp = na
-var label lbSl = na
 var int posSide = 0
 var float posK = na
 var float posPrem = na
@@ -263,7 +256,7 @@ if sigCall or sigPut
     isC = sigCall
     Tn = math.max(minsToClose, 3.0) / 525600.0
     [kk, pp] = f_pick(close, Tn, ivNow, isC, strikeStep, budMin, budMax)
-    kind = sigCall ? (breakoutUp ? "Breakout above resistance" : "Bounce off support") : (rejectDn ? "Rejection at resistance" : "Breakdown below support")
+    kind = sigCall ? (breakoutUp ? "اختراق" : "ارتداد") : (rejectDn ? "رفض" : "كسر")
     float tgtIdx = na
     if breakoutUp and sigCall
         tgtIdx := na(R2p) ? close + 0.35 * em : R2p
@@ -291,24 +284,9 @@ if sigCall or sigPut
         posTpIdx := tpIdx
         posSlIdx := slIdx
         lastSigBar := bar_index
-        tpShow = na(tpIdx) ? tgtIdx : tpIdx
-        txt = (isC ? "CALL ▲  BUY CALL" : "PUT ▼  BUY PUT") + "\n" + kind + "\n" + "Strike " + str.tostring(kk, "#") + "  ~$" + str.tostring(pp, "#") + "  x" + str.tostring(q) + "\n" + "Index TP " + (na(tpShow) ? "?" : str.tostring(tpShow, "#.0")) + "  SL " + (na(slIdx) ? "?" : str.tostring(slIdx, "#.0")) + "\n" + "Edge " + str.tostring(strength, "#.0") + "/10"
-        label.new(bar_index, isC ? low : high, txt, style=isC ? label.style_label_up : label.style_label_down, color=isC ? color.new(color.green, 5) : color.new(color.red, 5), textcolor=color.white, size=size.normal)
-        line.delete(lnEn)
-        line.delete(lnTp)
-        line.delete(lnSl)
-        label.delete(lbEn)
-        label.delete(lbTp)
-        label.delete(lbSl)
-        lnEn := line.new(bar_index, close, bar_index + 1, close, extend=extend.right, color=color.white, width=2)
-        lbEn := label.new(bar_index + 4, close, "ENTRY " + str.tostring(close, "#.0"), style=label.style_label_left, color=color.new(color.gray, 20), textcolor=color.white, size=size.small)
-        if not na(tpShow)
-            lnTp := line.new(bar_index, tpShow, bar_index + 1, tpShow, extend=extend.right, color=color.lime, style=line.style_dashed, width=2)
-            lbTp := label.new(bar_index + 4, tpShow, "TARGET " + str.tostring(tpShow, "#.0"), style=label.style_label_left, color=color.new(color.green, 10), textcolor=color.white, size=size.small)
-        if not na(slIdx)
-            lnSl := line.new(bar_index, slIdx, bar_index + 1, slIdx, extend=extend.right, color=color.red, style=line.style_dashed, width=2)
-            lbSl := label.new(bar_index + 4, slIdx, "STOP " + str.tostring(slIdx, "#.0"), style=label.style_label_left, color=color.new(color.red, 10), textcolor=color.white, size=size.small)
-        alert("SPX " + (isC ? "CALL" : "PUT") + " (" + kind + ") | Price " + str.tostring(close, "#.0") + " | Strike " + str.tostring(kk, "#") + " ~$" + str.tostring(pp, "#") + " x" + str.tostring(q) + " | Index TP " + (na(tpShow) ? "?" : str.tostring(tpShow, "#.0")) + " | SL " + (na(slIdx) ? "?" : str.tostring(slIdx, "#.0")) + " | Model price, check the real book", alert.freq_once_per_bar_close)
+        txt = (isC ? "CALL ▲ " : "PUT ▼ ") + kind + " | Strike " + str.tostring(kk, "#") + " ≈ $" + str.tostring(pp, "#") + " ×" + str.tostring(q) + "\n" + "هدف المؤشر " + (na(tpIdx) ? "؟" : str.tostring(tpIdx, "#.0")) + " | وقف " + (na(slIdx) ? "؟" : str.tostring(slIdx, "#.0")) + "\n" + "دلتا " + str.tostring(dlt, "#.00") + " | قوة " + str.tostring(strength, "#.0") + "/10 | هدف الخطة " + str.tostring(tgtIdx, "#")
+        label.new(bar_index, isC ? low : high, txt, style=isC ? label.style_label_up : label.style_label_down, color=isC ? color.new(color.green, 15) : color.new(color.red, 15), textcolor=color.white, size=size.small)
+        alert("SPX " + (isC ? "CALL" : "PUT") + " (" + kind + ") | السعر " + str.tostring(close, "#.0") + " | Strike " + str.tostring(kk, "#") + " ≈ $" + str.tostring(pp, "#") + " ×" + str.tostring(q) + " | هدف المؤشر " + (na(tpIdx) ? "؟" : str.tostring(tpIdx, "#.0")) + " | وقف " + (na(slIdx) ? "؟" : str.tostring(slIdx, "#.0")) + " | السعر تقدير نظري، تحقق من الدفتر", alert.freq_once_per_bar_close)
 
 // ------------------------------- متابعة الصفقة والخروج -----------------------
 float posPnl = na
@@ -335,15 +313,8 @@ if posSide != 0 and bar_index > posBar
         trades += 1
         wins += pl > 0 ? 1 : 0
         netUsd += pl
-        whyEn = why == "هدف" ? "TARGET HIT" : (why == "وقف" ? "STOP HIT" : "END OF DAY")
-        label.new(bar_index, close, "EXIT: " + whyEn + "  " + (pl >= 0 ? "+" : "") + str.tostring(pl, "#") + "$", style=label.style_label_left, color=pl > 0 ? color.new(color.teal, 5) : color.new(color.maroon, 5), textcolor=color.white, size=size.normal)
-        line.set_extend(lnEn, extend.none)
-        line.set_extend(lnTp, extend.none)
-        line.set_extend(lnSl, extend.none)
-        line.set_x2(lnEn, bar_index)
-        line.set_x2(lnTp, bar_index)
-        line.set_x2(lnSl, bar_index)
-        alert("SPX EXIT (" + whyEn + ") | Paper P/L " + str.tostring(pl, "#") + "$ | Price " + str.tostring(close, "#.0"), alert.freq_once_per_bar_close)
+        label.new(bar_index, close, "خروج: " + why + " | " + str.tostring(pl, "#") + "$", style=label.style_label_left, color=pl > 0 ? color.new(color.teal, 10) : color.new(color.maroon, 10), textcolor=color.white, size=size.small)
+        alert("SPX خروج (" + why + ") | ربح/خسارة نظرية " + str.tostring(pl, "#") + "$ | السعر " + str.tostring(close, "#.0"), alert.freq_once_per_bar_close)
         posSide := 0
         posBar := na
 
@@ -355,61 +326,48 @@ plot(orDone ? orL : na, "أدنى أول 30د", color=color.new(color.aqua, 30),
 plot(vwapSpx, "VWAP", color=color.new(color.yellow, 20), linewidth=2)
 
 var line lnR1 = na
+var line lnR2 = na
 var line lnS1 = na
-var label lbR1 = na
-var label lbS1 = na
-var label lbVw = na
-var label lbPH = na
-var label lbPL = na
-var label lbOH = na
-var label lbOL = na
+var line lnS2 = na
 if barstate.islast
     line.delete(lnR1)
+    line.delete(lnR2)
     line.delete(lnS1)
-    label.delete(lbR1)
-    label.delete(lbS1)
-    label.delete(lbVw)
-    label.delete(lbPH)
-    label.delete(lbPL)
-    label.delete(lbOH)
-    label.delete(lbOL)
+    line.delete(lnS2)
+    // المستويات الحالية بالنسبة لآخر إغلاق
     r1 = f_above(lv, close, close * 0.0004)
     s1 = f_below(lv, close, close * 0.0004)
+    r2 = f_above(lv, na(r1) ? close : r1, close * 0.0012)
+    s2 = f_below(lv, na(s1) ? close : s1, close * 0.0012)
     if not na(r1)
         lnR1 := line.new(bar_index - 20, r1, bar_index + 5, r1, extend=extend.right, color=color.red, width=2)
-        lbR1 := label.new(bar_index + 6, r1, "RESIST " + str.tostring(r1, "#"), style=label.style_label_left, color=color.new(color.red, 15), textcolor=color.white, size=size.small)
+    if not na(r2)
+        lnR2 := line.new(bar_index - 20, r2, bar_index + 5, r2, extend=extend.right, color=color.new(color.red, 55), style=line.style_dashed)
     if not na(s1)
         lnS1 := line.new(bar_index - 20, s1, bar_index + 5, s1, extend=extend.right, color=color.green, width=2)
-        lbS1 := label.new(bar_index + 6, s1, "SUPPORT " + str.tostring(s1, "#"), style=label.style_label_left, color=color.new(color.green, 15), textcolor=color.white, size=size.small)
-    if not na(vwapSpx)
-        lbVw := label.new(bar_index + 2, vwapSpx, "VWAP", style=label.style_none, textcolor=color.yellow, size=size.small)
-    if not na(pdH)
-        lbPH := label.new(bar_index + 2, pdH, "Y-High", style=label.style_none, textcolor=color.orange, size=size.small)
-    if not na(pdL)
-        lbPL := label.new(bar_index + 2, pdL, "Y-Low", style=label.style_none, textcolor=color.orange, size=size.small)
-    if orDone
-        lbOH := label.new(bar_index + 2, orH, "30m-High", style=label.style_none, textcolor=color.aqua, size=size.small)
-        lbOL := label.new(bar_index + 2, orL, "30m-Low", style=label.style_none, textcolor=color.aqua, size=size.small)
+    if not na(s2)
+        lnS2 := line.new(bar_index - 20, s2, bar_index + 5, s2, extend=extend.right, color=color.new(color.green, 55), style=line.style_dashed)
 
 // ------------------------------- اللوحة --------------------------------------
-var table tb = table.new(position.top_right, 2, 7, bgcolor=color.new(color.black, 25), border_width=1, border_color=color.new(color.gray, 60))
+var table tb = table.new(position.top_right, 2, 8, bgcolor=color.new(color.black, 20), border_width=1, border_color=color.new(color.gray, 60))
 if barstate.islast and showTable
-    sideTxt = edge >= minEdge ? "CALL side 🟢" : (edge <= -minEdge ? "PUT side 🔴" : "WAIT ⚪ (no clear side)")
+    biasTxt = edge >= minEdge ? "صعود 🟢" : (edge <= -minEdge ? "هبوط 🔴" : "محايد ⚪")
     rr1 = f_above(lv, close, close * 0.0004)
     ss1 = f_below(lv, close, close * 0.0004)
-    table.cell(tb, 0, 0, "Bias", text_color=color.white, text_size=size.normal, text_halign=text.align_left)
-    table.cell(tb, 1, 0, sideTxt + "  (" + str.tostring(bullP, "#.0") + " vs " + str.tostring(bearP, "#.0") + ")", text_color=edge >= minEdge ? color.lime : (edge <= -minEdge ? color.red : color.white), text_size=size.normal, text_halign=text.align_left)
-    table.cell(tb, 0, 1, "Resist", text_color=color.red, text_size=size.normal, text_halign=text.align_left)
-    table.cell(tb, 1, 1, na(rr1) ? "-" : str.tostring(rr1, "#") + "  (+" + str.tostring(rr1 - close, "#") + ")", text_color=color.white, text_size=size.normal, text_halign=text.align_left)
-    table.cell(tb, 0, 2, "Support", text_color=color.lime, text_size=size.normal, text_halign=text.align_left)
-    table.cell(tb, 1, 2, na(ss1) ? "-" : str.tostring(ss1, "#") + "  (-" + str.tostring(close - ss1, "#") + ")", text_color=color.white, text_size=size.normal, text_halign=text.align_left)
-    table.cell(tb, 0, 3, "Day move", text_color=color.white, text_size=size.normal, text_halign=text.align_left)
-    table.cell(tb, 1, 3, na(vix) ? "n/a" : "VIX " + str.tostring(vix, "#.0") + "  ±" + str.tostring(em, "#") + " pts/day", text_color=color.white, text_size=size.normal, text_halign=text.align_left)
-    posTxt = posSide == 0 ? "none" : ((posSide == 1 ? "CALL " : "PUT ") + str.tostring(posK, "#") + " x" + str.tostring(posQty) + (na(posPnl) ? "" : "  " + str.tostring(posPnl * 100, "#") + "%"))
-    table.cell(tb, 0, 4, "Position", text_color=color.white, text_size=size.normal, text_halign=text.align_left)
-    table.cell(tb, 1, 4, posTxt, text_color=posSide == 1 ? color.lime : (posSide == -1 ? color.red : color.white), text_size=size.normal, text_halign=text.align_left)
-    table.cell(tb, 0, 5, "Frame", text_color=color.white, text_size=size.normal, text_halign=text.align_left)
-    table.cell(tb, 1, 5, tfMin == 5 ? "5m OK" : "SET 5m!", text_color=tfMin == 5 ? color.white : color.orange, text_size=size.normal, text_halign=text.align_left)
-    if showStats
-        table.cell(tb, 0, 6, "Paper", text_color=color.yellow, text_size=size.small, text_halign=text.align_left)
-        table.cell(tb, 1, 6, str.tostring(trades) + " trades, model prices, not real", text_color=color.yellow, text_size=size.small, text_halign=text.align_left)
+    table.cell(tb, 0, 0, "الميل", text_color=color.white, text_size=size.small, text_halign=text.align_left)
+    table.cell(tb, 1, 0, biasTxt + "  " + str.tostring(bullP, "#.0") + " / " + str.tostring(bearP, "#.0"), text_color=color.white, text_size=size.small, text_halign=text.align_left)
+    table.cell(tb, 0, 1, "مقاومة", text_color=color.new(color.red, 0), text_size=size.small, text_halign=text.align_left)
+    table.cell(tb, 1, 1, na(rr1) ? "-" : str.tostring(rr1, "#"), text_color=color.white, text_size=size.small, text_halign=text.align_left)
+    table.cell(tb, 0, 2, "دعم", text_color=color.new(color.green, 0), text_size=size.small, text_halign=text.align_left)
+    table.cell(tb, 1, 2, na(ss1) ? "-" : str.tostring(ss1, "#"), text_color=color.white, text_size=size.small, text_halign=text.align_left)
+    table.cell(tb, 0, 3, "VIX", text_color=color.white, text_size=size.small, text_halign=text.align_left)
+    table.cell(tb, 1, 3, na(vix) ? "غير متاح" : str.tostring(vix, "#.0") + "  ±" + str.tostring(em, "#") + " نقطة/يوم", text_color=color.white, text_size=size.small, text_halign=text.align_left)
+    posTxt = posSide == 0 ? "لا مركز" : ((posSide == 1 ? "CALL " : "PUT ") + str.tostring(posK, "#") + " ×" + str.tostring(posQty) + (na(posPnl) ? "" : "  " + str.tostring(posPnl * 100, "#") + "%"))
+    table.cell(tb, 0, 4, "المركز", text_color=color.white, text_size=size.small, text_halign=text.align_left)
+    table.cell(tb, 1, 4, posTxt, text_color=color.white, text_size=size.small, text_halign=text.align_left)
+    table.cell(tb, 0, 5, "الصفقات", text_color=color.white, text_size=size.small, text_halign=text.align_left)
+    table.cell(tb, 1, 5, str.tostring(trades) + " | رابحة " + (trades > 0 ? str.tostring(wins * 100.0 / trades, "#") + "%" : "-") + " | صافي " + str.tostring(netUsd, "#") + "$", text_color=color.white, text_size=size.small, text_halign=text.align_left)
+    table.cell(tb, 0, 6, "تنبيه", text_color=color.yellow, text_size=size.small, text_halign=text.align_left)
+    table.cell(tb, 1, 6, "الصافي نظري (نموذج) لا سعر دفتر", text_color=color.yellow, text_size=size.small, text_halign=text.align_left)
+    table.cell(tb, 0, 7, "الفريم", text_color=color.white, text_size=size.small, text_halign=text.align_left)
+    table.cell(tb, 1, 7, tfMin == 5 ? "5 دقائق ✔" : "اضبطه على 5 دقائق", text_color=tfMin == 5 ? color.white : color.orange, text_size=size.small, text_halign=text.align_left)
