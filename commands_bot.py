@@ -193,7 +193,7 @@ def handle(cmd, arg, n):
         return spx_text(n)
     if cmd == "board":
         P = sb.load_positions() or {"positions": []}
-        rows = eval_positions(sb.active_positions(P, n), n)
+        rows = sb.live_rows(eval_positions(sb.active_positions(P, n), n))
         if not rows:
             return "لا توجد عقود مفتوحة الآن."
         try:

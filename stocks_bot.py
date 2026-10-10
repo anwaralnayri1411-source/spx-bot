@@ -591,7 +591,7 @@ def contract_quote(t, p, cache):
         return 0.0 if v is None or pd.isna(v) else float(v)
     bid, ask, last = num("bid"), num("ask"), num("lastPrice")
     if bid > 0 and ask > 0:
-        val, spr = (bid + ask) / 2, (ask - bid) / ((ask + bid) / 2)
+        val, spr = (bid if ob.EXIT_AT_BID else (bid + ask) / 2), (ask - bid) / ((ask + bid) / 2)
     elif last > 0:
         val, spr = last, None
     else:
@@ -778,8 +778,14 @@ def footer_line():
             f"🕒 {ob.now_ny().astimezone(ob.RY).strftime('%H:%M')} الرياض | إصدار 16")
 
 
+def live_rows(rows):
+    """العقود التي لم تبلغ الوقف فقط. ما بلغ الوقف لا يظهر في المتابعة، وتبقى بياناته للتعلم."""
+    return [(p, i) for p, i in rows if p["status"] != "stopped"]
+
+
 def board_png(rows):
     import cards
+    rows = live_rows(rows)
     items = [{"name": f"{p['ticker']} {p['side']} {p['strike']:g}", "sub": date_ar(p["exp"]), "entry": p["entry"],
               "now": info["val"], "pnl": info["pnl"], "status": p["status"]} for p, info in rows]
     return cards.board_card("لوحة عقود الشركات", ob.now_ny().strftime("%Y-%m-%d %H:%M") + " نيويورك", items,
@@ -788,6 +794,10 @@ def board_png(rows):
 
 def send_board(rows, n):
     """لوحة صورة للعقود المفتوحة، وإن تعذرت نرسل النص بدلاً منها."""
+    rows = live_rows(rows)
+    if not rows:
+        ob.send_telegram("📋 <b>حالة العقود</b> #حالة\nلا عقود نشطة الآن.")
+        return
     net = sum((i["val"] - p["entry"]) * 100 for p, i in rows)
     try:
         if ob.send_photo(board_png(rows), f"📋 <b>حالة العقود</b> #حالة | المجموع على الورق: <b>{net:+,.0f}$</b>"):
@@ -799,9 +809,7 @@ def send_board(rows, n):
 
 def status_message(rows, n):
     L = ["📋 <b>الشركات — حالة العقود المفتوحة</b> #حالة", ""]
-    net = 0.0
-    live = [(p, i) for p, i in rows if p["status"] != "stopped"]
-    dead = [(p, i) for p, i in rows if p["status"] == "stopped"]
+    live = live_rows(rows)
     for p, info in sorted(live, key=lambda x: -x[1]["pnl"]):
         pn = info["pnl"]
         ico = "🟩" if pn >= 0.2 else ("🟢" if pn >= 0 else ("🟠" if pn > -WARN_LOSS else "🔴"))
@@ -809,13 +817,9 @@ def status_message(rows, n):
         L.append(f"{ico} <b>{ob.esc(p['ticker'])} {p['side']}</b> {p['strike']:,.1f} | {date_ar(p['exp'])}: "
                  f"${p['entry'] * 100:,.0f} ← ${info['val'] * 100:,.0f} (<b>{pn * 100:+.0f}%</b>){tag}")
     if not live:
-        L.append("لا عقود نشطة (كلها تحت الوقف).")
-    if dead:
-        L += ["", "🛑 <b>تحت الوقف (متوقفة التنبيهات، ونسجل بياناتها للتعلم):</b> " +
-              "، ".join(f"{ob.esc(p['ticker'])} {i['pnl'] * 100:+.0f}%" for p, i in dead)]
-    for p, info in rows:
-        net += (info["val"] - p["entry"]) * 100
-    L += ["", f"المجموع على الورق: <b>{net:+,.0f}$</b> لو بعت كلها الآن بسعر الوسط", "", short_footer()]
+        L.append("لا عقود نشطة الآن.")
+    net = sum((i["val"] - p["entry"]) * 100 for p, i in live)
+    L += ["", f"المجموع على الورق: <b>{net:+,.0f}$</b> لو بعت كلها الآن بسعر البيع", "", short_footer()]
     return "\n".join(L)
 
 

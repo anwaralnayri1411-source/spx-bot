@@ -25,6 +25,8 @@ import yfinance as yf
 
 # ====================== الإعدادات ======================
 SYMBOL = "^SPX"             # يمكنك تغييره إلى "SPY"
+EXIT_AT_BID = True          # نقيس قيمة العقد للخروج بسعر البيع (bid) لا الوسط، فالأرقام أقرب للتنفيذ الفعلي
+MAX_DAILY_STOPS = 2         # بعد هذا العدد من الإشارات التي بلغت الوقف في اليوم نوقف إشارات SPX الجديدة
 NDX_SYMBOL = "^NDX"         # ناسداك 100 (NDXP): نفس اتجاه SPX بعقود أرخص بعيدة عن السعر (اتركها "" لتعطيلها)
 NDX_MIN_OI, NDX_MIN_VOL, NDX_MAX_SPREAD = 20, 50, 0.35   # سيولته أقل من SPX فنخفف الشروط
 ALT_SYMBOL = "SPY"          # أداة بديلة: خيارات SPY بنفس الاتجاه (اتركها "" لتعطيلها)
@@ -1257,7 +1259,7 @@ def spx_quote(p):
         ask = 0 if pd.isna(r.get("ask")) else float(r["ask"])
         last = 0 if pd.isna(r.get("lastPrice")) else float(r["lastPrice"])
         if bid > 0 and ask > 0:
-            val, spr = (bid + ask) / 2, (ask - bid) / ((ask + bid) / 2)
+            val, spr = (bid if EXIT_AT_BID else (bid + ask) / 2), (ask - bid) / ((ask + bid) / 2)
         elif last > 0:
             val, spr = last, None
         else:
@@ -1327,6 +1329,16 @@ def position_message(p, val, pnl, spot, text, kind):
     L.append(f"🛑 الوقف {p['entry'] * (1 - STOP_LOSS):.2f} | ✅ الجني {p['entry'] * (1 + TAKE_PROFIT):.2f}")
     L.append(f"⚠️ القرار قرارك | 🕒 {now_ny().astimezone(RY).strftime('%H:%M')} الرياض | SPX إصدار 17")
     return "\n".join(L)
+
+
+def stops_today(n):
+    """عدد إشارات اليوم (بوقت إرسال مختلف) التي بلغ أي عقد منها الوقف."""
+    try:
+        today = n.date().isoformat()
+        return len({p["time"] for p in load_positions()["positions"]
+                    if p["time"][:10] == today and p.get("status") == "stopped"})
+    except Exception:
+        return 0
 
 
 def follow_payload(p, val, pnl, spot, text, kind):
@@ -1456,6 +1468,13 @@ def run_once(force=False):
         state = {"date": today_s, "last_side": state.get("last_side"), "last_time": state.get("last_time"),
                  "report_sent": False, "runs": 0, "best_edge": 0.0, "signals": 0, "summary_sent": False,
                  "reason_counts": {}}
+    if not force and stops_today(n) >= MAX_DAILY_STOPS and a["contracts"]:
+        a["contracts"] = []
+        a["reasons"].append(f"⛔ حد الخسارة اليومي: {MAX_DAILY_STOPS} إشارات بلغت الوقف اليوم، فتوقفت الإشارات الجديدة.")
+        if not state.get("paused_sent"):
+            state["paused_sent"] = True
+            send_telegram(f"⛔ <b>توقف إشارات SPX اليوم</b> #خطة\n{MAX_DAILY_STOPS} إشارات بلغت الوقف اليوم. "
+                          "نوقف الجديد حمايةً من التوالي في الخسارة، ونواصل متابعة المفتوح.")
     has_signal = bool(a["contracts"])
     log_line = log_summary()
 
