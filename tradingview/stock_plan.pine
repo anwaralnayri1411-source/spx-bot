@@ -1,27 +1,37 @@
 //@version=5
 // ============================================================================
-// Stock Plan | خطة الأسهم (تعليمي وليس توصية)
-// يعمل على أي سهم أمريكي، فريم 5 دقائق. الإشارة: CALL أو PUT مع خطوط الدخول والهدف والوقف.
-// يعتمد على: مستويات أمس، نطاق أول 30 دقيقة، VWAP، القوة النسبية مقابل SPY، حجم التداول.
-// سعر العقد هنا تقدير نظري (بلاك-شولز بتذبذب تاريخي × معامل)، والسعر الحقيقي من دفتر الأوامر.
-// تنبيه: Condition = هذا المؤشر | Any alert() function call
+// Stock Plan v2 (educational, not advice). Works on any US stock, 5m to 4h.
+// Mode auto: 5m-30m = DAY mode (intraday levels, opening range, VWAP).
+//            1h-4h  = SWING mode (multi-day: weekly/20-day levels, SMA20/50/200, holds for days).
+// Signals combine: trend, momentum (RSI/MACD), volume (RVOL/OBV), relative strength vs SPY,
+// support/resistance, gaps, earnings & dividend dates. NEWS cannot be read by TradingView scripts.
+// Contract prices are model estimates (Black-Scholes, historical vol x multiplier): check the real book.
+// Alert: Condition = this indicator | Any alert() function call
 // ============================================================================
-indicator("Stock Plan", shorttitle="Stock Plan", overlay=true, max_labels_count=300, max_lines_count=100)
+indicator("Stock Plan v2", shorttitle="Stock Plan", overlay=true, max_labels_count=300, max_lines_count=100)
 
 if not timeframe.isintraday
-    runtime.error("Use an intraday timeframe (5m recommended).")
+    runtime.error("Use an intraday timeframe: 5m up to 4h.")
+
+gM = "Mode"
+modeIn = input.string("Auto", "Mode", options=["Auto", "Day", "Swing"], group=gM)
 
 gS = "Signals"
 minEdge = input.float(3.0, "Min bull-bear points gap", minval=0.5, step=0.5, group=gS)
 allowCounter = input.bool(false, "Allow counter-bias signals", group=gS)
 minRvol = input.float(1.0, "Min relative volume for breakouts", minval=0.0, step=0.1, group=gS)
-noEntryH = input.int(15, "No entry after (NY hour)", minval=10, maxval=16, group=gS)
-cooldownMin = input.int(30, "Min minutes between signals", minval=5, group=gS)
-tolPct = input.float(0.05, "Level touch tolerance %", minval=0.0, step=0.01, group=gS)
+noEntryH = input.int(15, "Day mode: no entry after (NY hour)", minval=10, maxval=16, group=gS)
+cooldownHrs = input.float(2.0, "Min hours between signals", minval=0.25, step=0.25, group=gS)
+tolPct = input.float(0.08, "Level touch tolerance %", minval=0.0, step=0.01, group=gS)
+blockEarn = input.int(2, "No entry within N days before earnings (0 = off)", minval=0, maxval=30, group=gS)
 
 gO = "Contract model"
 ivMult = input.float(1.3, "IV = historical vol x this", minval=0.3, step=0.05, group=gO)
-daysExp = input.int(5, "Days to expiry (calendar)", minval=1, maxval=45, group=gO)
+daysDay = input.int(5, "Day mode: days to expiry", minval=1, maxval=45, group=gO)
+daysSwing = input.int(21, "Swing mode: days to expiry", minval=3, maxval=120, group=gO)
+holdMinDay = input.int(60, "Day mode: assumed hold (minutes) for target", minval=5, group=gO)
+holdDaysSwing = input.int(3, "Swing mode: assumed hold (days) for target", minval=1, group=gO)
+maxHoldDays = input.int(10, "Swing mode: time stop (days)", minval=1, group=gO)
 budMin = input.float(100.0, "Min contract price $", minval=10.0, group=gO)
 budMax = input.float(300.0, "Max contract price $", minval=20.0, group=gO)
 stepIn = input.float(0.0, "Strike step (0 = auto by price)", minval=0.0, group=gO)
@@ -29,7 +39,6 @@ riskUsd = input.float(150.0, "Risk budget at stop $", minval=10.0, group=gO)
 maxQty = input.int(5, "Max contracts", minval=1, group=gO)
 tpPct = input.float(50.0, "Take profit % of contract", minval=5.0, group=gO)
 slPct = input.float(40.0, "Stop loss % of contract", minval=5.0, maxval=95.0, group=gO)
-holdMin = input.int(60, "Assumed hold minutes (for target)", minval=5, group=gO)
 
 gD = "Display"
 spySym = input.string("AMEX:SPY", "Market reference", group=gD)
@@ -121,12 +130,12 @@ NYTZ = "America/New_York"
 inSess = not na(time(timeframe.period, "0930-1600:23456", NYTZ))
 newSess = inSess and not inSess[1]
 tfMin = timeframe.in_seconds(timeframe.period) / 60.0
+dayMode = modeIn == "Day" or (modeIn == "Auto" and tfMin <= 30)
 hmOpen = hour(time, NYTZ) * 60 + minute(time, NYTZ)
 hmClose = hmOpen + tfMin
 minsOpen = hmOpen - 570
-minsToClose = 960 - hmClose
 noEntryMin = noEntryH * 60
-remMin = math.max(daysExp * 1440.0 - (hmClose - 570), 30.0)
+daysExp = dayMode ? daysDay : daysSwing
 
 // ------------------------------- Data ---------------------------------------
 pdH = request.security(syminfo.tickerid, "D", high[1], lookahead=barmerge.lookahead_on)
@@ -134,21 +143,39 @@ pdL = request.security(syminfo.tickerid, "D", low[1], lookahead=barmerge.lookahe
 pdC = request.security(syminfo.tickerid, "D", close[1], lookahead=barmerge.lookahead_on)
 d20 = request.security(syminfo.tickerid, "D", ta.sma(close, 20)[1], lookahead=barmerge.lookahead_on)
 d50 = request.security(syminfo.tickerid, "D", ta.sma(close, 50)[1], lookahead=barmerge.lookahead_on)
+d200 = request.security(syminfo.tickerid, "D", ta.sma(close, 200)[1], lookahead=barmerge.lookahead_on)
+h20 = request.security(syminfo.tickerid, "D", ta.highest(high, 20)[1], lookahead=barmerge.lookahead_on)
+l20 = request.security(syminfo.tickerid, "D", ta.lowest(low, 20)[1], lookahead=barmerge.lookahead_on)
+wkH = request.security(syminfo.tickerid, "W", high[1], lookahead=barmerge.lookahead_on)
+wkL = request.security(syminfo.tickerid, "W", low[1], lookahead=barmerge.lookahead_on)
 atrD = request.security(syminfo.tickerid, "D", ta.atr(14)[1], lookahead=barmerge.lookahead_on)
 hv = request.security(syminfo.tickerid, "D", ta.stdev(math.log(close / close[1]), 20)[1] * math.sqrt(252.0), lookahead=barmerge.lookahead_on)
+c5 = request.security(syminfo.tickerid, "D", close[5], lookahead=barmerge.lookahead_on)
 spyNow = request.security(spySym, timeframe.period, close)
 spyPrev = request.security(spySym, "D", close[1], lookahead=barmerge.lookahead_on)
+spy5 = request.security(spySym, "D", close[5], lookahead=barmerge.lookahead_on)
 
 ivNow = na(hv) ? 0.35 * ivMult : hv * ivMult
 vwapS = ta.vwap(hlc3)
 ema9 = ta.ema(close, 9)
 ema21 = ta.ema(close, 21)
-n30 = math.max(1, math.round(30 / tfMin))
-r30 = close / close[n30] - 1
-rvol = ta.sma(volume, 20) > 0 ? volume / ta.sma(volume, 20) : na
-stockChg = not na(pdC) and pdC > 0 ? close / pdC - 1 : na
-spyChg = not na(spyNow) and not na(spyPrev) and spyPrev > 0 ? spyNow / spyPrev - 1 : na
-rs = not na(stockChg) and not na(spyChg) ? stockChg - spyChg : na
+rsi = ta.rsi(close, 14)
+[macdL, macdS, macdH] = ta.macd(close, 12, 26, 9)
+obv = ta.obv
+nBars = dayMode ? math.max(1, math.round(30 / tfMin)) : 10
+rN = close / close[nBars] - 1
+vAvg = ta.sma(volume, 20)
+rvol = vAvg > 0 ? volume / vAvg : na
+stockDay = not na(pdC) and pdC > 0 ? close / pdC - 1 : na
+spyDay = not na(spyNow) and not na(spyPrev) and spyPrev > 0 ? spyNow / spyPrev - 1 : na
+stock5 = not na(c5) and c5 > 0 ? close / c5 - 1 : na
+spy5c = not na(spyNow) and not na(spy5) and spy5 > 0 ? spyNow / spy5 - 1 : na
+rs = dayMode ? (not na(stockDay) and not na(spyDay) ? stockDay - spyDay : na) : (not na(stock5) and not na(spy5c) ? stock5 - spy5c : na)
+mktChg = dayMode ? spyDay : spy5c
+
+daysToEarn = na(earnings.future_time) ? na : (earnings.future_time - time) / 86400000.0
+daysToDiv = na(dividends.future_ex_date) ? na : (dividends.future_ex_date - time) / 86400000.0
+earnSoon = blockEarn > 0 and not na(daysToEarn) and daysToEarn >= 0 and daysToEarn <= blockEarn
 
 var float orH = na
 var float orL = na
@@ -160,8 +187,8 @@ if newSess
 else if inSess and minsOpen < 30
     orH := math.max(orH, high)
     orL := math.min(orL, low)
-orDone = inSess and minsOpen >= 30 and not na(orH)
-gap = not na(dayOpen) and not na(pdC) and pdC > 0 ? dayOpen / pdC - 1 : na
+orDone = dayMode and inSess and minsOpen >= 30 and not na(orH)
+gap = dayMode and not na(dayOpen) and not na(pdC) and pdC > 0 ? dayOpen / pdC - 1 : na
 
 // ------------------------------- Bias ---------------------------------------
 float bullP = 0.0
@@ -171,30 +198,52 @@ if not na(d20) and not na(d50)
         bullP += 1
     else if close < d50 and d20 < d50
         bearP += 1
-vwUp = na(vwapS) ? 0 : (close > vwapS ? 1 : -1)
+if not na(d200)
+    if close > d200
+        bullP += 0.5
+    else
+        bearP += 0.5
+vwUp = na(vwapS) or not dayMode ? 0 : (close > vwapS ? 1 : -1)
 emUp = ema9 > ema21 ? 1 : -1
-if vwUp + emUp == 2
+trendFrame = dayMode ? vwUp + emUp : emUp * 2
+if trendFrame == 2
     bullP += 2
-else if vwUp + emUp == -2
+else if trendFrame == -2
     bearP += 2
-if r30 > 0.003
+thrR = dayMode ? 0.003 : 0.02
+if rN > thrR
     bullP += 1
-else if r30 < -0.003
+else if rN < -thrR
     bearP += 1
+if not na(rsi)
+    if rsi > 55
+        bullP += 0.5
+    else if rsi < 45
+        bearP += 0.5
+if not na(macdH) and not na(macdH[1])
+    if macdH > 0 and macdH > macdH[1]
+        bullP += 0.5
+    else if macdH < 0 and macdH < macdH[1]
+        bearP += 0.5
+if not na(obv) and not na(ta.sma(obv, 20))
+    if obv > ta.sma(obv, 20)
+        bullP += 0.5
+    else
+        bearP += 0.5
 if not na(gap)
     if gap >= 0.01
         bullP += 0.5
     else if gap <= -0.01
         bearP += 0.5
 if not na(rs)
-    if rs >= 0.003
+    if rs >= thrR
         bullP += 1
-    else if rs <= -0.003
+    else if rs <= -thrR
         bearP += 1
-if not na(spyChg)
-    if spyChg >= 0.003
+if not na(mktChg)
+    if mktChg >= thrR
         bullP += 0.5
-    else if spyChg <= -0.003
+    else if mktChg <= -thrR
         bearP += 0.5
 if orDone
     if close > orH
@@ -206,21 +255,28 @@ if not na(pdH) and not na(pdL)
         bullP += 1
     else if close < pdL
         bearP += 1
+if not dayMode and not na(h20) and not na(l20)
+    if close > h20
+        bullP += 1
+    else if close < l20
+        bearP += 1
 edge = bullP - bearP
 strong = math.abs(edge) >= minEdge
-strength = math.min(10.0, math.abs(edge) * 1.5)
+strength = math.min(10.0, math.abs(edge) * 1.2)
 
 // ------------------------------- Levels -------------------------------------
-em = na(atrD) ? close * 0.015 : atrD * 0.6
+em = na(atrD) ? close * 0.015 : atrD * (dayMode ? 0.6 : 1.5)
 rstep = close < 20 ? 1.0 : (close < 100 ? 5.0 : (close < 500 ? 10.0 : 50.0))
 rUp = math.floor(close[1] / rstep) * rstep + rstep
 rDn = math.floor(close[1] / rstep) * rstep
-lv = array.from(pdH, pdL, orDone ? orH : na, orDone ? orL : na, vwapS, pdC + em, pdC - em, rUp, rDn)
+lv = dayMode ? array.from(pdH, pdL, orDone ? orH : na, orDone ? orL : na, vwapS, pdC + em, pdC - em, rUp, rDn) : array.from(pdH, pdL, wkH, wkL, h20, l20, d20, d50, rUp, rDn)
+g1 = dayMode ? 0.001 : 0.003
+g2 = dayMode ? 0.003 : 0.01
 refP = close[1]
-R1p = f_above(lv, refP, refP * 0.001)
-S1p = f_below(lv, refP, refP * 0.001)
-R2p = f_above(lv, na(R1p) ? refP : R1p, refP * 0.003)
-S2p = f_below(lv, na(S1p) ? refP : S1p, refP * 0.003)
+R1p = f_above(lv, refP, refP * g1)
+S1p = f_below(lv, refP, refP * g1)
+R2p = f_above(lv, na(R1p) ? refP : R1p, refP * g2)
+S2p = f_below(lv, na(S1p) ? refP : S1p, refP * g2)
 
 // ------------------------------- Entries ------------------------------------
 tol = tolPct / 100.0
@@ -245,14 +301,16 @@ var float posK = na
 var float posPrem = na
 var int posQty = 0
 var int posBar = na
-var int lastSigBar = na
+var int posTime = na
+var int posDays = 0
+var int lastSigTime = na
 var int trades = 0
 var int wins = 0
 var float netUsd = 0.0
 
-cooldownBars = math.max(1, math.round(cooldownMin / tfMin))
-cooldownOk = na(lastSigBar) or bar_index - lastSigBar >= cooldownBars
-canEnter = inSess and minsOpen >= 15 and hmOpen < noEntryMin and posSide == 0 and cooldownOk and not na(close[1])
+cooldownOk = na(lastSigTime) or time - lastSigTime >= cooldownHrs * 3600000
+sessOk = dayMode ? (inSess and minsOpen >= 15 and hmOpen < noEntryMin) : true
+canEnter = sessOk and posSide == 0 and cooldownOk and not earnSoon and not na(close[1])
 bullOk = (edge > 0 and strong) or allowCounter
 bearOk = (edge < 0 and strong) or allowCounter
 sigCall = canEnter and (breakoutUp or bounceUp) and bullOk
@@ -260,7 +318,7 @@ sigPut = canEnter and (rejectDn or breakdownDn) and bearOk and not sigCall
 
 if sigCall or sigPut
     isC = sigCall
-    Tn = remMin / 525600.0
+    Tn = daysExp * 1440.0 / 525600.0
     [kk, pp] = f_pick(close, Tn, ivNow, isC, stepUse, budMin, budMax)
     kind = sigCall ? (breakoutUp ? "Breakout" : "Bounce") : (rejectDn ? "Rejection" : "Breakdown")
     float tgtIdx = na
@@ -278,17 +336,19 @@ if sigCall or sigPut
         premSh = pp / 100.0
         perLoss = pp * slPct / 100.0
         q = math.max(1, math.min(maxQty, math.floor(riskUsd / perLoss)))
-        T2 = math.max(Tn - holdMin / 525600.0, 30.0 / 525600.0)
-        tpIdx = f_solve(kk, T2, ivNow, isC, premSh * (1 + tpPct / 100.0), isC ? close : close * 0.8, isC ? close * 1.2 : close)
-        slIdx = f_solve(kk, Tn, ivNow, isC, premSh * (1 - slPct / 100.0), isC ? close * 0.8 : close, isC ? close : close * 1.2)
+        holdMinUse = dayMode ? holdMinDay : holdDaysSwing * 1440.0
+        T2 = math.max(Tn - holdMinUse / 525600.0, 30.0 / 525600.0)
+        tpIdx = f_solve(kk, T2, ivNow, isC, premSh * (1 + tpPct / 100.0), isC ? close : close * 0.7, isC ? close * 1.3 : close)
+        slIdx = f_solve(kk, Tn, ivNow, isC, premSh * (1 - slPct / 100.0), isC ? close * 0.7 : close, isC ? close : close * 1.3)
         posSide := isC ? 1 : -1
         posK := kk
         posPrem := premSh
         posQty := int(q)
         posBar := bar_index
-        lastSigBar := bar_index
+        posTime := time_close
+        lastSigTime := time
         tpShow = na(tpIdx) ? tgtIdx : tpIdx
-        txt = (isC ? "CALL ▲ " : "PUT ▼ ") + kind + "\n" + str.tostring(kk, "#.##") + " ~$" + str.tostring(pp, "#") + " x" + str.tostring(q) + "  edge " + str.tostring(strength, "#.0") + "/10"
+        txt = (isC ? "CALL ▲ " : "PUT ▼ ") + kind + (dayMode ? "" : " (swing)") + "\n" + str.tostring(kk, "#.##") + " ~$" + str.tostring(pp, "#") + " x" + str.tostring(q) + "  edge " + str.tostring(strength, "#.0") + "/10"
         if not showAll
             label.delete(sigB)
             sigB := sigA
@@ -309,12 +369,13 @@ if sigCall or sigPut
         if not na(slIdx)
             lnSl := line.new(bar_index, slIdx, bar_index + 1, slIdx, extend=extend.right, color=color.red, style=line.style_dashed, width=2)
             lbSl := label.new(bar_index + 4, slIdx, "STOP " + str.tostring(slIdx, "#.00"), style=label.style_label_left, color=color.new(color.red, 10), textcolor=color.white, size=size.small)
-        alert(syminfo.ticker + " " + (isC ? "CALL" : "PUT") + " (" + kind + ") | Price " + str.tostring(close, "#.00") + " | Strike " + str.tostring(kk, "#.##") + " ~$" + str.tostring(pp, "#") + " x" + str.tostring(q) + " | TP " + (na(tpShow) ? "?" : str.tostring(tpShow, "#.00")) + " | SL " + (na(slIdx) ? "?" : str.tostring(slIdx, "#.00")) + " | Model price, check the real book", alert.freq_once_per_bar_close)
+        alert(syminfo.ticker + " " + (isC ? "CALL" : "PUT") + " " + kind + (dayMode ? " (day)" : " (swing)") + " | Price " + str.tostring(close, "#.00") + " | Strike " + str.tostring(kk, "#.##") + " ~$" + str.tostring(pp, "#") + " x" + str.tostring(q) + " | TP " + (na(tpShow) ? "?" : str.tostring(tpShow, "#.00")) + " | SL " + (na(slIdx) ? "?" : str.tostring(slIdx, "#.00")) + " | Model price, check the real book", alert.freq_once_per_bar_close)
 
 // ------------------------------- Position follow-up -------------------------
 float posPnl = na
 if posSide != 0 and bar_index > posBar
     isCp = posSide == 1
+    remMin = math.max(daysExp * 1440.0 - (time_close - posTime) / 60000.0, 30.0)
     Tx = remMin / 525600.0
     valFav = f_bs(isCp ? high : low, posK, Tx, ivNow, isCp)
     valAdv = f_bs(isCp ? low : high, posK, Tx, ivNow, isCp)
@@ -328,8 +389,11 @@ if posSide != 0 and bar_index > posBar
     else if not na(valFav) and valFav >= posPrem * (1 + tpPct / 100.0)
         why := "TARGET HIT"
         exitVal := posPrem * (1 + tpPct / 100.0)
-    else if hmClose >= 955 or not inSess
+    else if dayMode and (hmClose >= 955 or not inSess)
         why := "END OF DAY"
+        exitVal := na(valEnd) ? posPrem : valEnd
+    else if not dayMode and (time_close - posTime) >= maxHoldDays * 86400000
+        why := "TIME STOP"
         exitVal := na(valEnd) ? posPrem : valEnd
     if why != ""
         pl = (exitVal - posPrem) * 100 * posQty
@@ -352,7 +416,11 @@ plot(pdH, "Y-High", color=color.new(color.orange, 30), style=plot.style_linebr)
 plot(pdL, "Y-Low", color=color.new(color.orange, 30), style=plot.style_linebr)
 plot(orDone ? orH : na, "30m-High", color=color.new(color.aqua, 30), style=plot.style_linebr)
 plot(orDone ? orL : na, "30m-Low", color=color.new(color.aqua, 30), style=plot.style_linebr)
-plot(vwapS, "VWAP", color=color.new(color.yellow, 20), linewidth=2)
+plot(dayMode ? vwapS : na, "VWAP", color=color.new(color.yellow, 20), linewidth=2)
+plot(dayMode ? na : d20, "SMA20 (D)", color=color.new(color.yellow, 20), style=plot.style_linebr)
+plot(dayMode ? na : d50, "SMA50 (D)", color=color.new(color.fuchsia, 30), style=plot.style_linebr)
+plot(dayMode ? na : wkH, "Week-High", color=color.new(color.aqua, 30), style=plot.style_linebr)
+plot(dayMode ? na : wkL, "Week-Low", color=color.new(color.aqua, 30), style=plot.style_linebr)
 
 var line lnR1 = na
 var line lnS1 = na
@@ -363,8 +431,8 @@ if barstate.islast
     line.delete(lnS1)
     label.delete(lbR1)
     label.delete(lbS1)
-    r1 = f_above(lv, close, close * 0.001)
-    s1 = f_below(lv, close, close * 0.001)
+    r1 = f_above(lv, close, close * g1)
+    s1 = f_below(lv, close, close * g1)
     if not na(r1)
         lnR1 := line.new(bar_index - 20, r1, bar_index + 5, r1, extend=extend.right, color=color.red, width=2)
         lbR1 := label.new(bar_index + 6, r1, "RESIST " + str.tostring(r1, "#.00"), style=label.style_label_left, color=color.new(color.red, 15), textcolor=color.white, size=size.small)
@@ -373,11 +441,11 @@ if barstate.islast
         lbS1 := label.new(bar_index + 6, s1, "SUPPORT " + str.tostring(s1, "#.00"), style=label.style_label_left, color=color.new(color.green, 15), textcolor=color.white, size=size.small)
 
 // ------------------------------- Table --------------------------------------
-var table tb = table.new(position.top_right, 2, 7, bgcolor=color.new(color.black, 25), border_width=1, border_color=color.new(color.gray, 60))
+var table tb = table.new(position.top_right, 2, 8, bgcolor=color.new(color.black, 25), border_width=1, border_color=color.new(color.gray, 60))
 if barstate.islast and showTable
     sideTxt = edge >= minEdge ? "CALL side 🟢" : (edge <= -minEdge ? "PUT side 🔴" : "WAIT ⚪ (no clear side)")
-    rr1 = f_above(lv, close, close * 0.001)
-    ss1 = f_below(lv, close, close * 0.001)
+    rr1 = f_above(lv, close, close * g1)
+    ss1 = f_below(lv, close, close * g1)
     table.cell(tb, 0, 0, "Bias", text_color=color.white, text_size=size.normal, text_halign=text.align_left)
     table.cell(tb, 1, 0, sideTxt + "  (" + str.tostring(bullP, "#.0") + " vs " + str.tostring(bearP, "#.0") + ")", text_color=edge >= minEdge ? color.lime : (edge <= -minEdge ? color.red : color.white), text_size=size.normal, text_halign=text.align_left)
     table.cell(tb, 0, 1, "Resist", text_color=color.red, text_size=size.normal, text_halign=text.align_left)
@@ -386,11 +454,12 @@ if barstate.islast and showTable
     table.cell(tb, 1, 2, na(ss1) ? "-" : str.tostring(ss1, "#.00") + "  (-" + str.tostring(close - ss1, "#.00") + ")", text_color=color.white, text_size=size.normal, text_halign=text.align_left)
     table.cell(tb, 0, 3, "vs SPY", text_color=color.white, text_size=size.normal, text_halign=text.align_left)
     table.cell(tb, 1, 3, na(rs) ? "n/a" : (rs >= 0 ? "stronger +" : "weaker ") + str.tostring(rs * 100, "#.0") + "%  | RVOL " + (na(rvol) ? "n/a" : str.tostring(rvol, "#.0")), text_color=color.white, text_size=size.normal, text_halign=text.align_left)
+    table.cell(tb, 0, 4, "Earnings", text_color=color.white, text_size=size.normal, text_halign=text.align_left)
+    table.cell(tb, 1, 4, na(daysToEarn) or daysToEarn < 0 ? "n/a" : "in " + str.tostring(daysToEarn, "#") + " days" + (earnSoon ? "  ⛔ entries blocked" : ""), text_color=earnSoon ? color.orange : color.white, text_size=size.normal, text_halign=text.align_left)
+    table.cell(tb, 0, 5, "Ex-dividend", text_color=color.white, text_size=size.normal, text_halign=text.align_left)
+    table.cell(tb, 1, 5, na(daysToDiv) or daysToDiv < 0 ? "n/a" : "in " + str.tostring(daysToDiv, "#") + " days", text_color=color.white, text_size=size.normal, text_halign=text.align_left)
     posTxt = posSide == 0 ? "none" : ((posSide == 1 ? "CALL " : "PUT ") + str.tostring(posK, "#.##") + " x" + str.tostring(posQty) + (na(posPnl) ? "" : "  " + str.tostring(posPnl * 100, "#") + "%"))
-    table.cell(tb, 0, 4, "Position", text_color=color.white, text_size=size.normal, text_halign=text.align_left)
-    table.cell(tb, 1, 4, posTxt, text_color=posSide == 1 ? color.lime : (posSide == -1 ? color.red : color.white), text_size=size.normal, text_halign=text.align_left)
-    table.cell(tb, 0, 5, "Frame", text_color=color.white, text_size=size.normal, text_halign=text.align_left)
-    table.cell(tb, 1, 5, tfMin == 5 ? "5m OK" : "SET 5m!", text_color=tfMin == 5 ? color.white : color.orange, text_size=size.normal, text_halign=text.align_left)
-    if showStats
-        table.cell(tb, 0, 6, "Paper", text_color=color.yellow, text_size=size.small, text_halign=text.align_left)
-        table.cell(tb, 1, 6, str.tostring(trades) + " trades, model prices, not real", text_color=color.yellow, text_size=size.small, text_halign=text.align_left)
+    table.cell(tb, 0, 6, "Position", text_color=color.white, text_size=size.normal, text_halign=text.align_left)
+    table.cell(tb, 1, 6, posTxt, text_color=posSide == 1 ? color.lime : (posSide == -1 ? color.red : color.white), text_size=size.normal, text_halign=text.align_left)
+    table.cell(tb, 0, 7, "Mode", text_color=color.white, text_size=size.normal, text_halign=text.align_left)
+    table.cell(tb, 1, 7, (dayMode ? "DAY" : "SWING") + " | expiry ~" + str.tostring(daysExp) + "d" + (showStats ? " | " + str.tostring(trades) + " paper trades" : ""), text_color=color.white, text_size=size.normal, text_halign=text.align_left)
