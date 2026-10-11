@@ -27,7 +27,7 @@ gO = "نموذج العقد"
 ivMult = input.float(1.0, "معامل التذبذب (IV = VIX × المعامل)", minval=0.3, step=0.05, group=gO)
 budMin = input.float(100.0, "أقل سعر للعقد $", minval=10.0, group=gO)
 budMax = input.float(300.0, "أعلى سعر للعقد $", minval=20.0, group=gO)
-strikeStep = input.float(5.0, "خطوة السترايك", minval=1.0, group=gO)
+strikeIn = input.float(0.0, "خطوة السترايك (0 = تلقائي: SPX 5 / NDX 25 / SPY-QQQ 1)", minval=0.0, group=gO)
 riskUsd = input.float(150.0, "ميزانية المخاطرة عند الوقف $", minval=10.0, group=gO)
 maxQty = input.int(5, "سقف عدد العقود", minval=1, group=gO)
 tpPct = input.float(50.0, "جني الربح % من سعر العقد", minval=5.0, group=gO)
@@ -39,7 +39,12 @@ spySym = input.string("AMEX:SPY", "رمز SPY (لحساب VWAP)", group=gD)
 vixSym = input.string("CBOE:VIX", "رمز VIX", group=gD)
 esSym = input.string("CME_MINI:ES1!", "رمز عقود SPX الآجلة", group=gD)
 showTable = input.bool(true, "إظهار اللوحة", group=gD)
+showAll = input.bool(false, "إظهار كل الإشارات السابقة (افتراضياً آخر إشارتين فقط)", group=gD)
 showStats = input.bool(false, "إظهار إحصاء الصفقات الافتراضية (نظري)", group=gD)
+
+// خطوة السترايك التلقائية حسب مستوى السعر
+strikeStep = strikeIn > 0 ? strikeIn : (close > 15000 ? 25.0 : (close > 2500 ? 5.0 : 1.0))
+symTag = close > 15000 ? "NDX-like" : (close > 2500 ? "SPX-like" : "ETF (SPY/QQQ)")
 
 // ------------------------------- دوال مساعدة --------------------------------
 f_ncdf(x) =>
@@ -232,6 +237,10 @@ bounceUp = not na(S1p) and low <= S1p * (1 + tol) and close > S1p and close > op
 rejectDn = not na(R1p) and high >= R1p * (1 - tol) and close < R1p and close < open
 breakdownDn = not na(S1p) and close < S1p and close[1] >= S1p
 
+var label sigA = na
+var label sigB = na
+var label exA = na
+var label exB = na
 var line lnEn = na
 var line lnTp = na
 var line lnSl = na
@@ -263,7 +272,7 @@ if sigCall or sigPut
     isC = sigCall
     Tn = math.max(minsToClose, 3.0) / 525600.0
     [kk, pp] = f_pick(close, Tn, ivNow, isC, strikeStep, budMin, budMax)
-    kind = sigCall ? (breakoutUp ? "Breakout above resistance" : "Bounce off support") : (rejectDn ? "Rejection at resistance" : "Breakdown below support")
+    kind = sigCall ? (breakoutUp ? "Breakout" : "Bounce") : (rejectDn ? "Rejection" : "Breakdown")
     float tgtIdx = na
     if breakoutUp and sigCall
         tgtIdx := na(R2p) ? close + 0.35 * em : R2p
@@ -292,8 +301,13 @@ if sigCall or sigPut
         posSlIdx := slIdx
         lastSigBar := bar_index
         tpShow = na(tpIdx) ? tgtIdx : tpIdx
-        txt = (isC ? "CALL ▲  BUY CALL" : "PUT ▼  BUY PUT") + "\n" + kind + "\n" + "Strike " + str.tostring(kk, "#") + "  ~$" + str.tostring(pp, "#") + "  x" + str.tostring(q) + "\n" + "Index TP " + (na(tpShow) ? "?" : str.tostring(tpShow, "#.0")) + "  SL " + (na(slIdx) ? "?" : str.tostring(slIdx, "#.0")) + "\n" + "Edge " + str.tostring(strength, "#.0") + "/10"
-        label.new(bar_index, isC ? low : high, txt, style=isC ? label.style_label_up : label.style_label_down, color=isC ? color.new(color.green, 5) : color.new(color.red, 5), textcolor=color.white, size=size.normal)
+        txt = (isC ? "CALL ▲ " : "PUT ▼ ") + kind + "\n" + str.tostring(kk, "#") + " ~$" + str.tostring(pp, "#") + " x" + str.tostring(q) + "  edge " + str.tostring(strength, "#.0") + "/10"
+        if not showAll
+            label.delete(sigB)
+            sigB := sigA
+            label.delete(exB)
+            exB := exA
+        sigA := label.new(bar_index, isC ? low : high, txt, style=isC ? label.style_label_up : label.style_label_down, color=isC ? color.new(color.green, 5) : color.new(color.red, 5), textcolor=color.white, size=size.small)
         line.delete(lnEn)
         line.delete(lnTp)
         line.delete(lnSl)
@@ -336,7 +350,7 @@ if posSide != 0 and bar_index > posBar
         wins += pl > 0 ? 1 : 0
         netUsd += pl
         whyEn = why == "هدف" ? "TARGET HIT" : (why == "وقف" ? "STOP HIT" : "END OF DAY")
-        label.new(bar_index, close, "EXIT: " + whyEn + "  " + (pl >= 0 ? "+" : "") + str.tostring(pl, "#") + "$", style=label.style_label_left, color=pl > 0 ? color.new(color.teal, 5) : color.new(color.maroon, 5), textcolor=color.white, size=size.normal)
+        exA := label.new(bar_index, close, "EXIT: " + whyEn + "  " + (pl >= 0 ? "+" : "") + str.tostring(pl, "#") + "$", style=label.style_label_left, color=pl > 0 ? color.new(color.teal, 5) : color.new(color.maroon, 5), textcolor=color.white, size=size.small)
         line.set_extend(lnEn, extend.none)
         line.set_extend(lnTp, extend.none)
         line.set_extend(lnSl, extend.none)
@@ -409,7 +423,7 @@ if barstate.islast and showTable
     table.cell(tb, 0, 4, "Position", text_color=color.white, text_size=size.normal, text_halign=text.align_left)
     table.cell(tb, 1, 4, posTxt, text_color=posSide == 1 ? color.lime : (posSide == -1 ? color.red : color.white), text_size=size.normal, text_halign=text.align_left)
     table.cell(tb, 0, 5, "Frame", text_color=color.white, text_size=size.normal, text_halign=text.align_left)
-    table.cell(tb, 1, 5, tfMin == 5 ? "5m OK" : "SET 5m!", text_color=tfMin == 5 ? color.white : color.orange, text_size=size.normal, text_halign=text.align_left)
+    table.cell(tb, 1, 5, tfMin == 5 ? "5m OK | " + symTag : "SET 5m! | " + symTag, text_color=tfMin == 5 ? color.white : color.orange, text_size=size.normal, text_halign=text.align_left)
     if showStats
         table.cell(tb, 0, 6, "Paper", text_color=color.yellow, text_size=size.small, text_halign=text.align_left)
         table.cell(tb, 1, 6, str.tostring(trades) + " trades, model prices, not real", text_color=color.yellow, text_size=size.small, text_halign=text.align_left)
