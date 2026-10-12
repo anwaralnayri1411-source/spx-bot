@@ -50,13 +50,26 @@ def _gex_at(rows, Sx):
     return g
 
 
+def _market_open(n):
+    """هل نحن داخل جلسة الأسهم (9:30-16:00 نيويورك، الاثنين-الجمعة)؟ العطل الرسمية تُعامل كجلسة بلا شموع جديدة فلا يضر."""
+    m = n.hour * 60 + n.minute
+    return n.weekday() < 5 and 9 * 60 + 30 <= m < 16 * 60
+
+
 def compute(n=None):
     n = n or ob.now_ny()
     t = yf.Ticker("^SPX")
     bars = t.history(period="5d", interval="5m")["Close"].dropna()
     if bars.empty:
         raise RuntimeError("لا توجد بيانات SPX الآن.")
-    S = float(bars.iloc[-1])
+    S = S_bar = float(bars.iloc[-1])
+    if not _market_open(n):      # خارج الجلسة: إغلاق اليوم الرسمي أدق من آخر شمعة 5 دقائق (قد تتأخر عنه)
+        try:
+            dh = t.history(period="5d")["Close"].dropna()
+            if len(dh) and dh.index[-1].date() <= n.date() and abs(float(dh.iloc[-1]) / S_bar - 1) < 0.01:
+                S = float(dh.iloc[-1])
+        except Exception:
+            pass
     opts = list(t.options)
     today = n.date()
     exps = [(e, (date.fromisoformat(e) - today).days) for e in opts
@@ -127,7 +140,7 @@ def compute(n=None):
         return None if iv_atm is None else S * iv_atm * math.sqrt(max(h, 0) / (24 * 365))
 
     return {"time": n.strftime("%Y-%m-%d %H:%M"), "spot": S, "flip": flip, "support": support,
-            "resistance": resistance, "gravity": gravity, "net_gex": net_gex, "atm_iv": iv_atm,
+            "resistance": resistance, "gravity": gravity, "spot_bar": S_bar, "net_gex": net_gex, "atm_iv": iv_atm,
             "em_1h": em(1), "em_4h": em(4), "em_rest": em(rest_h) if rest_h > 0 else None}
 
 
