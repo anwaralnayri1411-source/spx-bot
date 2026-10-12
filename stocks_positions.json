@@ -108,9 +108,11 @@
    "entry_spy": 773.09,
    "strength": 8.9,
    "earn": "2026-11-12",
-   "status": "open",
-   "peak": 0.43,
-   "alerts": {}
+   "status": "tp",
+   "peak": 0.535,
+   "alerts": {
+    "tp": "2026-10-12T13:57-04:00"
+   }
   },
   {
    "id": "V:CALL:2026-10-16:385",
