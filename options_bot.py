@@ -747,6 +747,8 @@ def analyze(force):
 
     # ----- مؤشرات إضافية (كل واحد اختياري: إن فشل جلبه يُتجاهل) -----
     c["es"] = c["vix_day"] = c["orb"] = c["pd_hl"] = c["pc"] = None
+    c["day_hl"] = None
+    c["pivots"] = []
     try:
         es = yf.Ticker("ES=F").history(period="5d")["Close"].dropna()
         if len(es) >= 2:
@@ -765,6 +767,20 @@ def analyze(force):
         if len(day) >= 7:   # اكتمل نطاق أول 30 دقيقة
             first = day.iloc[:6]
             c["orb"] = (float(first["High"].max()), float(first["Low"].min()))
+        if len(day) >= 3:
+            c["day_hl"] = (float(day["High"].max()), float(day["Low"].min()))
+        try:   # قمم وقيعان قريبة من آخر جلستين (نقاط ارتداد حقيقية على الشارت)
+            rec = ix[ix.index.date >= dates[-2]] if len(dates) > 1 else day
+            hi, lo = rec["High"].values, rec["Low"].values
+            piv = []
+            for i in range(3, len(rec) - 3):
+                if hi[i] == hi[i - 3:i + 4].max():
+                    piv.append((float(hi[i]), "قمة سابقة"))
+                if lo[i] == lo[i - 3:i + 4].min():
+                    piv.append((float(lo[i]), "قاع سابق"))
+            c["pivots"] = piv
+        except Exception:
+            c["pivots"] = []
         if len(dates) > 1:
             pdn = ix[ix.index.date == dates[-2]]
             if not pdn.empty:
@@ -906,6 +922,11 @@ def build_plan(c, bull, bear):
         lv += [(c["orb"][0], "أعلى أول 30د"), (c["orb"][1], "أدنى أول 30د")]
     if c.get("vwap_spx"):
         lv.append((c["vwap_spx"], "VWAP"))
+    if c.get("day_hl"):
+        lv += [(c["day_hl"][0], "أعلى اليوم"), (c["day_hl"][1], "أدنى اليوم")]
+    lv += [(p_, t) for p_, t in (c.get("pivots") or []) if abs(p_ - S) / S <= 0.006]
+    k25 = int(S // 25)
+    lv += [(float(k * 25), "رقم دائري") for k in (k25 - 1, k25, k25 + 1, k25 + 2)]
     if c.get("max_pain"):
         lv.append((c["max_pain"], "نقطة الألم"))
     if prev and vix:
@@ -914,7 +935,14 @@ def build_plan(c, bull, bear):
     merged = []                       # ندمج المستويات المتقاربة في مستوى واحد
     for p_, t in lv:
         if merged and abs(p_ - merged[-1][0]) / S <= 0.0012:
-            merged[-1] = ((merged[-1][0] + p_) / 2, merged[-1][1] + ([t] if t not in merged[-1][1] else []))
+            prev_p, prev_t = merged[-1]
+            if prev_t == ["رقم دائري"]:
+                np_ = p_                       # الرقم الدائري لا يزيح مستوى حقيقياً
+            elif t == "رقم دائري":
+                np_ = prev_p
+            else:
+                np_ = (prev_p + p_) / 2
+            merged[-1] = (np_, prev_t + ([t] if t not in prev_t else []))
         else:
             merged.append((p_, [t]))
     res = [x for x in merged if x[0] > S * 1.0004][:3]
