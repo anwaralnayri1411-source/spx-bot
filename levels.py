@@ -169,6 +169,11 @@ def block(d):
 
 def log(d):
     try:
+        import mgt_compare
+        mgt_compare.log(d)
+    except Exception:
+        pass
+    try:
         new = not os.path.exists(LOG)
         pd.DataFrame([{k: (round(d[k], 2) if isinstance(d.get(k), float) else d.get(k)) for k in COLS}]).to_csv(
             LOG, mode="a", header=new, index=False)
