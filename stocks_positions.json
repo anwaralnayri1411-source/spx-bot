@@ -52,7 +52,7 @@
    "strength": 7.8,
    "earn": "2026-11-19",
    "status": "tp",
-   "peak": 1.287,
+   "peak": 1.326,
    "alerts": {
     "tp": "2026-10-08T13:13-04:00",
     "giveback": "2026-10-09T10:41-04:00"
@@ -91,7 +91,7 @@
    "strength": 7.5,
    "earn": "2026-10-30",
    "status": "open",
-   "peak": 0.44,
+   "peak": 0.464,
    "alerts": {
     "warn": "2026-10-09T15:11-04:00"
    }
@@ -109,7 +109,7 @@
    "strength": 8.9,
    "earn": "2026-11-12",
    "status": "open",
-   "peak": 0.423,
+   "peak": 0.43,
    "alerts": {}
   },
   {
@@ -200,7 +200,7 @@
    "strength": 9.4,
    "earn": "2026-10-30",
    "status": "open",
-   "peak": 0.0,
+   "peak": 0.016,
    "alerts": {}
   }
  ],
