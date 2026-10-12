@@ -45,6 +45,8 @@ STOP_LOSS = 0.40            # وقف الخسارة عند -40%
 REPEAT_MINUTES = 90         # لا نكرر نفس الاتجاه قبل هذه المدة
 RISK_BUDGET_USD = 150       # أقصى خسارة تقبلها في الصفقة الواحدة عند الوقف (عدّلها حسب حسابك)
 MAX_QTY = 5                 # سقف عدد العقود المقترح
+TARGET_MAX_EM = 0.25         # أقصى مسافة لهدف الخطة من نقطة الدخول (جزء من الحركة اليومية المتوقعة)
+TARGET_MIN_EM = 0.08         # أقل مسافة معقولة للهدف
 HOLD_MIN = 30               # افتراض مدة الاحتفاظ بالعقد لحساب مستوى هدف المؤشر (دقيقة)
 WINDOW_START = (9, 45)      # نافذة التشغيل بتوقيت نيويورك
 WINDOW_END = (16, 0)
@@ -952,16 +954,28 @@ def build_plan(c, bull, bear):
     if not sup:
         sup = [(S - 0.5 * em, ["حركة متوقعة"])]
     R1 = res[0][0]
-    R2 = res[1][0] if len(res) > 1 else R1 + 0.35 * em
     S1 = sup[0][0]
-    S2 = sup[1][0] if len(sup) > 1 else S1 - 0.35 * em
+    lvls = [x[0] for x in merged]
+
+    def targets(trig, up):
+        """أهداف قريبة وواقعية: أول مستوى حقيقي بعد الدخول ضمن سقف مسافة (TARGET_MAX_EM من الحركة اليومية).
+        إن لم يوجد مستوى ضمنه نضع هدفاً بمسافة السقف. هدف ثانٍ فقط إذا كان مستوى حقيقياً ضمن السقف نفسه."""
+        sg = 1 if up else -1
+        lo, hi = TARGET_MIN_EM * em, TARGET_MAX_EM * em
+        ahead = sorted((abs(p_ - trig), p_) for p_ in lvls if (p_ - trig) * sg >= lo)
+        t1 = next((p_ for dist, p_ in ahead if dist <= hi), None)
+        if t1 is None:
+            t1 = round(trig + sg * hi)
+        t2 = next((p_ for dist, p_ in ahead if abs(p_ - t1) >= lo and (p_ - t1) * sg > 0 and abs(p_ - trig) <= hi), None)
+        return [t1] + ([t2] if t2 is not None else [])
+
     d = bull - bear
     bias = "CALL" if d >= 2 else ("PUT" if d <= -2 else None)
     scen = [
-        {"side": "CALL", "txt": f"إغلاق شمعة 5د فوق <b>{R1:,.0f}</b>", "tg": [R2]},
-        {"side": "PUT", "txt": f"رفض عند <b>{R1:,.0f}</b> (شمعة 5د حمراء تغلق تحته)", "tg": [S1, S2]},
-        {"side": "CALL", "txt": f"ارتداد من <b>{S1:,.0f}</b> (شمعة 5د خضراء تغلق فوقه)", "tg": [R1]},
-        {"side": "PUT", "txt": f"إغلاق شمعة 5د تحت <b>{S1:,.0f}</b>", "tg": [S2]},
+        {"side": "CALL", "txt": f"إغلاق شمعة 5د فوق <b>{R1:,.0f}</b>", "tg": targets(R1, True)},
+        {"side": "PUT", "txt": f"رفض عند <b>{R1:,.0f}</b> (شمعة 5د حمراء تغلق تحته)", "tg": targets(R1, False)},
+        {"side": "CALL", "txt": f"ارتداد من <b>{S1:,.0f}</b> (شمعة 5د خضراء تغلق فوقه)", "tg": targets(S1, True)},
+        {"side": "PUT", "txt": f"إغلاق شمعة 5د تحت <b>{S1:,.0f}</b>", "tg": targets(S1, False)},
     ]
     if bias:
         scen.sort(key=lambda x: x["side"] != bias)   # السيناريوهات الموافقة لميل البوت أولاً
