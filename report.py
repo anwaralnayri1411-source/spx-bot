@@ -42,6 +42,19 @@ def _closes(sym, period="10d"):
         return None
 
 
+def hist_range(n, k=10):
+    """(متوسط المدى الحقيقي ATR لآخر k جلسة مكتملة، عدد الجلسات). المدى الحقيقي يشمل فجوة الافتتاح عن إغلاق أمس. أو None."""
+    try:
+        h = yf.Ticker("^SPX").history(period="2mo")[["High", "Low", "Close"]].dropna()
+        rows = [(i.date(), float(r.High), float(r.Low), float(r.Close)) for i, r in h.iterrows()
+                if i.date() < n.date() or (i.date() == n.date() and n.hour >= 16)]
+        trs = [max(hi, rows[j - 1][3]) - min(lo, rows[j - 1][3]) for j, (_, hi, lo, _) in enumerate(rows) if j > 0]
+        trs = trs[-k:]
+        return (sum(trs) / len(trs), len(trs)) if len(trs) >= 3 else None
+    except Exception:
+        return None
+
+
 def pulse(n, d):
     """(أيقونة، نص، جملة السبب) من تغير المؤشر منذ إغلاق الأمس وVIX وجاما الصنّاع."""
     S = d["spot"]
@@ -105,8 +118,12 @@ def build(kind, n=None, extras=None, d=None):
     icon, word, why = pulse(n, d)
     L = [f"{TITLES[kind]} #تقرير", "",
          f"{icon} <b>نبض السوق: {word}</b>", f"<blockquote>{ob.esc(why)}</blockquote>", ""]
+    hr = hist_range(n)
     if d.get("em_1h"):
-        L += ["📊 <b>نطاقات الحركة</b>",
+        L += ["📊 <b>نطاقات الحركة</b>"]
+        if hr:
+            L.append(f"   المدى اليومي التاريخي: {S - hr[0]:,.0f} — {S + hr[0]:,.0f} (±{hr[0]:.0f}؛ متوسط آخر {hr[1]} جلسات)")
+        L += [
               f"   المتبقي للتداول: ±{d['em_rest']:.0f} نقطة" if d.get("em_rest") else "   السوق خارج الجلسة",
               f"   4 ساعات: ±{d['em_4h']:.0f} | ساعة: ±{d['em_1h']:.0f}", ""]
     ml = []
