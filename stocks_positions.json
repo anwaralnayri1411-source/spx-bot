@@ -52,7 +52,7 @@
    "strength": 7.8,
    "earn": "2026-11-19",
    "status": "tp",
-   "peak": 1.132,
+   "peak": 1.147,
    "alerts": {
     "tp": "2026-10-08T13:13-04:00",
     "giveback": "2026-10-09T10:41-04:00"
@@ -186,6 +186,22 @@
    "alerts": {
     "warn": "2026-10-12T10:37-04:00"
    }
+  },
+  {
+   "id": "CVX:CALL:2026-10-23:220",
+   "ticker": "CVX",
+   "side": "CALL",
+   "exp": "2026-10-23",
+   "strike": 220.0,
+   "entry": 1.86,
+   "time": "2026-10-12T12:32-04:00",
+   "entry_spot": 215.04,
+   "entry_spy": 778.38,
+   "strength": 9.4,
+   "earn": "2026-10-30",
+   "status": "open",
+   "peak": 0.0,
+   "alerts": {}
   }
  ],
  "summary_date": "2026-10-09"
