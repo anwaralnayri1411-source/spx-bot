@@ -518,6 +518,16 @@ def direction_points(c):
             rows.append(("عقود SPX الآجلة (ES)", 0, w, f"{es * 100:+.2f}% عن إغلاق أمس"))
         else:
             rows.append(("عقود SPX الآجلة (ES)", 0, 0, f"{es * 100:+.2f}% (محايد)"))
+    ld = c.get("leaders")
+    if ld:
+        d_, m_ = ld["day"], ld["m30"]
+        txt = f"مساهمتها {d_:+.2f}% في المؤشر | {ld['up']}/{ld['n']} صاعدة"
+        if d_ >= 0.15:
+            rows.append(("القياديات", 1 if m_ >= -0.03 else 0.5, 0, txt))
+        elif d_ <= -0.15:
+            rows.append(("القياديات", 0, 1 if m_ <= 0.03 else 0.5, txt))
+        else:
+            rows.append(("القياديات", 0, 0, txt + " (محايد)"))
     orb = c.get("orb")
     if orb:
         if c["S"] > orb[0]:
@@ -751,6 +761,12 @@ def analyze(force):
     c["es"] = c["vix_day"] = c["orb"] = c["pd_hl"] = c["pc"] = None
     c["day_hl"] = None
     c["pivots"] = []
+    c["range1h"] = None
+    try:
+        import leaders
+        c["leaders"] = leaders.compute()
+    except Exception:
+        c["leaders"] = None
     try:
         es = yf.Ticker("ES=F").history(period="5d")["Close"].dropna()
         if len(es) >= 2:
@@ -771,6 +787,8 @@ def analyze(force):
             c["orb"] = (float(first["High"].max()), float(first["Low"].min()))
         if len(day) >= 3:
             c["day_hl"] = (float(day["High"].max()), float(day["Low"].min()))
+        if len(ix) >= 12:   # مدى آخر ساعة: يحدد كثافة المستويات (هادئ/عادي/متقلب)
+            c["range1h"] = float(ix["High"].iloc[-12:].max() - ix["Low"].iloc[-12:].min())
         try:   # قمم وقيعان قريبة من آخر جلستين (نقاط ارتداد حقيقية على الشارت)
             rec = ix[ix.index.date >= dates[-2]] if len(dates) > 1 else day
             hi, lo = rec["High"].values, rec["Low"].values
@@ -927,8 +945,10 @@ def build_plan(c, bull, bear):
     if c.get("day_hl"):
         lv += [(c["day_hl"][0], "أعلى اليوم"), (c["day_hl"][1], "أدنى اليوم")]
     lv += [(p_, t) for p_, t in (c.get("pivots") or []) if abs(p_ - S) / S <= 0.006]
-    k25 = int(S // 25)
-    lv += [(float(k * 25), "رقم دائري") for k in (k25 - 1, k25, k25 + 1, k25 + 2)]
+    rg = c.get("range1h")
+    stp = 10 if (rg is not None and rg <= 12) else (50 if (rg is not None and rg >= 35) else 25)   # هادئ/عادي/متقلب
+    k_ = int(S // stp)
+    lv += [(float(k * stp), "رقم دائري") for k in (k_ - 1, k_, k_ + 1, k_ + 2)]
     if c.get("max_pain"):
         lv.append((c["max_pain"], "نقطة الألم"))
     if prev and vix:
