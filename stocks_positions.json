@@ -1,45 +1,6 @@
 {
  "positions": [
   {
-   "id": "NVDA:CALL:2026-10-12:240",
-   "ticker": "NVDA",
-   "side": "CALL",
-   "exp": "2026-10-12",
-   "strike": 240.0,
-   "entry": 1.89,
-   "time": "2026-10-07T10:38-04:00",
-   "entry_spot": 237.97,
-   "entry_spy": 774.41,
-   "strength": 8.0,
-   "earn": "2026-11-17",
-   "status": "stopped",
-   "peak": 0.0,
-   "alerts": {
-    "warn": "2026-10-07T11:44-04:00",
-    "stop": "2026-10-08T09:56-04:00",
-    "broken": "2026-10-08T09:56-04:00"
-   }
-  },
-  {
-   "id": "AAPL:CALL:2026-10-12:340",
-   "ticker": "AAPL",
-   "side": "CALL",
-   "exp": "2026-10-12",
-   "strike": 340.0,
-   "entry": 1.73,
-   "time": "2026-10-07T10:38-04:00",
-   "entry_spot": 335.4,
-   "entry_spy": 774.41,
-   "strength": 7.8,
-   "earn": "2026-11-02",
-   "status": "stopped",
-   "peak": 1.023,
-   "alerts": {
-    "tp": "2026-10-08T14:58-04:00",
-    "stop": "2026-10-09T09:56-04:00"
-   }
-  },
-  {
    "id": "WMT:CALL:2026-10-16:110",
    "ticker": "WMT",
    "side": "CALL",
@@ -52,7 +13,7 @@
    "strength": 7.8,
    "earn": "2026-11-19",
    "status": "tp",
-   "peak": 1.442,
+   "peak": 2.295,
    "alerts": {
     "tp": "2026-10-08T13:13-04:00",
     "giveback": "2026-10-09T10:41-04:00"
@@ -90,10 +51,11 @@
    "entry_spy": 774.22,
    "strength": 7.5,
    "earn": "2026-10-30",
-   "status": "open",
-   "peak": 0.464,
+   "status": "tp",
+   "peak": 0.92,
    "alerts": {
-    "warn": "2026-10-09T15:11-04:00"
+    "warn": "2026-10-09T15:11-04:00",
+    "tp": "2026-10-13T10:05-04:00"
    }
   },
   {
@@ -109,7 +71,7 @@
    "strength": 8.9,
    "earn": "2026-11-12",
    "status": "tp",
-   "peak": 0.606,
+   "peak": 0.824,
    "alerts": {
     "tp": "2026-10-12T13:57-04:00"
    }
@@ -127,7 +89,7 @@
    "strength": 8.7,
    "earn": "2026-10-27",
    "status": "tp",
-   "peak": 2.985,
+   "peak": 3.239,
    "alerts": {
     "tp": "2026-10-09T10:57-04:00"
    }
@@ -183,10 +145,11 @@
    "entry_spy": 779.08,
    "strength": 8.2,
    "earn": "2026-10-28",
-   "status": "open",
-   "peak": 0.152,
+   "status": "tp",
+   "peak": 1.283,
    "alerts": {
-    "warn": "2026-10-12T10:37-04:00"
+    "warn": "2026-10-12T10:37-04:00",
+    "tp": "2026-10-13T10:05-04:00"
    }
   },
   {
@@ -202,7 +165,23 @@
    "strength": 9.4,
    "earn": "2026-10-30",
    "status": "open",
-   "peak": 0.016,
+   "peak": 0.183,
+   "alerts": {}
+  },
+  {
+   "id": "AAPL:CALL:2026-10-16:350",
+   "ticker": "AAPL",
+   "side": "CALL",
+   "exp": "2026-10-16",
+   "strike": 350.0,
+   "entry": 1.5,
+   "time": "2026-10-13T10:05-04:00",
+   "entry_spot": 345.58,
+   "entry_spy": 777.44,
+   "strength": 9.2,
+   "earn": "2026-11-02",
+   "status": "open",
+   "peak": 0.1,
    "alerts": {}
   }
  ],
