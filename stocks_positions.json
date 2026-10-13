@@ -185,7 +185,9 @@
    "earn": "2026-11-02",
    "status": "open",
    "peak": 0.333,
-   "alerts": {}
+   "alerts": {
+    "warn": "2026-10-13T13:14-04:00"
+   }
   }
  ],
  "summary_date": "2026-10-12"
