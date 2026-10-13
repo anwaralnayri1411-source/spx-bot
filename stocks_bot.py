@@ -445,6 +445,16 @@ def load_positions():
             d = json.load(f)
         d.setdefault("positions", [])
         d.setdefault("summary_date", "")
+        for p in d["positions"]:      # مراكز قديمة: ما بلغ الهدف أو الوقف يُعتبر مقفلاً بنتيجة القاعدة
+            al = p.get("alerts", {})
+            if p.get("closed"):
+                continue
+            if p.get("status") == "tp":
+                p["closed"] = {"kind": "tp", "time": al.get("tp") or p.get("time"), "pnl": TAKE_PROFIT}
+                d["dirty"] = True
+            elif p.get("status") == "stopped":
+                p["closed"] = {"kind": "stop", "time": al.get("stop") or p.get("time"), "pnl": -STOP_LOSS}
+                d["dirty"] = True
         return d
     except Exception:
         return None
@@ -457,6 +467,45 @@ def save_positions(d):
             json.dump(d, f, ensure_ascii=False, indent=1)
     except Exception as e:
         print("تعذر حفظ المراكز:", e)
+
+
+def is_closed(p):
+    """العقد مقفل إذا بلغ الهدف أو الوقف (نتيجته محفوظة ولا يتأرجح بعدها)."""
+    return bool(p.get("closed")) or p.get("status") == "stopped"
+
+
+def closed_info(p):
+    """(النوع 'tp'|'stop'، وقت الإقفال، الربح المقفل كنسبة من سعر الدخول) أو None."""
+    c = p.get("closed")
+    if c:
+        return c["kind"], c.get("time"), c["pnl"]
+    if p.get("status") == "stopped":
+        return "stop", p.get("alerts", {}).get("stop") or p.get("time"), -STOP_LOSS
+    return None
+
+
+def _on_date(iso, d):
+    try:
+        return datetime.fromisoformat(iso).date() == d
+    except Exception:
+        return False
+
+
+def closed_on(p, d):
+    ci = closed_info(p)
+    return bool(ci and ci[1] and _on_date(ci[1], d))
+
+
+def blocked_map(P, n):
+    """{(سهم، اتجاه): السبب} للتوصيات الجديدة الممنوعة: عقد مفتوح بنفس الاتجاه، أو أُغلق عقد السهم اليوم."""
+    today, out = n.date(), {}
+    for p in active_positions(P, n):
+        key = (p["ticker"], p["side"])
+        if not is_closed(p):
+            out[key] = "لديك عقد مفتوح بنفس الاتجاه، لا نكرر التوصية"
+        elif closed_on(p, today):
+            out.setdefault(key, "أُغلق عقد هذا السهم اليوم، توصية جديدة من الغد")
+    return out
 
 
 def pos_id(tk, side, exp, strike):
@@ -525,10 +574,9 @@ def record_outcomes(done):
             if not m.any():
                 continue
             peak = float(p.get("peak", 0.0))
-            if peak >= TAKE_PROFIT:
-                rule, rp = "tp", TAKE_PROFIT
-            elif p.get("status") == "stopped":
-                rule, rp = "stop", -STOP_LOSS
+            ci = closed_info(p)
+            if ci:
+                rule, rp = ci[0], ci[2]
             else:
                 rule, rp = "none", None
             df.loc[m, "rule"] = rule
@@ -553,9 +601,13 @@ def add_position(P, n, idea, spy_px):
     p = make_pos(idea["ticker"], idea["side"], k["exp"], k["strike"], k["price"], n.isoformat(timespec="minutes"),
                  round(idea["S"], 2), round(spy_px, 2) if spy_px else None, round(idea["strength"], 1),
                  earn.isoformat() if earn else None)
-    if all(x["id"] != p["id"] for x in P["positions"]):
-        P["positions"].append(p)
-        P["dirty"] = True
+    same = [x for x in P["positions"] if x["id"] == p["id"] or x["id"].startswith(p["id"] + "@")]
+    if any(not is_closed(x) for x in same):
+        return                                   # لا نضاعف عقداً ما زال مفتوحاً
+    if same:
+        p["id"] = f"{p['id']}@{n.date().isoformat()}"   # نفس العقد بعد إقفاله: صفقة جديدة
+    P["positions"].append(p)
+    P["dirty"] = True
 
 
 def spot_now(t):
@@ -642,27 +694,28 @@ def evaluate(p, n, q, spot, spy_spot):
             new.append((kind, text))
             changed = True
 
-    if pnl > p.get("peak", 0.0) + 1e-9:
-        p["peak"] = round(pnl, 3)
+    live = not is_closed(p)
+    pk_key = "peak" if live else "peak_after"      # بعد الإقفال لا نلوّث قمة القاعدة
+    if pnl > p.get(pk_key, 0.0) + 1e-9:
+        p[pk_key] = round(pnl, 3)
         changed = True
-    live = p["status"] != "stopped"
     mature = age >= MIN_AGE_MIN
 
     if live and mature:
         if pnl <= -STOP_LOSS:
             fire("stop", f"وصل وقف الخسارة (-{STOP_LOSS * 100:.0f}%). الخروج يحدّ الخسارة. لا تعزّز عقداً خاسراً.")
             p["status"] = "stopped"
+            p["closed"] = {"kind": "stop", "time": n.isoformat(timespec="minutes"), "pnl": -STOP_LOSS}
             changed = True
         elif pnl <= -WARN_LOSS:
             fire("warn", f"العقد نزل {abs(pnl) * 100:.0f}%. وقف الخسارة عند -{STOP_LOSS * 100:.0f}%.")
     if live and pnl >= TAKE_PROFIT:
-        fire("tp", f"وصل هدف الربح (+{TAKE_PROFIT * 100:.0f}%). فكّر بجني الربح أو ارفع وقفك إلى سعر دخولك.")
-        if p["status"] == "open":
-            p["status"] = "tp"
-            changed = True
-    if live and p["status"] == "tp" and p.get("peak", 0) >= TAKE_PROFIT and pnl <= p["peak"] * GIVEBACK:
-        fire("giveback", (f"الربح تبخّر: كان +{p['peak'] * 100:.0f}% وأصبح {pnl * 100:+.0f}%." if pnl < 0 else
-                          f"الربح تراجع من +{p['peak'] * 100:.0f}% إلى {pnl * 100:+.0f}%. احمِ ما تبقى."))
+        lock = TAKE_PROFIT * entry * 100
+        fire("tp", f"وصل هدف الربح (+{TAKE_PROFIT * 100:.0f}%). الصفقة مقفلة بالقاعدة: ربح ≈ +${lock:,.0f} للعقد. "
+                   "أنهِ صفقتك، وسأواصل رصد العقد بصمت للدراسة.")
+        p["status"] = "tp"
+        p["closed"] = {"kind": "tp", "time": n.isoformat(timespec="minutes"), "pnl": TAKE_PROFIT}
+        changed = True
     if live and mature and mv is not None:
         thr = ADVERSE_SHORT if dte <= 2 else ADVERSE_LONG
         if mv <= -thr:
@@ -779,48 +832,95 @@ def footer_line():
 
 
 def live_rows(rows):
-    """العقود التي لم تبلغ الوقف فقط. ما بلغ الوقف لا يظهر في المتابعة، وتبقى بياناته للتعلم."""
-    return [(p, i) for p, i in rows if p["status"] != "stopped"]
+    """ما يظهر في اللوحة: العقود المفتوحة + ما أُقفل اليوم. المقفل في أيام سابقة يخرج (وتبقى بياناته للدراسة)."""
+    today = ob.now_ny().date()
+    return [(p, i) for p, i in rows if not is_closed(p) or closed_on(p, today)]
 
 
 def board_png(rows):
     import cards
     rows = live_rows(rows)
-    items = [{"name": f"{p['ticker']} {p['side']} {p['strike']:g}", "sub": date_ar(p["exp"]), "entry": p["entry"],
-              "now": info["val"], "pnl": info["pnl"], "status": p["status"]} for p, info in rows]
+    items = []
+    for p, info in rows:
+        ci = closed_info(p)
+        if ci:                                    # مقفل اليوم: القيمة المقفلة بالقاعدة وليس السعر الحي
+            lp = ci[2]
+            lab = "🔒 مقفل بالهدف" if ci[0] == "tp" else "🔒 مقفل بالوقف"
+            items.append({"name": f"{p['ticker']} {p['side']} {p['strike']:g}", "sub": f"{lab} · {date_ar(p['exp'])}",
+                          "entry": p["entry"], "now": round(p["entry"] * (1 + lp), 2), "pnl": lp,
+                          "status": "tp" if ci[0] == "tp" else "stopped", "closed": True})
+        else:
+            items.append({"name": f"{p['ticker']} {p['side']} {p['strike']:g}", "sub": date_ar(p["exp"]),
+                          "entry": p["entry"], "now": info["val"], "pnl": info["pnl"], "status": "open"})
+    items.sort(key=lambda x: bool(x.get("closed")))
     return cards.board_card("لوحة عقود الشركات", ob.now_ny().strftime("%Y-%m-%d %H:%M") + " نيويورك", items,
                             STOP_LOSS, TAKE_PROFIT)
 
 
+def _split_rows(rows, n):
+    today = n.date()
+    closed = [(p, i) for p, i in rows if closed_on(p, today)]
+    opened = [(p, i) for p, i in rows if not is_closed(p)]
+    locked = sum(closed_info(p)[2] * p["entry"] * 100 for p, _ in closed)
+    floating = sum((i["val"] - p["entry"]) * 100 for p, i in opened)
+    return closed, opened, locked, floating
+
+
 def send_board(rows, n):
-    """لوحة صورة للعقود المفتوحة، وإن تعذرت نرسل النص بدلاً منها."""
+    """لوحة صورة: المفتوح (عائم) وما أُقفل اليوم (مقفل بنتيجة القاعدة). يرجع 'photo' أو 'text'."""
     rows = live_rows(rows)
     if not rows:
         ob.send_telegram("📋 <b>حالة العقود</b> #حالة\nلا عقود نشطة الآن.")
-        return
-    net = sum((i["val"] - p["entry"]) * 100 for p, i in rows)
+        return "text"
+    closed, opened, locked, floating = _split_rows(rows, n)
+    cap = (f"📋 <b>حالة العقود</b> #حالة | مقفل اليوم: <b>{locked:+,.0f}$</b> ({len(closed)}) "
+           f"| عائم: <b>{floating:+,.0f}$</b> ({len(opened)})")
     try:
-        if ob.send_photo(board_png(rows), f"📋 <b>حالة العقود</b> #حالة | المجموع على الورق: <b>{net:+,.0f}$</b>"):
-            return
+        if ob.send_photo(board_png(rows), cap):
+            return "photo"
     except Exception as e:
         print("تعذر إنشاء اللوحة:", e)
     ob.send_telegram(status_message(rows, n))
+    return "text"
+
+
+def day_report(rows, n, title="🌇 <b>الشركات — تقرير اليوم</b> #ملخص"):
+    """المقفل اليوم بنتيجته (ربح/خسارة بالقاعدة)، وما لم يُقفل: توصيات اليوم، ثم المنتقلة بصورة كاملة."""
+    today = n.date()
+    closed, opened, locked, floating = _split_rows(rows, n)
+    L = [title, ""]
+    if closed:
+        L.append("🔒 <b>مقفلة اليوم</b>")
+        for p, _ in sorted(closed, key=lambda x: -closed_info(x[0])[2]):
+            kind, _, lp = closed_info(p)
+            L.append(f"{'🎯' if kind == 'tp' else '🛑'} <b>{ob.esc(p['ticker'])} {p['side']}</b> {p['strike']:,.1f} | "
+                     f"{date_ar(p['exp'])}: ${p['entry'] * 100:,.0f} ← <b>{lp * p['entry'] * 100:+,.0f}$</b> ({lp * 100:+.0f}%)")
+        L += [f"   الصافي المقفل: <b>{locked:+,.0f}$</b>", ""]
+    fresh = [(p, i) for p, i in opened if _on_date(p["time"], today)]
+    carry = [(p, i) for p, i in opened if not _on_date(p["time"], today)]
+    for head, grp in (("🆕 <b>مفتوحة (توصية اليوم)</b>", fresh), ("↪️ <b>منتقلة، لم تُقفل بعد</b>", carry)):
+        if not grp:
+            continue
+        L.append(head)
+        for p, info in sorted(grp, key=lambda x: -x[1]["pnl"]):
+            pn = info["pnl"]
+            ico = "🟩" if pn >= 0.2 else ("🟢" if pn >= 0 else ("🟠" if pn > -WARN_LOSS else "🔴"))
+            L.append(f"{ico} <b>{ob.esc(p['ticker'])} {p['side']}</b> {p['strike']:,.1f} | {date_ar(p['exp'])}: "
+                     f"${p['entry'] * 100:,.0f} ← ${info['val'] * 100:,.0f} (<b>{pn * 100:+.0f}%</b>) | دخلت {p['time'][5:10]} "
+                     f"| أعلى {p.get('peak', 0) * 100:+.0f}% | يتبقى {info['dte']} يوم | "
+                     f"هدف ${p['entry'] * (1 + TAKE_PROFIT) * 100:,.0f} · وقف ${p['entry'] * (1 - STOP_LOSS) * 100:,.0f}")
+        L.append("")
+    if not closed and not opened:
+        L.append("لا عقود نشطة الآن.")
+    if opened:
+        L.append(f"العائم على الورق: <b>{floating:+,.0f}$</b> (بسعر الوسط، لو بعت الآن)")
+    L += ["", f"⚠️ <i>المقفل بقاعدة الهدف +{TAKE_PROFIT * 100:.0f}% / الوقف −{STOP_LOSS * 100:.0f}%: قيمة نظرية، "
+              "فالفحص كل نصف ساعة وقد يختلف سعر تنفيذك.</i>", short_footer()]
+    return "\n".join(L)
 
 
 def status_message(rows, n):
-    L = ["📋 <b>الشركات — حالة العقود المفتوحة</b> #حالة", ""]
-    live = live_rows(rows)
-    for p, info in sorted(live, key=lambda x: -x[1]["pnl"]):
-        pn = info["pnl"]
-        ico = "🟩" if pn >= 0.2 else ("🟢" if pn >= 0 else ("🟠" if pn > -WARN_LOSS else "🔴"))
-        tag = " (بلغ الهدف)" if p["status"] == "tp" else ""
-        L.append(f"{ico} <b>{ob.esc(p['ticker'])} {p['side']}</b> {p['strike']:,.1f} | {date_ar(p['exp'])}: "
-                 f"${p['entry'] * 100:,.0f} ← ${info['val'] * 100:,.0f} (<b>{pn * 100:+.0f}%</b>){tag}")
-    if not live:
-        L.append("لا عقود نشطة الآن.")
-    net = sum((i["val"] - p["entry"]) * 100 for p, i in live)
-    L += ["", f"المجموع على الورق: <b>{net:+,.0f}$</b> لو بعت كلها الآن بسعر البيع", "", short_footer()]
-    return "\n".join(L)
+    return day_report(rows, n, title="📋 <b>الشركات — حالة العقود</b> #حالة")
 
 
 def track_rows(rows, n, spy_spot, vix):
@@ -883,7 +983,9 @@ def do_monitor(n, force, P):
     hm = (n.hour, n.minute)
     if force or (hm >= min(SUMMARY_AT, session_end_stocks(n)) and P.get("summary_date") != today_s):
         if rows:
-            send_board(rows, n)
+            how = send_board(rows, n)
+            if how == "photo" and not force:
+                ob.send_telegram(day_report(rows, n))
         elif force:
             ob.send_telegram("📋 <b>الشركات — حالة العقود المفتوحة</b>\nلا توجد عقود مفتوحة الآن.")
         elif not sent_today:
@@ -1211,13 +1313,13 @@ def do_scan(n, force, P):
         return
 
     # لا نكرر التوصية على سهم لديك فيه عقد مفتوح بنفس الاتجاه (منعاً لمضاعفة المخاطرة)
-    blocked = {(p["ticker"], p["side"]) for p in active_positions(P, n) if p["status"] in ("open", "tp")}
+    blocked = blocked_map(P, n)
     new = []
     for i in a["ideas"]:
         if f"{i['ticker']}:{i['side']}" in state["sent"]:
             continue
         if (i["ticker"], i["side"]) in blocked:
-            a["watch"].insert(0, (i["ticker"], "لديك عقد مفتوح بنفس الاتجاه، لا نكرر التوصية"))
+            a["watch"].insert(0, (i["ticker"], blocked[(i["ticker"], i["side"])]))
             continue
         new.append(i)
     if new:
