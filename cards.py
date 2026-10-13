@@ -141,9 +141,20 @@ def board_card(title, subtitle, items, sl, tp):
         rows.append({"style": st, "cells": [
             f"<b>{ltr(it['name'])}</b><div class='dim'>{esc(it.get('sub', ''))}</div>", f"{it['entry']:.2f}", f"{it['now']:.2f}",
             f"<span style='color:{col}'>{ltr(f'{pn * 100:+.0f}%')}</span>", f"{it['entry'] * (1 - sl):.2f}", f"{it['entry'] * (1 + tp):.2f}"]})
-    tiles = [("المجموع على الورق", _money(net_n), "#35d07f" if net_n >= 0 else "#ff6b73"),
-             ("نشطة رابحة", f"{up}", "#35d07f"), ("نازلة", f"{down}", "#ffb340"), ("تحت الوقف", f"{stopped}", "#ff6b73")]
-    return make_card(title, subtitle, tiles, rows, ["القيمة بسعر الوسط بين العرض والطلب، وقد تختلف عن سعر بيعك."], COLS_BOARD)
+    any_closed = any(it.get("closed") for it in items)
+    if any_closed:      # لوحة بمقفل وعائم: نفصل بينهما صراحة
+        n_open = sum(1 for it in items if not it.get("closed"))
+        n_tp = sum(1 for it in items if it.get("closed") and it["status"] == "tp")
+        n_st = sum(1 for it in items if it.get("closed") and it["status"] == "stopped")
+        tiles = [("المجموع (مقفل + عائم)", _money(net_n), "#35d07f" if net_n >= 0 else "#ff6b73"),
+                 ("مفتوحة", f"{n_open}", "#9fb0c8"), ("مقفلة بالهدف", f"{n_tp}", "#35d07f"),
+                 ("مقفلة بالوقف", f"{n_st}", "#ff6b73")]
+        notes = ["المفتوح بسعر الوسط بين العرض والطلب، والمقفل بقيمة نظرية بقاعدة الهدف والوقف (الفحص كل نصف ساعة)."]
+    else:
+        tiles = [("المجموع على الورق", _money(net_n), "#35d07f" if net_n >= 0 else "#ff6b73"),
+                 ("نشطة رابحة", f"{up}", "#35d07f"), ("نازلة", f"{down}", "#ffb340"), ("تحت الوقف", f"{stopped}", "#ff6b73")]
+        notes = ["القيمة بسعر الوسط بين العرض والطلب، وقد تختلف عن سعر بيعك."]
+    return make_card(title, subtitle, tiles, rows, notes, COLS_BOARD)
 
 
 # ------------------------------------------------------------------ الشعار وبطاقة العقد
