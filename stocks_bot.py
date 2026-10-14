@@ -728,6 +728,11 @@ def evaluate(p, n, q, spot, spy_spot):
         p[pk_key] = round(pnl, 3)
         changed = True
     mature = age >= MIN_AGE_MIN
+    # دراسة صامتة: آخر ربح/خسارة مرصود (للمقارنة بين «بالقاعدة» و«لو تركته حتى الانتهاء»)
+    if p.get("last_pnl") != round(pnl, 3):
+        p["last_pnl"] = round(pnl, 3)
+        p["last_at"] = n.isoformat(timespec="minutes")
+        changed = True
 
     if live and mature:
         if pnl <= -STOP_LOSS:
