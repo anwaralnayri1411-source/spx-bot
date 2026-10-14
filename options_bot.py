@@ -565,6 +565,13 @@ def direction_points(c):
 
 
 # ====================== اختيار العقود ======================
+REJ = {}   # تشخيص فقط: عدد العقود المرفوضة لكل سبب (لا يغيّر الاختيار)
+
+
+def _rej(k):
+    REJ[k] = REJ.get(k, 0) + 1
+
+
 def pick_contracts(side, df, S, T, vix, min_oi=None, min_vol=None, max_spr=None):
     min_oi = MIN_OI if min_oi is None else min_oi
     min_vol = MIN_VOL if min_vol is None else min_vol
@@ -582,12 +589,15 @@ def pick_contracts(side, df, S, T, vix, min_oi=None, min_vol=None, max_spr=None)
             price, spr = last, None
         cost = price * 100
         if not (CONTRACT_MIN_USD <= cost <= CONTRACT_MAX_USD):
+            _rej("سعر خارج النطاق")
             continue
         oi = 0 if pd.isna(r.get("openInterest")) else float(r["openInterest"])
         vol = 0 if pd.isna(r.get("volume")) else float(r["volume"])
         if oi < min_oi and vol < min_vol:
+            _rej("سيولة ضعيفة")
             continue
         if spr is not None and spr > max_spr:
+            _rej("فرق الشراء/البيع واسع")
             continue
         iv = r.get("impliedVolatility")
         if iv is None or pd.isna(iv) or iv < 0.03:
@@ -599,6 +609,7 @@ def pick_contracts(side, df, S, T, vix, min_oi=None, min_vol=None, max_spr=None)
         prob = prob_beyond(S, be, T, iv, side)
         z = abs(be - S) / (S * iv * math.sqrt(T))
         if z > 2.0 or delta < 0.03:
+            _rej("بعيد عن السعر")
             continue
         # درجة العقد: سيولة (3) + دلتا (3) + واقعية الوصول للتعادل (4)
         liq = 2 if oi >= 1000 else (1.5 if oi >= 300 else (1 if oi >= min_oi else 0.5))
@@ -613,6 +624,7 @@ def pick_contracts(side, df, S, T, vix, min_oi=None, min_vol=None, max_spr=None)
             flow += 0.5 if flow_ratio >= 1.5 else 0.0
         score = min(10.0, liq + dp + rp + flow)
         if score < MIN_CONTRACT_SCORE:
+            _rej("درجة منخفضة")
             continue
         out.append({"strike": K, "price": price, "cost": cost, "be": be, "delta": delta, "prob": prob,
                     "z": z, "oi": oi, "vol": vol, "spr": spr, "iv": iv, "T": T, "score": score,
@@ -835,6 +847,7 @@ def analyze(force):
         reasons.append(f"لا اتجاه واضح (صعود {bull:.1f} مقابل هبوط {bear:.1f}).")
 
     contracts = []
+    REJ.clear()
     if not reasons:
         contracts = pick_contracts(side, ch.calls if side == "CALL" else ch.puts, S, T, c["vix"])
         for k in contracts:
@@ -870,7 +883,7 @@ def analyze(force):
                 print("تعذر قراءة خيارات", NDX_SYMBOL, e)
         if not contracts:
             reasons.append(f"لا توجد عقود {('Call' if side == 'CALL' else 'Put')} بسعر ${CONTRACT_MIN_USD}-${CONTRACT_MAX_USD} "
-                           "مع سيولة كافية الآن.")
+                           "مع سيولة كافية الآن." + (" [رُفض: " + "، ".join(f"{k} {v}" for k, v in sorted(REJ.items(), key=lambda x: -x[1])) + "]" if REJ else ""))
 
     return {"c": c, "shock": shock, "heads": heads, "events": events, "rows": rows, "bull": bull, "bear": bear,
             "edge": edge, "side": side, "strength": strength, "reasons": reasons, "contracts": contracts,
