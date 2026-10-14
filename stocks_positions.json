@@ -23,7 +23,7 @@
     "time": "2026-10-08T13:13-04:00",
     "pnl": 0.5
    },
-   "peak_after": 2.992
+   "peak_after": 3.264
   },
   {
    "id": "PLTR:CALL:2026-10-16:212.5",
@@ -73,7 +73,7 @@
     "time": "2026-10-13T10:05-04:00",
     "pnl": 0.5
    },
-   "peak_after": 2.76
+   "peak_after": 2.92
   },
   {
    "id": "DIS:CALL:2026-10-16:107",
@@ -298,7 +298,7 @@
    "strength": 8.4,
    "earn": "2026-10-30",
    "status": "open",
-   "peak": 0.48,
+   "peak": 0.496,
    "alerts": {}
   },
   {
@@ -314,7 +314,23 @@
    "strength": 8.6,
    "earn": "2026-11-19",
    "status": "open",
-   "peak": 0.038,
+   "peak": 0.185,
+   "alerts": {}
+  },
+  {
+   "id": "HOOD:PUT:2026-10-23:96",
+   "ticker": "HOOD",
+   "side": "PUT",
+   "exp": "2026-10-23",
+   "strike": 96.0,
+   "entry": 1.79,
+   "time": "2026-10-14T14:51-04:00",
+   "entry_spot": 101.11,
+   "entry_spy": 768.11,
+   "strength": 6.2,
+   "earn": "2026-10-27",
+   "status": "open",
+   "peak": 0.0,
    "alerts": {}
   }
  ],
