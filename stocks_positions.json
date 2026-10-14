@@ -23,7 +23,7 @@
     "time": "2026-10-08T13:13-04:00",
     "pnl": 0.5
    },
-   "peak_after": 2.721
+   "peak_after": 2.837
   },
   {
    "id": "PLTR:CALL:2026-10-16:212.5",
@@ -73,7 +73,7 @@
     "time": "2026-10-13T10:05-04:00",
     "pnl": 0.5
    },
-   "peak_after": 2.68
+   "peak_after": 2.76
   },
   {
    "id": "DIS:CALL:2026-10-16:107",
@@ -219,7 +219,7 @@
     "time": "2026-10-13T12:00-04:00",
     "pnl": 0.5
    },
-   "peak_after": 1.5
+   "peak_after": 1.581
   },
   {
    "id": "AAPL:CALL:2026-10-16:350",
@@ -258,7 +258,7 @@
    "strength": 8.9,
    "earn": "2026-10-30",
    "status": "open",
-   "peak": 0.195,
+   "peak": 0.286,
    "alerts": {}
   },
   {
@@ -275,7 +275,9 @@
    "earn": "2026-11-02",
    "status": "open",
    "peak": 0.0,
-   "alerts": {}
+   "alerts": {
+    "warn": "2026-10-14T13:25-04:00"
+   }
   },
   {
    "id": "XOM:CALL:2026-10-23:180",
@@ -290,7 +292,23 @@
    "strength": 8.4,
    "earn": "2026-10-30",
    "status": "open",
-   "peak": 0.299,
+   "peak": 0.48,
+   "alerts": {}
+  },
+  {
+   "id": "WMT:CALL:2026-10-23:116",
+   "ticker": "WMT",
+   "side": "CALL",
+   "exp": "2026-10-23",
+   "strike": 116.0,
+   "entry": 1.3,
+   "time": "2026-10-14T13:25-04:00",
+   "entry_spot": 115.19,
+   "entry_spy": 769.12,
+   "strength": 8.6,
+   "earn": "2026-11-19",
+   "status": "open",
+   "peak": 0.0,
    "alerts": {}
   }
  ],
