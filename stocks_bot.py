@@ -58,6 +58,7 @@ TRACK_FILE = "stocks_track.csv"   # تتبع كل عقد بعد التوصية (
 
 # ---- متابعة العقود المفتوحة (تنبيهات بعد التوصية) ----
 POS_FILE = "stocks_positions.json"
+MINE_FILE = "stocks_mine.json"   # اختياراتك من الأزرار (مراقبة/اشتريت)؛ يكتبه بوت الأوامر وحده ويقرؤه هذا البوت
 MONITOR_START = (9, 45)     # بتوقيت نيويورك
 MONITOR_END = (16, 0)
 WARN_LOSS = 0.25            # تحذير مبكر عند نزول العقد 25%
@@ -512,6 +513,33 @@ def pos_id(tk, side, exp, strike):
     return f"{tk}:{side}:{exp}:{float(strike):g}"
 
 
+def mine_key(base, day):
+    """مفتاح اختيارك: معرّف العقد الأساسي + يوم التوصية (نيويورك). ثابت حتى لو أُعيدت توصية نفس العقد لاحقاً."""
+    return f"{base}|{day}"
+
+
+def load_mine():
+    """{مفتاح: {mode: 'watch'|'bought'، price، qty، ...}}. فشل القراءة = لا اختيارات."""
+    try:
+        with open(MINE_FILE, encoding="utf-8") as f:
+            return json.load(f).get("items", {})
+    except Exception:
+        return {}
+
+
+def save_mine(items):
+    with open(MINE_FILE, "w", encoding="utf-8") as f:
+        json.dump({"items": items}, f, ensure_ascii=False, indent=1)
+
+
+def mine_for(p, items):
+    """اختيارك لهذا المركز أو None."""
+    try:
+        return items.get(mine_key(p["id"].split("@")[0], p["time"][:10]))
+    except Exception:
+        return None
+
+
 def make_pos(tk, side, exp, strike, entry, t_iso, entry_spot=None, entry_spy=None, strength=None, earn=None):
     return {"id": pos_id(tk, side, exp, strike), "ticker": tk, "side": side, "exp": exp,
             "strike": float(strike), "entry": round(float(entry), 2), "time": t_iso,
@@ -884,17 +912,72 @@ def send_board(rows, n):
     return "text"
 
 
-def day_report(rows, n, title="🌇 <b>الشركات — تقرير اليوم</b> #ملخص"):
-    """المقفل اليوم بنتيجته (ربح/خسارة بالقاعدة)، وما لم يُقفل: توصيات اليوم، ثم المنتقلة بصورة كاملة."""
+def _closed_line(p):
+    kind, _, lp = closed_info(p)
+    return (f"{'🎯' if kind == 'tp' else '🛑'} <b>{ob.esc(p['ticker'])} {p['side']}</b> {p['strike']:,.1f} | "
+            f"{date_ar(p['exp'])}: ${p['entry'] * 100:,.0f} ← <b>{lp * p['entry'] * 100:+,.0f}$</b> ({lp * 100:+.0f}%)")
+
+
+def _open_line(p, info):
+    pn = info["pnl"]
+    ico = "🟩" if pn >= 0.2 else ("🟢" if pn >= 0 else ("🟠" if pn > -WARN_LOSS else "🔴"))
+    return (f"{ico} <b>{ob.esc(p['ticker'])} {p['side']}</b> {p['strike']:,.1f} | {date_ar(p['exp'])}: "
+            f"${p['entry'] * 100:,.0f} ← ${info['val'] * 100:,.0f} (<b>{pn * 100:+.0f}%</b>) | دخلت {p['time'][5:10]} "
+            f"| أعلى {p.get('peak', 0) * 100:+.0f}% | يتبقى {info['dte']} يوم | "
+            f"هدف ${p['entry'] * (1 + TAKE_PROFIT) * 100:,.0f} · وقف ${p['entry'] * (1 - STOP_LOSS) * 100:,.0f}")
+
+
+def _my_line(p, info, m):
+    """سطر عقد اشتريته: الربح محسوب على سعر دخولك أنت (وإن لم تذكره فسعر البوت). يرجع (نص، ربح بالدولار)."""
+    my_px = float(m.get("price") or p["entry"])
+    qty = int(m.get("qty") or 1)
+    ci = closed_info(p)
+    if ci:
+        px = p["entry"] * (1 + ci[2])               # سعر الخروج بقاعدة البوت
+        head, now = ("🎯🔒" if ci[0] == "tp" else "🛑🔒"), f"مقفل ${px * 100:,.0f}"
+    else:
+        px = info["val"]
+        head, now = ("🟢" if px >= my_px else "🔴"), f"الآن ${px * 100:,.0f}"
+    usd, pct = (px - my_px) * 100 * qty, px / my_px - 1
+    src = "" if m.get("price") else " (بسعر البوت)"
+    return (f"{head} <b>{ob.esc(p['ticker'])} {p['side']}</b> {p['strike']:,.1f} | {date_ar(p['exp'])}: "
+            f"دخلت ${my_px * 100:,.0f}{src}{f' ×{qty}' if qty > 1 else ''} ← {now} "
+            f"(<b>{pct * 100:+.0f}%</b> ≈ {usd:+,.0f}$)"), usd
+
+
+def day_report(rows, n, title="🌇 <b>الشركات — تقرير اليوم</b> #ملخص", mine=None):
+    """عقودك المشتراة (على سعرك)، ثم مراقبتك، ثم توصيات البوت التي لم تختر فيها:
+    المقفل اليوم بنتيجته، وما لم يُقفل: توصيات اليوم، ثم المنتقلة بصورة كاملة.
+    إن لم تختر شيئاً بالأزرار يبقى التقرير بشكله المعتاد."""
     today = n.date()
-    closed, opened, locked, floating = _split_rows(rows, n)
+    mine = load_mine() if mine is None else mine
+    closed_all, opened_all, _, _ = _split_rows(rows, n)
+    pairs = closed_all + opened_all
+    bought = [(p, i, mine_for(p, mine)) for p, i in pairs if (mine_for(p, mine) or {}).get("mode") == "bought"]
+    watched = [(p, i) for p, i in pairs if (mine_for(p, mine) or {}).get("mode") == "watch"]
+    chosen = {id(p) for p, *_ in bought} | {id(p) for p, _ in watched}
+    rest = [(p, i) for p, i in rows if id(p) not in chosen]
+    closed, opened, locked, floating = _split_rows(rest, n)
     L = [title, ""]
+    if bought:
+        L.append("🛒 <b>عقودي المشتراة</b>")
+        net = 0.0
+        for p, i, m in sorted(bought, key=lambda x: x[0]["time"]):
+            line, usd = _my_line(p, i, m)
+            L.append(line)
+            net += usd
+        L += [f"   صافيها على سعر دخولك: <b>{net:+,.0f}$</b>", ""]
+    if watched:
+        L.append("👀 <b>مراقبتي</b>")
+        for p, i in watched:
+            L.append(_closed_line(p) if is_closed(p) else _open_line(p, i))
+        L.append("")
+    if (bought or watched) and (closed or opened):
+        L += ["🤖 <b>باقي توصيات البوت</b> (لم تختر فيها)", ""]
     if closed:
         L.append("🔒 <b>مقفلة اليوم</b>")
         for p, _ in sorted(closed, key=lambda x: -closed_info(x[0])[2]):
-            kind, _, lp = closed_info(p)
-            L.append(f"{'🎯' if kind == 'tp' else '🛑'} <b>{ob.esc(p['ticker'])} {p['side']}</b> {p['strike']:,.1f} | "
-                     f"{date_ar(p['exp'])}: ${p['entry'] * 100:,.0f} ← <b>{lp * p['entry'] * 100:+,.0f}$</b> ({lp * 100:+.0f}%)")
+            L.append(_closed_line(p))
         L += [f"   الصافي المقفل: <b>{locked:+,.0f}$</b>", ""]
     fresh = [(p, i) for p, i in opened if _on_date(p["time"], today)]
     carry = [(p, i) for p, i in opened if not _on_date(p["time"], today)]
@@ -903,14 +986,9 @@ def day_report(rows, n, title="🌇 <b>الشركات — تقرير اليوم<
             continue
         L.append(head)
         for p, info in sorted(grp, key=lambda x: -x[1]["pnl"]):
-            pn = info["pnl"]
-            ico = "🟩" if pn >= 0.2 else ("🟢" if pn >= 0 else ("🟠" if pn > -WARN_LOSS else "🔴"))
-            L.append(f"{ico} <b>{ob.esc(p['ticker'])} {p['side']}</b> {p['strike']:,.1f} | {date_ar(p['exp'])}: "
-                     f"${p['entry'] * 100:,.0f} ← ${info['val'] * 100:,.0f} (<b>{pn * 100:+.0f}%</b>) | دخلت {p['time'][5:10]} "
-                     f"| أعلى {p.get('peak', 0) * 100:+.0f}% | يتبقى {info['dte']} يوم | "
-                     f"هدف ${p['entry'] * (1 + TAKE_PROFIT) * 100:,.0f} · وقف ${p['entry'] * (1 - STOP_LOSS) * 100:,.0f}")
+            L.append(_open_line(p, info))
         L.append("")
-    if not closed and not opened:
+    if not pairs:
         L.append("لا عقود نشطة الآن.")
     if opened:
         L.append(f"العائم على الورق: <b>{floating:+,.0f}$</b> (بسعر الوسط، لو بعت الآن)")
@@ -1185,6 +1263,35 @@ def idea_caption(i):
         "⚠️ <i>تعليمي وليست توصية. لا تلاحق السعر فوق +10%.</i>"])
 
 
+def idea_keyboard(i):
+    """زرّان تحت كل توصية: مراقبة أو اشتريت. يعالجهما بوت الأوامر (قد يتأخر حتى ~15 دقيقة)."""
+    k = i["contracts"][0]
+    base = pos_id(i["ticker"], i["side"], k["exp"], k["strike"])
+    day = ob.now_ny().date().isoformat()
+    return {"inline_keyboard": [[{"text": "👀 مراقبة", "callback_data": f"w|{base}|{day}"},
+                                 {"text": "🛒 اشتريت", "callback_data": f"b|{base}|{day}"}]]}
+
+
+def send_photo_kb(png, caption, markup):
+    """مثل ob.send_photo لكن مع أزرار. (دالة خاصة بالشركات حتى لا نلمس ملف SPX المشترك.) يرجع رقم الرسالة أو None."""
+    import requests
+    print("[صورة]", caption)
+    ob.log_message(f"[صورة] {caption}")
+    if not ob.TOKEN or not ob.CHAT_ID or not png:
+        return None
+    data = {"chat_id": ob.CHAT_ID, "caption": caption, "parse_mode": "HTML", "reply_markup": json.dumps(markup)}
+    try:
+        r = requests.post(f"https://api.telegram.org/bot{ob.TOKEN}/sendPhoto", data=data,
+                          files={"photo": ("card.png", png, "image/png")}, timeout=40)
+        if not r.ok:
+            print("خطأ من تليجرام:", r.text)
+            return None
+        return r.json()["result"]["message_id"]
+    except Exception as e:
+        print("تعذر إرسال الصورة:", e)
+        return None
+
+
 def send_ideas(a, ideas):
     """كل فكرة بطاقة صورة وتذكرة مختصرة. يرجع رقم أول رسالة، وعند تعذر الصور نرسل النص الكامل."""
     first, ok = None, 0
@@ -1199,7 +1306,7 @@ def send_ideas(a, ideas):
                                       f"انتهاء {date_ar(k['exp'])} · السهم {i['S']:,.2f}", k["price"], None,
                                       k["price"], stop_p, tp_p, badge=f"{side} {'🟢' if side == 'CALL' else '🔴'}",
                                       foot=f"{ob.now_ny().astimezone(ob.RY).strftime('%H:%M')} الرياض | الشركات إصدار 16")
-            mid = ob.send_photo(png, idea_caption(i))
+            mid = send_photo_kb(png, idea_caption(i), idea_keyboard(i))
         except Exception as e:
             print("تعذر إنشاء بطاقة الفكرة:", e)
         if mid:
