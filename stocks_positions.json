@@ -23,7 +23,7 @@
     "time": "2026-10-08T13:13-04:00",
     "pnl": 0.5
    },
-   "peak_after": 3.264
+   "peak_after": 3.341
   },
   {
    "id": "PLTR:CALL:2026-10-16:212.5",
@@ -258,7 +258,7 @@
    "strength": 8.9,
    "earn": "2026-10-30",
    "status": "open",
-   "peak": 0.297,
+   "peak": 0.351,
    "alerts": {}
   },
   {
@@ -297,9 +297,16 @@
    "entry_spy": 771.97,
    "strength": 8.4,
    "earn": "2026-10-30",
-   "status": "open",
-   "peak": 0.496,
-   "alerts": {}
+   "status": "tp",
+   "peak": 0.567,
+   "alerts": {
+    "tp": "2026-10-14T15:29-04:00"
+   },
+   "closed": {
+    "kind": "tp",
+    "time": "2026-10-14T15:29-04:00",
+    "pnl": 0.5
+   }
   },
   {
    "id": "WMT:CALL:2026-10-23:116",
@@ -314,7 +321,7 @@
    "strength": 8.6,
    "earn": "2026-11-19",
    "status": "open",
-   "peak": 0.185,
+   "peak": 0.2,
    "alerts": {}
   },
   {
@@ -330,9 +337,9 @@
    "strength": 6.2,
    "earn": "2026-10-27",
    "status": "open",
-   "peak": 0.0,
+   "peak": 0.011,
    "alerts": {}
   }
  ],
- "summary_date": "2026-10-13"
+ "summary_date": "2026-10-14"
 }
