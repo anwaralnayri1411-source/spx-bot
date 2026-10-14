@@ -3,6 +3,7 @@
   /تحديث NVDA   تحليل شركة + عقودك المفتوحة عليها + آخر توصية
   /حالة         كل العقود المفتوحة الآن
   /spx          حالة SPX وآخر إشارة
+  /سعر NVDA 1.95 [عدد]   سعر دخولك الفعلي لعقد اشتريته (بعد ضغط «اشتريت»)
   /مساعدة       قائمة الأوامر
 تقبل أيضاً: /update /status /help (وبدون الشرطة). تُقبل رسائلك أنت فقط (TELEGRAM_CHAT_ID).
 البيانات من yfinance المجاني ومتأخرة نحو 15 دقيقة."""
@@ -24,7 +25,7 @@ CHAT_ID = ob.CHAT_ID
 ALIASES = {"update": "company", "تحديث": "company", "شركة": "company", "company": "company",
            "status": "status", "حالة": "status", "positions": "status", "عقود": "status",
            "لوحة": "board", "board": "board", "تقرير": "report", "report": "report",
-           "spx": "spx", "help": "help", "مساعدة": "help", "start": "help", "مساعده": "help"}
+           "spx": "spx", "سعر": "price", "price": "price", "help": "help", "مساعدة": "help", "start": "help", "مساعده": "help"}
 
 
 def load_state():
@@ -46,7 +47,7 @@ def fetch_updates(offset):
         return []
     try:
         r = requests.get(f"https://api.telegram.org/bot{TOKEN}/getUpdates",
-                         params={"offset": offset, "timeout": 0, "allowed_updates": json.dumps(["message"])}, timeout=20)
+                         params={"offset": offset, "timeout": 0, "allowed_updates": json.dumps(["message", "callback_query"])}, timeout=20)
         data = r.json()
         return data.get("result", []) if data.get("ok") else []
     except Exception as e:
@@ -96,7 +97,9 @@ def help_text():
             "• <code>/حالة</code> كل العقود المفتوحة (نص)\n"
             "• <code>/لوحة</code> العقود المفتوحة بصورة\n"
             "• <code>/تقرير</code> تقرير SPX اليومي بصورة\n"
-            "• <code>/spx</code> حالة SPX وآخر إشارة\n\n"
+            "• <code>/spx</code> حالة SPX وآخر إشارة\n"
+            "• <code>/سعر NVDA 1.95</code> سعر دخولك الفعلي لعقد اشتريته (وعدد العقود اختياري: <code>/سعر NVDA 1.95 2</code>)\n\n"
+            "🔘 تحت كل توصية شركات زرّان: <b>👀 مراقبة</b> أو <b>🛒 اشتريت</b>.\n"
             "⏱️ أرد عند أول فحص مجدول، وقد يتأخر 15 دقيقة أو أكثر.\n"
             "📉 البيانات مجانية ومتأخرة نحو 15 دقيقة.")
 
@@ -184,6 +187,103 @@ def spx_text(n):
     return "\n".join(L)
 
 
+def _tg(method, data):
+    """نداء تليجرام. الفشل (مثل انتهاء صلاحية الضغطة) لا يوقف شيئاً."""
+    try:
+        r = requests.post(f"https://api.telegram.org/bot{TOKEN}/{method}", data=data, timeout=15)
+        if not r.ok:
+            print(f"تليجرام {method}:", r.text[:160])
+        return r
+    except requests.RequestException as e:
+        print("تعذر الاتصال بتليجرام:", e)
+        return None
+
+
+def kb_json(mode, base, day):
+    """لوحة الأزرار بعد الاختيار: علامة ✅ على ما اخترته، ويمكنك تغييره بالضغط على الآخر."""
+    w = "👀 مراقبة" + (" ✅" if mode == "watch" else "")
+    b = "🛒 اشتريت" + (" ✅" if mode == "bought" else "")
+    return json.dumps({"inline_keyboard": [[{"text": w, "callback_data": f"w|{base}|{day}"},
+                                            {"text": b, "callback_data": f"b|{base}|{day}"}]]})
+
+
+def handle_callback(cq, n):
+    """ضغطة زر تحت توصية: تسجّل اختيارك في stocks_mine.json وتؤكد لك."""
+    parts = (cq.get("data") or "").split("|")
+    if len(parts) != 3 or parts[0] not in ("w", "b"):
+        return
+    mode = "watch" if parts[0] == "w" else "bought"
+    base, day = parts[1], parts[2]
+    bits = base.split(":")
+    if len(bits) != 4:
+        return
+    tk, side, exp, strike = bits
+    try:
+        strike_f = float(strike)
+    except ValueError:
+        return
+    items = sb.load_mine()
+    key = sb.mine_key(base, day)
+    old = items.get(key) or {}
+    keep = mode == "bought" and old.get("mode") == "bought"        # الضغط المتكرر لا يمسح سعرك
+    items[key] = {"mode": mode, "ticker": tk, "side": side, "exp": exp, "strike": strike_f, "day": day,
+                  "time": n.isoformat(timespec="minutes"),
+                  "price": old.get("price") if keep else None, "qty": old.get("qty") if keep else None}
+    sb.save_mine(items)
+    name = f"{ob.esc(tk)} {strike_f:,.1f} {side}"
+    _tg("answerCallbackQuery", {"callback_query_id": cq.get("id"),
+                                "text": "سُجّلت في مراقبتك" if mode == "watch" else "سُجّل شراؤك"})
+    msg = cq.get("message") or {}
+    if msg.get("message_id"):
+        _tg("editMessageReplyMarkup", {"chat_id": CHAT_ID, "message_id": msg["message_id"],
+                                       "reply_markup": kb_json(mode, base, day)})
+    if mode == "watch":
+        ob.send_telegram(f"👀 أضفتُ <b>{name}</b> إلى مراقبتك. سأعرضه في «مراقبتي» ضمن التقارير.")
+        return
+    bot_px = None
+    try:
+        for p in (sb.load_positions() or {"positions": []})["positions"]:
+            if p["id"].split("@")[0] == base and p["time"][:10] == day:
+                bot_px = p["entry"]
+    except Exception:
+        pass
+    ref = f" سعر البوت <b>{bot_px:.2f}</b>." if bot_px else ""
+    ob.send_telegram(f"🛒 سجّلتُ أنك اشتريت <b>{name}</b>.{ref}\n"
+                     f"إن دخلت بسعر مختلف أرسل: <code>/سعر {ob.esc(tk)} 1.95</code> "
+                     "(وعدد العقود اختياري: <code>/سعر " + ob.esc(tk) + " 1.95 2</code>). وإلا أعتمد سعر البوت.")
+
+
+def price_text(text, n):
+    """/سعر TICKER PRICE [QTY]: يحدّث سعر دخولك لآخر عقد اشتريته في هذا السهم."""
+    bits = (text or "").split()[1:]
+    if len(bits) < 2 or not re.fullmatch(r"[A-Za-z.\-]{1,6}", bits[0]):
+        return "الصيغة: <code>/سعر NVDA 1.95</code> (وعدد العقود اختياري: <code>/سعر NVDA 1.95 2</code>)"
+    tk = bits[0].upper()
+    try:
+        px = float(bits[1])
+        qty = int(bits[2]) if len(bits) > 2 else None
+    except ValueError:
+        return "السعر والعدد أرقام فقط. مثال: <code>/سعر NVDA 1.95 2</code>"
+    if px > 50:
+        return (f"{px:g} يبدو قيمة العقد بالدولار. اكتب سعره للسهم الواحد: اقسمه على 100 "
+                f"(مثلاً 195$ تُكتب <code>/سعر {ob.esc(tk)} 1.95</code>).")
+    if not (0.01 <= px) or (qty is not None and not (1 <= qty <= 1000)):
+        return "السعر أو العدد خارج المعقول. مثال صحيح: <code>/سعر NVDA 1.95 2</code>"
+    items = sb.load_mine()
+    mine = [(k, v) for k, v in items.items() if v.get("ticker") == tk and v.get("mode") == "bought"
+            and v.get("exp", "") >= n.date().isoformat()]
+    if not mine:
+        return f"لا شراء مسجّل في {ob.esc(tk)}. اضغط «🛒 اشتريت» تحت توصيته أولاً."
+    k, v = max(mine, key=lambda kv: kv[1].get("time", ""))
+    v["price"] = px
+    if qty is not None:
+        v["qty"] = qty
+    sb.save_mine(items)
+    more = f" (لديك {len(mine)} عقود في هذا السهم، عدّلتُ آخرها)" if len(mine) > 1 else ""
+    return (f"✅ سعر دخولك <b>{ob.esc(tk)} {v['strike']:,.1f} {v['side']}</b> = <b>{px:.2f}</b>"
+            f"{f' × {qty}' if qty else ''}{more}. سيُحسب ربحك على هذا السعر في «عقودي المشتراة».")
+
+
 def handle(cmd, arg, n):
     if cmd == "help":
         return help_text()
@@ -219,6 +319,16 @@ def main():
     n = ob.now_ny()
     for u in ups:
         st["offset"] = max(st.get("offset", 0), u["update_id"] + 1)
+        cq = u.get("callback_query")
+        if cq:
+            cm = (cq.get("message") or {}).get("chat") or {}
+            if str(cm.get("id")) != str(CHAT_ID):
+                continue        # ضغطة من غيرك: نتجاهلها
+            try:
+                handle_callback(cq, n)
+            except Exception as e:
+                ob.send_telegram(f"⚠️ تعذر تسجيل اختيارك: {ob.esc(e)}")
+            continue
         m = u.get("message") or {}
         if str((m.get("chat") or {}).get("id")) != str(CHAT_ID):
             continue            # نتجاهل أي شخص غيرك
@@ -226,7 +336,7 @@ def main():
         if cmd is None:
             continue
         try:
-            out = handle(cmd, arg, n)
+            out = price_text(m.get("text"), n) if cmd == "price" else handle(cmd, arg, n)
             if isinstance(out, tuple):
                 ob.send_photo(out[1], out[2])
             else:
