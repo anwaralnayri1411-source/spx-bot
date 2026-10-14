@@ -912,10 +912,17 @@ def send_board(rows, n):
     return "text"
 
 
+def highest_pnl(p):
+    """أعلى ربح (نسبة من سعر دخول البوت) وصله العقد قبل الإقفال أو بعده. يُقاس بفحوص نصف ساعة فقط."""
+    return max(float(p.get("peak", 0.0) or 0.0), float(p.get("peak_after", 0.0) or 0.0))
+
+
 def _closed_line(p):
     kind, _, lp = closed_info(p)
+    hi = highest_pnl(p)
+    top = f" | أعلى ربح وصله <b>{hi * 100:+.0f}%</b>" if hi > 0.01 else ""
     return (f"{'🎯' if kind == 'tp' else '🛑'} <b>{ob.esc(p['ticker'])} {p['side']}</b> {p['strike']:,.1f} | "
-            f"{date_ar(p['exp'])}: ${p['entry'] * 100:,.0f} ← <b>{lp * p['entry'] * 100:+,.0f}$</b> ({lp * 100:+.0f}%)")
+            f"{date_ar(p['exp'])}: ${p['entry'] * 100:,.0f} ← <b>{lp * p['entry'] * 100:+,.0f}$</b> ({lp * 100:+.0f}%){top}")
 
 
 def _open_line(p, info):
@@ -940,9 +947,11 @@ def _my_line(p, info, m):
         head, now = ("🟢" if px >= my_px else "🔴"), f"الآن ${px * 100:,.0f}"
     usd, pct = (px - my_px) * 100 * qty, px / my_px - 1
     src = "" if m.get("price") else " (بسعر البوت)"
+    hi_px = p["entry"] * (1 + highest_pnl(p))
+    top = f" | أعلى ربح وصله <b>{(hi_px / my_px - 1) * 100:+.0f}%</b>" if hi_px / my_px - 1 > 0.01 else ""
     return (f"{head} <b>{ob.esc(p['ticker'])} {p['side']}</b> {p['strike']:,.1f} | {date_ar(p['exp'])}: "
             f"دخلت ${my_px * 100:,.0f}{src}{f' ×{qty}' if qty > 1 else ''} ← {now} "
-            f"(<b>{pct * 100:+.0f}%</b> ≈ {usd:+,.0f}$)"), usd
+            f"(<b>{pct * 100:+.0f}%</b> ≈ {usd:+,.0f}$){top}"), usd
 
 
 def day_report(rows, n, title="🌇 <b>الشركات — تقرير اليوم</b> #ملخص", mine=None):
@@ -993,7 +1002,7 @@ def day_report(rows, n, title="🌇 <b>الشركات — تقرير اليوم<
     if opened:
         L.append(f"العائم على الورق: <b>{floating:+,.0f}$</b> (بسعر الوسط، لو بعت الآن)")
     L += ["", f"⚠️ <i>المقفل بقاعدة الهدف +{TAKE_PROFIT * 100:.0f}% / الوقف −{STOP_LOSS * 100:.0f}%: قيمة نظرية، "
-              "فالفحص كل نصف ساعة وقد يختلف سعر تنفيذك.</i>", short_footer()]
+              "فالفحص كل نصف ساعة وقد يفوتنا أعلى سعر حقيقي ويختلف سعر تنفيذك.</i>", short_footer()]
     return "\n".join(L)
 
 
