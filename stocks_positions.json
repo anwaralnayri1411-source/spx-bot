@@ -23,7 +23,7 @@
     "time": "2026-10-08T13:13-04:00",
     "pnl": 0.5
    },
-   "peak_after": 2.14
+   "peak_after": 2.256
   },
   {
    "id": "PLTR:CALL:2026-10-16:212.5",
@@ -273,6 +273,22 @@
    "entry_spy": 772.6,
    "strength": 7.8,
    "earn": "2026-11-02",
+   "status": "open",
+   "peak": 0.0,
+   "alerts": {}
+  },
+  {
+   "id": "XOM:CALL:2026-10-23:180",
+   "ticker": "XOM",
+   "side": "CALL",
+   "exp": "2026-10-23",
+   "strike": 180.0,
+   "entry": 1.27,
+   "time": "2026-10-14T10:54-04:00",
+   "entry_spot": 175.53,
+   "entry_spy": 771.97,
+   "strength": 8.4,
+   "earn": "2026-10-30",
    "status": "open",
    "peak": 0.0,
    "alerts": {}
