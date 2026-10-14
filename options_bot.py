@@ -33,7 +33,7 @@ ALT_SYMBOL = "SPY"          # أداة بديلة: خيارات SPY بنفس ا�
 FLOW_SYMBOL = "SPY"         # لحساب VWAP (المؤشر نفسه بلا حجم تداول)
 NEWS_SYMBOL = "SPY"
 CONTRACT_MIN_USD = 100      # أقل سعر للعقد (دولار)
-CONTRACT_MAX_USD = 300      # أعلى سعر للعقد (دولار)
+CONTRACT_MAX_USD = 350      # أعلى سعر للعقد (دولار)
 MIN_OI = 150                # أقل فائدة مفتوحة (أو حجم تداول 200)
 MIN_VOL = 200
 MAX_SPREAD = 0.30           # أقصى فرق مقبول بين الشراء والبيع (نسبة من المتوسط)
@@ -67,7 +67,9 @@ RY = ZoneInfo("Asia/Riyadh")
 EVENTS = {
     "2026-10-28": "قرار الفيدرالي (FOMC)",
     "2026-12-09": "قرار الفيدرالي (FOMC)",
-    # "2026-10-14": "تقرير التضخم CPI",
+    "2026-10-14": "تقرير التضخم CPI",   # BLS: 8:30 ص نيويورك
+    "2026-11-10": "تقرير التضخم CPI",
+    "2026-12-10": "تقرير التضخم CPI",
 }
 RISK_WORDS = ["crash", "plunge", "selloff", "sell-off", "tumble", "recession", "default",
               "shutdown", "downgrade", "panic", "rate hike", "bank failure", "slump", "rout"]
@@ -840,7 +842,11 @@ def analyze(force):
         reasons.append("بعد وقت آخر دخول (قرب الإغلاق، والزمن يأكل قيمة العقد بسرعة).")
     if any(d == today for d, _ in events):
         nm = next(nm for d, nm in events if d == today)
-        reasons.append(f"حدث كبير اليوم: {nm}. التقلب يصعب توقعه.")
+        if nm.startswith("تقرير"):   # CPI/الوظائف 8:30 قبل الافتتاح: نمنع أول 30 دقيقة بعد الافتتاح فقط
+            if (n.hour, n.minute) < (10, 0):
+                reasons.append(f"صدور {nm} اليوم؛ ننتظر ما بعد 10:00 (نيويورك) حتى تهدأ الحركة الأولى.")
+        else:
+            reasons.append(f"حدث كبير اليوم: {nm}. التقلب يصعب توقعه.")
     if shock["level"] >= 3:
         reasons.append("مخاطر الأخبار والجيوسياسة مرتفعة: " + "، ".join(shock["flags"][:2]) + ".")
     if edge < MIN_EDGE:
