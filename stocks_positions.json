@@ -23,7 +23,7 @@
     "time": "2026-10-08T13:13-04:00",
     "pnl": 0.5
    },
-   "peak_after": 1.907
+   "peak_after": 2.14
   },
   {
    "id": "PLTR:CALL:2026-10-16:212.5",
@@ -73,7 +73,7 @@
     "time": "2026-10-13T10:05-04:00",
     "pnl": 0.5
    },
-   "peak_after": 1.24
+   "peak_after": 1.68
   },
   {
    "id": "DIS:CALL:2026-10-16:107",
@@ -97,7 +97,7 @@
     "time": "2026-10-12T13:57-04:00",
     "pnl": 0.5
    },
-   "peak_after": 0.077
+   "peak_after": 0.331
   },
   {
    "id": "V:CALL:2026-10-16:385",
@@ -219,7 +219,7 @@
     "time": "2026-10-13T12:00-04:00",
     "pnl": 0.5
    },
-   "peak_after": 0.516
+   "peak_after": 0.962
   },
   {
    "id": "AAPL:CALL:2026-10-16:350",
@@ -244,6 +244,38 @@
     "time": "2026-10-13T13:58-04:00",
     "pnl": -0.4
    }
+  },
+  {
+   "id": "CVX:CALL:2026-10-23:225",
+   "ticker": "CVX",
+   "side": "CALL",
+   "exp": "2026-10-23",
+   "strike": 225.0,
+   "entry": 1.85,
+   "time": "2026-10-14T10:44-04:00",
+   "entry_spot": 219.32,
+   "entry_spy": 772.6,
+   "strength": 8.9,
+   "earn": "2026-10-30",
+   "status": "open",
+   "peak": 0.0,
+   "alerts": {}
+  },
+  {
+   "id": "AAPL:CALL:2026-10-19:350",
+   "ticker": "AAPL",
+   "side": "CALL",
+   "exp": "2026-10-19",
+   "strike": 350.0,
+   "entry": 1.98,
+   "time": "2026-10-14T10:44-04:00",
+   "entry_spot": 345.4,
+   "entry_spy": 772.6,
+   "strength": 7.8,
+   "earn": "2026-11-02",
+   "status": "open",
+   "peak": 0.0,
+   "alerts": {}
   }
  ],
  "summary_date": "2026-10-13"
