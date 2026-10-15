@@ -1576,6 +1576,10 @@ def run_once(force=False):
     state["runs"] = state.get("runs", 0) + 1
     if a["edge"] >= state.get("best_edge", 0.0):
         state.update(best_edge=round(a["edge"], 2), best_time=n.isoformat(), best_side=a["side"])
+    if REJ and a["reasons"]:      # تشخيص: أسباب رفض العقود في هذا الفحص (يُحفظ آخر 15 فحصاً)
+        lg = state.setdefault("reject_log", [])
+        lg.append([n.strftime("%H:%M"), a["side"], dict(REJ)])
+        del lg[:-15]
     for r in a["reasons"]:
         key = r.split(" (")[0][:60]
         rc = state.setdefault("reason_counts", {})
