@@ -1,0 +1,40 @@
+name: SPX Monitor
+# متابعة خفيفة كل 5 دقائق لصفقات SPX المفتوحة فقط (هدف/وقف). لا توصيات جديدة. مشروع SPX فقط.
+on:
+  schedule:
+    - cron: "*/5 13-21 * * 1-5"
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: spx-bot            # نفس مجموعة بوت SPX حتى لا يتعارض حفظ الملفات
+  cancel-in-progress: false
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Any live SPX position?
+        id: gate
+        run: |
+          live=$(python3 -c "import json;d=json.load(open('spx_positions.json'));print('true' if any(p.get('status') in ('open','tp') for p in d.get('positions',[])) else 'false')" 2>/dev/null || echo false)
+          echo "live=$live" >> "$GITHUB_OUTPUT"
+          echo "live positions: $live"
+      - if: steps.gate.outputs.live == 'true'
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - if: steps.gate.outputs.live == 'true'
+        run: pip install yfinance pandas requests numpy playwright
+      - if: steps.gate.outputs.live == 'true'
+        run: python spx_monitor.py
+        env:
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+      - name: Save state and log
+        if: steps.gate.outputs.live == 'true'
+        run: |
+          git config user.name "spx-bot"
+          git config user.email "bot@users.noreply.github.com"
+          for f in spx_positions.json spx_track.csv messages_options_bot.jsonl; do git add "$f" 2>/dev/null || true; done
+          git diff --cached --quiet || (git commit -m "update spx monitor" && (git pull --rebase && git push || (sleep 5 && git pull --rebase && git push)))
