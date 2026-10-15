@@ -1155,11 +1155,12 @@ def send_signal(a):
     k0 = ks[0]
     sym = k0.get("sym", SYMBOL).lstrip("^")
     dot = "🟢" if side == "CALL" else "🔴"
-    cap = [f"🔔 <b>توصية SPX | {side} {dot}</b> | ⭐ {a['strength']:.0f}/10 #توصية"] + ticket_lines(sym, k0, side)
+    title = "SPX" if sym == "SPX" else f"{sym} (اتجاه SPX)"
+    cap = [f"🔔 <b>توصية {title} | {side} {dot}</b> | ⭐ {a['strength']:.0f}/10 #توصية"] + ticket_lines(sym, k0, side)
     alt = groups.get(ALT_SYMBOL) if ALT_SYMBOL else None
-    if alt:
-        ka = alt[0]
-        cap.append(f"↳ بديل ETF: {root_sym(ka)} {ka['strike']:,.0f} {side} · ${ka['cost']:,.0f}")
+    alt_sep = bool(alt) and sym != ALT_SYMBOL      # بطاقة SPY منفصلة (لا تكرار إن كان العقد الرئيسي هو SPY نفسه)
+    if alt_sep:
+        cap.append("↳ توصية SPY منفصلة في الرد التالي")
     cap.append(f"⏰ لا دخول بعد {ry_time(*no_entry(now_ny()))} | 📍 SPX {S:,.1f}")
     nd = groups.get("NDX")
     if c["age"] >= 5:
@@ -1173,12 +1174,30 @@ def send_signal(a):
                                   badge=f"{side} {dot}", foot=f"{now_ny().astimezone(RY).strftime('%H:%M')} الرياض | SPX إصدار 17")
         mid = send_photo(png, "\n".join(cap))
         if mid:
+            if alt_sep:
+                send_alt_card(a, alt[0], side, dot, reply_to=mid)
             if nd:
                 send_ndx_card(a, nd[0], side, dot, reply_to=mid)
             return mid
     except Exception as e:
         print("تعذر إنشاء بطاقة التوصية:", e)
     return send_telegram(signal_message(a))
+
+
+def send_alt_card(a, ka, side, dot, reply_to=None):
+    """بطاقة SPY منفصلة: نفس اتجاه SPX بعقد ETF أرخص (نظام تسوية مختلف)."""
+    try:
+        import cards
+        cap = [f"🔔 <b>توصية {root_sym(ka)} (اتجاه SPX) | {side} {dot}</b> #توصية"] + ticket_lines(ka.get("sym", ALT_SYMBOL), ka, side) + [
+            "ℹ️ الاتجاه مأخوذ من تحليل SPX. SPY عقد أصغر (≈ عُشر SPX) وتسويته بأسهم لا نقداً.",
+            "⚠️ <i>تعليمي وليست توصية.</i>"]
+        png = cards.contract_card("entry", f"{root_sym(ka)} {ka['strike']:,.0f} {side}",
+                                  f"انتهاء {a['exp']} · {ka.get('sym', ALT_SYMBOL)} {ka.get('spot', 0):,.0f}", ka["price"], None,
+                                  ka["price"], ka["price"] * (1 - STOP_LOSS), ka["price"] * (1 + TAKE_PROFIT),
+                                  badge=f"{root_sym(ka)} {dot}", foot=f"{now_ny().astimezone(RY).strftime('%H:%M')} الرياض | SPX إصدار 17")
+        send_photo(png, "\n".join(cap), reply_to=reply_to)
+    except Exception as e:
+        print("تعذر إنشاء بطاقة SPY:", e)
 
 
 def send_ndx_card(a, kn, side, dot, reply_to=None):
