@@ -10,6 +10,17 @@
    "time": "2026-10-14T12:17-04:00",
    "price": null,
    "qty": null
+  },
+  "V:CALL:2026-10-23:410|2026-10-15": {
+   "mode": "watch",
+   "ticker": "V",
+   "side": "CALL",
+   "exp": "2026-10-23",
+   "strike": 410.0,
+   "day": "2026-10-15",
+   "time": "2026-10-15T14:14-04:00",
+   "price": null,
+   "qty": null
   }
  }
 }
