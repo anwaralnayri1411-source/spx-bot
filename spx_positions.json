@@ -1,1 +1,1 @@
-{"positions": [{"id": "SPY:CALL:771:2026-10-15", "sym": "SPY", "root": "SPY", "side": "CALL", "strike": 771.0, "exp": "2026-10-15", "entry": 1.24, "qty": 3, "time": "2026-10-15T11:36-04:00", "entry_spot": 770.05, "status": "open", "peak": 0.0, "alerts": {}}]}
+{"positions": [{"id": "SPY:CALL:771:2026-10-15", "sym": "SPY", "root": "SPY", "side": "CALL", "strike": 771.0, "exp": "2026-10-15", "entry": 1.24, "qty": 3, "time": "2026-10-15T11:36-04:00", "entry_spot": 770.05, "status": "stopped", "peak": 0.0, "alerts": {"stop": "2026-10-15T12:27-04:00"}}]}
