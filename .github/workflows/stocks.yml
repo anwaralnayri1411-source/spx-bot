@@ -23,6 +23,7 @@ jobs:
         env:
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          TELEGRAM_EXTRA_CHAT_IDS: ${{ secrets.TELEGRAM_EXTRA_CHAT_IDS }}
           FORCE: ${{ github.event_name == 'workflow_dispatch' && '1' || '0' }}
           BOT_MODE: ${{ github.event.schedule == '12,42 13-20 * * 1-5' && 'monitor' || 'scan' }}
       - name: Save state and log

@@ -1357,6 +1357,7 @@ def send_photo_kb(png, caption, markup):
     try:
         r = requests.post(f"https://api.telegram.org/bot{ob.TOKEN}/sendPhoto", data=data,
                           files={"photo": ("card.png", png, "image/png")}, timeout=40)
+        ob.send_photo_copies(png, caption)          # نسخة للمشاهدين بلا أزرار
         if not r.ok:
             print("خطأ من تليجرام:", r.text)
             return None

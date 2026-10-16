@@ -83,6 +83,8 @@ GEO_QUERY = "geopolitical tensions markets"
 
 TOKEN = os.getenv("TELEGRAM_TOKEN")
 CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
+# مستقبلون إضافيون (للمشاهدة فقط): أرقام محادثات مفصولة بفاصلة في TELEGRAM_EXTRA_CHAT_IDS. بلا أزرار ولا ردود.
+EXTRA_IDS = [x.strip() for x in (os.getenv("TELEGRAM_EXTRA_CHAT_IDS") or "").replace(";", ",").split(",") if x.strip()]
 LINE = "━━━━━━━━━━━━━━━"
 
 
@@ -184,6 +186,16 @@ def send_telegram(text, reply_to=None, full_text=None):
                 first = r.json()["result"]["message_id"]
             except Exception:
                 pass
+    for cid in EXTRA_IDS:                              # نسخة للمشاهدين (فشل أحدهم لا يؤثر على غيره)
+        for p in parts:
+            try:
+                rr = requests.post(f"https://api.telegram.org/bot{TOKEN}/sendMessage",
+                                   data={"chat_id": cid, "text": p, "parse_mode": "HTML"}, timeout=15)
+                if not rr.ok and "parse" in rr.text.lower():
+                    requests.post(f"https://api.telegram.org/bot{TOKEN}/sendMessage",
+                                  data={"chat_id": cid, "text": _plain(p)}, timeout=15)
+            except Exception as e:
+                print("تعذر الإرسال لمشاهد:", e)
     return first
 
 
@@ -210,6 +222,7 @@ def send_photo(png, caption="", reply_to=None):
     try:
         r = requests.post(f"https://api.telegram.org/bot{TOKEN}/sendPhoto", data=data,
                           files={"photo": ("card.png", png, "image/png")}, timeout=40)
+        send_photo_copies(png, caption)
         if not r.ok:
             print("خطأ من تليجرام:", r.text)
             return None
@@ -217,6 +230,17 @@ def send_photo(png, caption="", reply_to=None):
     except Exception as e:
         print("تعذر إرسال الصورة:", e)
         return None
+
+
+def send_photo_copies(png, caption=""):
+    """نسخة الصورة للمشاهدين الإضافيين (بلا أزرار ولا ردود). فشل أحدهم لا يؤثر على غيره."""
+    for cid in EXTRA_IDS:
+        try:
+            requests.post(f"https://api.telegram.org/bot{TOKEN}/sendPhoto",
+                          data={"chat_id": cid, "caption": caption, "parse_mode": "HTML"},
+                          files={"photo": ("card.png", png, "image/png")}, timeout=40)
+        except Exception as e:
+            print("تعذر إرسال صورة لمشاهد:", e)
 
 
 COLLAPSE_LIMIT = 3300
