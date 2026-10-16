@@ -1,1 +1,1 @@
-{"positions": [{"id": "SPY:CALL:771:2026-10-15", "sym": "SPY", "root": "SPY", "side": "CALL", "strike": 771.0, "exp": "2026-10-15", "entry": 1.24, "qty": 3, "time": "2026-10-15T11:36-04:00", "entry_spot": 770.05, "status": "stopped", "peak": 0.073, "alerts": {"stop": "2026-10-15T12:27-04:00"}}]}
+{"positions": [{"id": "SPX:PUT:7710:2026-10-16", "sym": "SPX", "root": "SPXW", "side": "PUT", "strike": 7710.0, "exp": "2026-10-16", "entry": 3.3, "qty": 1, "time": "2026-10-16T10:29-04:00", "entry_spot": 7736.14, "status": "open", "peak": 0.0, "alerts": {}}]}
