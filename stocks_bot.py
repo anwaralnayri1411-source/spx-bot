@@ -1107,6 +1107,60 @@ def intraday_price(t, fallback):
     return fallback
 
 
+# شركات إضافية للدراسة الصامتة فقط (لا توصيات منها بعد): نرى هل كانت ستظهر فرصاً أفضل من القائمة الحالية
+EXTRA = ("ORCL CRM ADBE QCOM TXN AMAT LRCX KLAC CSCO IBM NOW SHOP PYPL ABNB CRWD PANW SNOW DDOG NET ZS ROKU DKNG "
+         "CCL AAL DAL UAL GM NKE SBUX MCD KO PEP PG COST HD LOW TGT CVS UNH JNJ MRK ABBV LLY BMY GILD MRNA GS MS C WFC "
+         "SCHW AXP COF COP OXY SLB HAL DVN MPC GE CAT DE RTX HON UPS FDX MMM VZ TMUS CMCSA WBD EBAY LULU SMCI ARM ANET "
+         "MRVL ON WDC GME AMC BABA PDD JD NIO TSM ASML SPOT RBLX U AFRM UPST MARA RIOT IONQ RGTI HIMS APP").split()
+SHADOW_FILE = "stocks_shadow_log.csv"
+FLOW_FILE = "stocks_flow_log.csv"
+
+
+def _append_csv(path, header, rows):
+    import csv
+    if not rows:
+        return
+    fresh = not os.path.exists(path)
+    with open(path, "a", encoding="utf-8", newline="") as f:
+        w = csv.writer(f)
+        if fresh:
+            w.writerow(header)
+        w.writerows(rows)
+
+
+def shadow_log(n, scored, finalists_flow, spy5, spy_up):
+    """دراسة صامتة (لا تُرسل شيئاً ولا تغيّر التوصيات): (1) أفضل مرشحين من قائمة موسّعة مقابل القائمة الحالية،
+    (2) نسبة حجم الكول/البوت لكل شركة لقياس انحياز الكول البنيوي."""
+    t = n.isoformat(timespec="minutes")
+    _append_csv(FLOW_FILE, ["time", "ticker", "call_vol", "put_vol", "ratio"],
+                [[t, tk, round(cv), round(pv), round(cv / max(pv, 1.0), 2)] for tk, cv, pv in finalists_flow])
+    try:
+        raw2 = yf.download(EXTRA, period="6mo", group_by="ticker", auto_adjust=True, progress=False, threads=True)
+    except Exception as e:
+        print("تعذر تنزيل القائمة الموسّعة:", e)
+        return
+    rows = []
+    main_names = {s["ticker"] for s in scored}
+    cands = [(s["ticker"], s["bull"], s["bear"], s["info"], True) for s in scored]
+    for tk in EXTRA:
+        try:
+            df = raw2[tk].dropna(subset=["Close"])
+            if len(df) < 55:
+                continue
+            bull, bear, _why, info = tech_points(df, spy5, None, completed_volume(df, n))
+        except Exception:
+            continue
+        bull, bear = (bull + 0.5, bear) if spy_up else (bull, bear + 0.5)
+        cands.append((tk, bull, bear, info, False))
+    cands.sort(key=lambda x: -abs(x[1] - x[2]))
+    for tk, bull, bear, info, inmain in cands[:25]:
+        edge = bull - bear
+        rows.append([t, tk, int(inmain), round(bull, 1), round(bear, 1), round(edge, 1), "CALL" if edge > 0 else "PUT",
+                     round(info["S"], 2), round(info["ret5"] * 100, 1), round(info["vr"], 2), round(info["rsi"])])
+    _append_csv(SHADOW_FILE, ["time", "ticker", "in_main", "bull", "bear", "edge", "side", "price", "ret5_pct",
+                              "vol_ratio", "rsi"], rows)
+
+
 def analyze(force):
     n = ob.now_ny()
     today = n.date()
@@ -1161,7 +1215,7 @@ def analyze(force):
     scored.sort(key=lambda x: -abs(x["bull"] - x["bear"]))
     finalists = [s for s in scored if abs(s["bull"] - s["bear"]) >= 2.0][:FINALISTS]
 
-    ideas, watch = [], []
+    ideas, watch, flow_rows = [], [], []
     geo_heads = ob.fetch_rss("geopolitical tensions markets") if any(s["dkey"] == "geo" for s in finalists) else []
     for s in finalists:
         tk = s["ticker"]
@@ -1176,6 +1230,7 @@ def analyze(force):
             s["why"].append(nwhy)
         chains = get_chains(t, today)
         fb, fe, fwhy, cv, pv = flow_points(chains)
+        flow_rows.append((tk, cv, pv))
         s["bull"] += fb
         s["bear"] += fe
         if fwhy:
@@ -1210,6 +1265,11 @@ def analyze(force):
             kept.append(i)
             cnt[i["side"]] += 1
     ideas = kept
+    if in_window(n):      # دراسة صامتة، وأي خطأ فيها لا يؤثر على التوصيات
+        try:
+            shadow_log(n, scored, flow_rows, spy5, spy_up)
+        except Exception as e:
+            print("تعذر تسجيل الدراسة الصامتة:", e)
     spy_px = intraday_price(yf.Ticker("SPY"), float(spyc.iloc[-1]))
     return {"n": n, "today": today, "ideas": ideas[:MAX_IDEAS], "watch": watch, "vix": vix, "vix_pct": vix_pct,
             "spy5": spy5, "spy_up": spy_up, "shock": shock, "is_test": not in_window(n), "scanned": len(scored),

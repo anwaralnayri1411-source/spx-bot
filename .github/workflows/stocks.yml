@@ -34,4 +34,6 @@ jobs:
           git add messages_stocks_bot.jsonl || true
           git add stocks_state.json || true
           git add stocks_positions.json || true
+          git add stocks_shadow_log.csv || true
+          git add stocks_flow_log.csv || true
           git diff --cached --quiet || (git commit -m "update stocks state" && (git pull --rebase && git push || (sleep 5 && git pull --rebase && git push)))
