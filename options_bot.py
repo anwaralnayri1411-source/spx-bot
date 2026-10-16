@@ -599,6 +599,19 @@ def _rej(k):
     REJ[k] = REJ.get(k, 0) + 1
 
 
+def spxw_rows(df):
+    """في أيام انتهاء الشهر يوجد لكل سترايك عقدان: SPX الشهري (تسوية صباحية، قد يكون سعره قديماً أو منتهياً)
+    وSPXW اليومي (تسوية مسائية). نبقي SPXW فقط عند وجوده حتى لا نوصي أو نتابع العقد الخطأ."""
+    try:
+        if "contractSymbol" in df.columns:
+            sub = df[df["contractSymbol"].astype(str).str.startswith("SPXW")]
+            if len(sub):
+                return sub
+    except Exception:
+        pass
+    return df
+
+
 def pick_contracts(side, df, S, T, vix, min_oi=None, min_vol=None, max_spr=None):
     min_oi = MIN_OI if min_oi is None else min_oi
     min_vol = MIN_VOL if min_vol is None else min_vol
@@ -880,7 +893,7 @@ def analyze(force):
     contracts = []
     REJ.clear()
     if not reasons:
-        contracts = pick_contracts(side, ch.calls if side == "CALL" else ch.puts, S, T, c["vix"])
+        contracts = pick_contracts(side, spxw_rows(ch.calls if side == "CALL" else ch.puts), S, T, c["vix"])
         for k in contracts:
             k["sym"], k["spot"] = SYMBOL, S
         if ALT_SYMBOL:
@@ -1163,7 +1176,9 @@ def ticket_lines(sym, k0, side):
             f"🛑 الوقف <b>{sl_p:.2f}</b> (-{STOP_LOSS * 100:.0f}%){sl_t}",
             f"💰 أقصى خسارة ≈ ${q * per:,.0f}"] + (
         ["⚠️ الهدف والوقف قريبان جداً: الضوضاء قد تضرب الوقف أولاً."]
-        if lv and max(abs(lv[0] - k0.get("spot", lv[0])), abs(lv[1] - k0.get("spot", lv[1]))) / k0.get("spot", lv[0]) < 0.0012 else [])
+        if lv and max(abs(lv[0] - k0.get("spot", lv[0])), abs(lv[1] - k0.get("spot", lv[1]))) / k0.get("spot", lv[0]) < 0.0012 else []) + (
+        ["⚠️ لا عرض/طلب لهذا العقد في بياناتنا: السعر من آخر صفقة وقد يكون قديماً. تحقق من سعره الحي قبل الدخول."]
+        if k0.get("spr") is None else [])
 
 
 def send_signal(a):
@@ -1376,6 +1391,8 @@ def spx_quote(p):
         t = yf.Ticker({"SPX": "^SPX", "NDX": "^NDX"}.get(p["sym"], p["sym"]))
         ch = t.option_chain(p["exp"])
         df = ch.calls if p["side"] == "CALL" else ch.puts
+        if p["sym"] == "SPX":
+            df = spxw_rows(df)
         r = df[(df["strike"] - p["strike"]).abs() < 1e-6]
         if r.empty:
             return None
