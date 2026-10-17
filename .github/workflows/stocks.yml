@@ -3,7 +3,7 @@ on:
   schedule:
     - cron: "20 14,15 * * 1-5"
     - cron: "0 17,19 * * 1-5"
-    - cron: "12,42 13-21 * * 1-5"   # متابعة العقود المفتوحة كل نصف ساعة
+    - cron: "12,42 13-21 * * 1-5"   # كل نصف ساعة: بحث عن أفكار (داخل نافذة الفحص) + متابعة العقود المفتوحة
   workflow_dispatch:
 permissions:
   contents: write
@@ -25,7 +25,9 @@ jobs:
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           TELEGRAM_EXTRA_CHAT_IDS: ${{ secrets.TELEGRAM_EXTRA_CHAT_IDS }}
           FORCE: ${{ github.event_name == 'workflow_dispatch' && '1' || '0' }}
-          BOT_MODE: ${{ github.event.schedule == '12,42 13-20 * * 1-5' && 'monitor' || 'scan' }}
+          # كل التشغيلات بوضع scan (بحث + متابعة). هذا هو السلوك الذي أنتج نتائج الشركات حتى 17/10.
+          # لجعل تشغيلات نصف الساعة متابعة فقط: 'monitor' عند github.event.schedule == '12,42 13-21 * * 1-5'
+          BOT_MODE: scan
       - name: Save state and log
         run: |
           git config user.name "spx-bot"
