@@ -23,3 +23,8 @@ if __name__ == "__main__":
         print("لا صفقات حيّة.")
         sys.exit(0)
     ob.monitor_positions(n)
+    try:
+        import spx_thesis
+        spx_thesis.write()
+    except Exception as e:
+        print('تعذر تحديث اختبار وقف الفكرة:', e)
