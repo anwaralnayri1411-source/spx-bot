@@ -70,6 +70,26 @@ def ob_day(g):
     return rows
 
 
+def fvg_day(g, minsz=0.0006):
+    """Fair Value Gap: فجوة بين شمعة 1 وشمعة 3 (high1 < low3 صاعدة / low1 > high3 هابطة) بحجم ≥0.06%؛ أول عودة للفجوة دون كسرها."""
+    g = g.reset_index()
+    rows, n = [], len(g)
+    for i in range(2, n - FWD - 1):
+        for side in ("bull", "bear"):
+            lo, hi = (g.high[i - 2], g.low[i]) if side == "bull" else (g.high[i], g.low[i - 2])
+            if hi <= lo or (hi - lo) / g.close[i] < minsz: continue
+            for j in range(i + 1, n - FWD):
+                t = g.low[j] <= hi if side == "bull" else g.high[j] >= lo
+                brk = (g.close[j] < lo) if side == "bull" else (g.close[j] > hi)
+                if t:
+                    if not brk:
+                        r = _react(g, j, g.close[j], side == "bull")
+                        if r: rows.append((str(g.iloc[j, 0])[:16], side, round(lo, 2), round(hi, 2), round(r[0], 5), round(r[1], 5)))
+                    break
+                if brk: break
+    return rows
+
+
 def summarize(rows, fav_i, adv_i):
     if not rows: return "لا حالات"
     f = sum(r[fav_i] for r in rows) / len(rows); a = sum(r[adv_i] for r in rows) / len(rows)
@@ -112,6 +132,7 @@ def daily(period="10d"):
         append(OUT_GRID, ["time_ny", "level", "type", "fav", "adv"], grid_day(g, anchor))
         append("shadow_grid_placebo_log.csv", ["time_ny", "level", "type", "fav", "adv"], grid_day(g, anchor, 0.5))
         append(OUT_OB, ["time_ny", "side", "zone_lo", "zone_hi", "fav", "adv"], ob_day(g))
+        append("shadow_fvg_log.csv", ["time_ny", "side", "zone_lo", "zone_hi", "fav", "adv"], fvg_day(g))
         with open("shadow_days.txt", "a") as f: f.write(k + "\n")
         print("تمت معالجة", k, "مرساة", anchor)
 
