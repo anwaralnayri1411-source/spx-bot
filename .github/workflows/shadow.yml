@@ -1,0 +1,25 @@
+name: Shadow Levels
+# اختبار ظلّي يومي بعد الإغلاق: شبكة MGT مقابل شبكة وهمية + Order Block. تسجيل فقط، لا رسائل ولا تأثير على التوصيات.
+on:
+  schedule:
+    - cron: "40 21 * * 1-5"
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: shadow
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install yfinance pandas requests numpy
+      - run: python shadow_levels.py --daily
+      - run: |
+          git config user.name "bot"; git config user.email "bot@users.noreply.github.com"
+          for f in shadow_grid_log.csv shadow_grid_placebo_log.csv shadow_ob_log.csv shadow_days.txt; do git add "$f" 2>/dev/null || true; done
+          git commit -m "shadow levels log" || exit 0
+          for i in 1 2 3; do git pull --rebase && git push && break; sleep 3; done
