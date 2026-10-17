@@ -1,0 +1,23 @@
+name: Market Read
+# بطاقة «قراءة السوق» لـ SPX (تجربة). تشغيل يدوي فقط، ترسل للمستخدم وحده (بدون TELEGRAM_EXTRA_CHAT_IDS)،
+# ولا تحفظ أي ملف في المستودع، فلا تتعارض مع حفظ البوتات الأخرى.
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: market-read
+  cancel-in-progress: false
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install yfinance pandas requests numpy playwright
+      - run: python market_read.py
+        env:
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
