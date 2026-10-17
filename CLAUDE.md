@@ -21,6 +21,8 @@
 | السلّم (عقد رخيص لكل 5 نقاط، تسعير Black-Scholes نظري) | `ladder_shadow.py` | `ladder_shadow_log.csv` |
 | مستويات الجاما GEX (جدران كول/بوت، انقلاب، Max Pain) لـ SPX/SPY/QQQ/NDX/IWM/DIA + 33 شركة | `gex_shadow.py` + `gex.yml` | `gex_snapshots.csv`, `gex_outcomes.csv` |
 | مقارنة MGT (تقاريرهم وتوصياتهم تُسجَّل بصمت) | `mgt_compare.py` | `mgt_reports_log.csv`, `mgt_recs_log.csv` |
+| عقد البوت مقابل عقد أقرب للسعر (على السعر، ودلتا 0.30): لكل توصية SPX، أسعار ياهو الحقيقية، شراء الثلاثة في اللقطة نفسها، بقواعد البوت (+50% / −40% بعد 15د / 15:30). منذ 18/10، لا نتائج حية بعد | `contract_shadow.py` + `contract_shadow.yml` (كل 5د، فقط في يوم فيه توصية SPX) | `contract_shadow_log.csv`, `contract_shadow_track.csv`, `contract_shadow_state.json`, `research/contract_shadow_results.md` |
+| اختبار تاريخي v2 يحاكي توصيات البوت نفسه (`direction_points` + فلاتره، فحص كل 30د، بيانات متأخرة 15د، فاصل ثقة حسب الأيام، مرجع بالاتجاه المعاكس، بيانات محجوزة من 13/10). يدوي، والقديم `backtest_spx.py` باقٍ | `research/backtest_spx_v2.py` | `research/backtest_spx_v2_results.md` |
 
 ## نتائج الدراسة حتى 17 أكتوبر 2026 (على 60 يوماً، تسعير نظري)
 - Order Block: 39–47% لصالحك مقابل ~50% عشوائي → لا ميزة. FVG: نتائج متناقضة (45–75%) وعينات صغيرة → لا ميزة مثبتة.
