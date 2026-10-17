@@ -1,0 +1,36 @@
+name: GEX Shadow
+# مستويات الجاما (جدران الكول/البوت، انقلاب الجاما، Max Pain) لـ SPX وSPY وQQQ وNDX وIWM وDIA وشركات المراقبة. تسجيل فقط، لا رسائل.
+on:
+  schedule:
+    - cron: "50 13 * * 1-5"   # بعد الافتتاح بقليل (9:50 نيويورك صيفاً)
+    - cron: "45 21 * * 1-5"   # بعد الإغلاق: قمة/قاع/إغلاق
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "snap أو eval"
+        default: "snap"
+permissions:
+  contents: write
+concurrency:
+  group: gex
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install yfinance pandas requests numpy
+      - name: Choose mode
+        id: m
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then echo "mode=${{ inputs.mode }}" >> "$GITHUB_OUTPUT";
+          elif [ "${{ github.event.schedule }}" = "50 13 * * 1-5" ]; then echo "mode=snap" >> "$GITHUB_OUTPUT";
+          else echo "mode=eval" >> "$GITHUB_OUTPUT"; fi
+      - run: python gex_shadow.py --${{ steps.m.outputs.mode }}
+      - run: |
+          git config user.name "bot"; git config user.email "bot@users.noreply.github.com"
+          for f in gex_snapshots.csv gex_outcomes.csv; do git add "$f" 2>/dev/null || true; done
+          git commit -m "gex shadow log" || exit 0
+          for i in 1 2 3; do git pull --rebase && git push && break; sleep 3; done
