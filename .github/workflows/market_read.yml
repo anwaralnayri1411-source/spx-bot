@@ -1,8 +1,13 @@
 name: Market Read
-# بطاقة «قراءة السوق» لـ SPX (تجربة). تشغيل يدوي فقط، ترسل للمستخدم وحده (بدون TELEGRAM_EXTRA_CHAT_IDS)،
-# ولا تحفظ أي ملف في المستودع، فلا تتعارض مع حفظ البوتات الأخرى.
+# بطاقة «قراءة السوق» لـ SPX (تجربة). تعمل يدوياً، أو تلقائياً عند تعديل ملفاتها فقط (لا جدولة).
+# ترسل للمستخدم وحده (بدون TELEGRAM_EXTRA_CHAT_IDS)، ولا تحفظ أي ملف في المستودع، فلا تتعارض مع البوتات الأخرى.
 on:
   workflow_dispatch:
+  push:
+    paths:
+      - "market_read.py"
+      - "market_read_card.py"
+      - ".github/workflows/market_read.yml"
 permissions:
   contents: read
 concurrency:
@@ -21,4 +26,3 @@ jobs:
         env:
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-# v2
