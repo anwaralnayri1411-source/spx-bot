@@ -1,0 +1,23 @@
+name: Alpaca Probe
+
+# اختبار اتصال Alpaca — يدوي فقط، تسجيل في السجل، لا يرسل تيليجرام ولا يلمس البوت.
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: alpaca-probe
+  cancel-in-progress: false
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: تشغيل اختبار الاتصال
+        env:
+          ALPACA_KEY: ${{ secrets.ALPACA_KEY }}
+          ALPACA_SECRET: ${{ secrets.ALPACA_SECRET }}
+        run: python research/alpaca_probe.py
