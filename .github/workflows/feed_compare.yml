@@ -1,0 +1,50 @@
+name: Feed Compare
+# مقارنة Alpaca (لحظي) بياهو (متأخر) لعقود SPXW وSPY. تسجيل فقط: لا رسائل، ولا تعديل لأي ملف من ملفات البوت.
+# تجربة مؤقتة: تعمل أثناء الجلسة حتى RUN_UNTIL ثم تتوقف تلقائياً. تعمل أيضاً عند تعديل ملفها.
+on:
+  schedule:
+    - cron: "1-56/5 13-20 * * 1-5"
+  workflow_dispatch:
+  push:
+    paths:
+      - "research/feed_compare.py"
+      - ".github/workflows/feed_compare.yml"
+permissions:
+  contents: write
+concurrency:
+  group: feed-compare
+  cancel-in-progress: false
+env:
+  RUN_UNTIL: "2026-10-20"
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Within trial dates?
+        id: gate
+        run: |
+          today=$(TZ=America/New_York date +%F)
+          if [[ "$today" > "$RUN_UNTIL" ]]; then echo "go=false" >> "$GITHUB_OUTPUT"; echo "trial ended"; else echo "go=true" >> "$GITHUB_OUTPUT"; fi
+      - if: steps.gate.outputs.go == 'true'
+        uses: actions/checkout@v4
+      - if: steps.gate.outputs.go == 'true'
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - if: steps.gate.outputs.go == 'true'
+        run: pip install yfinance pandas requests numpy
+      - if: steps.gate.outputs.go == 'true'
+        env:
+          ALPACA_KEY: ${{ secrets.ALPACA_KEY }}
+          ALPACA_SECRET: ${{ secrets.ALPACA_SECRET }}
+        run: |
+          python research/feed_compare.py
+          python research/feed_compare.py --report
+      - name: Save log
+        if: steps.gate.outputs.go == 'true'
+        run: |
+          git config user.name "bot"; git config user.email "bot@users.noreply.github.com"
+          for f in research/feed_compare_obs.csv research/feed_compare_results.md; do git add "$f" 2>/dev/null || true; done
+          git diff --cached --quiet && exit 0
+          git commit -m "feed compare log"
+          for i in 1 2 3 4; do git pull --rebase && git push && break; sleep 4; done
