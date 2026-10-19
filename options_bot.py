@@ -1382,7 +1382,44 @@ def add_positions(n, a):
                                "exp": a["exp"], "entry": round(float(k["price"]), 2), "qty": q,
                                "time": n.isoformat(timespec="minutes"), "entry_spot": round(k.get("spot", a["c"]["S"]), 2),
                                "status": "open", "peak": 0.0, "alerts": {}})
+        _live_entry(P["positions"][-1])
     save_positions(P)
+
+
+# ---- ظل البيانات اللحظية (Alpaca): تسجيل فقط، لا يغيّر أي سعر أو تنبيه. المفتاح LIVE_QUOTES_SPX في سير العمل ----
+LIVE_ROOTS = {"SPX": "SPXW", "SPY": "SPY"}
+
+
+def _live_entry(p):
+    """يحفظ سعر الطلب اللحظي لحظة التوصية في entry_live (للمقارنة فقط؛ الحسابات ما زالت على entry)."""
+    try:
+        import live_quotes as lq
+        if lq.mode("SPX") == "0" or p.get("sym") not in LIVE_ROOTS:
+            return
+        q = lq.quote(lq.occ(LIVE_ROOTS[p["sym"]], p["exp"], p["side"], p["strike"]))
+        if q["status"] == "ok":
+            p["entry_live"] = round(q["ask"], 2)
+    except Exception as e:
+        print("تعذر جلب سعر الدخول اللحظي:", e)
+
+
+def _live_shadow(p, q):
+    """يسجّل سعر Alpaca بجانب سعر ياهو لكل متابعة، والربح بالمصدرين. لا يرجع شيئاً ولا يغيّر p."""
+    try:
+        import live_quotes as lq
+        if lq.mode("SPX") == "0" or p.get("sym") not in LIVE_ROOTS:
+            return
+        c = lq.occ(LIVE_ROOTS[p["sym"]], p["exp"], p["side"], p["strike"])
+        z = lq.quote(c)
+        yv, el = (q[0] if q else None), p.get("entry_live")
+        lq.log({"time": now_ny().isoformat(timespec="minutes"), "project": "SPX", "id": p["id"], "contract": c,
+                "yahoo_val": yv if yv is not None else "", "alpaca_bid": z["bid"] or "", "alpaca_ask": z["ask"] or "",
+                "age_s": "" if z["age"] is None else round(z["age"]), "status": z["status"],
+                "entry": p["entry"], "entry_live": el or "",
+                "pnl_yahoo": round(yv / p["entry"] - 1, 3) if yv else "",
+                "pnl_live": round(z["bid"] / el - 1, 3) if (el and z["bid"] and z["status"] == "ok") else ""})
+    except Exception as e:
+        print("تعذر تسجيل السعر اللحظي:", e)
 
 
 def spx_quote(p):
@@ -1546,6 +1583,8 @@ def monitor_positions(n, force=False):
     for p0 in keep:
         p = copy.deepcopy(p0) if force else p0
         q = spx_quote(p)
+        if not force:
+            _live_shadow(p, q)      # ظل لحظي: تسجيل فقط
         if q is None:
             continue
         val, spr, spot = q
