@@ -1,3 +1,2 @@
 id,entry,entry_spot,max_adverse_pct,peak_pnl,final_pnl,current_rule,suspect_stale_price,thesis_0.15,thesis_0.25,thesis_0.35
-SPX:PUT:7710:2026-10-16,3.3,7736.14,0.154,19.879,18.364,stop 11:01,False,stop 11:01 pnl -58%,لم يُفعَّل,لم يُفعَّل
-SPX:PUT:7680:2026-10-16,2.46,7716.63,-0.137,0.0,0.0,no stop,True,لم يُفعَّل,لم يُفعَّل,لم يُفعَّل
+SPY:CALL:768:2026-10-19,1.96,767.4,-0.079,-0.403,-0.403,stop 10:58,False,لم يُفعَّل,لم يُفعَّل,لم يُفعَّل
