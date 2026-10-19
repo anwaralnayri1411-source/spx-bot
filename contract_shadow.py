@@ -27,6 +27,7 @@ REPORT = os.path.join("research", "contract_shadow_results.md")
 VARIANTS = ("bot", "atm", "d30")
 SYMS = {"SPX": "^SPX", "SPY": "SPY"}   # رمز التوصية في spx_positions.json ← رمز ياهو
 FINAL = (15, 30)
+MAX_LATE_MIN = 30      # توصية نراها بعد أكثر من هذا لا تُسجَّل
 LOG_COLS = ["date", "pos_id", "variant", "side", "strike", "exp", "entry_time", "entry_spot", "entry", "bot_entry",
             "qty_budget", "rule_out", "rule_time", "rule_pnl", "peak_pnl", "close_pnl", "stale_quotes", "quotes", "sym"]
 
@@ -149,6 +150,14 @@ def run(n=None):
         # عناصر جديدة لكل توصية لم تُسجَّل بعد (شراء الثلاثة في اللقطة نفسها)
         for p in pos:
             if p["sym"] != sym or p["exp"] != exp or p["id"] in have or hm >= (16, 0):
+                continue
+            try:
+                late = (n - datetime.fromisoformat(p["time"])).total_seconds() / 60
+            except Exception:
+                late = 0
+            if late > MAX_LATE_MIN:          # رأيناها متأخرين جداً (تأخر جدولة GitHub): المقارنة لن تكون عادلة
+                print(f"تجاهل {p['id']}: اكتُشفت بعد {late:.0f} دقيقة من التوصية.")
+                have.add(p["id"])
                 continue
             picks = pick_variants(p["side"], calls if p["side"] == "CALL" else puts, S, n, float(p["strike"]))
             for v in VARIANTS:

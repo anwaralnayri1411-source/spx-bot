@@ -38,6 +38,7 @@ VARIANTS = ("bot", "atm", "d30")
 # رمز التوصية ← (رمز Alpaca للسلسلة، مضاعف تقدير السعر من SPY، نصف نافذة السترايكات)
 SYMS = {"SPX": ("SPXW", alc.RATIO_GUESS, alc.WIDE), "SPY": ("SPY", 1.0, alc.WIDE / 10)}
 FINAL = (15, 30)
+MAX_LATE_MIN = 30      # توصية نراها بعد أكثر من هذا لا تُسجَّل
 ALERT_KINDS = ("stop", "tp", "exp_final")
 LOG_COLS = ["date", "pos_id", "variant", "side", "strike", "exp", "sig_time", "entry_time", "entry_spot", "entry",
             "bot_shown_entry", "qty_budget", "live_out", "live_time", "live_pnl", "alert_out", "alert_time", "alert_pnl",
@@ -171,6 +172,13 @@ def run(n=None):
     for pid, p in pos.items():
         sym = p["sym"]
         if pid in have or hm >= (16, 0) or sym not in books:
+            continue
+        try:
+            late = (n - datetime.fromisoformat(p["time"])).total_seconds() / 60
+        except Exception:
+            late = 0
+        if late > MAX_LATE_MIN:              # رأيناها متأخرين جداً (تأخر جدولة GitHub): المقارنة لن تكون عادلة
+            print(f"تجاهل {pid}: اكتُشفت بعد {late:.0f} دقيقة من التوصية.")
             continue
         book, S = books[sym], spots[sym]
         for v, k in pick(book, p["side"], S, n, float(p["strike"])).items():
