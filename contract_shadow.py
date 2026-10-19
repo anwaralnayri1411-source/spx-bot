@@ -1,6 +1,6 @@
 """تجربة ظلّية: عقد البوت الحالي مقابل عقد أقرب للسعر (تسجيل فقط؛ لا يرسل ولا يغيّر أي توصية أو ملف للبوت).
 
-لكل توصية SPX في spx_positions.json نتابع بأسعار ياهو الحقيقية (المتأخرة) ثلاثة عقود من نفس الاتجاه والانتهاء:
+لكل توصية SPX أو SPY (بديل SPX حين لا يجد البوت عقد SPX مناسباً) في spx_positions.json نتابع بأسعار ياهو الحقيقية (المتأخرة) ثلاثة عقود من نفس الاتجاه والانتهاء:
   bot  = نفس سترايك البوت (100–350$ غالباً بعيد عن السعر)
   atm  = أول سترايك على السعر أو خارجه بخطوة (CALL: أصغر سترايك ≥ السعر، PUT: أكبر سترايك ≤ السعر)
   d30  = السترايك الذي دلتاه أقرب إلى 0.30
@@ -25,9 +25,10 @@ TRACK = "contract_shadow_track.csv"
 LOG = "contract_shadow_log.csv"
 REPORT = os.path.join("research", "contract_shadow_results.md")
 VARIANTS = ("bot", "atm", "d30")
+SYMS = {"SPX": "^SPX", "SPY": "SPY"}   # رمز التوصية في spx_positions.json ← رمز ياهو
 FINAL = (15, 30)
 LOG_COLS = ["date", "pos_id", "variant", "side", "strike", "exp", "entry_time", "entry_spot", "entry", "bot_entry",
-            "qty_budget", "rule_out", "rule_time", "rule_pnl", "peak_pnl", "close_pnl", "stale_quotes", "quotes"]
+            "qty_budget", "rule_out", "rule_time", "rule_pnl", "peak_pnl", "close_pnl", "stale_quotes", "quotes", "sym"]
 
 
 # ============================ أدوات ============================
@@ -60,12 +61,14 @@ def quote(row):
     return None
 
 
-def chain(exp):
+def chain(sym, exp):
     import yfinance as yf
-    t = yf.Ticker("^SPX")
+    t = yf.Ticker(SYMS[sym])
     ch = t.option_chain(exp)
     spot = float(t.history(period="1d", interval="5m")["Close"].dropna().iloc[-1])
-    return ob.spxw_rows(ch.calls), ob.spxw_rows(ch.puts), spot
+    if sym == "SPX":
+        return ob.spxw_rows(ch.calls), ob.spxw_rows(ch.puts), spot
+    return ch.calls, ch.puts, spot
 
 
 def pick_variants(side, df, S, n, bot_strike):
@@ -126,26 +129,26 @@ def run(n=None):
     if not ob.market_day(n):
         save_state(state)
         return
-    pos = [p for p in ob.load_positions()["positions"] if p.get("sym") == "SPX" and p.get("exp") == today]
+    pos = [p for p in ob.load_positions()["positions"] if p.get("sym") in SYMS and p.get("exp") == today]
     have = {it["pos_id"] for it in state["items"]}
-    exps = {p["exp"] for p in pos} | {it["exp"] for it in state["items"]}
-    if not exps:
+    groups = {(p["sym"], p["exp"]) for p in pos} | {(it.get("sym", "SPX"), it["exp"]) for it in state["items"]}
+    if not groups:
         save_state(state)
-        print("لا توصيات SPX اليوم، لا شيء للتسجيل.")
+        print("لا توصيات SPX/SPY اليوم، لا شيء للتسجيل.")
         return
     hm = (n.hour, n.minute)
     track = []
-    for exp in sorted(exps):
+    for sym, exp in sorted(groups):
         try:
-            calls, puts, S = chain(exp)
+            calls, puts, S = chain(sym, exp)
         except Exception as e:
-            print("تعذر جلب السلسلة:", e)
+            print("تعذر جلب السلسلة:", sym, e)
             continue
         books = {"CALL": {float(r["strike"]): r for r in calls.to_dict("records")},
                  "PUT": {float(r["strike"]): r for r in puts.to_dict("records")}}
         # عناصر جديدة لكل توصية لم تُسجَّل بعد (شراء الثلاثة في اللقطة نفسها)
         for p in pos:
-            if p["exp"] != exp or p["id"] in have or hm >= (16, 0):
+            if p["sym"] != sym or p["exp"] != exp or p["id"] in have or hm >= (16, 0):
                 continue
             picks = pick_variants(p["side"], calls if p["side"] == "CALL" else puts, S, n, float(p["strike"]))
             for v in VARIANTS:
@@ -154,7 +157,7 @@ def run(n=None):
                 if q is None:
                     continue
                 ask = q[0]
-                state["items"].append({"date": today, "pos_id": p["id"], "variant": v, "side": p["side"],
+                state["items"].append({"date": today, "sym": sym, "pos_id": p["id"], "variant": v, "side": p["side"],
                                        "strike": float(r["strike"]), "exp": exp, "sig_time": p["time"],
                                        "entry_time": n.isoformat(timespec="minutes"), "entry_spot": round(S, 2),
                                        "entry": round(ask, 2), "bot_entry": p.get("entry"),
@@ -164,7 +167,7 @@ def run(n=None):
             have.add(p["id"])
         # تقييم كل العناصر المفتوحة وغير المفتوحة (نتابع حتى الإغلاق لقياس القمة وقيمة الإغلاق)
         for it in state["items"]:
-            if it["exp"] != exp or it["entry_time"] == n.isoformat(timespec="minutes"):
+            if it.get("sym", "SPX") != sym or it["exp"] != exp or it["entry_time"] == n.isoformat(timespec="minutes"):
                 continue
             r = books[it["side"]].get(it["strike"])
             q = quote(r) if r is not None else None
@@ -195,7 +198,7 @@ def run(n=None):
                 w.writerow(["time", "pos_id", "variant", "strike", "spot", "bid", "src", "pnl", "status"])
             w.writerows(track)
     save_state(state)
-    print(f"سُجّل {len(track)} تقييماً لـ {len({it['pos_id'] for it in state['items']})} توصية.")
+    print(f"سُجّل {len(track)} تقييماً لـ {len({it['pos_id'] for it in state['items']})} توصية (SPX/SPY).")
 
 
 # ============================ التقرير ============================
@@ -206,7 +209,10 @@ def report():
     st = load_state()
     rows += [{k: str(it.get(k, "")) for k in LOG_COLS} for it in st.get("items", [])]   # اليوم الجاري (قد يكون ناقصاً)
     by = {v: [r for r in rows if r["variant"] == v and r["rule_pnl"] not in ("", None)] for v in VARIANTS}
+    syms = sorted({r.get("sym") or "SPX" for r in rows})
     L = ["# تجربة ظلّية: عقد البوت مقابل عقد أقرب للسعر (نتائج آلية)", "",
+         f"- التوصيات المشمولة: {' و'.join(syms) if syms else 'لا شيء بعد'} (SPY = بديل البوت حين لا يجد عقد SPX ضمن 100–350$). "
+         "النسب المئوية قابلة للجمع بين الرمزين؛ المبالغ بالدولار تختلف بحجم العقد.",
          "- أسعار ياهو الحقيقية المتأخرة ~15 دقيقة. الشراء بسعر الطلب والتقييم بسعر البيع، في اللقطة نفسها للعقود الثلاثة.",
          "- القاعدة نفسها للجميع: هدف +50% / وقف −40% (بعد 15 دقيقة) / بيع 15:30. «لكل 150$ مخاطرة» = الربح لو اشتريت "
          "كمية تخسر 150$ عند الوقف (كسور مسموحة للمقارنة فقط).",
@@ -243,7 +249,8 @@ def report():
             better = sum(1 for z in d if z > 0)
             L.append(f"\n- **{names[v]} − عقد البوت** (لكل 150$ مخاطرة، {len(d)} توصية): متوسط {sum(d) / len(d):+.0f}$، "
                      f"وأفضل في {better} من {len(d)}.")
-    L += ["", "- عقد «على السعر» أغلى بكثير: غالباً عقد واحد منه يتجاوز ميزانية 150$ عند الوقف، فلا يصلح دون تغيير الميزانية.",
+    L += ["", "- في SPX عقد «على السعر» أغلى بكثير: غالباً عقد واحد منه يتجاوز ميزانية 150$ عند الوقف. في SPY الفرق أصغر، "
+              "وإذا تحرك السعر بعد التوصية قد يصبح عقد البوت نفسه داخل المال وعقد «على السعر» أرخص منه.",
           "- عمود «أسعار قديمة» = تقييمات بلا عرض/طلب (آخر صفقة فقط)؛ كثرتها تعني أن نتيجة ذلك العقد غير موثوقة."]
     os.makedirs(os.path.dirname(REPORT), exist_ok=True)
     with open(REPORT, "w", encoding="utf-8") as f:

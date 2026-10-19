@@ -1,6 +1,6 @@
 name: Live Shadow
-# ظل لحظي لتوصيات SPX بأسعار Alpaca (تكلفة التأخير + العقد الأقرب للسعر). تسجيل فقط: لا رسائل، ولا تعديل لأي ملف من ملفات البوت.
-# يعمل فقط في يوم فيه توصية SPX (أو لإغلاق سجل يوم سابق)، بفارق 4 دقائق عن SPX Monitor لتقليل تعارض الحفظ.
+# ظل لحظي لتوصيات SPX وSPY بأسعار Alpaca (تكلفة التأخير + العقد الأقرب للسعر). تسجيل فقط: لا رسائل، ولا تعديل لأي ملف من ملفات البوت.
+# يعمل فقط في يوم فيه توصية SPX أو SPY (أو لإغلاق سجل يوم سابق)، بفارق 4 دقائق عن SPX Monitor لتقليل تعارض الحفظ.
 on:
   schedule:
     - cron: "4-59/5 13-21 * * 1-5"
@@ -29,7 +29,7 @@ jobs:
               st = json.load(open("live_shadow_state.json"))
           except Exception:
               st = {}
-          sig = any(p.get("sym") == "SPX" and p.get("exp") == today for p in pos)
+          sig = any(p.get("sym") in ("SPX", "SPY") and p.get("exp") == today for p in pos)
           print("true" if sig or st.get("items") else "false")
           EOF
           )

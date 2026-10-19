@@ -2,7 +2,7 @@
 """ظل لحظي لتوصيات SPX (تسجيل فقط؛ لا يرسل ولا يغيّر أي توصية أو ملف للبوت).
 
 السؤال: كم من خسارة البوت سببه تأخر البيانات وحده؟ ومعه: هل العقد الأقرب للسعر أفضل؟
-لكل توصية SPX في spx_positions.json نشتري «على الورق» بسعر الطلب اللحظي من Alpaca (indicative) أول ما نراها، ثم:
+لكل توصية SPX أو SPY (بديل البوت حين لا يجد عقد SPX ضمن 100–350$) في spx_positions.json نشتري «على الورق» بسعر الطلب اللحظي من Alpaca (indicative) أول ما نراها، ثم:
   أ) «كما يعمل البوت الآن»: عقد البوت، والخروج عند تنبيهات البوت نفسها (stop / tp / exp_final في spx_positions.json،
      وهي محسوبة من ياهو المتأخر) بسعر البيع اللحظي لحظة رؤية التنبيه.
   ب) «لو كانت المتابعة لحظية»: نفس القواعد (+50% / −40% بعد 15 دقيقة من التوصية / بيع 15:30) على سعر البيع اللحظي،
@@ -35,11 +35,13 @@ REPORT = os.path.join(HERE, "live_shadow_results.md")
 FEED = "indicative"
 MAX_AGE = 120            # ثانية: تسعيرة أقدم من هذا لا تُستخدم
 VARIANTS = ("bot", "atm", "d30")
+# رمز التوصية ← (رمز Alpaca للسلسلة، مضاعف تقدير السعر من SPY، نصف نافذة السترايكات)
+SYMS = {"SPX": ("SPXW", alc.RATIO_GUESS, alc.WIDE), "SPY": ("SPY", 1.0, alc.WIDE / 10)}
 FINAL = (15, 30)
 ALERT_KINDS = ("stop", "tp", "exp_final")
 LOG_COLS = ["date", "pos_id", "variant", "side", "strike", "exp", "sig_time", "entry_time", "entry_spot", "entry",
             "bot_shown_entry", "qty_budget", "live_out", "live_time", "live_pnl", "alert_out", "alert_time", "alert_pnl",
-            "peak_pnl", "close_pnl", "quotes", "stale"]
+            "peak_pnl", "close_pnl", "quotes", "stale", "sym"]
 
 
 # ============================ أدوات ============================
@@ -55,14 +57,16 @@ def save_state(s):
         json.dump(s, f, ensure_ascii=False, indent=1)
 
 
-def snapshot(exp, guess):
-    """{(النوع، السترايك): صف} وسعر SPX من التكافؤ، من Alpaca indicative."""
-    st, snaps = alc.chain("SPXW", FEED, exp, guess - alc.WIDE, guess + alc.WIDE)
+def snapshot(sym, exp, spy_px):
+    """{(النوع، السترايك): صف} وسعر الأصل من التكافؤ، من Alpaca indicative."""
+    und, mult, wide = SYMS[sym]
+    guess = spy_px * mult
+    st, snaps = alc.chain(und, FEED, exp, guess - wide, guess + wide)
     if st != 200:
         raise RuntimeError(f"Alpaca ({st}): {str(snaps)[:160]}")
     rows = alc.rows_of(snaps)
     spot = alc.parity_spot(rows, guess)
-    return {(r["type"], r["strike"]): r for r in rows}, spot
+    return {(r["type"], r["strike"]): r for r in rows}, (spot or guess)
 
 
 def usable(r):
@@ -141,10 +145,10 @@ def run(n=None):
     if not ob.market_day(n):
         save_state(state)
         return
-    pos = {p["id"]: p for p in ob.load_positions()["positions"] if p.get("sym") == "SPX" and p.get("exp") == today}
+    pos = {p["id"]: p for p in ob.load_positions()["positions"] if p.get("sym") in SYMS and p.get("exp") == today}
     if not pos and not state["items"]:
         save_state(state)
-        print("لا توصيات SPX اليوم.")
+        print("لا توصيات SPX/SPY اليوم.")
         return
     st, d = alc.get(f"{alc.DATA}/v2/stocks/SPY/trades/latest")
     px = (d.get("trade") or {}).get("p") if st == 200 and isinstance(d, dict) else None
@@ -152,22 +156,27 @@ def run(n=None):
         print("تعذّر جلب SPY:", st, str(d)[:120])
         save_state(state)
         return
-    try:
-        book, S = snapshot(today, px * alc.RATIO_GUESS)
-    except Exception as e:
-        print("تعذّر جلب السلسلة:", e)
+    needed = {p["sym"] for p in pos.values()} | {it.get("sym", "SPX") for it in state["items"]}
+    books, spots = {}, {}
+    for sym in sorted(needed):
+        try:
+            books[sym], spots[sym] = snapshot(sym, today, px)
+        except Exception as e:
+            print("تعذّر جلب السلسلة:", sym, e)
+    if not books:
         save_state(state)
         return
-    S = S or px * alc.RATIO_GUESS
     hm = (n.hour, n.minute)
     have = {it["pos_id"] for it in state["items"]}
     for pid, p in pos.items():
-        if pid in have or hm >= (16, 0):
+        sym = p["sym"]
+        if pid in have or hm >= (16, 0) or sym not in books:
             continue
+        book, S = books[sym], spots[sym]
         for v, k in pick(book, p["side"], S, n, float(p["strike"])).items():
             ask = book[(p["side"], k)]["ask"]
             state["items"].append({
-                "date": today, "pos_id": pid, "variant": v, "side": p["side"], "strike": k, "exp": today,
+                "date": today, "sym": sym, "pos_id": pid, "variant": v, "side": p["side"], "strike": k, "exp": today,
                 "sig_time": p["time"], "entry_time": now_s, "entry_spot": round(S, 2), "entry": round(ask, 2),
                 "bot_shown_entry": p.get("entry"),
                 "qty_budget": round(ob.RISK_BUDGET_USD / (ask * 100 * ob.STOP_LOSS), 3),
@@ -175,9 +184,11 @@ def run(n=None):
                 "peak_pnl": 0.0, "close_pnl": "", "quotes": 0, "stale": 0})
     track = []
     for it in state["items"]:
-        if it["entry_time"] == now_s:
+        sym = it.get("sym", "SPX")
+        if it["entry_time"] == now_s or sym not in books:
             continue
-        r = book.get((it["side"], it["strike"]))
+        S = spots[sym]
+        r = books[sym].get((it["side"], it["strike"]))
         if not usable(r):
             it["stale"] += 1
             continue
@@ -209,7 +220,7 @@ def run(n=None):
                 w.writerow(["time", "pos_id", "variant", "strike", "spot", "bid", "quote_age_s", "pnl", "live", "alert"])
             w.writerows(track)
     save_state(state)
-    print(f"سُجّل {len(track)} تقييماً، SPX ≈ {S:,.2f}.")
+    print(f"سُجّل {len(track)} تقييماً | " + " | ".join(f"{s} ≈ {v:,.2f}" for s, v in spots.items()))
 
 
 # ============================ التقرير ============================
@@ -224,7 +235,9 @@ def report():
     rows = list(csv.DictReader(open(LOG, encoding="utf-8"))) if os.path.exists(LOG) else []
     rows += [{k: str(it.get(k, "")) for k in LOG_COLS} for it in load_state().get("items", [])]
     names = {"bot": "عقد البوت", "atm": "على السعر", "d30": "دلتا 0.30"}
-    L = ["# ظل لحظي لتوصيات SPX (Alpaca) — نتائج آلية", "",
+    syms = sorted({r.get("sym") or "SPX" for r in rows})
+    L = ["# ظل لحظي لتوصيات SPX وSPY (Alpaca) — نتائج آلية", "",
+         f"- التوصيات المشمولة: {' و'.join(syms) if syms else 'لا شيء بعد'} (SPY = بديل البوت حين لا يجد عقد SPX ضمن 100–350$).",
          "- الشراء بسعر الطلب اللحظي (Alpaca indicative) عند أول رؤية للتوصية، والتقييم بسعر البيع اللحظي كل 5 دقائق.",
          "- «لحظي» = قواعد البوت (+50% / −40% بعد 15د / 15:30) على السعر اللحظي. «تنبيهات البوت» = الخروج عند تنبيه البوت "
          "الفعلي المحسوب من ياهو المتأخر، بالسعر اللحظي لحظة رؤيته.",

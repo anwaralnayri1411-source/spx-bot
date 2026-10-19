@@ -1,6 +1,6 @@
 name: Contract Shadow
-# تجربة ظلّية: عقد البوت مقابل عقد أقرب للسعر لتوصيات SPX. تسجيل فقط: لا رسائل، ولا تعديل لأي ملف من ملفات البوت.
-# تعمل فقط في يوم فيه توصية SPX (أو لإغلاق سجل يوم سابق)، بفارق دقيقتين عن SPX Monitor لتقليل تعارض الحفظ.
+# تجربة ظلّية: عقد البوت مقابل عقد أقرب للسعر لتوصيات SPX وSPY. تسجيل فقط: لا رسائل، ولا تعديل لأي ملف من ملفات البوت.
+# تعمل فقط في يوم فيه توصية SPX أو SPY (أو لإغلاق سجل يوم سابق)، بفارق دقيقتين عن SPX Monitor لتقليل تعارض الحفظ.
 on:
   schedule:
     - cron: "2-57/5 13-21 * * 1-5"
@@ -29,7 +29,7 @@ jobs:
               st = json.load(open("contract_shadow_state.json"))
           except Exception:
               st = {}
-          sig = any(p.get("sym") == "SPX" and p.get("exp") == today for p in pos)
+          sig = any(p.get("sym") in ("SPX", "SPY") and p.get("exp") == today for p in pos)
           print("true" if sig or st.get("items") else "false")
           EOF
           )
