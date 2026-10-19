@@ -23,6 +23,7 @@
 | مقارنة MGT (تقاريرهم وتوصياتهم تُسجَّل بصمت) | `mgt_compare.py` | `mgt_reports_log.csv`, `mgt_recs_log.csv` |
 | عقد البوت مقابل عقد أقرب للسعر (على السعر، ودلتا 0.30): لكل توصية SPX، أسعار ياهو الحقيقية، شراء الثلاثة في اللقطة نفسها، بقواعد البوت (+50% / −40% بعد 15د / 15:30). منذ 18/10، لا نتائج حية بعد | `contract_shadow.py` + `contract_shadow.yml` (كل 5د، فقط في يوم فيه توصية SPX) | `contract_shadow_log.csv`, `contract_shadow_track.csv`, `contract_shadow_state.json`, `research/contract_shadow_results.md` |
 | اختبار تاريخي v2 يحاكي توصيات البوت نفسه (`direction_points` + فلاتره، فحص كل 30د، بيانات متأخرة 15د، فاصل ثقة حسب الأيام، مرجع بالاتجاه المعاكس، بيانات محجوزة من 13/10). يدوي، والقديم `backtest_spx.py` باقٍ | `research/backtest_spx_v2.py` | `research/backtest_spx_v2_results.md` |
+| ظل لحظي (Alpaca indicative): لكل توصية SPX شراء على الورق بسعر الطلب اللحظي، ثم (أ) الخروج عند تنبيهات البوت المتأخرة مقابل (ب) قواعد البوت على السعر اللحظي، لعقد البوت وعلى السعر ودلتا 0.30. الرقم الذهبي: خسرت في (أ) وربحت في (ب). عرض/طلب فقط (آخر صفقة متأخرة 15د)، وتُهمل تسعيرة أقدم من 120ث. منذ 19/10، لا نتائج حية بعد | `research/live_shadow.py` + `live_shadow.yml` (كل 5د، فقط في يوم فيه توصية SPX؛ يحتاج `ALPACA_KEY`/`ALPACA_SECRET`) | `live_shadow_log.csv`, `live_shadow_track.csv`, `live_shadow_state.json`, `research/live_shadow_results.md` |
 
 ## نتائج الدراسة حتى 17 أكتوبر 2026 (على 60 يوماً، تسعير نظري)
 - Order Block: 39–47% لصالحك مقابل ~50% عشوائي → لا ميزة. FVG: نتائج متناقضة (45–75%) وعينات صغيرة → لا ميزة مثبتة.
