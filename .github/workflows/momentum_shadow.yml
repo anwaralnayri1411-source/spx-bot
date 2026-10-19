@@ -1,0 +1,44 @@
+name: Momentum Shadow
+# ظل «زخم 30 دقيقة» لـ SPX بأسعار Alpaca اللحظية. تسجيل فقط: لا رسائل، ولا يقرأ أو يعدّل أي ملف من ملفات البوت.
+# يتوقف تلقائياً بعد END_DATE في research/momentum_shadow.py. مجموعة concurrency خاصة به.
+on:
+  schedule:
+    - cron: "3-58/5 13-21 * * 1-5"
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: momentum-shadow
+  cancel-in-progress: false
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Market hours (New York)?
+        id: gate
+        run: |
+          hm=$(TZ=America/New_York date +%H%M); dow=$(TZ=America/New_York date +%u)
+          if [ "$dow" -le 5 ] && [ "$hm" -ge 0945 ] && [ "$hm" -le 1605 ]; then echo "go=true" >> "$GITHUB_OUTPUT"; else echo "go=false" >> "$GITHUB_OUTPUT"; fi
+      - if: steps.gate.outputs.go == 'true' || github.event_name == 'workflow_dispatch'
+        uses: actions/checkout@v4
+      - if: steps.gate.outputs.go == 'true' || github.event_name == 'workflow_dispatch'
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - if: steps.gate.outputs.go == 'true' || github.event_name == 'workflow_dispatch'
+        run: pip install yfinance pandas
+      - if: steps.gate.outputs.go == 'true' || github.event_name == 'workflow_dispatch'
+        env:
+          ALPACA_KEY: ${{ secrets.ALPACA_KEY }}
+          ALPACA_SECRET: ${{ secrets.ALPACA_SECRET }}
+        run: |
+          python research/momentum_shadow.py
+          python research/momentum_shadow.py --report
+      - name: Save shadow log
+        if: steps.gate.outputs.go == 'true' || github.event_name == 'workflow_dispatch'
+        run: |
+          git config user.name "bot"; git config user.email "bot@users.noreply.github.com"
+          for f in momentum_shadow_state.json momentum_shadow_log.csv research/momentum_shadow_results.md; do git add "$f" 2>/dev/null || true; done
+          git diff --cached --quiet && exit 0
+          git commit -m "momentum shadow log"
+          for i in 1 2 3 4; do git pull --rebase && git push && break; sleep 4; done
