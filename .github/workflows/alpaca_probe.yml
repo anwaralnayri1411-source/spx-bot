@@ -1,8 +1,16 @@
 name: Alpaca Probe
 
-# اختبار اتصال Alpaca — يدوي فقط، تسجيل في السجل، لا يرسل تيليجرام ولا يلمس البوت.
+# اختبار اتصال Alpaca — يدوي، أو تلقائياً عند تعديل ملفاته فقط. تسجيل في السجل، لا يرسل تيليجرام ولا يلمس البوت.
 on:
   workflow_dispatch:
+  push:
+    paths:
+      - "research/alpaca_probe.py"
+      - "research/alpaca_live_check.py"
+      - ".github/workflows/alpaca_probe.yml"
+
+permissions:
+  contents: read
 
 concurrency:
   group: alpaca-probe
