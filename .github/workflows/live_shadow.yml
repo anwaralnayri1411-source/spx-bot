@@ -1,0 +1,58 @@
+name: Live Shadow
+# ظل لحظي لتوصيات SPX بأسعار Alpaca (تكلفة التأخير + العقد الأقرب للسعر). تسجيل فقط: لا رسائل، ولا تعديل لأي ملف من ملفات البوت.
+# يعمل فقط في يوم فيه توصية SPX (أو لإغلاق سجل يوم سابق)، بفارق 4 دقائق عن SPX Monitor لتقليل تعارض الحفظ.
+on:
+  schedule:
+    - cron: "4-59/5 13-21 * * 1-5"
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: live-shadow
+  cancel-in-progress: false
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Any SPX signal today (or a day to close)?
+        id: gate
+        run: |
+          live=$(python3 - <<'EOF' 2>/dev/null || echo false
+          import json, datetime, zoneinfo
+          today = datetime.datetime.now(zoneinfo.ZoneInfo("America/New_York")).date().isoformat()
+          try:
+              pos = json.load(open("spx_positions.json")).get("positions", [])
+          except Exception:
+              pos = []
+          try:
+              st = json.load(open("live_shadow_state.json"))
+          except Exception:
+              st = {}
+          sig = any(p.get("sym") == "SPX" and p.get("exp") == today for p in pos)
+          print("true" if sig or st.get("items") else "false")
+          EOF
+          )
+          echo "live=$live" >> "$GITHUB_OUTPUT"
+          echo "run needed: $live"
+      - if: steps.gate.outputs.live == 'true'
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - if: steps.gate.outputs.live == 'true'
+        run: pip install yfinance pandas requests numpy
+      - if: steps.gate.outputs.live == 'true'
+        env:
+          ALPACA_KEY: ${{ secrets.ALPACA_KEY }}
+          ALPACA_SECRET: ${{ secrets.ALPACA_SECRET }}
+        run: |
+          python research/live_shadow.py
+          python research/live_shadow.py --report
+      - name: Save shadow log
+        if: steps.gate.outputs.live == 'true'
+        run: |
+          git config user.name "bot"; git config user.email "bot@users.noreply.github.com"
+          for f in live_shadow_state.json live_shadow_track.csv live_shadow_log.csv research/live_shadow_results.md; do git add "$f" 2>/dev/null || true; done
+          git diff --cached --quiet && exit 0
+          git commit -m "live shadow log"
+          for i in 1 2 3 4; do git pull --rebase && git push && break; sleep 4; done
