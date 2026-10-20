@@ -1,0 +1,42 @@
+name: Live Watcher
+# المراقب اللحظي (ظل): مهمة طويلة تفحص كل دقيقة بأسعار Alpaca اللحظية وبقرار البوت نفسه. تسجيل فقط: لا رسائل،
+# ولا تعديل لأي ملف من ملفات البوت. مهمتان في اليوم (حد GitHub 6 ساعات للمهمة)، تعملان بالتتابع عبر concurrency،
+# والكود ينهي عند 16:00 نيويورك أو بعد ~5:45 ساعة. يتوقف تلقائياً بعد END_DATE في research/live_watcher.py.
+on:
+  schedule:
+    - cron: "11 13,14 * * 1-5"    # النصف الأول (صيفي/شتوي؛ الكود ينتظر حتى 9:31)
+    - cron: "41 16,17 * * 1-5"    # النصف الثاني (يبدأ فعلياً بعد انتهاء الأول)
+  workflow_dispatch:
+  push:
+    paths:
+      - "research/live_watcher.py"
+      - ".github/workflows/live_watcher.yml"
+permissions:
+  contents: write
+concurrency:
+  group: live-watcher
+  cancel-in-progress: false
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 355
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install yfinance pandas requests numpy
+      - name: Watch every minute until close
+        env:
+          ALPACA_KEY: ${{ secrets.ALPACA_KEY }}
+          ALPACA_SECRET: ${{ secrets.ALPACA_SECRET }}
+        run: python research/live_watcher.py
+      - name: Report and save
+        if: always()
+        run: |
+          python research/live_watcher.py --report || true
+          git config user.name "bot"; git config user.email "bot@users.noreply.github.com"
+          for f in live_watcher_state.json live_watcher_signals.csv live_watcher_edges.csv live_watcher_runs.csv research/live_watcher_results.md; do git add "$f" 2>/dev/null || true; done
+          git diff --cached --quiet && exit 0
+          git commit -m "live watcher log"
+          for i in 1 2 3 4 5; do git pull --rebase && git push && break; sleep 5; done
