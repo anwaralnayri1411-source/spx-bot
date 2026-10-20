@@ -36,7 +36,7 @@ jobs:
         run: |
           python research/live_watcher.py --report || true
           git config user.name "bot"; git config user.email "bot@users.noreply.github.com"
-          for f in live_watcher_state.json live_watcher_signals.csv live_watcher_edges.csv live_watcher_runs.csv research/live_watcher_results.md; do git add "$f" 2>/dev/null || true; done
+          for f in live_watcher_state.json live_watcher_signals.csv live_watcher_edges.csv live_watcher_runs.csv live_watcher_health.json research/live_watcher_results.md; do git add "$f" 2>/dev/null || true; done
           git diff --cached --quiet && exit 0
           git commit -m "live watcher log"
           for i in 1 2 3 4 5; do git pull --rebase && git push && break; sleep 5; done

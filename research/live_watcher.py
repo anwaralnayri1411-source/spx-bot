@@ -37,6 +37,8 @@ STATE = os.path.join(ROOT, "live_watcher_state.json")
 SIGNALS = os.path.join(ROOT, "live_watcher_signals.csv")
 EDGES = os.path.join(ROOT, "live_watcher_edges.csv")
 RUNS = os.path.join(ROOT, "live_watcher_runs.csv")
+HEALTH = os.path.join(ROOT, "live_watcher_health.json")   # نبضة: دقائق مفحوصة وأخطاء وآخر خطأ (تُحفظ كل 30 دقيقة)
+HEARTBEAT_MIN = 30
 REPORT = os.path.join(HERE, "live_watcher_results.md")
 DATA = "https://data.alpaca.markets"
 END_DATE = date(2026, 11, 20)        # نهاية التجربة ثم مراجعة مع المستخدم
@@ -244,13 +246,43 @@ def step(n, df, slow, state):
     return row
 
 
+def checkpoint(start, minutes, errors, last_err, final=False):
+    """نبضة: يكتب حالة التشغيل في live_watcher_health.json ويحفظ السجلات في المستودع (داخل GitHub فقط)."""
+    import subprocess
+    h = {"date": start.date().isoformat(), "start": start.strftime("%H:%M"), "now": ob.now_ny().strftime("%H:%M"),
+         "minutes": minutes, "errors": errors, "last_error": last_err, "final": final}
+    try:
+        json.dump(h, open(HEALTH, "w", encoding="utf-8"), ensure_ascii=False)
+    except Exception as e:
+        print("health:", e)
+    if os.getenv("GITHUB_ACTIONS") != "true" or final:
+        return          # الحفظ النهائي في خطوة «Report and save» بسير العمل
+    files = [p for p in (STATE, SIGNALS, EDGES, HEALTH) if os.path.exists(p)]
+    sh = lambda *a: subprocess.run(list(a), cwd=ROOT, capture_output=True, text=True, timeout=60)
+    try:
+        sh("git", "config", "user.name", "bot")
+        sh("git", "config", "user.email", "bot@users.noreply.github.com")
+        sh("git", "add", *files)
+        if sh("git", "diff", "--cached", "--quiet").returncode == 0:
+            return
+        sh("git", "commit", "-m", "live watcher heartbeat")
+        for _ in range(4):
+            if sh("git", "pull", "--rebase").returncode == 0 and sh("git", "push").returncode == 0:
+                print(f"نبضة محفوظة {h['now']}: {minutes} دقيقة، {errors} أخطاء")
+                return
+            time.sleep(5)
+        print("تعذر حفظ النبضة (سيُحفظ كل شيء في النهاية).")
+    except Exception as e:
+        print("checkpoint:", e)
+
+
 def loop(once=False):
     start = ob.now_ny()
     if start.date() > END_DATE or not ob.market_day(start):
         print("لا جلسة اليوم أو انتهت التجربة.")
         return
     state = load_state(start.date().isoformat())
-    slow, slow_t, minutes, errors = {}, None, 0, 0
+    slow, slow_t, minutes, errors, last_err, beat = {}, None, 0, 0, "", ob.now_ny()
     while True:
         n = ob.now_ny()
         if (n.hour, n.minute) >= (16, 0) or (n - start).total_seconds() / 60 > MAX_RUN_MIN:
@@ -263,9 +295,17 @@ def loop(once=False):
                 if df is not None and len(df):
                     step(n, df, slow, state)
                     minutes += 1
+                else:
+                    errors += 1
+                    last_err = f"{n.strftime('%H:%M')} لا شموع من Alpaca"
             except Exception as e:
                 errors += 1
-                print("خطأ في الدقيقة:", type(e).__name__, e)
+                last_err = f"{n.strftime('%H:%M')} {type(e).__name__}: {str(e)[:150]}"
+                print("خطأ في الدقيقة:", last_err)
+            first = not state.get("_beat_done") and minutes + errors >= 3
+            if first or (n - beat).total_seconds() >= HEARTBEAT_MIN * 60:
+                checkpoint(start, minutes, errors, last_err)     # أول نبضة بعد 3 فحوص (نجحت أو فشلت)، ثم كل 30 دقيقة
+                beat, state["_beat_done"] = ob.now_ny(), True
         if once:
             break
         nxt = (n + timedelta(minutes=1)).replace(second=5, microsecond=0)
@@ -273,6 +313,7 @@ def loop(once=False):
     _append(RUNS, ["date", "start", "end", "minutes", "errors"],
             {"date": start.date().isoformat(), "start": start.strftime("%H:%M"), "end": ob.now_ny().strftime("%H:%M"),
              "minutes": minutes, "errors": errors})
+    checkpoint(start, minutes, errors, last_err, final=True)
     print(f"انتهى: {minutes} دقيقة مفحوصة، {errors} أخطاء.")
 
 
