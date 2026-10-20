@@ -1,15 +1,20 @@
 {
  "seen": {
   "BAC:PUT": [
-   "bank of america corporation bac stock bank pictet cie europe ag decreases position"
+   "bank of america corporation bac stock bank pictet cie europe ag decreases position",
+   "bank of america nyse bac share price forecast analysis"
   ],
   "AMZN:CALL": [],
   "WMT:CALL": [
    "walmart slashes membership fees with this new bundle",
    "costco stock cost flat as walmart takes aim at 1 trillion 2026 holiday sales",
-   "dick s pays a higher dividend yield than walmart is it worth the risk"
+   "dick s pays a higher dividend yield than walmart is it worth the risk",
+   "walmart vs costco which big box giant stock is the smarter buy",
+   "walmart launches 120 walmart and sam s club bundle what you need to know"
   ],
-  "UBER:PUT": [],
+  "UBER:PUT": [
+   "why is hertz htz stock soaring today"
+  ],
   "DIS:CALL": [
    "skydance rises 5 as steep post merger slide pauses disney gains 2 netflix slips"
   ],
@@ -19,30 +24,41 @@
    "netflix inc nflx stock prime capital investment advisors llc lowers holdings",
    "netflix hinges at a key support zone as earnings approach",
    "traders are betting netflix s stock drama may be coming to an end",
-   "netflix q3 2026 earnings live updates of nflx earnings call stock forecast"
+   "netflix q3 2026 earnings live updates of nflx earnings call stock forecast",
+   "nflx stock falls below 70 as netflix q4 earnings and revenue targets raise the bar"
   ],
   "AVGO:PUT": [
    "3 artificial intelligence ai stocks that look like great buys right now"
   ],
-  "V:CALL": []
+  "V:CALL": [
+   "visa nyse v share price forecast analysis"
+  ]
  },
  "fired": {
-  "BAC:PUT:2026-10-30:51": [],
+  "BAC:PUT:2026-10-30:51": [
+   "up0.25"
+  ],
   "AMZN:CALL:2026-10-26:270": [
    "down-0.15",
    "down-0.3"
   ],
   "WMT:CALL:2026-10-30:120": [
    "down-0.15",
-   "news:walmart slashes membership fees with this new bundle"
+   "news:walmart slashes membership fees with this new bundle",
+   "down-0.3"
   ],
   "UBER:PUT:2026-10-30:68": [],
   "DIS:CALL:2026-10-30:112": [
-   "news:skydance rises 5 as steep post merger slide pauses disney gains 2 netflix slips"
+   "news:skydance rises 5 as steep post merger slide pauses disney gains 2 netflix slips",
+   "down-0.15"
   ],
-  "NFLX:PUT:2026-10-30:65": [],
+  "NFLX:PUT:2026-10-30:65": [
+   "news:nflx stock falls below 70 as netflix q4 earnings and revenue targets raise the bar"
+  ],
   "AVGO:PUT:2026-10-23:325": [],
-  "V:CALL:2026-10-23:412.5": []
+  "V:CALL:2026-10-23:412.5": [
+   "down-0.15"
+  ]
  },
  "stock_level": {},
  "seen_macro": [
@@ -63,7 +79,13 @@
   "bitgo research finds bitcoin s cpi reaction strengthens",
   "the era of stocks being the only viable investment option has ended baird strategas",
   "experts warn of interest rate hike new mortgages could cost buyers thousands more",
-  "no canada u s trade deal expected before american midterm elections sources"
+  "no canada u s trade deal expected before american midterm elections sources",
+  "wall street rises with investors rotating into healthcare and value stocks",
+  "trump says us trade deal with india is pretty close",
+  "us stocks rise after companies deliver strong profits and oil prices retreat",
+  "idea of partnering with u s is under attack in canada hoekstra says",
+  "lawsuit filed challenging trump s tariffs on canada",
+  "trump sued over canadian tariffs in latest legal challenge"
  ],
  "sharp": {}
 }
