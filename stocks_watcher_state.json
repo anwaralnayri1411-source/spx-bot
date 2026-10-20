@@ -1,27 +1,50 @@
 {
  "seen": {
-  "BAC:PUT": [],
+  "BAC:PUT": [
+   "bank of america corporation bac stock bank pictet cie europe ag decreases position"
+  ],
   "AMZN:CALL": [],
-  "WMT:CALL": [],
+  "WMT:CALL": [
+   "walmart slashes membership fees with this new bundle"
+  ],
   "UBER:PUT": [],
-  "DIS:CALL": [],
-  "NFLX:PUT": [],
+  "DIS:CALL": [
+   "skydance rises 5 as steep post merger slide pauses disney gains 2 netflix slips"
+  ],
+  "NFLX:PUT": [
+   "djt stock plummets to new lows trump appeal fades as 2026 midterms draw closer",
+   "skydance rises 5 as steep post merger slide pauses disney gains 2 netflix slips",
+   "netflix inc nflx stock prime capital investment advisors llc lowers holdings"
+  ],
   "AVGO:PUT": []
  },
  "fired": {
   "BAC:PUT:2026-10-30:51": [],
   "AMZN:CALL:2026-10-26:270": [
-   "down-0.15"
+   "down-0.15",
+   "down-0.3"
   ],
   "WMT:CALL:2026-10-30:120": [
-   "down-0.15"
+   "down-0.15",
+   "news:walmart slashes membership fees with this new bundle"
   ],
   "UBER:PUT:2026-10-30:68": [],
-  "DIS:CALL:2026-10-30:112": [],
+  "DIS:CALL:2026-10-30:112": [
+   "news:skydance rises 5 as steep post merger slide pauses disney gains 2 netflix slips"
+  ],
   "NFLX:PUT:2026-10-30:65": [],
   "AVGO:PUT:2026-10-23:325": []
  },
  "stock_level": {},
- "seen_macro": [],
+ "seen_macro": [
+  "from venezuela to texas to jamnagar marco rubio s dash for energy",
+  "food importer sues to block trump s 50 tariffs on canadian goods",
+  "housing is flashing warning signs just as the fed weighs more interest rate hikes",
+  "marco rubio in india can us biz diplomacy ease trump tensions over tariffs russian oil and bring trade deal closer",
+  "interest rate predictions for october 2026",
+  "food importer files new lawsuit to block trump s canada tariffs",
+  "gold wavers as traders weigh us iran talks fed rate path",
+  "vietnam s export boom offers india six lessons for growth"
+ ],
  "sharp": {}
 }
