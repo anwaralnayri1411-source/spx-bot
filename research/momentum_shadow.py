@@ -22,6 +22,7 @@ import json
 import os
 import re
 import sys
+import time
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -272,8 +273,54 @@ def report():
     print("\n".join(L))
 
 
+def checkpoint():
+    """حفظ منتصف الجلسة (داخل GitHub فقط) حتى لا يضيع شيء إن توقفت المهمة الطويلة."""
+    if os.getenv("GITHUB_ACTIONS") != "true":
+        return
+    import subprocess
+    files = [f for f in (STATE, LOG, REPORT) if os.path.exists(f)]
+    sh = lambda *a: subprocess.run(list(a), cwd=ROOT, capture_output=True, text=True, timeout=60)
+    try:
+        sh("git", "config", "user.name", "bot")
+        sh("git", "config", "user.email", "bot@users.noreply.github.com")
+        sh("git", "add", *files)
+        if sh("git", "diff", "--cached", "--quiet").returncode == 0:
+            return
+        sh("git", "commit", "-m", "momentum shadow heartbeat")
+        for _ in range(4):
+            if sh("git", "pull", "--rebase").returncode != 0:
+                sh("git", "rebase", "--abort")
+            elif sh("git", "push").returncode == 0:
+                return
+            time.sleep(5)
+    except Exception as e:
+        print("checkpoint:", type(e).__name__)
+
+
+def loop(max_min=345):
+    """مهمة طويلة: فحص كل دقيقة حتى 16:05 نيويورك أو ~5:45 ساعة (حد GitHub)، بدل الاعتماد على جدولة GitHub كل 5 دقائق."""
+    start, beat = datetime.now(NY), datetime.now(NY)
+    while True:
+        n = datetime.now(NY)
+        if (n.hour, n.minute) > (16, 5) or (n - start).total_seconds() / 60 > max_min:
+            break
+        if (n.hour, n.minute) >= (9, 45):
+            try:
+                run(n)
+            except Exception as e:
+                print("خطأ:", type(e).__name__, str(e)[:150])
+        if (n - beat).total_seconds() >= 30 * 60:
+            report()
+            checkpoint()
+            beat = n
+        nxt = (n + timedelta(minutes=1)).replace(second=10, microsecond=0)
+        time.sleep(max(1.0, (nxt - datetime.now(NY)).total_seconds()))
+
+
 if __name__ == "__main__":
     if "--report" in sys.argv:
         report()
+    elif "--loop" in sys.argv:
+        loop()
     else:
         run()

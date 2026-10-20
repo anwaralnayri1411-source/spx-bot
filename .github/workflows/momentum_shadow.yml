@@ -1,9 +1,11 @@
 name: Momentum Shadow
 # ظل «زخم 30 دقيقة» لـ SPX بأسعار Alpaca اللحظية. تسجيل فقط: لا رسائل، ولا يقرأ أو يعدّل أي ملف من ملفات البوت.
-# يتوقف تلقائياً بعد END_DATE في research/momentum_shadow.py. مجموعة concurrency خاصة به.
+# مهمة طويلة تفحص كل دقيقة (بدل تشغيل كل 5 دقائق يؤخره GitHub إلى 30–40 دقيقة). مواعيد بداية احتياطية: أول موعد يعمل
+# يبقى حتى 16:05 نيويورك أو ~5:45 ساعة، واللاحقة تنتظر دورها (واحد منتظر فقط) فتكمل الجلسة. يتوقف بعد END_DATE.
 on:
   schedule:
-    - cron: "3-58/5 13-21 * * 1-5"
+    - cron: "0,20,40 12,13,14 * * 1-5"   # بدايات احتياطية (صيفي 8:00–10:40، شتوي 7:00–9:40 نيويورك)
+    - cron: "0,30 17,18,19 * * 1-5"      # احتياط للنصف الثاني
   workflow_dispatch:
 permissions:
   contents: write
@@ -13,32 +15,27 @@ concurrency:
 jobs:
   run:
     runs-on: ubuntu-latest
+    timeout-minutes: 355
     steps:
-      - name: Market hours (New York)?
-        id: gate
-        run: |
-          hm=$(TZ=America/New_York date +%H%M); dow=$(TZ=America/New_York date +%u)
-          if [ "$dow" -le 5 ] && [ "$hm" -ge 0945 ] && [ "$hm" -le 1605 ]; then echo "go=true" >> "$GITHUB_OUTPUT"; else echo "go=false" >> "$GITHUB_OUTPUT"; fi
-      - if: steps.gate.outputs.go == 'true' || github.event_name == 'workflow_dispatch'
-        uses: actions/checkout@v4
-      - if: steps.gate.outputs.go == 'true' || github.event_name == 'workflow_dispatch'
-        uses: actions/setup-python@v5
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - if: steps.gate.outputs.go == 'true' || github.event_name == 'workflow_dispatch'
-        run: pip install yfinance pandas
-      - if: steps.gate.outputs.go == 'true' || github.event_name == 'workflow_dispatch'
+      - run: pip install yfinance pandas
+      - name: Sync to latest
+        run: git pull --rebase
+      - name: Watch every minute until close
         env:
           ALPACA_KEY: ${{ secrets.ALPACA_KEY }}
           ALPACA_SECRET: ${{ secrets.ALPACA_SECRET }}
-        run: |
-          python research/momentum_shadow.py
-          python research/momentum_shadow.py --report
+          PYTHONUNBUFFERED: "1"
+        run: python research/momentum_shadow.py --loop
       - name: Save shadow log
-        if: steps.gate.outputs.go == 'true' || github.event_name == 'workflow_dispatch'
+        if: always()
         run: |
+          python research/momentum_shadow.py --report || true
           git config user.name "bot"; git config user.email "bot@users.noreply.github.com"
           for f in momentum_shadow_state.json momentum_shadow_log.csv research/momentum_shadow_results.md; do git add "$f" 2>/dev/null || true; done
           git diff --cached --quiet && exit 0
           git commit -m "momentum shadow log"
-          for i in 1 2 3 4; do git pull --rebase && git push && break; sleep 4; done
+          for i in 1 2 3 4 5; do if git pull --rebase; then git push && break; else git rebase --abort; fi; sleep 5; done
