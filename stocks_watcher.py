@@ -226,11 +226,16 @@ def classify(p, name, heads, driver_label=None):
 
 def ask_claude(prompt, schema):
     """طلب واحد إلى Claude بإخراج JSON مقيّد بالمخطط. يرجع قائمة items أو None عند أي فشل."""
-    if not os.getenv("ANTHROPIC_API_KEY"):
+    key = (os.getenv("ANTHROPIC_API_KEY") or "").strip()
+    if not key:
+        return None
+    if not key.startswith("sk-ant-") or any(ch.isspace() for ch in key) or '"' in key:
+        # لا نطبع أي جزء من المفتاح أبداً (السجلات عامة)
+        print("Claude: قيمة ANTHROPIC_API_KEY بصيغة غير صحيحة (يجب أن تكون المفتاح وحده في سطر واحد). لا قراءة أخبار.")
         return None
     import anthropic
     try:
-        client = anthropic.Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY", "").strip(), timeout=60.0)
+        client = anthropic.Anthropic(api_key=key, timeout=60.0)
         resp = client.messages.create(
             model=MODEL, max_tokens=6000,
             output_config={"effort": "low", "format": {"type": "json_schema", "schema": schema}},
@@ -243,7 +248,7 @@ def ask_claude(prompt, schema):
         return None
     except anthropic.APIConnectionError as e:
         cause = e.__cause__ or e
-        print(f"Claude: خطأ اتصال: {type(cause).__name__}: {str(cause)[:200]}")
+        print(f"Claude: خطأ اتصال ({type(cause).__name__}).")   # نوع الخطأ فقط: نصه قد يحوي الترويسات والمفتاح
         return None
     if resp.stop_reason in ("refusal", "max_tokens"):
         print("Claude: لم يكتمل الرد:", resp.stop_reason)
