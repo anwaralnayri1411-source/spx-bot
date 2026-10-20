@@ -1,0 +1,43 @@
+name: Stocks Watcher
+# مراقب عقود الشركات اللحظي: مهمة طويلة تفحص كل دقيقة وترسل متابعة فورية عند أي حدث (خبر، حركة حادة، مرحلة خسارة/ربح،
+# المحرّك، الوقت) مع «قراءتي». الرسائل إلى TELEGRAM_CHAT_ID وحده في المرحلة الأولى. لا يعدّل ملفات بوت الشركات.
+# مهمتان في اليوم (حد GitHub 6 ساعات للمهمة) تعملان بالتتابع عبر concurrency، والكود ينهي عند 16:00 نيويورك أو بعد ~5:45 ساعة.
+on:
+  schedule:
+    - cron: "13 13,14 * * 1-5"    # النصف الأول (صيفي/شتوي؛ الكود ينتظر حتى 9:31)
+    - cron: "43 16,17 * * 1-5"    # النصف الثاني (يبدأ فعلياً بعد انتهاء الأول)
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: stocks-watcher
+  cancel-in-progress: false
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 355
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install yfinance pandas requests numpy anthropic
+      - name: Sync to latest
+        run: git pull --rebase
+      - name: Watch every minute until close
+        env:
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          ALPACA_KEY: ${{ secrets.ALPACA_KEY }}
+          ALPACA_SECRET: ${{ secrets.ALPACA_SECRET }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          PYTHONUNBUFFERED: "1"
+        run: python stocks_watcher.py
+      - name: Save
+        if: always()
+        run: |
+          git config user.name "bot"; git config user.email "bot@users.noreply.github.com"
+          for f in stocks_watcher_state.json stocks_watcher_log.csv messages_stocks_watcher.jsonl stocks_watcher_health.json; do git add "$f" 2>/dev/null || true; done
+          git diff --cached --quiet && exit 0
+          git commit -m "stocks watcher log"
+          for i in 1 2 3 4 5; do if git pull --rebase; then git push && break; else git rebase --abort; fi; sleep 5; done
