@@ -187,6 +187,11 @@ def news_key(title):
 
 
 # ============================ قراءة الأخبار (Claude) ============================
+CALIBRATION = (
+    " Calibrate importance strictly: 'high' is rare (a few times a week at most) and only for an actual new event that moves prices now: a new tariff or trade measure taking effect, a Fed decision or surprise, a major data surprise, earnings or guidance, war or escalation, a big index sell-off. Lawsuits and court filings, previews, 'what to watch' pieces, opinion and analysis, explainers, price recaps of moves that already happened, diplomatic talks with no outcome, and stories about other countries' tariffs are low."
+)
+
+
 NEWS_SCHEMA = {
     "type": "object",
     "properties": {"items": {"type": "array", "items": {
@@ -221,7 +226,8 @@ def classify(p, name, heads, driver_label=None):
         "stock's price in the next few days (low: routine, opinion, old or recycled news, listicles; medium: real "
         "news that can move the stock; high: material — earnings, guidance, regulation, lawsuits, big contracts, "
         "analyst rating changes by major banks, sharp moves in the driver). Write summary_ar as one short, plain "
-        "Arabic sentence a retail trader understands. Do not guess beyond the headline.\n\nHeadlines:\n" + lines)
+        "Arabic sentence a retail trader understands. Do not guess beyond the headline." + CALIBRATION +
+        "\n\nHeadlines:\n" + lines)
     return ask_claude(prompt, NEWS_SCHEMA)
 
 
@@ -304,7 +310,9 @@ def macro_prompt(positions, heads):
         "plain Arabic summary; and effects: one entry per position it really affects (k = position number), whether "
         "it pushes that position's stock in the trade's favour (with) or against it (against), whether strongly or "
         "weakly, and why_ar: a very short Arabic reason (a few words). Leave effects empty if no position is really "
-        "affected. Do not guess beyond the headline.\n\nHeadlines:\n" + lines)
+        "affected. Do not guess beyond the headline." + CALIBRATION +
+        ' Use "strong" only when the headline describes something that directly hits that company\'s own business '
+        "or sector now; indirect, speculative or market-wide mood effects are weak.\n\nHeadlines:\n" + lines)
 
 
 def classify_macro(positions, heads):
@@ -337,7 +345,7 @@ def macro_rows(c, positions, last_f, n):
         p = positions[e["k"]]
         f = last_f.get(p["id"]) or facts(p, n, None, None)
         strong, high = e["strength"] == "strong", c["importance"] == "high"
-        imp = "high" if (strong and high) else ("medium" if (strong or high) else "low")   # low = تأثير محدود
+        imp = ("high" if high else "medium") if strong else "low"   # التأثير الجزئي = «أبقِ وراقب» دائماً
         rows.append((p, e, f, advice(f, {"news": e["impact"], "importance": imp})))
     return rows
 
@@ -370,10 +378,14 @@ def check_macro(positions, last_f, n, state, start):
         if not rows:
             continue
         head = fresh[c["i"]]
-        if send(macro_message(c, head, rows, n)):
-            sent += 1
-        for p, e, f, adv in rows:
-            log_row(n, p, "macro", f"{e['impact']}/{e['strength']}/{c['importance']}: {head[1]}", f, adv)
+        loud = c["importance"] == "high" or any(e["strength"] == "strong" for _, e, _, _ in rows)
+        if loud:
+            shown = rows if c["importance"] == "high" else [r for r in rows if r[1]["strength"] == "strong"]
+            if send(macro_message(c, head, shown, n)):
+                sent += 1
+        for p, e, f, adv in rows:                  # كل شيء يُسجَّل للمراجعة، المرسل وغير المرسل
+            log_row(n, p, "macro" if loud else "macro_quiet",
+                    f"{e['impact']}/{e['strength']}/{c['importance']}: {head[1]}", f, adv)
     return sent
 
 
