@@ -1,0 +1,25 @@
+{
+ "seen": {
+  "BAC:PUT": [],
+  "AMZN:CALL": [],
+  "WMT:CALL": [],
+  "UBER:PUT": [],
+  "DIS:CALL": [],
+  "NFLX:PUT": []
+ },
+ "fired": {
+  "BAC:PUT:2026-10-30:51": [],
+  "AMZN:CALL:2026-10-26:270": [
+   "down-0.15"
+  ],
+  "WMT:CALL:2026-10-30:120": [
+   "down-0.15"
+  ],
+  "UBER:PUT:2026-10-30:68": [],
+  "DIS:CALL:2026-10-30:112": [],
+  "NFLX:PUT:2026-10-30:65": []
+ },
+ "stock_level": {},
+ "seen_macro": [],
+ "sharp": {}
+}
