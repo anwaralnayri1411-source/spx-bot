@@ -230,7 +230,7 @@ def ask_claude(prompt, schema):
         return None
     import anthropic
     try:
-        client = anthropic.Anthropic()
+        client = anthropic.Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY", "").strip(), timeout=60.0)
         resp = client.messages.create(
             model=MODEL, max_tokens=6000,
             output_config={"effort": "low", "format": {"type": "json_schema", "schema": schema}},
@@ -241,8 +241,9 @@ def ask_claude(prompt, schema):
     except anthropic.APIStatusError as e:
         print(f"Claude: خطأ {e.status_code}: {e.message}")
         return None
-    except anthropic.APIConnectionError:
-        print("Claude: خطأ اتصال.")
+    except anthropic.APIConnectionError as e:
+        cause = e.__cause__ or e
+        print(f"Claude: خطأ اتصال: {type(cause).__name__}: {str(cause)[:200]}")
         return None
     if resp.stop_reason in ("refusal", "max_tokens"):
         print("Claude: لم يكتمل الرد:", resp.stop_reason)
@@ -422,6 +423,8 @@ def advice(f, event):
         exit_r.insert(0, f"العقد تجاوز الوقف ({pnl * 100:+.0f}%)")
     elif pnl is not None and pnl <= -0.30 and not exit_r:
         think_r.append(f"العقد خسر {abs(pnl) * 100:.0f}% (الوقف عند −40%)")
+    elif pnl is not None and pnl <= -0.15:
+        hold_r.append(f"الفكرة قائمة لكن العقد {pnl * 100:+.0f}%؛ التزم بالوقف عند −40%")
     if pnl is not None and pnl >= 0.25 and (exit_r or think_r):
         return "فكّر بالخروج", ["احمِ ربحك الحالي"] + (exit_r + think_r)[:1]
     if exit_r:
