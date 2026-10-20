@@ -11,6 +11,9 @@
     والوقت (يومان أو أقل والسهم بعيد عن التعادل، وصباح يوم الانتهاء).
   - كل 5 دقائق: أخبار Google News الجديدة للسهم (وللنفط/البتكوين إن كان محرّكه). كل خبر جديد يقرؤه Claude Haiku 5.5
     مع تفاصيل العقد: أثره على الشركة، ومع العقد أم ضده، وأهميته، وملخص عربي. الأهمية المتوسطة والعالية تُرسل فوراً.
+  - كل 10 دقائق: أخبار السوق الكبرى (الرسوم والصين، الفيدرالي والفائدة، التضخم والوظائف، الجيوسياسة، وول ستريت اليوم).
+    يقرؤها Claude مع قائمة كل العقود المفتوحة ويحكم: أي عقد يتأثر، ومعه أم ضده، وبقوة أم جزئياً. خبر الشركة وحده لا يكفي:
+    خبر سوق كبير قد يعكس سهماً أرباحه ممتازة. لكل خبر سوق مهم رسالة واحدة فيها كل العقود المتأثرة ونصيحة لكل عقد.
 بلا حد زمني للرسائل؛ لكن كل حدث يُرسل مرة واحدة فقط (كل خبر، وكل مرحلة).
 «قراءتي» قاعدة ثابتة وواضحة (أبقِ / فكّر بالخروج / الأفضل الخروج) وليست ضماناً. كل رسالة تُسجَّل في stocks_watcher_log.csv للمراجعة.
 
@@ -54,6 +57,9 @@ STOCK_STEP = 0.01          # كل 1% إضافي ضدك منذ الدخول
 STEPS_DOWN = (-0.15, -0.30)
 STEPS_UP = (0.25,)
 DRIVER_MOVE = 0.02
+MACRO_EVERY_MIN = 10       # أخبار السوق الكبرى
+MACRO_QUERIES = ("stock market today Wall Street", "Trump tariffs China trade", "Federal Reserve interest rates",
+                 "inflation CPI jobs report economy", "geopolitical tensions markets oil")
 NEWS_LOOKBACK_MIN = 60     # عند بدء التشغيل: لا نرسل أخباراً أقدم من ساعة (ولا أقدم من الدخول)
 LOG_COLS = ["time", "pos_id", "ticker", "side", "event", "detail", "entry", "val", "pnl", "spot", "need", "tdays",
             "advice", "reasons"]
@@ -202,7 +208,6 @@ def classify(p, name, heads, driver_label=None):
     """يرجع قائمة تقييمات لكل عنوان، أو None إن تعذّر (لا مفتاح أو خطأ)."""
     if not os.getenv("ANTHROPIC_API_KEY") or not heads:
         return None
-    import anthropic
     side = p["side"]
     lines = "\n".join(f"{i}. [{src}] {title}" for i, (_, title, src) in enumerate(heads))
     prompt = (
@@ -216,11 +221,19 @@ def classify(p, name, heads, driver_label=None):
         "news that can move the stock; high: material — earnings, guidance, regulation, lawsuits, big contracts, "
         "analyst rating changes by major banks, sharp moves in the driver). Write summary_ar as one short, plain "
         "Arabic sentence a retail trader understands. Do not guess beyond the headline.\n\nHeadlines:\n" + lines)
+    return ask_claude(prompt, NEWS_SCHEMA)
+
+
+def ask_claude(prompt, schema):
+    """طلب واحد إلى Claude بإخراج JSON مقيّد بالمخطط. يرجع قائمة items أو None عند أي فشل."""
+    if not os.getenv("ANTHROPIC_API_KEY"):
+        return None
+    import anthropic
     try:
         client = anthropic.Anthropic()
         resp = client.messages.create(
-            model=MODEL, max_tokens=4000,
-            output_config={"effort": "low", "format": {"type": "json_schema", "schema": NEWS_SCHEMA}},
+            model=MODEL, max_tokens=6000,
+            output_config={"effort": "low", "format": {"type": "json_schema", "schema": schema}},
             messages=[{"role": "user", "content": prompt}])
     except anthropic.RateLimitError:
         print("Claude: حد الطلبات، نعيد لاحقاً.")
@@ -240,6 +253,121 @@ def classify(p, name, heads, driver_label=None):
     except Exception as e:
         print("Claude: رد غير مفهوم:", e)
         return None
+
+
+MACRO_SCHEMA = {
+    "type": "object",
+    "properties": {"items": {"type": "array", "items": {
+        "type": "object",
+        "properties": {
+            "i": {"type": "integer"},
+            "importance": {"type": "string", "enum": ["low", "medium", "high"]},
+            "summary_ar": {"type": "string"},
+            "effects": {"type": "array", "items": {
+                "type": "object",
+                "properties": {
+                    "k": {"type": "integer"},
+                    "impact": {"type": "string", "enum": ["with", "against", "none"]},
+                    "strength": {"type": "string", "enum": ["weak", "strong"]},
+                    "why_ar": {"type": "string"},
+                },
+                "required": ["k", "impact", "strength", "why_ar"],
+                "additionalProperties": False}},
+        },
+        "required": ["i", "importance", "summary_ar", "effects"],
+        "additionalProperties": False}}},
+    "required": ["items"],
+    "additionalProperties": False,
+}
+
+
+def macro_prompt(positions, heads):
+    book = "\n".join(f"{k}. {p['ticker']} ({sb.WATCHLIST.get(p['ticker'], (p['ticker'],))[0]}) {p['side']} option, "
+                     f"gains if the stock goes {'UP' if p['side'] == 'CALL' else 'DOWN'}"
+                     for k, p in enumerate(positions))
+    lines = "\n".join(f"{i}. [{src}] {title}" for i, (_, title, src) in enumerate(heads))
+    return (
+        "You are watching market-wide news for a trader's open options positions. Company news can be overwhelmed by "
+        "macro news (for example, new China tariffs can sink a stock right after strong earnings), so judge each "
+        "headline's effect on EACH position, using what you know about each company's business, sector, supply "
+        "chain and sensitivity to rates, trade, consumers, energy and risk appetite.\n\nOpen positions:\n" + book +
+        "\n\nFor each headline give: importance for US stock prices in the next few days (low: routine, opinion, "
+        "recycled, listicles; medium: real macro news; high: market-moving, such as new tariffs or trade measures, "
+        "Fed decisions or surprises, major data surprises, war or escalation, big index sell-offs); a one-sentence "
+        "plain Arabic summary; and effects: one entry per position it really affects (k = position number), whether "
+        "it pushes that position's stock in the trade's favour (with) or against it (against), whether strongly or "
+        "weakly, and why_ar: a very short Arabic reason (a few words). Leave effects empty if no position is really "
+        "affected. Do not guess beyond the headline.\n\nHeadlines:\n" + lines)
+
+
+def classify_macro(positions, heads):
+    """أخبار السوق الكبرى مقابل كل العقود المفتوحة في طلب واحد. None عند الفشل."""
+    if not os.getenv("ANTHROPIC_API_KEY") or not heads or not positions:
+        return None
+    return ask_claude(macro_prompt(positions, heads), MACRO_SCHEMA)
+
+
+def macro_message(c, head, rows, n):
+    imp = {"medium": "متوسطة", "high": "عالية"}[c["importance"]]
+    L = [f"🌐 <b>خبر سوق مهم</b> (أهمية {imp}) #متابعة",
+         f"📰 {ob.esc(c['summary_ar'])}", f"<i>{ob.esc(head[1][:160])}</i>", ""]
+    for p, e, f, adv in rows:
+        tag = ("في صالح عقدك ✅" if e["impact"] == "with" else
+               ("ضد عقدك بقوة ⚠️" if e["strength"] == "strong" else "ضد عقدك جزئياً"))
+        pl = f" | {f['pnl'] * 100:+.0f}%" if f.get("pnl") is not None else ""
+        L.append(f"{ICON[adv[0]]} <b>{ob.esc(p['ticker'])} {p['side']}</b> {p['strike']:,.1f}: {tag}{pl}"
+                 f" ({ob.esc(e['why_ar'])})")
+        L.append(f"   💡 <b>قراءتي: {adv[0]}.</b> " + "، ".join(adv[1][:2]) + ".")
+    L.append(f"⚠️ القرار قرارك | 🕒 {n.astimezone(ob.RY).strftime('%H:%M')} الرياض")
+    return "\n".join(L)
+
+
+def macro_rows(c, positions, last_f, n):
+    rows = []
+    for e in c["effects"]:
+        if e["impact"] == "none" or not (0 <= e["k"] < len(positions)):
+            continue
+        p = positions[e["k"]]
+        f = last_f.get(p["id"]) or facts(p, n, None, None)
+        strong, high = e["strength"] == "strong", c["importance"] == "high"
+        imp = "high" if (strong and high) else ("medium" if (strong or high) else "low")   # low = تأثير محدود
+        rows.append((p, e, f, advice(f, {"news": e["impact"], "importance": imp})))
+    return rows
+
+
+def check_macro(positions, last_f, n, state, start):
+    """كل 10 دقائق: أخبار السوق الجديدة، ورسالة لكل خبر مهم يمس عقداً واحداً على الأقل. يرجع عدد الرسائل."""
+    since = start.astimezone(timezone.utc) - timedelta(minutes=NEWS_LOOKBACK_MIN)
+    seen = state.setdefault("seen_macro", [])
+    fresh, keys = [], set()
+    for q in MACRO_QUERIES:
+        for h in rss(q, since):
+            k = news_key(h[1])
+            if k and k not in seen and k not in keys:
+                keys.add(k)
+                fresh.append(h)
+    fresh = sorted(fresh)[-25:]
+    if not fresh or not positions:
+        return 0
+    cls = classify_macro(positions, fresh)
+    if cls is None:                               # لا نعلّم الأخبار «مقروءة» إلا إذا قُرئت فعلاً
+        return 0
+    for h in fresh:
+        seen.append(news_key(h[1]))
+    del seen[:-600]
+    sent = 0
+    for c in cls:
+        if c["importance"] == "low" or not (0 <= c["i"] < len(fresh)):
+            continue
+        rows = macro_rows(c, positions, last_f, n)
+        if not rows:
+            continue
+        head = fresh[c["i"]]
+        if send(macro_message(c, head, rows, n)):
+            sent += 1
+        for p, e, f, adv in rows:
+            log_row(n, p, "macro", f"{e['impact']}/{e['strength']}/{c['importance']}: {head[1]}", f, adv)
+    return sent
 
 
 # ============================ التقييم والنصيحة ============================
@@ -274,6 +402,8 @@ def advice(f, event):
     pnl, need, prob, td = f["pnl"], f["need"], f["prob"], f["tdays"]
     if event.get("news") == "against" and event.get("importance") == "high":
         exit_r.append("خبر مهم ضد العقد")
+    elif event.get("news") == "against" and event.get("importance") == "low":
+        hold_r.append("خبر ضد العقد لكن تأثيره محدود، راقب")
     elif event.get("news") == "against":
         think_r.append("خبر ضد العقد")
     if event.get("news") == "with":
@@ -524,7 +654,7 @@ def loop(once=False, now_fn=None):
         print("لا جلسة اليوم.")
         return
     state = load_state()
-    hist, positions, slow_t, cache = {}, [], None, {}
+    hist, positions, slow_t, cache, macro_t, last_f = {}, [], None, {}, None, {}
     minutes = errors = sent = 0
     last_err, beat = "", start
     while True:
@@ -549,6 +679,8 @@ def loop(once=False, now_fn=None):
                 for p in positions:
                     spot = px.get(p["ticker"])
                     slow = slow_inputs(p, n, state, spot, cache, start) if slow_due else None
+                    if slow:
+                        last_f[p["id"]] = slow["f"]
                     events = []
                     check_position(p, n, state, spot, hist.get(p["ticker"]), slow, events)
                     if not events:
@@ -560,6 +692,9 @@ def loop(once=False, now_fn=None):
                         sent += 1
                     for kind, detail, _, _ in events:
                         log_row(n, p, kind, detail, f, adv)
+                if positions and (macro_t is None or (n - macro_t).total_seconds() >= MACRO_EVERY_MIN * 60):
+                    sent += check_macro(positions, last_f, n, state, start)
+                    macro_t = n
                 if slow_due:
                     slow_t = n
                     live_ids = {p["id"] for p in positions}
