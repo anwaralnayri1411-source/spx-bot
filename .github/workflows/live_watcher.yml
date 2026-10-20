@@ -26,10 +26,14 @@ jobs:
         with:
           python-version: "3.12"
       - run: pip install yfinance pandas requests numpy
+      - name: Sync to latest
+        # التشغيل المجدول يبدأ من نسخة وقت الجدولة؛ نأخذ آخر نسخة حتى لا تتصادم سجلاتنا مع حفظ تشغيل سابق
+        run: git pull --rebase
       - name: Watch every minute until close
         env:
           ALPACA_KEY: ${{ secrets.ALPACA_KEY }}
           ALPACA_SECRET: ${{ secrets.ALPACA_SECRET }}
+          PYTHONUNBUFFERED: "1"
         run: python research/live_watcher.py
       - name: Report and save
         if: always()
@@ -39,4 +43,4 @@ jobs:
           for f in live_watcher_state.json live_watcher_signals.csv live_watcher_edges.csv live_watcher_runs.csv live_watcher_health.json research/live_watcher_results.md; do git add "$f" 2>/dev/null || true; done
           git diff --cached --quiet && exit 0
           git commit -m "live watcher log"
-          for i in 1 2 3 4 5; do git pull --rebase && git push && break; sleep 5; done
+          for i in 1 2 3 4 5; do if git pull --rebase; then git push && break; else git rebase --abort; fi; sleep 5; done

@@ -267,7 +267,11 @@ def checkpoint(start, minutes, errors, last_err, final=False):
             return
         sh("git", "commit", "-m", "live watcher heartbeat")
         for _ in range(4):
-            if sh("git", "pull", "--rebase").returncode == 0 and sh("git", "push").returncode == 0:
+            p = sh("git", "pull", "--rebase")
+            if p.returncode != 0:
+                sh("git", "rebase", "--abort")          # لا نترك المستودع في منتصف إعادة ترتيب أبداً
+                print("pull فشل:", (p.stderr or p.stdout).strip()[:200])
+            elif sh("git", "push").returncode == 0:
                 print(f"نبضة محفوظة {h['now']}: {minutes} دقيقة، {errors} أخطاء")
                 return
             time.sleep(5)
