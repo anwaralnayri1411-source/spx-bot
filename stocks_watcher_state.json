@@ -6,7 +6,8 @@
   "AMZN:CALL": [],
   "WMT:CALL": [
    "walmart slashes membership fees with this new bundle",
-   "costco stock cost flat as walmart takes aim at 1 trillion 2026 holiday sales"
+   "costco stock cost flat as walmart takes aim at 1 trillion 2026 holiday sales",
+   "dick s pays a higher dividend yield than walmart is it worth the risk"
   ],
   "UBER:PUT": [],
   "DIS:CALL": [
@@ -15,9 +16,15 @@
   "NFLX:PUT": [
    "djt stock plummets to new lows trump appeal fades as 2026 midterms draw closer",
    "skydance rises 5 as steep post merger slide pauses disney gains 2 netflix slips",
-   "netflix inc nflx stock prime capital investment advisors llc lowers holdings"
+   "netflix inc nflx stock prime capital investment advisors llc lowers holdings",
+   "netflix hinges at a key support zone as earnings approach",
+   "traders are betting netflix s stock drama may be coming to an end",
+   "netflix q3 2026 earnings live updates of nflx earnings call stock forecast"
   ],
-  "AVGO:PUT": []
+  "AVGO:PUT": [
+   "3 artificial intelligence ai stocks that look like great buys right now"
+  ],
+  "V:CALL": []
  },
  "fired": {
   "BAC:PUT:2026-10-30:51": [],
@@ -34,7 +41,8 @@
    "news:skydance rises 5 as steep post merger slide pauses disney gains 2 netflix slips"
   ],
   "NFLX:PUT:2026-10-30:65": [],
-  "AVGO:PUT:2026-10-23:325": []
+  "AVGO:PUT:2026-10-23:325": [],
+  "V:CALL:2026-10-23:412.5": []
  },
  "stock_level": {},
  "seen_macro": [
@@ -50,7 +58,12 @@
   "asx set to climb as wal street rises a over us70c",
   "oil prices slip from five month high as iran pakistan discuss peace efforts",
   "trade rep greer tours ti s lehi utah chip plant",
-  "asx set to climb as wall street rises a over us70c"
+  "asx set to climb as wall street rises a over us70c",
+  "we asked chrystia freeland how canada should handle trump s trade threats here s her advice",
+  "bitgo research finds bitcoin s cpi reaction strengthens",
+  "the era of stocks being the only viable investment option has ended baird strategas",
+  "experts warn of interest rate hike new mortgages could cost buyers thousands more",
+  "no canada u s trade deal expected before american midterm elections sources"
  ],
  "sharp": {}
 }
