@@ -2,7 +2,8 @@
 """مراقب عقود الشركات اللحظي: متابعة مستمرة طوال الجلسة، ورسالة فورية عند أي حدث مهم مع «قراءتي» ونصيحة واضحة.
 
 لا يغيّر التوصيات، ولا يكتب على ملفات بوت الشركات (يقرأ stocks_positions.json وstocks_mine.json فقط).
-المرحلة الأولى: الرسائل تصل إلى TELEGRAM_CHAT_ID وحده (لا TELEGRAM_EXTRA_CHAT_IDS) حتى يوافق المستخدم.
+الرسائل تصل إلى TELEGRAM_CHAT_ID وإلى من أضافهم المستخدم في TELEGRAM_EXTRA_CHAT_IDS (بموافقته في 20/10).
+وسم «🛒 عقدك» يخص صاحب الحساب، فلا يظهر في نسخ المشاهدين.
 
 ماذا يراقب (مهمة GitHub طويلة تدور كل دقيقة، مثل research/live_watcher.py):
   - كل دقيقة: سعر السهم لحظياً من Alpaca (IEX)، ومنه: حركة حادة ضدك خلال 15 دقيقة، وكل 1% إضافي ضدك منذ الدخول.
@@ -469,8 +470,18 @@ def message(p, f, event_lines, adv, n):
     return "\n".join(L)
 
 
+def _post(tok, chat, text):
+    r = requests.post(f"https://api.telegram.org/bot{tok}/sendMessage",
+                      data={"chat_id": chat, "text": text, "parse_mode": "HTML", "disable_web_page_preview": True},
+                      timeout=20)
+    if not r.ok:
+        print("تليجرام:", r.text[:200])
+    return r.ok
+
+
 def send(text):
-    """إلى TELEGRAM_CHAT_ID وحده (مرحلة تجريبية). لا يستخدم دوال الإرسال المشتركة."""
+    """إلى TELEGRAM_CHAT_ID، ونسخة لكل من في TELEGRAM_EXTRA_CHAT_IDS (فشل أحدهم لا يؤثر على غيره).
+    لا يستخدم دوال الإرسال المشتركة."""
     try:
         with open(MSGS, "a", encoding="utf-8") as fh:
             fh.write(json.dumps({"t": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S"), "text": text},
@@ -482,15 +493,18 @@ def send(text):
         print("[بلا إرسال]\n" + text + "\n")
         return False
     try:
-        r = requests.post(f"https://api.telegram.org/bot{tok}/sendMessage",
-                          data={"chat_id": chat, "text": text, "parse_mode": "HTML", "disable_web_page_preview": True},
-                          timeout=20)
-        if not r.ok:
-            print("تليجرام:", r.text[:200])
-        return r.ok
+        ok = _post(tok, chat, text)
     except Exception as e:
         print("تليجرام:", e)
-        return False
+        ok = False
+    extra = [x.strip() for x in (os.getenv("TELEGRAM_EXTRA_CHAT_IDS") or "").replace(";", ",").split(",") if x.strip()]
+    copy = text.replace(" | 🛒 عقدك", "")
+    for cid in extra:
+        try:
+            _post(tok, cid, copy)
+        except Exception as e:
+            print("تعذر إرسال نسخة لمشاهد:", type(e).__name__)
+    return ok
 
 
 def log_row(n, p, event, detail, f, adv):

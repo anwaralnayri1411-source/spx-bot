@@ -1,6 +1,6 @@
 name: Stocks Watcher
 # مراقب عقود الشركات اللحظي: مهمة طويلة تفحص كل دقيقة وترسل متابعة فورية عند أي حدث (خبر، حركة حادة، مرحلة خسارة/ربح،
-# المحرّك، الوقت) مع «قراءتي». الرسائل إلى TELEGRAM_CHAT_ID وحده في المرحلة الأولى. لا يعدّل ملفات بوت الشركات.
+# المحرّك، الوقت) مع «قراءتي». الرسائل إلى TELEGRAM_CHAT_ID ومن في TELEGRAM_EXTRA_CHAT_IDS. لا يعدّل ملفات بوت الشركات.
 # مهمتان في اليوم (حد GitHub 6 ساعات للمهمة) تعملان بالتتابع عبر concurrency، والكود ينهي عند 16:00 نيويورك أو بعد ~5:45 ساعة.
 on:
   schedule:
@@ -28,6 +28,7 @@ jobs:
         env:
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          TELEGRAM_EXTRA_CHAT_IDS: ${{ secrets.TELEGRAM_EXTRA_CHAT_IDS }}
           ALPACA_KEY: ${{ secrets.ALPACA_KEY }}
           ALPACA_SECRET: ${{ secrets.ALPACA_SECRET }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
