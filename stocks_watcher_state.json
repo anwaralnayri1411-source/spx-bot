@@ -5,7 +5,8 @@
   "WMT:CALL": [],
   "UBER:PUT": [],
   "DIS:CALL": [],
-  "NFLX:PUT": []
+  "NFLX:PUT": [],
+  "AVGO:PUT": []
  },
  "fired": {
   "BAC:PUT:2026-10-30:51": [],
@@ -17,7 +18,8 @@
   ],
   "UBER:PUT:2026-10-30:68": [],
   "DIS:CALL:2026-10-30:112": [],
-  "NFLX:PUT:2026-10-30:65": []
+  "NFLX:PUT:2026-10-30:65": [],
+  "AVGO:PUT:2026-10-23:325": []
  },
  "stock_level": {},
  "seen_macro": [],
