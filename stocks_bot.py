@@ -634,8 +634,43 @@ def add_position(P, n, idea, spy_px):
         return                                   # لا نضاعف عقداً ما زال مفتوحاً
     if same:
         p["id"] = f"{p['id']}@{n.date().isoformat()}"   # نفس العقد بعد إقفاله: صفقة جديدة
+    _live_entry_stock(p)
     P["positions"].append(p)
     P["dirty"] = True
+
+
+# ---- ظل البيانات اللحظية (Alpaca) لبوت الشركات: تسجيل فقط، لا يغيّر أي سعر أو تنبيه. المفتاح LIVE_QUOTES_STOCKS ----
+def _live_entry_stock(p):
+    """يحفظ سعر الطلب اللحظي لحظة التوصية في entry_live (للمقارنة فقط؛ الحسابات ما زالت على entry)."""
+    try:
+        import live_quotes as lq
+        if lq.mode("STOCKS") == "0":
+            return
+        q = lq.quote(lq.occ(p["ticker"], p["exp"], p["side"], p["strike"]))
+        if q["status"] == "ok":
+            p["entry_live"] = round(q["ask"], 2)
+    except Exception as e:
+        print("تعذر جلب سعر الدخول اللحظي:", e)
+
+
+def _live_shadow_stock(p, q):
+    """يسجّل سعر Alpaca بجانب سعر ياهو لكل متابعة في ملف خاص ببوت الشركات. لا يرجع شيئاً ولا يغيّر p."""
+    try:
+        import live_quotes as lq
+        if lq.mode("STOCKS") == "0":
+            return
+        c = lq.occ(p["ticker"], p["exp"], p["side"], p["strike"])
+        z = lq.quote(c)
+        yv, el = (q["val"] if q else None), p.get("entry_live")
+        lq.log({"time": ob.now_ny().isoformat(timespec="minutes"), "project": "STOCKS", "id": p["id"], "contract": c,
+                "yahoo_val": yv if yv is not None else "", "alpaca_bid": z["bid"] or "", "alpaca_ask": z["ask"] or "",
+                "age_s": "" if z["age"] is None else round(z["age"]), "status": z["status"],
+                "entry": p["entry"], "entry_live": el or "",
+                "pnl_yahoo": round(yv / p["entry"] - 1, 3) if yv else "",
+                "pnl_live": round(z["bid"] / el - 1, 3) if (el and z["bid"] and z["status"] == "ok") else ""},
+               path=lq.LOG_STOCKS)
+    except Exception as e:
+        print("تعذر تسجيل السعر اللحظي:", e)
 
 
 def spot_now(t):
@@ -1052,6 +1087,8 @@ def do_monitor(n, force, P):
                 tickers[tk] = (t, spot_now(t))
             t, spot = tickers[tk]
             q = contract_quote(t, p, cache)
+            if not force:
+                _live_shadow_stock(p, q)      # ظل لحظي: تسجيل فقط
             if q is None:
                 print("لا سعر حالياً للعقد", p["id"])
                 continue

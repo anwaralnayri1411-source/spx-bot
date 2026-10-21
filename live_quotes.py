@@ -72,10 +72,13 @@ def quote(contract):
         return {"bid": None, "ask": None, "age": None, "status": f"error:{type(e).__name__}"}
 
 
-def log(row):
+LOG_STOCKS = "live_quotes_stocks_log.csv"   # ملف منفصل لبوت الشركات: سير عمل مختلف، فلا يتصادم الحفظ
+
+
+def log(row, path=LOG):
     try:
-        new = not os.path.exists(LOG)
-        with open(LOG, "a", encoding="utf-8", newline="") as f:
+        new = not os.path.exists(path)
+        with open(path, "a", encoding="utf-8", newline="") as f:
             w = csv.DictWriter(f, fieldnames=LOG_COLS)
             if new:
                 w.writeheader()

@@ -25,6 +25,9 @@ jobs:
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           TELEGRAM_EXTRA_CHAT_IDS: ${{ secrets.TELEGRAM_EXTRA_CHAT_IDS }}
           FORCE: ${{ github.event_name == 'workflow_dispatch' && '1' || '0' }}
+          ALPACA_KEY: ${{ secrets.ALPACA_KEY }}
+          ALPACA_SECRET: ${{ secrets.ALPACA_SECRET }}
+          LIVE_QUOTES_STOCKS: ${{ vars.LIVE_QUOTES_STOCKS || 'shadow' }}   # ظل لحظي: shadow تسجيل فقط، 0 إيقاف
           # كل التشغيلات بوضع scan (بحث + متابعة). هذا هو السلوك الذي أنتج نتائج الشركات حتى 17/10.
           # لجعل تشغيلات نصف الساعة متابعة فقط: 'monitor' عند github.event.schedule == '12,42 13-21 * * 1-5'
           BOT_MODE: scan
@@ -39,4 +42,5 @@ jobs:
           git add stocks_positions.json || true
           git add stocks_shadow_log.csv || true
           git add stocks_flow_log.csv || true
+          git add live_quotes_stocks_log.csv 2>/dev/null || true
           git diff --cached --quiet || (git commit -m "update stocks state" && (git pull --rebase && git push || (sleep 5 && git pull --rebase && git push)))
