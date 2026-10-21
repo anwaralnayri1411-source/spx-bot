@@ -1,0 +1,25 @@
+name: Ladder Exit Backtest
+# اختبار تاريخي يدوي: خروج بأهداف متدرجة مع رفع الوقف مقابل +50% على إشارات backtest_spx_v2 (تسعير نظري). لا يلمس البوت.
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: ladder-backtest
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install yfinance pandas numpy requests
+      - run: python research/backtest_ladder_exit.py
+      - name: Save results
+        run: |
+          git config user.name "bot"; git config user.email "bot@users.noreply.github.com"
+          git add research/backtest_ladder_exit_results.md || true
+          git diff --cached --quiet && exit 0
+          git commit -m "ladder exit backtest results"
+          for i in 1 2 3 4 5; do if git pull --rebase; then git push && break; else git rebase --abort; fi; sleep 5; done
