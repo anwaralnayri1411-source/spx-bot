@@ -4,7 +4,8 @@
    "bank of america corporation bac stock bank pictet cie europe ag decreases position",
    "bank of america nyse bac share price forecast analysis",
    "bank of america bac is its wealth business more valuable than the headline bank suggests",
-   "bank of america bac stock analysis 2026 graphs risks opportunities valuation fbi ilygklk07z"
+   "bank of america bac stock analysis 2026 graphs risks opportunities valuation fbi ilygklk07z",
+   "bac class action notice bank of america sued for securities fraud after 1 2 billion aml and sanctions penalties investor"
   ],
   "AMZN:CALL": [
    "starting jan 1 2027 amazon seasonal workers get day one health coverage if they work at least 30 hours a week",
@@ -29,7 +30,9 @@
    "uber uber trades at a discount as robotaxi investments grow",
    "td cowen maintains uber technologies uber us with buy rating maintains target price 118",
    "every woman s worst nightmare after seattle drinker 25 got into car whose driver said it was her uber only to realize as",
-   "uber stock guggenheim keeps usd 125 00 target for uber stock"
+   "uber stock guggenheim keeps usd 125 00 target for uber stock",
+   "unusually heavy options trading in uber ahead of earnings are investors bullish on uber",
+   "tt blk trgp googl amat aapl anet txg adi jpm dash uri asml cost v lly gd uber dell dxcm panw meta nvda ceg snow pwr incy"
   ],
   "DIS:CALL": [
    "skydance rises 5 as steep post merger slide pauses disney gains 2 netflix slips",
@@ -111,22 +114,6 @@
   "UBER:PUT:2026-10-30:68": [
    "news:td cowen maintains uber technologies uber us with buy rating maintains target price 118"
   ],
-  "NFLX:PUT:2026-10-30:65": [
-   "news:nflx stock falls below 70 as netflix q4 earnings and revenue targets raise the bar",
-   "down-0.15",
-   "down-0.3",
-   "news:netflix stock sinks as wall street lowers price targets after streamer s q3 earnings and q4 revenue forecast miss",
-   "news:bank of america has lowered expectations for netflix nasdaq nflx stock price",
-   "news:nflx stock on track for 26 month low after needham downgrade analyst says content problem seems clear",
-   "news:netflix nasdaq nflx stock price target lowered at guggenheim",
-   "sharp@2026-10-21T09:47-04:00",
-   "sharp@2026-10-21T09:57-04:00",
-   "news:netflix stock slips as weak guidance and downgrades hit",
-   "news:nflx stock heads for 26 month low after needham downgrade wall street price target cuts youtube threat grows content pro",
-   "news:netflix stock sinks as wall street lowers price targets following q4 revenue forecast miss",
-   "news:netflix stock slammed with price target cuts after q3 report",
-   "news:netflix nasdaq nflx stock price target lowered at jpmorgan chase co"
-  ],
   "PLTR:CALL:2026-10-30:210": [
    "news:pltr stock rebounds to 200 as palantir technologies partners with knox systems for federal software"
   ],
@@ -207,7 +194,5 @@
   "why is us stock market up today dow jones gains 200 points s p 500 rises 0 51 nasdaq climbs 1 04 as spacex rally ai dema",
   "nasdaq rises 0 6 as ai hardware gains divide wall street"
  ],
- "sharp": {
-  "NFLX:PUT:2026-10-30:65": 67.055
- }
+ "sharp": {}
 }
