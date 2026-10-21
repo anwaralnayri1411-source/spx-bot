@@ -20,9 +20,9 @@
    "rule_time": "12:16",
    "rule_pnl": 0.539,
    "peak_pnl": 1.586,
-   "close_pnl": 0.977,
+   "close_pnl": 0.688,
    "stale_quotes": 0,
-   "quotes": 10
+   "quotes": 11
   },
   {
    "date": "2026-10-21",
@@ -43,9 +43,9 @@
    "rule_time": "12:16",
    "rule_pnl": 0.585,
    "peak_pnl": 1.902,
-   "close_pnl": 1.037,
+   "close_pnl": 0.488,
    "stale_quotes": 0,
-   "quotes": 10
+   "quotes": 11
   },
   {
    "date": "2026-10-21",
@@ -66,9 +66,9 @@
    "rule_time": "12:16",
    "rule_pnl": 0.585,
    "peak_pnl": 1.902,
-   "close_pnl": 1.037,
+   "close_pnl": 0.488,
    "stale_quotes": 0,
-   "quotes": 10
+   "quotes": 11
   },
   {
    "date": "2026-10-21",
@@ -90,8 +90,8 @@
    "rule_pnl": -0.968,
    "peak_pnl": 0.0,
    "close_pnl": -0.968,
-   "stale_quotes": 1,
-   "quotes": 3
+   "stale_quotes": 2,
+   "quotes": 4
   },
   {
    "date": "2026-10-21",
@@ -113,8 +113,8 @@
    "rule_pnl": -0.955,
    "peak_pnl": 0.0,
    "close_pnl": -0.985,
-   "stale_quotes": 1,
-   "quotes": 3
+   "stale_quotes": 2,
+   "quotes": 4
   },
   {
    "date": "2026-10-21",
@@ -135,9 +135,9 @@
    "rule_time": "15:19",
    "rule_pnl": -0.857,
    "peak_pnl": 0.0,
-   "close_pnl": -0.914,
-   "stale_quotes": 1,
-   "quotes": 3
+   "close_pnl": -0.857,
+   "stale_quotes": 2,
+   "quotes": 4
   }
  ]
 }
