@@ -31,7 +31,8 @@
    "no breakout hit and an ad shortfall what netflix needs to prove next",
    "netflix has lost nearly half its value in a year",
    "netflix has 2 problems behind the stock slide and they aren t youtube co ceo ted sarandos says",
-   "netflix sinks 7 as soft q4 outlook sparks wave of price target cuts spotify slips disney holds steady"
+   "netflix sinks 7 as soft q4 outlook sparks wave of price target cuts spotify slips disney holds steady",
+   "netflix nflx can local language hits improve returns on content spending"
   ],
   "NFLX:PUT": [
    "djt stock plummets to new lows trump appeal fades as 2026 midterms draw closer",
@@ -54,7 +55,8 @@
    "netflix stock slips as weak guidance and downgrades hit",
    "nflx stock heads for 26 month low after needham downgrade wall street price target cuts youtube threat grows content pro",
    "netflix stock sinks as wall street lowers price targets following q4 revenue forecast miss",
-   "netflix stock drops over 6 following expected revenue numbers"
+   "netflix stock drops over 6 following expected revenue numbers",
+   "netflix nflx can local language hits improve returns on content spending"
   ],
   "AVGO:PUT": [
    "3 artificial intelligence ai stocks that look like great buys right now",
@@ -70,8 +72,10 @@
    "visa starts ai agent pilot for business payments adds fraud prevention tools",
    "visa inc announces enhanced capabilities across commercial card growth virtual card security and agentic commerce for co",
    "wall street analysts think vistra vst is a good investment is it",
-   "swiping to record highs why visa remains a fortress"
-  ]
+   "swiping to record highs why visa remains a fortress",
+   "ibm stock price forecast pulls back to 240 ahead of earnings could drop another 16"
+  ],
+  "PLTR:CALL": []
  },
  "fired": {
   "BAC:PUT:2026-10-30:51": [
@@ -80,12 +84,6 @@
    "down-0.3"
   ],
   "UBER:PUT:2026-10-30:68": [],
-  "DIS:CALL:2026-10-30:112": [
-   "news:skydance rises 5 as steep post merger slide pauses disney gains 2 netflix slips",
-   "down-0.15",
-   "down-0.3",
-   "stock1"
-  ],
   "NFLX:PUT:2026-10-30:65": [
    "news:nflx stock falls below 70 as netflix q4 earnings and revenue targets raise the bar",
    "down-0.15",
@@ -100,15 +98,9 @@
    "news:nflx stock heads for 26 month low after needham downgrade wall street price target cuts youtube threat grows content pro",
    "news:netflix stock sinks as wall street lowers price targets following q4 revenue forecast miss"
   ],
-  "V:CALL:2026-10-23:412.5": [
-   "down-0.15",
-   "news:visa starts ai agent pilot for business payments adds fraud prevention tools",
-   "down-0.3"
-  ]
+  "PLTR:CALL:2026-10-30:210": []
  },
- "stock_level": {
-  "DIS:CALL:2026-10-30:112": 1
- },
+ "stock_level": {},
  "seen_macro": [
   "from venezuela to texas to jamnagar marco rubio s dash for energy",
   "food importer sues to block trump s 50 tariffs on canadian goods",
@@ -154,7 +146,12 @@
   "oil uscrude price forecast for today tomorrow next week and next 30 days",
   "wall street futures rise as corporate earnings support technology stocks dow jones s p nasdaq",
   "wall street ticks higher after spacex jumps and ai stocks steady",
-  "gold steadies near one week low as oil driven inflation fears grow"
+  "gold steadies near one week low as oil driven inflation fears grow",
+  "netflix stock sinks as wall street lowers price targets following q4 revenue forecast miss",
+  "dow jones futures today dow futures hover near 52 700 as oil prices surge above 110 ai stocks and tesla meta earnings dr",
+  "wall street opens in green as spacex earnings lift investor confidence comp ind",
+  "wall street drifts as spacex climbs and netflix falls",
+  "us stock market today live dow jones rises 0 30 s p 500 gains 0 31 and nasdaq jumps 0 67 at open as spacex and super mic"
  ],
  "sharp": {
   "NFLX:PUT:2026-10-30:65": 67.055
