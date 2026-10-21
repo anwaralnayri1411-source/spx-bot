@@ -31,9 +31,9 @@ main() {
       files="spx_positions.json spx_track.csv spx_thesis_log.csv messages_options_bot.jsonl live_quotes_log.csv"
       msg="update spx monitor" ;;
     stocks)
-      group=stocks-bot; envs="TG"; extra_env="FORCE=0 BOT_MODE=scan"
+      group=stocks-bot; envs="TG ALPACA LQS"; extra_env="FORCE=0 BOT_MODE=scan"
       cmds=("$py stocks_bot.py")
-      files="stocks_log.csv stocks_track.csv messages_stocks_bot.jsonl stocks_state.json stocks_positions.json stocks_shadow_log.csv stocks_flow_log.csv stocks_sector_live_log.csv"
+      files="stocks_log.csv stocks_track.csv messages_stocks_bot.jsonl stocks_state.json stocks_positions.json stocks_shadow_log.csv stocks_flow_log.csv live_quotes_stocks_log.csv stocks_sector_live_log.csv"
       msg="update stocks state" ;;
     commands)
       group=commands-bot; envs="TG"
@@ -41,7 +41,7 @@ main() {
       files="commands_state.json messages_commands_bot.jsonl stocks_mine.json"
       msg="update commands state" ;;
     preopen)
-      group=preopen-bot; envs="TG"; extra_env="FORCE=0"
+      group=preopen-bot; envs="TG"; extra_env="FORCE=0 RESEND=0"
       cmds=("$py preopen_bot.py")
       files="messages_preopen_bot.jsonl levels_log.csv mgt_compare_log.csv"
       msg="update preopen messages" ;;
@@ -75,6 +75,21 @@ main() {
       cmds=("$py weekly.py")
       files="messages_*.jsonl"
       msg="weekly report log" ;;
+    news_shadow)
+      group=news-shadow
+      cmds=("$py research/news_shadow_eval.py")
+      files="news_shadow_outcomes.csv research/news_shadow_results.md"
+      msg="news shadow results" ;;
+    ladder_exit)
+      group=ladder-exit
+      cmds=("$py research/ladder_exit_shadow.py")
+      files="ladder_exit_log.csv research/ladder_exit_results.md"
+      msg="ladder exit shadow results" ;;
+    stocks_sector)
+      group=stocks-sector
+      cmds=("$py research/stocks_sector_study.py" "$py research/stocks_open_stop_study.py")
+      files="stocks_sector_log.csv research/stocks_sector_results.md research/stocks_open_stop_results.md"
+      msg="stocks sector study results" ;;
     stocks_watcher)
       group=stocks-watcher; envs="TG ALPACA ANTHROPIC"; long=1
       cmds=("$py stocks_watcher.py")
@@ -158,6 +173,7 @@ run_env() {
       ALPACA) e+=(ALPACA_KEY="${ALPACA_KEY:-}" ALPACA_SECRET="${ALPACA_SECRET:-}") ;;
       ANTHROPIC) e+=(ANTHROPIC_API_KEY="${ANTHROPIC_API_KEY:-}") ;;
       LQ) e+=(LIVE_QUOTES_SPX="${LIVE_QUOTES_SPX:-shadow}") ;;
+      LQS) e+=(LIVE_QUOTES_STOCKS="${LIVE_QUOTES_STOCKS:-shadow}") ;;
     esac
   done
   [ -n "$extra" ] && e+=($extra)
