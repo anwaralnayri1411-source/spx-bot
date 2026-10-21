@@ -2,7 +2,8 @@
  "seen": {
   "BAC:PUT": [
    "bank of america corporation bac stock bank pictet cie europe ag decreases position",
-   "bank of america nyse bac share price forecast analysis"
+   "bank of america nyse bac share price forecast analysis",
+   "bank of america bac is its wealth business more valuable than the headline bank suggests"
   ],
   "AMZN:CALL": [
    "starting jan 1 2027 amazon seasonal workers get day one health coverage if they work at least 30 hours a week",
@@ -56,7 +57,8 @@
    "nflx stock heads for 26 month low after needham downgrade wall street price target cuts youtube threat grows content pro",
    "netflix stock sinks as wall street lowers price targets following q4 revenue forecast miss",
    "netflix stock drops over 6 following expected revenue numbers",
-   "netflix nflx can local language hits improve returns on content spending"
+   "netflix nflx can local language hits improve returns on content spending",
+   "why netflix nflx shares are falling today"
   ],
   "AVGO:PUT": [
    "3 artificial intelligence ai stocks that look like great buys right now",
@@ -75,7 +77,10 @@
    "swiping to record highs why visa remains a fortress",
    "ibm stock price forecast pulls back to 240 ahead of earnings could drop another 16"
   ],
-  "PLTR:CALL": []
+  "PLTR:CALL": [
+   "palantir sees ark invest reduce position and uk fund review pltr remains under pressure",
+   "palantir technologies inc stock pltr moved up by 3 38 on oct 21 a full analysis"
+  ]
  },
  "fired": {
   "BAC:PUT:2026-10-30:51": [
@@ -151,7 +156,11 @@
   "dow jones futures today dow futures hover near 52 700 as oil prices surge above 110 ai stocks and tesla meta earnings dr",
   "wall street opens in green as spacex earnings lift investor confidence comp ind",
   "wall street drifts as spacex climbs and netflix falls",
-  "us stock market today live dow jones rises 0 30 s p 500 gains 0 31 and nasdaq jumps 0 67 at open as spacex and super mic"
+  "us stock market today live dow jones rises 0 30 s p 500 gains 0 31 and nasdaq jumps 0 67 at open as spacex and super mic",
+  "oil nears 110 as middle east risks reshape the global market outlook",
+  "mcx gold price today live gold rate falls 539 to 1 45 980 per 10 grams on october 21 check latest prices market trends a",
+  "pax silica collides with washington s chip tariffs",
+  "stock market today nasdaq rises as spacex gains 11 super micro jumps 12 and netflix falls"
  ],
  "sharp": {
   "NFLX:PUT:2026-10-30:65": 67.055
