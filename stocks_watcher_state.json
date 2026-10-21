@@ -5,7 +5,10 @@
    "bank of america nyse bac share price forecast analysis"
   ],
   "AMZN:CALL": [
-   "starting jan 1 2027 amazon seasonal workers get day one health coverage if they work at least 30 hours a week"
+   "starting jan 1 2027 amazon seasonal workers get day one health coverage if they work at least 30 hours a week",
+   "analysts are bullish on these consumer cyclical stocks sea se amazon amzn",
+   "amazon q3 preview the cloud giant strikes back nasdaq amzn",
+   "amazon twilio ebay and a health care stock cnbc s final trades"
   ],
   "WMT:CALL": [
    "walmart slashes membership fees with this new bundle",
@@ -18,7 +21,11 @@
    "why is hertz htz stock soaring today"
   ],
   "DIS:CALL": [
-   "skydance rises 5 as steep post merger slide pauses disney gains 2 netflix slips"
+   "skydance rises 5 as steep post merger slide pauses disney gains 2 netflix slips",
+   "no breakout hit and an ad shortfall what netflix needs to prove next",
+   "netflix has lost nearly half its value in a year",
+   "netflix has 2 problems behind the stock slide and they aren t youtube co ceo ted sarandos says",
+   "netflix sinks 7 as soft q4 outlook sparks wave of price target cuts spotify slips disney holds steady"
   ],
   "NFLX:PUT": [
    "djt stock plummets to new lows trump appeal fades as 2026 midterms draw closer",
@@ -28,14 +35,26 @@
    "traders are betting netflix s stock drama may be coming to an end",
    "netflix q3 2026 earnings live updates of nflx earnings call stock forecast",
    "nflx stock falls below 70 as netflix q4 earnings and revenue targets raise the bar",
-   "netflix stock falls ahead of quarterly results"
+   "netflix stock falls ahead of quarterly results",
+   "netflix stock sinks as wall street lowers price targets after streamer s q3 earnings and q4 revenue forecast miss",
+   "isrg nflx acn stocks slide before the bell why intuitive surgical netflix and accenture are heading lower",
+   "what analysts are saying about netflix after earnings nflx nasdaq",
+   "bank of america has lowered expectations for netflix nasdaq nflx stock price",
+   "netflix stock sinks to 52 week low here s why",
+   "nflx stock on track for 26 month low after needham downgrade analyst says content problem seems clear",
+   "netflix nasdaq nflx stock price target lowered at guggenheim",
+   "netflix nasdaq nflx stock rating reaffirmed as market perform by citizens jmp"
   ],
   "AVGO:PUT": [
    "3 artificial intelligence ai stocks that look like great buys right now",
-   "broadcom lands major 10 year cloud deal with japanese telecom giant"
+   "broadcom lands major 10 year cloud deal with japanese telecom giant",
+   "is broadcom attractive after falling 31 5 from its june high",
+   "apple vs broadcom which tech stock is a better buy in 2026",
+   "broadcom launches fraud defense feature for card transactions by investing com"
   ],
   "V:CALL": [
-   "visa nyse v share price forecast analysis"
+   "visa nyse v share price forecast analysis",
+   "visa starts ai agent pilot for business payments adds fraud prevention tools"
   ]
  },
  "fired": {
@@ -44,7 +63,8 @@
   ],
   "AMZN:CALL:2026-10-26:270": [
    "down-0.15",
-   "down-0.3"
+   "down-0.3",
+   "stock1"
   ],
   "WMT:CALL:2026-10-30:120": [
    "down-0.15",
@@ -58,17 +78,27 @@
    "down-0.15"
   ],
   "NFLX:PUT:2026-10-30:65": [
-   "news:nflx stock falls below 70 as netflix q4 earnings and revenue targets raise the bar"
+   "news:nflx stock falls below 70 as netflix q4 earnings and revenue targets raise the bar",
+   "down-0.15",
+   "down-0.3",
+   "news:netflix stock sinks as wall street lowers price targets after streamer s q3 earnings and q4 revenue forecast miss",
+   "news:bank of america has lowered expectations for netflix nasdaq nflx stock price",
+   "news:nflx stock on track for 26 month low after needham downgrade analyst says content problem seems clear",
+   "news:netflix nasdaq nflx stock price target lowered at guggenheim"
   ],
   "AVGO:PUT:2026-10-23:325": [
-   "news:broadcom lands major 10 year cloud deal with japanese telecom giant"
+   "news:broadcom lands major 10 year cloud deal with japanese telecom giant",
+   "down-0.15",
+   "down-0.3"
   ],
   "V:CALL:2026-10-23:412.5": [
-   "down-0.15"
+   "down-0.15",
+   "news:visa starts ai agent pilot for business payments adds fraud prevention tools"
   ]
  },
  "stock_level": {
-  "WMT:CALL:2026-10-30:120": 1
+  "WMT:CALL:2026-10-30:120": 1,
+  "AMZN:CALL:2026-10-26:270": 1
  },
  "seen_macro": [
   "from venezuela to texas to jamnagar marco rubio s dash for energy",
@@ -95,7 +125,20 @@
   "idea of partnering with u s is under attack in canada hoekstra says",
   "lawsuit filed challenging trump s tariffs on canada",
   "trump sued over canadian tariffs in latest legal challenge",
-  "new lawsuit filed challenging trump s tariffs on canada"
+  "new lawsuit filed challenging trump s tariffs on canada",
+  "sensex slumps over 900 points from day high nifty settles near 22 800 know what triggered the fall",
+  "oil tops 110 as middle east tensions revive supply fears",
+  "netflix stock sinks as wall street lowers price targets after streamer s q3 earnings and q4 revenue forecast miss",
+  "wall street to open in green nasdaq futures lead gains as ai space stocks surge in premarket trade",
+  "explained what the u s federal reserve does and why it matters to australia",
+  "oil prices jump 2 as iran talks falter and u s inventories tighten brent climbs above 110",
+  "us futures mostly higher as wall street digests earnings from spacex netflix",
+  "nasdaq futures rise 160 points 5 things to know before wall street opens",
+  "us stock market today dow jones futures edge higher s p 500 and nasdaq futures rise as ai stocks rebound brent crude top",
+  "tesla earnings today wall street s last minute verdict on tsla stock",
+  "gold steadies as conflicting iran signals cloud path for rates",
+  "brookings paper offers broad plan to shrink fed balance sheet",
+  "fed interest rate predictions for october 2026"
  ],
  "sharp": {}
 }
