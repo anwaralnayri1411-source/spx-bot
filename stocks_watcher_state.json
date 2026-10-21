@@ -102,7 +102,8 @@
    "wall street continues to systematically undervalue alphabet so i continue to buy",
    "us senators seek answers from google over ai use in schools goog nasdaq",
    "1 98 for alphabet stock as us sanctions hit chinese ai sector",
-   "cloudflare inc stock net moved up by 6 86 on oct 21 what signal does it send"
+   "cloudflare inc stock net moved up by 6 86 on oct 21 what signal does it send",
+   "datadog inc stock ddog moved up by 7 80 on oct 21 a full analysis"
   ]
  },
  "fired": {
@@ -118,7 +119,8 @@
    "news:pltr stock rebounds to 200 as palantir technologies partners with knox systems for federal software"
   ],
   "GOOGL:PUT:2026-10-26:325": [
-   "down-0.15"
+   "down-0.15",
+   "down-0.3"
   ]
  },
  "stock_level": {},
@@ -192,7 +194,8 @@
   "markets today wall street drifts as spacex climbs and netflix falls",
   "dow jones today live dow slips 0 1 as wall street trades mixed spacex and super micro rally while netflix shares fall ch",
   "why is us stock market up today dow jones gains 200 points s p 500 rises 0 51 nasdaq climbs 1 04 as spacex rally ai dema",
-  "nasdaq rises 0 6 as ai hardware gains divide wall street"
+  "nasdaq rises 0 6 as ai hardware gains divide wall street",
+  "interest rates should be raised as insurance against persistent inflation economist"
  ],
  "sharp": {}
 }
