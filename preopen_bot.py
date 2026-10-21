@@ -152,7 +152,7 @@ def main():
     if not ok and not FORCE:
         print("خارج نافذة ما قبل الافتتاح أو يوم إجازة.")
         return
-    if sent_today(n) and not FORCE:
+    if sent_today(n) and os.getenv("RESEND", "0") != "1":   # التشغيل اليدوي (FORCE) لا يتجاوز منع التكرار إلا بـ RESEND
         print("أُرسل تقرير اليوم في تشغيل سابق.")
         return
     ob.send_telegram(build(n))
