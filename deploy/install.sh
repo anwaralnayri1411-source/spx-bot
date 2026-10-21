@@ -89,7 +89,8 @@ EOF
 
 systemctl daemon-reload
 echo "$SCHEDULE" | while IFS='|' read -r job cal; do
-  [ -n "$job" ] && systemctl enable --now "spxbot-$job.timer" >/dev/null 2>&1
+  [ -n "$job" ] || continue
+  systemctl enable --now "spxbot-$job.timer" >/dev/null 2>&1
 done
 systemctl enable --now spxbot-pip.timer >/dev/null 2>&1
 echo "mode: $(cat /etc/spxbot/runner.env)"
