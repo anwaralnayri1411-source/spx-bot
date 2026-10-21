@@ -14,6 +14,10 @@
 النافذة 10:00–15:00 نيويورك، صفقة واحدة كل 60 دقيقة لكل تعريف، و3 كحد أقصى يومياً. يتوقف تلقائياً بعد END_DATE.
 تنبيه: GitHub قد يؤخر التشغيل (كل ~30 دقيقة أحياناً)، فوقت الخروج الفعلي يُسجَّل كما حدث.
 
+عمود at_ext (منذ 22/10): 1 إذا كانت الإشارة عند قمة/قاع اليوم حتى لحظتها (ضمن EXT_TOL من أعلى/أدنى إغلاق دقيقة لـ SPY
+لليوم)، فيقيس فكرة «القاع نفسه عكس الزخم»: دراسة 60 يوماً وجدت أن المعاكس عند طرف اليوم يلمس +0.25% أولاً في 64–67%
+(حدّي، p≈0.03–0.07، نظري). الحكم من صف «المعاكس عند الطرف» في التقرير، بعد ~20 حالة.
+
 الملفات (كلها جديدة): momentum_shadow_state.json، momentum_shadow_log.csv، research/momentum_shadow_results.md
 يحتاج: ALPACA_KEY، ALPACA_SECRET.   تشغيل: python research/momentum_shadow.py [--report]
 """
@@ -44,10 +48,11 @@ TP, SL, MIN_AGE, HOLD = 0.50, 0.40, 15, 60
 GAP_MIN, MAX_PER_DAY = 60, 3
 MAX_AGE = 120                     # ثانية: تسعيرة أقدم لا تُستخدم
 MAX_BAR_AGE = 180                 # ثانية: شمعة SPY أقدم = لا إشارة لحظية
+EXT_TOL = 0.0005                  # «عند طرف اليوم»: ضمن 0.05% من أعلى/أدنى اليوم حتى الآن
 HOLIDAYS = {"2026-11-26", "2026-12-25", "2027-01-01"}
 EARLY_CLOSE = {"2026-11-27", "2026-12-24"}
 LOG_COLS = ["date", "defn", "role", "side", "strike", "sig_time", "r30", "entry_time", "entry_spy", "entry", "exit",
-            "exit_time", "pnl", "peak", "spy_after_60", "spy_move_pts", "checks", "stale"]
+            "exit_time", "pnl", "peak", "spy_after_60", "spy_move_pts", "checks", "stale", "at_ext"]
 
 
 # ============================ البيانات ============================
@@ -118,6 +123,16 @@ def write_closed(items):
     if not items:
         return
     new = not os.path.exists(LOG)
+    if not new:   # سجل قديم بلا عمود at_ext: نعيد كتابة الترويسة (الصفوف القديمة تبقى بقيمة فارغة)
+        with open(LOG, encoding="utf-8") as f:
+            old = list(csv.DictReader(f))
+            hdr = old[0].keys() if old else []
+        if old and "at_ext" not in hdr:
+            with open(LOG, "w", encoding="utf-8", newline="") as f:
+                w = csv.DictWriter(f, fieldnames=LOG_COLS)
+                w.writeheader()
+                for r in old:
+                    w.writerow({k: r.get(k, "") for k in LOG_COLS})
     with open(LOG, "a", encoding="utf-8", newline="") as f:
         w = csv.DictWriter(f, fieldnames=LOG_COLS)
         if new:
@@ -170,6 +185,8 @@ def run(n=None, bars=None, r30_delayed=None, book=None):
             sig["delayed"] = r30_delayed() if r30_delayed else gspc_r30()
         except Exception as e:
             print("تعذّر ياهو:", e); sig["delayed"] = None
+        closes = [c for _, c in bars]
+        day_hi, day_lo = max(closes), min(closes)
         for defn, r in sig.items():
             if r is None or abs(r) < THRESH:
                 continue
@@ -178,11 +195,12 @@ def run(n=None, bars=None, r30_delayed=None, book=None):
                 continue
             side = "CALL" if r > 0 else "PUT"
             K = float(round(spy))
+            at_ext = int(spy >= day_hi * (1 - EXT_TOL) if r > 0 else spy <= day_lo * (1 + EXT_TOL))
             new.append([{"date": today, "defn": defn, "role": role, "side": sd, "strike": K,
                          "sig_time": n.isoformat(timespec="minutes"), "r30": round(r, 5),
                          "entry_time": n.isoformat(timespec="minutes"), "entry_spy": round(spy, 2), "entry": None,
                          "exit": "", "exit_time": "", "pnl": "", "peak": 0.0, "spy_after_60": "", "spy_move_pts": "",
-                         "checks": 0, "stale": 0, "occ": occ(today, sd, K)}
+                         "checks": 0, "stale": 0, "at_ext": at_ext, "occ": occ(today, sd, K)}
                         for role, sd in (("signal", side), ("opposite", "PUT" if side == "CALL" else "CALL"))])
 
     # ---- التسعير ----
@@ -266,7 +284,22 @@ def report():
                      f"{len(x)} | {len({r['date'] for r in x})} | {sum(p) / len(p) * 100:+.1f}% | "
                      f"{sum(1 for v in p if v > 0) / len(p) * 100:.0f}% | {k['tp']}/{k['stop']}/{k['time']}/{k['final']} | "
                      f"{(f'{sum(mv) / len(mv):+.1f}') if mv else '—'} |")
-    L += ["", "⚠️ العينة صغيرة حتى 20 يوماً على الأقل. الحكم: الإشارة أفضل من المعاكس بفارق واضح في الحالتين، "
+    L += ["", "## «القاع نفسه عكس الزخم»: الإشارات عند قمة/قاع اليوم (at_ext=1)", "",
+          "| التعريف | عند الطرف؟ | الإشارة (اتباع) | المعاكس | صفقات |", "|---|---|---|---|---|"]
+    for defn in ("live", "delayed"):
+        for ext in ("1", "0"):
+            cell = {}
+            for role in ("signal", "opposite"):
+                x = [r for r in rows if r["defn"] == defn and r["role"] == role and r.get("at_ext") == ext
+                     and r["pnl"] not in ("", None)]
+                p = [float(r["pnl"]) for r in x]
+                cell[role] = (f"{sum(p) / len(p) * 100:+.1f}% (رابحة {sum(1 for v in p if v > 0) / len(p) * 100:.0f}%)"
+                              if p else "—", len(p))
+            if cell["signal"][1] or cell["opposite"][1]:
+                L.append(f"| {'لحظي' if defn == 'live' else 'متأخر (ياهو)'} | {'نعم' if ext == '1' else 'لا'} | "
+                         f"{cell['signal'][0]} | {cell['opposite'][0]} | {cell['signal'][1]} |")
+    L += ["", "صفقات ما قبل 22/10 بلا قيمة at_ext فلا تظهر في هذا الجدول.",
+          "", "⚠️ العينة صغيرة حتى 20 يوماً على الأقل. الحكم: الإشارة أفضل من المعاكس بفارق واضح في الحالتين، "
               "ومتوسطها فوق الصفر، قبل أي اقتراح لتغيير البوت."]
     with open(REPORT, "w", encoding="utf-8") as f:
         f.write("\n".join(L) + "\n")
