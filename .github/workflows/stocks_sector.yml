@@ -1,0 +1,29 @@
+name: Stocks Sector Study
+# بوت الشركات (ظل): هل التوصية ضد قطاعها أو ضد السوق تضرب الوقف أكثر؟ + وقف الافتتاح. تسجيل فقط، لا رسائل.
+on:
+  schedule:
+    - cron: "40 22 * * 1-5"   # بعد الإغلاق
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: stocks-sector
+  cancel-in-progress: false
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install yfinance pandas
+      - run: python research/stocks_sector_study.py
+      - run: python research/stocks_open_stop_study.py
+      - name: Save results
+        run: |
+          git config user.name "bot"; git config user.email "bot@users.noreply.github.com"
+          for f in stocks_sector_log.csv research/stocks_sector_results.md research/stocks_open_stop_results.md; do git add "$f" 2>/dev/null || true; done
+          git diff --cached --quiet && exit 0
+          git commit -m "stocks sector study results"
+          for i in 1 2 3 4 5; do if git pull --rebase; then git push && break; else git rebase --abort; fi; sleep 5; done
