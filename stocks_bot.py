@@ -1549,6 +1549,11 @@ def do_scan(n, force, P):
             state["sent"][f"{i['ticker']}:{i['side']}"] = n.isoformat()
             log_idea(n, i)
             add_position(P, n, i, a.get("spy_px"))
+        try:   # ظل فلتر القطاع: تسجيل فقط (لا يغيّر التوصية)
+            import stocks_sector_shadow
+            stocks_sector_shadow.snapshot(n, new)
+        except Exception as e:
+            print("تعذر تسجيل ظل القطاع:", e)
         state["report_sent"] = True
     elif not state.get("report_sent"):
         ob.send_telegram(no_idea_message(a) + "\n\n🔔 سأواصل الفحص وأرسل لك عند ظهور فرصة.")

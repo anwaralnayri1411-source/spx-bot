@@ -33,7 +33,7 @@ main() {
     stocks)
       group=stocks-bot; envs="TG"; extra_env="FORCE=0 BOT_MODE=scan"
       cmds=("$py stocks_bot.py")
-      files="stocks_log.csv stocks_track.csv messages_stocks_bot.jsonl stocks_state.json stocks_positions.json stocks_shadow_log.csv stocks_flow_log.csv"
+      files="stocks_log.csv stocks_track.csv messages_stocks_bot.jsonl stocks_state.json stocks_positions.json stocks_shadow_log.csv stocks_flow_log.csv stocks_sector_live_log.csv"
       msg="update stocks state" ;;
     commands)
       group=commands-bot; envs="TG"
