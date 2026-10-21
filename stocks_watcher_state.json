@@ -91,11 +91,15 @@
   "PLTR:CALL": [
    "palantir sees ark invest reduce position and uk fund review pltr remains under pressure",
    "palantir technologies inc stock pltr moved up by 3 38 on oct 21 a full analysis",
-   "palantir rises 4 as software stocks rally servicenow gains 3 salesforce holds flat"
+   "palantir rises 4 as software stocks rally servicenow gains 3 salesforce holds flat",
+   "pltr stock rebounds to 200 as palantir technologies partners with knox systems for federal software",
+   "palantir technologies nasdaq pltr knox systems deal sparks fresh debate over whether the stock is overpriced"
   ],
   "GOOGL:PUT": [
    "wall street continues to systematically undervalue alphabet so i continue to buy",
-   "us senators seek answers from google over ai use in schools goog nasdaq"
+   "us senators seek answers from google over ai use in schools goog nasdaq",
+   "1 98 for alphabet stock as us sanctions hit chinese ai sector",
+   "cloudflare inc stock net moved up by 6 86 on oct 21 what signal does it send"
   ]
  },
  "fired": {
@@ -123,8 +127,12 @@
    "news:netflix stock slammed with price target cuts after q3 report",
    "news:netflix nasdaq nflx stock price target lowered at jpmorgan chase co"
   ],
-  "PLTR:CALL:2026-10-30:210": [],
-  "GOOGL:PUT:2026-10-26:325": []
+  "PLTR:CALL:2026-10-30:210": [
+   "news:pltr stock rebounds to 200 as palantir technologies partners with knox systems for federal software"
+  ],
+  "GOOGL:PUT:2026-10-26:325": [
+   "down-0.15"
+  ]
  },
  "stock_level": {},
  "seen_macro": [
