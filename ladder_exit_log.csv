@@ -1,0 +1,7 @@
+date,source,pos_id,variant,entry,sig_time,first_time,last_time,quotes,peak_pnl,fixed_pnl,fixed_out,ladder_pnl,ladder_out,thirds_pnl,thirds_out,mgt_pnl,mgt_out,hold_pnl,hold_out
+2026-10-21,yahoo,SPX:CALL:7775:2026-10-21,atm,3.33,14:32,15:19,17:57,18,-0.879,-0.955,stop,-0.955,stop,-0.955,stop,-0.955,stop,-0.985,last
+2026-10-21,yahoo,SPX:CALL:7775:2026-10-21,bot,1.56,14:32,15:19,17:57,18,-0.903,-0.968,stop,-0.968,stop,-0.968,stop,-0.968,stop,-0.968,last
+2026-10-21,yahoo,SPX:CALL:7775:2026-10-21,d30,0.35,14:32,15:19,17:57,18,-0.857,-0.857,stop,-0.857,stop,-0.857,stop,-0.857,stop,-0.857,last
+2026-10-21,yahoo,SPY:CALL:771:2026-10-21,atm,0.82,11:04,11:46,17:57,25,1.902,0.585,tp,-0.22,trail,0.553,trail,-0.22,trail,0.488,last
+2026-10-21,yahoo,SPY:CALL:771:2026-10-21,bot,1.28,11:04,11:46,17:57,25,1.586,0.539,tp,-0.156,trail,0.503,trail,-0.156,trail,0.688,last
+2026-10-21,yahoo,SPY:CALL:771:2026-10-21,d30,0.82,11:04,11:46,17:57,25,1.902,0.585,tp,-0.22,trail,0.553,trail,-0.22,trail,0.488,last
