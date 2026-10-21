@@ -67,7 +67,9 @@
    "buy the post earnings selloff in netflix stock nflx says bmo",
    "netflix nasdaq nflx stock price target lowered at jpmorgan chase co",
    "netflix the market has lost its mind nasdaq nflx",
-   "wall street lunch netflix sinks as analysts debate competition and growth prospects"
+   "wall street lunch netflix sinks as analysts debate competition and growth prospects",
+   "netflix i m buying post earnings nasdaq nflx",
+   "netflix stock the revenue slowdown is real the earnings slowdown isn t nasdaq nflx"
   ],
   "AVGO:PUT": [
    "3 artificial intelligence ai stocks that look like great buys right now",
@@ -88,7 +90,12 @@
   ],
   "PLTR:CALL": [
    "palantir sees ark invest reduce position and uk fund review pltr remains under pressure",
-   "palantir technologies inc stock pltr moved up by 3 38 on oct 21 a full analysis"
+   "palantir technologies inc stock pltr moved up by 3 38 on oct 21 a full analysis",
+   "palantir rises 4 as software stocks rally servicenow gains 3 salesforce holds flat"
+  ],
+  "GOOGL:PUT": [
+   "wall street continues to systematically undervalue alphabet so i continue to buy",
+   "us senators seek answers from google over ai use in schools goog nasdaq"
   ]
  },
  "fired": {
@@ -116,7 +123,8 @@
    "news:netflix stock slammed with price target cuts after q3 report",
    "news:netflix nasdaq nflx stock price target lowered at jpmorgan chase co"
   ],
-  "PLTR:CALL:2026-10-30:210": []
+  "PLTR:CALL:2026-10-30:210": [],
+  "GOOGL:PUT:2026-10-26:325": []
  },
  "stock_level": {},
  "seen_macro": [
@@ -184,7 +192,12 @@
   "9 15am markets update",
   "gold gains silver slips as oil prices rise fed rate hike expectations persist kitco am report",
   "nexo sees bitcoin outlook hinging on fed rates and etf demand in q4",
-  "us swiss trade deal implications for global commerce"
+  "us swiss trade deal implications for global commerce",
+  "us stock market today nasdaq futures rise as spacex jumps tesla earnings in focus",
+  "markets today wall street drifts as spacex climbs and netflix falls",
+  "dow jones today live dow slips 0 1 as wall street trades mixed spacex and super micro rally while netflix shares fall ch",
+  "why is us stock market up today dow jones gains 200 points s p 500 rises 0 51 nasdaq climbs 1 04 as spacex rally ai dema",
+  "nasdaq rises 0 6 as ai hardware gains divide wall street"
  ],
  "sharp": {
   "NFLX:PUT:2026-10-30:65": 67.055
