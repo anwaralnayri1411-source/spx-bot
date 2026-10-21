@@ -23,7 +23,7 @@ main() {
     bot)
       group=spx-bot; envs="TG ALPACA LQ"; extra_env="FORCE=0"
       cmds=("$py options_bot.py")
-      files="zero_dte_log.csv messages_options_bot.jsonl bot_state.json spx_positions.json spx_track.csv live_quotes_log.csv signals_extra_log.csv levels_log.csv mgt_compare_log.csv"
+      files="zero_dte_log.csv messages_options_bot.jsonl bot_state.json spx_positions.json spx_track.csv live_quotes_log.csv signals_extra_log.csv levels_log.csv mgt_compare_log.csv news_shadow_log.csv"
       msg="update bot state" ;;
     spx_monitor)
       group=spx-bot; envs="TG ALPACA LQ"; gate=gate_open_positions

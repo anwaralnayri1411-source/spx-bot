@@ -1,0 +1,29 @@
+name: News Filter Shadow
+# تقييم ظل فلتر الأخبار بعد الإغلاق: ماذا فعل SPX بعد كل فحص حجبه فلتر الأخبار. تسجيل فقط، لا رسائل.
+# التسجيل نفسه يتم داخل بوت SPX (news_shadow.py)؛ هذا يحسب النتائج فقط.
+on:
+  schedule:
+    - cron: "25 21 * * 1-5"   # 17:25 نيويورك صيفاً / 16:25 شتاءً
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: news-shadow
+  cancel-in-progress: false
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install yfinance pandas
+      - run: python research/news_shadow_eval.py
+      - name: Save results
+        run: |
+          git config user.name "bot"; git config user.email "bot@users.noreply.github.com"
+          for f in news_shadow_outcomes.csv research/news_shadow_results.md; do git add "$f" 2>/dev/null || true; done
+          git diff --cached --quiet && exit 0
+          git commit -m "news shadow results"
+          for i in 1 2 3 4 5; do if git pull --rebase; then git push && break; else git rebase --abort; fi; sleep 5; done

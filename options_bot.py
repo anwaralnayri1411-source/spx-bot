@@ -1663,6 +1663,11 @@ def run_once(force=False):
             signals_extra.snapshot(n, a["side"] if has_signal else "")
         except Exception as e:
             print("تعذر تسجيل الإشارات التجريبية:", e)
+        try:   # ظل فلتر الأخبار: يسجّل ما حجبه الفلتر فقط (لا يغيّر التوصية)
+            import news_shadow
+            news_shadow.snapshot(n, a)
+        except Exception as e:
+            print("تعذر تسجيل ظل فلتر الأخبار:", e)
     log_line = log_summary()
 
     if force:
