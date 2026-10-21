@@ -105,6 +105,10 @@ main() {
       cmds=("$py research/preopen_shadow.py")
       files="preopen_shadow_state.json preopen_shadow_log.csv preopen_shadow_msgs.jsonl research/preopen_shadow_results.md"
       msg="preopen shadow log" ;;
+    market_read)
+      group=market-read; envs="TG"; gate="gate_ny_times 1005 1300"
+      cmds=("$py market_read.py --all --session-only")
+      msg="market read" ;;
     tasty_health)
       group=tasty-health; envs="TG TASTY"
       cmds=("$py tasty_health.py")
@@ -214,6 +218,13 @@ except Exception:
 sig = any(p.get("sym") in ("SPX", "SPY") and p.get("exp") == today for p in pos)
 print("true" if sig or st.get("items") else "false")
 EOF
+}
+
+# يمر فقط إن كان وقت نيويورك ضمن 10 دقائق بعد أحد الأوقات (HHMM)؛ المؤقت يضع موعدين لكل وقت (صيفي/شتوي).
+gate_ny_times() {
+  local hm t; hm=$((10#$(TZ=America/New_York date +%H%M)))
+  for t in "$@"; do t=$((10#$t)); [ "$hm" -ge "$t" ] && [ "$hm" -lt $((t + 10)) ] && return 0; done
+  return 1
 }
 
 gate_until() { [[ ! "$(TZ=America/New_York date +%F)" > "$1" ]]; }
