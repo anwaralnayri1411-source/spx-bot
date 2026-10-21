@@ -1,9 +1,10 @@
 """ملخص ما قبل الافتتاح: رسالة واحدة قبل افتتاح السوق الأمريكي بنحو 15 دقيقة.
 لا يعطي توصية دخول. يجمع ما حدث في الليل ويذكّر بالإحصاء التاريخي للفجوة.
 البيانات مجانية ومتأخرة قليلاً (yfinance)."""
+import json
 import os
 import sys
-from datetime import date, datetime, timedelta
+from datetime import date, datetime, timedelta, timezone
 
 import pandas as pd
 import yfinance as yf
@@ -12,7 +13,7 @@ import options_bot as ob
 import stocks_bot as sb
 
 FORCE = os.getenv("FORCE", "0") == "1"
-WINDOW = ((9, 0), (9, 40))                      # بتوقيت نيويورك
+WINDOW = ((8, 40), (9, 40))                     # بتوقيت نيويورك (يبدأ 8:40 ليقبل الموعد الاحتياطي المبكر)
 HOLIDAYS = {"2026-11-26", "2026-12-25", "2027-01-01", "2027-01-18", "2027-02-15", "2027-03-26"}
 GAP_T = 0.004
 MIN_PM_VOL = 20000                              # أقل حجم تداول قبل الافتتاح لعرض السهم
@@ -135,11 +136,24 @@ def build(n):
     return "\n".join(L)
 
 
+def sent_today(n):
+    """هل أُرسل تقرير اليوم في تشغيل سابق؟ (للمواعيد الاحتياطية ضد تأخر جدولة GitHub)."""
+    day = n.astimezone(timezone.utc).strftime("%Y-%m-%d")
+    try:
+        with open("messages_preopen_bot.jsonl", encoding="utf-8") as f:
+            return any(json.loads(line).get("t", "").startswith(day) for line in f if line.strip())
+    except Exception:
+        return False
+
+
 def main():
     n = ob.now_ny()
     ok = n.weekday() < 5 and n.date().isoformat() not in HOLIDAYS and ob.market_day(n) and WINDOW[0] <= (n.hour, n.minute) <= WINDOW[1]
     if not ok and not FORCE:
         print("خارج نافذة ما قبل الافتتاح أو يوم إجازة.")
+        return
+    if sent_today(n) and not FORCE:
+        print("أُرسل تقرير اليوم في تشغيل سابق.")
         return
     ob.send_telegram(build(n))
 
