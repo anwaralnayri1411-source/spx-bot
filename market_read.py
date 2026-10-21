@@ -271,6 +271,13 @@ def send(png, text_fallback, everyone=False):
     if everyone:
         chats += [x.strip() for x in (os.getenv("TELEGRAM_EXTRA_CHAT_IDS") or "").replace(";", ",").split(",") if x.strip()]
     cap = CAPTION_ALL if everyone else CAPTION
+    try:                                             # رابط الصفحة الحية (market_live.py) إن جُهّز الخادم
+        import market_live
+        url = market_live.conf().get("url")
+        if url:
+            cap += f"\n🔴 <a href=\"{url}\">البطاقة مباشرة (تتحدّث كل دقيقة)</a>"
+    except Exception as e:
+        print("تعذر قراءة رابط الصفحة الحية:", e)
     ok = True
     for cid in chats:
         try:
