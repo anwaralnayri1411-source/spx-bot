@@ -1,7 +1,8 @@
 name: Telegram Commands
 on:
-  schedule:
-    - cron: "3,18,33,48 13-21 * * 1-5"    # كل ربع ساعة أثناء الجلسة
+  # المواعيد انتقلت إلى الخادم (deploy/run_job.sh + deploy/install.sh) منذ 21/10/2026؛ التشغيل اليدوي باقٍ احتياطاً.
+#  schedule:
+#    - cron: "3,18,33,48 13-21 * * 1-5"    # كل ربع ساعة أثناء الجلسة
   workflow_dispatch:
 permissions:
   contents: write

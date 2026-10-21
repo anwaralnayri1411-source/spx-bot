@@ -1,8 +1,9 @@
 name: Stocks Sector Study
 # بوت الشركات (ظل): هل التوصية ضد قطاعها أو ضد السوق تضرب الوقف أكثر؟ + وقف الافتتاح. تسجيل فقط، لا رسائل.
 on:
-  schedule:
-    - cron: "40 22 * * 1-5"   # بعد الإغلاق
+  # المواعيد انتقلت إلى الخادم (deploy/run_job.sh + deploy/install.sh) منذ 21/10/2026؛ التشغيل اليدوي باقٍ احتياطاً.
+#  schedule:
+#    - cron: "40 22 * * 1-5"   # بعد الإغلاق
   workflow_dispatch:
 permissions:
   contents: write

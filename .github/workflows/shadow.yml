@@ -1,8 +1,9 @@
 name: Shadow Levels
 # اختبار ظلّي يومي بعد الإغلاق: شبكة MGT مقابل شبكة وهمية + Order Block. تسجيل فقط، لا رسائل ولا تأثير على التوصيات.
 on:
-  schedule:
-    - cron: "40 21 * * 1-5"
+  # المواعيد انتقلت إلى الخادم (deploy/run_job.sh + deploy/install.sh) منذ 21/10/2026؛ التشغيل اليدوي باقٍ احتياطاً.
+#  schedule:
+#    - cron: "40 21 * * 1-5"
   workflow_dispatch:
 permissions:
   contents: write

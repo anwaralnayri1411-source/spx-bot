@@ -3,14 +3,15 @@ name: Live Watcher
 # ولا تعديل لأي ملف من ملفات البوت. مهمتان في اليوم (حد GitHub 6 ساعات للمهمة)، تعملان بالتتابع عبر concurrency،
 # والكود ينهي عند 16:00 نيويورك أو بعد ~5:45 ساعة. يتوقف تلقائياً بعد END_DATE في research/live_watcher.py.
 on:
-  schedule:
-    - cron: "11 13,14 * * 1-5"    # النصف الأول (صيفي/شتوي؛ الكود ينتظر حتى 9:31)
-    - cron: "41 16,17 * * 1-5"    # النصف الثاني (يبدأ فعلياً بعد انتهاء الأول)
+  # المواعيد انتقلت إلى الخادم (deploy/run_job.sh + deploy/install.sh) منذ 21/10/2026؛ التشغيل اليدوي باقٍ احتياطاً.
+#  schedule:
+#    - cron: "11 13,14 * * 1-5"    # النصف الأول (صيفي/شتوي؛ الكود ينتظر حتى 9:31)
+#    - cron: "41 16,17 * * 1-5"    # النصف الثاني (يبدأ فعلياً بعد انتهاء الأول)
   workflow_dispatch:
-  push:
-    paths:
-      - "research/live_watcher.py"
-      - ".github/workflows/live_watcher.yml"
+#  push:
+#    paths:
+#      - "research/live_watcher.py"
+#      - ".github/workflows/live_watcher.yml"
 permissions:
   contents: write
 concurrency:

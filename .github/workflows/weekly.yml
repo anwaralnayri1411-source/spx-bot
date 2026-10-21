@@ -1,7 +1,8 @@
 name: Weekly Report
 on:
-  schedule:
-    - cron: "30 21 * * 5"     # الجمعة بعد الإغلاق صيفاً وشتاءً
+  # المواعيد انتقلت إلى الخادم (deploy/run_job.sh + deploy/install.sh) منذ 21/10/2026؛ التشغيل اليدوي باقٍ احتياطاً.
+#  schedule:
+#    - cron: "30 21 * * 5"     # الجمعة بعد الإغلاق صيفاً وشتاءً
   workflow_dispatch:
 permissions:
   contents: write

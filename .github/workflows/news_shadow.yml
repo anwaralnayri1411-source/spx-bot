@@ -2,8 +2,9 @@ name: News Filter Shadow
 # تقييم ظل فلتر الأخبار بعد الإغلاق: ماذا فعل SPX بعد كل فحص حجبه فلتر الأخبار. تسجيل فقط، لا رسائل.
 # التسجيل نفسه يتم داخل بوت SPX (news_shadow.py)؛ هذا يحسب النتائج فقط.
 on:
-  schedule:
-    - cron: "25 21 * * 1-5"   # 17:25 نيويورك صيفاً / 16:25 شتاءً
+  # المواعيد انتقلت إلى الخادم (deploy/run_job.sh + deploy/install.sh) منذ 21/10/2026؛ التشغيل اليدوي باقٍ احتياطاً.
+#  schedule:
+#    - cron: "25 21 * * 1-5"   # 17:25 نيويورك صيفاً / 16:25 شتاءً
   workflow_dispatch:
 permissions:
   contents: write
