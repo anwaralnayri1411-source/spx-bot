@@ -1386,8 +1386,9 @@ def add_positions(n, a):
     save_positions(P)
 
 
-# ---- ظل البيانات اللحظية (Alpaca): تسجيل فقط، لا يغيّر أي سعر أو تنبيه. المفتاح LIVE_QUOTES_SPX في سير العمل ----
+# ---- البيانات اللحظية (Alpaca). المفتاح LIVE_QUOTES_SPX: shadow = تسجيل فقط، 1 = سعر البيع اللحظي مصدر أول للمتابعة وياهو احتياط ----
 LIVE_ROOTS = {"SPX": "SPXW", "SPY": "SPY"}
+SRC_NOTE = {"alpaca": "سعر لحظي", "yahoo_fallback": "سعر ياهو متأخر"}   # يظهر في المتابعة فقط في الوضع 1
 
 
 def _live_entry(p):
@@ -1403,21 +1404,49 @@ def _live_entry(p):
         print("تعذر جلب سعر الدخول اللحظي:", e)
 
 
-def _live_shadow(p, q):
-    """يسجّل سعر Alpaca بجانب سعر ياهو لكل متابعة، والربح بالمصدرين. لا يرجع شيئاً ولا يغيّر p."""
+def _live_quote(p):
+    """تسعيرة Alpaca للعقد (مع contract) أو None إن كان المفتاح معطّلاً أو الأداة غير مدعومة. لا يرفع استثناء."""
     try:
         import live_quotes as lq
         if lq.mode("SPX") == "0" or p.get("sym") not in LIVE_ROOTS:
-            return
+            return None
         c = lq.occ(LIVE_ROOTS[p["sym"]], p["exp"], p["side"], p["strike"])
-        z = lq.quote(c)
+        return dict(lq.quote(c), contract=c)
+    except Exception as e:
+        print("تعذر جلب السعر اللحظي:", e)
+        return None
+
+
+def _pick_quote(q, z):
+    """يرجع (q، المصدر). الوضع 1 وتسعيرة Alpaca حديثة (≤120ث) → bid اللحظي (وسعر الأصل من ياهو)؛
+    وإلا ياهو كما هو. المصدر: alpaca | yahoo_fallback (الوضع 1 بلا لحظي) | yahoo (الظل/الإيقاف)."""
+    try:
+        import live_quotes as lq
+        if lq.mode("SPX") != "1":
+            return q, "yahoo"
+    except Exception:
+        return q, "yahoo"
+    if z and z.get("status") == "ok":
+        bid, ask = z["bid"], z["ask"]
+        val = bid if EXIT_AT_BID else (bid + ask) / 2
+        return (val, (ask - bid) / ((ask + bid) / 2), q[2] if q else None), "alpaca"
+    return q, "yahoo_fallback"
+
+
+def _live_shadow(p, q, z, src=""):
+    """يسجّل سعر Alpaca بجانب سعر ياهو لكل متابعة، والربح بالمصدرين، والمصدر المستخدم. لا يغيّر p."""
+    try:
+        import live_quotes as lq
+        if z is None:
+            return
         yv, el = (q[0] if q else None), p.get("entry_live")
-        lq.log({"time": now_ny().isoformat(timespec="minutes"), "project": "SPX", "id": p["id"], "contract": c,
+        lq.log({"time": now_ny().isoformat(timespec="minutes"), "project": "SPX", "id": p["id"], "contract": z["contract"],
                 "yahoo_val": yv if yv is not None else "", "alpaca_bid": z["bid"] or "", "alpaca_ask": z["ask"] or "",
                 "age_s": "" if z["age"] is None else round(z["age"]), "status": z["status"],
                 "entry": p["entry"], "entry_live": el or "",
                 "pnl_yahoo": round(yv / p["entry"] - 1, 3) if yv else "",
-                "pnl_live": round(z["bid"] / el - 1, 3) if (el and z["bid"] and z["status"] == "ok") else ""})
+                "pnl_live": round(z["bid"] / el - 1, 3) if (el and z["bid"] and z["status"] == "ok") else "",
+                "source": src})
     except Exception as e:
         print("تعذر تسجيل السعر اللحظي:", e)
 
@@ -1494,7 +1523,7 @@ def eval_position(p, n, val, spot):
     return pnl, new
 
 
-def position_message(p, val, pnl, spot, text, kind):
+def position_message(p, val, pnl, spot, text, kind, src=""):
     icon = {"stop": "🛑", "tp": "🟢", "giveback": "📉", "exp_final": "⏰"}.get(kind, "📈")
     pl = (val - p["entry"]) * 100 * p.get("qty", 1)
     head = {"stop": "وصل الوقف", "tp": "وصل الهدف", "giveback": "الربح يتراجع", "exp_final": "ينتهي اليوم"}.get(kind, "تحرّك سعر العقد")
@@ -1506,7 +1535,8 @@ def position_message(p, val, pnl, spot, text, kind):
         L.append(f"📍 {p['sym']} {fmt}")
     L.append(text)
     L.append(f"🛑 الوقف {p['entry'] * (1 - STOP_LOSS):.2f} | ✅ الجني {p['entry'] * (1 + TAKE_PROFIT):.2f}")
-    L.append(f"⚠️ القرار قرارك | 🕒 {now_ny().astimezone(RY).strftime('%H:%M')} الرياض | SPX إصدار 17")
+    note = f" · {SRC_NOTE[src]}" if src in SRC_NOTE else ""
+    L.append(f"⚠️ القرار قرارك | 🕒 {now_ny().astimezone(RY).strftime('%H:%M')} الرياض{note} | SPX إصدار 17")
     return "\n".join(L)
 
 
@@ -1520,9 +1550,10 @@ def stops_today(n):
         return 0
 
 
-def follow_payload(p, val, pnl, spot, text, kind):
-    """متابعة العقد: بطاقة صورة وتعليق مختصر (ونص كامل احتياطي)."""
-    full = position_message(p, val, pnl, spot, text, kind)
+def follow_payload(p, val, pnl, spot, text, kind, src=""):
+    """متابعة العقد: بطاقة صورة وتعليق مختصر (ونص كامل احتياطي). src يضيف ملاحظة مصدر السعر في الوضع 1 فقط."""
+    full = position_message(p, val, pnl, spot, text, kind, src)
+    note = f" · {SRC_NOTE[src]}" if src in SRC_NOTE else ""
     pl = (val - p["entry"]) * 100 * p.get("qty", 1)
     head = {"stop": "🛑 وصل الوقف", "tp": "🎯 وصل الهدف", "giveback": "📉 الربح يتراجع",
             "exp_final": "⏰ ينتهي اليوم"}.get(kind, "📈 تحرّك سعر العقد")
@@ -1531,10 +1562,10 @@ def follow_payload(p, val, pnl, spot, text, kind):
     cap = ["📌 <b>متابعة</b> #متابعة", f"{head}: <b>{name}</b>",
            f"💵 دخول <b>{p['entry']:.2f}</b> ← الآن <b>{val:.2f}</b> | <b>{pnl * 100:+.0f}%</b> ({pl:+,.0f}$ على ×{p.get('qty', 1)})",
            f"🛑 الوقف {stop_p:.2f} | 🎯 الهدف {tp_p:.2f}", text,
-           f"⚠️ القرار قرارك | 🕒 {now_ny().astimezone(RY).strftime('%H:%M')} الرياض"]
+           f"⚠️ القرار قرارك | 🕒 {now_ny().astimezone(RY).strftime('%H:%M')} الرياض{note}"]
     args = (("follow", name, ("انتهاء اليوم" + (f" · {p['sym']} {spot:,.0f}" if spot else "")), val, pnl,
              p["entry"], stop_p, tp_p), {"now": val, "badge": head,
-                                         "foot": f"وقت الرصد {now_ny().astimezone(RY).strftime('%H:%M')} الرياض | SPX إصدار 17"})
+                                         "foot": f"وقت الرصد {now_ny().astimezone(RY).strftime('%H:%M')} الرياض{note} | SPX إصدار 17"})
     return (args, "\n".join(cap), full)
 
 
@@ -1582,9 +1613,10 @@ def monitor_positions(n, force=False):
     msgs, track = [], []
     for p0 in keep:
         p = copy.deepcopy(p0) if force else p0
-        q = spx_quote(p)
+        yq, z = spx_quote(p), _live_quote(p)
+        q, src = _pick_quote(yq, z)     # الوضع 1: سعر البيع اللحظي أولاً وياهو احتياط؛ غير ذلك ياهو كما هو
         if not force:
-            _live_shadow(p, q)      # ظل لحظي: تسجيل فقط
+            _live_shadow(p, yq, z, src)
         if q is None:
             continue
         val, spr, spot = q
@@ -1596,7 +1628,7 @@ def monitor_positions(n, force=False):
                       round(val, 3), round(pnl, 3)])
         if new and not force:
             kind, text = new[0]
-            msgs.append(follow_payload(p, val, pnl, spot, text, kind))
+            msgs.append(follow_payload(p, val, pnl, spot, text, kind, src))
     if track and not force:
         import csv
         fresh = not os.path.exists(TRACK_FILE)
