@@ -21,6 +21,7 @@ RECS = os.path.join(ROOT, "stocks_log.csv")
 TRACK = os.path.join(ROOT, "stocks_track.csv")
 LOG = os.path.join(ROOT, "stocks_sector_log.csv")
 REPORT = os.path.join(HERE, "stocks_sector_results.md")
+LIVE = os.path.join(ROOT, "stocks_sector_live_log.csv")   # يكتبه stocks_sector_shadow.py لحظة التوصية (كما يراها البوت)
 SL, TP, MIN_AGE = 0.40, 0.50, 30
 TZ = "America/New_York"
 # صندوق القطاع لكل سهم في قائمة بوت الشركات (WATCHLIST في stocks_bot.py)
@@ -137,6 +138,18 @@ def report(rows):
     if both:
         tp = sum(r["outcome"] == "tp" for r in both)
         L.append(f"| القطاع والقوة النسبية معنا معاً | {len(both)} | {tp} | {len(both) - tp} | {tp / len(both) * 100:.0f}% |")
+    if os.path.exists(LIVE):   # الظل الحي: الفلتر بالبيانات المتأخرة كما رآها البوت لحظة التوصية
+        res = {(r["time"], r["ticker"], r["side"]): r["outcome"] for r in rows}
+        live = [dict(r, outcome=res.get((r["time"], r["ticker"], r["side"]), "")) for r in csv.DictReader(open(LIVE, encoding="utf-8"))]
+        lc = [r for r in live if r["outcome"] in ("tp", "stop")]
+        L += ["", f"## الظل الحي (كما رآه البوت لحظة التوصية، منذ 22/10): {len(live)} توصية، {len(lc)} مغلقة", "",
+              "| الفلتر | مغلقة | هدف | وقف | نسبة الهدف | متوسط (+50/−40) |", "|---|---|---|---|---|---|"]
+        for v, lab in (("1", "يبقيها"), ("0", "يستبعدها")):
+            x = [r for r in lc if r["keep"] == v]
+            if x:
+                tp = sum(r["outcome"] == "tp" for r in x)
+                L.append(f"| {lab} | {len(x)} | {tp} | {len(x) - tp} | {tp / len(x) * 100:.0f}% | "
+                         f"{(tp * TP - (len(x) - tp) * SL) / len(x) * 100:+.0f}% |")
     L += ["", "## التوصيات", "", "| الوقت | السهم | النوع | القطاع | السهم يومياً | القطاع يومياً | مع القطاع | النتيجة |", "|---|---|---|---|---|---|---|---|"]
     for r in rows:
         L.append(f"| {r['time'][:16]} | {r['ticker']} | {r['side']} | {r['sector']} | {float(r['stock_d']) * 100:+.2f}% | "
