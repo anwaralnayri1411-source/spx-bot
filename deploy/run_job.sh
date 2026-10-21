@@ -118,6 +118,16 @@ main() {
       cmds=("$py tasty_health.py")
       files="tasty_health.json"
       msg="tasty health" ;;
+    news_memory)
+      group=news-memory; envs="ANTHROPIC"
+      cmds=("$py research/news_memory.py --collect")
+      files="news_memory_log.csv news_memory_state.json"
+      msg="news memory log" ;;
+    news_memory_eval)
+      group=news-memory
+      cmds=("$py research/news_memory.py --eval")
+      files="news_memory_outcomes.csv research/news_memory_results.md"
+      msg="news memory outcomes" ;;
     live_watcher)
       group=live-watcher; envs="ALPACA"; long=1
       cmds=("$py research/live_watcher.py"); after=("$py research/live_watcher.py --report")
