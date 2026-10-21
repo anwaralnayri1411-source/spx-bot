@@ -100,6 +100,11 @@ main() {
       cmds=("$py research/momentum_shadow.py --loop"); after=("$py research/momentum_shadow.py --report")
       files="momentum_shadow_state.json momentum_shadow_log.csv research/momentum_shadow_results.md"
       msg="momentum shadow log" ;;
+    preopen_shadow)
+      group=preopen-shadow; envs="ALPACA TASTY"
+      cmds=("$py research/preopen_shadow.py")
+      files="preopen_shadow_state.json preopen_shadow_log.csv preopen_shadow_msgs.jsonl research/preopen_shadow_results.md"
+      msg="preopen shadow log" ;;
     tasty_health)
       group=tasty-health; envs="TG TASTY"
       cmds=("$py tasty_health.py")

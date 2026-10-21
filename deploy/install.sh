@@ -21,6 +21,7 @@ news_shadow|Mon..Fri *-*-* 21:25:00
 ladder_exit|Mon..Fri *-*-* 22:15:00
 stocks_sector|Mon..Fri *-*-* 22:40:00
 tasty_health|Mon..Fri *-*-* 13..20:07/15:00
+preopen_shadow|Mon..Fri *-*-* 12,13:55:00;Mon..Fri *-*-* 13,14:46:00;Mon..Fri *-*-* 20,21:20:00
 stocks_watcher|Mon..Fri *-*-* 11..20:00/5:00
 momentum_shadow|Mon..Fri *-*-* 11..20:00/5:00
 live_watcher|Mon..Fri *-*-* 11..20:00/5:00
