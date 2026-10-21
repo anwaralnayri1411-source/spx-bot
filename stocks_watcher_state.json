@@ -96,7 +96,8 @@
    "palantir technologies inc stock pltr moved up by 3 38 on oct 21 a full analysis",
    "palantir rises 4 as software stocks rally servicenow gains 3 salesforce holds flat",
    "pltr stock rebounds to 200 as palantir technologies partners with knox systems for federal software",
-   "palantir technologies nasdaq pltr knox systems deal sparks fresh debate over whether the stock is overpriced"
+   "palantir technologies nasdaq pltr knox systems deal sparks fresh debate over whether the stock is overpriced",
+   "palantir shares gain almost 4 after knox systems deal and strong revenue growth"
   ],
   "GOOGL:PUT": [
    "wall street continues to systematically undervalue alphabet so i continue to buy",
@@ -104,7 +105,8 @@
    "1 98 for alphabet stock as us sanctions hit chinese ai sector",
    "cloudflare inc stock net moved up by 6 86 on oct 21 what signal does it send",
    "datadog inc stock ddog moved up by 7 80 on oct 21 a full analysis",
-   "why are alphabet shares down on tuesday even as nasdaq is up over 1"
+   "why are alphabet shares down on tuesday even as nasdaq is up over 1",
+   "ex google ceo eric schmidt says ai could eliminate 20 of jobs at large companies"
   ]
  },
  "fired": {
@@ -114,10 +116,12 @@
    "down-0.3"
   ],
   "UBER:PUT:2026-10-30:68": [
-   "news:td cowen maintains uber technologies uber us with buy rating maintains target price 118"
+   "news:td cowen maintains uber technologies uber us with buy rating maintains target price 118",
+   "up0.25"
   ],
   "PLTR:CALL:2026-10-30:210": [
-   "news:pltr stock rebounds to 200 as palantir technologies partners with knox systems for federal software"
+   "news:pltr stock rebounds to 200 as palantir technologies partners with knox systems for federal software",
+   "news:palantir shares gain almost 4 after knox systems deal and strong revenue growth"
   ],
   "GOOGL:PUT:2026-10-26:325": [
    "down-0.15",
