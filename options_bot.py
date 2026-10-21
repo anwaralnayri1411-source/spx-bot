@@ -1111,7 +1111,8 @@ def instrument_block(sym, ks, side, S_idx):
     mark = tier(k0["score"]) + ("🔥" if k0.get("flow", 0) >= 1 else "")
     L = [title,
          f"{mark} <b>{root_sym(k0)} {k0['strike']:,.0f} {word}</b> ×{q} | 💵 ${k0['cost']:,.0f} للعقد",
-         f"├ 🟢 <b>دخول</b> بسعر حتى <b>{k0['price']:.2f}</b> | يحتاج {sgn}{need:.2f}% للتعادل"]
+         f"├ 🟢 <b>دخول</b> بسعر حتى <b>{k0['price']:.2f}</b> | يحتاج {sgn}{need:.2f}% للتعادل"
+         + (f" · {SRC_NOTE[k0['price_src']]}" if k0.get("price_src") in SRC_NOTE else "")]
     tp_p, sl_p = k0["price"] * (1 + TAKE_PROFIT), k0["price"] * (1 - STOP_LOSS)
     lv = index_levels(k0, side)
     warn = None
@@ -1178,7 +1179,8 @@ def ticket_lines(sym, k0, side):
         ["⚠️ الهدف والوقف قريبان جداً: الضوضاء قد تضرب الوقف أولاً."]
         if lv and max(abs(lv[0] - k0.get("spot", lv[0])), abs(lv[1] - k0.get("spot", lv[1]))) / k0.get("spot", lv[0]) < 0.0012 else []) + (
         ["⚠️ لا عرض/طلب لهذا العقد في بياناتنا: السعر من آخر صفقة وقد يكون قديماً. تحقق من سعره الحي قبل الدخول."]
-        if k0.get("spr") is None else [])
+        if k0.get("spr") is None else []) + (
+        [f"📡 {SRC_NOTE[k0['price_src']]}"] if k0.get("price_src") in SRC_NOTE else [])
 
 
 def send_signal(a):
@@ -1382,6 +1384,8 @@ def add_positions(n, a):
                                "exp": a["exp"], "entry": round(float(k["price"]), 2), "qty": q,
                                "time": n.isoformat(timespec="minutes"), "entry_spot": round(k.get("spot", a["c"]["S"]), 2),
                                "status": "open", "peak": 0.0, "alerts": {}})
+        if k.get("price_src"):
+            P["positions"][-1].update(entry_src=k["price_src"], entry_yahoo=round(float(k.get("yahoo_price", k["price"])), 2))
         _live_entry(P["positions"][-1])
     save_positions(P)
 
@@ -1431,6 +1435,29 @@ def _pick_quote(q, z):
         val = bid if EXIT_AT_BID else (bid + ask) / 2
         return (val, (ask - bid) / ((ask + bid) / 2), q[2] if q else None), "alpaca"
     return q, "yahoo_fallback"
+
+
+def _live_prices(a):
+    """الوضع 1: سعر الدخول لعقود SPX/SPY من ask اللحظي (اختيار العقد ما زال من سلسلة ياهو).
+    يحدّث price/cost/be/prob/spr ويضع price_src = alpaca | yahoo_fallback، ويحفظ yahoo_price. خارج الوضع 1 لا يغيّر شيئاً."""
+    try:
+        import live_quotes as lq
+        if lq.mode("SPX") != "1":
+            return
+        for k in a["contracts"]:
+            sym = k.get("sym", SYMBOL).lstrip("^")
+            if sym not in LIVE_ROOTS:
+                continue
+            z = lq.quote(lq.occ(LIVE_ROOTS[sym], a["exp"], a["side"], k["strike"]))
+            if z["status"] != "ok":
+                k["price_src"] = "yahoo_fallback"
+                continue
+            bid, ask, K, S = z["bid"], z["ask"], k["strike"], k.get("spot", a["c"]["S"])
+            k.update(yahoo_price=k["price"], price=ask, cost=ask * 100, spr=(ask - bid) / ((ask + bid) / 2),
+                     be=K + ask if a["side"] == "CALL" else K - ask, price_src="alpaca")
+            k["prob"] = prob_beyond(S, k["be"], k["T"], k["iv"], a["side"])
+    except Exception as e:
+        print("تعذر تحديث أسعار الدخول اللحظية:", e)
 
 
 def _live_shadow(p, q, z, src=""):
@@ -1689,6 +1716,8 @@ def run_once(force=False):
             send_telegram(f"⛔ <b>توقف إشارات SPX اليوم</b> #خطة\n{MAX_DAILY_STOPS} إشارات بلغت الوقف اليوم. "
                           "نوقف الجديد حمايةً من التوالي في الخسارة، ونواصل متابعة المفتوح.")
     has_signal = bool(a["contracts"])
+    if has_signal:
+        _live_prices(a)
     if not force:
         try:   # إشارات تجريبية صامتة للتعلم (لا تغيّر التوصية)
             import signals_extra
