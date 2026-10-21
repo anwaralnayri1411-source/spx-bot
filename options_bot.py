@@ -1467,13 +1467,15 @@ def _live_shadow(p, q, z, src=""):
         if z is None:
             return
         yv, el = (q[0] if q else None), p.get("entry_live")
+        t = lq.tasty_quote(z["contract"])       # مصدر ثالث للمقارنة فقط
         lq.log({"time": now_ny().isoformat(timespec="minutes"), "project": "SPX", "id": p["id"], "contract": z["contract"],
                 "yahoo_val": yv if yv is not None else "", "alpaca_bid": z["bid"] or "", "alpaca_ask": z["ask"] or "",
                 "age_s": "" if z["age"] is None else round(z["age"]), "status": z["status"],
                 "entry": p["entry"], "entry_live": el or "",
                 "pnl_yahoo": round(yv / p["entry"] - 1, 3) if yv else "",
                 "pnl_live": round(z["bid"] / el - 1, 3) if (el and z["bid"] and z["status"] == "ok") else "",
-                "source": src})
+                "source": src, "tasty_bid": t["bid"] or "", "tasty_ask": t["ask"] or "",
+                "tasty_age_s": "" if t["age"] is None else round(t["age"]), "tasty_status": t["status"]})
     except Exception as e:
         print("تعذر تسجيل السعر اللحظي:", e)
 

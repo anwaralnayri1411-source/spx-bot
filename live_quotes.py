@@ -4,6 +4,8 @@
   LIVE_QUOTES_SPX / LIVE_QUOTES_STOCKS = "0" (معطّل) | "shadow" (نجلب ونسجّل فقط؛ البوت يستخدم ياهو كما هو)
   | "1" (السعر اللحظي مصدر أول للمتابعة وياهو احتياط؛ لمشاريع LIVE_READY فقط، وغيرها يُعامل "1" كـ "shadow").
 لا ترفع أي استثناء إلى البوت أبداً، وتنتظر 5 ثوانٍ كحد أقصى، وترفض أي تسعيرة أقدم من MAX_AGE.
+وTastytrade مصدر ثالث في الظل فقط (tasty_quote): يُسجَّل بجانب Alpaca ولا يُستخدم في أي حساب. يحتاج
+TASTY_CLIENT_SECRET وTASTY_REFRESH_TOKEN (منحة OAuth شخصية بصلاحية read فقط).
 المخرج: live_quotes_log.csv (للمقارنة).   تقرير: python live_quotes.py --report
 """
 import csv
@@ -22,7 +24,8 @@ TIMEOUT = 5
 MAX_AGE = 120
 LOG = "live_quotes_log.csv"
 LOG_COLS = ["time", "project", "id", "contract", "yahoo_val", "alpaca_bid", "alpaca_ask", "age_s", "status",
-            "entry", "entry_live", "pnl_yahoo", "pnl_live", "source"]
+            "entry", "entry_live", "pnl_yahoo", "pnl_live", "source",
+            "tasty_bid", "tasty_ask", "tasty_age_s", "tasty_status"]
 LIVE_READY = {"SPX"}   # المشاريع التي يُفعَّل فيها "1" فعلياً (الشركات تنتظر نتائج feed_compare)
 
 
@@ -72,6 +75,53 @@ def quote(contract):
         st = "ok" if age is not None and age <= MAX_AGE else "stale"
         return {"bid": float(bid), "ask": float(ask), "age": age, "status": st}
     except Exception as e:  # noqa: BLE001  أي خطأ = رجوع لياهو
+        return {"bid": None, "ask": None, "age": None, "status": f"error:{type(e).__name__}"}
+
+
+TASTY = "https://api.tastyworks.com"
+TASTY_UA = "spxbot/1.0"            # Tastytrade يرفض أي طلب بلا User-Agent بصيغة product/version
+_TASTY_TOK = {}                     # رمز الدخول (15 دقيقة) مرة واحدة لكل تشغيل
+
+
+def _tasty_req(path, data=None, token=None):
+    h = {"User-Agent": TASTY_UA, "Accept": "application/json"}
+    if token:
+        h["Authorization"] = f"Bearer {token}"
+    body = None
+    if data is not None:
+        h["Content-Type"] = "application/json"
+        body = json.dumps(data).encode("utf-8")
+    with urllib.request.urlopen(urllib.request.Request(TASTY + path, data=body, headers=h), timeout=TIMEOUT) as r:
+        return json.loads(r.read().decode("utf-8"))
+
+
+def _tasty_token():
+    t = _TASTY_TOK.get("t")
+    if t and (datetime.now(timezone.utc) - _TASTY_TOK["at"]).total_seconds() < 600:
+        return t
+    d = _tasty_req("/oauth/token", {"grant_type": "refresh_token", "refresh_token": os.getenv("TASTY_REFRESH_TOKEN", ""),
+                                    "client_secret": os.getenv("TASTY_CLIENT_SECRET", "")})
+    _TASTY_TOK.update(t=d["access_token"], at=datetime.now(timezone.utc))
+    return d["access_token"]
+
+
+def tasty_quote(contract):
+    """تسعيرة Tastytrade لرمز OCC (نفس رمز quote()). نفس شكل quote()؛ status = off بلا مفاتيح. لا يرفع استثناء."""
+    if not (os.getenv("TASTY_CLIENT_SECRET") and os.getenv("TASTY_REFRESH_TOKEN")):
+        return {"bid": None, "ask": None, "age": None, "status": "off"}
+    try:
+        m = re.match(r"^([A-Z]+)(\d{6}[CP]\d{8})$", contract)
+        sym = f"{m.group(1):<6}{m.group(2)}"          # Tastytrade: الجذر بعرض 6 خانات بمسافات
+        q = urllib.parse.urlencode({"equity-option": sym})
+        items = (_tasty_req(f"/market-data/by-type?{q}", token=_tasty_token()).get("data") or {}).get("items") or []
+        it = next((x for x in items if x.get("symbol") == sym), None) or {}
+        bid, ask = float(it.get("bid") or 0), float(it.get("ask") or 0)
+        if bid <= 0 or ask <= 0:
+            return {"bid": None, "ask": None, "age": None, "status": "empty"}
+        age = _age(it.get("updated-at") or "")
+        st = "ok" if age is not None and age <= MAX_AGE else "stale"
+        return {"bid": bid, "ask": ask, "age": age, "status": st}
+    except Exception as e:  # noqa: BLE001
         return {"bid": None, "ask": None, "age": None, "status": f"error:{type(e).__name__}"}
 
 
