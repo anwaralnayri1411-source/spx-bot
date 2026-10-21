@@ -2,8 +2,9 @@
 سلّم السترايكات (أسعار CALL/PUT وحجم اليوم) وRSI/ADX ونقطة التحكم وأعلى/أدنى القيمة من حجم SPY.
 
 قراءة فقط (تجربة): لا يغيّر منطق التوصيات ولا يكتب في ملفات حالة البوتات الأخرى،
-ويرسل إلى TELEGRAM_CHAT_ID وحده (بدون المشاهدين الإضافيين) حتى يوافق المستخدم.
-تشغيل: python market_read.py [--no-send] [--html out.html] [--png out.png] [--demo]
+ويرسل إلى TELEGRAM_CHAT_ID وحده، ومع --all (بموافقة المستخدم 22/10) نسخة لـ TELEGRAM_EXTRA_CHAT_IDS أيضاً.
+--session-only: لا يعمل خارج الجلسة (بعد الإغلاق تنتقل السلسلة لليوم التالي فتخرج أرقام خاطئة مثل نقطة الألم).
+تشغيل: python market_read.py [--no-send] [--all] [--session-only] [--html out.html] [--png out.png] [--demo]
 """
 import argparse
 import math
@@ -11,6 +12,7 @@ import math
 LADDER_STEP = 5      # خطوة سترايك SPX
 LADDER_HALF = 11     # عدد السترايكات فوق السعر وتحته في السلّم
 CAPTION = "🧭 <b>قراءة السوق · SPX</b> #قراءة\n🧪 تجربة: تصلك وحدك حتى توافق عليها. قراءة وليست توصية."
+CAPTION_ALL = "🧭 <b>قراءة السوق · SPX</b> #قراءة\nقراءة مشروطة بحركة السعر، وليست توصية دخول."
 
 
 # ====================== مؤشرات ======================
@@ -256,24 +258,37 @@ def demo():
 
 
 # ====================== الإرسال ======================
-def send(png, text_fallback):
-    """إلى المستخدم وحده (TELEGRAM_CHAT_ID). لا يستخدم دوال الإرسال المشتركة حتى لا تصل النسخ للمشاهدين."""
+def send(png, text_fallback, everyone=False):
+    """إلى المستخدم (TELEGRAM_CHAT_ID)، ومع everyone نسخة لكل TELEGRAM_EXTRA_CHAT_IDS (فشل أحدهم لا يوقف الباقين).
+    لا يستخدم دوال الإرسال المشتركة."""
     import os
     import requests
     token, chat = os.getenv("TELEGRAM_TOKEN"), os.getenv("TELEGRAM_CHAT_ID")
     if not token or not chat:
         print("[تنبيه] لم تُضبط TELEGRAM_TOKEN / TELEGRAM_CHAT_ID، فلم تُرسل البطاقة.")
         return False
-    if png:
-        r = requests.post(f"https://api.telegram.org/bot{token}/sendPhoto",
-                          data={"chat_id": chat, "caption": CAPTION, "parse_mode": "HTML"},
-                          files={"photo": ("market_read.png", png, "image/png")}, timeout=40)
-    else:
-        r = requests.post(f"https://api.telegram.org/bot{token}/sendMessage",
-                          data={"chat_id": chat, "text": CAPTION + "\n\n" + text_fallback, "parse_mode": "HTML"}, timeout=15)
-    if not r.ok:
-        print("خطأ من تليجرام:", r.text)
-    return r.ok
+    chats = [chat]
+    if everyone:
+        chats += [x.strip() for x in (os.getenv("TELEGRAM_EXTRA_CHAT_IDS") or "").replace(";", ",").split(",") if x.strip()]
+    cap = CAPTION_ALL if everyone else CAPTION
+    ok = True
+    for cid in chats:
+        try:
+            if png:
+                r = requests.post(f"https://api.telegram.org/bot{token}/sendPhoto",
+                                  data={"chat_id": cid, "caption": cap, "parse_mode": "HTML"},
+                                  files={"photo": ("market_read.png", png, "image/png")}, timeout=40)
+            else:
+                r = requests.post(f"https://api.telegram.org/bot{token}/sendMessage",
+                                  data={"chat_id": cid, "text": cap + "\n\n" + text_fallback, "parse_mode": "HTML"},
+                                  timeout=15)
+            if not r.ok:
+                print("خطأ من تليجرام:", r.text)
+            ok = ok and r.ok
+        except Exception as e:
+            print("تعذر الإرسال:", e)
+            ok = False
+    return ok
 
 
 def text_version(d):
@@ -286,10 +301,17 @@ def text_version(d):
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--no-send", action="store_true")
+    ap.add_argument("--all", action="store_true", help="نسخة لـ TELEGRAM_EXTRA_CHAT_IDS أيضاً")
+    ap.add_argument("--session-only", action="store_true", help="لا شيء خارج الجلسة")
     ap.add_argument("--demo", action="store_true", help="بيانات وهمية لتجربة الشكل")
     ap.add_argument("--html")
     ap.add_argument("--png")
     args = ap.parse_args()
+    if args.session_only:
+        import options_bot as ob
+        if not ob.in_window(ob.now_ny()):
+            print("خارج الجلسة.")
+            raise SystemExit(0)
 
     from market_read_card import card_html, card_png
     d = demo() if args.demo else gather()
@@ -306,4 +328,4 @@ if __name__ == "__main__":
         with open(args.png, "wb") as f:
             f.write(png)
     if not args.no_send:
-        send(png, text_version(d))
+        send(png, text_version(d), everyone=args.all)
