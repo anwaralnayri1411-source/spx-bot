@@ -98,3 +98,5 @@ time,pos_id,ticker,side,event,detail,entry,val,pnl,spot,need,tdays,advice,reason
 2026-10-21T13:13-04:00,PLTR:CALL:2026-10-30:210,PLTR,CALL,news,with/medium: PLTR Stock Rebounds to $200 as Palantir Technologies Partners with Knox Systems for Federal Software - FXLeaders,1.92,2.32,0.2083,200.05,0.0593,8,أبقِ,الخبر في صالح العقد
 2026-10-21T13:13-04:00,GOOGL:PUT:2026-10-26:325,GOOGL,PUT,contract,-22%,1.71,1.34,-0.2164,334.3,0.0329,4,أبقِ,الفكرة قائمة لكن العقد -22%؛ التزم بالوقف عند −40%
 2026-10-21T14:04-04:00,GOOGL:PUT:2026-10-26:325,GOOGL,PUT,contract,-32%,1.71,1.17,-0.3158,334.505,0.0335,4,فكّر بالخروج,العقد خسر 32% (الوقف عند −40%)
+2026-10-21T14:47-04:00,BAC:PUT:2026-10-30:51,BAC,PUT,macro_quiet,against/weak/medium: US and Iranian Statements Highlight Geopolitical Tension Across Maritime and Ukraine Fronts - Sahi,0.81,0.73,-0.0988,51.005,0.016,8,أبقِ,خبر ضد العقد لكن تأثيره محدود، راقب
+2026-10-21T14:47-04:00,UBER:PUT:2026-10-30:68,UBER,PUT,macro_quiet,against/weak/medium: US and Iranian Statements Highlight Geopolitical Tension Across Maritime and Ukraine Fronts - Sahi,1.1,1.25,0.1364,68.145,0.0183,8,أبقِ,خبر ضد العقد لكن تأثيره محدود، راقب
