@@ -47,7 +47,8 @@ SLOW_EVERY_MIN = 15
 MAX_AGE = 120
 FOMC = {"2026-07-29", "2026-09-16", "2026-10-28", "2026-12-09"}
 SIG_COLS = ["date", "time", "side", "edge", "bull", "bear", "spy", "r30", "above_vwap", "orb", "atm", "atm_bid", "atm_ask",
-            "botlike", "botlike_bid", "botlike_ask"]
+            "botlike", "botlike_bid", "botlike_ask",
+            "spx_atm", "spx_atm_bid", "spx_atm_ask", "spx_botlike", "spx_botlike_bid", "spx_botlike_ask"]   # SPXW منذ 21/10
 
 
 # ============================ Alpaca ============================
@@ -91,13 +92,21 @@ def spy_bars(n, days=8):
     return df[(m >= 9 * 60 + 30) & (m < 16 * 60)]
 
 
-def spy_quotes(exp, side, S):
-    """(أقرب عقد للسعر، عقد شبيه بالبوت) من سلسلة SPY اللحظية: كل منهما (رمز، bid، ask) أو None."""
-    d = _get("/v1beta1/options/snapshots/SPY", {"feed": "indicative", "expiration_date": exp, "limit": 1000,
-                                                "strike_price_gte": f"{S - 12:.0f}", "strike_price_lte": f"{S + 12:.0f}"})
+SPX_RATIO = 10.03   # SPX ≈ SPY × 10.03 (قيس 12–16 أكتوبر)؛ لاختيار السترايك فقط
+
+
+def spx_quotes(exp, side, spy):
+    """نفس spy_quotes لعقود SPXW (العقد الذي يرسله البوت عادة)، بتقدير SPX من SPY."""
+    return spy_quotes(exp, side, spy * SPX_RATIO, root="SPXW", wide=120)
+
+
+def spy_quotes(exp, side, S, root="SPY", wide=12):
+    """(أقرب عقد للسعر، عقد شبيه بالبوت) من سلسلة Alpaca اللحظية: كل منهما (رمز، bid، ask) أو None."""
+    d = _get(f"/v1beta1/options/snapshots/{root}", {"feed": "indicative", "expiration_date": exp, "limit": 1000,
+                                                    "strike_price_gte": f"{S - wide:.0f}", "strike_price_lte": f"{S + wide:.0f}"})
     cand = []
     for sym, s in (d.get("snapshots") or {}).items():
-        m = re.match(r"^SPY\d{6}([CP])(\d{8})$", sym)
+        m = re.match(rf"^{root}\d{{6}}([CP])(\d{{8}})$", sym)
         q = s.get("latestQuote") or {}
         if not m or (m.group(1) == "C") != (side == "CALL"):
             continue
@@ -193,6 +202,16 @@ def blocked(n):
 
 # ============================ الحلقة ============================
 def _append(path, cols, row):
+    if os.path.exists(path):                       # عمود جديد أُضيف: نعيد كتابة الملف بالرأس الجديد (القيم القديمة كما هي)
+        with open(path, encoding="utf-8") as f:
+            old = list(csv.reader(f))
+        if old and old[0] != cols and set(old[0]) <= set(cols):
+            with open(path, "w", encoding="utf-8", newline="") as f:
+                w = csv.writer(f)
+                w.writerow(cols)
+                for r in old[1:]:
+                    d = dict(zip(old[0], r))
+                    w.writerow([d.get(k, "") for k in cols])
     new = not os.path.exists(path)
     with open(path, "a", encoding="utf-8", newline="") as f:
         w = csv.writer(f)
@@ -239,6 +258,14 @@ def step(n, df, slow, state):
             row.update(botlike=bl[0], botlike_bid=bl[1], botlike_ask=bl[2])
     except Exception as e:
         print("quotes:", e)
+    try:
+        atm, bl = spx_quotes(n.date().isoformat(), side, c["S"])
+        if atm:
+            row.update(spx_atm=atm[0], spx_atm_bid=atm[1], spx_atm_ask=atm[2])
+        if bl:
+            row.update(spx_botlike=bl[0], spx_botlike_bid=bl[1], spx_botlike_ask=bl[2])
+    except Exception as e:
+        print("spx quotes:", e)
     _append(SIGNALS, SIG_COLS, row)
     state.update(last_side=side, last_t=n.isoformat(), signals=state["signals"] + 1)
     json.dump(state, open(STATE, "w", encoding="utf-8"))
@@ -363,11 +390,14 @@ def report():
         diff = f"{(p2 / p1 - 1) * 100:+.0f}%" if p1 and p2 else "—"
         L.append(f"| {b['date']} | {b['time']} {b['side']} {b['symbol']} {float(b['strike']):g} | {s['time']} | "
                  f"{(bt - st).total_seconds() / 60:.0f} د | {p1 or '—'} | {p2 or '—'} | {diff} |")
-    L += ["", "## كل إشارات المراقب", "", "| اليوم | الوقت | الاتجاه | الفرق | SPY | عقد على السعر (طلب) | شبيه بالبوت (طلب) |",
-          "|---|---|---|---|---|---|---|"]
+    L += ["", "## كل إشارات المراقب", "",
+          "| اليوم | الوقت | الاتجاه | الفرق | SPY | SPY على السعر (طلب) | SPY شبيه بالبوت (طلب) | SPXW على السعر (طلب) | SPXW شبيه بالبوت (طلب) |",
+          "|---|---|---|---|---|---|---|---|---|"]
+    g = lambda s, k: s.get(k) or "—"
     for s in sig[-40:]:
-        L.append(f"| {s['date']} | {s['time']} | {s['side']} | {s['edge']} | {s['spy']} | {s['atm'] or '—'} ({s['atm_ask'] or '—'}) | "
-                 f"{s['botlike'] or '—'} ({s['botlike_ask'] or '—'}) |")
+        L.append(f"| {s['date']} | {s['time']} | {s['side']} | {s['edge']} | {s['spy']} | {g(s, 'atm')} ({g(s, 'atm_ask')}) | "
+                 f"{g(s, 'botlike')} ({g(s, 'botlike_ask')}) | {g(s, 'spx_atm')} ({g(s, 'spx_atm_ask')}) | "
+                 f"{g(s, 'spx_botlike')} ({g(s, 'spx_botlike_ask')}) |")
     L += ["", "- «سبق بـ» = كم دقيقة قبل البوت كان المراقب سيرسل نفس الاتجاه. «الفرق» = كم تغيّر سعر عقد البوت بين اللحظتين.",
           "- هذه إشارات بقرار البوت نفسه لكن كل دقيقة؛ تكرارها أعلى يعني أن قواعد الدخول تحتاج ضبطاً قبل أي تشغيل لحظي حقيقي."]
     with open(REPORT, "w", encoding="utf-8") as f:
