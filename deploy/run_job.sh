@@ -109,6 +109,10 @@ main() {
       group=market-read; envs="TG"; gate="gate_ny_times 1005 1300"
       cmds=("$py market_read.py --all --session-only")
       msg="market read" ;;
+    market_live)
+      group=market-live; envs="TASTY"; long=1
+      cmds=("$py market_live.py --loop")
+      msg="market live" ;;
     tasty_health)
       group=tasty-health; envs="TG TASTY"
       cmds=("$py tasty_health.py")
