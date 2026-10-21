@@ -21,12 +21,12 @@ main() {
   local -a cmds=() after=()
   case "$job" in
     bot)
-      group=spx-bot; envs="TG ALPACA LQ"; extra_env="FORCE=0"
+      group=spx-bot; envs="TG ALPACA LQ TASTY"; extra_env="FORCE=0"
       cmds=("$py options_bot.py")
       files="zero_dte_log.csv messages_options_bot.jsonl bot_state.json spx_positions.json spx_track.csv live_quotes_log.csv signals_extra_log.csv levels_log.csv mgt_compare_log.csv news_shadow_log.csv"
       msg="update bot state" ;;
     spx_monitor)
-      group=spx-bot; envs="TG ALPACA LQ"; gate=gate_open_positions
+      group=spx-bot; envs="TG ALPACA LQ TASTY"; gate=gate_open_positions
       cmds=("$py spx_monitor.py")
       files="spx_positions.json spx_track.csv spx_thesis_log.csv messages_options_bot.jsonl live_quotes_log.csv"
       msg="update spx monitor" ;;
@@ -172,6 +172,7 @@ run_env() {
       TG) [ "$mode" = live ] && e+=(TELEGRAM_TOKEN="${TELEGRAM_TOKEN:-}" TELEGRAM_CHAT_ID="${TELEGRAM_CHAT_ID:-}" TELEGRAM_EXTRA_CHAT_IDS="${TELEGRAM_EXTRA_CHAT_IDS:-}") ;;
       ALPACA) e+=(ALPACA_KEY="${ALPACA_KEY:-}" ALPACA_SECRET="${ALPACA_SECRET:-}") ;;
       ANTHROPIC) e+=(ANTHROPIC_API_KEY="${ANTHROPIC_API_KEY:-}") ;;
+      TASTY) e+=(TASTY_CLIENT_SECRET="${TASTY_CLIENT_SECRET:-}" TASTY_REFRESH_TOKEN="${TASTY_REFRESH_TOKEN:-}") ;;
       LQ) e+=(LIVE_QUOTES_SPX="${LIVE_QUOTES_SPX:-shadow}") ;;
       LQS) e+=(LIVE_QUOTES_STOCKS="${LIVE_QUOTES_STOCKS:-shadow}") ;;
     esac
