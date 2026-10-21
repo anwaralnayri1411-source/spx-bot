@@ -1,0 +1,28 @@
+name: Ladder Exit Shadow
+# ظل الأهداف المتدرجة: بعد الإغلاق يطبّق سياسات خروج مختلفة (قاعدة البوت، أهداف متدرجة مع رفع الوقف، أثلاث، طريقة MGT)
+# على مسارات أسعار عقود توصيات البوت التي يسجّلها live_shadow وcontract_shadow. تسجيل فقط، لا رسائل.
+on:
+  schedule:
+    - cron: "15 22 * * 1-5"   # 18:15 نيويورك صيفاً / 17:15 شتاءً (بعد آخر تشغيل للظلّين)
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: ladder-exit
+  cancel-in-progress: false
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python research/ladder_exit_shadow.py
+      - name: Save results
+        run: |
+          git config user.name "bot"; git config user.email "bot@users.noreply.github.com"
+          for f in ladder_exit_log.csv research/ladder_exit_results.md; do git add "$f" 2>/dev/null || true; done
+          git diff --cached --quiet && exit 0
+          git commit -m "ladder exit shadow results"
+          for i in 1 2 3 4 5; do if git pull --rebase; then git push && break; else git rebase --abort; fi; sleep 5; done
