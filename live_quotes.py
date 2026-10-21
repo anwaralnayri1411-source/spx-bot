@@ -2,7 +2,7 @@
 
 يستخدمها بوت SPX (ولاحقاً بوت الشركات) عبر مفتاح لكل مشروع:
   LIVE_QUOTES_SPX / LIVE_QUOTES_STOCKS = "0" (معطّل) | "shadow" (نجلب ونسجّل فقط؛ البوت يستخدم ياهو كما هو)
-التفعيل الفعلي ("1") مرحلة لاحقة بموافقة المستخدم؛ حالياً تُعامل "1" كـ "shadow".
+  | "1" (السعر اللحظي مصدر أول للمتابعة وياهو احتياط؛ لمشاريع LIVE_READY فقط، وغيرها يُعامل "1" كـ "shadow").
 لا ترفع أي استثناء إلى البوت أبداً، وتنتظر 5 ثوانٍ كحد أقصى، وترفض أي تسعيرة أقدم من MAX_AGE.
 المخرج: live_quotes_log.csv (للمقارنة).   تقرير: python live_quotes.py --report
 """
@@ -22,14 +22,17 @@ TIMEOUT = 5
 MAX_AGE = 120
 LOG = "live_quotes_log.csv"
 LOG_COLS = ["time", "project", "id", "contract", "yahoo_val", "alpaca_bid", "alpaca_ask", "age_s", "status",
-            "entry", "entry_live", "pnl_yahoo", "pnl_live"]
+            "entry", "entry_live", "pnl_yahoo", "pnl_live", "source"]
+LIVE_READY = {"SPX"}   # المشاريع التي يُفعَّل فيها "1" فعلياً (الشركات تنتظر نتائج feed_compare)
 
 
 def mode(project):
-    """'0' أو 'shadow'. أي قيمة أخرى غير '0' تُعامل كظل في هذه المرحلة. بلا مفاتيح = '0'."""
+    """'0' أو 'shadow' أو '1'. بلا مفاتيح = '0'؛ '1' فقط لمشاريع LIVE_READY، وأي قيمة أخرى = ظل."""
     m = (os.getenv(f"LIVE_QUOTES_{project}") or "0").strip().lower()
     if m in ("", "0", "off", "false") or not (os.getenv("ALPACA_KEY") and os.getenv("ALPACA_SECRET")):
         return "0"
+    if m in ("1", "on", "true", "live") and project in LIVE_READY:
+        return "1"
     return "shadow"
 
 
@@ -75,9 +78,24 @@ def quote(contract):
 LOG_STOCKS = "live_quotes_stocks_log.csv"   # ملف منفصل لبوت الشركات: سير عمل مختلف، فلا يتصادم الحفظ
 
 
+def _upgrade_header(path):
+    """سجل قديم بأعمدة أقل: يُعاد كتابته بالأعمدة الحالية (القيم الجديدة فارغة) كي لا تنزاح الصفوف."""
+    with open(path, encoding="utf-8", newline="") as f:
+        r = csv.DictReader(f)
+        if r.fieldnames is None or list(r.fieldnames) == LOG_COLS:
+            return
+        rows = list(r)
+    with open(path, "w", encoding="utf-8", newline="") as f:
+        w = csv.DictWriter(f, fieldnames=LOG_COLS)
+        w.writeheader()
+        w.writerows({k: r.get(k) or "" for k in LOG_COLS} for r in rows)
+
+
 def log(row, path=LOG):
     try:
         new = not os.path.exists(path)
+        if not new:
+            _upgrade_header(path)
         with open(path, "a", encoding="utf-8", newline="") as f:
             w = csv.DictWriter(f, fieldnames=LOG_COLS)
             if new:
