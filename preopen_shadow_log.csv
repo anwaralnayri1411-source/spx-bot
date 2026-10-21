@@ -1,0 +1,5 @@
+date,gap,side,confirm,role,contract,strike,S945,entry_model,entry_live,live_src,out,exit_time,pnl,touch,day_with_gap
+2026-10-21,0.00309,CALL,0,rule,bot,7845.0,7727.03,3.09,,,stop,10:25,-0.474,1,1
+2026-10-21,0.00309,CALL,0,rule,atm,7725.0,7727.03,35.68,,,stop,15:20,-0.313,1,1
+2026-10-21,0.00309,CALL,0,opp,bot,7615.0,7727.03,3.4,,,stop,11:05,-0.593,-1,1
+2026-10-21,0.00309,CALL,0,opp,atm,7725.0,7727.03,33.55,,,stop,11:45,-0.548,-1,1
