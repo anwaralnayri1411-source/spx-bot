@@ -15,10 +15,15 @@
    "costco stock cost flat as walmart takes aim at 1 trillion 2026 holiday sales",
    "dick s pays a higher dividend yield than walmart is it worth the risk",
    "walmart vs costco which big box giant stock is the smarter buy",
-   "walmart launches 120 walmart and sam s club bundle what you need to know"
+   "walmart launches 120 walmart and sam s club bundle what you need to know",
+   "how wmt tgt bj are betting big on ai powered shopping",
+   "walmart stock november 19 2026 is walmart s next report date for walmart stock"
   ],
   "UBER:PUT": [
-   "why is hertz htz stock soaring today"
+   "why is hertz htz stock soaring today",
+   "automatic data processing price pierces pivotal resistance forecast today 21 10 2026",
+   "uber price suffers from negative pressures forecast today 21 10 2026",
+   "mclean based hilton to move stock listing to nasdaq"
   ],
   "DIS:CALL": [
    "skydance rises 5 as steep post merger slide pauses disney gains 2 netflix slips",
@@ -43,39 +48,37 @@
    "netflix stock sinks to 52 week low here s why",
    "nflx stock on track for 26 month low after needham downgrade analyst says content problem seems clear",
    "netflix nasdaq nflx stock price target lowered at guggenheim",
-   "netflix nasdaq nflx stock rating reaffirmed as market perform by citizens jmp"
+   "netflix nasdaq nflx stock rating reaffirmed as market perform by citizens jmp",
+   "netflix inc stock nflx opened down by 3 33 on oct 21 facts behind the movement",
+   "netflix stock slips as weak guidance and downgrades hit",
+   "nflx stock heads for 26 month low after needham downgrade wall street price target cuts youtube threat grows content pro"
   ],
   "AVGO:PUT": [
    "3 artificial intelligence ai stocks that look like great buys right now",
    "broadcom lands major 10 year cloud deal with japanese telecom giant",
    "is broadcom attractive after falling 31 5 from its june high",
    "apple vs broadcom which tech stock is a better buy in 2026",
-   "broadcom launches fraud defense feature for card transactions by investing com"
+   "broadcom launches fraud defense feature for card transactions by investing com",
+   "broadcom upgrading to buy even after i cut management s numbers nasdaq avgo",
+   "investment analysis apple vs broadcom"
   ],
   "V:CALL": [
    "visa nyse v share price forecast analysis",
-   "visa starts ai agent pilot for business payments adds fraud prevention tools"
+   "visa starts ai agent pilot for business payments adds fraud prevention tools",
+   "visa inc announces enhanced capabilities across commercial card growth virtual card security and agentic commerce for co"
   ]
  },
  "fired": {
   "BAC:PUT:2026-10-30:51": [
-   "up0.25"
-  ],
-  "AMZN:CALL:2026-10-26:270": [
+   "up0.25",
    "down-0.15",
-   "down-0.3",
-   "stock1"
-  ],
-  "WMT:CALL:2026-10-30:120": [
-   "down-0.15",
-   "news:walmart slashes membership fees with this new bundle",
-   "down-0.3",
-   "stock1"
+   "down-0.3"
   ],
   "UBER:PUT:2026-10-30:68": [],
   "DIS:CALL:2026-10-30:112": [
    "news:skydance rises 5 as steep post merger slide pauses disney gains 2 netflix slips",
-   "down-0.15"
+   "down-0.15",
+   "down-0.3"
   ],
   "NFLX:PUT:2026-10-30:65": [
    "news:nflx stock falls below 70 as netflix q4 earnings and revenue targets raise the bar",
@@ -84,22 +87,19 @@
    "news:netflix stock sinks as wall street lowers price targets after streamer s q3 earnings and q4 revenue forecast miss",
    "news:bank of america has lowered expectations for netflix nasdaq nflx stock price",
    "news:nflx stock on track for 26 month low after needham downgrade analyst says content problem seems clear",
-   "news:netflix nasdaq nflx stock price target lowered at guggenheim"
-  ],
-  "AVGO:PUT:2026-10-23:325": [
-   "news:broadcom lands major 10 year cloud deal with japanese telecom giant",
-   "down-0.15",
-   "down-0.3"
+   "news:netflix nasdaq nflx stock price target lowered at guggenheim",
+   "sharp@2026-10-21T09:47-04:00",
+   "sharp@2026-10-21T09:57-04:00",
+   "news:netflix stock slips as weak guidance and downgrades hit",
+   "news:nflx stock heads for 26 month low after needham downgrade wall street price target cuts youtube threat grows content pro"
   ],
   "V:CALL:2026-10-23:412.5": [
    "down-0.15",
-   "news:visa starts ai agent pilot for business payments adds fraud prevention tools"
+   "news:visa starts ai agent pilot for business payments adds fraud prevention tools",
+   "down-0.3"
   ]
  },
- "stock_level": {
-  "WMT:CALL:2026-10-30:120": 1,
-  "AMZN:CALL:2026-10-26:270": 1
- },
+ "stock_level": {},
  "seen_macro": [
   "from venezuela to texas to jamnagar marco rubio s dash for energy",
   "food importer sues to block trump s 50 tariffs on canadian goods",
@@ -138,7 +138,15 @@
   "tesla earnings today wall street s last minute verdict on tsla stock",
   "gold steadies as conflicting iran signals cloud path for rates",
   "brookings paper offers broad plan to shrink fed balance sheet",
-  "fed interest rate predictions for october 2026"
+  "fed interest rate predictions for october 2026",
+  "will modi walk away from a trade deal with trump",
+  "commentary why is capital leaving money market funds as rates rise deborah cunningham",
+  "trump says he does not care about usmca as us canada plan trade talks",
+  "oil uscrude price forecast for today tomorrow next week and next 30 days",
+  "wall street futures rise as corporate earnings support technology stocks dow jones s p nasdaq",
+  "wall street ticks higher after spacex jumps and ai stocks steady"
  ],
- "sharp": {}
+ "sharp": {
+  "NFLX:PUT:2026-10-30:65": 67.055
+ }
 }
