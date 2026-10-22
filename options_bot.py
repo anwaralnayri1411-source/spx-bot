@@ -893,9 +893,10 @@ def analyze(force):
     contracts = []
     REJ.clear()
     if not reasons:
-        contracts = pick_contracts(side, spxw_rows(ch.calls if side == "CALL" else ch.puts), S, T, c["vix"])
+        Sp = _live_spot(SYMBOL, S)     # الوضع 1: سعر SPX اللحظي لاختيار العقد (الإشارة نفسها من شموع ياهو)
+        contracts = pick_contracts(side, _live_chain(spxw_rows(ch.calls if side == "CALL" else ch.puts), Sp), Sp, T, c["vix"])
         for k in contracts:
-            k["sym"], k["spot"] = SYMBOL, S
+            k["sym"], k["spot"] = SYMBOL, Sp
         if ALT_SYMBOL:
             try:
                 ts = yf.Ticker(ALT_SYMBOL)
@@ -903,7 +904,8 @@ def analyze(force):
                     chs = ts.option_chain(exp)
                     hs = ts.history(period="1d", interval="5m")["Close"].dropna()
                     Ss = float(hs.iloc[-1]) if len(hs) else float(ts.history(period="5d")["Close"].dropna().iloc[-1])
-                    alt = pick_contracts(side, chs.calls if side == "CALL" else chs.puts, Ss, T, c["vix"])
+                    Ss = _live_spot(ALT_SYMBOL, Ss)
+                    alt = pick_contracts(side, _live_chain(chs.calls if side == "CALL" else chs.puts, Ss), Ss, T, c["vix"])
                     for k in alt:
                         k["sym"], k["spot"] = ALT_SYMBOL, Ss
                     contracts += alt
@@ -918,7 +920,8 @@ def analyze(force):
                     chn = tn.option_chain(exp)
                     hn = tn.history(period="1d", interval="5m")["Close"].dropna()
                     Sn = float(hn.iloc[-1]) if len(hn) else float(tn.history(period="5d")["Close"].dropna().iloc[-1])
-                    nd = pick_contracts(side, chn.calls if side == "CALL" else chn.puts, Sn, T, c["vix"],
+                    Sn = _live_spot(NDX_SYMBOL, Sn)
+                    nd = pick_contracts(side, _live_chain(chn.calls if side == "CALL" else chn.puts, Sn), Sn, T, c["vix"],
                                         NDX_MIN_OI, NDX_MIN_VOL, NDX_MAX_SPREAD)
                     for k in nd[:1]:
                         k["sym"], k["spot"] = "NDX", Sn
@@ -1391,8 +1394,34 @@ def add_positions(n, a):
 
 
 # ---- البيانات اللحظية (Alpaca). المفتاح LIVE_QUOTES_SPX: shadow = تسجيل فقط، 1 = سعر البيع اللحظي مصدر أول للمتابعة وياهو احتياط ----
-LIVE_ROOTS = {"SPX": "SPXW", "SPY": "SPY"}
+LIVE_ROOTS = {"SPX": "SPXW", "SPY": "SPY", "NDX": "NDXP"}
 SRC_NOTE = {"alpaca": "سعر لحظي", "tasty": "سعر لحظي", "yahoo_fallback": "سعر ياهو متأخر"}   # يظهر في المتابعة فقط في الوضع 1
+
+
+def _live_on():
+    try:
+        import live_quotes as lq
+        return lq.mode("SPX") == "1"
+    except Exception:
+        return False
+
+
+def _live_spot(sym, fallback):
+    """الوضع 1: سعر المؤشر/السهم اللحظي (Tastytrade ثم Alpaca)؛ وإلا fallback (ياهو). لاختيار العقد والمتابعة فقط:
+    إشارات الاتجاه ما زالت على شموع ياهو 5د (تغييرها يحتاج اختباراً تاريخياً)."""
+    if not _live_on():
+        return fallback
+    import live_quotes as lq
+    px, _ = lq.spot(sym)
+    return px or fallback
+
+
+def _live_chain(df, S):
+    """الوضع 1: سلسلة ياهو بعرض/طلب لحظي للسترايكات القريبة (±3%)؛ وإلا كما هي."""
+    if not _live_on():
+        return df
+    import live_quotes as lq
+    return lq.overlay(df, S, 0.03)
 
 
 def _live_entry(p):
@@ -1510,7 +1539,7 @@ def spx_quote(p):
             spot = float(t.history(period="1d", interval="5m")["Close"].dropna().iloc[-1])
         except Exception:
             pass
-        return val, spr, spot
+        return val, spr, _live_spot(p["sym"], spot)
     except Exception as e:
         print("تعذر تقييم", p.get("id"), e)
         return None
