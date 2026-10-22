@@ -634,20 +634,44 @@ def add_position(P, n, idea, spy_px):
         return                                   # لا نضاعف عقداً ما زال مفتوحاً
     if same:
         p["id"] = f"{p['id']}@{n.date().isoformat()}"   # نفس العقد بعد إقفاله: صفقة جديدة
+    if k.get("price_src"):
+        p.update(entry_src=k["price_src"], entry_yahoo=round(float(k.get("yahoo_price", k["price"])), 2))
     _live_entry_stock(p)
     P["positions"].append(p)
     P["dirty"] = True
 
 
-# ---- ظل البيانات اللحظية (Alpaca) لبوت الشركات: تسجيل فقط، لا يغيّر أي سعر أو تنبيه. المفتاح LIVE_QUOTES_STOCKS ----
+def _live_prices_stock(ideas):
+    """الوضع 1: سعر الدخول من ask اللحظي (Alpaca ثم Tastytrade)؛ اختيار العقد ما زال من سلسلة ياهو.
+    يحدّث price/cost/be/need/prob ويضع price_src = alpaca | tasty | yahoo_fallback ويحفظ yahoo_price. خارج الوضع 1 لا يغيّر شيئاً."""
+    try:
+        import live_quotes as lq
+        if lq.mode("STOCKS") != "1":
+            return
+        for i in ideas:
+            for k in i["contracts"]:
+                z, src = lq.best_quote(lq.occ(i["ticker"], k["exp"], i["side"], k["strike"]))
+                if not z:
+                    k["price_src"] = "yahoo_fallback"
+                    continue
+                ask, K, S = z["ask"], k["strike"], i["S"]
+                be = K + ask if i["side"] == "CALL" else K - ask
+                T = max(k["dte"], 0.5) / 365
+                k.update(yahoo_price=k["price"], price=ask, cost=ask * 100, be=be, need=abs(be / S - 1),
+                         prob=ob.prob_beyond(S, be, T, k["iv"], i["side"]), price_src=src)
+    except Exception as e:
+        print("تعذر تحديث أسعار الدخول اللحظية:", e)
+
+
+# ---- البيانات اللحظية لبوت الشركات: الوضع 1 يعتمدها (contract_quote)، والظل يسجّل المقارنة. المفتاح LIVE_QUOTES_STOCKS ----
 def _live_entry_stock(p):
     """يحفظ سعر الطلب اللحظي لحظة التوصية في entry_live (للمقارنة فقط؛ الحسابات ما زالت على entry)."""
     try:
         import live_quotes as lq
         if lq.mode("STOCKS") == "0":
             return
-        q = lq.quote(lq.occ(p["ticker"], p["exp"], p["side"], p["strike"]))
-        if q["status"] == "ok":
+        q, _ = lq.best_quote(lq.occ(p["ticker"], p["exp"], p["side"], p["strike"]))
+        if q:
             p["entry_live"] = round(q["ask"], 2)
     except Exception as e:
         print("تعذر جلب سعر الدخول اللحظي:", e)
@@ -661,13 +685,14 @@ def _live_shadow_stock(p, q):
             return
         c = lq.occ(p["ticker"], p["exp"], p["side"], p["strike"])
         z = lq.quote(c)
-        yv, el = (q["val"] if q else None), p.get("entry_live")
+        yv, el = (q.get("yahoo_val") if q else None), p.get("entry_live")
         lq.log({"time": ob.now_ny().isoformat(timespec="minutes"), "project": "STOCKS", "id": p["id"], "contract": c,
                 "yahoo_val": yv if yv is not None else "", "alpaca_bid": z["bid"] or "", "alpaca_ask": z["ask"] or "",
                 "age_s": "" if z["age"] is None else round(z["age"]), "status": z["status"],
                 "entry": p["entry"], "entry_live": el or "",
                 "pnl_yahoo": round(yv / p["entry"] - 1, 3) if yv else "",
-                "pnl_live": round(z["bid"] / el - 1, 3) if (el and z["bid"] and z["status"] == "ok") else ""},
+                "pnl_live": round(z["bid"] / el - 1, 3) if (el and z["bid"] and z["status"] == "ok") else "",
+                "source": q["src"] if q else ""},
                path=lq.LOG_STOCKS)
     except Exception as e:
         print("تعذر تسجيل السعر اللحظي:", e)
@@ -687,6 +712,25 @@ def spot_now(t):
 
 
 def contract_quote(t, p, cache):
+    """سعر العقد: {'val','spr','iv','src','yahoo_val'}. في الوضع 1 (LIVE_QUOTES_STOCKS=1) bid اللحظي من Alpaca ثم Tastytrade
+    (≤120ث) وياهو احتياطاً؛ غير ذلك ياهو كما هو. src: alpaca | tasty | yahoo_fallback | yahoo."""
+    yq = _yahoo_quote(t, p, cache)
+    try:
+        import live_quotes as lq
+        if lq.mode("STOCKS") != "1":
+            return yq and dict(yq, src="yahoo", yahoo_val=yq["val"])
+        z, src = lq.best_quote(lq.occ(p["ticker"], p["exp"], p["side"], p["strike"]))
+    except Exception as e:
+        print("تعذر جلب السعر اللحظي:", e)
+        z = None
+    if not z:
+        return yq and dict(yq, src="yahoo_fallback", yahoo_val=yq["val"])
+    bid, ask = z["bid"], z["ask"]
+    return {"val": bid if ob.EXIT_AT_BID else (bid + ask) / 2, "spr": (ask - bid) / ((ask + bid) / 2),
+            "iv": yq["iv"] if yq else None, "src": src, "yahoo_val": yq["val"] if yq else None}
+
+
+def _yahoo_quote(t, p, cache):
     key = (p["ticker"], p["exp"])
     try:
         if key not in cache:
@@ -1337,7 +1381,8 @@ def idea_line(i):
         f"{'🟢' if call else '🔴'} <b>{ob.esc(i['ticker'])}</b> — <b>{'CALL' if call else 'PUT'}</b> | ⭐ {i['strength']:.1f}{flags}",
         f"🎯 Strike <b>{k['strike']:,.1f}</b> | 📅 <b>{date_ar(k['exp'])}</b>",
         f"💵 <b>${k['cost']:,.0f}</b> ({k['price']:.2f}) | يحتاج {'+' if call else '-'}{k['need'] * 100:.1f}% | {mark}",
-        f"├ 🟢 <b>دخول</b> بسعر حتى <b>{k['price']:.2f}</b> (لا تلاحقه فوق +10%)",
+        f"├ 🟢 <b>دخول</b> بسعر حتى <b>{k['price']:.2f}</b> (لا تلاحقه فوق +10%)"
+        + (f" · 📡 {ob.SRC_NOTE[k['price_src']]}" if k.get("price_src") in ob.SRC_NOTE else ""),
     ] + stock_levels(i, k))
 
 
@@ -1521,6 +1566,7 @@ def do_scan(n, force, P):
         state = {"date": today_s, "sent": {}, "report_sent": False}
     log_line = log_summary()
 
+    _live_prices_stock(a["ideas"])
     if force:
         if a["ideas"]:
             mid = send_ideas(a, a["ideas"])

@@ -26,7 +26,7 @@ LOG = "live_quotes_log.csv"
 LOG_COLS = ["time", "project", "id", "contract", "yahoo_val", "alpaca_bid", "alpaca_ask", "age_s", "status",
             "entry", "entry_live", "pnl_yahoo", "pnl_live", "source",
             "tasty_bid", "tasty_ask", "tasty_age_s", "tasty_status"]
-LIVE_READY = {"SPX"}   # المشاريع التي يُفعَّل فيها "1" فعلياً (الشركات تنتظر نتائج feed_compare)
+LIVE_READY = {"SPX", "STOCKS"}   # المشاريع التي يُفعَّل فيها "1" فعلياً (الشركات منذ 23/10 بعد ثبوت دقة Alpaca لعقودها في feed_compare)
 
 
 def mode(project):
