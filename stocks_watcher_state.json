@@ -8,7 +8,8 @@
    "bac class action notice bank of america sued for securities fraud after 1 2 billion aml and sanctions penalties investor",
    "bank of america corporation bac shares purchased by vest financial llc",
    "bank of america corporation bac shareholder alert",
-   "bank of america vs jpmorgan chase which financial stock is a better buy in 2026"
+   "bank of america vs jpmorgan chase which financial stock is a better buy in 2026",
+   "bank of america corporation nyse bac shareholders to collect 0 32 quarterly dividend"
   ],
   "AMZN:CALL": [
    "starting jan 1 2027 amazon seasonal workers get day one health coverage if they work at least 30 hours a week",
@@ -42,7 +43,10 @@
    "elon musk tesla will end up with a majority of all passenger miles on earth",
    "brokers suggest investing in spotify spot read this before placing a bet",
    "uber delivery driver claims their day took a strange turn when they realized they were delivering something worth more t",
-   "uber eats customer says support admitted there was no photo then denied a refund"
+   "uber eats customer says support admitted there was no photo then denied a refund",
+   "inflamed oil prices send pre markets lower",
+   "uber to use chatgpt work for more than 30k employees openai private",
+   "uber technologies stock bernstein keeps buy rating for uber technologies stock at usd 95 00"
   ],
   "DIS:CALL": [
    "skydance rises 5 as steep post merger slide pauses disney gains 2 netflix slips",
@@ -84,7 +88,9 @@
    "netflix i m buying post earnings nasdaq nflx",
    "netflix stock the revenue slowdown is real the earnings slowdown isn t nasdaq nflx",
    "netflix don t start buying after the q3 post earnings price drop nasdaq nflx",
-   "netflix frustrating growth slowdown but this isn t game over nasdaq nflx"
+   "netflix frustrating growth slowdown but this isn t game over nasdaq nflx",
+   "netflix nflx partners with hoichoi to expand regional streamin",
+   "netflix inc stock nflx moved up by 3 38 on oct 22 what signal does it send"
   ],
   "AVGO:PUT": [
    "3 artificial intelligence ai stocks that look like great buys right now",
@@ -127,7 +133,10 @@
    "pltr price prediction mizuho s 245 target meets a flat macd and a short heavy binance book",
    "palantir expands federal cloud reach pltr remains range bound",
    "palantir makes sovereignty its selling point after ukraine s starlink disruptions",
-   "palantir continues to drive up us government commercial deals into q3 earnings citi"
+   "palantir continues to drive up us government commercial deals into q3 earnings citi",
+   "palantir technologies pltr set for strong revenue growth citi raises price target",
+   "palantir just gained 7 in a month take profits or buy more",
+   "cathie wood sells 16 million of surging tech stock"
   ],
   "GOOGL:PUT": [
    "wall street continues to systematically undervalue alphabet so i continue to buy",
@@ -149,7 +158,8 @@
    "google ceo says fully self improving ai is still a long way off",
    "one reason alphabet stock looks better than its price",
    "google investor alert alphabet inc securities class action notice contact suewallst"
-  ]
+  ],
+  "INTC:PUT": []
  },
  "fired": {
   "BAC:PUT:2026-10-30:51": [
@@ -174,14 +184,17 @@
    "news:stagwell stgw and palantir pltr expand ai partnership to transform enterprise marketing",
    "news:palantir s u s commercial revenue jumps 149 i",
    "sharp@2026-10-22T10:27-04:00",
-   "news:palantir continues to drive up us government commercial deals into q3 earnings citi"
+   "news:palantir continues to drive up us government commercial deals into q3 earnings citi",
+   "news:palantir technologies pltr set for strong revenue growth citi raises price target"
   ],
   "NFLX:PUT:2026-10-30:66": [
    "sharp@2026-10-22T11:00-04:00",
    "down-0.15",
    "sharp@2026-10-22T11:55-04:00",
-   "stock1"
-  ]
+   "stock1",
+   "down-0.3"
+  ],
+  "INTC:PUT:2026-10-30:80": []
  },
  "stock_level": {
   "NFLX:PUT:2026-10-30:66": 1
@@ -343,7 +356,12 @@
   "the fed is raising rates again here s what it means for savers banking advice u s news",
   "stock market today s p 500 dow jones nasdaq 100 futures drop following asian market sell off middle e",
   "given no choice by trump canada embraces asia to save auto heartland squeezed by u s tariffs",
-  "should you buy coinbase stock under 170"
+  "should you buy coinbase stock under 170",
+  "germany s new approach to global trade trumponomics",
+  "interest rate predictions for next week october 27 28 2026",
+  "bitcoin slides towards 81 000 on oil surge",
+  "why is us stock market down today dow jones slips 200 points s p 500 falls 1 25 nasdaq climbs 1 04 as spacex rally ai de",
+  "oct 22 sensex falls 460 pts for third day as oil risks weigh nifty slips below 22 700"
  ],
  "sharp": {
   "BAC:PUT:2026-10-30:51": 50.86,
