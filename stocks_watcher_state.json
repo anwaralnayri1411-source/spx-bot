@@ -100,7 +100,8 @@
    "nflx rises as oversold rsi hints at possible reversal",
    "this congressman can t stop buying the dip on netflix even as it hit 52 week low",
    "netflix stock has a long term opportunity that short term investors may be missing",
-   "netflix s higher spending fails to lift engagement says wolfe in downgrade but argus still sees 46 upside potential"
+   "netflix s higher spending fails to lift engagement says wolfe in downgrade but argus still sees 46 upside potential",
+   "netflix revenue growth slows as it overhauls programming units"
   ],
   "AVGO:PUT": [
    "3 artificial intelligence ai stocks that look like great buys right now",
@@ -148,7 +149,9 @@
    "palantir just gained 7 in a month take profits or buy more",
    "cathie wood sells 16 million of surging tech stock",
    "palantir the business is booming but the stock has a problem nasdaq pltr",
-   "palantir stock gets a 250 price target as citi predicts another strong earnings beat"
+   "palantir stock gets a 250 price target as citi predicts another strong earnings beat",
+   "all eyes will be on palantir on nov 2 here s what it must say to keep the run going",
+   "what palantir technologies holders got right"
   ],
   "GOOGL:PUT": [
    "wall street continues to systematically undervalue alphabet so i continue to buy",
@@ -171,7 +174,10 @@
    "one reason alphabet stock looks better than its price",
    "google investor alert alphabet inc securities class action notice contact suewallst"
   ],
-  "INTC:PUT": []
+  "INTC:PUT": [
+   "intel stock tumbles ahead of q3 earnings",
+   "intel shares drop more than 7 after stock moves further below key moving averages"
+  ]
  },
  "fired": {
   "BAC:PUT:2026-10-30:51": [
@@ -208,9 +214,12 @@
    "sharp@2026-10-22T11:55-04:00",
    "stock1",
    "down-0.3",
-   "news:netflix s higher spending fails to lift engagement says wolfe in downgrade but argus still sees 46 upside potential"
+   "news:netflix s higher spending fails to lift engagement says wolfe in downgrade but argus still sees 46 upside potential",
+   "news:netflix revenue growth slows as it overhauls programming units"
   ],
-  "INTC:PUT:2026-10-30:80": []
+  "INTC:PUT:2026-10-30:80": [
+   "news:intel stock tumbles ahead of q3 earnings"
+  ]
  },
  "stock_level": {
   "NFLX:PUT:2026-10-30:66": 1
@@ -385,7 +394,11 @@
   "graham s republican runoff opponent gives little support for incumbent s campaign",
   "meta tumbles 6 on ai spending fears 10 year yield falls below 5 stock market today",
   "mcguirewoods lawyers author chapter for seventh edition of gir s the guide to sanctions",
-  "allianz investment management the federal reserve and other central banks are expected to raise interest rates by anothe"
+  "allianz investment management the federal reserve and other central banks are expected to raise interest rates by anothe",
+  "the federal reserve is not expected to raise interest rates next week what conditions would be required to change this o",
+  "asx set to slide as wall street falls oil at highest since may",
+  "why is the stock market down today tech stocks plummet as oil tops 112 and geopolitical crises shake wall street",
+  "wall street plunges as ai fatigue bites mega caps and middle east escalation sends brent crude surging past 112"
  ],
  "sharp": {
   "BAC:PUT:2026-10-30:51": 50.86,
