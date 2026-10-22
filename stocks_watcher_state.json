@@ -198,7 +198,8 @@
    "news:td cowen maintains uber technologies uber us with buy rating maintains target price 118",
    "up0.25",
    "news:rbc keeps buy rating for uber technologies stock with usd 105 target",
-   "sharp@2026-10-22T09:45-04:00"
+   "sharp@2026-10-22T09:45-04:00",
+   "sharp@2026-10-22T15:55-04:00"
   ],
   "PLTR:CALL:2026-10-30:210": [
    "news:pltr stock rebounds to 200 as palantir technologies partners with knox systems for federal software",
@@ -215,7 +216,8 @@
    "down-0.15",
    "sharp@2026-10-22T14:00-04:00",
    "news:palantir stock gets a 250 price target as citi predicts another strong earnings beat",
-   "stock1"
+   "stock1",
+   "down-0.3"
   ],
   "NFLX:PUT:2026-10-30:66": [
    "sharp@2026-10-22T11:00-04:00",
@@ -414,11 +416,13 @@
   "u s stocks fall as tech selloff deepens",
   "worldwide drops for ai stocks send wall street toward its worst day since july as oil prices jump",
   "3 30pm markets update",
-  "sinking ai stocks undercut markets worldwide as oil climbs to its highest price since may"
+  "sinking ai stocks undercut markets worldwide as oil climbs to its highest price since may",
+  "nyse is getting trounced in the battle for wall street s biggest ipos",
+  "sensex nifty decline as geopolitical tensions and rising oil prices pressure markets"
  ],
  "sharp": {
   "BAC:PUT:2026-10-30:51": 50.86,
-  "UBER:PUT:2026-10-30:68": 68.01,
+  "UBER:PUT:2026-10-30:68": 69.06,
   "PLTR:CALL:2026-10-30:210": 197.075,
   "NFLX:PUT:2026-10-30:66": 67.14
  }
