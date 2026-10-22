@@ -34,6 +34,9 @@ news_memory_eval|Mon..Fri *-*-* 22:50:00
 # إن كانت تعمل. run_job.sh يتجاهلها خارج 7:00–16:00 نيويورك.
 
 mkdir -p /var/log/spxbot && chown spxbot:spxbot /var/log/spxbot
+# هوية git لمستخدم البوت: بدونها يفشل pull --rebase (إعادة ترتيب الالتزام المحلي) فيضيع حفظ ذلك التشغيل
+sudo -u spxbot -H git config --global user.name spx-bot-server
+sudo -u spxbot -H git config --global user.email bot@users.noreply.github.com
 [ -f /etc/spxbot/runner.env ] || echo "SPXBOT_MODE=shadow" > /etc/spxbot/runner.env
 chown root:spxbot /etc/spxbot/runner.env && chmod 640 /etc/spxbot/runner.env
 
