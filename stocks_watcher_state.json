@@ -50,7 +50,9 @@
    "us stocks starting with u complete list",
    "uber uber rolls out chatgpt work to 30 000 employees amid stoc",
    "uber rolling out chatgpt work to more than 30 000 employees",
-   "10 industrials stocks with whale alerts in today s session"
+   "10 industrials stocks with whale alerts in today s session",
+   "uber puts all 30 000 employees on chatgpt work",
+   "best large cap dip buys at t leads on earnings beat and rising estimates"
   ],
   "DIS:CALL": [
    "skydance rises 5 as steep post merger slide pauses disney gains 2 netflix slips",
@@ -101,7 +103,8 @@
    "this congressman can t stop buying the dip on netflix even as it hit 52 week low",
    "netflix stock has a long term opportunity that short term investors may be missing",
    "netflix s higher spending fails to lift engagement says wolfe in downgrade but argus still sees 46 upside potential",
-   "netflix revenue growth slows as it overhauls programming units"
+   "netflix revenue growth slows as it overhauls programming units",
+   "netflix nflx stock stays cheap after its 58 three year gain"
   ],
   "AVGO:PUT": [
    "3 artificial intelligence ai stocks that look like great buys right now",
@@ -151,7 +154,8 @@
    "palantir the business is booming but the stock has a problem nasdaq pltr",
    "palantir stock gets a 250 price target as citi predicts another strong earnings beat",
    "all eyes will be on palantir on nov 2 here s what it must say to keep the run going",
-   "what palantir technologies holders got right"
+   "what palantir technologies holders got right",
+   "investors should not own bonds for the next 10 years palantir co founder joe lonsdale"
   ],
   "GOOGL:PUT": [
    "wall street continues to systematically undervalue alphabet so i continue to buy",
@@ -176,7 +180,8 @@
   ],
   "INTC:PUT": [
    "intel stock tumbles ahead of q3 earnings",
-   "intel shares drop more than 7 after stock moves further below key moving averages"
+   "intel shares drop more than 7 after stock moves further below key moving averages",
+   "intel stock nasdaq intc slides after revealing manufacturing efforts"
   ]
  },
  "fired": {
@@ -206,7 +211,8 @@
    "news:palantir technologies pltr set for strong revenue growth citi raises price target",
    "down-0.15",
    "sharp@2026-10-22T14:00-04:00",
-   "news:palantir stock gets a 250 price target as citi predicts another strong earnings beat"
+   "news:palantir stock gets a 250 price target as citi predicts another strong earnings beat",
+   "stock1"
   ],
   "NFLX:PUT:2026-10-30:66": [
    "sharp@2026-10-22T11:00-04:00",
@@ -218,11 +224,13 @@
    "news:netflix revenue growth slows as it overhauls programming units"
   ],
   "INTC:PUT:2026-10-30:80": [
-   "news:intel stock tumbles ahead of q3 earnings"
+   "news:intel stock tumbles ahead of q3 earnings",
+   "up0.25"
   ]
  },
  "stock_level": {
-  "NFLX:PUT:2026-10-30:66": 1
+  "NFLX:PUT:2026-10-30:66": 1,
+  "PLTR:CALL:2026-10-30:210": 1
  },
  "seen_macro": [
   "from venezuela to texas to jamnagar marco rubio s dash for energy",
@@ -398,7 +406,9 @@
   "the federal reserve is not expected to raise interest rates next week what conditions would be required to change this o",
   "asx set to slide as wall street falls oil at highest since may",
   "why is the stock market down today tech stocks plummet as oil tops 112 and geopolitical crises shake wall street",
-  "wall street plunges as ai fatigue bites mega caps and middle east escalation sends brent crude surging past 112"
+  "wall street plunges as ai fatigue bites mega caps and middle east escalation sends brent crude surging past 112",
+  "long end us yield hits one month low as ai fears fuel haven bid",
+  "u s stocks fall as tech selloff deepens"
  ],
  "sharp": {
   "BAC:PUT:2026-10-30:51": 50.86,
