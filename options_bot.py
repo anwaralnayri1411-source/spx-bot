@@ -1392,7 +1392,7 @@ def add_positions(n, a):
 
 # ---- البيانات اللحظية (Alpaca). المفتاح LIVE_QUOTES_SPX: shadow = تسجيل فقط، 1 = سعر البيع اللحظي مصدر أول للمتابعة وياهو احتياط ----
 LIVE_ROOTS = {"SPX": "SPXW", "SPY": "SPY"}
-SRC_NOTE = {"alpaca": "سعر لحظي", "yahoo_fallback": "سعر ياهو متأخر"}   # يظهر في المتابعة فقط في الوضع 1
+SRC_NOTE = {"alpaca": "سعر لحظي", "tasty": "سعر لحظي", "yahoo_fallback": "سعر ياهو متأخر"}   # يظهر في المتابعة فقط في الوضع 1
 
 
 def _live_entry(p):
@@ -1401,8 +1401,8 @@ def _live_entry(p):
         import live_quotes as lq
         if lq.mode("SPX") == "0" or p.get("sym") not in LIVE_ROOTS:
             return
-        q = lq.quote(lq.occ(LIVE_ROOTS[p["sym"]], p["exp"], p["side"], p["strike"]))
-        if q["status"] == "ok":
+        q, _ = lq.best_quote(lq.occ(LIVE_ROOTS[p["sym"]], p["exp"], p["side"], p["strike"]))
+        if q:
             p["entry_live"] = round(q["ask"], 2)
     except Exception as e:
         print("تعذر جلب سعر الدخول اللحظي:", e)
@@ -1422,24 +1422,28 @@ def _live_quote(p):
 
 
 def _pick_quote(q, z):
-    """يرجع (q، المصدر). الوضع 1 وتسعيرة Alpaca حديثة (≤120ث) → bid اللحظي (وسعر الأصل من ياهو)؛
-    وإلا ياهو كما هو. المصدر: alpaca | yahoo_fallback (الوضع 1 بلا لحظي) | yahoo (الظل/الإيقاف)."""
+    """يرجع (q، المصدر). الوضع 1: bid اللحظي من Alpaca، وإلا Tastytrade (كلاهما ≤120ث؛ سعر الأصل من ياهو)،
+    وإلا ياهو كما هو. المصدر: alpaca | tasty | yahoo_fallback (الوضع 1 بلا لحظي) | yahoo (الظل/الإيقاف)."""
     try:
         import live_quotes as lq
         if lq.mode("SPX") != "1":
             return q, "yahoo"
     except Exception:
         return q, "yahoo"
-    if z and z.get("status") == "ok":
-        bid, ask = z["bid"], z["ask"]
-        val = bid if EXIT_AT_BID else (bid + ask) / 2
-        return (val, (ask - bid) / ((ask + bid) / 2), q[2] if q else None), "alpaca"
+    if z:
+        b, src = lq.best_quote(z["contract"], alpaca=z)
+        if src == "tasty":
+            z["tasty"] = b      # يُعاد استعماله في سجل الظل بلا طلب ثانٍ
+        if b:
+            bid, ask = b["bid"], b["ask"]
+            val = bid if EXIT_AT_BID else (bid + ask) / 2
+            return (val, (ask - bid) / ((ask + bid) / 2), q[2] if q else None), src
     return q, "yahoo_fallback"
 
 
 def _live_prices(a):
-    """الوضع 1: سعر الدخول لعقود SPX/SPY من ask اللحظي (اختيار العقد ما زال من سلسلة ياهو).
-    يحدّث price/cost/be/prob/spr ويضع price_src = alpaca | yahoo_fallback، ويحفظ yahoo_price. خارج الوضع 1 لا يغيّر شيئاً."""
+    """الوضع 1: سعر الدخول لعقود SPX/SPY من ask اللحظي، Alpaca ثم Tastytrade (اختيار العقد ما زال من سلسلة ياهو).
+    يحدّث price/cost/be/prob/spr ويضع price_src = alpaca | tasty | yahoo_fallback، ويحفظ yahoo_price. خارج الوضع 1 لا يغيّر شيئاً."""
     try:
         import live_quotes as lq
         if lq.mode("SPX") != "1":
@@ -1448,13 +1452,13 @@ def _live_prices(a):
             sym = k.get("sym", SYMBOL).lstrip("^")
             if sym not in LIVE_ROOTS:
                 continue
-            z = lq.quote(lq.occ(LIVE_ROOTS[sym], a["exp"], a["side"], k["strike"]))
-            if z["status"] != "ok":
+            z, src = lq.best_quote(lq.occ(LIVE_ROOTS[sym], a["exp"], a["side"], k["strike"]))
+            if not z:
                 k["price_src"] = "yahoo_fallback"
                 continue
             bid, ask, K, S = z["bid"], z["ask"], k["strike"], k.get("spot", a["c"]["S"])
             k.update(yahoo_price=k["price"], price=ask, cost=ask * 100, spr=(ask - bid) / ((ask + bid) / 2),
-                     be=K + ask if a["side"] == "CALL" else K - ask, price_src="alpaca")
+                     be=K + ask if a["side"] == "CALL" else K - ask, price_src=src)
             k["prob"] = prob_beyond(S, k["be"], k["T"], k["iv"], a["side"])
     except Exception as e:
         print("تعذر تحديث أسعار الدخول اللحظية:", e)
@@ -1467,7 +1471,7 @@ def _live_shadow(p, q, z, src=""):
         if z is None:
             return
         yv, el = (q[0] if q else None), p.get("entry_live")
-        t = lq.tasty_quote(z["contract"])       # مصدر ثالث للمقارنة فقط
+        t = z.get("tasty") or lq.tasty_quote(z["contract"])   # مصدر ثانٍ في الوضع 1 (بعد Alpaca)
         lq.log({"time": now_ny().isoformat(timespec="minutes"), "project": "SPX", "id": p["id"], "contract": z["contract"],
                 "yahoo_val": yv if yv is not None else "", "alpaca_bid": z["bid"] or "", "alpaca_ask": z["ask"] or "",
                 "age_s": "" if z["age"] is None else round(z["age"]), "status": z["status"],

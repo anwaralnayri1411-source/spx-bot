@@ -125,6 +125,18 @@ def tasty_quote(contract):
         return {"bid": None, "ask": None, "age": None, "status": f"error:{type(e).__name__}"}
 
 
+def best_quote(contract, alpaca=None):
+    """السلسلة في الوضع 1 (بطلب المستخدم 23/10): Alpaca ثم Tastytrade، كلاهما حديث (≤MAX_AGE).
+    يرجع (تسعيرة، المصدر alpaca | tasty) أو (None، None) فيرجع المستدعي إلى ياهو. alpaca: تسعيرة جاهزة لتفادي طلب ثانٍ."""
+    a = alpaca or quote(contract)
+    if a["status"] == "ok":
+        return a, "alpaca"
+    t = tasty_quote(contract)
+    if t["status"] == "ok":
+        return t, "tasty"
+    return None, None
+
+
 LOG_STOCKS = "live_quotes_stocks_log.csv"   # ملف منفصل لبوت الشركات: سير عمل مختلف، فلا يتصادم الحفظ
 
 
