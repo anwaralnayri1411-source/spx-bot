@@ -1764,6 +1764,11 @@ def run_once(force=False):
             news_shadow.snapshot(n, a)
         except Exception as e:
             print("تعذر تسجيل ظل فلتر الأخبار:", e)
+        try:   # ظل الإشارة القوية (فرق ≥ 7) بعقد على السعر لغد وخروج بعد 60د: تسجيل فقط (لا يغيّر التوصية)
+            import edge7_shadow
+            edge7_shadow.snapshot(n, a)
+        except Exception as e:
+            print("تعذر تسجيل ظل الإشارة القوية:", e)
     log_line = log_summary()
 
     if force:
