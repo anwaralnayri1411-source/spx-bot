@@ -5,7 +5,9 @@
    "bank of america nyse bac share price forecast analysis",
    "bank of america bac is its wealth business more valuable than the headline bank suggests",
    "bank of america bac stock analysis 2026 graphs risks opportunities valuation fbi ilygklk07z",
-   "bac class action notice bank of america sued for securities fraud after 1 2 billion aml and sanctions penalties investor"
+   "bac class action notice bank of america sued for securities fraud after 1 2 billion aml and sanctions penalties investor",
+   "bank of america corporation bac shares purchased by vest financial llc",
+   "bank of america corporation bac shareholder alert"
   ],
   "AMZN:CALL": [
    "starting jan 1 2027 amazon seasonal workers get day one health coverage if they work at least 30 hours a week",
@@ -32,7 +34,9 @@
    "every woman s worst nightmare after seattle drinker 25 got into car whose driver said it was her uber only to realize as",
    "uber stock guggenheim keeps usd 125 00 target for uber stock",
    "unusually heavy options trading in uber ahead of earnings are investors bullish on uber",
-   "tt blk trgp googl amat aapl anet txg adi jpm dash uri asml cost v lly gd uber dell dxcm panw meta nvda ceg snow pwr incy"
+   "tt blk trgp googl amat aapl anet txg adi jpm dash uri asml cost v lly gd uber dell dxcm panw meta nvda ceg snow pwr incy",
+   "rbc keeps buy rating for uber technologies stock with usd 105 target",
+   "did uber technologies fall catch you out what investors missed"
   ],
   "DIS:CALL": [
    "skydance rises 5 as steep post merger slide pauses disney gains 2 netflix slips",
@@ -97,7 +101,16 @@
    "palantir rises 4 as software stocks rally servicenow gains 3 salesforce holds flat",
    "pltr stock rebounds to 200 as palantir technologies partners with knox systems for federal software",
    "palantir technologies nasdaq pltr knox systems deal sparks fresh debate over whether the stock is overpriced",
-   "palantir shares gain almost 4 after knox systems deal and strong revenue growth"
+   "palantir shares gain almost 4 after knox systems deal and strong revenue growth",
+   "citi maintains palantir pltr us with buy rating raises target price to 250",
+   "palantir stock pltr falls despite reassuring nato on system controls",
+   "etfs are net sellers of palantir pltr on oct 20",
+   "citi raises palantir stock price target",
+   "palantir stock is holding above a key technical level why wall street sees 24 upside",
+   "palantir stock buy sell or hold after a research firm s ai warning",
+   "stagwell stgw and palantir pltr expand ai partnership to transform enterprise marketing",
+   "palantir reports nov 2 here s what i d do if the stock drops nasdaq pltr",
+   "palantir stock today 199 citi 250 213 or 184"
   ],
   "GOOGL:PUT": [
    "wall street continues to systematically undervalue alphabet so i continue to buy",
@@ -106,7 +119,15 @@
    "cloudflare inc stock net moved up by 6 86 on oct 21 what signal does it send",
    "datadog inc stock ddog moved up by 7 80 on oct 21 a full analysis",
    "why are alphabet shares down on tuesday even as nasdaq is up over 1",
-   "ex google ceo eric schmidt says ai could eliminate 20 of jobs at large companies"
+   "ex google ceo eric schmidt says ai could eliminate 20 of jobs at large companies",
+   "google s ai dominance has prediction markets betting big but anthropic could flip the script",
+   "uipath inc path stock price news quote and history",
+   "google s ex ceo says china trails us by 6 months in ai race but could still win due to this strategy w",
+   "google hits major quantum breakthrough this could be a game changer for googl stock",
+   "banking giant cuts google stock price target by 12",
+   "alphabet inc goog googl shareholder alert bernstein",
+   "alphabet the q3 could change everything for investors nasdaq goog nasdaq googl",
+   "alphabet stock slips as openai expands model availability to google cloud"
   ]
  },
  "fired": {
@@ -117,16 +138,24 @@
   ],
   "UBER:PUT:2026-10-30:68": [
    "news:td cowen maintains uber technologies uber us with buy rating maintains target price 118",
-   "up0.25"
+   "up0.25",
+   "news:rbc keeps buy rating for uber technologies stock with usd 105 target"
   ],
   "PLTR:CALL:2026-10-30:210": [
    "news:pltr stock rebounds to 200 as palantir technologies partners with knox systems for federal software",
    "news:palantir shares gain almost 4 after knox systems deal and strong revenue growth",
-   "up0.25"
+   "up0.25",
+   "news:citi maintains palantir pltr us with buy rating raises target price to 250",
+   "news:palantir stock pltr falls despite reassuring nato on system controls",
+   "news:citi raises palantir stock price target",
+   "news:stagwell stgw and palantir pltr expand ai partnership to transform enterprise marketing"
   ],
   "GOOGL:PUT:2026-10-26:325": [
    "down-0.15",
-   "down-0.3"
+   "down-0.3",
+   "news:google hits major quantum breakthrough this could be a game changer for googl stock",
+   "news:banking giant cuts google stock price target by 12",
+   "news:alphabet stock slips as openai expands model availability to google cloud"
   ]
  },
  "stock_level": {},
@@ -204,7 +233,32 @@
   "interest rates should be raised as insurance against persistent inflation economist",
   "asx set for flat start wall street climbs meta ordered to pay 36 billion in privacy case tesla results ahead",
   "us and iranian statements highlight geopolitical tension across maritime and ukraine fronts",
-  "trump can t leave canada alone now his tariffs are facing another lawsuit"
+  "trump can t leave canada alone now his tariffs are facing another lawsuit",
+  "stock market today sensex falls 460 points nifty closes below 22 700 media fmcg and it stocks drag",
+  "has america hit peak protectionism",
+  "gold holds near 4 125 as fed rate outlook and middle east tensions vie for direction",
+  "ta 35 falls 1 0 percent at midday as tech stocks slide",
+  "nasdaq futures crash over 500 points 5 things to know before wall street opens",
+  "sensex tanks 460 points as nifty slips below 22 700 media stocks lead losses",
+  "treasury yields fall as middle east tensions lift oil prices",
+  "what happens to ai stocks if the fed hikes rates again",
+  "canada fires back at trump s tariffs with 6 2bn plan to protect steel and auto jobs",
+  "share market today nifty 50 bank nifty oct 22 2026",
+  "why is bitcoin falling below 82 400 despite 1 1 billion in etf inflows",
+  "here are thursday s top wall street analyst research calls alcoa block constellation energy dick s sporting goods dutch ",
+  "us stock market today s p 500 futures fall on hot uk inflation surprise",
+  "dow jones futures today trading lower 0 56 to 0 68 amid multi day tech led rally major corporate earnings escalating geo",
+  "palantir stock is holding above a key technical level why wall street sees 24 upside",
+  "markets bet warsh holds rates steady but he won t say so himself",
+  "3 u s lender stocks built for higher interest rates",
+  "netflix tesla and meta earnings put wall street s cautious mood back in focus",
+  "us stock market today s p 500 futures slip on weak housing and consumer strain",
+  "canadian stock market today tsx futures firm on oil strength and rate crosswinds",
+  "former new york fed president dudley ai investment will push the federal reserve onto a rate roller coaster",
+  "wall st set for lower open as ai jitters rekindle oil gains",
+  "war in iran federal reserve rate hike weigh on real estate investor outlook according to fall 2026 rcn capital investor ",
+  "gold falls 2 to below 4 100 as markets weigh fed outlook",
+  "more fed hikes are priced in are ai stocks headed for another drop"
  ],
  "sharp": {}
 }
