@@ -4,7 +4,8 @@
   LIVE_QUOTES_SPX / LIVE_QUOTES_STOCKS = "0" (معطّل) | "shadow" (نجلب ونسجّل فقط؛ البوت يستخدم ياهو كما هو)
   | "1" (السعر اللحظي مصدر أول للمتابعة وياهو احتياط؛ لمشاريع LIVE_READY فقط، وغيرها يُعامل "1" كـ "shadow").
 لا ترفع أي استثناء إلى البوت أبداً، وتنتظر 5 ثوانٍ كحد أقصى، وترفض أي تسعيرة أقدم من MAX_AGE.
-وTastytrade مصدر ثالث في الظل فقط (tasty_quote): يُسجَّل بجانب Alpaca ولا يُستخدم في أي حساب. يحتاج
+في الوضع 1 (منذ 23/10): Alpaca ثم Tastytrade ثم ياهو للعقود (best_quote/chain_quotes/overlay)، ولسعر المؤشر والسهم (spot).
+Tastytrade (tasty_quote) يحتاج
 TASTY_CLIENT_SECRET وTASTY_REFRESH_TOKEN (منحة OAuth شخصية بصلاحية read فقط).
 المخرج: live_quotes_log.csv (للمقارنة).   تقرير: python live_quotes.py --report
 """
@@ -134,6 +135,104 @@ def best_quote(contract, alpaca=None):
     t = tasty_quote(contract)
     if t["status"] == "ok":
         return t, "tasty"
+    return None, None
+
+
+# ---- الوضع 1 الكامل (بطلب المستخدم 23/10): سلسلة الخيارات وسعر المؤشر والسهم لحظياً، وياهو احتياط ----
+def _parse_alpaca(s):
+    lq = (s or {}).get("latestQuote") or {}
+    bid, ask = lq.get("bp"), lq.get("ap")
+    if not bid or not ask or bid <= 0 or ask <= 0:
+        return None
+    age = _age(lq.get("t") or "")
+    return {"bid": float(bid), "ask": float(ask), "age": age, "status": "ok"} if age is not None and age <= MAX_AGE else None
+
+
+def _tasty_occ(contract):
+    m = re.match(r"^([A-Z]+)(\d{6}[CP]\d{8})$", contract)
+    return f"{m.group(1):<6}{m.group(2)}" if m else None
+
+
+def chain_quotes(contracts):
+    """{رمز OCC: (تسعيرة، المصدر)} للحديثة فقط (≤MAX_AGE): Alpaca دفعات 100، والباقي من Tastytrade دفعات 50. لا يرفع استثناء."""
+    out, todo = {}, [c for c in dict.fromkeys(contracts) if c]
+    try:
+        for i in range(0, len(todo), 100):
+            q = urllib.parse.urlencode({"symbols": ",".join(todo[i:i + 100]), "feed": FEED})
+            snaps = _get(f"{DATA}/v1beta1/options/snapshots?{q}").get("snapshots") or {}
+            for c, s in snaps.items():
+                z = _parse_alpaca(s)
+                if z:
+                    out[c] = (z, "alpaca")
+    except Exception as e:  # noqa: BLE001
+        print("Alpaca (سلسلة):", type(e).__name__)
+    rest = [c for c in todo if c not in out]
+    if rest and os.getenv("TASTY_CLIENT_SECRET") and os.getenv("TASTY_REFRESH_TOKEN"):
+        try:
+            back = {_tasty_occ(c): c for c in rest if _tasty_occ(c)}
+            keys = list(back)
+            for i in range(0, len(keys), 50):
+                q = urllib.parse.urlencode([("equity-option", k) for k in keys[i:i + 50]])
+                items = (_tasty_req(f"/market-data/by-type?{q}", token=_tasty_token()).get("data") or {}).get("items") or []
+                for it in items:
+                    bid, ask = float(it.get("bid") or 0), float(it.get("ask") or 0)
+                    age = _age(it.get("updated-at") or "")
+                    if bid > 0 and ask > 0 and age is not None and age <= MAX_AGE and it.get("symbol") in back:
+                        out[back[it["symbol"]]] = ({"bid": bid, "ask": ask, "age": age, "status": "ok"}, "tasty")
+        except Exception as e:  # noqa: BLE001
+            print("Tastytrade (سلسلة):", type(e).__name__)
+    return out
+
+
+def overlay(df, S=None, band=None):
+    """نسخة من سلسلة ياهو (DataFrame فيه contractSymbol) بعرض/طلب لحظي حيث يتوفر، وعمود live_src (alpaca/tasty/yahoo).
+    S وband: نجلب فقط السترايكات ضمن ±band من السعر (تقليل الطلبات). الحجم والعقود المفتوحة والتذبذب تبقى من ياهو.
+    عند أي فشل تُرجع السلسلة كما هي."""
+    try:
+        if df is None or df.empty or "contractSymbol" not in df.columns:
+            return df
+        near = df if not (S and band) else df[(df["strike"] / S - 1).abs() <= band]
+        live = chain_quotes([str(c) for c in near["contractSymbol"]])
+        d = df.copy()
+        d["live_src"] = "yahoo"
+        for i, c in zip(d.index, d["contractSymbol"]):
+            if str(c) in live:
+                z, src = live[str(c)]
+                d.at[i, "bid"], d.at[i, "ask"], d.at[i, "live_src"] = z["bid"], z["ask"], src
+        return d
+    except Exception as e:  # noqa: BLE001
+        print("تعذر دمج السلسلة اللحظية:", type(e).__name__)
+        return df
+
+
+INDEXES = {"SPX", "NDX", "VIX", "RUT"}
+
+
+def spot(sym):
+    """(سعر، المصدر) لحظي لمؤشر (SPX/NDX: آخر قيمة من Tastytrade) أو سهم (وسط العرض/الطلب من Tastytrade، وإلا آخر صفقة
+    IEX من Alpaca)، بعمر ≤MAX_AGE؛ وإلا (None، None) فيرجع المستدعي إلى ياهو. لا يرفع استثناء."""
+    sym = sym.lstrip("^").upper()
+    if os.getenv("TASTY_CLIENT_SECRET") and os.getenv("TASTY_REFRESH_TOKEN"):
+        try:
+            kind = "index" if sym in INDEXES else "equity"
+            items = (_tasty_req(f"/market-data/by-type?{urllib.parse.urlencode({kind: sym})}",
+                                token=_tasty_token()).get("data") or {}).get("items") or []
+            it = next((x for x in items if x.get("symbol") == sym), None) or {}
+            age = _age(it.get("updated-at") or "")
+            bid, ask, last = (float(it.get(k) or 0) for k in ("bid", "ask", "last"))
+            px = last if kind == "index" else ((bid + ask) / 2 if bid > 0 and ask > 0 else last)
+            if px > 0 and age is not None and age <= MAX_AGE:
+                return px, "tasty"
+        except Exception as e:  # noqa: BLE001
+            print("Tastytrade (سعر):", type(e).__name__)
+    if sym not in INDEXES:
+        try:
+            t = (_get(f"{DATA}/v2/stocks/snapshots?symbols={sym}&feed=iex").get(sym) or {}).get("latestTrade") or {}
+            age = _age(t.get("t") or "")
+            if t.get("p") and age is not None and age <= MAX_AGE:
+                return float(t["p"]), "alpaca"
+        except Exception as e:  # noqa: BLE001
+            print("Alpaca (سعر):", type(e).__name__)
     return None, None
 
 
