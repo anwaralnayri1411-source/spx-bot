@@ -698,7 +698,35 @@ def _live_shadow_stock(p, q):
         print("تعذر تسجيل السعر اللحظي:", e)
 
 
+def _live_on():
+    try:
+        import live_quotes as lq
+        return lq.mode("STOCKS") == "1"
+    except Exception:
+        return False
+
+
+def _live_px(t):
+    """الوضع 1: سعر السهم اللحظي (Tastytrade ثم Alpaca IEX) أو None فيرجع المستدعي إلى ياهو."""
+    if not _live_on():
+        return None
+    import live_quotes as lq
+    return lq.spot(t.ticker)[0]
+
+
+def _live_chains(chains, side, S):
+    """الوضع 1: سلاسل ياهو بعرض/طلب لحظي لجهة العقد فقط وضمن ±12% من السعر؛ وإلا كما هي."""
+    if not _live_on():
+        return chains
+    import live_quotes as lq
+    return [(e, dte, lq.overlay(c, S, 0.12) if side == "CALL" else c, lq.overlay(p, S, 0.12) if side == "PUT" else p)
+            for e, dte, c, p in chains]
+
+
 def spot_now(t):
+    px = _live_px(t)
+    if px:
+        return px
     try:
         h = t.history(period="1d", interval="5m")["Close"].dropna()
         if len(h):
@@ -1179,6 +1207,9 @@ def completed_volume(df, n):
 
 
 def intraday_price(t, fallback):
+    px = _live_px(t)
+    if px:
+        return px
     try:
         h = t.history(period="1d", interval="5m")["Close"].dropna()
         if len(h):
@@ -1328,7 +1359,7 @@ def analyze(force):
             watch.append((tk, "تحذير سوق: لا نقترح Call الآن"))
             continue
         S = intraday_price(t, s["info"]["S"])
-        contracts = pick_contracts(side, chains, S, s["info"]["rv"], s["info"]["closes"])
+        contracts = pick_contracts(side, _live_chains(chains, side, S), S, s["info"]["rv"], s["info"]["closes"])
         if contracts:   # القوة = نصف قوة الاتجاه + نصف درجة أفضل عقد (حتى لا تتشابه كل الفرص)
             s["strength"] = round(0.5 * min(10.0, abs(edge) * 1.1) + 0.5 * contracts[0]["score"], 1)
         if contracts and dates["earn"] is not None and any(
