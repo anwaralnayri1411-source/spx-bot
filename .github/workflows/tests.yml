@@ -1,0 +1,25 @@
+name: Tests
+# اختبارات آلية لمنطق البوتات (بلا شبكة وبلا مفاتيح). تعمل فقط عند تعديل ملفات بايثون أو الاختبارات، لا بالجدولة.
+# سجلات البوتات (csv/json) لا تشغّلها. لا تُرسل شيئاً ولا تكتب في المستودع.
+on:
+  push:
+    paths:
+      - "**.py"
+      - "tests/**"
+      - ".github/workflows/tests.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: tests
+  cancel-in-progress: true
+jobs:
+  pytest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install pytest yfinance pandas numpy requests anthropic
+      - run: python -m pytest tests -q
