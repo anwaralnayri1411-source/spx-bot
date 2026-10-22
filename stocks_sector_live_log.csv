@@ -1,0 +1,2 @@
+time,ticker,side,sector,stock_d,sector_d,spy_d,sector_h,with_sector,rs_with,keep,data_time
+2026-10-22T10:12-04:00,NFLX,PUT,XLC,0.02241,-0.00982,-0.00917,,1,0,0,10:10
