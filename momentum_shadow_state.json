@@ -1,58 +1,58 @@
 {
  "date": "2026-10-22",
- "open": [],
- "await": [
+ "open": [
   {
    "date": "2026-10-22",
-   "defn": "delayed",
+   "defn": "live",
    "role": "signal",
-   "side": "CALL",
-   "strike": 765.0,
-   "sig_time": "2026-10-22T12:10-04:00",
-   "r30": 0.0026,
-   "entry_time": "2026-10-22T12:10-04:00",
-   "entry_spy": 765.24,
-   "entry": 1.58,
-   "exit": "stop",
-   "exit_time": "12:39",
-   "pnl": -0.462,
-   "peak": 0.133,
+   "side": "PUT",
+   "strike": 763.0,
+   "sig_time": "2026-10-22T12:45-04:00",
+   "r30": -0.00268,
+   "entry_time": "2026-10-22T12:45-04:00",
+   "entry_spy": 763.0,
+   "entry": 1.42,
+   "exit": "",
+   "exit_time": "",
+   "pnl": 0.141,
+   "peak": 0.289,
    "spy_after_60": "",
    "spy_move_pts": "",
-   "checks": 29,
+   "checks": 31,
    "stale": 0,
    "at_ext": 0,
-   "occ": "SPY261022C00765000"
+   "occ": "SPY261022P00763000"
   },
   {
    "date": "2026-10-22",
-   "defn": "delayed",
+   "defn": "live",
    "role": "opposite",
-   "side": "PUT",
-   "strike": 765.0,
-   "sig_time": "2026-10-22T12:10-04:00",
-   "r30": 0.0026,
-   "entry_time": "2026-10-22T12:10-04:00",
-   "entry_spy": 765.24,
-   "entry": 1.35,
-   "exit": "tp",
-   "exit_time": "12:39",
-   "pnl": 0.548,
-   "peak": 0.548,
+   "side": "CALL",
+   "strike": 763.0,
+   "sig_time": "2026-10-22T12:45-04:00",
+   "r30": -0.00268,
+   "entry_time": "2026-10-22T12:45-04:00",
+   "entry_spy": 763.0,
+   "entry": 1.53,
+   "exit": "",
+   "exit_time": "",
+   "pnl": -0.261,
+   "peak": 0.196,
    "spy_after_60": "",
    "spy_move_pts": "",
-   "checks": 29,
+   "checks": 31,
    "stale": 0,
    "at_ext": 0,
-   "occ": "SPY261022P00765000"
+   "occ": "SPY261022C00763000"
   }
  ],
+ "await": [],
  "last": {
   "delayed": "2026-10-22T12:10-04:00",
-  "live": "2026-10-22T11:26-04:00"
+  "live": "2026-10-22T12:45-04:00"
  },
  "count": {
   "delayed": 2,
-  "live": 2
+  "live": 3
  }
 }
