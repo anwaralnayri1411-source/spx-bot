@@ -49,7 +49,8 @@
    "uber technologies stock bernstein keeps buy rating for uber technologies stock at usd 95 00",
    "us stocks starting with u complete list",
    "uber uber rolls out chatgpt work to 30 000 employees amid stoc",
-   "uber rolling out chatgpt work to more than 30 000 employees"
+   "uber rolling out chatgpt work to more than 30 000 employees",
+   "10 industrials stocks with whale alerts in today s session"
   ],
   "DIS:CALL": [
    "skydance rises 5 as steep post merger slide pauses disney gains 2 netflix slips",
@@ -146,7 +147,8 @@
    "palantir technologies pltr set for strong revenue growth citi raises price target",
    "palantir just gained 7 in a month take profits or buy more",
    "cathie wood sells 16 million of surging tech stock",
-   "palantir the business is booming but the stock has a problem nasdaq pltr"
+   "palantir the business is booming but the stock has a problem nasdaq pltr",
+   "palantir stock gets a 250 price target as citi predicts another strong earnings beat"
   ],
   "GOOGL:PUT": [
    "wall street continues to systematically undervalue alphabet so i continue to buy",
@@ -196,7 +198,9 @@
    "sharp@2026-10-22T10:27-04:00",
    "news:palantir continues to drive up us government commercial deals into q3 earnings citi",
    "news:palantir technologies pltr set for strong revenue growth citi raises price target",
-   "down-0.15"
+   "down-0.15",
+   "sharp@2026-10-22T14:00-04:00",
+   "news:palantir stock gets a 250 price target as citi predicts another strong earnings beat"
   ],
   "NFLX:PUT:2026-10-30:66": [
    "sharp@2026-10-22T11:00-04:00",
@@ -378,12 +382,15 @@
   "tech selloff deepens as flight into treasurys drives yields lower",
   "wall street sinks as nasdaq falls over 2 on ai cost worries",
   "meta sinks 6 10 year yield falls below 5 stock market today meta platforms nasdaq meta",
-  "graham s republican runoff opponent gives little support for incumbent s campaign"
+  "graham s republican runoff opponent gives little support for incumbent s campaign",
+  "meta tumbles 6 on ai spending fears 10 year yield falls below 5 stock market today",
+  "mcguirewoods lawyers author chapter for seventh edition of gir s the guide to sanctions",
+  "allianz investment management the federal reserve and other central banks are expected to raise interest rates by anothe"
  ],
  "sharp": {
   "BAC:PUT:2026-10-30:51": 50.86,
   "UBER:PUT:2026-10-30:68": 68.01,
-  "PLTR:CALL:2026-10-30:210": 199.345,
+  "PLTR:CALL:2026-10-30:210": 197.075,
   "NFLX:PUT:2026-10-30:66": 67.14
  }
 }
