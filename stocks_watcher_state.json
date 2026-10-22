@@ -41,7 +41,8 @@
    "is uber stock worth betting on now riding on its expansion drive",
    "elon musk tesla will end up with a majority of all passenger miles on earth",
    "brokers suggest investing in spotify spot read this before placing a bet",
-   "uber delivery driver claims their day took a strange turn when they realized they were delivering something worth more t"
+   "uber delivery driver claims their day took a strange turn when they realized they were delivering something worth more t",
+   "uber eats customer says support admitted there was no photo then denied a refund"
   ],
   "DIS:CALL": [
    "skydance rises 5 as steep post merger slide pauses disney gains 2 netflix slips",
@@ -82,7 +83,8 @@
    "wall street lunch netflix sinks as analysts debate competition and growth prospects",
    "netflix i m buying post earnings nasdaq nflx",
    "netflix stock the revenue slowdown is real the earnings slowdown isn t nasdaq nflx",
-   "netflix don t start buying after the q3 post earnings price drop nasdaq nflx"
+   "netflix don t start buying after the q3 post earnings price drop nasdaq nflx",
+   "netflix frustrating growth slowdown but this isn t game over nasdaq nflx"
   ],
   "AVGO:PUT": [
    "3 artificial intelligence ai stocks that look like great buys right now",
@@ -124,7 +126,8 @@
    "with robust growth palantir stock is worth considering at a premium",
    "pltr price prediction mizuho s 245 target meets a flat macd and a short heavy binance book",
    "palantir expands federal cloud reach pltr remains range bound",
-   "palantir makes sovereignty its selling point after ukraine s starlink disruptions"
+   "palantir makes sovereignty its selling point after ukraine s starlink disruptions",
+   "palantir continues to drive up us government commercial deals into q3 earnings citi"
   ],
   "GOOGL:PUT": [
    "wall street continues to systematically undervalue alphabet so i continue to buy",
@@ -170,14 +173,19 @@
    "news:citi raises palantir stock price target",
    "news:stagwell stgw and palantir pltr expand ai partnership to transform enterprise marketing",
    "news:palantir s u s commercial revenue jumps 149 i",
-   "sharp@2026-10-22T10:27-04:00"
+   "sharp@2026-10-22T10:27-04:00",
+   "news:palantir continues to drive up us government commercial deals into q3 earnings citi"
   ],
   "NFLX:PUT:2026-10-30:66": [
    "sharp@2026-10-22T11:00-04:00",
-   "down-0.15"
+   "down-0.15",
+   "sharp@2026-10-22T11:55-04:00",
+   "stock1"
   ]
  },
- "stock_level": {},
+ "stock_level": {
+  "NFLX:PUT:2026-10-30:66": 1
+ },
  "seen_macro": [
   "from venezuela to texas to jamnagar marco rubio s dash for energy",
   "food importer sues to block trump s 50 tariffs on canadian goods",
@@ -323,12 +331,24 @@
   "us stock market today live dow jones slips 300 points s p 500 slips 1 27 and nasdaq down 2 07 as price tops 111 spacex t",
   "why lazard laz stock is trading lower today",
   "the high rate era is already here are your finances ready",
-  "rob kaplan sees fed hike likely in december warns aggressive tightening may hurt jobs without taming inflation"
+  "rob kaplan sees fed hike likely in december warns aggressive tightening may hurt jobs without taming inflation",
+  "wpi vs cpi the inflation divergence in the two indices",
+  "us weekly jobless claims near 57 year lows",
+  "surging oil prices and fresh tech jitters are hammering stocks",
+  "rising costs and tight budgets strain americans ahead of midterm elections",
+  "will federal reserve raise interest rates in october 2026 expert forecast",
+  "nexo federal reserve decisions put crypto market recovery to the test",
+  "apple stock defies ai trade swings emerges as wall street s hedge against tech volatility",
+  "silver crashes 8 590 kg to a 7 month low gold hits 2 month low what s driving the selloff in precious metals",
+  "the fed is raising rates again here s what it means for savers banking advice u s news",
+  "stock market today s p 500 dow jones nasdaq 100 futures drop following asian market sell off middle e",
+  "given no choice by trump canada embraces asia to save auto heartland squeezed by u s tariffs",
+  "should you buy coinbase stock under 170"
  ],
  "sharp": {
   "BAC:PUT:2026-10-30:51": 50.86,
   "UBER:PUT:2026-10-30:68": 68.01,
   "PLTR:CALL:2026-10-30:210": 199.345,
-  "NFLX:PUT:2026-10-30:66": 66.635
+  "NFLX:PUT:2026-10-30:66": 67.14
  }
 }
