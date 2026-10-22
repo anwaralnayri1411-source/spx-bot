@@ -36,7 +36,7 @@ main() {
       files="stocks_log.csv stocks_track.csv messages_stocks_bot.jsonl stocks_state.json stocks_positions.json stocks_shadow_log.csv stocks_flow_log.csv live_quotes_stocks_log.csv stocks_sector_live_log.csv"
       msg="update stocks state" ;;
     commands)
-      group=commands-bot; envs="TG"
+      group=commands-bot; envs="TG ALPACA LQS TASTY"
       cmds=("$py commands_bot.py")
       files="commands_state.json messages_commands_bot.jsonl stocks_mine.json"
       msg="update commands state" ;;
@@ -91,7 +91,7 @@ main() {
       files="stocks_sector_log.csv research/stocks_sector_results.md research/stocks_open_stop_results.md"
       msg="stocks sector study results" ;;
     stocks_watcher)
-      group=stocks-watcher; envs="TG ALPACA ANTHROPIC"; long=1
+      group=stocks-watcher; envs="TG ALPACA ANTHROPIC LQS TASTY"; long=1
       cmds=("$py stocks_watcher.py")
       files="stocks_watcher_state.json stocks_watcher_log.csv messages_stocks_watcher.jsonl stocks_watcher_health.json"
       msg="stocks watcher log" ;;
