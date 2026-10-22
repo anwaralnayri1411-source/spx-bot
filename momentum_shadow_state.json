@@ -1,6 +1,7 @@
 {
  "date": "2026-10-22",
- "open": [
+ "open": [],
+ "await": [
   {
    "date": "2026-10-22",
    "defn": "delayed",
@@ -12,13 +13,13 @@
    "entry_time": "2026-10-22T12:10-04:00",
    "entry_spy": 765.24,
    "entry": 1.58,
-   "exit": "",
-   "exit_time": "",
-   "pnl": -0.38,
+   "exit": "stop",
+   "exit_time": "12:39",
+   "pnl": -0.462,
    "peak": 0.133,
    "spy_after_60": "",
    "spy_move_pts": "",
-   "checks": 27,
+   "checks": 29,
    "stale": 0,
    "at_ext": 0,
    "occ": "SPY261022C00765000"
@@ -34,19 +35,18 @@
    "entry_time": "2026-10-22T12:10-04:00",
    "entry_spy": 765.24,
    "entry": 1.35,
-   "exit": "",
-   "exit_time": "",
-   "pnl": 0.37,
-   "peak": 0.4,
+   "exit": "tp",
+   "exit_time": "12:39",
+   "pnl": 0.548,
+   "peak": 0.548,
    "spy_after_60": "",
    "spy_move_pts": "",
-   "checks": 27,
+   "checks": 29,
    "stale": 0,
    "at_ext": 0,
    "occ": "SPY261022P00765000"
   }
  ],
- "await": [],
  "last": {
   "delayed": "2026-10-22T12:10-04:00",
   "live": "2026-10-22T11:26-04:00"
