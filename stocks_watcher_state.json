@@ -7,7 +7,8 @@
    "bank of america bac stock analysis 2026 graphs risks opportunities valuation fbi ilygklk07z",
    "bac class action notice bank of america sued for securities fraud after 1 2 billion aml and sanctions penalties investor",
    "bank of america corporation bac shares purchased by vest financial llc",
-   "bank of america corporation bac shareholder alert"
+   "bank of america corporation bac shareholder alert",
+   "bank of america vs jpmorgan chase which financial stock is a better buy in 2026"
   ],
   "AMZN:CALL": [
    "starting jan 1 2027 amazon seasonal workers get day one health coverage if they work at least 30 hours a week",
@@ -37,7 +38,9 @@
    "tt blk trgp googl amat aapl anet txg adi jpm dash uri asml cost v lly gd uber dell dxcm panw meta nvda ceg snow pwr incy",
    "rbc keeps buy rating for uber technologies stock with usd 105 target",
    "did uber technologies fall catch you out what investors missed",
-   "is uber stock worth betting on now riding on its expansion drive"
+   "is uber stock worth betting on now riding on its expansion drive",
+   "elon musk tesla will end up with a majority of all passenger miles on earth",
+   "brokers suggest investing in spotify spot read this before placing a bet"
   ],
   "DIS:CALL": [
    "skydance rises 5 as steep post merger slide pauses disney gains 2 netflix slips",
@@ -117,7 +120,9 @@
    "palantir technologies inc elevates aplos data llc to vanguard elite",
    "palantir s u s commercial revenue jumps 149 i",
    "with robust growth palantir stock is worth considering at a premium",
-   "pltr price prediction mizuho s 245 target meets a flat macd and a short heavy binance book"
+   "pltr price prediction mizuho s 245 target meets a flat macd and a short heavy binance book",
+   "palantir expands federal cloud reach pltr remains range bound",
+   "palantir makes sovereignty its selling point after ukraine s starlink disruptions"
   ],
   "GOOGL:PUT": [
    "wall street continues to systematically undervalue alphabet so i continue to buy",
@@ -136,7 +141,9 @@
    "alphabet the q3 could change everything for investors nasdaq goog nasdaq googl",
    "alphabet stock slips as openai expands model availability to google cloud",
    "alphabet stock drops as us sanctions on chinese ai entities weigh on tech sector",
-   "google ceo says fully self improving ai is still a long way off"
+   "google ceo says fully self improving ai is still a long way off",
+   "one reason alphabet stock looks better than its price",
+   "google investor alert alphabet inc securities class action notice contact suewallst"
   ]
  },
  "fired": {
@@ -163,16 +170,9 @@
    "news:palantir s u s commercial revenue jumps 149 i",
    "sharp@2026-10-22T10:27-04:00"
   ],
-  "GOOGL:PUT:2026-10-26:325": [
-   "down-0.15",
-   "down-0.3",
-   "news:google hits major quantum breakthrough this could be a game changer for googl stock",
-   "news:banking giant cuts google stock price target by 12",
-   "news:alphabet stock slips as openai expands model availability to google cloud",
-   "up0.25",
-   "news:alphabet stock drops as us sanctions on chinese ai entities weigh on tech sector"
-  ],
-  "NFLX:PUT:2026-10-30:66": []
+  "NFLX:PUT:2026-10-30:66": [
+   "sharp@2026-10-22T11:00-04:00"
+  ]
  },
  "stock_level": {},
  "seen_macro": [
@@ -300,11 +300,25 @@
   "stock market today s p 500 nasdaq fall after tesla and meta earnings",
   "wall st opens lower as ai jitters return oil rises",
   "bitcoin ethereum xrp price outlook as us jobless claims hit 57 year low",
-  "the new market backdrop stronger growth tighter labor and higher rates"
+  "the new market backdrop stronger growth tighter labor and higher rates",
+  "stocks fall globally as meta dents ai optimism french bonds hit",
+  "philippine peso sinks to 34th record low of 2026",
+  "oil etfs to benefit as oil prices rally due to geopolitical tensions",
+  "wall street sells off markets dragged by meta and other tech stocks",
+  "nasdaq leads wall street lower on ai spending jitters oil prices rebound",
+  "djia s p 500 and nasdaq nq f futures slide as oil surges and markets digest tesla nasdaq tsla and meta nasdaq meta earni",
+  "south africa s trade with china surges after beijing s zero tariff deal",
+  "11am markets update",
+  "stocks slide after mideast tensions push oil higher",
+  "us jobless claims drop near 57 year low fuelin",
+  "spacex just crushed wall street s q3 targets but a potential tesla merger is even bigger news",
+  "gold price prediction central banks buy 79 tonnes in one month but prices still fall to 4 084",
+  "netflix has another tough month dropping 10 this wall street pro says 90 gains lie ahead"
  ],
  "sharp": {
   "BAC:PUT:2026-10-30:51": 50.86,
   "UBER:PUT:2026-10-30:68": 68.01,
-  "PLTR:CALL:2026-10-30:210": 199.345
+  "PLTR:CALL:2026-10-30:210": 199.345,
+  "NFLX:PUT:2026-10-30:66": 66.635
  }
 }
