@@ -220,7 +220,27 @@ def gather():
     else:
         contracts = "البوت يرى عقوداً مؤهلة، وتصلك في رسالة التوصية المعتادة."
 
+    # بيانات تصميم البطاقة: المستويات بأسمائها (المقاومات والدعوم أولاً)، وشموع 5د للجلسة الأخيرة.
+    # أي مرجع أبعد من 3% عن السعر يُسقط: بعد الإغلاق تنتقل السلسلة لليوم التالي فتخرج قيم شاذة (نقطة الألم 3,200 ليلة 21/10).
+    ok = lambda p: p is not None and abs(p / S - 1) < 0.03       # noqa: E731
+    rf = dict(refs)
+    levels_ = [(p, " · ".join(x for x in nm if x != "رقم دائري") or "مقاومة", "res") for p, nm in plan["res"][:3]]
+    levels_ += [(p, " · ".join(x for x in nm if x != "رقم دائري") or "دعم", "sup") for p, nm in plan["sup"][:3]]
+    levels_ += [(rf[k], k, "ref") for k in ("VWAP", "انقلاب الجاما", "نقطة الألم", "جدار الكول", "جدار البوت", "نقطة التحكم")]
+    if c.get("pd_hl"):
+        levels_ += [(c["pd_hl"][0], "أعلى أمس", "ref"), (c["pd_hl"][1], "أدنى أمس", "ref")]
+    uniq = []
+    for x in levels_:
+        if ok(x[0]) and all(abs(x[0] - y[0]) > 1.2 for y in uniq):
+            uniq.append(x)
+    last_day = ix.index[-1].date()
+    today = ix[ix.index.date == last_day]
+    candles = list(zip(today["Open"], today["High"], today["Low"], today["Close"]))
+    pick = lambda k: rf.get(k) if ok(rf.get(k)) else None    # noqa: E731
+
     return {"time_ry": n.astimezone(ob.RY).strftime("%Y-%m-%d %I:%M %p").replace("AM", "ص").replace("PM", "م") + " الرياض",
+            "plan": {"res": plan["res"], "sup": plan["sup"]}, "levels": uniq, "candles": candles,
+            "vwap": pick("VWAP"), "flip": pick("انقلاب الجاما"), "walls": (pick("جدار البوت"), pick("جدار الكول")),
             "spot": S, "age": c.get("age"), "exp": a["exp"], "dir": dir_, "bull": a["bull"], "bear": a["bear"],
             "res": plan["res"][0], "sup": plan["sup"][0], "rsi": rsi_v, "adx": adx_v, "frames": frames,
             "ladder": rows, "read": build_read(S, dir_, plan, frames, rsi_v, adx_v, m.get("gex"), plan["has_orb"]),
