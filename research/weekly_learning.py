@@ -17,6 +17,9 @@ import pandas as pd
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
+for _p in (ROOT, HERE):      # blocked_shadow (جذر المستودع) وstocks_exit_study (research) للأقسام 7 و8
+    if _p not in sys.path:
+        sys.path.insert(0, _p)
 OUT = os.path.join(HERE, "weekly_learning.md")
 DOW = ["الاثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة"]
 # فرضية «سياق اليوم» (سُجّلت مسبقاً في CLAUDE.md بتاريخ 23/10/2026): حدود الأثلاث تُثبَّت من عينة الاستكشاف (حتى 22/10)،
@@ -252,6 +255,65 @@ def sec_shadows(mom):
     return L or ["لا نتائج مكتملة بعد."]
 
 
+def sec_blocked(log):
+    """ظل الحجب: لكل سبب حجب، هل كان ما حُجب سيربح أم يخسر؟ (blocked_shadow_log.csv)"""
+    if log is None or log.empty:
+        return ["لا حالات مغلقة بعد. الظل يتابع العقود التي حجبتها الشروط حتى هدف/وقف/انتهاء (عقود الشركات أياماً)."]
+    import blocked_shadow as bs
+    d = log[~log["out"].isin(["no_data", ""]) & log["out_pnl"].notna()].copy()
+    d["out_pnl"] = pd.to_numeric(d["out_pnl"], errors="coerce")
+    d = d.dropna(subset=["out_pnl"])
+    if d.empty:
+        return ["لا حالات مغلقة بعد."]
+    L = []
+    for (proj, tag), g in sorted(d.groupby(["project", "tag"])):
+        by_day = {k: v["out_pnl"].tolist() for k, v in g.assign(day=g["entry_time"].str[:10]).groupby("day")}
+        name = " + ".join(bs.LABELS.get(x, x) for x in tag.split("+"))
+        L.append(f"⚖️ {'SPX' if proj == 'spx' else 'الشركات'} | {name}: {cnt(len(g), 'حالة', 'حالات', 'حالة')} في "
+                 f"{cnt(len(by_day), 'يوم', 'أيام', 'يوماً')}، متوسط ما كان سيحدث {g['out_pnl'].mean() * 100:+.0f}% — "
+                 f"{bs.verdict(g['out_pnl'].tolist(), by_day)}")
+    L.append(f"(الحكم يحتاج {bs.MIN_FOR_VERDICT} حالة لكل سبب. متوسط سالب يعني أن الحجب كان في صالحنا.)")
+    return L
+
+
+def sec_exit(exit_log, stocks_lines):
+    """ظل عقد/خروج SPX وSPY (exit_shadow_log.csv) ودراسة وقف سهم الشركات (قراءة فقط)."""
+    L = []
+    if exit_log is not None and len(exit_log):
+        e = exit_log.copy()
+        for c in ("r5040_pnl", "t60_pnl"):
+            e[c] = pd.to_numeric(e[c], errors="coerce")
+        recs = e["pos_id"].nunique()
+        parts = []
+        for rule, name in (("r5040", "قاعدة البوت +50/−40"), ("t60", "خروج بعد 60د")):
+            b, a = e[e["variant"] == "bot"][f"{rule}_pnl"].dropna(), e[e["variant"] == "atm1"][f"{rule}_pnl"].dropna()
+            if len(b) and len(a):
+                parts.append(f"{name}: عقد البوت {b.mean() * 100:+.0f}% مقابل ATM لغد {a.mean() * 100:+.0f}%")
+        L.append(f"⚖️ ظل العقد والخروج (SPX/SPY، {cnt(recs, 'توصية', 'توصيات', 'توصية')} في {cnt(e['date'].nunique(), 'يوم', 'أيام', 'يوماً')}): "
+                 + ("؛ ".join(parts) if parts else "لا نتائج مكتملة") + ". لا قرار قبل 20 توصية.")
+    else:
+        L.append("⚖️ ظل العقد والخروج (SPX/SPY): لا نتائج بعد.")
+    L += stocks_lines
+    return L
+
+
+def stocks_study_lines(positions, track):
+    """سطور دراسة وقف السهم للشركات من stocks_positions.json وstocks_track.csv (نفس دالة research/stocks_exit_study.py)."""
+    try:
+        import stocks_exit_study as sx
+        d = sx.build(positions, track)
+    except Exception:  # noqa: BLE001
+        return []
+    if d is None or d.empty:
+        return []
+    def m(x):
+        return f"{x.dropna().mean() * 100:+.0f}%"
+    long_, short_ = d[d["dte"] >= sx.LONG_DTE]["base"], d[d["dte"] < sx.LONG_DTE]["base"]
+    return [f"⚖️ الشركات (إعادة تشغيل على {cnt(len(d), 'توصية', 'توصيات', 'توصية')} في {cnt(d['entry_day'].nunique(), 'يوم', 'أيام', 'يوماً')}): "
+            f"قاعدة البوت {m(d['base'])}، وقف السهم 1.5% {m(d['s15'])}؛ حسب المدة: {sx.LONG_DTE} أيام فأكثر {m(long_)} "
+            f"({len(long_)}) مقابل الأقصر {m(short_)} ({len(short_)}). عينة صغيرة جداً: للمراقبة لا للحكم."]
+
+
 def build(today=None, data=None):
     """يرجع (نص markdown كامل، رسالة تيليجرام مختصرة)."""
     today = today or datetime.now().date()
@@ -262,14 +324,18 @@ def build(today=None, data=None):
              ("3) الدعم والمقاومة (جدران العقود)", sec_walls(data["snaps"], data["outcomes"])),
              ("4) الأخبار وتأثيرها", sec_news(data["news_md"])),
              ("5) التجارب الظلية", sec_shadows(data["momentum"])),
-             ("6) سياق اليوم: هل يتفوق البوت في الأيام المتحركة؟", sec_context(data.get("trades", pd.DataFrame()), data["tail_days"]))]
+             ("6) سياق اليوم: هل يتفوق البوت في الأيام المتحركة؟", sec_context(data.get("trades", pd.DataFrame()), data["tail_days"])),
+             ("7) الحجب: هل كان في صالحنا؟", sec_blocked(data.get("blocked"))),
+             ("8) العقد والخروج: ظلال ودراسات", sec_exit(data.get("exit_log"), data.get("stocks_study", []))) ]
     md = [f"# ما تعلمناه — أسبوع {since.isoformat()}", "",
           "⚠️ هذا ملخص آلي من سجلات المشروع. العينات صغيرة، وما لم يثبت يُقال صراحة. تعليمي وليس توصية مالية.", ""]
     for title, lines in parts:
         md += [f"## {title}"] + lines + [""]
     tg = [f"📚 <b>ما تعلمناه هذا الأسبوع</b> ({since.strftime('%d/%m')})", ""]
     for title, lines in parts:
-        shown = [x for x in lines if x.startswith("⚖️")] if title.startswith("6)") else lines[:5]     # القسم 6 في الرسالة: الحكم فقط
+        shown = [x for x in lines if x.startswith("⚖️")] if title.startswith(("6)", "7)", "8)")) else lines[:5]     # الأقسام 6–8 في الرسالة: الحكم فقط
+        if title.startswith(("7)", "8)")) and not shown:
+            shown = lines[:1]
         tg += [f"<b>{title}</b>"] + [re.sub(r"\s+$", "", x) for x in shown] + [""]
     tg.append("الملف الكامل: research/weekly_learning.md في المستودع.\n⚠️ عينات صغيرة؛ تعليمي وليس توصية.")
     return "\n".join(md), "\n".join(tg)[:3900]
@@ -284,6 +350,8 @@ def load_data():
     return {"z": _csv("zero_dte_log.csv"), "positions": positions, "stocks_log": _csv("stocks_log.csv"),
             "tail_days": _csv("tail_log_days.csv"), "tail_events": _csv("tail_log_events.csv"),
             "snaps": _csv("gex_snapshots.csv"), "outcomes": _csv("gex_outcomes.csv"), "momentum": _csv("momentum_shadow_log.csv"), "trades": _csv("research/real_price_check_trades.csv"),
+            "blocked": _csv("blocked_shadow_log.csv"), "exit_log": _csv("exit_shadow_log.csv"),
+            "stocks_study": stocks_study_lines(positions, _csv("stocks_track.csv")),
             "news_md": open(p, encoding="utf-8").read() if os.path.exists(p) else ""}
 
 
