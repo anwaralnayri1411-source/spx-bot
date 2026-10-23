@@ -1,0 +1,226 @@
+//@version=5
+// ============================================================================
+// قوة الأوردر بلوك | OB Strength  (تعليمي وليس توصية)
+// مصدر الفكرة: فيديو «درست 100 أوردر بلوك» (TikTok @xiop227): المنطقة الأقوى تجمع سبعة عوامل، نقطة لكل عامل:
+//   1 FVG   اندفاع ترك فجوة سعرية        2 BOS   الاندفاع كسر قمة/قاع سابق      3 Fresh أول لمس للمنطقة
+//   4 Liq   قيعان/قمم متساوية بين الاندفاع واللمس (سيولة الوقف) فوق/تحت المنطقة   5 Time  اللمس في ساعات السيولة (نيويورك)
+//   6 Trend اتجاه واضح (كفاءة السعر) يوافق المنطقة                              7 Conf  شمعة اللمس ممتلئة باتجاه الارتداد
+// المنطق نفسه الذي اختُبر في المستودع (research/ob_strategy_study.py)، فالنتائج هنا قابلة للمقارنة معه.
+// مهم: «السيولة» هنا تُستنتج من الشموع (لا دفتر أوامر Level 2)، والمنطقة = مدى شمعة OB كاملة (high/low).
+// الإعدادات الافتراضية لفريم 5 دقائق. لفريم الساعة جرّب: اندفاع 4، حد الاندفاع 0.30، BOS 6، الاتجاه 8.
+// تسمية الصندوق: F = FVG، B = BOS، T = اتجاه واضح (النقاط المعروفة عند التكوين، والباقي يُحسب عند اللمس).
+// ============================================================================
+// نسخة الاستراتيجية (Strategy Tester): تفتح صفقة عند أول لمس بنقاط ≥ الحد، الوقف خلف المنطقة، الهدف = مضاعف المخاطرة،
+// وتُغلق كل الصفقات قبل نهاية الجلسة. أسعار المؤشر (لا عقود خيارات): تقيس جودة الإشارة لا ربح العقد.
+// التكاليف الافتراضية: عمولة 0.01% لكل أمر + انزلاق 5 نقاط سعرية (ticks)؛ غيّرها من تبويب Properties. بلا تكاليف تبدو النتائج أفضل من الواقع.
+strategy("OB Strength Strategy", shorttitle="OB Strategy", overlay=true, max_boxes_count=300, max_labels_count=500,
+         initial_capital=100000, default_qty_type=strategy.percent_of_equity, default_qty_value=10, pyramiding=0,
+         commission_type=strategy.commission.percent, commission_value=0.01, slippage=5)
+
+// ------------------------------- المدخلات -----------------------------------
+gP = "المناطق"
+nImp     = input.int(6, "عدد شموع الاندفاع بعد شمعة OB", minval=4, maxval=20, group=gP)
+dispPct  = input.float(0.25, "أقل اندفاع % بعد إغلاق OB", minval=0.05, step=0.05, group=gP) / 100
+lb       = input.int(12, "نافذة كسر الهيكل BOS (شموع)", minval=3, group=gP)
+trendN   = input.int(72, "نافذة قياس الاتجاه (شموع)", minval=8, group=gP)
+trendMin = input.float(0.3, "حد كفاءة الاتجاه (0-1)", minval=0.05, maxval=1.0, step=0.05, group=gP)
+fvgMin   = input.float(0.06, "أقل حجم FVG %", minval=0.0, step=0.01, group=gP) / 100
+eqPct    = input.float(0.05, "تساوي القيعان/القمم %", minval=0.0, step=0.01, group=gP) / 100
+confBody = input.float(0.6, "امتلاء شمعة التأكيد (جسم/مدى)", minval=0.3, maxval=1.0, step=0.05, group=gP)
+cool     = input.int(6, "أقل فاصل بين لمستين (شموع)", minval=1, group=gP)
+maxAge   = input.int(600, "عمر المنطقة الأقصى (شموع)", minval=50, group=gP)
+
+gS = "الإشارة"
+minScore = input.int(5, "أقل نقاط للإشارة (من 7)", minval=0, maxval=7, group=gS)
+showLbl  = input.bool(true, "اكتب النقاط عند كل لمس", group=gS)
+
+gT = "الصفقة"
+rr       = input.float(2.0, "الهدف = مضاعف المخاطرة (R)", minval=0.5, step=0.5, group=gT)
+stopBuf  = input.float(0.02, "هامش الوقف خلف المنطقة %", minval=0.0, step=0.01, group=gT) / 100
+noEntryM = input.int(900, "لا دخول بعد (دقيقة من منتصف الليل بتوقيت نيويورك؛ 900 = 15:00)", minval=570, maxval=960, group=gT)
+exitM    = input.int(955, "إغلاق الصفقات عند (دقيقة؛ 955 = 15:55)", minval=570, maxval=960, group=gT)
+
+// ------------------------------- الحالة -------------------------------------
+var float[] zLo    = array.new_float()
+var float[] zHi    = array.new_float()
+var int[]   zSide  = array.new_int()
+var int[]   zBar   = array.new_int()
+var int[]   zFvg   = array.new_int()
+var int[]   zBos   = array.new_int()
+var int[]   zTrend = array.new_int()
+var int[]   zTouch = array.new_int()
+var int[]   zLast  = array.new_int()
+var array<box> zBox = array.new<box>()
+var float[] pvLoP  = array.new_float()
+var int[]   pvLoB  = array.new_int()
+var float[] pvHiP  = array.new_float()
+var int[]   pvHiB  = array.new_int()
+
+// ------------------------------- دوال ---------------------------------------
+fvgAt(int off, int sd) =>
+    ok = false
+    if off >= 0
+        gap = sd == 1 ? low[off] - high[off + 2] : low[off + 2] - high[off]
+        ok := gap > 0 and gap / close[off] >= fvgMin
+    ok
+
+liqCheck(int sd, int iBar, float zl, float zh) =>
+    // قيعان (للشراء) أو قمم (للبيع) متساوية بين الاندفاع واللمس، فوق/تحت المنطقة
+    pr = array.new_float()
+    nLo = array.size(pvLoB)
+    nHi = array.size(pvHiB)
+    if sd == 1 and nLo > 0
+        for p = 0 to nLo - 1
+            b = array.get(pvLoB, p)
+            if b >= iBar + 2 and b <= bar_index - 2 and array.get(pvLoP, p) > zh
+                array.push(pr, array.get(pvLoP, p))
+    if sd == -1 and nHi > 0
+        for p = 0 to nHi - 1
+            b = array.get(pvHiB, p)
+            if b >= iBar + 2 and b <= bar_index - 2 and array.get(pvHiP, p) < zl
+                array.push(pr, array.get(pvHiP, p))
+    found = false
+    n = array.size(pr)
+    if n >= 2
+        for a = 0 to n - 2
+            for c = a + 1 to n - 1
+                x = array.get(pr, a)
+                y = array.get(pr, c)
+                if math.abs(x - y) / x <= eqPct
+                    found := true
+    found
+
+dropZone(int k) =>
+    bx = array.get(zBox, k)
+    box.set_extend(bx, extend.none)
+    box.set_right(bx, bar_index)
+    box.set_bgcolor(bx, color.new(color.gray, 90))
+    box.set_border_color(bx, color.new(color.gray, 60))
+    array.remove(zLo, k)
+    array.remove(zHi, k)
+    array.remove(zSide, k)
+    array.remove(zBar, k)
+    array.remove(zFvg, k)
+    array.remove(zBos, k)
+    array.remove(zTrend, k)
+    array.remove(zTouch, k)
+    array.remove(zLast, k)
+    array.remove(zBox, k)
+
+// ------------------------------- حسابات كل شمعة -----------------------------
+hiImp = ta.highest(high, nImp)
+loImp = ta.lowest(low, nImp)
+hiPre = ta.highest(high, lb)[nImp + 1]
+loPre = ta.lowest(low, lb)[nImp + 1]
+pathLen = math.sum(math.abs(ta.change(close)), trendN)
+pl = ta.pivotlow(low, 1, 1)
+ph = ta.pivothigh(high, 1, 1)
+inSess = not na(time(timeframe.period, "0930-1130,1400-1600", "America/New_York"))
+
+float sigScore = 0.0
+int   sigSide  = 0
+float sigLo    = na
+float sigHi    = na
+
+if barstate.isconfirmed
+    if not na(pl)
+        array.push(pvLoP, pl)
+        array.push(pvLoB, bar_index - 1)
+        if array.size(pvLoB) > 300
+            array.shift(pvLoP)
+            array.shift(pvLoB)
+    if not na(ph)
+        array.push(pvHiP, ph)
+        array.push(pvHiB, bar_index - 1)
+        if array.size(pvHiB) > 300
+            array.shift(pvHiP)
+            array.shift(pvHiB)
+
+    // 1) تحديث المناطق القائمة: كسر بإغلاق أو عمر زائد → تُسقَط؛ لمس → نقاط
+    nz = array.size(zLo)
+    if nz > 0
+        for k = nz - 1 to 0
+            sd = array.get(zSide, k)
+            zl = array.get(zLo, k)
+            zh = array.get(zHi, k)
+            broken = (sd == 1 and close < zl) or (sd == -1 and close > zh)
+            tooOld = bar_index - array.get(zBar, k) > maxAge
+            if broken or tooOld
+                dropZone(k)
+            else
+                touched = (sd == 1 and low <= zh) or (sd == -1 and high >= zl)
+                if touched and bar_index - array.get(zLast, k) >= cool
+                    tc = array.get(zTouch, k)
+                    fresh = tc == 0
+                    liq = liqCheck(sd, array.get(zBar, k), zl, zh)
+                    rng = math.max(high - low, syminfo.mintick)
+                    conf = math.abs(close - open) / rng >= confBody and ((close > open) == (sd == 1))
+                    sc = array.get(zFvg, k) + array.get(zBos, k) + array.get(zTrend, k) + (fresh ? 1 : 0) + (liq ? 1 : 0) + (inSess ? 1 : 0) + (conf ? 1 : 0)
+                    array.set(zTouch, k, tc + 1)
+                    array.set(zLast, k, bar_index)
+                    strong = sc >= minScore
+                    if showLbl or strong
+                        label.new(bar_index, sd == 1 ? low : high, str.tostring(sc) + "/7",
+                                  style = sd == 1 ? label.style_label_up : label.style_label_down,
+                                  color = strong ? (sd == 1 ? color.green : color.red) : color.new(color.gray, 40),
+                                  textcolor = color.white, size = size.small)
+                    if strong and sc > sigScore
+                        sigScore := sc
+                        sigSide := sd
+                        sigLo := zl
+                        sigHi := zh
+                    if strong
+                        alert((sd == 1 ? "شراء" : "بيع") + " | منطقة OB قوية " + str.tostring(sc) + "/7 | " + syminfo.ticker + " " + str.tostring(close), alert.freq_once_per_bar_close)
+                    if tc + 1 >= 2
+                        dropZone(k)
+
+    // 2) منطقة OB جديدة عند الشمعة i = bar_index - nImp (يتأكد اندفاعها بعد nImp شموع)
+    if bar_index > nImp + math.max(lb, trendN) + 3
+        c0 = close[nImp]
+        o0 = open[nImp]
+        bullOB = c0 < o0 and (hiImp - c0) / c0 >= dispPct
+        bearOB = c0 > o0 and (c0 - loImp) / c0 >= dispPct
+        if bullOB or bearOB
+            sd = bullOB ? 1 : -1
+            fvg = fvgAt(nImp - 3, sd) or fvgAt(nImp - 4, sd)
+            bos = sd == 1 ? hiImp > hiPre : loImp < loPre
+            er = math.abs(close - close[trendN]) / math.max(pathLen, 1e-9)
+            trd = er >= trendMin and ((close > close[trendN]) == (sd == 1))
+            zl = low[nImp]
+            zh = high[nImp]
+            tag = (fvg ? "F" : "") + (bos ? "B" : "") + (trd ? "T" : "")
+            bx = box.new(bar_index - nImp, zh, bar_index + 1, zl, xloc = xloc.bar_index, extend = extend.right,
+                         border_color = color.new(sd == 1 ? color.green : color.red, 30),
+                         bgcolor = color.new(sd == 1 ? color.green : color.red, 85),
+                         text = tag, text_color = color.new(color.white, 20), text_size = size.small, text_halign = text.align_left)
+            array.push(zLo, zl)
+            array.push(zHi, zh)
+            array.push(zSide, sd)
+            array.push(zBar, bar_index - nImp)
+            array.push(zFvg, fvg ? 1 : 0)
+            array.push(zBos, bos ? 1 : 0)
+            array.push(zTrend, trd ? 1 : 0)
+            array.push(zTouch, 0)
+            array.push(zLast, -1000)
+            array.push(zBox, bx)
+
+plot(sigScore, "نقاط الإشارة", display = display.data_window)
+
+// ------------------------------- التنفيذ ------------------------------------
+etMin = hour(time, "America/New_York") * 60 + minute(time, "America/New_York")
+canEnter = strategy.position_size == 0 and etMin < noEntryM
+if barstate.isconfirmed and canEnter and sigSide != 0
+    if sigSide == 1
+        stopL = sigLo * (1 - stopBuf)
+        riskL = close - stopL
+        if riskL > 0
+            strategy.entry("OB L", strategy.long)
+            strategy.exit("OB L x", "OB L", stop = stopL, limit = close + rr * riskL)
+    else
+        stopS = sigHi * (1 + stopBuf)
+        riskS = stopS - close
+        if riskS > 0
+            strategy.entry("OB S", strategy.short)
+            strategy.exit("OB S x", "OB S", stop = stopS, limit = close - rr * riskS)
+if etMin >= exitM
+    strategy.close_all(comment = "نهاية الجلسة")
