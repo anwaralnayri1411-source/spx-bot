@@ -26,7 +26,8 @@
    "america s second biggest bank says the stock market is in the midst of a multibillion dollar stampede",
    "first citizens bancshares inc delaware stock fcnca moved up by 8 61 on oct 23 facts behind the movement",
    "best bank stocks to research october 23rd",
-   "bank of america may need a new ceo"
+   "bank of america may need a new ceo",
+   "bank of america stock and 2 top undervalued stocks"
   ],
   "AMZN:CALL": [
    "starting jan 1 2027 amazon seasonal workers get day one health coverage if they work at least 30 hours a week",
@@ -248,7 +249,8 @@
    "hyperscalers microsoft amazon line up with earnings along with servicenow intel",
    "why are nvidia intel and amd stocks rebounding in premarket today october 23",
    "what s going on with intel stock on friday",
-   "intel corp stock falls 8 0 underperforms peers"
+   "intel corp stock falls 8 0 underperforms peers",
+   "intel got its waiver intel stock nasdaq intc gains"
   ],
   "CVX:CALL": [
    "stocks see continued downward pressure from ai anxiety and oil prices",
@@ -315,7 +317,13 @@
    "watch stocks continue to sell off as rising oil prices keep lid on treasuries",
    "ca gas prices drop as diesel hits new high upward swings possible experts say",
    "trump accuses iran of making up attacks and mines to raise oil prices",
-   "can presidents affect gas prices"
+   "can presidents affect gas prices",
+   "equities mostly lower intraday as oil prices soar",
+   "update us equity indexes mixed as technology attempts recovery amid surging crude oil",
+   "oil prices climb as saudi attacks heighten supply concerns",
+   "update equities mostly lower intraday as oil prices soar",
+   "oil markets are on edge ahead of the weekend as midterm elections near and fresh u s strikes on iran are predicted",
+   "oil prices end mixed as traders weigh demand outlook hormuz shipping risks"
   ],
   "TSLA:CALL": [
    "tesla stock consolidates after potential tesla spacex merger exploration increases uncertainty",
@@ -342,7 +350,13 @@
    "oil price nears yearly high is a stock and crypto crash coming",
    "ca gas prices drop as diesel hits new high upward swings possible experts say",
    "trump accuses iran of making up attacks and mines to raise oil prices",
-   "can presidents affect gas prices"
+   "can presidents affect gas prices",
+   "equities mostly lower intraday as oil prices soar",
+   "update us equity indexes mixed as technology attempts recovery amid surging crude oil",
+   "oil prices climb as saudi attacks heighten supply concerns",
+   "update equities mostly lower intraday as oil prices soar",
+   "oil markets are on edge ahead of the weekend as midterm elections near and fresh u s strikes on iran are predicted",
+   "oil prices end mixed as traders weigh demand outlook hormuz shipping risks"
   ],
   "JPM:PUT": []
  },
@@ -353,14 +367,6 @@
    "down-0.3",
    "sharp@2026-10-22T09:45-04:00",
    "news:bank of america bac stock sees fair value cut after q3 and regulatory penalties"
-  ],
-  "UBER:PUT:2026-10-30:68": [
-   "news:td cowen maintains uber technologies uber us with buy rating maintains target price 118",
-   "up0.25",
-   "news:rbc keeps buy rating for uber technologies stock with usd 105 target",
-   "sharp@2026-10-22T09:45-04:00",
-   "sharp@2026-10-22T15:55-04:00",
-   "down-0.15"
   ],
   "INTC:PUT:2026-10-30:80": [
    "news:intel stock tumbles ahead of q3 earnings",
@@ -396,7 +402,12 @@
    "news:oil stocks rally as wti crude price tops 103 devon energy and diamondback energy gain 5 occidental petroleum rises 3",
    "news:u s rig count holds steady as oil prices surge",
    "news:dow falls more than 500 points as oil climbs on iran fears",
-   "news:watch stocks continue to sell off as rising oil prices keep lid on treasuries"
+   "news:watch stocks continue to sell off as rising oil prices keep lid on treasuries",
+   "news:equities mostly lower intraday as oil prices soar",
+   "news:update us equity indexes mixed as technology attempts recovery amid surging crude oil",
+   "news:oil prices climb as saudi attacks heighten supply concerns",
+   "news:update equities mostly lower intraday as oil prices soar",
+   "news:oil markets are on edge ahead of the weekend as midterm elections near and fresh u s strikes on iran are predicted"
   ],
   "TSLA:CALL:2026-10-28:390": [
    "down-0.15",
@@ -412,7 +423,12 @@
    "news:oil stocks rally as wti crude price tops 103 devon energy and diamondback energy gain 5 occidental petroleum rises 3",
    "down-0.3",
    "news:u s rig count holds steady as oil prices surge",
-   "news:dow falls more than 500 points as oil climbs on iran fears"
+   "news:dow falls more than 500 points as oil climbs on iran fears",
+   "news:equities mostly lower intraday as oil prices soar",
+   "news:update us equity indexes mixed as technology attempts recovery amid surging crude oil",
+   "news:oil prices climb as saudi attacks heighten supply concerns",
+   "news:update equities mostly lower intraday as oil prices soar",
+   "news:oil markets are on edge ahead of the weekend as midterm elections near and fresh u s strikes on iran are predicted"
   ],
   "JPM:PUT:2026-10-30:325": [
    "down-0.15"
@@ -699,11 +715,16 @@
   "bitcoin holds near 81 500 amid oil price surge and geopolitical tensions set for first monthly loss since july",
   "sensex extends losing streak investors lose nearly rs 21 lakh cr in four sessions",
   "why is us stock market down today dow jones slips 500 points s p 500 falls 0 24 nasdaq climbs 0 13 as spacex rally ai de",
-  "global fx market summary oil shock safe haven shifts central bank divides shake markets 23 october 2026"
+  "global fx market summary oil shock safe haven shifts central bank divides shake markets 23 october 2026",
+  "dow s p 500 fall tech steadies to end rocky week",
+  "federal reserve october hold makes december rate hike more likely td securities",
+  "france warns of rising oil prices as trump hints at more strikes on iran",
+  "canadian real estate prices to fall even further oxford economics",
+  "us israel iran war latest live news oil prices surges 4 to 117 45 as bessent claims us pressure has decimated tehran s o",
+  "us stock market live dow jones slips 600 points s p 500 falls 0 40 and nasdaq edges lower as oil tops 117 nvidia intel c"
  ],
  "sharp": {
   "BAC:PUT:2026-10-30:51": 50.86,
-  "UBER:PUT:2026-10-30:68": 69.06,
   "INTC:PUT:2026-10-30:80": 87.37
  }
 }
