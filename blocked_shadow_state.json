@@ -14,8 +14,8 @@
    "strength": "4.6",
    "occ": "XOM261030C00190000",
    "peak_pnl": 0.0,
-   "close_pnl": -0.279,
-   "quotes": 11,
+   "close_pnl": -0.264,
+   "quotes": 12,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -33,9 +33,9 @@
    "edge": "6.5",
    "strength": "8.6",
    "occ": "NFLX261106P00066000",
-   "peak_pnl": 0.074,
-   "close_pnl": 0.074,
-   "quotes": 11,
+   "peak_pnl": 0.116,
+   "close_pnl": 0.116,
+   "quotes": 12,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -53,9 +53,9 @@
    "edge": "6.5",
    "strength": "6.1",
    "occ": "UBER261030P00067000",
-   "peak_pnl": 0.108,
-   "close_pnl": 0.108,
-   "quotes": 11,
+   "peak_pnl": 0.145,
+   "close_pnl": 0.145,
+   "quotes": 12,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -74,8 +74,8 @@
    "strength": "4.6",
    "occ": "CVX261030C00240000",
    "peak_pnl": 0.0,
-   "close_pnl": -0.201,
-   "quotes": 2,
+   "close_pnl": -0.251,
+   "quotes": 3,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -90,7 +90,10 @@
   "20261023T1242|stocks|open_same_dir|UBER|PUT|67|2026-10-30",
   "20261023T1300|stocks|max_ideas_cap|CVX|CALL|240|2026-10-30",
   "20261023T1300|stocks|open_same_dir|NFLX|PUT|66|2026-10-30",
-  "20261023T1300|stocks|open_same_dir|UBER|PUT|67|2026-10-30"
+  "20261023T1300|stocks|open_same_dir|UBER|PUT|67|2026-10-30",
+  "20261023T1312|stocks|same_side_cap|UBER|PUT|67|2026-10-30",
+  "20261023T1312|stocks|max_ideas_cap|XOM|CALL|187.5|2026-10-30",
+  "20261023T1312|stocks|open_same_dir|NFLX|PUT|66|2026-10-30"
  ],
  "last": {
   "spx|CALL|SPY": "2026-10-23T12:05-04:00",
