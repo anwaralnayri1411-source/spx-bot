@@ -33,7 +33,7 @@ main() {
     stocks)
       group=stocks-bot; envs="TG ALPACA LQS TASTY"; extra_env="FORCE=0 BOT_MODE=scan"
       cmds=("$py stocks_bot.py")
-      files="stocks_log.csv stocks_track.csv messages_stocks_bot.jsonl stocks_state.json stocks_positions.json stocks_shadow_log.csv stocks_flow_log.csv live_quotes_stocks_log.csv stocks_sector_live_log.csv data_gaps_stocks_log.csv blocked_inbox_stocks.csv"
+      files="stocks_log.csv stocks_track.csv messages_stocks_bot.jsonl stocks_state.json stocks_positions.json stocks_shadow_log.csv stocks_flow_log.csv live_quotes_stocks_log.csv stocks_sector_live_log.csv data_gaps_stocks_log.csv blocked_inbox_stocks.csv pro_inbox_stocks.csv"
       msg="update stocks state" ;;
     commands)
       group=commands-bot; envs="TG ALPACA LQS TASTY"
@@ -120,6 +120,11 @@ main() {
       cmds=("$py research/stocks_contract_replay.py")
       files="research/stocks_contract_replay_results.md research/stocks_contract_replay_trades.csv"
       msg="stocks contract replay" ;;
+    pro_rules_shadow)
+      group=pro-rules-shadow; envs="ALPACA TASTY"
+      cmds=("$py pro_rules_shadow.py" "$py pro_rules_shadow.py --report")
+      files="pro_rules_shadow_state.json pro_rules_shadow_log.csv research/pro_rules_shadow_results.md data_gaps_pro_rules_shadow_log.csv"
+      msg="pro rules shadow log" ;;
     stocks_exit_study)
       group=stocks-exit-study
       cmds=("$py research/stocks_exit_study.py")
