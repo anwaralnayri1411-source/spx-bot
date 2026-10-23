@@ -20,8 +20,8 @@
    "t60_time": "",
    "t60_pnl": "",
    "peak_pnl": 0.0,
-   "close_pnl": -0.551,
-   "quotes": 5
+   "close_pnl": -0.66,
+   "quotes": 6
   },
   {
    "date": "2026-10-23",
@@ -42,8 +42,52 @@
    "t60_time": "",
    "t60_pnl": "",
    "peak_pnl": 0.0,
-   "close_pnl": -0.298,
-   "quotes": 5
+   "close_pnl": -0.361,
+   "quotes": 6
+  },
+  {
+   "date": "2026-10-23",
+   "sym": "SPY",
+   "pos_id": "SPY:CALL:763:2026-10-23",
+   "variant": "bot",
+   "side": "CALL",
+   "strike": 763.0,
+   "exp": "2026-10-23",
+   "occ": "SPY261023C00763000",
+   "sig_time": "2026-10-23T11:05-04:00",
+   "entry_time": "2026-10-23T11:08-04:00",
+   "entry_spot": 762.75,
+   "entry": 1.6,
+   "r5040_out": "",
+   "r5040_time": "",
+   "r5040_pnl": "",
+   "t60_time": "",
+   "t60_pnl": "",
+   "peak_pnl": 0.0,
+   "close_pnl": "",
+   "quotes": 0
+  },
+  {
+   "date": "2026-10-23",
+   "sym": "SPY",
+   "pos_id": "SPY:CALL:763:2026-10-23",
+   "variant": "atm1",
+   "side": "CALL",
+   "strike": 763.0,
+   "exp": "2026-10-26",
+   "occ": "SPY261026C00763000",
+   "sig_time": "2026-10-23T11:05-04:00",
+   "entry_time": "2026-10-23T11:08-04:00",
+   "entry_spot": 762.75,
+   "entry": 3.36,
+   "r5040_out": "",
+   "r5040_time": "",
+   "r5040_pnl": "",
+   "t60_time": "",
+   "t60_pnl": "",
+   "peak_pnl": 0.0,
+   "close_pnl": "",
+   "quotes": 0
   }
  ],
  "skipped": []
