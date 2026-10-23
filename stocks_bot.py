@@ -276,6 +276,12 @@ def hist_stats(closes, tdays, need, side):
             "dn": float(dn.mean()) if len(dn) else 0.0, "n": len(r)}
 
 
+def _blocked_idea(tag, i):
+    """فكرة محجوبة بسبب سقف أو مركز مفتوح: ما يحتاجه ظل الحجب (blocked_shadow) فقط."""
+    return {"tag": tag, "ticker": i["ticker"], "side": i["side"], "edge": i["edge"], "strength": i["strength"],
+            "S": i.get("S"), "contracts": i["contracts"]}
+
+
 def pick_contracts(side, chains, S, rv, closes=None):
     out = []
     today = ob.now_ny().date()
@@ -1331,6 +1337,7 @@ def analyze(force):
     finalists = [s for s in scored if abs(s["bull"] - s["bear"]) >= 2.0][:FINALISTS]
 
     ideas, watch, flow_rows = [], [], []
+    blocked = []   # blocked_shadow: ideas blocked by rules, log only
     geo_heads = ob.fetch_rss("geopolitical tensions markets") if any(s["dkey"] == "geo" for s in finalists) else []
     for s in finalists:
         tk = s["ticker"]
@@ -1360,6 +1367,14 @@ def analyze(force):
             continue
         if shock and side == "CALL":
             watch.append((tk, "تحذير سوق: لا نقترح Call الآن"))
+            try:   # ظل الحجب (تسجيل فقط): العقد الذي كان سيُقترح لولا تحذير السوق
+                Sx = intraday_price(t, s["info"]["S"])
+                cx = pick_contracts(side, _live_chains(chains, side, Sx), Sx, s["info"]["rv"], s["info"]["closes"])
+                if cx:
+                    blocked.append({"tag": "market_warning", "ticker": tk, "side": side, "edge": edge,
+                                    "strength": min(10.0, abs(edge) * 1.1), "S": Sx, "contracts": cx})
+            except Exception as e:
+                print("تعذر التقاط عقد ظل الحجب:", tk, e)
             continue
         S = intraday_price(t, s["info"]["S"])
         contracts = pick_contracts(side, _live_chains(chains, side, S), S, s["info"]["rv"], s["info"]["closes"])
@@ -1379,7 +1394,10 @@ def analyze(force):
         if cnt[i["side"]] < MAX_SAME_SIDE:
             kept.append(i)
             cnt[i["side"]] += 1
+        else:
+            blocked.append(_blocked_idea("same_side_cap", i))   # لظل الحجب (تسجيل فقط)
     ideas = kept
+    blocked += [_blocked_idea("max_ideas_cap", i) for i in ideas[MAX_IDEAS:]]
     if in_window(n):      # دراسة صامتة، وأي خطأ فيها لا يؤثر على التوصيات
         try:
             shadow_log(n, scored, flow_rows, spy5, spy_up)
@@ -1388,7 +1406,7 @@ def analyze(force):
     spy_px = intraday_price(yf.Ticker("SPY"), float(spyc.iloc[-1]))
     return {"n": n, "today": today, "ideas": ideas[:MAX_IDEAS], "watch": watch, "vix": vix, "vix_pct": vix_pct,
             "spy5": spy5, "spy_up": spy_up, "shock": shock, "is_test": not in_window(n), "scanned": len(scored),
-            "spy_px": spy_px}
+            "spy_px": spy_px, "blocked": blocked}
 
 
 # ====================== الرسائل ======================
@@ -1613,14 +1631,20 @@ def do_scan(n, force, P):
 
     # لا نكرر التوصية على سهم لديك فيه عقد مفتوح بنفس الاتجاه (منعاً لمضاعفة المخاطرة)
     blocked = blocked_map(P, n)
-    new = []
+    new, held = [], []
     for i in a["ideas"]:
         if f"{i['ticker']}:{i['side']}" in state["sent"]:
             continue
         if (i["ticker"], i["side"]) in blocked:
             a["watch"].insert(0, (i["ticker"], blocked[(i["ticker"], i["side"])]))
+            held.append(_blocked_idea("open_same_dir", i))
             continue
         new.append(i)
+    try:   # ظل الحجب: أفكار حجبتها الشروط تُتابَع بلا إرسال لنعرف هل كان الحجب في صالحنا (تسجيل فقط)
+        import blocked_shadow
+        blocked_shadow.log_stocks(n, a.get("blocked", []) + held)
+    except Exception as e:
+        print("تعذر تسجيل ظل الحجب:", e)
     if new:
         mid = send_ideas(a, new)
         shown, full = ob.analysis_wrap(details_message(a, new, log_line))

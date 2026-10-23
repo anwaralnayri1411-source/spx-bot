@@ -748,6 +748,46 @@ def log_summary():
 
 
 # ====================== التحليل ======================
+def _pick_all(side, ch, S, T, c, exp):
+    """اختيار عقود SPX وSPY وNDXP لاتجاه معيّن (استُخرجت من analyze كما هي، لتستعملها التوصية وظل الحجب بالمنطق نفسه)."""
+    Sp = _live_spot(SYMBOL, S)     # الوضع 1: سعر SPX اللحظي لاختيار العقد (الإشارة نفسها من شموع ياهو)
+    contracts = pick_contracts(side, _live_chain(spxw_rows(ch.calls if side == "CALL" else ch.puts), Sp), Sp, T, c["vix"])
+    for k in contracts:
+        k["sym"], k["spot"] = SYMBOL, Sp
+    if ALT_SYMBOL:
+        try:
+            ts = yf.Ticker(ALT_SYMBOL)
+            if exp in list(ts.options):
+                chs = ts.option_chain(exp)
+                hs = ts.history(period="1d", interval="5m")["Close"].dropna()
+                Ss = float(hs.iloc[-1]) if len(hs) else float(ts.history(period="5d")["Close"].dropna().iloc[-1])
+                Ss = _live_spot(ALT_SYMBOL, Ss)
+                alt = pick_contracts(side, _live_chain(chs.calls if side == "CALL" else chs.puts, Ss), Ss, T, c["vix"])
+                for k in alt:
+                    k["sym"], k["spot"] = ALT_SYMBOL, Ss
+                contracts += alt
+        except Exception as e:
+            print("تعذر قراءة خيارات", ALT_SYMBOL, e)
+    contracts.sort(key=lambda x: -x["score"])
+    contracts = contracts[:MAX_CONTRACTS]
+    if NDX_SYMBOL and contracts:
+        try:
+            tn = yf.Ticker(NDX_SYMBOL)
+            if exp in list(tn.options):
+                chn = tn.option_chain(exp)
+                hn = tn.history(period="1d", interval="5m")["Close"].dropna()
+                Sn = float(hn.iloc[-1]) if len(hn) else float(tn.history(period="5d")["Close"].dropna().iloc[-1])
+                Sn = _live_spot(NDX_SYMBOL, Sn)
+                nd = pick_contracts(side, _live_chain(chn.calls if side == "CALL" else chn.puts, Sn), Sn, T, c["vix"],
+                                    NDX_MIN_OI, NDX_MIN_VOL, NDX_MAX_SPREAD)
+                for k in nd[:1]:
+                    k["sym"], k["spot"] = "NDX", Sn
+                    contracts.append(k)
+        except Exception as e:
+            print("تعذر قراءة خيارات", NDX_SYMBOL, e)
+    return contracts
+
+
 def analyze(force):
     n = now_ny()
     today = n.date()
@@ -898,48 +938,30 @@ def analyze(force):
     contracts = []
     REJ.clear()
     if not reasons:
-        Sp = _live_spot(SYMBOL, S)     # الوضع 1: سعر SPX اللحظي لاختيار العقد (الإشارة نفسها من شموع ياهو)
-        contracts = pick_contracts(side, _live_chain(spxw_rows(ch.calls if side == "CALL" else ch.puts), Sp), Sp, T, c["vix"])
-        for k in contracts:
-            k["sym"], k["spot"] = SYMBOL, Sp
-        if ALT_SYMBOL:
-            try:
-                ts = yf.Ticker(ALT_SYMBOL)
-                if exp in list(ts.options):
-                    chs = ts.option_chain(exp)
-                    hs = ts.history(period="1d", interval="5m")["Close"].dropna()
-                    Ss = float(hs.iloc[-1]) if len(hs) else float(ts.history(period="5d")["Close"].dropna().iloc[-1])
-                    Ss = _live_spot(ALT_SYMBOL, Ss)
-                    alt = pick_contracts(side, _live_chain(chs.calls if side == "CALL" else chs.puts, Ss), Ss, T, c["vix"])
-                    for k in alt:
-                        k["sym"], k["spot"] = ALT_SYMBOL, Ss
-                    contracts += alt
-            except Exception as e:
-                print("تعذر قراءة خيارات", ALT_SYMBOL, e)
-        contracts.sort(key=lambda x: -x["score"])
-        contracts = contracts[:MAX_CONTRACTS]
-        if NDX_SYMBOL and contracts:
-            try:
-                tn = yf.Ticker(NDX_SYMBOL)
-                if exp in list(tn.options):
-                    chn = tn.option_chain(exp)
-                    hn = tn.history(period="1d", interval="5m")["Close"].dropna()
-                    Sn = float(hn.iloc[-1]) if len(hn) else float(tn.history(period="5d")["Close"].dropna().iloc[-1])
-                    Sn = _live_spot(NDX_SYMBOL, Sn)
-                    nd = pick_contracts(side, _live_chain(chn.calls if side == "CALL" else chn.puts, Sn), Sn, T, c["vix"],
-                                        NDX_MIN_OI, NDX_MIN_VOL, NDX_MAX_SPREAD)
-                    for k in nd[:1]:
-                        k["sym"], k["spot"] = "NDX", Sn
-                        contracts.append(k)
-            except Exception as e:
-                print("تعذر قراءة خيارات", NDX_SYMBOL, e)
+        contracts = _pick_all(side, ch, S, T, c, exp)
         if not contracts:
             reasons.append(f"لا توجد عقود {('Call' if side == 'CALL' else 'Put')} بسعر ${CONTRACT_MIN_USD}-${CONTRACT_MAX_USD} "
                            "مع سيولة كافية الآن." + (" [رُفض: " + "، ".join(f"{k} {v}" for k, v in sorted(REJ.items(), key=lambda x: -x[1])) + "]" if REJ else ""))
 
+    block_tags, blocked_contracts = [], []
+    if not force and not is_test:
+        try:   # ظل الحجب (تسجيل فقط): العقود التي كان البوت سيقترحها لولا شروط المنع؛ لا يغيّر التوصية ولا REJ
+            import blocked_shadow
+            block_tags = blocked_shadow.spx_tags(reasons, abs(bull - bear), shock["level"], MIN_EDGE)
+            if block_tags:
+                saved = dict(REJ)
+                try:
+                    blocked_contracts = _pick_all(side, ch, S, T, c, exp)
+                finally:
+                    REJ.clear()
+                    REJ.update(saved)
+        except Exception as e:
+            print("تعذر التقاط عقود ظل الحجب:", e)
+
     return {"c": c, "shock": shock, "heads": heads, "events": events, "rows": rows, "bull": bull, "bear": bear,
             "edge": edge, "side": side, "strength": strength, "reasons": reasons, "contracts": contracts,
-            "exp": exp, "is_test": is_test, "today": today}
+            "exp": exp, "is_test": is_test, "today": today, "block_tags": block_tags,
+            "blocked_contracts": blocked_contracts}
 
 
 # ====================== الكمية والمستويات والخطة ======================
@@ -1749,6 +1771,7 @@ def run_once(force=False):
                  "report_sent": False, "runs": 0, "best_edge": 0.0, "signals": 0, "summary_sent": False,
                  "reason_counts": {}}
     if not force and stops_today(n) >= MAX_DAILY_STOPS and a["contracts"]:
+        a["block_tags"], a["blocked_contracts"] = ["daily_stop"], list(a["contracts"])   # لظل الحجب (تسجيل فقط)
         a["contracts"] = []
         a["reasons"].append(f"⛔ حد الخسارة اليومي: {MAX_DAILY_STOPS} إشارات بلغت الوقف اليوم، فتوقفت الإشارات الجديدة.")
         if not state.get("paused_sent"):
@@ -1769,6 +1792,11 @@ def run_once(force=False):
             news_shadow.snapshot(n, a)
         except Exception as e:
             print("تعذر تسجيل ظل فلتر الأخبار:", e)
+        try:   # ظل الحجب: عقود حجبتها الشروط تُتابَع بلا إرسال لنعرف هل كان الحجب في صالحنا (تسجيل فقط)
+            import blocked_shadow
+            blocked_shadow.log_spx(n, a)
+        except Exception as e:
+            print("تعذر تسجيل ظل الحجب:", e)
         try:   # ظل الإشارة القوية (فرق ≥ 7) بعقد على السعر لغد وخروج بعد 60د: تسجيل فقط (لا يغيّر التوصية)
             import edge7_shadow
             edge7_shadow.snapshot(n, a)
@@ -1801,6 +1829,13 @@ def run_once(force=False):
             recent = (n - datetime.fromisoformat(last_t)).total_seconds() < REPEAT_MINUTES * 60
         except Exception:
             recent = False
+
+    if has_signal and recent and not force:
+        try:   # ظل الحجب: إشارة مكررة قبل REPEAT_MINUTES لم تُرسل (تسجيل فقط)
+            import blocked_shadow
+            blocked_shadow.log_spx(n, a, ["repeat_side"], a["contracts"])
+        except Exception as e:
+            print("تعذر تسجيل ظل الحجب:", e)
 
     plan = build_plan(a["c"], a["bull"], a["bear"])
     if has_signal and not recent:
