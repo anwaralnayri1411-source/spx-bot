@@ -666,7 +666,7 @@ def _live_prices_stock(ideas):
                 be = K + ask if i["side"] == "CALL" else K - ask
                 T = max(k["dte"], 0.5) / 365
                 k.update(yahoo_price=k["price"], price=ask, cost=ask * 100, be=be, need=abs(be / S - 1),
-                         prob=ob.prob_beyond(S, be, T, k["iv"], i["side"]), price_src=src)
+                         prob=ob.prob_beyond(S, be, T, k["iv"], i["side"]), price_src=src, bid=z["bid"])
     except Exception as e:
         print("تعذر تحديث أسعار الدخول اللحظية:", e)
 
@@ -1453,6 +1453,19 @@ def stock_levels(i, k):
     return [f"├ 🎯 <b>خروج بربح</b> {tp}", f"└ 🛑 <b>خروج بخسارة</b> {sl}"]
 
 
+def quote_line(k, now=None):
+    """سطر مصدر السعر ووقته وفرق الشراء/البيع في التوصية: ما يظهر في وسيطك قد يختلف بعد دقائق، فنُظهر ما عُرض لحظة الإرسال."""
+    when = (now or ob.now_ny()).astimezone(ob.RY).strftime("%H:%M")
+    if k.get("price_src") in ("alpaca", "tasty") and k.get("bid"):
+        ask, bid = k["price"], k["bid"]
+        spr = (ask - bid) / ((ask + bid) / 2)
+        line = f"📡 لحظي {when} الرياض: طلب <b>{ask:.2f}</b> | بيع <b>{bid:.2f}</b> | فرق {spr * 100:.0f}%"
+        if spr >= 0.08:
+            line += f"\n📝 الفرق كبير: ضع أمراً محدداً (Limit) قرب المنتصف {(ask + bid) / 2:.2f}، ولا تشترِ بسعر السوق"
+        return line.rstrip("\n")
+    return f"⏱️ سعر ياهو متأخر ~15د ({when} الرياض) ولا عرض/طلب لحظي؛ تحقق من السعر الحي"
+
+
 def idea_caption(i):
     call = i["side"] == "CALL"
     k = i["contracts"][0]
@@ -1466,6 +1479,7 @@ def idea_caption(i):
         f"🔔 <b>توصية الشركات | {ob.esc(i['ticker'])} {side} {'🟢' if call else '🔴'}</b> | ⭐ {i['strength']:.1f}{flags} #توصية",
         f"✅ <b>الدخول:</b> {ob.esc(i['ticker'])} {k['strike']:,.1f} {side} | 📅 {date_ar(k['exp'])}",
         f"💵 بسعر حتى <b>{k['price']:.2f}</b> | تكلفة <b>${k['cost']:,.0f}</b> للعقد | يحتاج {'+' if call else '-'}{k['need'] * 100:.1f}%",
+        quote_line(k),
         lv[0], lv[1],
         f"💰 أقصى خسارة ≈ ${k['cost'] * STOP_LOSS:,.0f}",
         "⚠️ <i>تعليمي وليست توصية. لا تلاحق السعر فوق +10%.</i>"])
