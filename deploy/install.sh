@@ -15,8 +15,6 @@ contract_shadow|Mon..Fri *-*-* 13..21:02/5:00
 exit_shadow|Mon..Fri *-*-* 13..21:03/5:00
 blocked_shadow|Mon..Fri *-*-* 13..21:07/5:00
 pro_rules_shadow|Mon..Fri *-*-* 13..21:08/5:00
-feed_compare|Mon..Fri *-*-* 13..20:01/5:00
-live_shadow|Mon..Fri *-*-* 13..21:04/5:00
 gex|Mon..Fri *-*-* 13:50:00;Mon..Fri *-*-* 21:45:00
 shadow|Mon..Fri *-*-* 21:40:00
 weekly|Fri *-*-* 21:30:00
@@ -111,6 +109,11 @@ cat > /etc/logrotate.d/spxbot <<'EOF'
 }
 EOF
 
+# مهام أُوقفت (24/10): نعطّل مؤقتاتها ونحذفها؛ كودها وسجلاتها ونتائجها تبقى في المستودع
+for job in feed_compare live_shadow; do
+  systemctl disable --now "spxbot-$job.timer" >/dev/null 2>&1
+  rm -f "$U/spxbot-$job.timer"
+done
 systemctl daemon-reload
 echo "$SCHEDULE" | while IFS='|' read -r job cal; do
   [ -n "$job" ] || continue
