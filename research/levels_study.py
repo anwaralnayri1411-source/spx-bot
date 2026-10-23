@@ -164,31 +164,30 @@ def orb_events(day, o, h, l, c):
 
 
 def boot_mean_ci(df, col="R", n=2000, seed=7):
-    by = {d: g[col].to_numpy() for d, g in df.groupby("day")}
-    days = list(by)
-    if len(days) < 5:
+    """فاصل 95% لمتوسط R بإعادة معاينة الأيام (متّجه: مجموع وعدد لكل يوم). None إن قلّت الأيام عن 5."""
+    g = df.groupby("day")[col].agg(["sum", "count"])
+    if len(g) < 5:
         return None
-    rng = np.random.default_rng(seed)
-    m = [np.concatenate([by[days[k]] for k in rng.integers(0, len(days), len(days))]).mean() for _ in range(n)]
+    S, N = g["sum"].to_numpy(), g["count"].to_numpy()
+    idx = np.random.default_rng(seed).integers(0, len(S), (n, len(S)))
+    m = S[idx].sum(1) / N[idx].sum(1)
     return float(np.percentile(m, 2.5)), float(np.percentile(m, 97.5))
 
 
 def boot_diff_ci(real, plac, n=2000, seed=7):
-    """فاصل 95% لفرق متوسط R (حقيقي − وهمي) بإعادة معاينة الأيام نفسها للمجموعتين."""
-    a = {d: g["R"].to_numpy() for d, g in real.groupby("day")}
-    b = {d: g["R"].to_numpy() for d, g in plac.groupby("day")}
-    days = sorted(set(a) | set(b))
+    """فاصل 95% لفرق متوسط R (حقيقي − وهمي) بإعادة معاينة الأيام نفسها للمجموعتين. None إن قلّت الأيام عن 5."""
+    a = real.groupby("day")["R"].agg(["sum", "count"])
+    b = plac.groupby("day")["R"].agg(["sum", "count"])
+    days = sorted(set(a.index) | set(b.index))
     if len(days) < 5:
         return None
-    rng = np.random.default_rng(seed)
-    out = []
-    for _ in range(n):
-        pick = [days[k] for k in rng.integers(0, len(days), len(days))]
-        xa = [a[d] for d in pick if d in a]
-        xb = [b[d] for d in pick if d in b]
-        if xa and xb:
-            out.append(np.concatenate(xa).mean() - np.concatenate(xb).mean())
-    return float(np.percentile(out, 2.5)), float(np.percentile(out, 97.5))
+    Sa, Na = a["sum"].reindex(days, fill_value=0).to_numpy(), a["count"].reindex(days, fill_value=0).to_numpy()
+    Sb, Nb = b["sum"].reindex(days, fill_value=0).to_numpy(), b["count"].reindex(days, fill_value=0).to_numpy()
+    idx = np.random.default_rng(seed).integers(0, len(days), (n, len(days)))
+    na, nb = Na[idx].sum(1), Nb[idx].sum(1)
+    ok = (na > 0) & (nb > 0)
+    d = Sa[idx].sum(1)[ok] / na[ok] - Sb[idx].sum(1)[ok] / nb[ok]
+    return float(np.percentile(d, 2.5)), float(np.percentile(d, 97.5))
 
 
 def stat(df):
@@ -230,6 +229,7 @@ def report(events, orb, meta):
     L = ["# دراسة المستويات واختراق أول 30 دقيقة على SPY (نتائج آلية)", "",
          f"- {meta}. قراءة فقط، ولا تغيّر أي توصية. الوحدة: R (المخاطرة)، بعد تكلفة 0.002% لكل جهة. فاصل 95% بإعادة معاينة الأيام.",
          "- الوقف خلف المستوى بـ0.10% والهدف 1.5R وأقصى احتفاظ ساعة. المرجع الوهمي: المستوى نفسه مُزاحاً ±0.35% بالإجراء نفسه.",
+         "- ملاحظة قراءة: القيم المطلقة لـR سالبة عادةً حتى على مشي عشوائي (تحفظ مقصود: وقف شمعة اللمس يُحسب وهدفها لا يُحسب، والوقف أولاً عند التعادل). المقارنة المعتمدة هي **الحقيقي مقابل الوهمي** لا القيمة المطلقة. أيام الإغلاق المبكر (13:00) مستبعدة من التداول.",
          "- ⚠️ مقارنات كثيرة (مستويات × اتجاهان × نصفان): أي رقم منفرد جيد قد يكون صدفة. الحكم فقط على الفرضية المسجّلة مسبقاً.", ""]
     if len(events) == 0:
         return L + ["لا بيانات."]
@@ -268,12 +268,28 @@ def load(path):
     return d[(m >= 570) & (m < 960)].reset_index(drop=True)
 
 
+HALF_DAY_RATIO = 0.20         # حجم 13:00–16:00 إلى حجم 9:30–13:00 أقل من هذا = إغلاق مبكر 13:00 (ما بعده ساعات ممتدة رقيقة)
+
+
+def trim_half_day(g):
+    """يرجع (اليوم مقصوصاً عند 13:00 إن كان إغلاقاً مبكراً، هل هو إغلاق مبكر). الجلسة الممتدة بعد الإغلاق المبكر تظهر بشموع قليلة الحجم فلا تُحسب جلسة عادية."""
+    m = (g["t"].dt.hour * 60 + g["t"].dt.minute).to_numpy()
+    am, pm = g["v"].to_numpy()[m < 780].sum(), g["v"].to_numpy()[m >= 780].sum()
+    if am > 0 and pm / am < HALF_DAY_RATIO:
+        return g[m < 780], True
+    return g, False
+
+
 def run(d):
     ev, orb, prev = [], [], None
     for day, g in d.groupby(d["t"].dt.date):
-        if len(g) < 70:                       # يوم ناقص أو إغلاق مبكر: لا نستعمله ولا يصير «أمس»
-            continue
+        g, half = trim_half_day(g)
         o, h, l, c, v = (g[k].to_numpy(float) for k in ("o", "h", "l", "c", "v"))
+        if half and len(g) >= 30:             # أمس = اليوم المقصوص، لكن لا نتداول في الإغلاق المبكر
+            prev = (float(h.max()), float(l.min()), float(c[-1]))
+            continue
+        if len(g) < 70:                       # يوم ناقص: لا نستعمله ولا يصير «أمس»
+            continue
         ds = str(day)
         ev += day_events(ds, prev, o, h, l, c, v)
         orb += orb_events(ds, o, h, l, c)

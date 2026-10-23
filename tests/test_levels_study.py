@@ -142,3 +142,44 @@ def test_report_and_main_work_on_a_small_synthetic_file(tmp_path, monkeypatch):
     text = (tmp_path / "r.md").read_text(encoding="utf-8")
     assert "دراسة المستويات" in text and "الفرضية المسجّلة مسبقاً" in text and "اختراق أول 30 دقيقة (ORB)" in text
     assert ls.main([str(tmp_path / "missing.csv")]) == 0
+
+
+def day_frame(day, half=False, n=78):
+    t = [(pd.Timestamp(day).tz_localize("America/New_York") + pd.Timedelta(hours=9, minutes=30 + 5 * i)) for i in range(n)]
+    vol = [1e6 if (t0.hour * 60 + t0.minute) < 780 or not half else 5e3 for t0 in t]
+    rng = np.random.default_rng(len(day))
+    c = 700 + np.cumsum(rng.normal(0, 0.1, n))
+    return pd.DataFrame({"t": t, "o": c, "h": c + 0.1, "l": c - 0.1, "c": c, "v": vol})
+
+
+def test_half_days_are_trimmed_at_1300_and_are_not_traded_but_still_define_yesterday():
+    full = day_frame("2026-11-02")
+    g, half = ls.trim_half_day(full)
+    assert not half and len(g) == 78
+    early = day_frame("2026-11-27", half=True)
+    g2, half2 = ls.trim_half_day(early)
+    assert half2 and len(g2) == 42 and (g2["t"].dt.hour * 60 + g2["t"].dt.minute < 780).all()
+    d = pd.concat([day_frame("2026-11-25"), early, day_frame("2026-11-30")], ignore_index=True)
+    ev, orb = ls.run(d)
+    assert "2026-11-27" not in set(ev["day"]) and "2026-11-27" not in set(orb["day"])
+    assert {"2026-11-30"} <= set(ev["day"])
+
+
+def random_walk_events(seed, ndays=700):
+    rng = np.random.default_rng(seed)
+    ev, prev, p = [], None, 700.0
+    for i in range(ndays):
+        c = p * np.cumprod(1 + rng.normal(0, 0.0013, 78))
+        o = np.r_[p, c[:-1]]
+        h = np.maximum(o, c) * (1 + rng.uniform(0, 0.0004, 78))
+        l = np.minimum(o, c) * (1 - rng.uniform(0, 0.0004, 78))
+        ev += ls.day_events(f"d{i:04d}", prev, o, h, l, c, np.full(78, 1e5))
+        prev, p = (float(h.max()), float(l.min()), float(c[-1])), float(c[-1])
+    return pd.DataFrame(ev)
+
+
+def test_null_calibration_a_random_walk_never_confirms_the_hypothesis():
+    """لو كانت الدراسة منحازة لأي مستوى حقيقي مقابل الوهمي لظهر «تحققت» على بيانات بلا بنية. نتحقق على مشيين عشوائيين."""
+    for seed in (11, 12):
+        _, test = ls.split_halves(random_walk_events(seed))
+        assert "تحققت الفرضية" not in ls.primary_verdict(test)
