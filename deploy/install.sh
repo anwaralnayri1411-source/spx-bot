@@ -112,7 +112,7 @@ EOF
 
 # مهام أُوقفت (24/10): نعطّل مؤقتاتها ونحذفها؛ كودها وسجلاتها ونتائجها تبقى في المستودع
 for job in feed_compare live_shadow; do
-  systemctl disable --now "spxbot-$job.timer" >/dev/null 2>&1
+  systemctl disable --now "spxbot-$job.timer" >/dev/null 2>&1 || true   # بعد حذفه في تثبيت سابق يفشل، فلا نوقف التثبيت
   rm -f "$U/spxbot-$job.timer"
 done
 systemctl daemon-reload
