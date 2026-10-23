@@ -90,6 +90,16 @@ main() {
       cmds=("$py research/stocks_sector_study.py" "$py research/stocks_open_stop_study.py")
       files="stocks_sector_log.csv research/stocks_sector_results.md research/stocks_open_stop_results.md"
       msg="stocks sector study results" ;;
+    tail_log)
+      group=tail-log; envs="ALPACA"
+      cmds=("$py research/tail_log.py")
+      files="tail_log_days.csv tail_log_events.csv"
+      msg="tail log" ;;
+    weekly_learning)
+      group=weekly-learning; envs="TG"
+      cmds=("$py research/weekly_learning.py")
+      files="research/weekly_learning.md"
+      msg="weekly learning summary" ;;
     stocks_watcher)
       group=stocks-watcher; envs="TG ALPACA ANTHROPIC LQS TASTY"; long=1
       cmds=("$py stocks_watcher.py")
