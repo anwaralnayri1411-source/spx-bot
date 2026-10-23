@@ -5,7 +5,7 @@
 يُستدعى من options_bot بعد كل فحص (:05 و:35):
   1) يغلق كل صفقة ظل عمرها ≥ 60 دقيقة بسعر البيع اللحظي (bid)، ويسجّل قيمة العقد عند 30 دقيقة أيضاً.
   2) إن كان فرق النقاط (|صعود − هبوط| كما يحسبه البوت) ≥ EDGE_MIN، والوقت ≤ 14:35 (حتى يُغلق قبل 15:35)، ولم يدخل الظل
-     الاتجاه نفسه خلال 90 دقيقة: يشتري على الورق عقد SPXW على السعر (أقرب 5 نقاط للسعر اللحظي) لانتهاء يوم التداول التالي
+     الاتجاه نفسه خلال 90 دقيقة: يشتري على الورق عقد SPXW على السعر (ومنذ 23/10 نسخة SPY الأرخص بالقاعدة نفسها) (أقرب 5 نقاط للسعر اللحظي) لانتهاء يوم التداول التالي
      بسعر الطلب اللحظي (Alpaca ثم Tastytrade)، ومعه العقد المعاكس على السترايك نفسه مرجعاً.
      يسجّل أيضاً هل أرسل البوت توصية في الفحص نفسه، وأسباب المنع (أخبار، حدث...)، فلا يُحجب الظل بأسباب البوت.
 بلا سعر لحظي حديث (≤120ث) لا دخول ولا خروج (يُعاد الخروج في الفحص التالي ويُسجَّل العمر الفعلي).
@@ -88,21 +88,30 @@ def snapshot(n, a):
         K = round(S / 5) * 5
         exp = next_trading_day(n.date()).isoformat()
         opp = "PUT" if side == "CALL" else "CALL"
-        legs = []
-        for role, sd in (("bot", side), ("opp", opp)):
-            c = lq.occ("SPXW", exp, sd, K)
-            z, src = lq.best_quote(c)
-            if not z:
-                legs = []
-                break
-            legs.append({"entry_time": n.isoformat(timespec="minutes"), "side": sd, "role": role, "contract": c, "strike": K,
-                         "exp": exp, "edge": round(edge, 2), "bot_sent": int(bool(a["contracts"])),
-                         "reasons": " | ".join(r[:50] for r in a["reasons"][:3]), "spot": round(S, 2),
-                         "entry": round(z["ask"], 2), "entry_src": src, "val30": ""})
-        if legs:
-            st["open"] += legs
+        S_spy, _ = lq.spot("SPY")
+        added = []
+        # SPXW (العقد ~2,000–3,000$) ونسخة SPY الأرخص (~300–500$، عُشر SPX) بالفكرة نفسها؛ كل أداة بزوجها (الاتجاه + المعاكس)
+        for root, Sx, step, pre in (("SPXW", S, 5, ""), ("SPY", S_spy, 1, "spy_")):
+            if not Sx:
+                continue
+            Kx = round(Sx / step) * step
+            legs = []
+            for role, sd in ((pre + "bot", side), (pre + "opp", opp)):
+                c = lq.occ(root, exp, sd, Kx)
+                z, src = lq.best_quote(c)
+                if not z:
+                    legs = []
+                    break
+                legs.append({"entry_time": n.isoformat(timespec="minutes"), "side": sd, "role": role, "contract": c,
+                             "strike": Kx, "exp": exp, "edge": round(edge, 2), "bot_sent": int(bool(a["contracts"])),
+                             "reasons": " | ".join(r[:50] for r in a["reasons"][:3]), "spot": round(Sx, 2),
+                             "entry": round(z["ask"], 2), "entry_src": src, "val30": ""})
+            added += legs
+        if added:
+            st["open"] += added
             st["last"][side] = n.isoformat(timespec="minutes")
-            print(f"ظل الإشارة القوية: {side} {K} لانتهاء {exp} بسعر {legs[0]['entry']} (فرق {edge:.1f})")
+            print(f"ظل الإشارة القوية: {side} لانتهاء {exp}: " + ", ".join(f"{x['contract']} {x['entry']}" for x in added)
+                  + f" (فرق {edge:.1f})")
         else:
             print("ظل الإشارة القوية: لا سعر لحظي حديث، لا دخول")
     _save(st)
@@ -113,19 +122,19 @@ def report():
         print("لا صفقات مغلقة بعد.")
         return
     R = list(csv.DictReader(open(LOG, encoding="utf-8")))
-    bot = {r["entry_time"]: float(r["pnl"]) for r in R if r["role"] == "bot" and r["pnl"]}
-    opp = {r["entry_time"]: float(r["pnl"]) for r in R if r["role"] == "opp" and r["pnl"]}
-    both = sorted(set(bot) & set(opp))
-    if not both:
-        print("لا أزواج مكتملة بعد.")
-        return
-    mb = sum(bot[t] for t in both) / len(both)
-    mo = sum(opp[t] for t in both) / len(both)
-    wins = sum(bot[t] > opp[t] for t in both)
-    sent = sum(1 for r in R if r["role"] == "bot" and r["bot_sent"] == "1")
-    print(f"إشارات: {len(both)} (أرسلها البوت: {sent}) | متوسط عقد الاتجاه {mb * 100:+.1f}% | المعاكس {mo * 100:+.1f}% | "
-          f"الاتجاه أفضل من عكسه في {wins}/{len(both)}. لا حكم قبل 20 إشارة.")
-
+    for pre, name in (("", "SPXW"), ("spy_", "SPY")):
+        bot = {r["entry_time"]: float(r["pnl"]) for r in R if r["role"] == pre + "bot" and r["pnl"]}
+        opp = {r["entry_time"]: float(r["pnl"]) for r in R if r["role"] == pre + "opp" and r["pnl"]}
+        both = sorted(set(bot) & set(opp))
+        if not both:
+            print(f"{name}: لا أزواج مكتملة بعد.")
+            continue
+        mb = sum(bot[t] for t in both) / len(both)
+        mo = sum(opp[t] for t in both) / len(both)
+        wins = sum(bot[t] > opp[t] for t in both)
+        sent = sum(1 for r in R if r["role"] == pre + "bot" and r["bot_sent"] == "1")
+        print(f"{name}: إشارات {len(both)} (أرسلها البوت: {sent}) | متوسط عقد الاتجاه {mb * 100:+.1f}% | المعاكس {mo * 100:+.1f}% | "
+              f"الاتجاه أفضل من عكسه في {wins}/{len(both)}. لا حكم قبل 20 إشارة.")
 
 if __name__ == "__main__":
     if sys.argv[1:] == ["--report"]:
