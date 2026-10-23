@@ -23,8 +23,8 @@
    "r2_pnl": "",
    "r2_time": "",
    "peak_pnl": 0.0,
-   "close_pnl": -0.115,
-   "quotes": 6
+   "close_pnl": -0.088,
+   "quotes": 7
   },
   {
    "id": "20261023T1342|XOM|CALL|atm|185|2026-11-20",
@@ -50,7 +50,7 @@
    "r2_time": "",
    "peak_pnl": 0.0,
    "close_pnl": -0.012,
-   "quotes": 6
+   "quotes": 7
   },
   {
    "id": "20261023T1342|XOM|CALL|itm|175|2026-11-20",
@@ -75,8 +75,8 @@
    "r2_pnl": "",
    "r2_time": "",
    "peak_pnl": 0.0,
-   "close_pnl": -0.085,
-   "quotes": 6
+   "close_pnl": -0.093,
+   "quotes": 7
   },
   {
    "id": "20261023T1342|NFLX|PUT|bot|66|2026-10-30",
@@ -101,8 +101,8 @@
    "r2_pnl": "",
    "r2_time": "",
    "peak_pnl": 0.01,
-   "close_pnl": 0.01,
-   "quotes": 6
+   "close_pnl": -0.04,
+   "quotes": 7
   },
   {
    "id": "20261023T1342|NFLX|PUT|atm|67.5|2026-11-20",
@@ -127,8 +127,8 @@
    "r2_pnl": "",
    "r2_time": "",
    "peak_pnl": 0.028,
-   "close_pnl": 0.028,
-   "quotes": 6
+   "close_pnl": -0.004,
+   "quotes": 7
   },
   {
    "id": "20261023T1342|NFLX|PUT|itm|70|2026-11-20",
@@ -153,8 +153,8 @@
    "r2_pnl": "",
    "r2_time": "",
    "peak_pnl": 0.0,
-   "close_pnl": -0.055,
-   "quotes": 6
+   "close_pnl": -0.018,
+   "quotes": 7
   },
   {
    "id": "20261023T1342|UBER|PUT|bot|67|2026-10-30",
@@ -178,9 +178,9 @@
    "r2_out": "",
    "r2_pnl": "",
    "r2_time": "",
-   "peak_pnl": 0.052,
-   "close_pnl": 0.042,
-   "quotes": 6
+   "peak_pnl": 0.083,
+   "close_pnl": 0.083,
+   "quotes": 7
   },
   {
    "id": "20261023T1342|UBER|PUT|atm|67.5|2026-11-20",
@@ -204,9 +204,9 @@
    "r2_out": "",
    "r2_pnl": "",
    "r2_time": "",
-   "peak_pnl": 0.032,
-   "close_pnl": 0.032,
-   "quotes": 6
+   "peak_pnl": 0.06,
+   "close_pnl": 0.06,
+   "quotes": 7
   },
   {
    "id": "20261023T1342|UBER|PUT|itm|72.5|2026-11-20",
@@ -230,9 +230,9 @@
    "r2_out": "",
    "r2_pnl": "",
    "r2_time": "",
-   "peak_pnl": 0.014,
-   "close_pnl": -0.013,
-   "quotes": 6
+   "peak_pnl": 0.018,
+   "close_pnl": 0.018,
+   "quotes": 7
   }
  ],
  "seen": [
