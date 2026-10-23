@@ -17,7 +17,9 @@
    "bank of america offers stronger dividend growth and safety than wells fargo despite recent stock drop",
    "bank of america just dropped 12 in a month is it time to sell or load up",
    "bank of america corporation bac stock adams diversified equity fund inc lowers stake",
-   "the bottom line on financial etfs weighing vfh s efficiency against iyf s large cap edge"
+   "the bottom line on financial etfs weighing vfh s efficiency against iyf s large cap edge",
+   "bank of america stock simply wall st cuts fair value to usd 63 14 for bank of america stock",
+   "truist securities reiterates buy on bank of america stock by investing com"
   ],
   "AMZN:CALL": [
    "starting jan 1 2027 amazon seasonal workers get day one health coverage if they work at least 30 hours a week",
@@ -65,7 +67,9 @@
    "uber rolls chatgpt work to all 30 000 employees the unpriced labor benchmark",
    "kohl s adds a new way to shop just in time for the holidays",
    "uber technologies inc estimates nyse uber",
-   "uber s september 2026 layoffs affected around 3 300 employees globally including an estimated 200 250 in india laid off "
+   "uber s september 2026 layoffs affected around 3 300 employees globally including an estimated 200 250 in india laid off ",
+   "analysts are bullish on top communication services stocks meta platforms meta at t t",
+   "doordash stock goldman sachs adjusts target to usd 280 for doordash stock"
   ],
   "DIS:CALL": [
    "skydance rises 5 as steep post merger slide pauses disney gains 2 netflix slips",
@@ -120,7 +124,10 @@
    "netflix nflx stock stays cheap after its 58 three year gain",
    "netflix nasdaq nflx shares in focus as communication stocks themes shift today",
    "netflix nflx stock fair value falls after cautious q3 analyst revisions",
-   "netflix stock tanks 5 as revenue growth slows in q3 how to play nflx here"
+   "netflix stock tanks 5 as revenue growth slows in q3 how to play nflx here",
+   "netflix inc estimates nasdaq nflx",
+   "bill ackman sees 20 plus returns from netflix netflix nasdaq nflx",
+   "can netflix stock hold margin gains as content spending keeps growing"
   ],
   "AVGO:PUT": [
    "3 artificial intelligence ai stocks that look like great buys right now",
@@ -178,7 +185,8 @@
    "what is palantir technologies pltr really building with its new ai partnerships",
    "pltr vs bbai which stock has more upside",
    "palantir stock today 196 gartner warning 213 or 184",
-   "palantir stock price prediction is 212 in reach by year end"
+   "palantir stock price prediction is 212 in reach by year end",
+   "pltr vs bbai which ai stock has more upside ahead of q3 earnings according to analysts"
   ],
   "GOOGL:PUT": [
    "wall street continues to systematically undervalue alphabet so i continue to buy",
@@ -213,7 +221,17 @@
    "mbl wealth llc buys 14 393 shares of intel corporation intc",
    "etfs are buying intel intc on wednesday",
    "intel in spotlight as wedbush says tool installation at az fab should aid revenue growth intc nasdaq",
-   "4 stocks to watch on friday intc ritm etsy and gm spx"
+   "4 stocks to watch on friday intc ritm etsy and gm spx",
+   "the foundry disconnect intel nails the transistor but tsmc holds the keys to yield and scale",
+   "intel corporation estimates nasdaq intc",
+   "intel corporation shs cert deposito arg repr 0 2 shs estimates bcba intc"
+  ],
+  "CVX:CALL": [
+   "stocks see continued downward pressure from ai anxiety and oil prices",
+   "wall street loses ground under pressure from rising oil prices more swings for big tech stocks",
+   "silver hits year to date low as gold also falls amid rising oil prices",
+   "gas prices for 10 23 26 what will you pay heading into the weekend",
+   "chevron stock may move 2 3 on earnings release by investing com"
   ]
  },
  "fired": {
@@ -232,28 +250,6 @@
    "sharp@2026-10-22T15:55-04:00",
    "down-0.15"
   ],
-  "PLTR:CALL:2026-10-30:210": [
-   "news:pltr stock rebounds to 200 as palantir technologies partners with knox systems for federal software",
-   "news:palantir shares gain almost 4 after knox systems deal and strong revenue growth",
-   "up0.25",
-   "news:citi maintains palantir pltr us with buy rating raises target price to 250",
-   "news:palantir stock pltr falls despite reassuring nato on system controls",
-   "news:citi raises palantir stock price target",
-   "news:stagwell stgw and palantir pltr expand ai partnership to transform enterprise marketing",
-   "news:palantir s u s commercial revenue jumps 149 i",
-   "sharp@2026-10-22T10:27-04:00",
-   "news:palantir continues to drive up us government commercial deals into q3 earnings citi",
-   "news:palantir technologies pltr set for strong revenue growth citi raises price target",
-   "down-0.15",
-   "sharp@2026-10-22T14:00-04:00",
-   "news:palantir stock gets a 250 price target as citi predicts another strong earnings beat",
-   "stock1",
-   "down-0.3",
-   "news:citi revamps palantir stock price target for 2027",
-   "stock2",
-   "stock3",
-   "sharp@2026-10-23T09:46-04:00"
-  ],
   "NFLX:PUT:2026-10-30:66": [
    "sharp@2026-10-22T11:00-04:00",
    "down-0.15",
@@ -270,11 +266,13 @@
    "up0.25",
    "news:intel in spotlight as wedbush says tool installation at az fab should aid revenue growth intc nasdaq",
    "sharp@2026-10-23T09:46-04:00"
+  ],
+  "CVX:CALL:2026-10-30:240": [
+   "down-0.15"
   ]
  },
  "stock_level": {
-  "NFLX:PUT:2026-10-30:66": 1,
-  "PLTR:CALL:2026-10-30:210": 3
+  "NFLX:PUT:2026-10-30:66": 1
  },
  "seen_macro": [
   "from venezuela to texas to jamnagar marco rubio s dash for energy",
@@ -494,12 +492,21 @@
   "dow jones today dow futures fall 0 6 to 52 749 as oil prices surge above 114 nvidia and ai stocks face selling pressure ",
   "us stock market today dow jones futures fall 0 6 s p 500 and nasdaq futures slide as oil surges above 114 amid us iran t",
   "wall street sets xpeng stock price for the next 12 months",
-  "apple and alphabet are sending wall street different signals"
+  "apple and alphabet are sending wall street different signals",
+  "unlocking potential zero tariffs and industrial transformation in china africa trade",
+  "europe midday shares extend losses on tech sell off oil nudges 115",
+  "here are friday s top wall street analyst research calls deckers outdoor globe life guardant health hess midstream lp ki",
+  "us stock market today s p 500 futures nudge higher on firm jobs and data test",
+  "psx slides over 1 500 points as geopolitical tensions rattle investors",
+  "more swings for big tech pull wall street lower in early trading",
+  "stock market today s p 500 dji fall after ai selloff as oil surges toward 115",
+  "gold and silver prices drop sharply amid geopolitical tensions and economic concerns",
+  "congress should reassert its role in trade policy after the midterms",
+  "surge in sa exports after china scraps tariffs"
  ],
  "sharp": {
   "BAC:PUT:2026-10-30:51": 50.86,
   "UBER:PUT:2026-10-30:68": 69.06,
-  "PLTR:CALL:2026-10-30:210": 192.2,
   "NFLX:PUT:2026-10-30:66": 67.14,
   "INTC:PUT:2026-10-30:80": 86.56
  }
