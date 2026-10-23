@@ -67,8 +67,8 @@ main() {
       msg="gex shadow log" ;;
     shadow)
       group=shadow
-      cmds=("$py shadow_levels.py --daily" "$py ladder_shadow.py --daily" "$py shadow_confluence.py --daily")
-      files="shadow_grid_log.csv shadow_grid_placebo_log.csv shadow_ob_log.csv shadow_fvg_log.csv shadow_days.txt ladder_shadow_log.csv ladder_days.txt shadow_confluence_log.csv shadow_confluence_days.txt"
+      cmds=("$py shadow_levels.py --daily" "$py ladder_shadow.py --daily" "$py shadow_confluence.py --daily" "$py shadow_ob_score.py --daily")
+      files="shadow_grid_log.csv shadow_grid_placebo_log.csv shadow_ob_log.csv shadow_fvg_log.csv shadow_days.txt ladder_shadow_log.csv ladder_days.txt shadow_confluence_log.csv shadow_confluence_days.txt shadow_ob_score_log.csv shadow_ob_score_days.txt shadow_ob_plan_log.csv"
       msg="shadow levels log" ;;
     weekly)
       group=weekly; envs="TG"

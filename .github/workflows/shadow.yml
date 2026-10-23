@@ -21,8 +21,9 @@ jobs:
       - run: python shadow_levels.py --daily
       - run: python ladder_shadow.py --daily
       - run: python shadow_confluence.py --daily
+      - run: python shadow_ob_score.py --daily
       - run: |
           git config user.name "bot"; git config user.email "bot@users.noreply.github.com"
-          for f in shadow_grid_log.csv shadow_grid_placebo_log.csv shadow_ob_log.csv shadow_fvg_log.csv shadow_days.txt ladder_shadow_log.csv ladder_days.txt shadow_confluence_log.csv shadow_confluence_days.txt; do git add "$f" 2>/dev/null || true; done
+          for f in shadow_grid_log.csv shadow_grid_placebo_log.csv shadow_ob_log.csv shadow_fvg_log.csv shadow_days.txt ladder_shadow_log.csv ladder_days.txt shadow_confluence_log.csv shadow_confluence_days.txt shadow_ob_score_log.csv shadow_ob_score_days.txt shadow_ob_plan_log.csv; do git add "$f" 2>/dev/null || true; done
           git commit -m "shadow levels log" || exit 0
           for i in 1 2 3; do git pull --rebase && git push && break; sleep 3; done
