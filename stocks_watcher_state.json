@@ -330,7 +330,13 @@
    "oil prices end mixed as traders weigh demand outlook hormuz shipping risks",
    "chevron nyse cvx stock edges down 0 04 3 11 dividend yield and eps growth",
    "brent crude tops 116 as traders price escalating middle east conflict",
-   "vance blamed biden for gas prices politifact says otherwise"
+   "vance blamed biden for gas prices politifact says otherwise",
+   "oil prices rise to highest since late april on middle east fears",
+   "european stocks post weekly loss as france turmoil oil prices dent earnings optimism by reuters",
+   "brent crude prices reach five month high amidst continued houthi attacks uae oil spill",
+   "oil prices at near three week high as us iran peace hopes fade",
+   "cbot soybeans rise on export sales oil prices",
+   "nasdaq index sp500 dow jones forecasts nasdaq attempts to rebound despite rising oil prices"
   ],
   "TSLA:CALL": [
    "tesla stock consolidates after potential tesla spacex merger exploration increases uncertainty",
@@ -370,7 +376,13 @@
    "oil uscrude price forecast for today tomorrow next week and next 30 days",
    "futures slip as big tech falters oil extends relentless advance",
    "brent crude tops 116 as traders price escalating middle east conflict",
-   "vance blamed biden for gas prices politifact says otherwise"
+   "vance blamed biden for gas prices politifact says otherwise",
+   "oil prices rise to highest since late april on middle east fears",
+   "european stocks post weekly loss as france turmoil oil prices dent earnings optimism by reuters",
+   "brent crude prices reach five month high amidst continued houthi attacks uae oil spill",
+   "oil prices at near three week high as us iran peace hopes fade",
+   "cbot soybeans rise on export sales oil prices",
+   "nasdaq index sp500 dow jones forecasts nasdaq attempts to rebound despite rising oil prices"
   ],
   "JPM:PUT": [
    "bank of america may need a new ceo"
@@ -424,7 +436,10 @@
    "news:oil prices climb as saudi attacks heighten supply concerns",
    "news:update equities mostly lower intraday as oil prices soar",
    "news:oil markets are on edge ahead of the weekend as midterm elections near and fresh u s strikes on iran are predicted",
-   "news:brent crude tops 116 as traders price escalating middle east conflict"
+   "news:brent crude tops 116 as traders price escalating middle east conflict",
+   "news:oil prices rise to highest since late april on middle east fears",
+   "news:brent crude prices reach five month high amidst continued houthi attacks uae oil spill",
+   "news:oil prices at near three week high as us iran peace hopes fade"
   ],
   "TSLA:CALL:2026-10-28:390": [
    "down-0.15",
@@ -448,7 +463,10 @@
    "news:update equities mostly lower intraday as oil prices soar",
    "news:oil markets are on edge ahead of the weekend as midterm elections near and fresh u s strikes on iran are predicted",
    "news:futures slip as big tech falters oil extends relentless advance",
-   "news:brent crude tops 116 as traders price escalating middle east conflict"
+   "news:brent crude tops 116 as traders price escalating middle east conflict",
+   "news:oil prices rise to highest since late april on middle east fears",
+   "news:brent crude prices reach five month high amidst continued houthi attacks uae oil spill",
+   "news:oil prices at near three week high as us iran peace hopes fade"
   ],
   "JPM:PUT:2026-10-30:325": [
    "down-0.15",
@@ -754,7 +772,9 @@
   "a new jersey importer is fighting trump s tariffs and a lindsay dairy s goat cheese is why",
   "growth to remain strong despite inflation headwinds",
   "ahead of tight race trump exempts some canadian goods from tariffs",
-  "trump administration exempts more canadian imports from tariffs"
+  "trump administration exempts more canadian imports from tariffs",
+  "trump claims prices are down down down americans in all 50 states know otherwise",
+  "what to expect from wednesday s federal reserve meeting"
  ],
  "sharp": {
   "BAC:PUT:2026-10-30:51": 50.86,
