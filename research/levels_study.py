@@ -33,6 +33,7 @@ COST = 0.00002       # لكل جهة
 SHIFT = 0.0035       # إزاحة المرجع الوهمي
 OR_BARS = 6          # أول 30 دقيقة
 PRIMARY_MIN = 150
+FORWARD_FROM = "2026-10-26"   # أول يوم تداول بعد تسجيل الفرضية: الحكم الرسمي عليها بالأيام الجديدة فقط (نصف الاختبار رُئي بالفعل يوم 24/10)
 FAMILIES = ("PDH", "PDL", "PDC", "OPEN", "VWAP", "ORH", "ORL", "ROUND5")
 
 
@@ -202,11 +203,13 @@ def split_halves(events):
     return events[events["day"] <= cut], events[events["day"] > cut]
 
 
-def primary_verdict(test):
+def primary_verdict(test, where="نصف الاختبار"):
+    if len(test) == 0:
+        return f"لا حكم بعد (0 من {PRIMARY_MIN} حدثاً في {where})"
     r = test[(test["family"].isin(["PDH", "PDL"])) & (test["mode"] == "fade")]
     real, plac = r[r["kind"] == "real"], r[r["kind"] == "placebo"]
     if len(real) < PRIMARY_MIN or len(plac) == 0:
-        return f"لا حكم بعد ({len(real)} من {PRIMARY_MIN} حدثاً في نصف الاختبار)"
+        return f"لا حكم بعد ({len(real)} من {PRIMARY_MIN} حدثاً في {where})"
     ci = boot_diff_ci(real, plac)
     d = real["R"].mean() - plac["R"].mean()
     if ci is None:
@@ -216,6 +219,11 @@ def primary_verdict(test):
     if ci[1] < 0:
         return f"عكسية: المرجع الوهمي أفضل ({d:+.3f}R، فاصل {ci[0]:+.3f}…{ci[1]:+.3f})"
     return f"لم تتحقق: الفرق {d:+.3f}R وفاصله {ci[0]:+.3f}…{ci[1]:+.3f} يشمل الصفر"
+
+
+def forward_verdict(events):
+    """الحكم الرسمي على الفرضية المسجّلة: الأيام من FORWARD_FROM فقط."""
+    return primary_verdict(events[events["day"] >= FORWARD_FROM] if len(events) else events, "الأيام الجديدة منذ 26/10/2026")
 
 
 def fmt(s):
@@ -247,7 +255,9 @@ def report(events, orb, meta):
                 diff = "-" if sp is None else f"{sr['mean'] - sp['mean']:+.3f}"
                 L.append(f"| {fam} | {mode} | {fmt(sr)} | {fmt(sp) if sp else '- | - | - | -'} | {diff} |")
         L.append("")
-    L += ["## الفرضية المسجّلة مسبقاً (ارتداد PDH/PDL مقابل الوهمي، نصف الاختبار)", "", "⚖️ **الحكم:** " + primary_verdict(test), ""]
+    L += ["## الفرضية المسجّلة مسبقاً (ارتداد PDH/PDL مقابل الوهمي)", "",
+          "⚖️ **الحكم الرسمي (بيانات جديدة فقط منذ 26/10/2026):** " + forward_verdict(events), "",
+          "- للعلم فقط (نصف الاختبار رُئي بالفعل يوم 24/10/2026 فلا يُعتمد): " + primary_verdict(test), ""]
     L += ["## اختراق أول 30 دقيقة (ORB)", ""]
     if len(orb) == 0:
         L.append("لا بيانات.")

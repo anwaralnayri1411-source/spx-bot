@@ -183,3 +183,18 @@ def test_null_calibration_a_random_walk_never_confirms_the_hypothesis():
     for seed in (11, 12):
         _, test = ls.split_halves(random_walk_events(seed))
         assert "تحققت الفرضية" not in ls.primary_verdict(test)
+
+
+def test_official_verdict_uses_only_days_after_the_registration_date():
+    rng = np.random.default_rng(3)
+    rows = []
+    for i in range(260):
+        d = f"2026-{11 + i // 120:02d}-{1 + i % 28:02d}-{i}"                       # كلها بعد 26/10/2026 لفظياً
+        for fam in ("PDH", "PDL"):
+            rows.append({"day": d, "family": fam, "mode": "fade", "kind": "real", "R": 0.5 + rng.normal(0, 0.5)})
+            rows.append({"day": d, "family": fam, "mode": "fade", "kind": "placebo", "R": rng.normal(0, 0.5)})
+    ev = pd.DataFrame(rows)
+    assert "تحققت الفرضية" in ls.forward_verdict(ev)
+    old = ev.assign(day="2025-01-01-" + ev["day"])                                   # قبل التسجيل: لا يُحسب
+    assert "لا حكم بعد (0 من 150" in ls.forward_verdict(old)
+    assert "لا حكم بعد" in ls.forward_verdict(pd.DataFrame())
