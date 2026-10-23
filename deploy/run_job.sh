@@ -95,6 +95,11 @@ main() {
       cmds=("$py research/tail_log.py")
       files="tail_log_days.csv tail_log_events.csv"
       msg="tail log" ;;
+    real_price_check)
+      group=real-price-check; envs="ALPACA"
+      cmds=("$py research/real_price_check.py")
+      files="research/real_price_check_results.md research/real_price_check_trades.csv"
+      msg="real price check refresh" ;;
     weekly_learning)
       group=weekly-learning; envs="TG"
       cmds=("$py research/weekly_learning.py")

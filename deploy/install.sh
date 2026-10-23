@@ -30,6 +30,7 @@ live_watcher|Mon..Fri *-*-* 11..20:00/5:00
 news_memory|Mon..Fri *-*-* 11..22:09/30:00
 news_memory_eval|Mon..Fri *-*-* 22:50:00
 tail_log|Mon..Fri *-*-* 22:30:00
+real_price_check|Sat *-*-* 08:00:00
 weekly_learning|Sat *-*-* 09:00:00
 '
 # المهام الطويلة (آخر ثلاث): المؤقت يعيد تشغيلها كل 5 دقائق إن توقفت (حد 345 دقيقة في الكود)، ولا يبدأ نسخة ثانية
