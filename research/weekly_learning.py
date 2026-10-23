@@ -314,6 +314,22 @@ def stocks_study_lines(positions, track):
             f"({len(long_)}) مقابل الأقصر {m(short_)} ({len(short_)}). عينة صغيرة جداً: للمراقبة لا للحكم."]
 
 
+SPREAD_BUCKETS = ((0.0, 0.08, "≤8%"), (0.08, 0.15, "8–15%"), (0.15, 9.0, ">15%"))
+
+
+def spread_lines(positions):
+    """أثر فرق الشراء/البيع عند الدخول (يُسجَّل منذ 24/10 في entry_spr) على نتيجة التوصيات المغلقة (قراءة فقط)."""
+    rows = [(float(p["entry_spr"]), float(p["closed"]["pnl"])) for p in positions or []
+            if p.get("entry_spr") is not None and p.get("closed") and p["closed"].get("pnl") is not None]
+    if not rows:
+        return ["⚖️ فرق الشراء/البيع عند الدخول (الشركات): يُسجَّل منذ 24/10، ولا توصيات مغلقة به بعد."]
+    parts = []
+    for lo, hi, name in SPREAD_BUCKETS:
+        v = [x for s, x in rows if lo <= s < hi]
+        parts.append(f"{name}: {len(v)} " + (f"({sum(v) / len(v) * 100:+.0f}%)" if v else "(-)"))
+    return [f"⚖️ فرق الشراء/البيع عند الدخول مقابل نتيجة الشركات المغلقة: " + "، ".join(parts) + ". لا حكم قبل 30 توصية لكل فئة."]
+
+
 VERDICT_FILES = (("مقارنة درجة الأخبار (Claude مقابل الكلمات)", "research/news_score_compare_results.md"),
                   ("ظل قواعد المحترفين (عقد 0.50 مقابل عقد البوت)", "research/pro_rules_shadow_results.md"))
 
@@ -365,7 +381,7 @@ def load_data():
             "tail_days": _csv("tail_log_days.csv"), "tail_events": _csv("tail_log_events.csv"),
             "snaps": _csv("gex_snapshots.csv"), "outcomes": _csv("gex_outcomes.csv"), "momentum": _csv("momentum_shadow_log.csv"), "trades": _csv("research/real_price_check_trades.csv"),
             "blocked": _csv("blocked_shadow_log.csv"), "exit_log": _csv("exit_shadow_log.csv"),
-            "stocks_study": stocks_study_lines(positions, _csv("stocks_track.csv")),
+            "stocks_study": stocks_study_lines(positions, _csv("stocks_track.csv")) + spread_lines(positions),
             "verdict_texts": {t: (open(os.path.join(ROOT, f), encoding="utf-8").read() if os.path.exists(os.path.join(ROOT, f)) else "") for t, f in VERDICT_FILES},
             "news_md": open(p, encoding="utf-8").read() if os.path.exists(p) else ""}
 
