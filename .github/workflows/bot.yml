@@ -35,5 +35,5 @@ jobs:
           git add messages_options_bot.jsonl || true
           git add bot_state.json || true
           for f in spx_positions.json spx_track.csv live_quotes_log.csv; do git add "$f" 2>/dev/null || true; done
-          for f in signals_extra_log.csv levels_log.csv mgt_compare_log.csv news_shadow_log.csv; do git add "$f" 2>/dev/null || true; done
+          for f in signals_extra_log.csv levels_log.csv mgt_compare_log.csv news_shadow_log.csv data_gaps_spx_log.csv; do git add "$f" 2>/dev/null || true; done
           git diff --cached --quiet || (git commit -m "update bot state" && (git pull --rebase && git push || (sleep 5 && git pull --rebase && git push)))
