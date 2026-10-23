@@ -10,7 +10,7 @@
   r2 = قاعدة المحترفين: +50%، ووقف على السهم 1.5% ضد الاتجاه (بعد 30 دقيقة)، ووقف زمني عند بقاء 7 أيام أو أقل للانتهاء
 تسعير الدخول والخروج: سعر افتتاح أول شمعة بعد التوصية + نصف فرق 1.5% وعمولة (كما في tail_log). السترايك البديل يُختار من شبكة مرشحة حول الدلتا المطلوبة
 (بتذبذب مُعايَر على عقد البوت وقت الدخول) ثم يُبقى على ما له شموع فعلية فقط.
-⚠️ العينة صغيرة (عشرات التوصيات في أيام قليلة) وشموع العقود البعيدة عن السعر قد تكون متباعدة (آخر صفقة لا سعر عرض)؛ للمراقبة لا للحكم.
+⚠️ عقود لم تنتهِ بعد تُقيَّم بآخر شمعة متاحة (سبب «end»)، وتُمدَّد النتائج مع مرور الأيام؛ والعينة صغيرة (عشرات التوصيات في أيام قليلة) وشموع العقود البعيدة عن السعر قد تكون متباعدة (آخر صفقة لا سعر عرض)؛ للمراقبة لا للحكم.
 تشغيل (على الخادم، يحتاج ALPACA_KEY/ALPACA_SECRET): python research/stocks_contract_replay.py   المخرجات: research/stocks_contract_replay_results.md و..._trades.csv
 """
 import json
@@ -201,6 +201,13 @@ def plan_position(p, abs_delta, bs_price):
     return {v: (exp, candidate_strikes(strike_for_delta(S, T, iv, p["side"], d, abs_delta)), iv, T) for v, d in VARIANTS.items()}
 
 
+def cap_end(expiry, now=None):
+    """نهاية نافذة الجلب: إغلاق يوم الانتهاء أو الآن−16 دقيقة أيهما أبكر؛ Alpaca يرفض (403 OPRA) أي نهاية في المستقبل أو أحدث من 15 دقيقة."""
+    utc = ZoneInfo("UTC")
+    close = datetime.combine(expiry, datetime.min.time(), NY).replace(hour=16).astimezone(utc)
+    return min(close, (now or datetime.now(utc)) - timedelta(minutes=16))
+
+
 def pick_strike(cands, bars_by_sym, ticker, exp, side, S, iv, T, target, abs_delta, t0):
     best = None
     for k in cands:
@@ -233,10 +240,9 @@ def run(pos, ob, fetch=None, get_stock=None):
         end = max(plan[v][0] for v in plan)
         utc = ZoneInfo("UTC")
         try:
-            bars = fetch(syms, t0.astimezone(utc).isoformat(),
-                         datetime.combine(end, datetime.min.time(), NY).replace(hour=16).astimezone(utc).isoformat())
+            bars = fetch(syms, t0.astimezone(utc).isoformat(), cap_end(end).isoformat())
         except Exception as e:  # noqa: BLE001
-            print("فشل الجلب:", p["id"], type(e).__name__)
+            print("فشل الجلب:", p["id"], getattr(e, "code", type(e).__name__))   # رمز HTTP فقط، لا نص الخطأ (قد يحمل ترويسات)
             continue
         stock = get_stock(tk)
         chosen = {"bot": (exp_bot, float(p["strike"]))}

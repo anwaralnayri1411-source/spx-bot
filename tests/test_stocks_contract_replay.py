@@ -144,3 +144,11 @@ def test_run_skips_positions_it_cannot_calibrate_or_fetch(capsys):
     ok = dict(bad, entry=3.0)
     boom = sr.run([ok], ob, fetch=lambda *a: (_ for _ in ()).throw(ConnectionError("x-api-key: secret")), get_stock=lambda t: None)
     assert boom.empty and "secret" not in capsys.readouterr().out
+
+
+def test_fetch_window_never_ends_in_the_future_or_inside_the_last_16_minutes():
+    now = datetime(2026, 10, 23, 14, 0, tzinfo=sr.ZoneInfo("UTC"))
+    capped = sr.cap_end(date(2026, 11, 20), now)
+    assert capped == now - timedelta(minutes=16)                                # انتهاء في المستقبل: نقصّه إلى الآن−16 د
+    past = sr.cap_end(date(2026, 10, 16), now)
+    assert past == datetime(2026, 10, 16, 20, 0, tzinfo=sr.ZoneInfo("UTC"))      # انتهاء مضى: إغلاق 16:00 نيويورك
