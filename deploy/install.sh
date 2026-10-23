@@ -15,6 +15,7 @@ contract_shadow|Mon..Fri *-*-* 13..21:02/5:00
 exit_shadow|Mon..Fri *-*-* 13..21:03/5:00
 blocked_shadow|Mon..Fri *-*-* 13..21:07/5:00
 pro_rules_shadow|Mon..Fri *-*-* 13..21:08/5:00
+structure_shadow|Mon..Fri *-*-* 13..21:09/5:00
 gex|Mon..Fri *-*-* 13:50:00;Mon..Fri *-*-* 21:45:00
 shadow|Mon..Fri *-*-* 21:40:00
 weekly|Fri *-*-* 21:30:00

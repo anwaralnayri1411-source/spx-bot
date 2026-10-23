@@ -110,6 +110,11 @@ main() {
       cmds=("$py blocked_shadow.py" "$py blocked_shadow.py --report")
       files="blocked_shadow_state.json blocked_shadow_log.csv research/blocked_shadow_results.md data_gaps_blocked_shadow_log.csv"
       msg="blocked shadow log" ;;
+    structure_shadow)
+      group=structure-shadow; envs="ALPACA TASTY"
+      cmds=("$py structure_shadow.py" "$py structure_shadow.py --report")
+      files="structure_shadow_state.json structure_shadow_log.csv research/structure_shadow_results.md data_gaps_structure_shadow_log.csv"
+      msg="structure shadow log" ;;
     news_score)
       group=news-score
       cmds=("$py research/news_score_compare.py")
