@@ -23,7 +23,7 @@ main() {
     bot)
       group=spx-bot; envs="TG ALPACA LQ TASTY"; extra_env="FORCE=0"
       cmds=("$py options_bot.py")
-      files="zero_dte_log.csv messages_options_bot.jsonl bot_state.json spx_positions.json spx_track.csv live_quotes_log.csv signals_extra_log.csv levels_log.csv mgt_compare_log.csv news_shadow_log.csv edge7_shadow_state.json edge7_shadow_log.csv data_gaps_spx_log.csv"
+      files="zero_dte_log.csv messages_options_bot.jsonl bot_state.json spx_positions.json spx_track.csv live_quotes_log.csv signals_extra_log.csv levels_log.csv mgt_compare_log.csv news_shadow_log.csv edge7_shadow_state.json edge7_shadow_log.csv data_gaps_spx_log.csv blocked_inbox_spx.csv"
       msg="update bot state" ;;
     spx_monitor)
       group=spx-bot; envs="TG ALPACA LQ TASTY"; gate=gate_open_positions
@@ -33,7 +33,7 @@ main() {
     stocks)
       group=stocks-bot; envs="TG ALPACA LQS TASTY"; extra_env="FORCE=0 BOT_MODE=scan"
       cmds=("$py stocks_bot.py")
-      files="stocks_log.csv stocks_track.csv messages_stocks_bot.jsonl stocks_state.json stocks_positions.json stocks_shadow_log.csv stocks_flow_log.csv live_quotes_stocks_log.csv stocks_sector_live_log.csv data_gaps_stocks_log.csv"
+      files="stocks_log.csv stocks_track.csv messages_stocks_bot.jsonl stocks_state.json stocks_positions.json stocks_shadow_log.csv stocks_flow_log.csv live_quotes_stocks_log.csv stocks_sector_live_log.csv data_gaps_stocks_log.csv blocked_inbox_stocks.csv"
       msg="update stocks state" ;;
     commands)
       group=commands-bot; envs="TG ALPACA LQS TASTY"
@@ -105,6 +105,11 @@ main() {
       cmds=("$py exit_shadow.py" "$py exit_shadow.py --report")
       files="exit_shadow_state.json exit_shadow_log.csv research/exit_shadow_results.md data_gaps_exit_shadow_log.csv"
       msg="exit shadow log" ;;
+    blocked_shadow)
+      group=blocked-shadow; envs="ALPACA TASTY"
+      cmds=("$py blocked_shadow.py" "$py blocked_shadow.py --report")
+      files="blocked_shadow_state.json blocked_shadow_log.csv research/blocked_shadow_results.md data_gaps_blocked_shadow_log.csv"
+      msg="blocked shadow log" ;;
     stocks_exit_study)
       group=stocks-exit-study
       cmds=("$py research/stocks_exit_study.py")

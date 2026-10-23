@@ -13,6 +13,7 @@ commands|Mon..Fri *-*-* 13..21:03/15:00
 preopen|Mon..Fri *-*-* 12,13:41:00;Mon..Fri *-*-* 13,14:03,23:00
 contract_shadow|Mon..Fri *-*-* 13..21:02/5:00
 exit_shadow|Mon..Fri *-*-* 13..21:03/5:00
+blocked_shadow|Mon..Fri *-*-* 13..21:07/5:00
 feed_compare|Mon..Fri *-*-* 13..20:01/5:00
 live_shadow|Mon..Fri *-*-* 13..21:04/5:00
 gex|Mon..Fri *-*-* 13:50:00;Mon..Fri *-*-* 21:45:00
