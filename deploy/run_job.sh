@@ -187,6 +187,7 @@ prepare_tree() {
   fi
   git -C "$dir" fetch -q origin main || return 1
   git -C "$dir" rebase --abort 2>/dev/null
+  git -C "$dir" stash clear 2>/dev/null
   git -C "$dir" reset -q --hard && git -C "$dir" clean -fdq &&
     git -C "$dir" checkout -q -B main origin/main && git -C "$dir" reset -q --hard origin/main
 }
@@ -251,7 +252,9 @@ save_files() {
   git -c user.name=spx-bot-server -c user.email=bot@users.noreply.github.com commit -q -m "$msg" || return 0
   local i
   for i in 1 2 3 4 5; do
-    if git pull -q --rebase origin main; then git push -q origin HEAD:main && return 0; else git rebase --abort 2>/dev/null; fi
+    # --autostash: ملف متتبَّع عدّله الكود ولا تحفظه هذه المهمة (مثل data_gaps_stocks_log.csv في مراقب الشركات)
+    # كان يمنع pull --rebase فيضيع حفظ التشغيل كله؛ يبقى ذلك الملف خارج الالتزام والتشغيل التالي يبدأ نظيفاً
+    if git pull -q --rebase --autostash origin main; then git push -q origin HEAD:main && return 0; else git rebase --abort 2>/dev/null; fi
     sleep 5
   done
   echo "=== push failed"
