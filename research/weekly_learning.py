@@ -80,7 +80,7 @@ def sec_tail(days, events):
     for k in range(5):
         g = d[d["dow"] == k]
         if len(g):
-            rows.append(f"{DOW[k]}: {g['rate'].mean() * 100:.0f}% ({len(g)} أيام)")
+            rows.append(f"{DOW[k]}: {g['rate'].mean() * 100:.0f}% ({cnt(len(g), 'يوم', 'أيام', 'يوماً')})")
     L.append("• نسبة لمس +100% حسب يوم الأسبوع: " + " | ".join(rows) + ".")
     fri, oth = d[d["dow"] == 4]["rate"], d[d["dow"] != 4]["rate"]
     if len(fri) >= 3 and len(oth) >= 3:
@@ -93,7 +93,7 @@ def sec_tail(days, events):
                      + ("(قوي: القفزات تتبع الأيام المتحركة أكثر من يوم الأسبوع)" if c > 0.5 else "(ضعيف أو متوسط)") + ".")
     if d["opex_month"].sum() >= 2:
         o = d[d["opex_month"] == 1]["rate"].mean() * 100
-        L.append(f"• جمعة الانتهاء الشهري: {o:.0f}% ({int(d['opex_month'].sum())} أيام فقط).")
+        L.append(f"• جمعة الانتهاء الشهري: {o:.0f}% ({cnt(d['opex_month'].sum(), 'يوم', 'أيام', 'يوماً')} فقط).")
     big = d[d["range_pct"] >= d["range_pct"].quantile(0.75)]["rate"].mean() * 100
     calm = d[d["range_pct"] <= d["range_pct"].quantile(0.25)]["rate"].mean() * 100
     L.append(f"• أيام الحركة الواسعة (الربع الأعلى): {big:.0f}% مقابل {calm:.0f}% في أهدأ الأيام.")
