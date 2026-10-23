@@ -24,7 +24,7 @@
    "peak_pnl": 0.0,
    "close_pnl": -0.946,
    "quotes": 67,
-   "stale": 0
+   "stale": 1
   },
   {
    "date": "2026-10-23",
@@ -49,7 +49,7 @@
    "peak_pnl": 0.0,
    "close_pnl": -0.897,
    "quotes": 67,
-   "stale": 0
+   "stale": 1
   },
   {
    "date": "2026-10-23",
@@ -74,7 +74,7 @@
    "peak_pnl": 0.0,
    "close_pnl": -0.96,
    "quotes": 67,
-   "stale": 0
+   "stale": 1
   },
   {
    "date": "2026-10-23",
@@ -99,7 +99,7 @@
    "peak_pnl": 0.161,
    "close_pnl": -0.993,
    "quotes": 61,
-   "stale": 0
+   "stale": 1
   },
   {
    "date": "2026-10-23",
@@ -124,7 +124,7 @@
    "peak_pnl": 0.161,
    "close_pnl": -0.993,
    "quotes": 61,
-   "stale": 0
+   "stale": 1
   },
   {
    "date": "2026-10-23",
@@ -149,7 +149,7 @@
    "peak_pnl": 0.164,
    "close_pnl": -0.986,
    "quotes": 60,
-   "stale": 1
+   "stale": 2
   }
  ]
 }
