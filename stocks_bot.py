@@ -17,6 +17,7 @@ import numpy as np
 import pandas as pd
 import yfinance as yf
 
+import data_gaps   # تسجيل فجوات البيانات فقط (لا يغيّر أي قرار)
 import options_bot as ob
 
 # ====================== الإعدادات ======================
@@ -241,7 +242,8 @@ def get_chains(t, today):
         try:
             ch = t.option_chain(e)
             out.append((e, dte, ch.calls.copy(), ch.puts.copy()))
-        except Exception:
+        except Exception as ex:
+            data_gaps.note("stocks", "option_chain", ex, e)
             continue
     return out
 
@@ -731,11 +733,12 @@ def spot_now(t):
         h = t.history(period="1d", interval="5m")["Close"].dropna()
         if len(h):
             return float(h.iloc[-1])
-    except Exception:
-        pass
+    except Exception as ex:
+        data_gaps.note("stocks", "spot_5m", ex, getattr(t, "ticker", ""))
     try:
         return float(t.history(period="5d")["Close"].dropna().iloc[-1])
-    except Exception:
+    except Exception as ex:
+        data_gaps.note("stocks", "spot_5d", ex, getattr(t, "ticker", ""))
         return None
 
 
@@ -1214,8 +1217,8 @@ def intraday_price(t, fallback):
         h = t.history(period="1d", interval="5m")["Close"].dropna()
         if len(h):
             return float(h.iloc[-1])
-    except Exception:
-        pass
+    except Exception as ex:
+        data_gaps.note("stocks", "price_5m", ex, getattr(t, "ticker", ""))
     return fallback
 
 

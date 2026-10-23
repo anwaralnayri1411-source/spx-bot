@@ -23,6 +23,8 @@ import pandas as pd
 import requests
 import yfinance as yf
 
+import data_gaps   # تسجيل فجوات البيانات فقط (لا يغيّر أي قرار)
+
 # ====================== الإعدادات ======================
 SYMBOL = "^SPX"             # يمكنك تغييره إلى "SPY"
 EXIT_AT_BID = True          # نقيس قيمة العقد للخروج بسعر البيع (bid) لا الوسط، فالأرقام أقرب للتنفيذ الفعلي
@@ -330,7 +332,8 @@ def liquidity_map(t, S, exps):
     for e, dte in exps:
         try:
             ch = t.option_chain(e)
-        except Exception:
+        except Exception as ex:
+            data_gaps.note("spx", "option_chain", ex, e)
             continue
         used += 1
         T = max(dte, 0.25) / 365
@@ -780,8 +783,10 @@ def analyze(force):
             c["vwap"] = vwap
             c["above_vwap"] = bool(fl["Close"].iloc[-1] > vwap)
             c["vwap_spx"] = vwap * S / float(fl["Close"].iloc[-1])   # VWAP بمستوى المؤشر
-    except Exception:
-        pass
+        else:
+            data_gaps.note("spx", "vwap_no_volume")   # يبقى above_vwap=True الافتراضي (سلوك قائم، نقيس تكراره)
+    except Exception as ex:
+        data_gaps.note("spx", "vwap", ex)             # يبقى above_vwap=True الافتراضي (سلوك قائم، نقيس تكراره)
 
     c["vix"], c["vpct"] = vix_info()
     heads = fetch_headlines()
@@ -823,15 +828,15 @@ def analyze(force):
         es = yf.Ticker("ES=F").history(period="5d")["Close"].dropna()
         if len(es) >= 2:
             c["es"] = float(es.iloc[-1] / es.iloc[-2] - 1)
-    except Exception:
-        pass
+    except Exception as ex:
+        data_gaps.note("spx", "es", ex)
     try:
         vx = yf.Ticker("^VIX").history(period="5d", interval="5m")["Close"].dropna()
         vx = vx[vx.index.date == last_date]
         if len(vx) >= 3:
             c["vix_day"] = float(vx.iloc[-1] / vx.iloc[0] - 1)
-    except Exception:
-        pass
+    except Exception as ex:
+        data_gaps.note("spx", "vix_day", ex)
     try:
         day = ix[ix.index.date == last_date]
         if len(day) >= 7:   # اكتمل نطاق أول 30 دقيقة
