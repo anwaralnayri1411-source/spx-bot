@@ -72,7 +72,8 @@
    "doordash stock goldman sachs adjusts target to usd 280 for doordash stock",
    "uber technologies stock november 4 results carry usd 0 94 estimate for uber technologies stock",
    "uber technologies inc ut81 f stock price news quote and history",
-   "with an ipo brewing anthropic just launched its answer to meta s uber popular muse"
+   "with an ipo brewing anthropic just launched its answer to meta s uber popular muse",
+   "polen focus growth strategy trims starbucks corporation sbux as turnaround progress enters valuation"
   ],
   "DIS:CALL": [
    "skydance rises 5 as steep post merger slide pauses disney gains 2 netflix slips",
@@ -131,7 +132,9 @@
    "netflix inc estimates nasdaq nflx",
    "bill ackman sees 20 plus returns from netflix netflix nasdaq nflx",
    "can netflix stock hold margin gains as content spending keeps growing",
-   "bill ackman lost 400 million on netflix now he sees 20 plus annual returns"
+   "bill ackman lost 400 million on netflix now he sees 20 plus annual returns",
+   "analysts offer insights on communication services companies at t t and netflix nflx",
+   "sa asks netflix hit a 52 week low this week is now the time to buy nflx nasdaq"
   ],
   "AVGO:PUT": [
    "3 artificial intelligence ai stocks that look like great buys right now",
@@ -229,7 +232,8 @@
    "the foundry disconnect intel nails the transistor but tsmc holds the keys to yield and scale",
    "intel corporation estimates nasdaq intc",
    "intel corporation shs cert deposito arg repr 0 2 shs estimates bcba intc",
-   "fy2027 eps estimates for intel boosted by erste group bank"
+   "fy2027 eps estimates for intel boosted by erste group bank",
+   "sandisk and intel will report earnings on oct 29 options traders expect 10 swings in sndk and intc stocks"
   ],
   "CVX:CALL": [
    "stocks see continued downward pressure from ai anxiety and oil prices",
@@ -244,7 +248,18 @@
    "maine heating oil prices are getting ridiculous we re all feeling it",
    "ai concerns continue to hit big tech stocks friday as oil prices rise again",
    "nasdaq 100 forecast ndx falls as the tech rout continues and oil prices soar",
-   "oil prices hit five month high and dow falls 700 points over fears of iran strikes ai spending"
+   "oil prices hit five month high and dow falls 700 points over fears of iran strikes ai spending",
+   "barrot new us iran escalation could push oil prices up",
+   "s p 500 forecast oil and ai spending risks test the path to 8 000",
+   "brent crude oil price rises amid middle east tensions",
+   "cruise stocks fall as oil price hits five month high norwegian sinks 6 royal caribbean and carnival drop 4",
+   "tiffany floats expansion of wisconsin s oil refinery to reduce reliance on middle east",
+   "oil s well that ends well energy stocks ride the crude rally xle nysearca",
+   "futures slip as big tech falters oil extends relentless advance",
+   "oil prices rise as inventory draws and middle east tensions support crude",
+   "brent crude jumped 4 to 113 trump is throwing 150 million at refiners",
+   "oil india strikes natural gas in shallow offshore basin",
+   "trump to use the defense production act to boost u s gas and diesel production could it help"
   ]
  },
  "fired": {
@@ -285,7 +300,13 @@
   "CVX:CALL:2026-10-30:240": [
    "down-0.15",
    "news:oil prices continue to rise surpass 116 per barrel",
-   "news:oil prices hit five month high and dow falls 700 points over fears of iran strikes ai spending"
+   "news:oil prices hit five month high and dow falls 700 points over fears of iran strikes ai spending",
+   "news:barrot new us iran escalation could push oil prices up",
+   "news:brent crude oil price rises amid middle east tensions",
+   "news:futures slip as big tech falters oil extends relentless advance",
+   "news:oil prices rise as inventory draws and middle east tensions support crude",
+   "news:brent crude jumped 4 to 113 trump is throwing 150 million at refiners",
+   "news:trump to use the defense production act to boost u s gas and diesel production could it help"
   ]
  },
  "stock_level": {
@@ -528,7 +549,10 @@
   "economic indicators types key examples 2026",
   "us stocks today us stocks open lower after ai rout spacex worries hit telecoms",
   "president trump opts for negotiations not tariffs in section 232 wind turbine investigation",
-  "us stock market today live dow jones s p 500 and nasdaq open lower as ai stock sell off surging oil prices and middle ea"
+  "us stock market today live dow jones s p 500 and nasdaq open lower as ai stock sell off surging oil prices and middle ea",
+  "trump s tariffs slow america s access to canada s cheese",
+  "central bank decisions inflation and market outlook",
+  "trump says deal with canada close but he holds all the cards"
  ],
  "sharp": {
   "BAC:PUT:2026-10-30:51": 50.86,
