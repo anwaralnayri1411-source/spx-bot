@@ -103,11 +103,32 @@ def summarize(res, up, days):
             "W": W, "L": Lw, "be": breakeven(W, Lw), "up_share": float(up.mean())}
 
 
+def calibration_lines(theory, path=None):
+    """معايرة النظري بالحقيقي: أسعار Alpaca الحقيقية في research/real_price_check_trades.csv (دخول بسعر الطلب، خروج بسعر البيع، خروج بعد 60 دقيقة).
+    theory: {اسم: متوسط عشوائي نظري عند VIX×1.0}. يرجع أسطراً (فارغة إن لم يوجد الملف)."""
+    path = path or os.path.join(HERE, "real_price_check_trades.csv")
+    if not os.path.exists(path):
+        return []
+    t = pd.read_csv(path)
+    t = t[t["exit"] == "t60"]
+    out = []
+    for kind, label, key in (("atm1", "ATM لليوم التالي (1DTE)", "ATM 1DTE"), ("otm0", "عقد البوت الرخيص (0DTE)", "OTM 1% 0DTE")):
+        g = t[t["kind"] == kind]
+        if len(g) >= 50 and key in theory:
+            out.append(f"| {label} | {len(g)} صفقة / {g['day'].nunique()} يوماً | {100 * g['real'].mean():+.1f}% | {100 * theory[key]:+.1f}% |")
+    if not out:
+        return []
+    return ["## معايرة: الحقيقي مقابل النظري (خروج بعد 60 دقيقة)", "",
+            "| العقد | العينة الحقيقية | متوسط حقيقي (الاتجاهان معاً) | نظري هنا (VIX × 1.0) |", "|---|---|---|---|"] + out + [
+            "", "- القراءة: النظري يبالغ في الخسارة لأن VIX يحمل تذبذب الليل وتذبذب 0DTE الفعلي أقل منه؛ فنسب التعادل أعلاه **حدّ أعلى** والحقيقية أقل (مثال: ATM 1DTE بخسارة عشوائية −3% بدل −6% يعني تعادلاً قرب 60% لا 72%).", ""]
+
+
 def report(S, vix, meta):
     L = ["# ثمن أن تكون مشتري خيارات على SPY (نتائج آلية، نظرية الأسعار)", "",
          f"- {meta}. عينات الدخول: {len(S)} (4 أوقات يومياً). التسعير بلاك-شولز بتذبذب VIX إغلاق أمس، الدخول بالطلب والخروج بالبيع.",
          "- **العمود الأهم: نسبة التعادل** = نسبة إصابة الاتجاه اللازمة لتعادل الشراء. بلا ميزة (إصابة 50%) يكون المتوسط العشوائي هو ما تخسره في كل صفقة.",
          "- ⚠️ تذبذب VIX لا يساوي التذبذب الضمني لـ0DTE، وثبات التذبذب عند الخروج تبسيط؛ تُعرض حساسية ×0.8 و×1.2. لا حكم دولاري، بل الحجم والاتجاه.", ""]
+    theory = {}
     for mult in IV_MULTS:
         L += [f"## تذبذب = VIX × {mult}", "", "| العقد | المدة | الاحتفاظ | عشوائي: متوسط العائد | فاصل 95% | متوسط عند الإصابة | عند الخطأ | نسبة التعادل |", "|---|---|---|---|---|---|---|---|"]
         for sname, (off, h) in STRIKES.items():
@@ -117,10 +138,12 @@ def report(S, vix, meta):
                     if len(days) < 100:
                         continue
                     s = summarize(res, up, days)
+                    if mult == 1.0 and hname == "60 دقيقة":
+                        theory[f"{sname} {dname}"] = s["random"]
                     be = "-" if s["be"] is None else f"{100 * s['be']:.1f}%"
                     L.append(f"| {sname} | {dname} | {hname} | {100 * s['random']:+.1f}% | {100 * s['ci'][0]:+.1f}…{100 * s['ci'][1]:+.1f} | {100 * s['W']:+.0f}% | {100 * s['L']:+.0f}% | {be} |")
         L.append("")
-    return L
+    return L + calibration_lines(theory)
 
 
 def load_vix():

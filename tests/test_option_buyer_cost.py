@@ -78,3 +78,16 @@ def test_report_and_main_run_on_a_synthetic_file(tmp_path, monkeypatch):
     text = (tmp_path / "r.md").read_text(encoding="utf-8")
     assert "نسبة التعادل" in text and "تذبذب = VIX × 1.0" in text and "ATM" in text and "OTM 1%" in text
     assert ob_cost.main([str(tmp_path / "none.csv")]) == 0
+
+
+def test_calibration_compares_real_prices_with_the_theory_when_the_file_exists(tmp_path):
+    rows = []
+    for i in range(120):
+        rows.append({"day": f"2026-09-{1 + i % 25:02d}", "run_m": 600, "edge": 5, "role": "bot", "kind": "atm1", "exit": "t60", "real": -0.03, "theo": -0.07})
+        rows.append({"day": f"2026-09-{1 + i % 25:02d}", "run_m": 600, "edge": 5, "role": "bot", "kind": "otm0", "exit": "t60", "real": -0.26, "theo": -0.45})
+    p = tmp_path / "t.csv"
+    pd.DataFrame(rows).to_csv(p, index=False)
+    L = chr(10).join(ob_cost.calibration_lines({"ATM 1DTE": -0.064, "OTM 1% 0DTE": -0.371}, str(p)))
+    assert "معايرة" in L and "-3.0%" in L and "-6.4%" in L and "-26.0%" in L and "-37.1%" in L and "حدّ أعلى" in L
+    assert ob_cost.calibration_lines({}, str(tmp_path / "none.csv")) == []
+    assert ob_cost.calibration_lines({"ATM 1DTE": -0.06}, str(p)) != []                      # يكفي مفتاح واحد
