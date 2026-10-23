@@ -55,6 +55,10 @@
 - **أي مهمة مجدولة جديدة أو تعديل في ملفات/متغيرات سير عمل مجدول: أضفه في `deploy/run_job.sh` + `deploy/install.sh`** (ثم على الخادم: `git -C /opt/spxbot/repo pull` و`bash /opt/spxbot/repo/deploy/install.sh` بصلاحية root). سير العمل الجديد بلا مقابل هناك لن يعمل.
 - المفاتيح في `/etc/spxbot/env` (يملؤها المستخدم بالأمر `spxbot-setkeys`؛ لا تطبع قيمها أبداً). منذ 22/10 فيه أيضاً `TASTY_CLIENT_SECRET`/`TASTY_REFRESH_TOKEN` (أضيفت خانتاهما لـ `/usr/local/sbin/spxbot-setkeys` على الخادم، نسخة سابقة `.bak-20261022`؛ الأمر نفسه ليس في المستودع). الوضع في `/etc/spxbot/runner.env`: `live` أو `shadow` (بلا إرسال ولا رفع).
 
+## حارس الصحة والاختبارات الآلية (منذ 23/10)
+`deploy/bot_watchdog.py` + `deploy/install_watchdog.sh` (مؤقت systemd كل 5د على الخادم، وضع live فقط): أثناء الجلسة (9:50–15:50 نيويورك) ينبّه المستخدم وحده على تيليجرام إن توقف `bot`/`stocks`/`commands` عن النجاح أكثر من 50/50/30 دقيقة، أو فشل تشغيلان متتاليان لأي منها، أو لم تكن `stocks_watcher` قيد التشغيل لفحصين، أو القرص > 85%؛ تنبيه واحد لكل مشكلة ورسالة «عاد للعمل». يقرأ `/var/log/spxbot/runs.csv`. **عند تغيير اسم مهمة أو فاصل جدولتها حدّث `RUN_CHECKS` في الملف.** إيقافه: `systemctl disable --now spxbot-watchdog.timer`.
+`tests/` (63 اختباراً بلا شبكة): `python -m pytest tests -q`؛ تعمل تلقائياً على GitHub عند تعديل ملفات بايثون (`.github/workflows/tests.yml`). شغّلها قبل أي التزام يمس `options_bot.py` أو `stocks_bot.py` أو `stocks_watcher.py` أو `deploy/bot_watchdog.py`، وأضف اختباراً لأي قاعدة جديدة.
+
 ## نتائج الدراسة حتى 17 أكتوبر 2026 (على 60 يوماً، تسعير نظري)
 - Order Block: 39–47% لصالحك مقابل ~50% عشوائي → لا ميزة. FVG: نتائج متناقضة (45–75%) وعينات صغيرة → لا ميزة مثبتة.
 - شبكة MGT: لا حكم (المرساة 7734.4 صالحة منذ 14/10 فقط)؛ تُقاس يومياً مقابل الوهمية.
