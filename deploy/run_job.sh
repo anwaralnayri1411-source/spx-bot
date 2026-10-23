@@ -90,6 +90,11 @@ main() {
       cmds=("$py research/stocks_sector_study.py" "$py research/stocks_open_stop_study.py")
       files="stocks_sector_log.csv research/stocks_sector_results.md research/stocks_open_stop_results.md"
       msg="stocks sector study results" ;;
+    spx_cache)
+      group=spx-cache
+      cmds=("$py research/spx_cache_update.py")
+      files="research/spx_5m_cache.csv"
+      msg="spx 5m cache update" ;;
     tail_log)
       group=tail-log; envs="ALPACA"
       cmds=("$py research/tail_log.py")
