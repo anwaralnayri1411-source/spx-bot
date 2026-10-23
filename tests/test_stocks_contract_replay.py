@@ -110,9 +110,9 @@ def test_report_has_sanity_check_and_paired_differences():
     for i, (bot, atm) in enumerate([(-0.4, 0.1), (0.5, 0.3), (-0.4, 0.2)]):
         for v, x in (("bot", bot), ("atm", atm)):
             for r in ("r1", "r2"):
-                rows.append({"id": f"p{i}", "variant": v, "rule": r, "pnl": x, "recorded": -0.4 if v == "bot" else None})
+                rows.append({"id": f"p{i}", "variant": v, "rule": r, "pnl": x, "why": "tp" if x > 0 else "stop", "recorded": -0.4 if v == "bot" else None})
     text = "\n".join(sr.report(pd.DataFrame(rows)))
-    assert "ضابط" in text and "على السعر (0.50) − عقد البوت" in text and "أفضل في 2 من 3" in text
+    assert "ضابط" in text and "على السعر (0.50) − عقد البوت" in text and "أفضل في 2 من 3" in text and "المنتهية فقط" in text and "النتيجة نفسها في 2 من 3" in text
     assert "لا نتائج بعد" in "\n".join(sr.report(pd.DataFrame()))
 
 
