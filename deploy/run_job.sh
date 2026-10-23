@@ -100,6 +100,16 @@ main() {
       cmds=("$py research/tail_log.py")
       files="tail_log_days.csv tail_log_events.csv"
       msg="tail log" ;;
+    exit_shadow)
+      group=exit-shadow; envs="ALPACA TASTY"; gate="gate_signal_today exit_shadow_state.json"
+      cmds=("$py exit_shadow.py" "$py exit_shadow.py --report")
+      files="exit_shadow_state.json exit_shadow_log.csv research/exit_shadow_results.md data_gaps_exit_shadow_log.csv"
+      msg="exit shadow log" ;;
+    stocks_exit_study)
+      group=stocks-exit-study
+      cmds=("$py research/stocks_exit_study.py")
+      files="research/stocks_exit_study_results.md"
+      msg="stocks exit study refresh" ;;
     real_price_check)
       group=real-price-check; envs="ALPACA"
       cmds=("$py research/real_price_check.py")
