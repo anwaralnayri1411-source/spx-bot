@@ -340,7 +340,7 @@ def pick_contracts(side, chains, S, rv, closes=None):
                 continue
             out.append({"exp": exp, "dte": dte, "strike": K, "price": price, "cost": cost, "be": be,
                         "delta": delta, "prob": prob, "z": z, "oi": oi, "vol": vol, "iv": iv,
-                        "score": score, "flow": flow, "rich": richness, "need": need, "hist": hs,
+                        "score": score, "flow": flow, "rich": richness, "need": need, "hist": hs, "spr": spr,
                         "em_iv": iv * math.sqrt(max(dte, 0.5) / 365), "em_rv": rv * math.sqrt(tdays / 252)})
     out.sort(key=lambda x: -(x["score"] + 0.15 * min(x["dte"], 5) + (0.5 if x["flow"] >= 1 else 0.0)))
     picked = []
@@ -644,6 +644,8 @@ def add_position(P, n, idea, spy_px):
         p["id"] = f"{p['id']}@{n.date().isoformat()}"   # نفس العقد بعد إقفاله: صفقة جديدة
     if k.get("price_src"):
         p.update(entry_src=k["price_src"], entry_yahoo=round(float(k.get("yahoo_price", k["price"])), 2))
+    if k.get("spr") is not None:
+        p["entry_spr"] = round(float(k["spr"]), 3)    # فرق الشراء/البيع عند الدخول: لدراسة أثره على النتيجة (لا يغيّر قراراً)
     _live_entry_stock(p)
     P["positions"].append(p)
     P["dirty"] = True
@@ -666,7 +668,8 @@ def _live_prices_stock(ideas):
                 be = K + ask if i["side"] == "CALL" else K - ask
                 T = max(k["dte"], 0.5) / 365
                 k.update(yahoo_price=k["price"], price=ask, cost=ask * 100, be=be, need=abs(be / S - 1),
-                         prob=ob.prob_beyond(S, be, T, k["iv"], i["side"]), price_src=src, bid=z["bid"])
+                         prob=ob.prob_beyond(S, be, T, k["iv"], i["side"]), price_src=src, bid=z["bid"],
+                         spr=(ask - z["bid"]) / ((ask + z["bid"]) / 2) if z.get("bid") and z["bid"] > 0 else k.get("spr"))
     except Exception as e:
         print("تعذر تحديث أسعار الدخول اللحظية:", e)
 
@@ -693,6 +696,7 @@ def _live_shadow_stock(p, q):
             return
         c = lq.occ(p["ticker"], p["exp"], p["side"], p["strike"])
         z = lq.quote(c)
+        t = lq.tasty_quote(c)           # مصدر ثانٍ مستقل: مقارنة دائمة مع Alpaca (تسجيل فقط، لا يغيّر شيئاً)
         yv, el = (q.get("yahoo_val") if q else None), p.get("entry_live")
         lq.log({"time": ob.now_ny().isoformat(timespec="minutes"), "project": "STOCKS", "id": p["id"], "contract": c,
                 "yahoo_val": yv if yv is not None else "", "alpaca_bid": z["bid"] or "", "alpaca_ask": z["ask"] or "",
@@ -700,7 +704,8 @@ def _live_shadow_stock(p, q):
                 "entry": p["entry"], "entry_live": el or "",
                 "pnl_yahoo": round(yv / p["entry"] - 1, 3) if yv else "",
                 "pnl_live": round(z["bid"] / el - 1, 3) if (el and z["bid"] and z["status"] == "ok") else "",
-                "source": q["src"] if q else ""},
+                "source": q["src"] if q else "", "tasty_bid": t["bid"] or "", "tasty_ask": t["ask"] or "",
+                "tasty_age_s": "" if t["age"] is None else round(t["age"]), "tasty_status": t["status"]},
                path=lq.LOG_STOCKS)
     except Exception as e:
         print("تعذر تسجيل السعر اللحظي:", e)
