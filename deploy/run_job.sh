@@ -110,6 +110,16 @@ main() {
       cmds=("$py blocked_shadow.py" "$py blocked_shadow.py --report")
       files="blocked_shadow_state.json blocked_shadow_log.csv research/blocked_shadow_results.md data_gaps_blocked_shadow_log.csv"
       msg="blocked shadow log" ;;
+    news_score)
+      group=news-score
+      cmds=("$py research/news_score_compare.py")
+      files="news_score_compare.csv research/news_score_compare_results.md"
+      msg="news score compare" ;;
+    stocks_contract_replay)
+      group=stocks-contract-replay; envs="ALPACA"
+      cmds=("$py research/stocks_contract_replay.py")
+      files="research/stocks_contract_replay_results.md research/stocks_contract_replay_trades.csv"
+      msg="stocks contract replay" ;;
     stocks_exit_study)
       group=stocks-exit-study
       cmds=("$py research/stocks_exit_study.py")
