@@ -15,7 +15,9 @@
    "bank of america bac stock sees fair value cut after q3 and regulatory penalties",
    "bank of america fell harder than wells fargo does that make it the better dividend buy",
    "bank of america offers stronger dividend growth and safety than wells fargo despite recent stock drop",
-   "bank of america just dropped 12 in a month is it time to sell or load up"
+   "bank of america just dropped 12 in a month is it time to sell or load up",
+   "bank of america corporation bac stock adams diversified equity fund inc lowers stake",
+   "the bottom line on financial etfs weighing vfh s efficiency against iyf s large cap edge"
   ],
   "AMZN:CALL": [
    "starting jan 1 2027 amazon seasonal workers get day one health coverage if they work at least 30 hours a week",
@@ -62,7 +64,8 @@
    "costco turned 1 000 into 8 018 in ten years while the s p 500 delivered 3 564",
    "uber rolls chatgpt work to all 30 000 employees the unpriced labor benchmark",
    "kohl s adds a new way to shop just in time for the holidays",
-   "uber technologies inc estimates nyse uber"
+   "uber technologies inc estimates nyse uber",
+   "uber s september 2026 layoffs affected around 3 300 employees globally including an estimated 200 250 in india laid off "
   ],
   "DIS:CALL": [
    "skydance rises 5 as steep post merger slide pauses disney gains 2 netflix slips",
@@ -209,7 +212,8 @@
    "intel corporation intc stock position trimmed by t3 companies llc",
    "mbl wealth llc buys 14 393 shares of intel corporation intc",
    "etfs are buying intel intc on wednesday",
-   "intel in spotlight as wedbush says tool installation at az fab should aid revenue growth intc nasdaq"
+   "intel in spotlight as wedbush says tool installation at az fab should aid revenue growth intc nasdaq",
+   "4 stocks to watch on friday intc ritm etsy and gm spx"
   ]
  },
  "fired": {
@@ -245,7 +249,10 @@
    "news:palantir stock gets a 250 price target as citi predicts another strong earnings beat",
    "stock1",
    "down-0.3",
-   "news:citi revamps palantir stock price target for 2027"
+   "news:citi revamps palantir stock price target for 2027",
+   "stock2",
+   "stock3",
+   "sharp@2026-10-23T09:46-04:00"
   ],
   "NFLX:PUT:2026-10-30:66": [
    "sharp@2026-10-22T11:00-04:00",
@@ -261,12 +268,13 @@
   "INTC:PUT:2026-10-30:80": [
    "news:intel stock tumbles ahead of q3 earnings",
    "up0.25",
-   "news:intel in spotlight as wedbush says tool installation at az fab should aid revenue growth intc nasdaq"
+   "news:intel in spotlight as wedbush says tool installation at az fab should aid revenue growth intc nasdaq",
+   "sharp@2026-10-23T09:46-04:00"
   ]
  },
  "stock_level": {
   "NFLX:PUT:2026-10-30:66": 1,
-  "PLTR:CALL:2026-10-30:210": 1
+  "PLTR:CALL:2026-10-30:210": 3
  },
  "seen_macro": [
   "from venezuela to texas to jamnagar marco rubio s dash for energy",
@@ -474,12 +482,25 @@
   "stock market steady amid rising oil prices and middle east tensions",
   "wall st set to open lower after ai led selloff spacex worries hit telecoms",
   "jamie dimon warns of 5 economic threats facing the u s",
-  "oil climbs above 114 as middle east attacks renew europe s energy fears"
+  "oil climbs above 114 as middle east attacks renew europe s energy fears",
+  "top cd rates today oct 23 2026 lock in up to up to 5 25",
+  "circle internet group crcl stock price news quote history",
+  "the fed can pause but inflation won t",
+  "investors just got bad news from the federal reserve here s what history says comes next",
+  "best high yield savings accounts of october 2026 up to 5",
+  "fed s flexible rate outlook offers emerging markets temporary relief inp",
+  "usd chf usdchf surges on oct 23 was it the dollar rates or data",
+  "chinese cars can t cross from canada to u s trump s envoy says",
+  "dow jones today dow futures fall 0 6 to 52 749 as oil prices surge above 114 nvidia and ai stocks face selling pressure ",
+  "us stock market today dow jones futures fall 0 6 s p 500 and nasdaq futures slide as oil surges above 114 amid us iran t",
+  "wall street sets xpeng stock price for the next 12 months",
+  "apple and alphabet are sending wall street different signals"
  ],
  "sharp": {
   "BAC:PUT:2026-10-30:51": 50.86,
   "UBER:PUT:2026-10-30:68": 69.06,
-  "PLTR:CALL:2026-10-30:210": 197.075,
-  "NFLX:PUT:2026-10-30:66": 67.14
+  "PLTR:CALL:2026-10-30:210": 192.2,
+  "NFLX:PUT:2026-10-30:66": 67.14,
+  "INTC:PUT:2026-10-30:80": 86.56
  }
 }
