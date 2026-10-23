@@ -252,7 +252,9 @@
    "intel corp stock falls 8 0 underperforms peers",
    "intel got its waiver intel stock nasdaq intc gains",
    "intel helps organizations balance control security and flexibility with microsoft will intc hold the ma 200",
-   "intc stock starts to rebound before weekend as analysts back intel s turnaround prospects"
+   "intc stock starts to rebound before weekend as analysts back intel s turnaround prospects",
+   "intel stock has moved an average of 16 the day after its last 3 reports should you buy before the next one",
+   "intel nasdaq intc stock falls 8 04 loss per share volume and rsi review"
   ],
   "CVX:CALL": [
    "stocks see continued downward pressure from ai anxiety and oil prices",
@@ -325,7 +327,10 @@
    "oil prices climb as saudi attacks heighten supply concerns",
    "update equities mostly lower intraday as oil prices soar",
    "oil markets are on edge ahead of the weekend as midterm elections near and fresh u s strikes on iran are predicted",
-   "oil prices end mixed as traders weigh demand outlook hormuz shipping risks"
+   "oil prices end mixed as traders weigh demand outlook hormuz shipping risks",
+   "chevron nyse cvx stock edges down 0 04 3 11 dividend yield and eps growth",
+   "brent crude tops 116 as traders price escalating middle east conflict",
+   "vance blamed biden for gas prices politifact says otherwise"
   ],
   "TSLA:CALL": [
    "tesla stock consolidates after potential tesla spacex merger exploration increases uncertainty",
@@ -363,9 +368,13 @@
    "oil markets are on edge ahead of the weekend as midterm elections near and fresh u s strikes on iran are predicted",
    "oil prices end mixed as traders weigh demand outlook hormuz shipping risks",
    "oil uscrude price forecast for today tomorrow next week and next 30 days",
-   "futures slip as big tech falters oil extends relentless advance"
+   "futures slip as big tech falters oil extends relentless advance",
+   "brent crude tops 116 as traders price escalating middle east conflict",
+   "vance blamed biden for gas prices politifact says otherwise"
   ],
-  "JPM:PUT": []
+  "JPM:PUT": [
+   "bank of america may need a new ceo"
+  ]
  },
  "fired": {
   "BAC:PUT:2026-10-30:51": [
@@ -414,7 +423,8 @@
    "news:update us equity indexes mixed as technology attempts recovery amid surging crude oil",
    "news:oil prices climb as saudi attacks heighten supply concerns",
    "news:update equities mostly lower intraday as oil prices soar",
-   "news:oil markets are on edge ahead of the weekend as midterm elections near and fresh u s strikes on iran are predicted"
+   "news:oil markets are on edge ahead of the weekend as midterm elections near and fresh u s strikes on iran are predicted",
+   "news:brent crude tops 116 as traders price escalating middle east conflict"
   ],
   "TSLA:CALL:2026-10-28:390": [
    "down-0.15",
@@ -437,10 +447,12 @@
    "news:oil prices climb as saudi attacks heighten supply concerns",
    "news:update equities mostly lower intraday as oil prices soar",
    "news:oil markets are on edge ahead of the weekend as midterm elections near and fresh u s strikes on iran are predicted",
-   "news:futures slip as big tech falters oil extends relentless advance"
+   "news:futures slip as big tech falters oil extends relentless advance",
+   "news:brent crude tops 116 as traders price escalating middle east conflict"
   ],
   "JPM:PUT:2026-10-30:325": [
-   "down-0.15"
+   "down-0.15",
+   "down-0.3"
   ]
  },
  "stock_level": {
@@ -736,7 +748,13 @@
   "trump administration cancels some canada tariffs sen susan collins says",
   "us stock market wall street futures dip meta stock falls as oil prices reach five month highs",
   "canadian stock market today tsx futures edge lower on energy inflation and retail focus",
-  "trump s tariffs and the american economy"
+  "trump s tariffs and the american economy",
+  "american express beats earnings cuts jobs still fails to win over wall street",
+  "susan collins touts canada tariff relief in tight maine senate race",
+  "a new jersey importer is fighting trump s tariffs and a lindsay dairy s goat cheese is why",
+  "growth to remain strong despite inflation headwinds",
+  "ahead of tight race trump exempts some canadian goods from tariffs",
+  "trump administration exempts more canadian imports from tariffs"
  ],
  "sharp": {
   "BAC:PUT:2026-10-30:51": 50.86,
