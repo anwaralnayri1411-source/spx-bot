@@ -125,6 +125,11 @@ main() {
       cmds=("$py pro_rules_shadow.py" "$py pro_rules_shadow.py --report")
       files="pro_rules_shadow_state.json pro_rules_shadow_log.csv research/pro_rules_shadow_results.md data_gaps_pro_rules_shadow_log.csv"
       msg="pro rules shadow log" ;;
+    levels_study)
+      group=levels-study; envs="ALPACA"
+      cmds=("$py research/spy_history.py" "$py research/levels_study.py")   # تحديث البيانات خارج الشجرة ثم الدراسة
+      files="research/levels_study_results.md"
+      msg="levels study refresh" ;;
     strategy_lab)
       group=strategy-lab
       cmds=("$py research/strategy_lab.py")
