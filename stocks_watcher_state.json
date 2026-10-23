@@ -81,7 +81,8 @@
    "with an ipo brewing anthropic just launched its answer to meta s uber popular muse",
    "polen focus growth strategy trims starbucks corporation sbux as turnaround progress enters valuation",
    "weride inc wrd stock price news quote and history",
-   "baidu and lyft push ahead with plans for a robotaxi service in london bidu nasdaq"
+   "baidu and lyft push ahead with plans for a robotaxi service in london bidu nasdaq",
+   "rivian buys startup to turn 400 000 daily clips into 3d sims"
   ],
   "DIS:CALL": [
    "skydance rises 5 as steep post merger slide pauses disney gains 2 netflix slips",
@@ -299,7 +300,17 @@
    "crude oil prices rise as speculation increases about possible us strike on iran post election",
    "odds of oil reaching 110 by october end rise to 34 cl1 com commodity",
    "london stocks mark weekly fall as oil hits five month high ahead of budget",
-   "oil stocks rally as wti crude price tops 103 devon energy and diamondback energy gain 5 occidental petroleum rises 3"
+   "oil stocks rally as wti crude price tops 103 devon energy and diamondback energy gain 5 occidental petroleum rises 3",
+   "120 oil is almost here and trump has few good options",
+   "u s dollar rebounds as oil prices gain 3 analysis for eur usd gbp usd usd cad usd jpy",
+   "chevron stock moves higher what s going on",
+   "u s rig count holds steady as oil prices surge",
+   "6 million barrels in two minutes draws cftc scrutiny",
+   "oil uscrude price forecast for today tomorrow next week and next 30 days",
+   "consumers across party lines are fed up with high gas prices",
+   "dow falls more than 500 points as oil climbs on iran fears",
+   "oil price nears yearly high is a stock and crypto crash coming",
+   "chevron nyse cvx stock sees heavy call option buying"
   ],
   "TSLA:CALL": [
    "tesla stock consolidates after potential tesla spacex merger exploration increases uncertainty",
@@ -314,8 +325,16 @@
    "wall street mostly loses ground under pressure from rising oil prices",
    "odds of oil reaching 110 by october end rise to 34 cl1 com commodity",
    "london stocks mark weekly fall as oil hits five month high ahead of budget",
-   "oil stocks rally as wti crude price tops 103 devon energy and diamondback energy gain 5 occidental petroleum rises 3"
-  ]
+   "oil stocks rally as wti crude price tops 103 devon energy and diamondback energy gain 5 occidental petroleum rises 3",
+   "u s dollar rebounds as oil prices gain 3 analysis for eur usd gbp usd usd cad usd jpy",
+   "u s stocks are mixed as investors ponder ai spending higher oil prices dji",
+   "u s rig count holds steady as oil prices surge",
+   "6 million barrels in two minutes draws cftc scrutiny",
+   "consumers across party lines are fed up with high gas prices",
+   "dow falls more than 500 points as oil climbs on iran fears",
+   "oil price nears yearly high is a stock and crypto crash coming"
+  ],
+  "JPM:PUT": []
  },
  "fired": {
   "BAC:PUT:2026-10-30:51": [
@@ -364,7 +383,9 @@
    "news:oil prices climb as middle east shipping risks grow",
    "news:crude oil prices rise as speculation increases about possible us strike on iran post election",
    "news:london stocks mark weekly fall as oil hits five month high ahead of budget",
-   "news:oil stocks rally as wti crude price tops 103 devon energy and diamondback energy gain 5 occidental petroleum rises 3"
+   "news:oil stocks rally as wti crude price tops 103 devon energy and diamondback energy gain 5 occidental petroleum rises 3",
+   "news:u s rig count holds steady as oil prices surge",
+   "news:dow falls more than 500 points as oil climbs on iran fears"
   ],
   "TSLA:CALL:2026-10-28:390": [
    "down-0.15",
@@ -377,7 +398,13 @@
    "news:aaa national average falls 6 cents crude oil nears 100 barrel",
    "news:wall street mostly loses ground under pressure from rising oil prices",
    "news:london stocks mark weekly fall as oil hits five month high ahead of budget",
-   "news:oil stocks rally as wti crude price tops 103 devon energy and diamondback energy gain 5 occidental petroleum rises 3"
+   "news:oil stocks rally as wti crude price tops 103 devon energy and diamondback energy gain 5 occidental petroleum rises 3",
+   "down-0.3",
+   "news:u s rig count holds steady as oil prices surge",
+   "news:dow falls more than 500 points as oil climbs on iran fears"
+  ],
+  "JPM:PUT:2026-10-30:325": [
+   "down-0.15"
   ]
  },
  "stock_level": {
@@ -648,7 +675,9 @@
   "could silver rebound in 2027 what experts predict will happen next",
   "bitcoin holding above 83 000 as september inflation pressures ease",
   "bitcoin falls toward 81 000 as technology selloff weighs on cryptocurrencies",
-  "markets extend losses investors lose 21 lakh cr in 4 days"
+  "markets extend losses investors lose 21 lakh cr in 4 days",
+  "oil tops 100 on iran fears energy etf xle hits new record stock market today",
+  "s p 500 today live index falls 1 21 as ai stock sell off rising oil prices fed rate hike fears hit wall street nvidia mi"
  ],
  "sharp": {
   "BAC:PUT:2026-10-30:51": 50.86,
