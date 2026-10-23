@@ -13,3 +13,6 @@ id,time,project,tag,sym,root,side,strike,exp,entry,spot,edge,strength
 20261023T1342|stocks|max_ideas_cap|XOM|CALL|187.5|2026-10-30,2026-10-23T13:42-04:00,stocks,max_ideas_cap,XOM,XOM,CALL,187.5,2026-10-30,1.82,182.36,6.0,4.8
 20261023T1342|stocks|open_same_dir|NFLX|PUT|66|2026-10-30,2026-10-23T13:42-04:00,stocks,open_same_dir,NFLX,NFLX,PUT,66.0,2026-10-30,1.0,66.34,5.5,8.0
 20261023T1342|stocks|open_same_dir|UBER|PUT|67|2026-10-30,2026-10-23T13:42-04:00,stocks,open_same_dir,UBER,UBER,PUT,67.0,2026-10-30,0.96,67.65,6.5,6.3
+20261023T1412|stocks|max_ideas_cap|XOM|CALL|187.5|2026-10-30,2026-10-23T14:12-04:00,stocks,max_ideas_cap,XOM,XOM,CALL,187.5,2026-10-30,1.78,182.52,6.0,4.8
+20261023T1412|stocks|open_same_dir|NFLX|PUT|66|2026-10-30,2026-10-23T14:12-04:00,stocks,open_same_dir,NFLX,NFLX,PUT,66.0,2026-10-30,1.01,66.25,4.5,7.5
+20261023T1412|stocks|open_same_dir|UBER|PUT|67|2026-10-30,2026-10-23T14:12-04:00,stocks,open_same_dir,UBER,UBER,PUT,67.0,2026-10-30,1.0,67.39,6.5,6.3
