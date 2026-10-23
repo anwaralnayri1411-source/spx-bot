@@ -22,8 +22,8 @@
    "alert_time": "10:50",
    "alert_pnl": -0.592,
    "peak_pnl": 0.0,
-   "close_pnl": -0.538,
-   "quotes": 4,
+   "close_pnl": -0.485,
+   "quotes": 5,
    "stale": 0
   },
   {
@@ -47,8 +47,8 @@
    "alert_time": "",
    "alert_pnl": "",
    "peak_pnl": 0.0,
-   "close_pnl": -0.554,
-   "quotes": 4,
+   "close_pnl": -0.474,
+   "quotes": 5,
    "stale": 0
   },
   {
@@ -72,8 +72,8 @@
    "alert_time": "",
    "alert_pnl": "",
    "peak_pnl": 0.0,
-   "close_pnl": -0.594,
-   "quotes": 4,
+   "close_pnl": -0.475,
+   "quotes": 5,
    "stale": 0
   }
  ]
