@@ -69,7 +69,10 @@
    "uber technologies inc estimates nyse uber",
    "uber s september 2026 layoffs affected around 3 300 employees globally including an estimated 200 250 in india laid off ",
    "analysts are bullish on top communication services stocks meta platforms meta at t t",
-   "doordash stock goldman sachs adjusts target to usd 280 for doordash stock"
+   "doordash stock goldman sachs adjusts target to usd 280 for doordash stock",
+   "uber technologies stock november 4 results carry usd 0 94 estimate for uber technologies stock",
+   "uber technologies inc ut81 f stock price news quote and history",
+   "with an ipo brewing anthropic just launched its answer to meta s uber popular muse"
   ],
   "DIS:CALL": [
    "skydance rises 5 as steep post merger slide pauses disney gains 2 netflix slips",
@@ -127,7 +130,8 @@
    "netflix stock tanks 5 as revenue growth slows in q3 how to play nflx here",
    "netflix inc estimates nasdaq nflx",
    "bill ackman sees 20 plus returns from netflix netflix nasdaq nflx",
-   "can netflix stock hold margin gains as content spending keeps growing"
+   "can netflix stock hold margin gains as content spending keeps growing",
+   "bill ackman lost 400 million on netflix now he sees 20 plus annual returns"
   ],
   "AVGO:PUT": [
    "3 artificial intelligence ai stocks that look like great buys right now",
@@ -224,14 +228,23 @@
    "4 stocks to watch on friday intc ritm etsy and gm spx",
    "the foundry disconnect intel nails the transistor but tsmc holds the keys to yield and scale",
    "intel corporation estimates nasdaq intc",
-   "intel corporation shs cert deposito arg repr 0 2 shs estimates bcba intc"
+   "intel corporation shs cert deposito arg repr 0 2 shs estimates bcba intc",
+   "fy2027 eps estimates for intel boosted by erste group bank"
   ],
   "CVX:CALL": [
    "stocks see continued downward pressure from ai anxiety and oil prices",
    "wall street loses ground under pressure from rising oil prices more swings for big tech stocks",
    "silver hits year to date low as gold also falls amid rising oil prices",
    "gas prices for 10 23 26 what will you pay heading into the weekend",
-   "chevron stock may move 2 3 on earnings release by investing com"
+   "chevron stock may move 2 3 on earnings release by investing com",
+   "chevron stock may move 2 3 on earnings release",
+   "india s bharat petroleum profit drops amid crude oil price volatility",
+   "oil prices continue to rise surpass 116 per barrel",
+   "3 european utility stocks with pricing power as gas prices rise",
+   "maine heating oil prices are getting ridiculous we re all feeling it",
+   "ai concerns continue to hit big tech stocks friday as oil prices rise again",
+   "nasdaq 100 forecast ndx falls as the tech rout continues and oil prices soar",
+   "oil prices hit five month high and dow falls 700 points over fears of iran strikes ai spending"
   ]
  },
  "fired": {
@@ -265,10 +278,14 @@
    "news:intel stock tumbles ahead of q3 earnings",
    "up0.25",
    "news:intel in spotlight as wedbush says tool installation at az fab should aid revenue growth intc nasdaq",
-   "sharp@2026-10-23T09:46-04:00"
+   "sharp@2026-10-23T09:46-04:00",
+   "sharp@2026-10-23T10:40-04:00",
+   "down-0.15"
   ],
   "CVX:CALL:2026-10-30:240": [
-   "down-0.15"
+   "down-0.15",
+   "news:oil prices continue to rise surpass 116 per barrel",
+   "news:oil prices hit five month high and dow falls 700 points over fears of iran strikes ai spending"
   ]
  },
  "stock_level": {
@@ -502,12 +519,21 @@
   "stock market today s p 500 dji fall after ai selloff as oil surges toward 115",
   "gold and silver prices drop sharply amid geopolitical tensions and economic concerns",
   "congress should reassert its role in trade policy after the midterms",
-  "surge in sa exports after china scraps tariffs"
+  "surge in sa exports after china scraps tariffs",
+  "stock market today s p 500 nasdaq 100 dow jones futures fall ahead of global pmi data western digital",
+  "9 30am markets update",
+  "gold and silver plunge as oil rally fuels inflation fears and fed rate hike bets",
+  "silver crashes 56000 kg from august peak gold slides 23000 10 grams what s driving the selloff in precious metals",
+  "trump s trade dispute drives some napa wineries sales to canada to zero",
+  "economic indicators types key examples 2026",
+  "us stocks today us stocks open lower after ai rout spacex worries hit telecoms",
+  "president trump opts for negotiations not tariffs in section 232 wind turbine investigation",
+  "us stock market today live dow jones s p 500 and nasdaq open lower as ai stock sell off surging oil prices and middle ea"
  ],
  "sharp": {
   "BAC:PUT:2026-10-30:51": 50.86,
   "UBER:PUT:2026-10-30:68": 69.06,
   "NFLX:PUT:2026-10-30:66": 67.14,
-  "INTC:PUT:2026-10-30:80": 86.56
+  "INTC:PUT:2026-10-30:80": 87.37
  }
 }
