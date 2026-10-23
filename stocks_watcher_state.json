@@ -250,7 +250,9 @@
    "why are nvidia intel and amd stocks rebounding in premarket today october 23",
    "what s going on with intel stock on friday",
    "intel corp stock falls 8 0 underperforms peers",
-   "intel got its waiver intel stock nasdaq intc gains"
+   "intel got its waiver intel stock nasdaq intc gains",
+   "intel helps organizations balance control security and flexibility with microsoft will intc hold the ma 200",
+   "intc stock starts to rebound before weekend as analysts back intel s turnaround prospects"
   ],
   "CVX:CALL": [
    "stocks see continued downward pressure from ai anxiety and oil prices",
@@ -329,7 +331,10 @@
    "tesla stock consolidates after potential tesla spacex merger exploration increases uncertainty",
    "project crystal sun gets approval in texas tesla stock nasdaq tsla slips",
    "tesla outlook is grim former hedge funder won t touch stock tesla nasdaq tsla",
-   "elon musk expands government spending footprint ahead of midterm elections"
+   "elon musk expands government spending footprint ahead of midterm elections",
+   "here s how much 100 invested in tesla stock today could be worth if cathie wood s prediction comes true in 2031",
+   "tesla stock drops as cybertruck exit hits australia and new zealand",
+   "why tesla nasdaq tsla keeps popping up on market watchlists"
   ],
   "XOM:CALL": [
    "trump uses defense act as fuel prices surge",
@@ -356,7 +361,9 @@
    "oil prices climb as saudi attacks heighten supply concerns",
    "update equities mostly lower intraday as oil prices soar",
    "oil markets are on edge ahead of the weekend as midterm elections near and fresh u s strikes on iran are predicted",
-   "oil prices end mixed as traders weigh demand outlook hormuz shipping risks"
+   "oil prices end mixed as traders weigh demand outlook hormuz shipping risks",
+   "oil uscrude price forecast for today tomorrow next week and next 30 days",
+   "futures slip as big tech falters oil extends relentless advance"
   ],
   "JPM:PUT": []
  },
@@ -412,7 +419,8 @@
   "TSLA:CALL:2026-10-28:390": [
    "down-0.15",
    "down-0.3",
-   "stock1"
+   "stock1",
+   "news:tesla stock drops as cybertruck exit hits australia and new zealand"
   ],
   "XOM:CALL:2026-10-30:190": [
    "down-0.15",
@@ -428,7 +436,8 @@
    "news:update us equity indexes mixed as technology attempts recovery amid surging crude oil",
    "news:oil prices climb as saudi attacks heighten supply concerns",
    "news:update equities mostly lower intraday as oil prices soar",
-   "news:oil markets are on edge ahead of the weekend as midterm elections near and fresh u s strikes on iran are predicted"
+   "news:oil markets are on edge ahead of the weekend as midterm elections near and fresh u s strikes on iran are predicted",
+   "news:futures slip as big tech falters oil extends relentless advance"
   ],
   "JPM:PUT:2026-10-30:325": [
    "down-0.15"
@@ -721,7 +730,13 @@
   "france warns of rising oil prices as trump hints at more strikes on iran",
   "canadian real estate prices to fall even further oxford economics",
   "us israel iran war latest live news oil prices surges 4 to 117 45 as bessent claims us pressure has decimated tehran s o",
-  "us stock market live dow jones slips 600 points s p 500 falls 0 40 and nasdaq edges lower as oil tops 117 nvidia intel c"
+  "us stock market live dow jones slips 600 points s p 500 falls 0 40 and nasdaq edges lower as oil tops 117 nvidia intel c",
+  "fed seen holding rates next week before likely december hike pantheon says",
+  "banker coin defies oil shock as gold sinks",
+  "trump administration cancels some canada tariffs sen susan collins says",
+  "us stock market wall street futures dip meta stock falls as oil prices reach five month highs",
+  "canadian stock market today tsx futures edge lower on energy inflation and retail focus",
+  "trump s tariffs and the american economy"
  ],
  "sharp": {
   "BAC:PUT:2026-10-30:51": 50.86,
