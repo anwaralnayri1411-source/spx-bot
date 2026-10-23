@@ -137,9 +137,14 @@ main() {
       msg="levels study refresh" ;;
     signals_batch)
       group=signals-batch; keepgoing=1
-      cmds=("$py research/intraday_signals_study.py" "$py research/option_buyer_cost.py" "$py research/fomc_study.py" "$py research/vix_shock_study.py" "$py research/stocks_daily_signals.py" "$py research/pead_study.py")
-      files="research/intraday_signals_study_results.md research/option_buyer_cost_results.md research/fomc_study_results.md research/vix_shock_study_results.md research/stocks_daily_signals_results.md research/pead_study_results.md"
+      cmds=("$py research/intraday_signals_study.py" "$py research/option_buyer_cost.py" "$py research/fomc_study.py" "$py research/vix_shock_study.py" "$py research/stocks_daily_signals.py" "$py research/pead_study.py" "$py research/account_erosion_sim.py" "$py research/study_registry.py")
+      files="research/intraday_signals_study_results.md research/option_buyer_cost_results.md research/fomc_study_results.md research/vix_shock_study_results.md research/stocks_daily_signals_results.md research/pead_study_results.md research/account_erosion_sim_results.md research/study_registry_results.md"
       msg="signals batch refresh" ;;
+    long_price_calibration)
+      group=long-price; envs="ALPACA"
+      cmds=("$py research/long_price_calibration.py")
+      files="research/long_price_calibration_results.md"
+      msg="long price calibration" ;;
     strategy_lab)
       group=strategy-lab
       cmds=("$py research/strategy_lab.py")
