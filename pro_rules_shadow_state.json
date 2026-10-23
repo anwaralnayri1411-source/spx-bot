@@ -23,8 +23,8 @@
    "r2_pnl": "",
    "r2_time": "",
    "peak_pnl": 0.0,
-   "close_pnl": -0.115,
-   "quotes": 8
+   "close_pnl": -0.165,
+   "quotes": 9
   },
   {
    "id": "20261023T1342|XOM|CALL|atm|185|2026-11-20",
@@ -49,8 +49,8 @@
    "r2_pnl": "",
    "r2_time": "",
    "peak_pnl": 0.0,
-   "close_pnl": -0.051,
-   "quotes": 8
+   "close_pnl": -0.049,
+   "quotes": 9
   },
   {
    "id": "20261023T1342|XOM|CALL|itm|175|2026-11-20",
@@ -75,8 +75,8 @@
    "r2_pnl": "",
    "r2_time": "",
    "peak_pnl": 0.0,
-   "close_pnl": -0.062,
-   "quotes": 8
+   "close_pnl": -0.058,
+   "quotes": 9
   },
   {
    "id": "20261023T1342|NFLX|PUT|bot|66|2026-10-30",
@@ -100,9 +100,9 @@
    "r2_out": "",
    "r2_pnl": "",
    "r2_time": "",
-   "peak_pnl": 0.05,
-   "close_pnl": 0.05,
-   "quotes": 8
+   "peak_pnl": 0.08,
+   "close_pnl": 0.08,
+   "quotes": 9
   },
   {
    "id": "20261023T1342|NFLX|PUT|atm|67.5|2026-11-20",
@@ -126,9 +126,9 @@
    "r2_out": "",
    "r2_pnl": "",
    "r2_time": "",
-   "peak_pnl": 0.028,
-   "close_pnl": 0.007,
-   "quotes": 8
+   "peak_pnl": 0.039,
+   "close_pnl": 0.039,
+   "quotes": 9
   },
   {
    "id": "20261023T1342|NFLX|PUT|itm|70|2026-11-20",
@@ -152,9 +152,9 @@
    "r2_out": "",
    "r2_pnl": "",
    "r2_time": "",
-   "peak_pnl": 0.0,
-   "close_pnl": -0.009,
-   "quotes": 8
+   "peak_pnl": 0.018,
+   "close_pnl": 0.018,
+   "quotes": 9
   },
   {
    "id": "20261023T1342|UBER|PUT|bot|67|2026-10-30",
@@ -178,9 +178,9 @@
    "r2_out": "",
    "r2_pnl": "",
    "r2_time": "",
-   "peak_pnl": 0.094,
-   "close_pnl": 0.094,
-   "quotes": 8
+   "peak_pnl": 0.146,
+   "close_pnl": 0.146,
+   "quotes": 9
   },
   {
    "id": "20261023T1342|UBER|PUT|atm|67.5|2026-11-20",
@@ -205,8 +205,8 @@
    "r2_pnl": "",
    "r2_time": "",
    "peak_pnl": 0.06,
-   "close_pnl": 0.035,
-   "quotes": 8
+   "close_pnl": 0.05,
+   "quotes": 9
   },
   {
    "id": "20261023T1342|UBER|PUT|itm|72.5|2026-11-20",
@@ -231,8 +231,8 @@
    "r2_pnl": "",
    "r2_time": "",
    "peak_pnl": 0.018,
-   "close_pnl": 0.016,
-   "quotes": 8
+   "close_pnl": 0.01,
+   "quotes": 9
   }
  ],
  "seen": [
