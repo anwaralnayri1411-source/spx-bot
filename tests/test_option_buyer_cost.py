@@ -91,3 +91,13 @@ def test_calibration_compares_real_prices_with_the_theory_when_the_file_exists(t
     assert "معايرة" in L and "-3.0%" in L and "-6.4%" in L and "-26.0%" in L and "-37.1%" in L and "حدّ أعلى" in L
     assert ob_cost.calibration_lines({}, str(tmp_path / "none.csv")) == []
     assert ob_cost.calibration_lines({"ATM 1DTE": -0.06}, str(p)) != []                      # يكفي مفتاح واحد
+
+
+def test_by_entry_lines_lists_each_entry_time_for_both_strikes():
+    d, vix = make_days(0.18, 0.18, ndays=150)
+    S = ob_cost.samples(d)
+    text = "\n".join(ob_cost.by_entry_lines(S, vix))
+    for clock in ("10:30", "11:30", "12:30", "13:30"):
+        assert clock in text
+    assert text.count("| ATM |") == 8 and text.count("| OTM 1% |") == 8
+    assert "H-ENTRYTIME" in text

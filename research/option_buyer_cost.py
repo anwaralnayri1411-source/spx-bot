@@ -123,6 +123,25 @@ def calibration_lines(theory, path=None):
             "", "- القراءة: النظري يبالغ في الخسارة لأن VIX يحمل تذبذب الليل وتذبذب 0DTE الفعلي أقل منه؛ فنسب التعادل أعلاه **حدّ أعلى** والحقيقية أقل (مثال: ATM 1DTE بخسارة عشوائية −3% بدل −6% يعني تعادلاً قرب 60% لا 72%).", ""]
 
 
+def by_entry_lines(S, vix, mult=1.0):
+    """استكشافي (H-ENTRYTIME، بلا حكم): كلفة المشتري العشوائي ونسبة التعادل بحسب وقت الدخول. خروج بعد 60 دقيقة، تذبذب VIX × mult."""
+    L = ["## الكلفة بحسب وقت الدخول (H-ENTRYTIME، خروج بعد 60 دقيقة، استكشافي بلا حكم)", "",
+         "| العقد | المدة | الدخول | عينات | عشوائي: متوسط العائد | فاصل 95% | نسبة التعادل |", "|---|---|---|---|---|---|---|"]
+    for sname in ("ATM", "OTM 1%"):
+        off, h = STRIKES[sname]
+        for dname, dte in DTES.items():
+            for i in sorted(S["i"].unique()):
+                sub = S[S["i"] == i]
+                res, up, days = returns(sub, vix, mult, off, h, dte, 12)
+                if len(days) < 100:
+                    continue
+                s = summarize(res, up, days)
+                clock = f"{(9 * 60 + 35 + 5 * int(i)) // 60}:{(9 * 60 + 35 + 5 * int(i)) % 60:02d}"
+                be = "-" if s["be"] is None else f"{100 * s['be']:.1f}%"
+                L.append(f"| {sname} | {dname} | {clock} | {s['n']} | {100 * s['random']:+.1f}% | {100 * s['ci'][0]:+.1f}…{100 * s['ci'][1]:+.1f} | {be} |")
+    return L + [""]
+
+
 def report(S, vix, meta):
     L = ["# ثمن أن تكون مشتري خيارات على SPY (نتائج آلية، نظرية الأسعار)", "",
          f"- {meta}. عينات الدخول: {len(S)} (4 أوقات يومياً). التسعير بلاك-شولز بتذبذب VIX إغلاق أمس، الدخول بالطلب والخروج بالبيع.",
@@ -143,7 +162,7 @@ def report(S, vix, meta):
                     be = "-" if s["be"] is None else f"{100 * s['be']:.1f}%"
                     L.append(f"| {sname} | {dname} | {hname} | {100 * s['random']:+.1f}% | {100 * s['ci'][0]:+.1f}…{100 * s['ci'][1]:+.1f} | {100 * s['W']:+.0f}% | {100 * s['L']:+.0f}% | {be} |")
         L.append("")
-    return L + calibration_lines(theory)
+    return L + by_entry_lines(S, vix) + calibration_lines(theory)
 
 
 def load_vix():
