@@ -37,6 +37,8 @@ mkdir -p /var/log/spxbot && chown spxbot:spxbot /var/log/spxbot
 # هوية git لمستخدم البوت: بدونها يفشل pull --rebase (إعادة ترتيب الالتزام المحلي) فيضيع حفظ ذلك التشغيل
 sudo -u spxbot -H git config --global user.name spx-bot-server
 sudo -u spxbot -H git config --global user.email bot@users.noreply.github.com
+# حفظ منتصف الجلسة داخل كود المهام الطويلة يستعمل pull --rebase عادياً: autoStash يمنع ملفاً متتبَّعاً معدَّلاً من إيقافه
+sudo -u spxbot -H git config --global rebase.autoStash true
 [ -f /etc/spxbot/runner.env ] || echo "SPXBOT_MODE=shadow" > /etc/spxbot/runner.env
 chown root:spxbot /etc/spxbot/runner.env && chmod 640 /etc/spxbot/runner.env
 
