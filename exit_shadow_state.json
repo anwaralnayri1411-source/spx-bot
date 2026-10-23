@@ -20,8 +20,8 @@
    "t60_time": "11:38",
    "t60_pnl": -0.673,
    "peak_pnl": 0.0,
-   "close_pnl": -0.81,
-   "quotes": 46
+   "close_pnl": -0.837,
+   "quotes": 47
   },
   {
    "date": "2026-10-23",
@@ -42,8 +42,8 @@
    "t60_time": "11:38",
    "t60_pnl": -0.361,
    "peak_pnl": 0.0,
-   "close_pnl": -0.265,
-   "quotes": 46
+   "close_pnl": -0.254,
+   "quotes": 47
   },
   {
    "date": "2026-10-23",
@@ -64,8 +64,8 @@
    "t60_time": "12:08",
    "t60_pnl": -0.181,
    "peak_pnl": 0.019,
-   "close_pnl": -0.894,
-   "quotes": 40
+   "close_pnl": -0.887,
+   "quotes": 41
   },
   {
    "date": "2026-10-23",
@@ -86,8 +86,8 @@
    "t60_time": "12:08",
    "t60_pnl": -0.051,
    "peak_pnl": 0.042,
-   "close_pnl": -0.36,
-   "quotes": 40
+   "close_pnl": -0.336,
+   "quotes": 41
   }
  ],
  "skipped": []
