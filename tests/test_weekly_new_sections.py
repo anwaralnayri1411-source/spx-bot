@@ -61,3 +61,18 @@ def test_build_still_works_when_new_inputs_are_missing():
             "tail_events": pd.DataFrame(), "snaps": pd.DataFrame(), "outcomes": pd.DataFrame(), "momentum": pd.DataFrame(), "news_md": ""}
     md, tg = wl.build(today=date(2026, 10, 24), data=data)
     assert "## 7) الحجب" in md and len(tg) <= 3900
+
+
+def test_verdict_section_takes_the_last_verdict_line_of_each_report():
+    texts = {"فرضية أ": "# x\n⚖️ **الحكم على الفرضية:** لا حكم بعد (3 من 100)\n", "فرضية ب": "لا شيء هنا"}
+    L = wl.sec_verdicts(texts)
+    assert L[0] == "⚖️ فرضية أ: الحكم على الفرضية: لا حكم بعد (3 من 100)" and L[1] == "⚖️ فرضية ب: لا تقرير بعد"
+    assert wl.sec_verdicts({}) == ["لا فرضيات مسجّلة بعد."]
+
+
+def test_build_adds_section_nine_and_stays_within_telegram_limit():
+    data = {"z": pd.DataFrame(columns=["date", "result"]), "positions": [], "stocks_log": pd.DataFrame(), "tail_days": pd.DataFrame(),
+            "tail_events": pd.DataFrame(), "snaps": pd.DataFrame(), "outcomes": pd.DataFrame(), "momentum": pd.DataFrame(), "news_md": "",
+            "verdict_texts": {"فرضية أ": "⚖️ الحكم: تحققت"}}
+    md, tg = wl.build(today=date(2026, 10, 24), data=data)
+    assert "## 9) الفرضيات المسجّلة مسبقاً" in md and "<b>9) الفرضيات" in tg and "فرضية أ: الحكم: تحققت" in tg and len(tg) <= 3900

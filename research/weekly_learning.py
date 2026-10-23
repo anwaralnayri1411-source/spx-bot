@@ -314,6 +314,19 @@ def stocks_study_lines(positions, track):
             f"({len(long_)}) مقابل الأقصر {m(short_)} ({len(short_)}). عينة صغيرة جداً: للمراقبة لا للحكم."]
 
 
+VERDICT_FILES = (("مقارنة درجة الأخبار (Claude مقابل الكلمات)", "research/news_score_compare_results.md"),
+                  ("ظل قواعد المحترفين (عقد 0.50 مقابل عقد البوت)", "research/pro_rules_shadow_results.md"))
+
+
+def sec_verdicts(texts):
+    """سطر الحكم (يبدأ بـ ⚖️) من تقرير كل فرضية مسجّلة مسبقاً. texts: {عنوان: نص التقرير}."""
+    L = []
+    for title, text in texts.items():
+        v = [x.strip() for x in str(text).split("\n") if x.strip().startswith("⚖️")]
+        L.append(f"⚖️ {title}: " + (v[-1].replace("⚖️", "").replace("**", "").strip() if v else "لا تقرير بعد"))
+    return L or ["لا فرضيات مسجّلة بعد."]
+
+
 def build(today=None, data=None):
     """يرجع (نص markdown كامل، رسالة تيليجرام مختصرة)."""
     today = today or datetime.now().date()
@@ -326,15 +339,16 @@ def build(today=None, data=None):
              ("5) التجارب الظلية", sec_shadows(data["momentum"])),
              ("6) سياق اليوم: هل يتفوق البوت في الأيام المتحركة؟", sec_context(data.get("trades", pd.DataFrame()), data["tail_days"])),
              ("7) الحجب: هل كان في صالحنا؟", sec_blocked(data.get("blocked"))),
-             ("8) العقد والخروج: ظلال ودراسات", sec_exit(data.get("exit_log"), data.get("stocks_study", []))) ]
+             ("8) العقد والخروج: ظلال ودراسات", sec_exit(data.get("exit_log"), data.get("stocks_study", []))),
+             ("9) الفرضيات المسجّلة مسبقاً: أين وصلنا؟", sec_verdicts(data.get("verdict_texts", {})))]
     md = [f"# ما تعلمناه — أسبوع {since.isoformat()}", "",
           "⚠️ هذا ملخص آلي من سجلات المشروع. العينات صغيرة، وما لم يثبت يُقال صراحة. تعليمي وليس توصية مالية.", ""]
     for title, lines in parts:
         md += [f"## {title}"] + lines + [""]
     tg = [f"📚 <b>ما تعلمناه هذا الأسبوع</b> ({since.strftime('%d/%m')})", ""]
     for title, lines in parts:
-        shown = [x for x in lines if x.startswith("⚖️")] if title.startswith(("6)", "7)", "8)")) else lines[:5]     # الأقسام 6–8 في الرسالة: الحكم فقط
-        if title.startswith(("7)", "8)")) and not shown:
+        shown = [x for x in lines if x.startswith("⚖️")] if title.startswith(("6)", "7)", "8)", "9)")) else lines[:5]     # الأقسام 6–8 في الرسالة: الحكم فقط
+        if title.startswith(("7)", "8)", "9)")) and not shown:
             shown = lines[:1]
         tg += [f"<b>{title}</b>"] + [re.sub(r"\s+$", "", x) for x in shown] + [""]
     tg.append("الملف الكامل: research/weekly_learning.md في المستودع.\n⚠️ عينات صغيرة؛ تعليمي وليس توصية.")
@@ -352,6 +366,7 @@ def load_data():
             "snaps": _csv("gex_snapshots.csv"), "outcomes": _csv("gex_outcomes.csv"), "momentum": _csv("momentum_shadow_log.csv"), "trades": _csv("research/real_price_check_trades.csv"),
             "blocked": _csv("blocked_shadow_log.csv"), "exit_log": _csv("exit_shadow_log.csv"),
             "stocks_study": stocks_study_lines(positions, _csv("stocks_track.csv")),
+            "verdict_texts": {t: (open(os.path.join(ROOT, f), encoding="utf-8").read() if os.path.exists(os.path.join(ROOT, f)) else "") for t, f in VERDICT_FILES},
             "news_md": open(p, encoding="utf-8").read() if os.path.exists(p) else ""}
 
 
