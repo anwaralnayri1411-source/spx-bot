@@ -24,7 +24,8 @@
    "american express co stock axp moved down by 3 34 on oct 23 what investors need to know",
    "bac deadline news bank of america investors are notified",
    "america s second biggest bank says the stock market is in the midst of a multibillion dollar stampede",
-   "first citizens bancshares inc delaware stock fcnca moved up by 8 61 on oct 23 facts behind the movement"
+   "first citizens bancshares inc delaware stock fcnca moved up by 8 61 on oct 23 facts behind the movement",
+   "best bank stocks to research october 23rd"
   ],
   "AMZN:CALL": [
    "starting jan 1 2027 amazon seasonal workers get day one health coverage if they work at least 30 hours a week",
@@ -79,7 +80,8 @@
    "uber technologies inc ut81 f stock price news quote and history",
    "with an ipo brewing anthropic just launched its answer to meta s uber popular muse",
    "polen focus growth strategy trims starbucks corporation sbux as turnaround progress enters valuation",
-   "weride inc wrd stock price news quote and history"
+   "weride inc wrd stock price news quote and history",
+   "baidu and lyft push ahead with plans for a robotaxi service in london bidu nasdaq"
   ],
   "DIS:CALL": [
    "skydance rises 5 as steep post merger slide pauses disney gains 2 netflix slips",
@@ -285,10 +287,34 @@
    "stock market midday oct 23 energy surges on oil price spike cybersecurity stocks gain",
    "oil tops 117 as houthis launch another wave of attacks on saudi arabia",
    "ftse 100 slips as oil price hits five month high",
-   "european stocks close lower in friday trading amid rising oil prices extraordinary collapse in uk consumer confidence"
+   "european stocks close lower in friday trading amid rising oil prices extraordinary collapse in uk consumer confidence",
+   "stocks mixed day after ai related selloff oil prices rise again",
+   "energy markets adapt to the iran forever conflict as region avoids mutually assured destruction",
+   "trump uses defense act as fuel prices surge",
+   "us equity indexes mixed amid surging crude oil prices moderate buying in technology",
+   "aaa national average falls 6 cents crude oil nears 100 barrel",
+   "gas prices drop for second straight week",
+   "oil prices climb as middle east shipping risks grow",
+   "european stocks post weekly loss as france turmoil oil prices dent earnings optimism",
+   "crude oil prices rise as speculation increases about possible us strike on iran post election",
+   "odds of oil reaching 110 by october end rise to 34 cl1 com commodity",
+   "london stocks mark weekly fall as oil hits five month high ahead of budget",
+   "oil stocks rally as wti crude price tops 103 devon energy and diamondback energy gain 5 occidental petroleum rises 3"
   ],
   "TSLA:CALL": [
-   "tesla stock consolidates after potential tesla spacex merger exploration increases uncertainty"
+   "tesla stock consolidates after potential tesla spacex merger exploration increases uncertainty",
+   "project crystal sun gets approval in texas tesla stock nasdaq tsla slips"
+  ],
+  "XOM:CALL": [
+   "trump uses defense act as fuel prices surge",
+   "us equity indexes mixed amid surging crude oil prices moderate buying in technology",
+   "aaa national average falls 6 cents crude oil nears 100 barrel",
+   "gas prices drop for second straight week",
+   "european stocks post weekly loss as france turmoil oil prices dent earnings optimism",
+   "wall street mostly loses ground under pressure from rising oil prices",
+   "odds of oil reaching 110 by october end rise to 34 cl1 com commodity",
+   "london stocks mark weekly fall as oil hits five month high ahead of budget",
+   "oil stocks rally as wti crude price tops 103 devon energy and diamondback energy gain 5 occidental petroleum rises 3"
   ]
  },
  "fired": {
@@ -331,12 +357,27 @@
    "news:the dow plunges 500 points as fears of renewed middle east fighting send oil soaring",
    "news:stock market midday oct 23 energy surges on oil price spike cybersecurity stocks gain",
    "news:oil tops 117 as houthis launch another wave of attacks on saudi arabia",
-   "news:ftse 100 slips as oil price hits five month high"
+   "news:ftse 100 slips as oil price hits five month high",
+   "news:stocks mixed day after ai related selloff oil prices rise again",
+   "news:trump uses defense act as fuel prices surge",
+   "news:aaa national average falls 6 cents crude oil nears 100 barrel",
+   "news:oil prices climb as middle east shipping risks grow",
+   "news:crude oil prices rise as speculation increases about possible us strike on iran post election",
+   "news:london stocks mark weekly fall as oil hits five month high ahead of budget",
+   "news:oil stocks rally as wti crude price tops 103 devon energy and diamondback energy gain 5 occidental petroleum rises 3"
   ],
   "TSLA:CALL:2026-10-28:390": [
    "down-0.15",
    "down-0.3",
    "stock1"
+  ],
+  "XOM:CALL:2026-10-30:190": [
+   "down-0.15",
+   "news:us equity indexes mixed amid surging crude oil prices moderate buying in technology",
+   "news:aaa national average falls 6 cents crude oil nears 100 barrel",
+   "news:wall street mostly loses ground under pressure from rising oil prices",
+   "news:london stocks mark weekly fall as oil hits five month high ahead of budget",
+   "news:oil stocks rally as wti crude price tops 103 devon energy and diamondback energy gain 5 occidental petroleum rises 3"
   ]
  },
  "stock_level": {
@@ -601,7 +642,13 @@
   "the limits of trump s trade war",
   "week ahead for fx bonds decisions from fed other central banks in focus",
   "bitcoin struggles near us 80k as ai sell off hits markets and etfs lose us 636 million",
-  "federal reserve preview a pause before a december hike"
+  "federal reserve preview a pause before a december hike",
+  "nasdaq today live nasdaq composite falls 2 6 as ai stock sell off hits wall street nvidia intel microsoft in focus amid ",
+  "dow jones today live index falls 1 as oil prices surge ai stock sell off hits wall street nvidia microsoft telecom share",
+  "could silver rebound in 2027 what experts predict will happen next",
+  "bitcoin holding above 83 000 as september inflation pressures ease",
+  "bitcoin falls toward 81 000 as technology selloff weighs on cryptocurrencies",
+  "markets extend losses investors lose 21 lakh cr in 4 days"
  ],
  "sharp": {
   "BAC:PUT:2026-10-30:51": 50.86,
