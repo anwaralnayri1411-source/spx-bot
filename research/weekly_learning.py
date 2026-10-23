@@ -19,6 +19,12 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 OUT = os.path.join(HERE, "weekly_learning.md")
 DOW = ["الاثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة"]
+# فرضية «سياق اليوم» (سُجّلت مسبقاً في CLAUDE.md بتاريخ 23/10/2026): حدود الأثلاث تُثبَّت من عينة الاستكشاف (حتى 22/10)،
+# والحكم على الأيام الجديدة فقط (من 23/10): حتى لا نحكم على ما رأيناه عند صياغة الفرضية.
+EXPLORE_END = "2026-10-22"
+MIN_SIGNALS = 30
+CTX_FEATURES = (("prange", "اتساع حركة أمس"), ("pvix", "VIX إغلاق أمس"))
+CTX_KINDS = (("atm1", "عقد على السعر لغد قريب (الأساسي)"), ("otm0", "عقد البوت الرخيص 0DTE"))
 
 
 def _csv(name, **kw):
@@ -138,6 +144,101 @@ def sec_news(md_text):
            [f"  - {k} ({cnt(n, 'حالة', 'حالات', 'حالة')}): صعد {up}، متوسط الحركة {mv}" for k, n, up, mv in rows[:6]]
 
 
+def context_days(days):
+    """سياق كل يوم معروف عند الافتتاح: إغلاق VIX أمس واتساع حركة أمس (بلا أي معلومة من اليوم نفسه)."""
+    d = days.sort_values("date").reset_index(drop=True).copy()
+    d["pvix"] = pd.to_numeric(d["vix_close"], errors="coerce").shift(1)
+    d["prange"] = pd.to_numeric(d["range_pct"], errors="coerce").shift(1)
+    return d
+
+
+def ctx_cutoffs(d):
+    """حدا الأثلاث لكل مؤشر، ثابتان من عينة الاستكشاف فقط."""
+    e = d[d["date"] <= EXPLORE_END]
+    return {f: e[f].dropna().quantile([1 / 3, 2 / 3]).tolist() for f, _ in CTX_FEATURES}
+
+
+def pair_values(trades, kind, ex="t60"):
+    """لكل إشارة: عائد اتجاه البوت وعائد المعاكس ونفس العقد، والفرق = قيمة الاتجاه."""
+    t = trades[(trades["kind"] == kind) & (trades["exit"] == ex)].dropna(subset=["real"])
+    idx = ["day", "run_m"]
+    b = t[t["role"] == "bot"].set_index(idx)["real"]
+    o = t[t["role"] == "opp"].set_index(idx)["real"]
+    j = pd.concat({"bot": b, "opp": o}, axis=1).dropna().reset_index()
+    j["value"] = j["bot"] - j["opp"]
+    return j
+
+
+def boot_ci(j, n=2000, seed=7):
+    """فاصل 95% لمتوسط قيمة الاتجاه بإعادة معاينة الأيام (الصفقات في اليوم نفسه مترابطة)."""
+    if j["day"].nunique() < 3:
+        return None
+    groups = [g["value"].values for _, g in j.groupby("day")]
+    rng = np.random.default_rng(seed)
+    means = []
+    for _ in range(n):
+        pick = rng.integers(0, len(groups), len(groups))
+        means.append(np.concatenate([groups[i] for i in pick]).mean())
+    return float(np.percentile(means, 2.5)), float(np.percentile(means, 97.5))
+
+
+def ctx_stats(j, ctx, feature, cuts, bucket, part):
+    """إحصاء فئة واحدة (منخفض/وسط/مرتفع) في جزء واحد (استكشاف أو جديد)."""
+    lo, hi = cuts[feature]
+    x = j.copy()
+    x["c"] = x["day"].map(ctx[feature])
+    x = x.dropna(subset=["c"])
+    x = x[x["day"] <= EXPLORE_END] if part == "explore" else x[x["day"] > EXPLORE_END]
+    x = x[x["c"] <= lo] if bucket == "low" else (x[x["c"] > hi] if bucket == "high" else x[(x["c"] > lo) & (x["c"] <= hi)])
+    if x.empty:
+        return None
+    return {"n": len(x), "days": x["day"].nunique(), "bot": float(x["bot"].mean()), "opp": float(x["opp"].mean()),
+            "value": float(x["value"].mean()), "ci": boot_ci(x)}
+
+
+def _fmt_ci(ci):
+    return "فاصل 95%: غير متاح" if ci is None else f"فاصل 95%: {ci[0] * 100:+.0f}…{ci[1] * 100:+.0f}%"
+
+
+def sec_context(trades, days):
+    """هل يتفوق اتجاه البوت على عكسه في الأيام المتحركة (سياق صباحي)؟ استكشاف مقابل بيانات جديدة."""
+    if trades.empty or days.empty or "day" not in trades:
+        return ["لا بيانات كافية بعد."]
+    d = context_days(days)
+    ctx = d.set_index("date")
+    cuts = ctx_cutoffs(d)
+    L = ["الفرضية (سُجّلت 23/10): اتجاه البوت يتفوق على عكسه عندما يكون سياق الصباح «مرتفعاً» (VIX أمس أو اتساع حركة أمس في الثلث الأعلى)، ولا يتفوق في الأيام الهادئة.",
+         f"الحكم على الأيام الجديدة فقط (من 23/10)، بحدود أثلاث ثابتة من عينة الاستكشاف؛ ولا حكم قبل {MIN_SIGNALS} إشارة في الفئة المرتفعة وفاصل ثقة لا يشمل الصفر."]
+    verdict = None
+    for kind, kname in CTX_KINDS:
+        j = pair_values(trades, kind)
+        if j.empty:
+            continue
+        L.append(f"{kname}: (قيمة الاتجاه = عائد اتجاه البوت − عائد المعاكس، خروج بعد 60د، أسعار حقيقية)")
+        for feat, flabel in CTX_FEATURES:
+            for part, pname in (("explore", "استكشاف حتى 22/10"), ("new", "جديد من 23/10")):
+                parts = []
+                for bucket, bname in (("high", "مرتفع"), ("low", "منخفض")):
+                    st = ctx_stats(j, ctx, feat, cuts, bucket, part)
+                    if st is None:
+                        parts.append(f"{bname}: لا صفقات بعد")
+                        continue
+                    parts.append(f"{bname}: {cnt(st['n'], 'إشارة', 'إشارات', 'إشارة')}/{cnt(st['days'], 'يوم', 'أيام', 'يوماً')}، "
+                                 f"البوت {st['bot'] * 100:+.0f}% مقابل المعاكس {st['opp'] * 100:+.0f}% (الفرق {st['value'] * 100:+.0f}%، {_fmt_ci(st['ci'])})")
+                    if kind == "atm1" and feat == "prange" and part == "new" and bucket == "high":
+                        verdict = st
+                L.append(f"  - {flabel} [{pname}]: " + " | ".join(parts))
+    if verdict is None or verdict["n"] < MIN_SIGNALS:
+        got = 0 if verdict is None else verdict["n"]
+        L.append(f"⚖️ الحكم الأساسي (اتساع حركة أمس، عقد على السعر): لا حكم بعد: {got} من {MIN_SIGNALS} إشارة على الأيام الجديدة.")
+    elif verdict["ci"] is not None and verdict["ci"][0] > 0:
+        L.append("⚖️ الحكم الأساسي: تحققت الفرضية على أيام جديدة (الفاصل لا يشمل الصفر). الخطوة التالية: ظل يسجّل أثر تخفيض التوصيات في الأيام الهادئة، بموافقتك.")
+    else:
+        L.append("⚖️ الحكم الأساسي: لم تتحقق الفرضية على الأيام الجديدة؛ نتائج الاستكشاف كانت ضجيجاً أو تغيّر السوق.")
+    L.append("⚠️ جرّبنا مؤشرين وعقدين وفئات متعددة: نتيجة لافتة واحدة قد تكون صدفة. ولا يغيّر هذا القسم أي توصية.")
+    return L
+
+
 def sec_shadows(mom):
     L = []
     if len(mom):
@@ -160,14 +261,16 @@ def build(today=None, data=None):
              ("2) الأيام النادرة: لماذا تقفز بعض العقود الرخيصة؟", sec_tail(data["tail_days"], data["tail_events"])),
              ("3) الدعم والمقاومة (جدران العقود)", sec_walls(data["snaps"], data["outcomes"])),
              ("4) الأخبار وتأثيرها", sec_news(data["news_md"])),
-             ("5) التجارب الظلية", sec_shadows(data["momentum"]))]
+             ("5) التجارب الظلية", sec_shadows(data["momentum"])),
+             ("6) سياق اليوم: هل يتفوق البوت في الأيام المتحركة؟", sec_context(data.get("trades", pd.DataFrame()), data["tail_days"]))]
     md = [f"# ما تعلمناه — أسبوع {since.isoformat()}", "",
           "⚠️ هذا ملخص آلي من سجلات المشروع. العينات صغيرة، وما لم يثبت يُقال صراحة. تعليمي وليس توصية مالية.", ""]
     for title, lines in parts:
         md += [f"## {title}"] + lines + [""]
     tg = [f"📚 <b>ما تعلمناه هذا الأسبوع</b> ({since.strftime('%d/%m')})", ""]
     for title, lines in parts:
-        tg += [f"<b>{title}</b>"] + [re.sub(r"\s+$", "", x) for x in lines[:5]] + [""]
+        shown = [x for x in lines if x.startswith("⚖️")] if title.startswith("6)") else lines[:5]     # القسم 6 في الرسالة: الحكم فقط
+        tg += [f"<b>{title}</b>"] + [re.sub(r"\s+$", "", x) for x in shown] + [""]
     tg.append("الملف الكامل: research/weekly_learning.md في المستودع.\n⚠️ عينات صغيرة؛ تعليمي وليس توصية.")
     return "\n".join(md), "\n".join(tg)[:3900]
 
@@ -180,7 +283,7 @@ def load_data():
     p = os.path.join(HERE, "news_memory_results.md")
     return {"z": _csv("zero_dte_log.csv"), "positions": positions, "stocks_log": _csv("stocks_log.csv"),
             "tail_days": _csv("tail_log_days.csv"), "tail_events": _csv("tail_log_events.csv"),
-            "snaps": _csv("gex_snapshots.csv"), "outcomes": _csv("gex_outcomes.csv"), "momentum": _csv("momentum_shadow_log.csv"),
+            "snaps": _csv("gex_snapshots.csv"), "outcomes": _csv("gex_outcomes.csv"), "momentum": _csv("momentum_shadow_log.csv"), "trades": _csv("research/real_price_check_trades.csv"),
             "news_md": open(p, encoding="utf-8").read() if os.path.exists(p) else ""}
 
 
