@@ -83,9 +83,24 @@ def daily(period="10d"):
         if k in done or k < "2026-10-23" or len(g) < 70:
             continue
         sl.append(OUT, HEAD, day_rows(g))
+        plan(d, k)
         with open(days, "a") as f:
             f.write(k + "\n")
         print("تمت معالجة", k)
+
+
+def plan(d, k):
+    """الخطة الكاملة (7 عوامل، دراسة research/ob_strategy_study.py): مناطق 5د ومناطق الساعة بدخول 5د، لمسات اليوم k فقط."""
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "research"))
+    import ob_strategy_study as st
+    d5 = d[["open", "high", "low", "close"]]
+    cols = ["day", "tf", "kind", "side", "fvg", "bos", "fresh", "liq", "trend", "time", "conf", "score", "fav", "adv"]
+    out = []
+    for tf, df in (("5m", st.rows_for(d5, st.P5)), ("1h>5m", st.rows_for(st.to_hour(d5), st.P1H, mtf=d5))):
+        if not df.empty:
+            df = df[df.day == k]
+            out += [(r.day, tf, r.kind, r.side, int(r.fvg), int(r.bos), int(r.fresh), int(r.liq), int(r.trend), int(r.time), int(r.conf), r.score, round(r.fav, 5), round(r.adv, 5)) for r in df.itertuples()]
+    sl.append("shadow_ob_plan_log.csv", cols, out)
 
 
 def _read():

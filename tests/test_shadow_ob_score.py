@@ -18,3 +18,14 @@ def test_score_is_sum_of_factors():
         + [(100.45, 100.5, 100.3, 100.4)] * 4 + [(100.3, 100.3, 99.7, 99.9)] + [(99.9, 100.0, 99.8, 99.95)] * 30
     for r in so.day_rows(_bars(rows)):
         assert r[9] == r[5] + r[6] + r[7] + r[8]
+
+
+def test_plan_logs_only_given_day(tmp_path, monkeypatch):
+    import sys
+    sys.path.insert(0, "research")
+    import ob_strategy_study as st
+    idx = pd.date_range("2026-10-23 09:30", periods=78, freq="5min", tz="America/New_York")
+    d = pd.DataFrame({"open": 100.0, "high": 100.05, "low": 99.95, "close": 100.0}, index=idx)
+    monkeypatch.chdir(tmp_path)
+    so.plan(d, "2026-10-23")
+    assert len(st.to_hour(d)) == 7
