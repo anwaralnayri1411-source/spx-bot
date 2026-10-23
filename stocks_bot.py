@@ -1645,6 +1645,11 @@ def do_scan(n, force, P):
         blocked_shadow.log_stocks(n, a.get("blocked", []) + held)
     except Exception as e:
         print("تعذر تسجيل ظل الحجب:", e)
+    try:   # ظل قواعد المحترفين: عقدان شهريان بدلتا 0.50 و0.70 بجانب عقد كل فكرة، تُتابَع بلا إرسال (تسجيل فقط)
+        import pro_rules_shadow
+        pro_rules_shadow.log_ideas(n, [dict(i, tag="sent") for i in new] + a.get("blocked", []) + held, ob.abs_delta)
+    except Exception as e:
+        print("تعذر تسجيل ظل قواعد المحترفين:", e)
     if new:
         mid = send_ideas(a, new)
         shown, full = ob.analysis_wrap(details_message(a, new, log_line))
