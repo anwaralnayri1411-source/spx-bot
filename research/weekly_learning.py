@@ -331,7 +331,13 @@ def spread_lines(positions):
 
 
 VERDICT_FILES = (("مقارنة درجة الأخبار (Claude مقابل الكلمات)", "research/news_score_compare_results.md"),
-                  ("ظل قواعد المحترفين (عقد 0.50 مقابل عقد البوت)", "research/pro_rules_shadow_results.md"))
+                  ("ظل قواعد المحترفين (عقد 0.50 مقابل عقد البوت)", "research/pro_rules_shadow_results.md"),
+                  ("المستويات والارتداد (SPY)", "research/levels_study_results.md"),
+                  ("الانجراف بعد الأرباح", "research/pead_study_results.md"),
+                  ("الفجوة وآخر 30 دقيقة (SPY)", "research/intraday_signals_study_results.md"),
+                  ("ارتداد SPY بعد الصدمة", "research/vix_shock_study_results.md"),
+                  ("فجوة السهم والنفط", "research/stocks_daily_signals_results.md"),
+                  ("ظل هيكل الصفقة (سبريد وكوندور)", "research/structure_shadow_results.md"))
 
 
 def sec_verdicts(texts):
@@ -339,7 +345,7 @@ def sec_verdicts(texts):
     L = []
     for title, text in texts.items():
         v = [x.strip() for x in str(text).split("\n") if x.strip().startswith("⚖️")]
-        L.append(f"⚖️ {title}: " + (v[-1].replace("⚖️", "").replace("**", "").strip() if v else "لا تقرير بعد"))
+        L.append(f"⚖️ {title}: " + (" | ".join(x.replace("⚖️", "").replace("**", "").strip() for x in v) if v else "لا تقرير بعد"))
     return L or ["لا فرضيات مسجّلة بعد."]
 
 
