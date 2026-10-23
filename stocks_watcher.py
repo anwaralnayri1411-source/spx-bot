@@ -407,6 +407,7 @@ def facts(p, n, spot, q):
         f["need"] = d * (be / spot - 1)
     if q:
         f["val"], f["pnl"] = q["val"], q["val"] / p["entry"] - 1
+        f["src"] = q.get("src")
         if spot:
             exp = date.fromisoformat(p["exp"])
             secs = max((datetime(exp.year, exp.month, exp.day, 16, 0, tzinfo=n.tzinfo) - n).total_seconds(), 1800)
@@ -459,6 +460,13 @@ def days_ar(k):
     return f"{k} يوم" if k in (1, 2) or k > 10 else f"{k} أيام"
 
 
+def price_age(f):
+    """وصف عمر سعر العقد بحسب مصدره الفعلي (لحظي من Alpaca/Tastytrade، وإلا ياهو المتأخر)."""
+    if f.get("src") in ("alpaca", "tasty"):
+        return "سعر العقد لحظي"
+    return "سعر العقد من ياهو متأخر ~15د"
+
+
 def message(p, f, event_lines, adv, n):
     e = p["entry"]
     L = [f"📌 <b>متابعة لحظية</b> #متابعة" + (" | 🛒 عقدك" if p.get("_bought") else ""),
@@ -466,7 +474,7 @@ def message(p, f, event_lines, adv, n):
          f" | باقٍ {days_ar(f['tdays'])} تداول"]
     if f["val"] is not None:
         L.append(f"💵 دخول ${e * 100:,.0f} ← الآن ${f['val'] * 100:,.0f} | <b>{f['pnl'] * 100:+.0f}%</b> "
-                 f"({(f['val'] - e) * 100:+,.0f}$) <i>(سعر العقد متأخر ~15د)</i>")
+                 f"({(f['val'] - e) * 100:+,.0f}$) <i>({price_age(f)})</i>")
     s = []
     if f["spot"]:
         s.append(f"📈 السهم {f['spot']:,.2f}")

@@ -1126,6 +1126,13 @@ def root_sym(k):
     return {"SPX": "SPXW", "NDX": "NDXP"}.get(sy, sy)
 
 
+def age_note(age):
+    """سطر عمر البيانات: أسعار العقود لحظية في الوضع 1، وشموع الاتجاه (ياهو) هي المتأخرة."""
+    if _live_on():
+        return f"⏱️ أسعار العقود لحظية؛ شموع الاتجاه متأخرة ~{age:.0f} دقيقة."
+    return f"⏱️ البيانات متأخرة ~{age:.0f} دقيقة، تحقق من السعر الحي."
+
+
 def instrument_block(sym, ks, side, S_idx):
     """كتلة مستقلة لأداة واحدة (SPX أو SPY): العقد، الدخول، الجني، الوقف، الكمية، أقصى خسارة."""
     call = side == "CALL"
@@ -1186,7 +1193,7 @@ def signal_message(a):
     L.append("ادخل بسعر العقد المذكور أو أقل، ولا تلاحق السعر إن ارتفع العقد أكثر من 10% قبل دخولك. "
              f"⏰ لا دخول بعد {ry_time(*no_entry(now_ny()))}")
     if c["age"] >= 5:
-        L.append(f"⏱️ البيانات متأخرة ~{c['age']:.0f} دقيقة، تحقق من السعر الحي.")
+        L.append(age_note(c["age"]))
     L.append("⚠️ <i>تعليمي وليست توصية. أقصى خسارة هي سعر العقد.</i>")
     L.append(f"🕒 {now_ny().astimezone(RY).strftime('%H:%M')} الرياض | SPX إصدار 17")
     return "\n".join(L)
@@ -1235,7 +1242,7 @@ def send_signal(a):
     cap.append(f"⏰ لا دخول بعد {ry_time(*no_entry(now_ny()))} | 📍 SPX {S:,.1f}")
     nd = groups.get("NDX")
     if c["age"] >= 5:
-        cap.append(f"⏱️ البيانات متأخرة ~{c['age']:.0f} دقيقة، تحقق من السعر الحي.")
+        cap.append(age_note(c["age"]))
     cap.append("⚠️ <i>تعليمي وليست توصية.</i>")
     try:
         import cards
