@@ -17,7 +17,7 @@ main() {
   mkdir -p "$logdir"
 
   # ---- تعريف المهام (من ملفات سير العمل) ----
-  local group="" files="" msg="" envs="" long=0 gate="" extra_env=""
+  local group="" files="" msg="" envs="" long=0 gate="" extra_env="" keepgoing=0
   local -a cmds=() after=()
   case "$job" in
     bot)
@@ -41,7 +41,7 @@ main() {
       files="commands_state.json messages_commands_bot.jsonl stocks_mine.json"
       msg="update commands state" ;;
     preopen)
-      group=preopen-bot; envs="TG"; extra_env="FORCE=0 RESEND=0"
+      group=spx-bot; envs="TG"; extra_env="FORCE=0 RESEND=0"   # مجموعة البوت نفسها: يحفظان levels_log وmgt_compare_log معاً فلا يتعارضان
       cmds=("$py preopen_bot.py")
       files="messages_preopen_bot.jsonl levels_log.csv mgt_compare_log.csv"
       msg="update preopen messages" ;;
@@ -66,7 +66,7 @@ main() {
       files="gex_snapshots.csv gex_outcomes.csv"
       msg="gex shadow log" ;;
     shadow)
-      group=shadow
+      group=shadow; keepgoing=1
       cmds=("$py shadow_levels.py --daily" "$py ladder_shadow.py --daily" "$py shadow_confluence.py --daily" "$py shadow_ob_score.py --daily")
       files="shadow_grid_log.csv shadow_grid_placebo_log.csv shadow_ob_log.csv shadow_fvg_log.csv shadow_days.txt ladder_shadow_log.csv ladder_days.txt shadow_confluence_log.csv shadow_confluence_days.txt shadow_ob_score_log.csv shadow_ob_score_days.txt shadow_ob_plan_log.csv"
       msg="shadow levels log" ;;
@@ -209,12 +209,12 @@ main() {
 
     local rc=0 c
     for c in "${cmds[@]}"; do
-      run_env "$mode" "$envs" "$extra_env" "$long" $c || { rc=$?; break; }
+      run_env "$mode" "$envs" "$extra_env" "$long" $c || { rc=$?; [ "$keepgoing" = 1 ] || break; }   # keepgoing=1: فشل أمر لا يوقف الباقي ولا الحفظ (rc يبقى غير صفر فيظهر في runs.csv والحارس)
     done
     if [ "$long" = 1 ]; then              # خطوة الحفظ في سير العمل: if: always()
       for c in "${after[@]}"; do run_env "$mode" "$envs" "$extra_env" "$long" $c || true; done
     fi
-    if [ "$rc" = 0 ] || [ "$long" = 1 ]; then save_files "$mode" "$msg" $files; fi
+    if [ "$rc" = 0 ] || [ "$long" = 1 ] || [ "$keepgoing" = 1 ]; then save_files "$mode" "$msg" $files; fi
     git status --short | sed 's/^/    /'
     echo "=== $(date -u +%FT%TZ) end rc=$rc"
     echo "$t0,$(date -u +%FT%TZ),$job,$mode,$rc" >> "$logdir/runs.csv"
