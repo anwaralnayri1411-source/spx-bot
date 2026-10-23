@@ -358,3 +358,9 @@ time,pos_id,ticker,side,event,detail,entry,val,pnl,spot,need,tdays,advice,reason
 2026-10-23T11:56-04:00,TSLA:CALL:2026-10-28:390,TSLA,CALL,contract,-19%,1.91,1.54,-0.1937,372.555,0.052,4,أبقِ,الفكرة قائمة لكن العقد -19%؛ التزم بالوقف عند −40%
 2026-10-23T11:59-04:00,UBER:PUT:2026-10-30:68,UBER,PUT,macro_quiet,with/weak/medium: US Consumer Sentiment Slips to Five-Month Low on Inflation Woes - Bloomberg.com,1.1,1.37,0.2455,67.625,0.0107,6,أبقِ,الخبر في صالح العقد
 2026-10-23T11:59-04:00,TSLA:CALL:2026-10-28:390,TSLA,CALL,macro_quiet,against/weak/medium: US Consumer Sentiment Slips to Five-Month Low on Inflation Woes - Bloomberg.com,1.91,1.54,-0.1937,372.555,0.052,4,أبقِ,خبر ضد العقد لكن تأثيره محدود، راقب | الفكرة قائمة لكن العقد -19%؛ التزم بالوقف عند −40%
+2026-10-23T12:13-04:00,CVX:CALL:2026-10-30:240,CVX,CALL,news,with/medium: Airline stocks tumble as oil prices climb - Breakingthenews.net,1.46,1.78,0.2192,232.91,0.0367,6,أبقِ,الخبر في صالح العقد
+2026-10-23T12:24-04:00,CVX:CALL:2026-10-30:240,CVX,CALL,news,"with/medium: Global Oil Price Hits $117 a Barrel, Highest Since April - The New York Times",1.46,1.83,0.2534,233.19,0.0355,6,أبقِ,الخبر في صالح العقد
+2026-10-23T12:24-04:00,TSLA:CALL:2026-10-28:390,TSLA,CALL,contract,-32%,1.91,1.29,-0.3246,371.5,0.0549,4,فكّر بالخروج,العقد خسر 32% (الوقف عند −40%)
+2026-10-23T12:28-04:00,TSLA:CALL:2026-10-28:390,TSLA,CALL,stock,-1.01% منذ الدخول,1.91,,,370.61,0.0575,4,أبقِ,لا جديد يغيّر فكرة الصفقة
+2026-10-23T12:30-04:00,CVX:CALL:2026-10-30:240,CVX,CALL,news,with/high: The Dow plunges 500 points as fears of renewed Middle East fighting send oil soaring - Business Insider,1.46,1.88,0.2877,233.36,0.0347,6,أبقِ,الخبر في صالح العقد
+2026-10-23T12:30-04:00,CVX:CALL:2026-10-30:240,CVX,CALL,news,"with/medium: Stock Market Midday, Oct. 23: Energy Surges on Oil Price Spike, Cybersecurity Stocks Gain - The Motley Fool",1.46,1.88,0.2877,233.36,0.0347,6,أبقِ,الخبر في صالح العقد

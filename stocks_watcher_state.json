@@ -21,7 +21,10 @@
    "bank of america stock simply wall st cuts fair value to usd 63 14 for bank of america stock",
    "truist securities reiterates buy on bank of america stock by investing com",
    "bank of america sends stark warning on u s stocks",
-   "american express co stock axp moved down by 3 34 on oct 23 what investors need to know"
+   "american express co stock axp moved down by 3 34 on oct 23 what investors need to know",
+   "bac deadline news bank of america investors are notified",
+   "america s second biggest bank says the stock market is in the midst of a multibillion dollar stampede",
+   "first citizens bancshares inc delaware stock fcnca moved up by 8 61 on oct 23 facts behind the movement"
   ],
   "AMZN:CALL": [
    "starting jan 1 2027 amazon seasonal workers get day one health coverage if they work at least 30 hours a week",
@@ -238,7 +241,9 @@
    "fy2027 eps estimates for intel boosted by erste group bank",
    "sandisk and intel will report earnings on oct 29 options traders expect 10 swings in sndk and intc stocks",
    "hyperscalers microsoft amazon line up with earnings along with servicenow intel",
-   "why are nvidia intel and amd stocks rebounding in premarket today october 23"
+   "why are nvidia intel and amd stocks rebounding in premarket today october 23",
+   "what s going on with intel stock on friday",
+   "intel corp stock falls 8 0 underperforms peers"
   ],
   "CVX:CALL": [
    "stocks see continued downward pressure from ai anxiety and oil prices",
@@ -269,9 +274,18 @@
    "oil stocks are looking stretched to traders as earnings loom",
    "u s stocks are mixed as investors ponder ai spending higher oil prices dji",
    "white house report card rallies grievances and rising oil prices",
-   "stocks undercut by oil prices and continued ai anxiety"
+   "stocks undercut by oil prices and continued ai anxiety",
+   "aramco s plan to supersize hormuz bypass pipeline could take years and do little for oil prices",
+   "airline stocks tumble as oil prices climb",
+   "gold set for steep weekly loss as rising oil prices bolster fed rate hike bets",
+   "saudi arabia wants to send 10 million barrels of oil a day around hormuz a former treasury official says it may barely m",
+   "global oil price hits 117 a barrel highest since april",
+   "the dow plunges 500 points as fears of renewed middle east fighting send oil soaring",
+   "stock market midday oct 23 energy surges on oil price spike cybersecurity stocks gain"
   ],
-  "TSLA:CALL": []
+  "TSLA:CALL": [
+   "tesla stock consolidates after potential tesla spacex merger exploration increases uncertainty"
+  ]
  },
  "fired": {
   "BAC:PUT:2026-10-30:51": [
@@ -288,17 +302,6 @@
    "sharp@2026-10-22T09:45-04:00",
    "sharp@2026-10-22T15:55-04:00",
    "down-0.15"
-  ],
-  "NFLX:PUT:2026-10-30:66": [
-   "sharp@2026-10-22T11:00-04:00",
-   "down-0.15",
-   "sharp@2026-10-22T11:55-04:00",
-   "stock1",
-   "down-0.3",
-   "news:netflix s higher spending fails to lift engagement says wolfe in downgrade but argus still sees 46 upside potential",
-   "news:netflix revenue growth slows as it overhauls programming units",
-   "news:netflix nflx stock fair value falls after cautious q3 analyst revisions",
-   "news:netflix stock tanks 5 as revenue growth slows in q3 how to play nflx here"
   ],
   "INTC:PUT:2026-10-30:80": [
    "news:intel stock tumbles ahead of q3 earnings",
@@ -318,14 +321,20 @@
    "news:oil prices rise as inventory draws and middle east tensions support crude",
    "news:brent crude jumped 4 to 113 trump is throwing 150 million at refiners",
    "news:trump to use the defense production act to boost u s gas and diesel production could it help",
-   "up0.25"
+   "up0.25",
+   "news:airline stocks tumble as oil prices climb",
+   "news:global oil price hits 117 a barrel highest since april",
+   "news:the dow plunges 500 points as fears of renewed middle east fighting send oil soaring",
+   "news:stock market midday oct 23 energy surges on oil price spike cybersecurity stocks gain"
   ],
   "TSLA:CALL:2026-10-28:390": [
-   "down-0.15"
+   "down-0.15",
+   "down-0.3",
+   "stock1"
   ]
  },
  "stock_level": {
-  "NFLX:PUT:2026-10-30:66": 1
+  "TSLA:CALL:2026-10-28:390": 1
  },
  "seen_macro": [
   "from venezuela to texas to jamnagar marco rubio s dash for energy",
@@ -572,12 +581,23 @@
   "wall st dips after ai led selloff spacex worries hit telecoms",
   "treasury proposes major restrictions to u s investment in chinese biotech sector",
   "us consumer sentiment slips to five month low on inflation woes",
-  "wall street mostly loses ground under pressure from rising oil prices"
+  "wall street mostly loses ground under pressure from rising oil prices",
+  "usdcad falls below 1 4000 as stronger canadian spending keeps sellers in control",
+  "did john sununu actually oppose the iran war and canada tariffs",
+  "closing bell sensex nifty fall for 4th session as brent crude nears 114 smallcap stocks tumble",
+  "what the fed s balance sheet could mean for the debt",
+  "rbi flags rising inflation risks from west asia conflict el nino despite resilient indian economy",
+  "eric ham trump s about face on canada",
+  "america s second biggest bank says the stock market is in the midst of a multibillion dollar stampede",
+  "fed may hold in october but analysts see a tougher call ahead",
+  "south africa s bilateral trade with china surges after zero tariff deal",
+  "swiss franc retreats as markets turn to next week s fed interest rate decision",
+  "the limits of trump s trade war",
+  "week ahead for fx bonds decisions from fed other central banks in focus"
  ],
  "sharp": {
   "BAC:PUT:2026-10-30:51": 50.86,
   "UBER:PUT:2026-10-30:68": 69.06,
-  "NFLX:PUT:2026-10-30:66": 67.14,
   "INTC:PUT:2026-10-30:80": 87.37
  }
 }
