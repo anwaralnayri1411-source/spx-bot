@@ -9,7 +9,13 @@
    "bank of america corporation bac shares purchased by vest financial llc",
    "bank of america corporation bac shareholder alert",
    "bank of america vs jpmorgan chase which financial stock is a better buy in 2026",
-   "bank of america corporation nyse bac shareholders to collect 0 32 quarterly dividend"
+   "bank of america corporation nyse bac shareholders to collect 0 32 quarterly dividend",
+   "bank of america bac why is it facing fresh questions now",
+   "form 4 generac holdings for 23 october by investing com",
+   "bank of america bac stock sees fair value cut after q3 and regulatory penalties",
+   "bank of america fell harder than wells fargo does that make it the better dividend buy",
+   "bank of america offers stronger dividend growth and safety than wells fargo despite recent stock drop",
+   "bank of america just dropped 12 in a month is it time to sell or load up"
   ],
   "AMZN:CALL": [
    "starting jan 1 2027 amazon seasonal workers get day one health coverage if they work at least 30 hours a week",
@@ -53,7 +59,10 @@
    "10 industrials stocks with whale alerts in today s session",
    "uber puts all 30 000 employees on chatgpt work",
    "best large cap dip buys at t leads on earnings beat and rising estimates",
-   "costco turned 1 000 into 8 018 in ten years while the s p 500 delivered 3 564"
+   "costco turned 1 000 into 8 018 in ten years while the s p 500 delivered 3 564",
+   "uber rolls chatgpt work to all 30 000 employees the unpriced labor benchmark",
+   "kohl s adds a new way to shop just in time for the holidays",
+   "uber technologies inc estimates nyse uber"
   ],
   "DIS:CALL": [
    "skydance rises 5 as steep post merger slide pauses disney gains 2 netflix slips",
@@ -105,7 +114,10 @@
    "netflix stock has a long term opportunity that short term investors may be missing",
    "netflix s higher spending fails to lift engagement says wolfe in downgrade but argus still sees 46 upside potential",
    "netflix revenue growth slows as it overhauls programming units",
-   "netflix nflx stock stays cheap after its 58 three year gain"
+   "netflix nflx stock stays cheap after its 58 three year gain",
+   "netflix nasdaq nflx shares in focus as communication stocks themes shift today",
+   "netflix nflx stock fair value falls after cautious q3 analyst revisions",
+   "netflix stock tanks 5 as revenue growth slows in q3 how to play nflx here"
   ],
   "AVGO:PUT": [
    "3 artificial intelligence ai stocks that look like great buys right now",
@@ -157,7 +169,13 @@
    "all eyes will be on palantir on nov 2 here s what it must say to keep the run going",
    "what palantir technologies holders got right",
    "investors should not own bonds for the next 10 years palantir co founder joe lonsdale",
-   "venture capitalist joe lonsdale urges equity focus amid ai boom palantir pltr valuation insights"
+   "venture capitalist joe lonsdale urges equity focus amid ai boom palantir pltr valuation insights",
+   "citi revamps palantir stock price target for 2027",
+   "cathie wood buys the dip in meta stock trims palantir and teradyne shares",
+   "what is palantir technologies pltr really building with its new ai partnerships",
+   "pltr vs bbai which stock has more upside",
+   "palantir stock today 196 gartner warning 213 or 184",
+   "palantir stock price prediction is 212 in reach by year end"
   ],
   "GOOGL:PUT": [
    "wall street continues to systematically undervalue alphabet so i continue to buy",
@@ -184,7 +202,14 @@
    "intel stock tumbles ahead of q3 earnings",
    "intel shares drop more than 7 after stock moves further below key moving averages",
    "intel stock nasdaq intc slides after revealing manufacturing efforts",
-   "intel stock may move 8 3 on oct 29 earnings report"
+   "intel stock may move 8 3 on oct 29 earnings report",
+   "intel tokenized stock robinhood price data",
+   "prediction intel stock will take off after oct 29",
+   "intel corporation intc shares purchased by royal fund management llc",
+   "intel corporation intc stock position trimmed by t3 companies llc",
+   "mbl wealth llc buys 14 393 shares of intel corporation intc",
+   "etfs are buying intel intc on wednesday",
+   "intel in spotlight as wedbush says tool installation at az fab should aid revenue growth intc nasdaq"
   ]
  },
  "fired": {
@@ -192,14 +217,16 @@
    "up0.25",
    "down-0.15",
    "down-0.3",
-   "sharp@2026-10-22T09:45-04:00"
+   "sharp@2026-10-22T09:45-04:00",
+   "news:bank of america bac stock sees fair value cut after q3 and regulatory penalties"
   ],
   "UBER:PUT:2026-10-30:68": [
    "news:td cowen maintains uber technologies uber us with buy rating maintains target price 118",
    "up0.25",
    "news:rbc keeps buy rating for uber technologies stock with usd 105 target",
    "sharp@2026-10-22T09:45-04:00",
-   "sharp@2026-10-22T15:55-04:00"
+   "sharp@2026-10-22T15:55-04:00",
+   "down-0.15"
   ],
   "PLTR:CALL:2026-10-30:210": [
    "news:pltr stock rebounds to 200 as palantir technologies partners with knox systems for federal software",
@@ -217,7 +244,8 @@
    "sharp@2026-10-22T14:00-04:00",
    "news:palantir stock gets a 250 price target as citi predicts another strong earnings beat",
    "stock1",
-   "down-0.3"
+   "down-0.3",
+   "news:citi revamps palantir stock price target for 2027"
   ],
   "NFLX:PUT:2026-10-30:66": [
    "sharp@2026-10-22T11:00-04:00",
@@ -226,11 +254,14 @@
    "stock1",
    "down-0.3",
    "news:netflix s higher spending fails to lift engagement says wolfe in downgrade but argus still sees 46 upside potential",
-   "news:netflix revenue growth slows as it overhauls programming units"
+   "news:netflix revenue growth slows as it overhauls programming units",
+   "news:netflix nflx stock fair value falls after cautious q3 analyst revisions",
+   "news:netflix stock tanks 5 as revenue growth slows in q3 how to play nflx here"
   ],
   "INTC:PUT:2026-10-30:80": [
    "news:intel stock tumbles ahead of q3 earnings",
-   "up0.25"
+   "up0.25",
+   "news:intel in spotlight as wedbush says tool installation at az fab should aid revenue growth intc nasdaq"
   ]
  },
  "stock_level": {
@@ -418,7 +449,32 @@
   "3 30pm markets update",
   "sinking ai stocks undercut markets worldwide as oil climbs to its highest price since may",
   "nyse is getting trounced in the battle for wall street s biggest ipos",
-  "sensex nifty decline as geopolitical tensions and rising oil prices pressure markets"
+  "sensex nifty decline as geopolitical tensions and rising oil prices pressure markets",
+  "morning brief global ai trade under pressure japan inflation rises above boj target eurozone pmis missed expectations",
+  "stock market today s p 500 nasdaq 100 futures mixed ahead of global pmi data western digital newmont",
+  "world shares are mixed after wall street s ai related losses while oil prices jump",
+  "sticky september inflation data sustains bank of japan s tightening trajectory",
+  "sensex nifty end lower as rising crude oil prices weigh on markets",
+  "us pmi data due friday as crypto traders eye fed rate decision",
+  "where they stand michele tafoya and peggy flanagan on trump s tariffs",
+  "when it comes to trump s economy these numbers matter before mid terms",
+  "how to turn a 5 000 investment into 1 500 in passive income 4 stocks to buy",
+  "indian equities fall for fourth day as west asia tensions drive oil prices higher",
+  "oil prices hit five month high what happens next",
+  "share market today nifty 50 bank nifty oct 23 2026",
+  "the bond market is sending a dire warning to wall street about the ai infrastructure build out but is anyone paying atte",
+  "us dollar weakens as yen surges and investors assess federal reserve outlook",
+  "the week in trade uk eu reset progress amid beijing threats healey set to extend hundreds of import tariff suspensions a",
+  "brent geopolitical tensions push prices higher commerzbank",
+  "10 year treasury yield holds below 5 as ai debt and oil risks weigh",
+  "it s their fault trump accuses iran of deliberately driving up oil prices ahead of u s midterm elections",
+  "us stock market today s p 500 futures steady on strong jobs and pmi focus",
+  "gold price today gold rate suffers biggest weekly loss since june silver price lowest since november 202",
+  "commentary the economy not the fed",
+  "stock market steady amid rising oil prices and middle east tensions",
+  "wall st set to open lower after ai led selloff spacex worries hit telecoms",
+  "jamie dimon warns of 5 economic threats facing the u s",
+  "oil climbs above 114 as middle east attacks renew europe s energy fears"
  ],
  "sharp": {
   "BAC:PUT:2026-10-30:51": 50.86,
