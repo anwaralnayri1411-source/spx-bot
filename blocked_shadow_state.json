@@ -1,5 +1,30 @@
 {
- "open": [],
- "seen": [],
- "last": {}
+ "open": [
+  {
+   "id": "20261023T1205|spx|news_weak|SPY|CALL|763|2026-10-23",
+   "project": "spx",
+   "tag": "news_weak",
+   "sym": "SPY",
+   "side": "CALL",
+   "strike": 763.0,
+   "exp": "2026-10-23",
+   "entry": 1.34,
+   "entry_time": "2026-10-23T12:05-04:00",
+   "edge": "3.5",
+   "strength": "3.8",
+   "occ": "SPY261023C00763000",
+   "peak_pnl": 0.007,
+   "close_pnl": 0.007,
+   "quotes": 1,
+   "out": "",
+   "out_time": "",
+   "out_pnl": ""
+  }
+ ],
+ "seen": [
+  "20261023T1205|spx|news_weak|SPY|CALL|763|2026-10-23"
+ ],
+ "last": {
+  "spx|CALL|SPY": "2026-10-23T12:05-04:00"
+ }
 }
