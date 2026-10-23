@@ -15,7 +15,7 @@
    "occ": "XOM261030C00190000",
    "peak_pnl": 0.0,
    "close_pnl": -0.101,
-   "quotes": 4,
+   "quotes": 5,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -35,7 +35,7 @@
    "occ": "NFLX261106P00066000",
    "peak_pnl": 0.0,
    "close_pnl": -0.099,
-   "quotes": 4,
+   "quotes": 5,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -54,8 +54,8 @@
    "strength": "6.1",
    "occ": "UBER261030P00067000",
    "peak_pnl": 0.036,
-   "close_pnl": -0.024,
-   "quotes": 4,
+   "close_pnl": 0.012,
+   "quotes": 5,
    "out": "",
    "out_time": "",
    "out_pnl": ""
