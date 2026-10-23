@@ -152,3 +152,12 @@ def test_fetch_window_never_ends_in_the_future_or_inside_the_last_16_minutes():
     assert capped == now - timedelta(minutes=16)                                # انتهاء في المستقبل: نقصّه إلى الآن−16 د
     past = sr.cap_end(date(2026, 10, 16), now)
     assert past == datetime(2026, 10, 16, 20, 0, tzinfo=sr.ZoneInfo("UTC"))      # انتهاء مضى: إغلاق 16:00 نيويورك
+
+
+def test_a_very_recent_recommendation_is_skipped_without_calling_alpaca(capsys):
+    now = datetime.now(sr.NY)
+    p = {"id": "XOM:CALL", "ticker": "XOM", "side": "CALL", "exp": (now.date() + timedelta(days=7)).isoformat(), "strike": 190.0, "entry": 1.3,
+         "entry_spot": 185.0, "time": (now - timedelta(minutes=5)).isoformat()}
+    called = []
+    out = sr.run([p], ob, fetch=lambda *a: called.append(a) or {}, get_stock=lambda tk: None)
+    assert out.empty and not called and "تخطي توصية حديثة جداً" in capsys.readouterr().out

@@ -239,8 +239,12 @@ def run(pos, ob, fetch=None, get_stock=None):
             syms += [occ(tk, exp, side, k) for k in ks]
         end = max(plan[v][0] for v in plan)
         utc = ZoneInfo("UTC")
+        stop_at = cap_end(end)
+        if stop_at <= t0.astimezone(utc) + timedelta(minutes=10):     # توصية حديثة جداً: لا شموع بعد (Alpaca يرفض نافذة معكوسة)
+            print("تخطي توصية حديثة جداً:", p["id"])
+            continue
         try:
-            bars = fetch(syms, t0.astimezone(utc).isoformat(), cap_end(end).isoformat())
+            bars = fetch(syms, t0.astimezone(utc).isoformat(), stop_at.isoformat())
         except Exception as e:  # noqa: BLE001
             print("فشل الجلب:", p["id"], getattr(e, "code", type(e).__name__))   # رمز HTTP فقط، لا نص الخطأ (قد يحمل ترويسات)
             continue
