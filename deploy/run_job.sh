@@ -125,6 +125,11 @@ main() {
       cmds=("$py pro_rules_shadow.py" "$py pro_rules_shadow.py --report")
       files="pro_rules_shadow_state.json pro_rules_shadow_log.csv research/pro_rules_shadow_results.md data_gaps_pro_rules_shadow_log.csv"
       msg="pro rules shadow log" ;;
+    strategy_lab)
+      group=strategy-lab
+      cmds=("$py research/strategy_lab.py")
+      files="research/strategy_lab_results.md"
+      msg="strategy lab refresh" ;;
     stocks_exit_study)
       group=stocks-exit-study
       cmds=("$py research/stocks_exit_study.py")
