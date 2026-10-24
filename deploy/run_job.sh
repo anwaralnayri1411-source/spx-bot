@@ -115,6 +115,11 @@ main() {
       cmds=("$py structure_shadow.py" "$py structure_shadow.py --report")
       files="structure_shadow_state.json structure_shadow_log.csv research/structure_shadow_results.md data_gaps_structure_shadow_log.csv"
       msg="structure shadow log" ;;
+    candidates_shadow)
+      group=candidates-shadow; envs="ALPACA TASTY"
+      cmds=("$py candidates_shadow.py" "$py candidates_shadow.py --report")
+      files="candidates_shadow_state.json candidates_shadow_log.csv research/candidates_shadow_results.md data_gaps_candidates_shadow_log.csv"
+      msg="candidates shadow log" ;;
     news_score)
       group=news-score
       cmds=("$py research/news_score_compare.py")
@@ -137,8 +142,8 @@ main() {
       msg="levels study refresh" ;;
     signals_batch)
       group=signals-batch; keepgoing=1
-      cmds=("$py research/intraday_signals_study.py" "$py research/option_buyer_cost.py" "$py research/fomc_study.py" "$py research/vix_shock_study.py" "$py research/stocks_daily_signals.py" "$py research/pead_study.py" "$py research/study_registry.py")
-      files="research/intraday_signals_study_results.md research/option_buyer_cost_results.md research/fomc_study_results.md research/vix_shock_study_results.md research/stocks_daily_signals_results.md research/pead_study_results.md research/study_registry_results.md"
+      cmds=("$py research/intraday_signals_study.py" "$py research/option_buyer_cost.py" "$py research/fomc_study.py" "$py research/vix_shock_study.py" "$py research/stocks_daily_signals.py" "$py research/pead_study.py" "$py research/regime_study.py" "$py research/study_registry.py")
+      files="research/intraday_signals_study_results.md research/option_buyer_cost_results.md research/fomc_study_results.md research/vix_shock_study_results.md research/stocks_daily_signals_results.md research/pead_study_results.md research/regime_study_results.md research/study_registry_results.md"
       msg="signals batch refresh" ;;
     long_price_calibration)
       group=long-price; envs="ALPACA"
