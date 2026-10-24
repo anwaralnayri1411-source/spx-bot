@@ -63,6 +63,33 @@ def attempt(name, fn):
         return None, type(e).__name__
 
 
+def last_session_day(today=None):
+    """آخر يوم عمل قبل اليوم (يتجاهل العطلات الرسمية؛ نافذة فحص فقط)."""
+    d = (today or datetime.now().date()) - timedelta(days=1)
+    while d.weekday() >= 5:
+        d -= timedelta(days=1)
+    return d
+
+
+def tape_stats(trades):
+    """ملخص قائمة صفقات Alpaca (p سعر، s حجم، x بورصة، c شروط، t وقت): عددها، مجموع الحجم، أكبر صفقة، عدد البورصات، الشروط المختلفة."""
+    if not trades:
+        return {"n": 0}
+    sizes = [float(t.get("s") or 0) for t in trades]
+    return {"n": len(trades), "volume": sum(sizes), "max_size": max(sizes), "exchanges": len({t.get("x") for t in trades}),
+            "conditions": sorted({str(t.get("c")) for t in trades})}
+
+
+def fallback_spot(sym="SPY"):
+    """سعر آخر/إغلاق من Tastytrade عند فشل القراءة اللحظية (خارج ساعات السوق)."""
+    try:
+        items = (lq._tasty_req("/market-data/by-type?" + urllib.parse.urlencode({"equity": sym}), token=lq._tasty_token()).get("data") or {}).get("items") or []
+        it = next((x for x in items if x.get("symbol") == sym), {})
+        return float(it.get("last") or it.get("close") or 0) or None
+    except Exception:  # noqa: BLE001
+        return None
+
+
 def target_contract(spot, today=None):
     """عقد كول ATM على SPY بأقرب انتهاء يوم تداول (اليوم إن كان يوم عمل، وإلا التالي)."""
     d = today or datetime.now().date()
@@ -77,7 +104,7 @@ def main(argv):
         print("يلزم مفاتيح Alpaca (الخادم).")
         return 0
     spot, _ = lq.spot("SPY")
-    spot = spot or 700.0
+    spot = spot or fallback_spot() or 700.0
     occ, exp = target_contract(spot)
     L = ["# حقول البيانات المتاحة من Alpaca وTastytrade (نتائج آلية)", "", f"- عقد الفحص: `{occ}` (انتهاء {exp})، سعر SPY ≈ {spot:.2f}. أسماء حقول وأمثلة أرقام فقط.", ""]
     q = urllib.parse.urlencode({"symbols": occ, "feed": "indicative"})
@@ -99,6 +126,25 @@ def main(argv):
             L += [f"- {kind}: {st}", ""]
             if r:
                 L += table(f"حقول {kind}", r[0])
+    # شريط الصفقات التاريخي لعقد ATM بانتهاء آخر يوم جلسة (نافذة 14:30-15:30 UTC)، وسجل العروض في النافذة نفسها
+    day = last_session_day()
+    occ0 = lq.occ("SPY", day.isoformat(), "CALL", round(spot))
+    start, end = f"{day}T14:30:00Z", f"{day}T15:30:00Z"
+    L += [f"## شريط الصفقات التاريخي (عقد {occ0}، {start} → {end})", ""]
+    for name, path in (("الصفقات", "/v1beta1/options/trades"), ("العروض", "/v1beta1/options/quotes")):
+        qq = urllib.parse.urlencode({"symbols": occ0, "start": start, "end": end, "limit": 200, "feed": "indicative", "sort": "asc"})
+        r, st = attempt(name, lambda p=path, qq=qq: lq._get(lq.DATA + p + "?" + qq))
+        L += [f"- {name}: {st}"]
+        if r:
+            rows = (r.get("trades") if name == "الصفقات" else r.get("quotes") or {}) or {}
+            rows = rows.get(occ0) or []
+            if name == "الصفقات":
+                st2 = tape_stats(rows)
+                L += [f"- عدد الصفقات في الساعة: {st2['n']}" + (f"، الحجم {st2['volume']:g}، أكبر صفقة {st2['max_size']:g}، بورصات {st2['exchanges']}، شروط {st2['conditions']}" if st2["n"] else "")]
+            else:
+                L += [f"- عدد تحديثات العرض في الساعة: {len(rows)}"]
+            if rows:
+                L += [""] + table("عيّنة أول سجل", rows[0])
     with open(OUT, "w", encoding="utf-8", newline="\n") as f:
         f.write("\n".join(L) + f"\n(آخر تشغيل {datetime.now():%Y-%m-%d})\n")
     print("\n".join(L))

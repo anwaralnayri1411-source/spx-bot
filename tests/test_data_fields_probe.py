@@ -41,3 +41,16 @@ def test_target_contract_rolls_weekend_to_monday():
 def test_main_without_keys_is_a_no_op(monkeypatch):
     monkeypatch.delenv("ALPACA_KEY", raising=False)
     assert dp.main([]) == 0
+
+
+def test_last_session_day_skips_weekends():
+    assert dp.last_session_day(date(2026, 10, 26)) == date(2026, 10, 23)      # اثنين ← جمعة
+    assert dp.last_session_day(date(2026, 10, 24)) == date(2026, 10, 23)      # سبت ← جمعة
+    assert dp.last_session_day(date(2026, 10, 28)) == date(2026, 10, 27)
+
+
+def test_tape_stats_summarizes_size_exchanges_and_conditions():
+    t = [{"p": 1.0, "s": 5, "x": "C", "c": "g"}, {"p": 1.1, "s": 100, "x": "X", "c": "S"}, {"p": 1.1, "s": 1, "x": "C", "c": "g"}]
+    s = dp.tape_stats(t)
+    assert s["n"] == 3 and s["volume"] == 106 and s["max_size"] == 100 and s["exchanges"] == 2 and s["conditions"] == ["S", "g"]
+    assert dp.tape_stats([]) == {"n": 0}
