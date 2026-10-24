@@ -30,7 +30,7 @@ GAP_MIN = 0.004
 MIN_DAYS = 60
 SIGNALS = ("mom", "f30", "agree", "gap")
 LOG_COLS = ["id", "day", "slot", "spot", "gap", "r_first", "r_prev60", "mom", "f30", "agree", "gap_sig", "exp", "call_occ", "put_occ",
-            "call_entry", "put_entry", "entry_time", "call_exit", "put_exit", "exit_time", "call_ret", "put_ret", "status"]
+            "call_entry", "put_entry", "call_bid0", "put_bid0", "entry_time", "call_exit", "put_exit", "call_ask1", "put_ask1", "exit_time", "call_ret", "put_ret", "status"]
 
 
 # ============================ دوال نقية ============================
@@ -181,12 +181,12 @@ def run(n=None, get_bars=None, fetch=None):
         except Exception as e:  # noqa: BLE001
             data_gaps.note("candidates_shadow", "quotes", e)
     for it in new:
-        ca, _ = ask_bid(q, it["call_occ"])
-        pa, _ = ask_bid(q, it["put_occ"])
+        ca, cb0 = ask_bid(q, it["call_occ"])
+        pa, pb0 = ask_bid(q, it["put_occ"])
         if ca is None or pa is None:
             data_gaps.note("candidates_shadow", "entry_quote", None, it["slot"])
             continue
-        it["call_entry"], it["put_entry"] = ca, pa
+        it["call_entry"], it["put_entry"], it["call_bid0"], it["put_bid0"] = ca, pa, cb0, pb0
         state["items"].append(it)
     done, still = [], []
     for it in state["items"]:
@@ -195,10 +195,10 @@ def run(n=None, get_bars=None, fetch=None):
             continue
         age = (n - datetime.fromisoformat(it["entry_time"])).total_seconds() / 60
         if it["status"] == "open" and age >= HOLD_MIN:
-            _, cb = ask_bid(q, it["call_occ"])
-            _, pb = ask_bid(q, it["put_occ"])
+            ca1, cb = ask_bid(q, it["call_occ"])
+            pa1, pb = ask_bid(q, it["put_occ"])
             if cb is not None and pb is not None:
-                it.update(call_exit=cb, put_exit=pb, exit_time=n.isoformat(timespec="minutes"), call_ret=round(cb / it["call_entry"] - 1, 4),
+                it.update(call_exit=cb, put_exit=pb, call_ask1=ca1, put_ask1=pa1, exit_time=n.isoformat(timespec="minutes"), call_ret=round(cb / it["call_entry"] - 1, 4),
                           put_ret=round(pb / it["put_entry"] - 1, 4), status="closed")
             elif age >= HOLD_MIN + EXIT_WINDOW_MIN or n.date() > date.fromisoformat(it["day"]):
                 it["status"] = "no_exit"
@@ -225,6 +225,37 @@ def skill_rows(rows, name):
         if s:
             out.append((r["day"], (c if s > 0 else p) - (c + p) / 2))
     return out
+
+
+CURATED_SLOTS = ("10:30", "11:30")
+
+
+def curated_pairs(rows):
+    """H-CURATED: صفقات اتفاق الزخم وأول 30 دقيقة في موعدي 10:30 و11:30. يرجع (أيام وعائد بالأمر السوقي، أيام وعائد وسط العرض/الطلب كحد أعلى)."""
+    market, mid = [], []
+    for r in rows:
+        if r.get("status") != "closed" or r.get("slot") not in CURATED_SLOTS:
+            continue
+        try:
+            a = int(float(r["agree"]))
+            if not a:
+                continue
+            side = "call" if a > 0 else "put"
+            market.append((r["day"], float(r[side + "_ret"])))
+            e0 = (float(r[side + "_entry"]) + float(r[side + "_bid0"])) / 2
+            e1 = (float(r[side + "_exit"]) + float(r[side + "_ask1"])) / 2
+            mid.append((r["day"], e1 / e0 - 1))
+        except (KeyError, TypeError, ValueError, ZeroDivisionError):
+            continue
+    return market, mid
+
+
+def curated_verdict(s):
+    if s is None or s["days"] < MIN_DAYS:
+        return f"H-CURATED: لا حكم بعد ({0 if s is None else s['days']} من {MIN_DAYS} يوماً)"
+    lo, hi = s["ci"]
+    desc = f"متوسط العائد الصافي بالأمر السوقي {100 * s['mean']:+.2f}%، فاصل {100 * lo:+.2f}…{100 * hi:+.2f}"
+    return "H-CURATED: " + ("تحققت (" if lo > 0 else "عكسية (" if hi < 0 else "لم تتحقق (") + desc + (")" if lo > 0 or hi < 0 else " يشمل الصفر)")
 
 
 def boot(by_day, n=2000, seed=29):
@@ -279,6 +310,17 @@ def report():
     L.append("")
     for name, label in labels[:3]:
         L += ["⚖️ **" + verdict(name, label.split(":")[0], stats[name]) + "**", ""]
+    market, mid = curated_pairs(rows)
+    sm, sd = stat(market), stat(mid)
+    L += ["## السياسة المنتقاة H-CURATED (اتفاق الإشارتين، 10:30 و11:30 فقط، عقد الغد، خروج بعد 60 دقيقة)", "",
+          "| التنفيذ | دخولات | أيام | متوسط العائد الصافي | ربح | فاصل 95% (%) |", "|---|---|---|---|---|---|"]
+    for name, st_ in (("أمر سوقي (الطلب ثم البيع) — المقياس الأساسي", sm), ("أمر محدد بوسط العرض/الطلب — حد أعلى لا يُحكم به", sd)):
+        if st_:
+            ci = "-" if st_["ci"] is None else f"{100 * st_['ci'][0]:+.2f}…{100 * st_['ci'][1]:+.2f}"
+            L.append(f"| {name} | {st_['n']} | {st_['days']} | {100 * st_['mean']:+.2f}% | {100 * st_['win']:.0f}% | {ci} |")
+        else:
+            L.append(f"| {name} | 0 | 0 | - | - | - |")
+    L += ["", "⚖️ **" + curated_verdict(sm) + "**", ""]
     return _write(L)
 
 

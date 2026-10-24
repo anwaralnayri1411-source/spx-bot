@@ -121,3 +121,49 @@ def test_report_writes_a_file_even_without_data(tmp_path, monkeypatch):
     monkeypatch.chdir(tmp_path)
     cs.report()
     assert "لا نتائج مكتملة" in open(cs.REPORT, encoding="utf-8").read()
+
+
+def test_log_keeps_both_sides_of_the_book_at_entry_and_exit(tmp_path, monkeypatch):
+    monkeypatch.chdir(tmp_path)
+    get = lambda s, e: bars()
+    cs.run(t(10, 31), get, fake_quotes(1.00, 0.95))
+    cs.run(t(11, 32), get, fake_quotes(1.5, 1.20))
+    r = list(csv.DictReader(open(cs.LOG, encoding="utf-8")))[0]
+    assert (float(r["call_entry"]), float(r["call_bid0"]), float(r["call_exit"]), float(r["call_ask1"])) == (1.0, 0.95, 1.2, 1.5)
+
+
+def curated_rows(n=70, market_ret=0.10):
+    rows = []
+    for i in range(n):
+        rows.append({"day": f"2026-11-{1 + i % 28:02d}-{i}", "status": "closed", "slot": "10:30" if i % 2 else "11:30", "agree": "1" if i % 3 else "-1",
+                     "call_entry": "1.00", "call_bid0": "0.96", "call_exit": "1.10", "call_ask1": "1.14", "call_ret": str(market_ret),
+                     "put_entry": "1.00", "put_bid0": "0.96", "put_exit": "1.10", "put_ask1": "1.14", "put_ret": str(market_ret)})
+    rows.append({"day": "2026-12-01", "status": "closed", "slot": "13:30", "agree": "1", "call_ret": "9", "put_ret": "9"})          # خارج الموعدين
+    rows.append({"day": "2026-12-02", "status": "closed", "slot": "10:30", "agree": "0", "call_ret": "9", "put_ret": "9"})          # بلا اتفاق
+    return rows
+
+
+def test_curated_policy_uses_only_agree_and_the_two_morning_slots_and_gives_mid_upper_bound():
+    market, mid = cs.curated_pairs(curated_rows())
+    assert len(market) == 70 and len(mid) == 70
+    assert market[0][1] == pytest.approx(0.10) and mid[0][1] == pytest.approx((1.12 / 0.98) - 1)
+    assert mid[0][1] > market[0][1]                                       # الأمر المحدد حدّ أعلى
+    assert "تحققت" in cs.curated_verdict(cs.stat(market))
+    assert "لا حكم بعد" in cs.curated_verdict(cs.stat(market[:10]))
+    assert "عكسية" in cs.curated_verdict(cs.stat(cs.curated_pairs(curated_rows(market_ret=-0.1))[0]))
+    assert cs.curated_pairs([{"status": "open"}]) == ([], [])
+
+
+def test_report_has_the_curated_section_with_both_execution_models(tmp_path, monkeypatch):
+    monkeypatch.chdir(tmp_path)
+    rows = curated_rows()
+    for r in rows:
+        r.setdefault("mom", "0"); r.setdefault("f30", "0"); r.setdefault("gap_sig", "0")
+    with open(cs.LOG, "w", encoding="utf-8", newline="") as f:
+        w = csv.DictWriter(f, fieldnames=cs.LOG_COLS)
+        w.writeheader()
+        for r in rows:
+            w.writerow({k: r.get(k, "") for k in cs.LOG_COLS})
+    cs.report()
+    text = open(cs.REPORT, encoding="utf-8").read()
+    assert "H-CURATED" in text and "أمر سوقي" in text and "أمر محدد" in text and "⚖️" in text
