@@ -142,9 +142,9 @@ main() {
       msg="signals batch refresh" ;;
     long_price_calibration)
       group=long-price; envs="ALPACA"
-      cmds=("$py research/long_price_calibration.py" "$py research/account_erosion_sim.py" "$py research/strategy_sim.py")   # المعايرة تغذي المحاكيين بـW/L والكلفة الحقيقية
+      cmds=("$py research/long_price_calibration.py" "$py research/account_erosion_sim.py" "$py research/strategy_sim.py" "$py research/strategy_walkforward.py")   # المعايرة تغذي المحاكيين بـW/L والكلفة الحقيقية
       keepgoing=1
-      files="research/long_price_calibration_results.md research/long_price_calibration_wl.json research/account_erosion_sim_results.md research/strategy_sim_results.md"
+      files="research/long_price_calibration_results.md research/long_price_calibration_wl.json research/account_erosion_sim_results.md research/strategy_sim_results.md research/strategy_walkforward_results.md"
       msg="long price calibration" ;;
     strategy_lab)
       group=strategy-lab
