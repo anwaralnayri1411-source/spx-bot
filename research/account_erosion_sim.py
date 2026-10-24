@@ -8,6 +8,7 @@
 القراءة: عند إصابة تحت نسبة التعادل يتآكل الحساب حتماً ويزداد التآكل بزيادة الحجم؛ فوقها ينمو لكن بتذبذب كبير. لا تُرفع الإصابة بأمنية: نستعمل الإصابة التي تثبتها الظلال فقط.
 تشغيل: python research/account_erosion_sim.py   المخرج: research/account_erosion_sim_results.md
 """
+import json
 import os
 import sys
 from datetime import datetime
@@ -16,6 +17,7 @@ import numpy as np
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(HERE, "account_erosion_sim_results.md")
+REAL = os.path.join(HERE, "long_price_calibration_wl.json")      # W/L الحقيقيان من long_price_calibration إن وُجدا
 SCENARIOS = {"ATM 1DTE (60د)": (0.08, -0.21), "ATM 0DTE (60د)": (0.11, -0.37)}
 SIZES = (0.05, 0.10, 0.25)
 HITS = (0.50, 0.55, 0.60, 0.70, 0.80)
@@ -50,11 +52,24 @@ def expected_growth(w, l, p, f):
     return p * np.log(1 + f * w) + (1 - p) * np.log(1 + f * l)
 
 
+def scenarios(path=None):
+    """السيناريوهات: الحقيقية أولاً (إن وُجد ملف المعايرة) ثم النظرية للمقارنة."""
+    path = path or REAL
+    out = {}
+    try:
+        for k, v in json.load(open(path, encoding="utf-8")).items():
+            out[f"{k} (60د، أسعار حقيقية)"] = (v["W"], v["L"])
+    except Exception:  # noqa: BLE001
+        pass
+    out.update({f"{k} (نظري)" if out else k: v for k, v in SCENARIOS.items()})
+    return out
+
+
 def report():
     L = ["# محاكاة تآكل الحساب لمشتري الخيارات (حساب رياضي، لا بيانات)", "",
          f"- {PATHS} مسار × {TRADES} صفقة (صفقة يومياً لسنة). كل صفقة تخاطر بنسبة f من الرصيد؛ الرصيد الابتدائي 1.00. العوائد W وL ثابتة من option_buyer_cost (نظرية الأسعار).",
          "- الوسيط = ما يحدث لحساب «نموذجي»؛ احتمال هبوط ≥50% = احتمال أن يمر الحساب بنصف قيمته من قمته في أي لحظة. لا تنبؤ: توضيح للتآكل.", ""]
-    for name, (w, l) in SCENARIOS.items():
+    for name, (w, l) in scenarios().items():
         be = breakeven(w, l)
         L += [f"## {name}: W={100 * w:+.0f}% وL={100 * l:+.0f}% — نسبة التعادل {100 * be:.0f}%", "",
               "| الإصابة | الحجم f | نمو لوغاريتمي/صفقة | وسيط الرصيد | أسوأ 5% | احتمال < 0.5 | احتمال هبوط ≥50% | احتمال الربح |", "|---|---|---|---|---|---|---|---|"]

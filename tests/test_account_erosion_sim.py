@@ -42,3 +42,12 @@ def test_report_lists_all_scenarios_and_main_writes_file(tmp_path, monkeypatch):
     assert ae.main([]) == 0
     text = (tmp_path / "r.md").read_text(encoding="utf-8")
     assert "ATM 1DTE" in text and "ATM 0DTE" in text and "نسبة التعادل" in text and text.count("| 25% |") >= 10
+
+
+def test_real_scenarios_come_first_and_theory_is_kept_for_comparison(tmp_path):
+    p = tmp_path / "wl.json"
+    p.write_text('{"ATM 0DTE": {"W": 0.10, "L": -0.12}}', encoding="utf-8")
+    sc = ae.scenarios(str(p))
+    names = list(sc)
+    assert "حقيقية" in names[0] and sc[names[0]] == (0.10, -0.12) and any("نظري" in n for n in names[1:])
+    assert list(ae.scenarios(str(tmp_path / "none.json"))) == list(ae.SCENARIOS)

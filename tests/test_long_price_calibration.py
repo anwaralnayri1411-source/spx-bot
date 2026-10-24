@@ -82,3 +82,15 @@ def test_summarize_and_report_show_each_entry_time_and_the_gap_to_theory():
 def test_main_without_keys_or_data_is_a_no_op(monkeypatch, tmp_path):
     monkeypatch.delenv("ALPACA_KEY", raising=False)
     assert lp.main([]) == 0
+
+
+def test_wl_table_has_real_win_and_loss_returns():
+    rows = []
+    for d in pd.bdate_range("2025-01-02", periods=60):
+        for i in obc.ENTRIES:
+            for dte in (0, 1):
+                for side in ("CALL", "PUT"):
+                    rows.append({"day": d, "i": i, "dte": dte, "side": side, "real": 0.1 if side == "CALL" else -0.2, "theory": -0.1, "up": True})
+    t = lp.wl_table(lp.pair_up(rows))
+    assert set(t) == {"ATM 0DTE", "ATM 1DTE"}
+    assert t["ATM 0DTE"]["W"] == pytest.approx(0.1) and t["ATM 0DTE"]["L"] == pytest.approx(-0.2) and t["ATM 0DTE"]["be"] == pytest.approx(0.2 / 0.3)

@@ -9,6 +9,7 @@
 تحفظات: لا إشارة ولا اتجاه (متوسط الكول والبوت = كلفة بلا ميزة)؛ سعر "الصفقة الأخيرة" في الشمعة لا يساوي وسط العرض/الطلب بدقة؛ ثابت h يفترض نصف الفرق الذي قسناه.
 تشغيل (الخادم؛ يحتاج ALPACA_KEY/SECRET وملف /opt/spxbot/data/spy_5m.csv.gz): python research/long_price_calibration.py   المخرج: research/long_price_calibration_results.md
 """
+import json
 import os
 import sys
 import time as _time
@@ -27,6 +28,7 @@ import option_buyer_cost as obc  # noqa: E402
 import live_quotes as lq  # noqa: E402
 
 OUT = os.path.join(HERE, "long_price_calibration_results.md")
+WL_JSON = os.path.join(HERE, "long_price_calibration_wl.json")
 START = "2024-03-01"
 ENTRIES = obc.ENTRIES
 HOLD_BARS = 12
@@ -116,7 +118,18 @@ def summarize(P):
     wrong = np.where(P["up"], P["real_put"], P["real_call"])
     ci = boot_mean(pd.Series(P["real"].to_numpy(), index=P["day"].to_numpy()))
     return {"n": len(P), "days": int(P["day"].nunique()), "real": float(P["real"].mean()), "theory": float(P["theory"].mean()), "ci": ci,
-            "be": obc.breakeven(float(right.mean()), float(wrong.mean()))}
+            "W": float(right.mean()), "L": float(wrong.mean()), "be": obc.breakeven(float(right.mean()), float(wrong.mean()))}
+
+
+def wl_table(P):
+    """{"ATM 0DTE": {"W":..,"L":..,"be":..,"random":..,"n":..}, ...} لكل الأوقات، تقرؤه account_erosion_sim وstrategy_sim."""
+    out = {}
+    for dte in (0, 1):
+        sub = P[P["dte"] == dte] if len(P) else P
+        if len(sub) >= 100:
+            s = summarize(sub)
+            out[f"ATM {dte}DTE"] = {"W": s["W"], "L": s["L"], "be": s["be"], "random": s["real"], "n": s["n"]}
+    return out
 
 
 def report(P, stats, meta):
@@ -125,7 +138,7 @@ def report(P, stats, meta):
          f"- عينات مستبعدة لغياب صفقات: {stats.get('dropped', 0)} من {stats.get('total', 0)} (عقد لم يُتداول عند الدخول/الخروج).", ""]
     if len(P) == 0:
         return L + ["لا عينات."]
-    L += ["| الانتهاء | وقت الدخول | عينات | أيام | حقيقي: متوسط عشوائي | فاصل 95% | نظري | حقيقي − نظري | نسبة التعادل الحقيقية |", "|---|---|---|---|---|---|---|---|---|"]
+    L += ["| الانتهاء | وقت الدخول | عينات | أيام | حقيقي: متوسط عشوائي | فاصل 95% | نظري | حقيقي − نظري | عند الإصابة W | عند الخطأ L | نسبة التعادل الحقيقية |", "|---|---|---|---|---|---|---|---|---|---|---|"]
     for dte in (0, 1):
         for label, sub in [("كل الأوقات", P[P["dte"] == dte])] + [(f"{(9 * 60 + 35 + 5 * i) // 60}:{(9 * 60 + 35 + 5 * i) % 60:02d}", P[(P["dte"] == dte) & (P["i"] == i)]) for i in ENTRIES]:
             if len(sub) < 30:
@@ -133,7 +146,7 @@ def report(P, stats, meta):
             s = summarize(sub)
             ci = "-" if s["ci"] is None else f"{100 * s['ci'][0]:+.1f}…{100 * s['ci'][1]:+.1f}"
             be = "-" if s["be"] is None else f"{100 * s['be']:.1f}%"
-            L.append(f"| {dte}DTE | {label} | {s['n']} | {s['days']} | {100 * s['real']:+.1f}% | {ci} | {100 * s['theory']:+.1f}% | {100 * (s['real'] - s['theory']):+.1f} نقطة | {be} |")
+            L.append(f"| {dte}DTE | {label} | {s['n']} | {s['days']} | {100 * s['real']:+.1f}% | {ci} | {100 * s['theory']:+.1f}% | {100 * (s['real'] - s['theory']):+.1f} نقطة | {100 * s['W']:+.1f}% | {100 * s['L']:+.1f}% | {be} |")
     L += ["", "- القراءة: إن كان «حقيقي − نظري» موجباً فالنظري يبالغ في كلفة الشراء (VIX أعلى من التذبذب الفعلي الضمني أو أن الفرق أقل)، وتُعتمد نسبة التعادل الحقيقية العمود الأخير."]
     return L
 
@@ -183,6 +196,8 @@ def main(argv):
     P = pair_up(rows)
     meta = f"{len(days)} يوماً مرشحاً من {START}، {len(P)} عينة مزدوجة (كول+بوت)"
     L = report(P, {"dropped": dropped, "total": total}, meta)
+    with open(WL_JSON, "w", encoding="utf-8", newline="\n") as f:
+        json.dump(wl_table(P), f, ensure_ascii=False, indent=1)
     with open(OUT, "w", encoding="utf-8", newline="\n") as f:
         f.write("\n".join(L) + f"\n(آخر تشغيل {datetime.now():%Y-%m-%d})\n")
     print("\n".join(L))
