@@ -53,12 +53,22 @@ def table(title, d):
     return L
 
 
+def error_message(e):
+    """حقل message من جسم خطأ JSON (يشرح سبب الرفض ولا يحمل أسراراً)، مقطوع. فارغ إن تعذر."""
+    try:
+        import json
+        m = json.loads(e.read().decode("utf-8")).get("message")
+        return f" — {str(m)[:120]}" if m else ""
+    except Exception:  # noqa: BLE001
+        return ""
+
+
 def attempt(name, fn):
     """(اسم، نتيجة dict أو None، سطر الحالة). لا يرفع استثناء؛ يسجل رمز HTTP فقط."""
     try:
         return fn(), "ok"
     except urllib.error.HTTPError as e:
-        return None, f"HTTP {e.code}"
+        return None, f"HTTP {e.code}" + error_message(e)
     except Exception as e:  # noqa: BLE001
         return None, type(e).__name__
 
@@ -132,7 +142,7 @@ def main(argv):
     start, end = f"{day}T14:30:00Z", f"{day}T15:30:00Z"
     L += [f"## شريط الصفقات التاريخي (عقد {occ0}، {start} → {end})", ""]
     for name, path in (("الصفقات", "/v1beta1/options/trades"), ("العروض", "/v1beta1/options/quotes")):
-        qq = urllib.parse.urlencode({"symbols": occ0, "start": start, "end": end, "limit": 200, "feed": "indicative", "sort": "asc"})
+        qq = urllib.parse.urlencode({"symbols": occ0, "start": start, "end": end, "limit": 200, "sort": "asc"})
         r, st = attempt(name, lambda p=path, qq=qq: lq._get(lq.DATA + p + "?" + qq))
         L += [f"- {name}: {st}"]
         if r:

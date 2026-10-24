@@ -29,6 +29,11 @@ def test_attempt_reports_http_code_without_raising():
     def boom():
         raise urllib.error.HTTPError("u", 403, "forbidden", {}, None)
     assert dp.attempt("x", boom) == (None, "HTTP 403")
+    import io as _io
+
+    def bad():
+        raise urllib.error.HTTPError("u", 400, "bad", {}, _io.BytesIO(b'{"message": "invalid start"}'))
+    assert dp.attempt("x", bad) == (None, "HTTP 400 — invalid start")
     assert dp.attempt("x", lambda: {"a": 1}) == ({"a": 1}, "ok")
     assert dp.attempt("x", lambda: 1 / 0)[1] == "ZeroDivisionError"
 
