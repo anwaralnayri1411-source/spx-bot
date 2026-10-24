@@ -68,5 +68,6 @@ def test_report_and_main_survive_download_failure(tmp_path, monkeypatch):
     p = tmp_path / "spy.csv"
     p.write_text("t,o,h,l,c,v\n", encoding="utf-8")
     monkeypatch.setattr(rs, "fetch_cpi", lambda: (_ for _ in ()).throw(RuntimeError("x")))
-    assert rs.main([str(p)]) == 0
+    assert rs.main([str(p)]) == 1                               # الفشل ظاهر: رمز خروج غير صفري وملف يذكر السبب
+    assert "تعذر تحميل CPI" in (tmp_path / "r.md").read_text(encoding="utf-8")
     assert rs.main([str(tmp_path / "none.csv")]) == 0

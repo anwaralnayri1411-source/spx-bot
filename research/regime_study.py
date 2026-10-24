@@ -101,7 +101,7 @@ def report(per_dte, yearly, meta):
 
 # ============================ التشغيل ============================
 def fetch_cpi():
-    req = urllib.request.Request(FRED, headers={"User-Agent": "Mozilla/5.0"})
+    req = urllib.request.Request(FRED, headers={"User-Agent": "spxbot/1.0"})
     return parse_cpi(urllib.request.urlopen(req, timeout=30).read().decode("utf-8"))
 
 
@@ -113,8 +113,11 @@ def main(argv):
     try:
         cpi = fetch_cpi()
     except Exception as e:  # noqa: BLE001
-        print("تعذر تحميل CPI:", type(e).__name__)
-        return 0
+        msg = f"تعذر تحميل CPI ({type(e).__name__}): لا دراسة هذه المرة."
+        print(msg)
+        with open(OUT, "w", encoding="utf-8", newline="\n") as f:
+            f.write("# الزخم ونظام التضخم\n\n" + msg + f"\n(آخر تشغيل {datetime.now():%Y-%m-%d})\n")
+        return 1
     d = ls.load(path)
     vix = obc.load_vix()
     F = sim.features(d)
