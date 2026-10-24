@@ -45,8 +45,9 @@ def known_yoy(cpi, days):
     yoy = cpi.pct_change(12).dropna()
     avail = yoy.copy()
     avail.index = avail.index + pd.Timedelta(days=PUBLISH_LAG_DAYS)
-    days = pd.DatetimeIndex(pd.to_datetime(days))
-    return avail.reindex(avail.index.union(days)).ffill().reindex(days)
+    u = pd.DatetimeIndex(pd.to_datetime(days))                     # قد يتكرر اليوم (عدة صفقات في اليوم)
+    filled = avail.reindex(avail.index.union(u.unique())).ffill()
+    return filled.reindex(u)
 
 
 def cluster_diff(df, flag_col="high", n=3000, seed=31):

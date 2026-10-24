@@ -34,6 +34,13 @@ def test_known_yoy_waits_for_publication_and_never_uses_the_future():
     assert y.iloc[2] == pytest.approx(cut.iloc[2])                         # حذف المستقبل لا يغيّر القيمة المعروفة وقتها
 
 
+def test_known_yoy_accepts_repeated_days_like_several_trades_per_day():
+    cpi = cpi_series()
+    days = pd.to_datetime(["2020-03-02", "2020-03-02", "2020-03-02", "2021-05-03", "2021-05-03"])
+    y = rs.known_yoy(cpi, days)
+    assert len(y) == 5 and y.iloc[0] == y.iloc[1] == y.iloc[2] and not np.isnan(y.iloc[3])
+
+
 def frame(diff, n_months=60, per_month=60, seed=1):
     rng = np.random.default_rng(seed)
     rows = []
