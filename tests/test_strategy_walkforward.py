@@ -35,7 +35,7 @@ def test_planted_skill_is_found_and_walk_forward_picks_it():
     s = wf.skill_stat(fr["تتبّع أول 30 دقيقة"])
     assert s["mean"] > 0.02 and s["ci"][0] > 0 and wf.verdict(s).startswith("تتفوق")
     rows, chosen, avg = wf.walk_forward(fr)
-    assert rows and all(r["chosen"] == "تتبّع أول 30 دقيقة" for r in rows if r["test_n"])
+    assert rows and all(r["chosen"] in ("تتبّع أول 30 دقيقة", "اتفاق الزخم وأول 30") for r in rows if r["test_n"])
     sc = wf.skill_stat(chosen)
     assert sc["ci"][0] > 0 and sc["mean"] > wf.skill_stat(avg)["mean"]
 

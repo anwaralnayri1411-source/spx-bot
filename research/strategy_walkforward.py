@@ -23,7 +23,7 @@ import option_buyer_cost as obc  # noqa: E402
 import strategy_sim as sim  # noqa: E402
 
 OUT = os.path.join(HERE, "strategy_walkforward_results.md")
-CANDIDATES = ("تتبّع الفجوة ≥0.4%", "تتبّع أول 30 دقيقة", "زخم آخر ساعة", "انعكاس آخر ساعة")
+CANDIDATES = ("تتبّع الفجوة ≥0.4%", "تتبّع أول 30 دقيقة", "زخم آخر ساعة", "انعكاس آخر ساعة", "اتفاق الزخم وأول 30")
 MIN_TRAIN_TRADES = 200
 MIN_TRAIN_YEARS = 2
 

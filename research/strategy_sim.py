@@ -79,8 +79,15 @@ def sig_reversal_1h(f):
     return -np.sign(f["r_prev60"]).to_numpy()
 
 
+def sig_agree_mf(f):
+    """دخول فقط حين يتفق اتجاه آخر ساعة مع اتجاه أول 30 دقيقة (مرشح الدمج المسجّل H-AGREE)."""
+    m, a = np.sign(f["r_prev60"]).to_numpy(), np.sign(f["r_first"]).to_numpy()
+    return np.where(m == a, m, 0.0)
+
+
 SIGNALS = {"عشوائي (ضابط)": make_random(), "كول دائماً (ضابط)": sig_always_call, "تتبّع الفجوة ≥0.4%": sig_gap_follow,
-           "تتبّع أول 30 دقيقة": sig_first30_follow, "زخم آخر ساعة": sig_momentum_1h, "انعكاس آخر ساعة": sig_reversal_1h}
+           "تتبّع أول 30 دقيقة": sig_first30_follow, "زخم آخر ساعة": sig_momentum_1h, "انعكاس آخر ساعة": sig_reversal_1h,
+           "اتفاق الزخم وأول 30": sig_agree_mf}
 
 
 # ============================ التسعير والتقييم ============================
