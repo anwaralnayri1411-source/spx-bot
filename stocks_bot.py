@@ -36,7 +36,7 @@ WATCHLIST = {
     "LMT": ("Lockheed Martin", "geo"),
 }
 CONTRACT_MIN_USD = 80
-CONTRACT_MAX_USD = 200
+CONTRACT_MAX_USD = 350   # كان 200 حتى 25/10/2026؛ رُفع بطلب المستخدم (الحد الأدنى 80 باقٍ)
 MIN_OI = 500                # أقل مراكز مفتوحة (أو حجم تداول MIN_VOL)
 MIN_VOL = 150
 MAX_SPREAD = 0.30
