@@ -341,7 +341,8 @@ VERDICT_FILES = (("مقارنة درجة الأخبار (Claude مقابل ال�
                   ("ظل المرشحين (الزخم وأول 30 دقيقة)", "research/candidates_shadow_results.md"),
                   ("الزخم ونظام التضخم", "research/regime_study_results.md"),
                   ("شذوذ حجم الخيارات (التدفق)", "research/flow_shadow_results.md"),
-                  ("شبكة الوقف والهدف", "research/exit_grid_study_results.md"))
+                  ("شبكة الوقف والهدف", "research/exit_grid_study_results.md"),
+                  ("سحب السيولة + كسر الهيكل + FVG", "research/sweep_fvg_study_results.md"))
 
 
 def sec_verdicts(texts):
