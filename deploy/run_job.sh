@@ -163,8 +163,9 @@ main() {
       msg="strategy lab refresh" ;;
     stocks_exit_study)
       group=stocks-exit-study
-      cmds=("$py research/stocks_exit_study.py")
-      files="research/stocks_exit_study_results.md"
+      cmds=("$py research/stocks_exit_study.py" "$py research/exit_grid_study.py")
+      keepgoing=1
+      files="research/stocks_exit_study_results.md research/exit_grid_study_results.md"
       msg="stocks exit study refresh" ;;
     real_price_check)
       group=real-price-check; envs="ALPACA"
