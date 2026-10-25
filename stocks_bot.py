@@ -631,6 +631,24 @@ def prune_positions(P, n):
         P["dirty"] = True
 
 
+def _entry_ctx(idea, k, n):
+    """سياق لحظة التوصية للسجل فقط (لتفسير الخسارة لاحقاً: أخبار، أرباح، توزيعات، مدة، دلتا...). لا يغيّر أي قرار ولا يرفع استثناء."""
+    try:
+        exp = date.fromisoformat(k["exp"])
+        today = n.date()
+        d = idea.get("dates") or {}
+        earn, exd = d.get("earn"), d.get("exdiv")
+        c = {"news_b": idea.get("news_b"), "news_e": idea.get("news_e"), "flow_b": idea.get("flow_b"), "flow_e": idea.get("flow_e"),
+             "bull": round(idea["bull"], 1) if idea.get("bull") is not None else None, "bear": round(idea["bear"], 1) if idea.get("bear") is not None else None,
+             "dte": k.get("dte"), "delta": round(float(k["delta"]), 2) if k.get("delta") is not None else None,
+             "z": round(float(k["z"]), 2) if k.get("z") is not None else None, "score": k.get("score"),
+             "earn_in_life": bool(earn and today <= earn <= exp), "exdiv": exd.isoformat() if exd else None,
+             "exdiv_in_life": bool(exd and today <= exd <= exp)}
+        return {key: v for key, v in c.items() if v is not None}
+    except Exception:  # noqa: BLE001
+        return {}
+
+
 def add_position(P, n, idea, spy_px):
     k = idea["contracts"][0]
     earn = idea["dates"]["earn"]
@@ -646,6 +664,9 @@ def add_position(P, n, idea, spy_px):
         p.update(entry_src=k["price_src"], entry_yahoo=round(float(k.get("yahoo_price", k["price"])), 2))
     if k.get("spr") is not None:
         p["entry_spr"] = round(float(k["spr"]), 3)    # فرق الشراء/البيع عند الدخول: لدراسة أثره على النتيجة (لا يغيّر قراراً)
+    ctx = _entry_ctx(idea, k, n)
+    if ctx:
+        p["ctx"] = ctx          # سجل فقط: لا يدخل في أي قرار
     _live_entry_stock(p)
     P["positions"].append(p)
     P["dirty"] = True
@@ -1366,7 +1387,8 @@ def analyze(force):
         side = "CALL" if edge > 0 else "PUT"
         strength = min(10.0, abs(edge) * 1.6)
         dates = get_dates(t)
-        s.update(heads=heads[:3], dates=dates, edge=edge, side=side, strength=strength, cv=cv, pv=pv)
+        s.update(heads=heads[:3], dates=dates, edge=edge, side=side, strength=strength, cv=cv, pv=pv,
+                 news_b=nb, news_e=ne, flow_b=fb, flow_e=fe)
         if abs(edge) < MIN_EDGE:
             watch.append((tk, f"الفرق {abs(edge):.1f} أقل من {MIN_EDGE}"))
             continue
