@@ -3,49 +3,16 @@
  "plan_date": "2026-10-26",
  "prev_close": 7623.68,
  "es_night": 0.0028,
- "snap_date": "2026-10-23",
+ "snap_date": "2026-10-26",
  "snap": {
-  "time": "2026-10-23T09:46-04:00",
-  "open": 7637.18,
-  "S945": 7629.81,
+  "time": "2026-10-26T09:46-04:00",
+  "open": 7639.7,
+  "S945": 7655.8,
   "src": "tasty",
-  "prev_close": 7663.43,
-  "gap": -0.00343,
-  "side": "PUT",
-  "confirm": true,
-  "legs": [
-   {
-    "role": "rule",
-    "side": "PUT",
-    "contract": "bot",
-    "strike": 7505.0,
-    "entry_live": 0.65,
-    "live_src": "tasty"
-   },
-   {
-    "role": "rule",
-    "side": "PUT",
-    "contract": "atm",
-    "strike": 7630.0,
-    "entry_live": 21.1,
-    "live_src": "tasty"
-   },
-   {
-    "role": "opp",
-    "side": "CALL",
-    "contract": "bot",
-    "strike": 7760.0,
-    "entry_live": 0.35,
-    "live_src": "tasty"
-   },
-   {
-    "role": "opp",
-    "side": "CALL",
-    "contract": "atm",
-    "strike": 7630.0,
-    "entry_live": 20.8,
-    "live_src": "tasty"
-   }
-  ]
+  "prev_close": 7623.68,
+  "gap": 0.0021,
+  "side": "",
+  "confirm": false,
+  "legs": []
  }
 }
