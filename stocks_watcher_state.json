@@ -544,7 +544,14 @@
    "galp raises 2026 profit forecast by 25 after strong quarter",
    "oil prices slip as saudi defense chief visits tehran",
    "why the price of gas is the most important number in us politics",
-   "gas is more expensive on average under trump than under biden data shows"
+   "gas is more expensive on average under trump than under biden data shows",
+   "oil prices retreat from six month highs as iran diplomacy eases supply fears",
+   "trump boasts oil companies are making a freaking fortune while americans pay 4 29 a gallon",
+   "oil prices jump but refiners eat the cost as retail margins soar",
+   "iran attack could drive up gas prices within days some analysts say abc news",
+   "will the rise in oil prices drive up inflation experts weigh in abc news",
+   "la oc gas prices drop slightly",
+   "why are oil prices falling despite continuing attacks and supply risks in the middle east"
   ],
   "TSLA:CALL": [
    "tesla stock consolidates after potential tesla spacex merger exploration increases uncertainty",
@@ -776,10 +783,18 @@
    "leon wankum says bitcoin could absorb real estate s monetary value",
    "btc price range on oct 26 2026 at 2pm edt crypto prediction market",
    "prediction could bitcoin reach a new all time high before the 2028 halving",
-   "bitcoin and gold rank last of 21 asset classes can they rebound talkmarkets"
+   "bitcoin and gold rank last of 21 asset classes can they rebound talkmarkets",
+   "bitcoin price prediction btc falls below 80 000 ahead of fed meeting",
+   "btc price range on oct 26 2026 at 3pm edt crypto prediction market",
+   "bitcoin faces another drop as 80m in buy orders cluster at 78k 79k",
+   "ai price prediction chatgpt predicts where ethereum chainlink and uniswap could be by the end of 2026"
   ],
   "HOOD:PUT": [
-   "prediction could bitcoin reach a new all time high before the 2028 halving"
+   "prediction could bitcoin reach a new all time high before the 2028 halving",
+   "bitcoin faces another drop as 80m in buy orders cluster at 78k 79k",
+   "ai price prediction chatgpt predicts where ethereum chainlink and uniswap could be by the end of 2026",
+   "robinhood q3 preview could record revenue help turn shares around",
+   "polymarket odds will hood sofi v beat earnings tomorrow"
   ]
  },
  "fired": {
@@ -854,10 +869,14 @@
    "news:oil prices rise after ship attacks us iran talks deadlock",
    "news:oil prices fall amidst hopes of easing us iran hostilities",
    "news:oil prices rise on fears of middle east conflict escalation",
-   "news:egypt votes to defend saudi arabia risking houthi fire"
+   "news:egypt votes to defend saudi arabia risking houthi fire",
+   "news:oil prices retreat from six month highs as iran diplomacy eases supply fears",
+   "news:iran attack could drive up gas prices within days some analysts say abc news",
+   "news:why are oil prices falling despite continuing attacks and supply risks in the middle east"
   ],
   "UBER:PUT:2026-10-30:66": [
-   "down-0.15"
+   "down-0.15",
+   "sharp@2026-10-26T15:34-04:00"
   ],
   "COIN:PUT:2026-10-30:150": [
    "sharp@2026-10-26T10:43-04:00",
@@ -871,7 +890,8 @@
    "news:bitcoin falls below 80 000 as investors flee risk assets ahead of federal reserve decision",
    "news:coinbase target cut to 250 robinhood to benefit from prediction markets bernstein",
    "news:btc price hits 79 250 marking deepest drop since july",
-   "news:strategy mstr pauses bitcoin buying and spends 205 million on preferred stock"
+   "news:strategy mstr pauses bitcoin buying and spends 205 million on preferred stock",
+   "news:bitcoin price prediction btc falls below 80 000 ahead of fed meeting"
   ],
   "PLTR:CALL:2026-10-30:202.5": [],
   "HOOD:PUT:2026-10-30:91": []
@@ -1318,10 +1338,15 @@
   "what commodity markets can expect from the trump xi summit",
   "the fed is expected to hold interest rates steady tomorrow despite inflation hitting 3 7 here s why",
   "canada s carney navigates trump tariffs as economy slows",
-  "the fed could hike interest rates again in 2026 here s what investors should do right now"
+  "the fed could hike interest rates again in 2026 here s what investors should do right now",
+  "ai is surprisingly profitable what that means for the stock market",
+  "fed preview rate hikes will likely wait until december",
+  "oil nasdaq 100 gold what s moving the markets this week",
+  "donald trump s biggest mistake ever everyone missies starting a trade war with canada that is jacking up inflation"
  ],
  "sharp": {
   "CVX:CALL:2026-10-30:240": 232.145,
-  "COIN:PUT:2026-10-30:150": 162.19
+  "COIN:PUT:2026-10-30:150": 162.19,
+  "UBER:PUT:2026-10-30:66": 66.56
  }
 }
