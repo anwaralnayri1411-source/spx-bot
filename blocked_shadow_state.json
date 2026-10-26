@@ -14,8 +14,8 @@
    "strength": "4.6",
    "occ": "CVX261030C00240000",
    "peak_pnl": 0.035,
-   "close_pnl": -0.206,
-   "quotes": 40,
+   "close_pnl": -0.286,
+   "quotes": 41,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -33,9 +33,9 @@
    "edge": "5.0",
    "strength": "7.5",
    "occ": "SPY261026C00764000",
-   "peak_pnl": 0.0,
-   "close_pnl": -0.104,
-   "quotes": 1,
+   "peak_pnl": 0.179,
+   "close_pnl": 0.179,
+   "quotes": 2,
    "out": "",
    "out_time": "",
    "out_pnl": ""
