@@ -47,6 +47,17 @@ def test_day_ci_and_diff_ci_bracket_the_mean_and_need_enough_data():
     assert d2 > 0.1 and ci2[95.0][0] > 0 and rp.diff_ci(real.head(5), plac, days) is None
 
 
+def test_per_series_mean_matches_the_pooled_event_mean_even_with_uneven_entries_per_day():
+    days = list(pd.bdate_range("2023-01-02", periods=120))
+    rows = []
+    for k, d in enumerate(days):
+        n = 4 if k % 2 == 0 else 1                                                      # أيام باتفاق في 4 مواعيد وأخرى في موعد واحد
+        rows += [{"day": d, "val": 0.002 if n == 4 else -0.001} for _ in range(n)]
+    df = pd.DataFrame(rows)
+    m, t = rp.per_series_t(df)
+    assert m == pytest.approx(df["val"].mean()) and m > 0                                # لا تناقض مع المتوسط المجمّع
+
+
 def test_per_series_t_uses_daily_averages():
     days = list(pd.bdate_range("2023-01-02", periods=100))
     rng = np.random.default_rng(2)

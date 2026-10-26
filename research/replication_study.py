@@ -108,11 +108,16 @@ def diff_ci(real, plac, all_days, levels=LEVELS, n=2000, seed=67):
 
 
 def per_series_t(df):
-    """t لمتوسط القيم المجمَّعة يومياً داخل سلسلة واحدة (تفادياً لترابط دخولات اليوم): (متوسط، t) أو None."""
-    g = df.groupby("day")["val"].mean()
-    if len(g) < 60 or g.std(ddof=1) == 0:
+    """متوسط الصفقات (نفس وزن الإحصاءة المجمّعة) داخل سلسلة واحدة وإحصاءة t بخطأ معياري عنقودي باليوم (دخولات اليوم مترابطة): (متوسط، t) أو None."""
+    g = df.groupby("day")["val"].agg(["sum", "count"])
+    if len(g) < 60:
         return None
-    return float(g.mean()), float(g.mean() / (g.std(ddof=1) / np.sqrt(len(g))))
+    n = g["count"].sum()
+    m = g["sum"].sum() / n
+    se = float(np.sqrt(((g["sum"] - m * g["count"]) ** 2).sum()) / n)
+    if se == 0:
+        return None
+    return float(m), float(m / se)
 
 
 def replicates(hyp, stats_by_group):
