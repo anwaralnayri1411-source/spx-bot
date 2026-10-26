@@ -1,0 +1,2 @@
+id,idea,tag,variant,ticker,side,strike,exp,entry_time,entry,spot,delta,r1_out,r1_pnl,r1_time,r2_out,r2_pnl,r2_time,peak_pnl,close_pnl,quotes
+20261023T1342|UBER|PUT|bot|67|2026-10-30,UBER|PUT|2026-10-23,open_same_dir,bot,UBER,PUT,67.0,2026-10-30,2026-10-23T13:42-04:00,0.96,67.65,0.399,tp,0.531,2026-10-26T09:43-04:00,time,0.281,2026-10-23T15:53-04:00,0.531,0.531,28
