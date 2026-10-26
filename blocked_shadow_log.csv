@@ -2,3 +2,5 @@ id,project,tag,sym,side,strike,exp,entry_time,entry,edge,strength,out,out_time,o
 20261023T1205|spx|news_weak|SPY|CALL|763|2026-10-23,spx,news_weak,SPY,CALL,763.0,2026-10-23,2026-10-23T12:05-04:00,1.34,3.5,3.8,stop,2026-10-23T12:32-04:00,-0.425,0.007,6
 20261023T1535|spx|late_entry+news_risk|SPX|PUT|7625|2026-10-23,spx,late_entry+news_risk,SPX,PUT,7625.0,2026-10-23,2026-10-23T15:35-04:00,2.87,4.0,6.0,final,2026-10-23T15:37-04:00,-0.244,0.0,1
 20261023T1212|stocks|open_same_dir|UBER|PUT|67|2026-10-30,stocks,open_same_dir,UBER,PUT,67.0,2026-10-30,2026-10-23T12:12-04:00,0.83,6.5,6.1,tp,2026-10-23T15:57-04:00,0.639,0.639,42
+20261023T1212|stocks|max_ideas_cap|XOM|CALL|190|2026-10-30,stocks,max_ideas_cap,XOM,CALL,190.0,2026-10-30,2026-10-23T12:12-04:00,1.29,6.5,4.6,stop,2026-10-26T09:32-04:00,-0.481,0.0,43
+20261023T1212|stocks|open_same_dir|NFLX|PUT|66|2026-11-06,stocks,open_same_dir,NFLX,PUT,66.0,2026-11-06,2026-10-23T12:12-04:00,1.21,6.5,8.6,tp,2026-10-26T09:32-04:00,0.512,0.512,43
