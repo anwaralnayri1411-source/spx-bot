@@ -23,7 +23,7 @@ main() {
     bot)
       group=spx-bot; envs="TG ALPACA LQ TASTY"; extra_env="FORCE=0"
       cmds=("$py options_bot.py")
-      files="zero_dte_log.csv messages_options_bot.jsonl bot_state.json spx_positions.json spx_track.csv live_quotes_log.csv signals_extra_log.csv levels_log.csv mgt_compare_log.csv news_shadow_log.csv edge7_shadow_state.json edge7_shadow_log.csv data_gaps_spx_log.csv blocked_inbox_spx.csv"
+      files="zero_dte_log.csv messages_options_bot.jsonl bot_state.json spx_positions.json spx_track.csv live_quotes_log.csv signals_extra_log.csv levels_log.csv mgt_compare_log.csv news_shadow_log.csv edge7_shadow_state.json edge7_shadow_log.csv data_gaps_spx_log.csv blocked_inbox_spx.csv live_bars_log.csv"
       msg="update bot state" ;;
     spx_monitor)
       group=spx-bot; envs="TG ALPACA LQ TASTY"; gate=gate_open_positions
@@ -300,7 +300,7 @@ run_env() {
       ALPACA) e+=(ALPACA_KEY="${ALPACA_KEY:-}" ALPACA_SECRET="${ALPACA_SECRET:-}") ;;
       ANTHROPIC) e+=(ANTHROPIC_API_KEY="${ANTHROPIC_API_KEY:-}") ;;
       TASTY) e+=(TASTY_CLIENT_SECRET="${TASTY_CLIENT_SECRET:-}" TASTY_REFRESH_TOKEN="${TASTY_REFRESH_TOKEN:-}") ;;
-      LQ) e+=(LIVE_QUOTES_SPX="${LIVE_QUOTES_SPX:-shadow}") ;;
+      LQ) e+=(LIVE_QUOTES_SPX="${LIVE_QUOTES_SPX:-shadow}" LIVE_BARS_SPX="${LIVE_BARS_SPX:-shadow}") ;;
       LQS) e+=(LIVE_QUOTES_STOCKS="${LIVE_QUOTES_STOCKS:-shadow}") ;;
     esac
   done
