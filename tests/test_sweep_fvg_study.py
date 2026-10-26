@@ -182,3 +182,16 @@ def test_prev_events_use_yesterdays_open_as_level_and_close_as_target():
     assert sw.day_events_prev(day, o, h, l, c, prev=None) == []
     ev2 = sw.day_events_prev(day, o, h, l, c, prev=(100.0, 100.2))                  # هدف قريب جداً: R صغير لكنه موجب
     assert all(e["R"] < 3 for e in ev2)
+
+
+def test_bear_side_applies_the_same_one_percent_risk_cap_as_the_bull_side():
+    """خطأ سابق: جهة البيع (أسعار مَنفيّة) كانت تتجاوز سقف الخطر 1%؛ يجب أن يتصرف المرآتان بالطريقة نفسها."""
+    o, h, l, c = prev_day_arrays()
+    wide = {3: (100.2, 100.25, 95.0, 99.9)}                                                    # وقف بعيد: خطر > 1%
+    bars = np.column_stack([o, h, l, c])
+    for i, v in wide.items():
+        bars[i] = v
+    o2, h2, l2, c2 = bars[:, 0], bars[:, 1], bars[:, 2], bars[:, 3]
+    assert sw.bull_setup(o2, h2, l2, c2, 100.0, confirm=2, start_above=True) is None
+    m = lambda x: 200.0 - x
+    assert sw.day_trade(m(o2), m(l2), m(h2), m(c2), m(100.0), -1, "line", target_price=m(101.0), confirm=2, start_above=True) is None

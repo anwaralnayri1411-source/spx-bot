@@ -57,7 +57,7 @@ def bull_setup(o, h, l, c, level, confirm=1, start_above=False):
         if l[k] <= gap_top:
             entry = min(float(o[k]), gap_top)
             risk = entry - stop
-            if risk <= 0 or risk / entry > RISK_CAP:
+            if risk <= 0 or risk / abs(entry) > RISK_CAP:          # abs: جهة البيع تعمل بأسعار مَنفيّة
                 return None
             return {"k": k, "entry": entry, "stop": stop, "risk": risk}
     return None
