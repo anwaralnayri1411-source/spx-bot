@@ -47,8 +47,10 @@ def spy_bars(n, days=1):
                          "Low": [float(b["l"]) for b in rows], "Close": [float(b["c"]) for b in rows]}, index=idx)
 
 
-def extend(ix, spy, n, spx_live=None, spy_live=None):
-    """دالة نقية: (شموع مستكملة، معلومات). ix: شموع ياهو SPX بفهرس نيويورك. spy: شموع SPY اللحظية لليوم."""
+def extend(ix, spy, n, spx_live=None, spy_live=None, complete_only=True):
+    """دالة نقية: (شموع مستكملة، معلومات). ix: شموع ياهو SPX بفهرس نيويورك. spy: شموع SPY اللحظية لليوم.
+    آخر شمعة من ياهو قد تكون ناقصة (متأخرة وجارية عنده)، فتُستبدل بنسخة SPY. complete_only: القرار على الشموع
+    المكتملة فقط (بدايتها + 5 دقائق ≤ الآن) كما اختُبر في H-LIVE5؛ وإلا تبقى الجارية وتُضبط على سعر SPX اللحظي."""
     if ix is None or ix.empty:
         return ix, {"status": "no_yahoo"}
     if spy is None or spy.empty:
@@ -56,7 +58,8 @@ def extend(ix, spy, n, spx_live=None, spy_live=None):
     today = spy.index[-1].date()
     if today != n.date():
         return ix, {"status": "spy_not_today"}
-    ix_t = ix[ix.index.date == today]
+    last = ix.index[-1]
+    ix_t = ix[(ix.index.date == today) & (ix.index < last)]
     common = ix_t.index.intersection(spy.index)
     if len(common):
         r = (ix_t.loc[common, "Close"] / spy.loc[common, "Close"]).iloc[-RATIO_BARS:]
@@ -67,16 +70,20 @@ def extend(ix, spy, n, spx_live=None, spy_live=None):
         return ix, {"status": "no_ratio"}
     if not 9.0 < ratio < 11.0:                     # SPX/SPY ≈ 10؛ غير ذلك خطأ بيانات
         return ix, {"status": "bad_ratio", "ratio": ratio}
-    last = ix.index[-1]
-    add = spy[spy.index > last][["Open", "High", "Low", "Close"]] * ratio
+    add = spy[spy.index >= last][["Open", "High", "Low", "Close"]] * ratio
     add["Volume"] = 0.0
-    out = pd.concat([ix, add]) if len(add) else ix.copy()
-    if spx_live and out.index[-1] >= n - timedelta(minutes=BAR_MIN) and out.index[-1].date() == today:
+    base = ix[ix.index < last] if len(add) and add.index[0] == last else ix
+    out = pd.concat([base, add]) if len(add) else ix.copy()
+    if complete_only:
+        out = out[out.index <= n - timedelta(minutes=BAR_MIN)]
+        if out.empty:
+            return ix, {"status": "no_complete_bar"}
+    elif spx_live and out.index[-1] >= n - timedelta(minutes=BAR_MIN) and out.index[-1].date() == today:
         k = out.index[-1]
         out.loc[k, "Close"] = float(spx_live)
         out.loc[k, "High"] = max(float(out.loc[k, "High"]), float(spx_live))
         out.loc[k, "Low"] = min(float(out.loc[k, "Low"]), float(spx_live))
-    return out, {"status": "ok", "ratio": round(ratio, 5), "ratio_src": src, "added": len(add), "yahoo_last": last,
+    return out, {"status": "ok", "ratio": round(ratio, 5), "ratio_src": src, "added": int(out.index.isin(add.index).sum()), "yahoo_last": last,
                  "yahoo_age_min": round((n - last.to_pydatetime()).total_seconds() / 60, 1),
                  "live_age_min": round((n - out.index[-1].to_pydatetime()).total_seconds() / 60, 1)}
 

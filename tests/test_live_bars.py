@@ -19,16 +19,23 @@ def frame(start, n, base, step=1.0, vol=1.0):
     return pd.DataFrame({"Open": c, "High": [x + 0.5 for x in c], "Low": [x - 0.5 for x in c], "Close": c, "Volume": [vol] * n}, index=idx)
 
 
-def test_extend_appends_missing_tail_scaled_by_overlap_ratio_and_patches_live_bar():
-    ix = pd.concat([frame("2026-10-26 09:30", 78, 7600.0), frame("2026-10-27 09:30", 6, 7700.0, step=10.0)])   # ياهو حتى 09:55
-    spy = frame("2026-10-27 09:30", 10, 770.0, step=1.0)                                                    # Alpaca حتى 10:15
+def test_extend_replaces_yahoo_last_bar_and_keeps_only_completed_bars():
+    ix = pd.concat([frame("2026-10-26 09:30", 78, 7600.0), frame("2026-10-27 09:30", 6, 7700.0, step=10.0)])   # ياهو حتى 09:55 (قد تكون ناقصة)
+    spy = frame("2026-10-27 09:30", 10, 770.0, step=1.0)                                                    # Alpaca حتى 10:15 (جارية)
     n = datetime(2026, 10, 27, 10, 17, tzinfo=NY)
     out, info = lb.extend(ix, spy, n, spx_live=7795.0)
-    assert info["status"] == "ok" and info["ratio_src"] == "overlap" and info["added"] == 4
-    assert info["ratio"] == pytest.approx(10.0) and info["yahoo_age_min"] == pytest.approx(22.0) and info["live_age_min"] == pytest.approx(2.0)
-    assert len(out) == len(ix) + 4 and out["Close"].iloc[-2] == pytest.approx(7780.0)
-    assert out["Close"].iloc[-1] == pytest.approx(7795.0) and out["High"].iloc[-1] >= 7795.0
-    assert out.index[-1] == pd.Timestamp("2026-10-27 10:15", tz=NY) and out["Volume"].iloc[-1] == 0
+    assert info["status"] == "ok" and info["ratio_src"] == "overlap" and info["ratio"] == pytest.approx(10.0)
+    assert info["added"] == 4 and info["yahoo_age_min"] == pytest.approx(22.0) and info["live_age_min"] == pytest.approx(7.0)
+    assert len(out) == len(ix) + 3 and out.index[-1] == pd.Timestamp("2026-10-27 10:10", tz=NY)
+    assert out["Close"].iloc[-1] == pytest.approx(7780.0) and out.loc[pd.Timestamp("2026-10-27 09:55", tz=NY), "Close"] == pytest.approx(7750.0)
+    assert out["Volume"].iloc[-1] == 0
+
+
+def test_extend_can_keep_the_running_bar_patched_to_live_price():
+    ix = pd.concat([frame("2026-10-26 09:30", 78, 7600.0), frame("2026-10-27 09:30", 6, 7700.0, step=10.0)])
+    spy = frame("2026-10-27 09:30", 10, 770.0, step=1.0)
+    out, info = lb.extend(ix, spy, datetime(2026, 10, 27, 10, 17, tzinfo=NY), spx_live=7795.0, complete_only=False)
+    assert out.index[-1] == pd.Timestamp("2026-10-27 10:15", tz=NY) and out["Close"].iloc[-1] == pytest.approx(7795.0) and out["High"].iloc[-1] >= 7795.0
 
 
 def test_extend_uses_live_ratio_when_yahoo_has_no_bar_today_yet():
