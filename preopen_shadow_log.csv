@@ -11,3 +11,4 @@ date,gap,side,confirm,role,contract,strike,S945,entry_model,entry_live,live_src,
 2026-10-23,-0.00343,PUT,1,rule,atm,7630.0,7630.6,37.26,21.1,tasty,stop,11:10,-0.363,-1,1
 2026-10-23,-0.00343,PUT,1,opp,bot,7760.0,7630.6,3.25,0.35,tasty,stop,10:35,-0.495,1,1
 2026-10-23,-0.00343,PUT,1,opp,atm,7630.0,7630.6,37.89,20.8,tasty,stop,13:40,-0.462,1,1
+2026-10-26,0.0021,,,,,,,,,,,,,,
