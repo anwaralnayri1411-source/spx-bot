@@ -14,14 +14,14 @@
    "entry_time": "2026-10-26T10:38-04:00",
    "entry_spot": 764.94,
    "entry": 1.29,
-   "r5040_out": "",
-   "r5040_time": "",
-   "r5040_pnl": "",
+   "r5040_out": "tp",
+   "r5040_time": "10:48",
+   "r5040_pnl": 0.55,
    "t60_time": "",
    "t60_pnl": "",
-   "peak_pnl": 0.132,
-   "close_pnl": 0.132,
-   "quotes": 1
+   "peak_pnl": 0.55,
+   "close_pnl": 0.55,
+   "quotes": 2
   },
   {
    "date": "2026-10-26",
@@ -41,9 +41,9 @@
    "r5040_pnl": "",
    "t60_time": "",
    "t60_pnl": "",
-   "peak_pnl": 0.117,
-   "close_pnl": 0.117,
-   "quotes": 1
+   "peak_pnl": 0.315,
+   "close_pnl": 0.315,
+   "quotes": 2
   },
   {
    "date": "2026-10-26",
@@ -58,14 +58,14 @@
    "entry_time": "2026-10-26T10:38-04:00",
    "entry_spot": 7674.66,
    "entry": 4.79,
-   "r5040_out": "",
-   "r5040_time": "",
-   "r5040_pnl": "",
+   "r5040_out": "tp",
+   "r5040_time": "10:48",
+   "r5040_pnl": 0.666,
    "t60_time": "",
    "t60_pnl": "",
-   "peak_pnl": 0.121,
-   "close_pnl": 0.121,
-   "quotes": 1
+   "peak_pnl": 0.666,
+   "close_pnl": 0.666,
+   "quotes": 2
   },
   {
    "date": "2026-10-26",
@@ -85,9 +85,9 @@
    "r5040_pnl": "",
    "t60_time": "",
    "t60_pnl": "",
-   "peak_pnl": 0.094,
-   "close_pnl": 0.094,
-   "quotes": 1
+   "peak_pnl": 0.283,
+   "close_pnl": 0.283,
+   "quotes": 2
   }
  ],
  "skipped": []
