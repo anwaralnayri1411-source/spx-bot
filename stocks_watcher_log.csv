@@ -671,3 +671,4 @@ time,pos_id,ticker,side,event,detail,entry,val,pnl,spot,need,tdays,advice,reason
 2026-10-26T15:34-04:00,UBER:PUT:2026-10-30:66,UBER,PUT,sharp,-0.80% في 15د,0.93,,,66.56,0.0224,5,فكّر بالخروج,السهم يتحرك ضدك
 2026-10-26T15:37-04:00,CVX:CALL:2026-10-30:240,CVX,CALL,news,"with/medium: Iran attack could drive up gas prices within days, some analysts say - ABC News - Breaking News, Latest News and Videos",1.46,1.1,-0.2466,231.895,0.0412,5,فكّر بالخروج,خبر ضد العقد
 2026-10-26T15:37-04:00,CVX:CALL:2026-10-30:240,CVX,CALL,news,against/medium: Why are oil prices falling despite continuing attacks and supply risks in the Middle East? - Latest news from Azerbaijan,1.46,1.1,-0.2466,231.895,0.0412,5,فكّر بالخروج,خبر ضد العقد
+2026-10-26T15:53-04:00,CVX:CALL:2026-10-30:240,CVX,CALL,contract,-35%,1.46,0.95,-0.3493,231.64,0.0424,5,فكّر بالخروج,العقد خسر 35% (الوقف عند −40%)
