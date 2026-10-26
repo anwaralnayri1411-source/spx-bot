@@ -102,7 +102,7 @@ def log_spx(n, a, tags=None, contracts=None):
         if sym in seen:
             continue
         seen.add(sym)
-        rows.append(_row("spx", n, "+".join(tags), sym, a["side"], k, a["exp"], k.get("spot", a["c"]["S"]), raw, a.get("strength")))
+        rows.append(_row("spx", n, "+".join(tags), sym, a["side"], k, k.get("exp", a["exp"]), k.get("spot", a["c"]["S"]), raw, a.get("strength")))
     return append_inbox("spx", rows)
 
 

@@ -59,6 +59,12 @@ STATE_FILE = "bot_state.json"
 POS_FILE = "spx_positions.json"      # إشارات اليوم المفتوحة للمتابعة
 TRACK_FILE = "spx_track.csv"         # تتبع صامت لكل عقد حتى بعد الوقف
 MIN_AGE_MIN = 15                     # لا تنبيه وقف قبل مرور هذه المدة (فرق السعر وحده قد يخدع)
+# عقد SPY (منذ 27/10/2026 بطلب المستخدم): لليوم التالي، أقرب دلتا إلى 0.45 بسعر ≤ CONTRACT_MAX_USD؛
+# إن لم يوجد نبتعد عن السعر حتى دلتا 0.30؛ وإلا لا عقد SPY. فرق الشراء/البيع ≤ 10%.
+SPY_TARGET_DELTA, SPY_MIN_DELTA, SPY_MAX_SPREAD = 0.45, 0.30, 0.10
+# نصيحة التآكل (عقود الأيام التالية): بعد ساعة، خسارة ≥ 20% والسعر لم يتحرك ضد الصفقة أكثر من 0.15%
+# (أي أن الخسارة من مرور الوقت لا من الاتجاه) → رسالة واحدة تنصح بالخروج.
+DECAY_MIN_AGE, DECAY_LOSS, DECAY_MAX_ADVERSE = 60, 0.20, 0.0015
 GIVEBACK = 0.50                      # بعد بلوغ الهدف: تنبيه إذا تراجع الربح لنصف أعلى ربح
 LOG_FILE = "zero_dte_log.csv"
 
@@ -676,6 +682,108 @@ def pick_contracts(side, df, S, T, vix, min_oi=None, min_vol=None, max_spr=None)
     return out[:MAX_CONTRACTS]
 
 
+def next_trading_day(d):
+    d += timedelta(days=1)
+    while d.weekday() >= 5 or d.isoformat() in HOLIDAYS:
+        d += timedelta(days=1)
+    return d
+
+
+def choose_spy(side, df, S, T, vix):
+    """قاعدة عقد SPY (دالة نقية على سلسلة): من العقود بسعر طلب وعرض، فرق ≤ 10%، سيولة كافية، تكلفة ضمن النطاق،
+    ودلتا ≥ 0.30: نختار الأقرب دلتا إلى 0.45. يرجع [عقد] أو []."""
+    best = None
+    for _, r in df.iterrows():
+        bid = 0 if pd.isna(r.get("bid")) else float(r["bid"])
+        ask = 0 if pd.isna(r.get("ask")) else float(r["ask"])
+        if bid <= 0 or ask <= 0:
+            _rej("SPY: بلا عرض/طلب")
+            continue
+        price, spr = ask, (ask - bid) / ((ask + bid) / 2)
+        cost = price * 100
+        if not (CONTRACT_MIN_USD <= cost <= CONTRACT_MAX_USD):
+            _rej("SPY: سعر خارج النطاق")
+            continue
+        if spr > SPY_MAX_SPREAD:
+            _rej("SPY: فرق الشراء/البيع واسع")
+            continue
+        oi = 0 if pd.isna(r.get("openInterest")) else float(r["openInterest"])
+        vol = 0 if pd.isna(r.get("volume")) else float(r["volume"])
+        if oi < MIN_OI and vol < MIN_VOL:
+            _rej("SPY: سيولة ضعيفة")
+            continue
+        iv = r.get("impliedVolatility")
+        if iv is None or pd.isna(iv) or iv < 0.03:
+            iv = (vix or 18) / 100
+        iv, K = float(iv), float(r["strike"])
+        delta = abs_delta(S, K, T, iv, side)
+        if delta < SPY_MIN_DELTA:
+            _rej("SPY: دلتا أقل من 0.30")
+            continue
+        be = K + price if side == "CALL" else K - price
+        z = abs(be - S) / (S * iv * math.sqrt(T))
+        k = {"strike": K, "price": price, "cost": cost, "be": be, "delta": delta, "prob": prob_beyond(S, be, T, iv, side),
+             "z": z, "oi": oi, "vol": vol, "spr": spr, "iv": iv, "T": T, "flow": 0.0, "flow_ratio": vol / max(oi, 1.0),
+             "score": round(10 - 10 * abs(delta - SPY_TARGET_DELTA), 1)}
+        if best is None or abs(delta - SPY_TARGET_DELTA) < abs(best["delta"] - SPY_TARGET_DELTA):
+            best = k
+    return [best] if best else []
+
+
+def pick_spy(side, n, vix):
+    """عقد SPY لليوم التالي بقاعدة choose_spy. يرجع [عقد بالحقول sym/spot/exp] أو []."""
+    exp = next_trading_day(n.date()).isoformat()
+    ts = yf.Ticker(ALT_SYMBOL)
+    if exp not in list(ts.options):
+        _rej("SPY: لا سلسلة لليوم التالي")
+        return []
+    ch = ts.option_chain(exp)
+    hs = ts.history(period="1d", interval="5m")["Close"].dropna()
+    Ss = float(hs.iloc[-1]) if len(hs) else float(ts.history(period="5d")["Close"].dropna().iloc[-1])
+    Ss = _live_spot(ALT_SYMBOL, Ss)
+    df = ch.calls if side == "CALL" else ch.puts
+    df = df[(df["strike"] / Ss - 1).abs() <= 0.03]
+    end = datetime.combine(date.fromisoformat(exp), datetime.min.time(), tzinfo=NY).replace(hour=16)
+    T = max((end - n).total_seconds() / 3600, 1.0) / (24 * 365)
+    out = choose_spy(side, _live_chain(df, Ss), Ss, T, vix)
+    for k in out:
+        k["sym"], k["spot"], k["exp"] = ALT_SYMBOL, Ss, exp
+    return out
+
+
+SPY_COMPARE_LOG = "spy_rule_compare_log.csv"
+
+
+def _spy_old_shadow(side, exp, T, c, new):
+    """ظل (تسجيل فقط): عقد SPY الذي كانت القاعدة القديمة ستختاره (اليوم نفسه، خارج السعر، بالدرجة) بجانب الجديد، للمقارنة لاحقاً."""
+    try:
+        old = []
+        ts = yf.Ticker(ALT_SYMBOL)
+        if exp in list(ts.options):
+            chs = ts.option_chain(exp)
+            hs = ts.history(period="1d", interval="5m")["Close"].dropna()
+            Ss = _live_spot(ALT_SYMBOL, float(hs.iloc[-1]))
+            saved = dict(REJ)
+            try:
+                old = pick_contracts(side, _live_chain(chs.calls if side == "CALL" else chs.puts, Ss), Ss, T, c["vix"])
+            finally:
+                REJ.clear()
+                REJ.update(saved)
+        o, k = (old[0] if old else {}), (new[0] if new else {})
+        row = {"time": now_ny().isoformat(timespec="minutes"), "side": side,
+               "new_exp": k.get("exp", ""), "new_strike": k.get("strike", ""), "new_price": round(k["price"], 2) if k else "", "new_delta": round(k["delta"], 3) if k else "",
+               "old_exp": exp if o else "", "old_strike": o.get("strike", ""), "old_price": round(o["price"], 2) if o else "", "old_delta": round(o["delta"], 3) if o else ""}
+        import csv
+        fresh = not os.path.exists(SPY_COMPARE_LOG)
+        with open(SPY_COMPARE_LOG, "a", encoding="utf-8", newline="") as f:
+            w = csv.DictWriter(f, fieldnames=list(row))
+            if fresh:
+                w.writeheader()
+            w.writerow(row)
+    except Exception as e:
+        print("تعذر تسجيل ظل عقد SPY القديم:", type(e).__name__)
+
+
 def tier(score):
     return "🟩" if score >= 7.5 else ("🟨" if score >= 6.0 else "🟧")
 
@@ -754,22 +862,16 @@ def _pick_all(side, ch, S, T, c, exp):
     contracts = pick_contracts(side, _live_chain(spxw_rows(ch.calls if side == "CALL" else ch.puts), Sp), Sp, T, c["vix"])
     for k in contracts:
         k["sym"], k["spot"] = SYMBOL, Sp
-    if ALT_SYMBOL:
-        try:
-            ts = yf.Ticker(ALT_SYMBOL)
-            if exp in list(ts.options):
-                chs = ts.option_chain(exp)
-                hs = ts.history(period="1d", interval="5m")["Close"].dropna()
-                Ss = float(hs.iloc[-1]) if len(hs) else float(ts.history(period="5d")["Close"].dropna().iloc[-1])
-                Ss = _live_spot(ALT_SYMBOL, Ss)
-                alt = pick_contracts(side, _live_chain(chs.calls if side == "CALL" else chs.puts, Ss), Ss, T, c["vix"])
-                for k in alt:
-                    k["sym"], k["spot"] = ALT_SYMBOL, Ss
-                contracts += alt
-        except Exception as e:
-            print("تعذر قراءة خيارات", ALT_SYMBOL, e)
     contracts.sort(key=lambda x: -x["score"])
     contracts = contracts[:MAX_CONTRACTS]
+    if ALT_SYMBOL:      # توصية SPY منفصلة بقاعدتها (لليوم التالي، دلتا ≈ 0.45)؛ لا تنافس عقود SPX على الدرجة
+        new = []
+        try:
+            new = pick_spy(side, now_ny(), c["vix"])
+            contracts += new
+        except Exception as e:
+            print("تعذر قراءة خيارات", ALT_SYMBOL, e)
+        _spy_old_shadow(side, exp, T, c, new)
     if NDX_SYMBOL and contracts:
         try:
             tn = yf.Ticker(NDX_SYMBOL)
@@ -1304,7 +1406,8 @@ def send_signal(a):
     cap.append("⚠️ <i>تعليمي وليست توصية.</i>")
     try:
         import cards
-        sub = (f"انتهاء {a['exp']} (تجريبي)" if a["is_test"] else "انتهاء اليوم") + f" · {sym} {k0.get('spot', S):,.0f}"
+        kexp = k0.get("exp", a["exp"])
+        sub = (f"انتهاء {kexp} (تجريبي)" if a["is_test"] else ("انتهاء اليوم" if kexp == a["exp"] else f"انتهاء {kexp}")) + f" · {sym} {k0.get('spot', S):,.0f}"
         png = cards.contract_card("entry", f"{root_sym(k0)} {k0['strike']:,.0f} {side}", sub, k0["price"], None,
                                   k0["price"], k0["price"] * (1 - STOP_LOSS), k0["price"] * (1 + TAKE_PROFIT),
                                   badge=f"{side} {dot}", foot=f"{now_ny().astimezone(RY).strftime('%H:%M')} الرياض | SPX إصدار 17")
@@ -1325,13 +1428,14 @@ def send_alt_card(a, ka, side, dot, reply_to=None):
     try:
         import cards
         cap = [f"🔔 <b>توصية {root_sym(ka)} (اتجاه SPX) | {side} {dot}</b> #توصية"] + ticket_lines(ka.get("sym", ALT_SYMBOL), ka, side) + [
+            f"🗓 عقد اليوم التالي ({ka.get('exp', a['exp'])}) بدلتا {ka['delta']:.2f}: أقرب للسعر وتآكله اليومي أبطأ من عقد اليوم نفسه." if ka.get("exp", a["exp"]) != a["exp"] else "",
             "ℹ️ الاتجاه مأخوذ من تحليل SPX. SPY عقد أصغر (≈ عُشر SPX) وتسويته بأسهم لا نقداً.",
             "⚠️ <i>تعليمي وليست توصية.</i>"]
         png = cards.contract_card("entry", f"{root_sym(ka)} {ka['strike']:,.0f} {side}",
-                                  f"انتهاء {a['exp']} · {ka.get('sym', ALT_SYMBOL)} {ka.get('spot', 0):,.0f}", ka["price"], None,
+                                  f"انتهاء {ka.get('exp', a['exp'])} · {ka.get('sym', ALT_SYMBOL)} {ka.get('spot', 0):,.0f}", ka["price"], None,
                                   ka["price"], ka["price"] * (1 - STOP_LOSS), ka["price"] * (1 + TAKE_PROFIT),
                                   badge=f"{root_sym(ka)} {dot}", foot=f"{now_ny().astimezone(RY).strftime('%H:%M')} الرياض | SPX إصدار 17")
-        send_photo(png, "\n".join(cap), reply_to=reply_to)
+        send_photo(png, "\n".join(x for x in cap if x), reply_to=reply_to)
     except Exception as e:
         print("تعذر إنشاء بطاقة SPY:", e)
 
@@ -1472,11 +1576,12 @@ def add_positions(n, a):
             continue
         seen.add(sym)
         q, _ = qty_for(k["cost"])
-        pid = f"{sym}:{a['side']}:{k['strike']:g}:{a['exp']}"
+        kexp = k.get("exp", a["exp"])
+        pid = f"{sym}:{a['side']}:{k['strike']:g}:{kexp}"
         if any(p["id"] == pid for p in P["positions"]):
             continue
         P["positions"].append({"id": pid, "sym": sym, "root": root_sym(k), "side": a["side"], "strike": float(k["strike"]),
-                               "exp": a["exp"], "entry": round(float(k["price"]), 2), "qty": q,
+                               "exp": kexp, "entry": round(float(k["price"]), 2), "qty": q,
                                "time": n.isoformat(timespec="minutes"), "entry_spot": round(k.get("spot", a["c"]["S"]), 2),
                                "status": "open", "peak": 0.0, "alerts": {}})
         if k.get("price_src"):
@@ -1573,7 +1678,7 @@ def _live_prices(a):
             sym = k.get("sym", SYMBOL).lstrip("^")
             if sym not in LIVE_ROOTS:
                 continue
-            z, src = lq.best_quote(lq.occ(LIVE_ROOTS[sym], a["exp"], a["side"], k["strike"]))
+            z, src = lq.best_quote(lq.occ(LIVE_ROOTS[sym], k.get("exp", a["exp"]), a["side"], k["strike"]))
             if not z:
                 k["price_src"] = "yahoo_fallback"
                 continue
@@ -1663,7 +1768,13 @@ def eval_position(p, n, val, spot):
             p["status"] = "tp"
     if live and p["status"] == "tp" and p.get("peak", 0) >= TAKE_PROFIT and pnl <= p["peak"] * GIVEBACK:
         fire("giveback", f"الربح تراجع من +{p['peak'] * 100:.0f}% إلى {pnl * 100:+.0f}%. احمِ ما تبقى.")
-    if live and hm >= (15, 30):
+    if (live and p["status"] == "open" and p.get("exp", "") > p["time"][:10] and age >= DECAY_MIN_AGE and pnl <= -DECAY_LOSS
+            and spot and p.get("entry_spot")):
+        adverse = (p["entry_spot"] - spot) / p["entry_spot"] if p["side"] == "CALL" else (spot - p["entry_spot"]) / p["entry_spot"]
+        if adverse <= DECAY_MAX_ADVERSE:
+            fire("decay", f"العقد يتآكل: خسر {pnl * 100:.0f}% والسعر لم يتحرك ضدك تقريباً، فالخسارة من مرور الوقت. "
+                          "ننصح بالخروج بدل انتظار الوقف.")
+    if live and hm >= (15, 30) and p.get("exp", n.date().isoformat()) == n.date().isoformat():
         itm = spot is not None and ((spot > p["strike"]) if p["side"] == "CALL" else (spot < p["strike"]))
         if p["sym"] == "SPY" and itm:
             fire("exp_final", "آخر 30 دقيقة: العقد داخل المال. إن تركته قد يتحول إلى 100 سهم. أغلقه قبل الإغلاق.")
@@ -1678,9 +1789,10 @@ def eval_position(p, n, val, spot):
 
 
 def position_message(p, val, pnl, spot, text, kind, src=""):
-    icon = {"stop": "🛑", "tp": "🟢", "giveback": "📉", "exp_final": "⏰"}.get(kind, "📈")
+    icon = {"stop": "🛑", "tp": "🟢", "giveback": "📉", "exp_final": "⏰", "decay": "⏳"}.get(kind, "📈")
     pl = (val - p["entry"]) * 100 * p.get("qty", 1)
-    head = {"stop": "وصل الوقف", "tp": "وصل الهدف", "giveback": "الربح يتراجع", "exp_final": "ينتهي اليوم"}.get(kind, "تحرّك سعر العقد")
+    head = {"stop": "وصل الوقف", "tp": "وصل الهدف", "giveback": "الربح يتراجع", "exp_final": "ينتهي اليوم",
+            "decay": "العقد يتآكل"}.get(kind, "تحرّك سعر العقد")
     L = ["📌 <b>متابعة</b> #متابعة",
          f"{icon} <b>{head}</b>: {p['root']} {p['strike']:,.0f} {p['side']}",
          f"💵 دخول {p['entry']:.2f} ← الآن {val:.2f} | <b>{pnl * 100:+.0f}%</b> ({pl:+,.0f}$ على ×{p.get('qty', 1)})"]
@@ -1710,14 +1822,15 @@ def follow_payload(p, val, pnl, spot, text, kind, src=""):
     note = f" · {SRC_NOTE[src]}" if src in SRC_NOTE else ""
     pl = (val - p["entry"]) * 100 * p.get("qty", 1)
     head = {"stop": "🛑 وصل الوقف", "tp": "🎯 وصل الهدف", "giveback": "📉 الربح يتراجع",
-            "exp_final": "⏰ ينتهي اليوم"}.get(kind, "📈 تحرّك سعر العقد")
+            "exp_final": "⏰ ينتهي اليوم", "decay": "⏳ العقد يتآكل"}.get(kind, "📈 تحرّك سعر العقد")
     name = f"{p['root']} {p['strike']:,.0f} {p['side']}"
     stop_p, tp_p = p["entry"] * (1 - STOP_LOSS), p["entry"] * (1 + TAKE_PROFIT)
     cap = ["📌 <b>متابعة</b> #متابعة", f"{head}: <b>{name}</b>",
            f"💵 دخول <b>{p['entry']:.2f}</b> ← الآن <b>{val:.2f}</b> | <b>{pnl * 100:+.0f}%</b> ({pl:+,.0f}$ على ×{p.get('qty', 1)})",
            f"🛑 الوقف {stop_p:.2f} | 🎯 الهدف {tp_p:.2f}", text,
            f"⚠️ القرار قرارك | 🕒 {now_ny().astimezone(RY).strftime('%H:%M')} الرياض{note}"]
-    args = (("follow", name, ("انتهاء اليوم" + (f" · {p['sym']} {spot:,.0f}" if spot else "")), val, pnl,
+    when = "انتهاء اليوم" if p.get("exp", now_ny().date().isoformat()) == now_ny().date().isoformat() else f"انتهاء {p['exp']}"
+    args = (("follow", name, (when + (f" · {p['sym']} {spot:,.0f}" if spot else "")), val, pnl,
              p["entry"], stop_p, tp_p), {"now": val, "badge": head,
                                          "foot": f"وقت الرصد {now_ny().astimezone(RY).strftime('%H:%M')} الرياض{note} | SPX إصدار 17"})
     return (args, "\n".join(cap), full)
@@ -1921,7 +2034,7 @@ def run_once(force=False):
         mid = send_signal(a)
         shown, full = analysis_wrap(details_message(a, log_line, True))
         send_telegram(shown, reply_to=mid, full_text=full)
-        log_signal(n, a["exp"], a["side"], a["contracts"][0], a["c"]["S"], a["strength"])
+        log_signal(n, a["contracts"][0].get("exp", a["exp"]), a["side"], a["contracts"][0], a["c"]["S"], a["strength"])
         add_positions(n, a)
         state.update(last_side=a["side"], last_time=n.isoformat(), date=today_s, report_sent=True,
                      signals=state.get("signals", 0) + 1)
