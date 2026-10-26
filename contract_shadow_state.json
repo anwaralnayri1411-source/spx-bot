@@ -19,10 +19,10 @@
    "rule_out": "tp",
    "rule_time": "11:07",
    "rule_pnl": 0.517,
-   "peak_pnl": 0.517,
-   "close_pnl": 0.517,
+   "peak_pnl": 0.767,
+   "close_pnl": 0.767,
    "stale_quotes": 0,
-   "quotes": 6
+   "quotes": 7
   },
   {
    "date": "2026-10-26",
@@ -38,14 +38,14 @@
    "entry": 11.9,
    "bot_entry": 3.66,
    "qty_budget": 0.315,
-   "status": "open",
-   "rule_out": "",
-   "rule_time": "",
-   "rule_pnl": "",
-   "peak_pnl": 0.437,
-   "close_pnl": 0.437,
+   "status": "closed",
+   "rule_out": "tp",
+   "rule_time": "11:12",
+   "rule_pnl": 0.689,
+   "peak_pnl": 0.689,
+   "close_pnl": 0.689,
    "stale_quotes": 0,
-   "quotes": 6
+   "quotes": 7
   },
   {
    "date": "2026-10-26",
@@ -65,10 +65,10 @@
    "rule_out": "tp",
    "rule_time": "11:07",
    "rule_pnl": 0.542,
-   "peak_pnl": 0.542,
-   "close_pnl": 0.542,
+   "peak_pnl": 0.729,
+   "close_pnl": 0.729,
    "stale_quotes": 0,
-   "quotes": 6
+   "quotes": 7
   },
   {
    "date": "2026-10-26",
@@ -84,14 +84,14 @@
    "entry": 1.51,
    "bot_entry": 1.07,
    "qty_budget": 2.483,
-   "status": "open",
-   "rule_out": "",
-   "rule_time": "",
-   "rule_pnl": "",
-   "peak_pnl": 0.444,
-   "close_pnl": 0.444,
+   "status": "closed",
+   "rule_out": "tp",
+   "rule_time": "11:12",
+   "rule_pnl": 0.616,
+   "peak_pnl": 0.616,
+   "close_pnl": 0.616,
    "stale_quotes": 0,
-   "quotes": 6
+   "quotes": 7
   },
   {
    "date": "2026-10-26",
@@ -107,14 +107,14 @@
    "entry": 1.51,
    "bot_entry": 1.07,
    "qty_budget": 2.483,
-   "status": "open",
-   "rule_out": "",
-   "rule_time": "",
-   "rule_pnl": "",
-   "peak_pnl": 0.444,
-   "close_pnl": 0.444,
+   "status": "closed",
+   "rule_out": "tp",
+   "rule_time": "11:12",
+   "rule_pnl": 0.616,
+   "peak_pnl": 0.616,
+   "close_pnl": 0.616,
    "stale_quotes": 0,
-   "quotes": 6
+   "quotes": 7
   },
   {
    "date": "2026-10-26",
@@ -130,14 +130,14 @@
    "entry": 1.02,
    "bot_entry": 1.07,
    "qty_budget": 3.676,
-   "status": "open",
-   "rule_out": "",
-   "rule_time": "",
-   "rule_pnl": "",
-   "peak_pnl": 0.451,
-   "close_pnl": 0.451,
+   "status": "closed",
+   "rule_out": "tp",
+   "rule_time": "11:12",
+   "rule_pnl": 0.667,
+   "peak_pnl": 0.667,
+   "close_pnl": 0.667,
    "stale_quotes": 0,
-   "quotes": 6
+   "quotes": 7
   }
  ]
 }
