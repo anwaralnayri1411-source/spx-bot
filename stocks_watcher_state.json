@@ -100,7 +100,8 @@
    "doordash eyes instacart deal with amazon in crosshairs",
    "cart stock draws wall street s attention after report of potential sale discussions a look at some key analyst takes",
    "rrc stock surges to over 11 year high rbrk shares hit record levels what s fueling the rallies today",
-   "fed rate path ai revenue to drive markets after midterms says ubs alli mccartney iran oil overhang may remain"
+   "fed rate path ai revenue to drive markets after midterms says ubs alli mccartney iran oil overhang may remain",
+   "instacart stock draws btig analysis on potential doordash uber deal"
   ],
   "DIS:CALL": [
    "skydance rises 5 as steep post merger slide pauses disney gains 2 netflix slips",
@@ -534,7 +535,12 @@
    "gas diesel prices surge amid ongoing conflict with iran",
    "oil prices rise after ship attacks us iran talks deadlock",
    "oil prices fall amidst hopes of easing us iran hostilities",
-   "michigan gas prices climb 32 cents in a week"
+   "michigan gas prices climb 32 cents in a week",
+   "oil prices rise on fears of middle east conflict escalation",
+   "egypt votes to defend saudi arabia risking houthi fire",
+   "michigan gas prices edge closer to record territory one week before 2026 election",
+   "aaa average rhode island gas price drops 7 cents",
+   "weekly gas watch gas prices slip slightly in western pa"
   ],
   "TSLA:CALL": [
    "tesla stock consolidates after potential tesla spacex merger exploration increases uncertainty",
@@ -754,8 +760,15 @@
    "btc price range on oct 26 2026 at 1pm edt crypto prediction market",
    "tom lee says crypto faced same risk off forces behind ai sell off bmnr asst add to crypto treasuries as mstr skips bitco",
    "btc price on oct 26 2026 at 3pm edt crypto prediction market",
-   "the bitcoin bull market is finally here according to strategy s michael saylor could bitcoin hit a price of 100 000 in 2"
-  ]
+   "the bitcoin bull market is finally here according to strategy s michael saylor could bitcoin hit a price of 100 000 in 2",
+   "bitcoin price prediction one more oil spike from 70k alphapepe approaches its binance listing whilst on presale",
+   "bitcoin price stands at 80 401 40 usd as etfs draw 301 2 million usd",
+   "btc price hits 79 250 marking deepest drop since july",
+   "bitcoin could replace real estate as a major st",
+   "btc price on oct 26 2026 at 2pm edt prediction market",
+   "anthropic could be worth more than bitcoin by year end polymarket traders say"
+  ],
+  "HOOD:PUT": []
  },
  "fired": {
   "CVX:CALL:2026-10-30:240": [
@@ -827,7 +840,9 @@
    "news:european gas at four year high on winter supply fears",
    "news:gas diesel prices surge amid ongoing conflict with iran",
    "news:oil prices rise after ship attacks us iran talks deadlock",
-   "news:oil prices fall amidst hopes of easing us iran hostilities"
+   "news:oil prices fall amidst hopes of easing us iran hostilities",
+   "news:oil prices rise on fears of middle east conflict escalation",
+   "news:egypt votes to defend saudi arabia risking houthi fire"
   ],
   "UBER:PUT:2026-10-30:66": [
    "down-0.15"
@@ -842,9 +857,11 @@
    "news:bitcoin below 80k into fed day and 12b options expiry",
    "news:coinbase global nasdaq coin stock gets price target bump from jpmorgan chase co",
    "news:bitcoin falls below 80 000 as investors flee risk assets ahead of federal reserve decision",
-   "news:coinbase target cut to 250 robinhood to benefit from prediction markets bernstein"
+   "news:coinbase target cut to 250 robinhood to benefit from prediction markets bernstein",
+   "news:btc price hits 79 250 marking deepest drop since july"
   ],
-  "PLTR:CALL:2026-10-30:202.5": []
+  "PLTR:CALL:2026-10-30:202.5": [],
+  "HOOD:PUT:2026-10-30:91": []
  },
  "stock_level": {
   "COIN:PUT:2026-10-30:150": 1
@@ -1279,7 +1296,11 @@
   "federal reserve meeting rice experts available to discuss interest rates inflation and economic outlook",
   "brent crude oil price forecast 2026 surge above 100 explained",
   "cart stock draws wall street s attention after report of potential sale discussions a look at some key analyst takes",
-  "btc price hits 79 250 marking deepest drop since july"
+  "btc price hits 79 250 marking deepest drop since july",
+  "u s stocks climb amid shaky trading in markets worldwide",
+  "asx set to edge up wall street climbs anthropic files for ipo",
+  "the fed s interest rate decision is imminent how will the m futubull community",
+  "bank of america still forecasts fed rate hike this week but with low confidence"
  ],
  "sharp": {
   "CVX:CALL:2026-10-30:240": 232.145,
