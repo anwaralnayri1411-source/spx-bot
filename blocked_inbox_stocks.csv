@@ -38,3 +38,5 @@ id,time,project,tag,sym,root,side,strike,exp,entry,spot,edge,strength
 20261026T1112|stocks|max_ideas_cap|UBER|PUT|66|2026-10-30,2026-10-26T11:12-04:00,stocks,max_ideas_cap,UBER,UBER,PUT,66.0,2026-10-30,0.87,66.38,6.0,6.1
 20261026T1112|stocks|open_same_dir|TSLA|CALL|410|2026-11-02,2026-10-26T11:12-04:00,stocks,open_same_dir,TSLA,TSLA,CALL,410.0,2026-11-02,3.53,395.56,9.0,9.7
 20261026T1120|stocks|same_side_cap|HOOD|PUT|88|2026-10-30,2026-10-26T11:20-04:00,stocks,same_side_cap,HOOD,HOOD,PUT,88.0,2026-10-30,1.98,94.08,4.0,4.0
+20261026T1142|stocks|max_ideas_cap|UBER|PUT|66|2026-10-30,2026-10-26T11:42-04:00,stocks,max_ideas_cap,UBER,UBER,PUT,66.0,2026-10-30,0.85,66.52,4.5,5.2
+20261026T1142|stocks|open_same_dir|TSLA|CALL|410|2026-11-02,2026-10-26T11:42-04:00,stocks,open_same_dir,TSLA,TSLA,CALL,410.0,2026-11-02,3.08,394.58,8.0,8.9
