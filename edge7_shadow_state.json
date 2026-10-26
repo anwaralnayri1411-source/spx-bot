@@ -1,4 +1,67 @@
 {
- "open": [],
- "last": {}
+ "open": [
+  {
+   "entry_time": "2026-10-26T10:35-04:00",
+   "side": "CALL",
+   "role": "bot",
+   "contract": "SPXW261027C07670000",
+   "strike": 7670,
+   "exp": "2026-10-27",
+   "edge": 8.75,
+   "bot_sent": 1,
+   "reasons": "",
+   "spot": 7670.0,
+   "entry": 26.39,
+   "entry_src": "alpaca",
+   "val30": ""
+  },
+  {
+   "entry_time": "2026-10-26T10:35-04:00",
+   "side": "PUT",
+   "role": "opp",
+   "contract": "SPXW261027P07670000",
+   "strike": 7670,
+   "exp": "2026-10-27",
+   "edge": 8.75,
+   "bot_sent": 1,
+   "reasons": "",
+   "spot": 7670.0,
+   "entry": 24.38,
+   "entry_src": "alpaca",
+   "val30": ""
+  },
+  {
+   "entry_time": "2026-10-26T10:35-04:00",
+   "side": "CALL",
+   "role": "spy_bot",
+   "contract": "SPY261027C00765000",
+   "strike": 765,
+   "exp": "2026-10-27",
+   "edge": 8.75,
+   "bot_sent": 1,
+   "reasons": "",
+   "spot": 764.54,
+   "entry": 2.37,
+   "entry_src": "alpaca",
+   "val30": ""
+  },
+  {
+   "entry_time": "2026-10-26T10:35-04:00",
+   "side": "PUT",
+   "role": "spy_opp",
+   "contract": "SPY261027P00765000",
+   "strike": 765,
+   "exp": "2026-10-27",
+   "edge": 8.75,
+   "bot_sent": 1,
+   "reasons": "",
+   "spot": 764.54,
+   "entry": 2.73,
+   "entry_src": "alpaca",
+   "val30": ""
+  }
+ ],
+ "last": {
+  "CALL": "2026-10-26T10:35-04:00"
+ }
 }
