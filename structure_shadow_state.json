@@ -1,6 +1,59 @@
 {
  "date": null,
- "items": [],
+ "items": [
+  {
+   "id": "20261026T1034|ic|day-2026-10-26",
+   "kind": "ic",
+   "pos_id": "day-2026-10-26",
+   "date": "2026-10-26",
+   "side": "BOTH",
+   "exp": "2026-10-27",
+   "entry_time": "2026-10-26T10:34-04:00",
+   "entry_spot": 764.49,
+   "legs": [
+    {
+     "occ": "SPY261027P00757000",
+     "strike": 757.0,
+     "side": "PUT",
+     "qty": -1
+    },
+    {
+     "occ": "SPY261027P00754000",
+     "strike": 754.0,
+     "side": "PUT",
+     "qty": 1
+    },
+    {
+     "occ": "SPY261027C00772000",
+     "strike": 772.0,
+     "side": "CALL",
+     "qty": -1
+    },
+    {
+     "occ": "SPY261027C00775000",
+     "strike": 775.0,
+     "side": "CALL",
+     "qty": 1
+    }
+   ],
+   "capital": 2.65,
+   "entry_cash": 0.35,
+   "peak": 0.0,
+   "last_pnl": "",
+   "quotes": 0,
+   "t60_pnl": "",
+   "t60_time": "",
+   "eod_pnl": "",
+   "eod_time": "",
+   "hold_pnl": "",
+   "hold_time": "",
+   "managed_pnl": "",
+   "managed_out": "",
+   "managed_time": ""
+  }
+ ],
  "done_recs": [],
- "condor_days": []
+ "condor_days": [
+  "2026-10-26"
+ ]
 }
