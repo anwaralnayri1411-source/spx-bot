@@ -788,6 +788,94 @@ def _pick_all(side, ch, S, T, c, exp):
     return contracts
 
 
+BAR_KEYS = ("S", "age", "ema9", "ema21", "r30", "gap", "prev_close", "orb", "day_hl", "range1h", "pivots", "pd_hl")
+
+
+def bar_fields(ix, n):
+    """مؤشرات الاتجاه المبنية على شموع SPX 5د (نفس الحساب السابق حرفياً، مفصول لحسابه على نسختي ياهو واللحظي)."""
+    closes = ix["Close"].dropna()
+    dates = sorted(set(ix.index.date))
+    last_date = dates[-1]
+    bars = ix[ix.index.date == last_date]["Close"].dropna()
+    f = {"S": float(closes.iloc[-1]), "age": (n - ix.index[-1].to_pydatetime()).total_seconds() / 60,
+         "ema9": float(closes.ewm(span=9, adjust=False).mean().iloc[-1]),
+         "ema21": float(closes.ewm(span=21, adjust=False).mean().iloc[-1]),
+         "r30": float(bars.iloc[-1] / bars.iloc[-7] - 1) if len(bars) >= 7 else 0.0,
+         "gap": None, "prev_close": None, "orb": None, "day_hl": None, "range1h": None, "pivots": [], "pd_hl": None,
+         "dates": dates, "last_date": last_date}
+    if len(dates) > 1:
+        prev = ix[ix.index.date == dates[-2]]["Close"].dropna()
+        if not prev.empty:
+            f["gap"] = float(bars.iloc[0] / prev.iloc[-1] - 1)
+            f["prev_close"] = float(prev.iloc[-1])
+    try:
+        day = ix[ix.index.date == last_date]
+        if len(day) >= 7:   # اكتمل نطاق أول 30 دقيقة
+            first = day.iloc[:6]
+            f["orb"] = (float(first["High"].max()), float(first["Low"].min()))
+        if len(day) >= 3:
+            f["day_hl"] = (float(day["High"].max()), float(day["Low"].min()))
+        if len(ix) >= 12:   # مدى آخر ساعة: يحدد كثافة المستويات (هادئ/عادي/متقلب)
+            f["range1h"] = float(ix["High"].iloc[-12:].max() - ix["Low"].iloc[-12:].min())
+        try:   # قمم وقيعان قريبة من آخر جلستين (نقاط ارتداد حقيقية على الشارت)
+            rec = ix[ix.index.date >= dates[-2]] if len(dates) > 1 else day
+            hi, lo = rec["High"].values, rec["Low"].values
+            piv = []
+            for i in range(3, len(rec) - 3):
+                if hi[i] == hi[i - 3:i + 4].max():
+                    piv.append((float(hi[i]), "قمة سابقة"))
+                if lo[i] == lo[i - 3:i + 4].min():
+                    piv.append((float(lo[i]), "قاع سابق"))
+            f["pivots"] = piv
+        except Exception:
+            f["pivots"] = []
+        if len(dates) > 1:
+            pdn = ix[ix.index.date == dates[-2]]
+            if not pdn.empty:
+                f["pd_hl"] = (float(pdn["High"].max()), float(pdn["Low"].min()))
+    except Exception:
+        pass
+    return f
+
+
+def _live_bars(ix, n):
+    """(شموع القرار، شموع المقارنة، معلومات، الوضع). LIVE_BARS_SPX: 0 ياهو فقط؛ shadow القرار من ياهو ويُقارن باللحظي؛ 1 العكس."""
+    try:
+        import live_bars
+        m = live_bars.mode()
+        if m == "0":
+            return ix, None, {}, m
+        ix2, info = live_bars.build(ix, n)
+    except Exception as e:
+        data_gaps.note("spx", "live_bars", e)
+        return ix, None, {}, "0"
+    if info.get("status") != "ok":
+        return ix, None, info, m
+    return (ix2, ix, info, m) if m == "1" else (ix, ix2, info, m)
+
+
+def _log_live_bars(n, m, info, c, other, bull, bear):
+    """يسجّل المقارنة بين نسختي الشموع (اتجاه البوت ونقاطه بكل منهما). لا يغيّر شيئاً في القرار."""
+    if m == "0":
+        return
+    try:
+        import live_bars
+        row = {"time": n.isoformat(timespec="minutes"), "mode": m, **{k: info.get(k) for k in ("status", "ratio", "ratio_src", "added", "yahoo_age_min", "live_age_min")},
+               "yahoo_last": str(info.get("yahoo_last", ""))[:16]}
+        if other is not None:
+            c2 = dict(c, **{k: other[k] for k in BAR_KEYS})
+            if c.get("vwap_spx") is not None:
+                c2["above_vwap"] = bool(c2["S"] > c["vwap_spx"])
+            b2, r2, _ = direction_points(c2)
+            y, l = ((c, bull, bear), (c2, b2, r2)) if m == "shadow" else ((c2, b2, r2), (c, bull, bear))
+            row.update(S_yahoo=round(y[0]["S"], 2), S_live=round(l[0]["S"], 2), r30_yahoo=round(y[0]["r30"], 5), r30_live=round(l[0]["r30"], 5),
+                       bull_yahoo=round(y[1], 2), bear_yahoo=round(y[2], 2), bull_live=round(l[1], 2), bear_live=round(l[2], 2),
+                       side_yahoo="CALL" if y[1] > y[2] else "PUT", side_live="CALL" if l[1] > l[2] else "PUT")
+        live_bars.log(row)
+    except Exception as e:
+        print("live_bars مقارنة:", type(e).__name__)
+
+
 def analyze(force):
     n = now_ny()
     today = n.date()
@@ -796,24 +884,17 @@ def analyze(force):
     ix = t.history(period="5d", interval="5m")
     if daily.empty or ix.empty:
         raise RuntimeError("لا توجد بيانات كافية حالياً.")
-    closes = ix["Close"].dropna()
-    dates = sorted(set(ix.index.date))
-    last_date = dates[-1]
-    bars = ix[ix.index.date == last_date]["Close"].dropna()
-    S = float(closes.iloc[-1])
-    age = (n - ix.index[-1].to_pydatetime()).total_seconds() / 60
+    ix_y = ix
+    ix, ix_other, lb_info, lb_mode = _live_bars(ix, n)
+    bf = bar_fields(ix, n)
+    bf_other = bar_fields(ix_other, n) if ix_other is not None else None
+    bf_y = bf if ix is ix_y else bf_other
+    last_date, S, age = bf["last_date"], bf["S"], bf["age"]
 
     c = {"n": n, "S": S, "age": age,
          "sma20": float(daily.rolling(20).mean().iloc[-1]), "sma50": float(daily.rolling(50).mean().iloc[-1]),
-         "ema9": float(closes.ewm(span=9, adjust=False).mean().iloc[-1]),
-         "ema21": float(closes.ewm(span=21, adjust=False).mean().iloc[-1]),
-         "r30": float(bars.iloc[-1] / bars.iloc[-7] - 1) if len(bars) >= 7 else 0.0,
-         "gap": None, "above_vwap": True, "vwap": None, "prev_close": None, "vwap_spx": None}
-    if len(dates) > 1:
-        prev = ix[ix.index.date == dates[-2]]["Close"].dropna()
-        if not prev.empty:
-            c["gap"] = float(bars.iloc[0] / prev.iloc[-1] - 1)
-            c["prev_close"] = float(prev.iloc[-1])
+         "ema9": bf["ema9"], "ema21": bf["ema21"], "r30": bf["r30"],
+         "gap": bf["gap"], "above_vwap": True, "vwap": None, "prev_close": bf["prev_close"], "vwap_spx": None}
     try:
         fl = yf.Ticker(FLOW_SYMBOL).history(period="5d", interval="5m")
         fl = fl[fl.index.date == last_date]
@@ -821,8 +902,10 @@ def analyze(force):
             tp = (fl["High"] + fl["Low"] + fl["Close"]) / 3
             vwap = float((tp * fl["Volume"]).cumsum().iloc[-1] / fl["Volume"].cumsum().iloc[-1])
             c["vwap"] = vwap
-            c["above_vwap"] = bool(fl["Close"].iloc[-1] > vwap)
-            c["vwap_spx"] = vwap * S / float(fl["Close"].iloc[-1])   # VWAP بمستوى المؤشر
+            # VWAP بمستوى المؤشر بنسبة ياهو المتزامنة (SPX وSPY من ياهو في اللحظة نفسها)؛ والموضع من سعر القرار.
+            # بشموع ياهو هذا يساوي حرفياً الشرط السابق (إغلاق SPY > VWAP).
+            c["vwap_spx"] = vwap * bf_y["S"] / float(fl["Close"].iloc[-1]) if bf_y else vwap * S / float(fl["Close"].iloc[-1])
+            c["above_vwap"] = bool(fl["Close"].iloc[-1] > vwap) if ix is ix_y else bool(S > c["vwap_spx"])
         else:
             data_gaps.note("spx", "vwap_no_volume")   # يبقى above_vwap=True الافتراضي (سلوك قائم، نقيس تكراره)
     except Exception as ex:
@@ -877,33 +960,7 @@ def analyze(force):
             c["vix_day"] = float(vx.iloc[-1] / vx.iloc[0] - 1)
     except Exception as ex:
         data_gaps.note("spx", "vix_day", ex)
-    try:
-        day = ix[ix.index.date == last_date]
-        if len(day) >= 7:   # اكتمل نطاق أول 30 دقيقة
-            first = day.iloc[:6]
-            c["orb"] = (float(first["High"].max()), float(first["Low"].min()))
-        if len(day) >= 3:
-            c["day_hl"] = (float(day["High"].max()), float(day["Low"].min()))
-        if len(ix) >= 12:   # مدى آخر ساعة: يحدد كثافة المستويات (هادئ/عادي/متقلب)
-            c["range1h"] = float(ix["High"].iloc[-12:].max() - ix["Low"].iloc[-12:].min())
-        try:   # قمم وقيعان قريبة من آخر جلستين (نقاط ارتداد حقيقية على الشارت)
-            rec = ix[ix.index.date >= dates[-2]] if len(dates) > 1 else day
-            hi, lo = rec["High"].values, rec["Low"].values
-            piv = []
-            for i in range(3, len(rec) - 3):
-                if hi[i] == hi[i - 3:i + 4].max():
-                    piv.append((float(hi[i]), "قمة سابقة"))
-                if lo[i] == lo[i - 3:i + 4].min():
-                    piv.append((float(lo[i]), "قاع سابق"))
-            c["pivots"] = piv
-        except Exception:
-            c["pivots"] = []
-        if len(dates) > 1:
-            pdn = ix[ix.index.date == dates[-2]]
-            if not pdn.empty:
-                c["pd_hl"] = (float(pdn["High"].max()), float(pdn["Low"].min()))
-    except Exception:
-        pass
+    c.update({k: bf[k] for k in ("orb", "day_hl", "range1h", "pivots", "pd_hl")})
     try:
         cv = float(pd.to_numeric(ch.calls["volume"], errors="coerce").fillna(0).sum())
         pv = float(pd.to_numeric(ch.puts["volume"], errors="coerce").fillna(0).sum())
@@ -913,6 +970,7 @@ def analyze(force):
         pass
 
     bull, bear, rows = direction_points(c)
+    _log_live_bars(n, lb_mode, lb_info, c, bf_other, bull, bear)
     edge = abs(bull - bear)
     reasons = []
     if shock["level"] == 2:
