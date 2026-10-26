@@ -127,8 +127,8 @@ main() {
       msg="flow shadow log" ;;
     replication)
       group=replication; envs="ALPACA"; keepgoing=1
-      cmds=("$py research/bars_history.py" "$py research/replication_study.py")   # تنزيل شموع الرموز ثم تكرار الفرضيات
-      files="research/replication_study_results.md"
+      cmds=("$py research/bars_history.py" "$py research/replication_study.py" "$py research/fibo_entry_study.py")   # تنزيل شموع الرموز ثم تكرار الفرضيات
+      files="research/replication_study_results.md research/fibo_entry_study_results.md"
       msg="replication study refresh" ;;
     news_score)
       group=news-score
