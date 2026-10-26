@@ -29,3 +29,6 @@ id,time,project,tag,sym,root,side,strike,exp,entry,spot,edge,strength
 20261023T1512|stocks|open_same_dir|PLTR|CALL|205|2026-10-30,2026-10-23T15:12-04:00,stocks,open_same_dir,PLTR,PLTR,CALL,205.0,2026-10-30,1.87,195.5,5.5,6.8
 20261026T1012|stocks|same_side_cap|HOOD|PUT|89|2026-10-30,2026-10-26T10:12-04:00,stocks,same_side_cap,HOOD,HOOD,PUT,89.0,2026-10-30,2.94,92.62,5.5,4.8
 20261026T1012|stocks|open_same_dir|TSLA|CALL|410|2026-11-02,2026-10-26T10:12-04:00,stocks,open_same_dir,TSLA,TSLA,CALL,410.0,2026-11-02,3.3,393.62,9.0,8.4
+20261026T1020|stocks|same_side_cap|HOOD|PUT|89|2026-10-30,2026-10-26T10:20-04:00,stocks,same_side_cap,HOOD,HOOD,PUT,89.0,2026-10-30,2.78,92.88,5.5,4.8
+20261026T1020|stocks|same_side_cap|UBER|PUT|66|2026-10-30,2026-10-26T10:20-04:00,stocks,same_side_cap,UBER,UBER,PUT,66.0,2026-10-30,0.83,66.7,4.0,4.7
+20261026T1020|stocks|open_same_dir|TSLA|CALL|407.5|2026-10-30,2026-10-26T10:20-04:00,stocks,open_same_dir,TSLA,TSLA,CALL,407.5,2026-10-30,3.56,395.37,9.0,9.2
