@@ -20,9 +20,9 @@
    "rule_time": "11:07",
    "rule_pnl": 0.517,
    "peak_pnl": 1.45,
-   "close_pnl": -0.608,
+   "close_pnl": -0.567,
    "stale_quotes": 0,
-   "quotes": 24
+   "quotes": 25
   },
   {
    "date": "2026-10-26",
@@ -43,9 +43,9 @@
    "rule_time": "11:12",
    "rule_pnl": 0.689,
    "peak_pnl": 1.134,
-   "close_pnl": -0.361,
+   "close_pnl": -0.345,
    "stale_quotes": 0,
-   "quotes": 24
+   "quotes": 25
   },
   {
    "date": "2026-10-26",
@@ -66,9 +66,9 @@
    "rule_time": "11:07",
    "rule_pnl": 0.542,
    "peak_pnl": 1.094,
-   "close_pnl": -0.469,
+   "close_pnl": -0.427,
    "stale_quotes": 0,
-   "quotes": 24
+   "quotes": 25
   },
   {
    "date": "2026-10-26",
@@ -89,9 +89,9 @@
    "rule_time": "11:12",
    "rule_pnl": 0.616,
    "peak_pnl": 0.974,
-   "close_pnl": -0.318,
+   "close_pnl": -0.252,
    "stale_quotes": 0,
-   "quotes": 24
+   "quotes": 25
   },
   {
    "date": "2026-10-26",
@@ -112,9 +112,9 @@
    "rule_time": "11:12",
    "rule_pnl": 0.616,
    "peak_pnl": 0.974,
-   "close_pnl": -0.318,
+   "close_pnl": -0.252,
    "stale_quotes": 0,
-   "quotes": 24
+   "quotes": 25
   },
   {
    "date": "2026-10-26",
@@ -135,9 +135,9 @@
    "rule_time": "11:12",
    "rule_pnl": 0.667,
    "peak_pnl": 1.147,
-   "close_pnl": -0.441,
+   "close_pnl": -0.412,
    "stale_quotes": 0,
-   "quotes": 24
+   "quotes": 25
   },
   {
    "date": "2026-10-26",
@@ -158,9 +158,9 @@
    "rule_time": "",
    "rule_pnl": "",
    "peak_pnl": 0.0,
-   "close_pnl": "",
+   "close_pnl": -0.026,
    "stale_quotes": 0,
-   "quotes": 0
+   "quotes": 1
   },
   {
    "date": "2026-10-26",
@@ -180,10 +180,10 @@
    "rule_out": "",
    "rule_time": "",
    "rule_pnl": "",
-   "peak_pnl": 0.0,
-   "close_pnl": "",
+   "peak_pnl": 0.013,
+   "close_pnl": 0.013,
    "stale_quotes": 0,
-   "quotes": 0
+   "quotes": 1
   },
   {
    "date": "2026-10-26",
@@ -203,10 +203,10 @@
    "rule_out": "",
    "rule_time": "",
    "rule_pnl": "",
-   "peak_pnl": 0.0,
-   "close_pnl": "",
+   "peak_pnl": 0.058,
+   "close_pnl": 0.058,
    "stale_quotes": 0,
-   "quotes": 0
+   "quotes": 1
   }
  ]
 }
