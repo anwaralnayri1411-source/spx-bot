@@ -177,6 +177,11 @@ main() {
       cmds=("$py research/real_price_check.py")
       files="research/real_price_check_results.md research/real_price_check_trades.csv"
       msg="real price check refresh" ;;
+    shadow_manager)
+      group=shadow-manager; envs="TG"
+      cmds=("$py shadow_manager.py")
+      files="shadow_manager_council.csv shadow_manager_state.json research/shadow_manager_results.md"
+      msg="shadow manager daily" ;;
     weekly_learning)
       group=weekly-learning; envs="TG"
       cmds=("$py research/combo_report.py" "$py research/weekly_learning.py")
