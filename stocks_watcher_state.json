@@ -91,7 +91,9 @@
    "rivian buys startup to turn 400 000 daily clips into 3d sims",
    "uber nyse uber walks away from deal talks as hiring lawsuit tests its story",
    "tech ipo first day performance 10 listings compared",
-   "jpmorgan funds global focus fund high conviction stock picking backed by deep research"
+   "jpmorgan funds global focus fund high conviction stock picking backed by deep research",
+   "what makes a good stock of the week",
+   "court keeps uber kenya in lawsuit over 37 riders account suspensions"
   ],
   "DIS:CALL": [
    "skydance rises 5 as steep post merger slide pauses disney gains 2 netflix slips",
@@ -489,7 +491,16 @@
    "gas prices remain high across the region despite promises of relief from washington",
    "oil retreats from six month highs as saudi attacks keep supply risks elevated",
    "world stocks gain ahead of formidable week for risk oil prices ease",
-   "toledo gas prices jump 35 cents in a week"
+   "toledo gas prices jump 35 cents in a week",
+   "gas prices fall for fifth straight week",
+   "why saudi just abandoned its core oil rule",
+   "chevron cvx is a great momentum stock should you buy",
+   "crude oil prices fall back as iran holds regional security meeting",
+   "high crude prices rise in lending rates take toll on small cap stocks",
+   "ranked the world s oil reserves by region",
+   "crude oil drops as saudi defense minister travels to tehran to meet iranian officials",
+   "european stocks close higher in monday trading as oil prices ease bond yields stabilize",
+   "massachusetts gas prices post sharpest drop in five weeks"
   ],
   "TSLA:CALL": [
    "tesla stock consolidates after potential tesla spacex merger exploration increases uncertainty",
@@ -680,7 +691,13 @@
    "bitcoin price analysis neutral bias",
    "can zcash price clear 1 265 53 to confirm its recovery",
    "fear and greed index reading the fear gauge right",
-   "bernstein s q3 preview for digital asset stocks coinbase coin us faces profit pressure while robinhood s hood us predict"
+   "bernstein s q3 preview for digital asset stocks coinbase coin us faces profit pressure while robinhood s hood us predict",
+   "bittensor tao and near fell up to 22 in two weeks while bitcoin fell 4 is the ai coin trade over",
+   "bitmine buys more eth repurchases 46 million in shares as tom lee sees crypto holding up",
+   "cryptocurrencies price prediction xrp bitcoin cryptos american wrap 26 october",
+   "crypto stocks trail 2026 leaders as bitcoin and gold lag",
+   "bitcoin falls below 80 000 as investors flee risk assets ahead of federal reserve decision",
+   "bitcoin price forecast ahead of fomc and us pce inflation will btc drop to 77 000"
   ]
  },
  "fired": {
@@ -746,10 +763,9 @@
    "news:oil eases on diplomacy hopes european gas rises on winter supply concerns",
    "news:chevron cvx plans 13 8 billion vaca muerta expansion through 2035",
    "news:oil price surge fuels iran hardliners case against us deal",
-   "news:oil retreats from six month highs as saudi attacks keep supply risks elevated"
-  ],
-  "NFLX:PUT:2026-11-06:65": [
-   "up0.25"
+   "news:oil retreats from six month highs as saudi attacks keep supply risks elevated",
+   "news:crude oil prices fall back as iran holds regional security meeting",
+   "news:crude oil drops as saudi defense minister travels to tehran to meet iranian officials"
   ],
   "UBER:PUT:2026-10-30:66": [
    "down-0.15"
@@ -762,7 +778,8 @@
    "stock1",
    "news:bitcoin linked stocks fall 4 while bitcoin sta",
    "news:bitcoin below 80k into fed day and 12b options expiry",
-   "news:coinbase global nasdaq coin stock gets price target bump from jpmorgan chase co"
+   "news:coinbase global nasdaq coin stock gets price target bump from jpmorgan chase co",
+   "news:bitcoin falls below 80 000 as investors flee risk assets ahead of federal reserve decision"
   ],
   "PLTR:CALL:2026-10-30:202.5": []
  },
@@ -1174,7 +1191,18 @@
   "u s stocks climb and more than recover last week s losses",
   "lula s win in brazil bucks a regional shift to the right and denies trump a powerful ally",
   "here are monday s top wall street analyst research calls block boise cascade equifax firstenergy lockheed martin lumentu",
-  "gold vs oil why is hsbc scaling back its gold bets and making a bigger bullish move on oil amid global market uncertaint"
+  "gold vs oil why is hsbc scaling back its gold bets and making a bigger bullish move on oil amid global market uncertaint",
+  "nvidia is now cheaper than the average s p 500 stock wall street still sees record profits",
+  "us stock market wall street rebounds as anthropic ipo filing lifts tech shares ahead of fed decision",
+  "the world has passed peak trump",
+  "federal reserve is likely to hold interest rates steady in october here s what that means for consumers",
+  "wall street in rally mode as ai stocks stabilize",
+  "weekly market commentary",
+  "trump tariff reversal could cut costs for us energy firms but will likely leave broader flows unchanged",
+  "xrp holds near 1 29 ahead of federal reserve rate decision as aviva tokenizes 50 million fund slice",
+  "interest rate forecast for tomorrow fed expected to hold rates at 3 75 4 00",
+  "wall st eyes best day in a month as anthropic s ipo filing propels ai stocks",
+  "fed interest rate decision inflation rises ahead of october fomc meeting"
  ],
  "sharp": {
   "CVX:CALL:2026-10-30:240": 232.145,
