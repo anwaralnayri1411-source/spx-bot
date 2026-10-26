@@ -1,8 +1,8 @@
 {
  "eval_date": "2026-10-23",
- "plan_date": "2026-10-23",
- "prev_close": 7663.43,
- "es_night": -0.0055,
+ "plan_date": "2026-10-26",
+ "prev_close": 7623.68,
+ "es_night": 0.0028,
  "snap_date": "2026-10-23",
  "snap": {
   "time": "2026-10-23T09:46-04:00",
