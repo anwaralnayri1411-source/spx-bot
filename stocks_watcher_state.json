@@ -30,7 +30,8 @@
    "bank of america stock and 2 top undervalued stocks",
    "bank of america names two directors as stock holds usd 350 0 billion value",
    "warren buffett put 10 billion into 2 banks when their stocks were under pressure here s what those deals teach today",
-   "bank of america bac adds two directors to its board"
+   "bank of america bac adds two directors to its board",
+   "banco santander sa stock san opened down by 4 05 on oct 26 what signal does it send"
   ],
   "AMZN:CALL": [
    "starting jan 1 2027 amazon seasonal workers get day one health coverage if they work at least 30 hours a week",
@@ -149,7 +150,8 @@
    "bill ackman lost 400 million on netflix now he sees 20 plus annual returns",
    "analysts offer insights on communication services companies at t t and netflix nflx",
    "sa asks netflix hit a 52 week low this week is now the time to buy nflx nasdaq",
-   "what is behind the upward move in netflix nasdaq nflx"
+   "what is behind the upward move in netflix nasdaq nflx",
+   "netflix co ceo greg peters just said we know that we can do better when it comes to u s engagement should investors be w"
   ],
   "AVGO:PUT": [
    "3 artificial intelligence ai stocks that look like great buys right now",
@@ -271,7 +273,12 @@
    "intel intc q3 2026 preview eps est 0 40 reports october 29",
    "wall street analyst identifies intel s final catalyst to reclaim 100",
    "intc stock before q3 earnings is it a smart buy or risky move",
-   "new street upgrades intel as cpu scarcity strengthens turnaround"
+   "new street upgrades intel as cpu scarcity strengthens turnaround",
+   "sk hynix q3 earnings on october 28 analysts see 86 upside as investors eye bigger payouts",
+   "why nu holdings and mercadolibre stocks are plunging today and what wall street sees next",
+   "intel server strength could easily offset a weak pc quarter in q3 nasdaq intc",
+   "flex to report q2 earnings what s in the cards for the stock",
+   "intel stock holds buy rating near 87 ahead of q3 earnings driven by strong server growth despite pc market softness"
   ],
   "CVX:CALL": [
    "stocks see continued downward pressure from ai anxiety and oil prices",
@@ -422,7 +429,22 @@
    "market wrap clear rebound in europe against falling oil price assets related to brazil in retreat",
    "is asset transfer altering the investment case for chevron cvx",
    "rupee falls for third straight session ends at 95 19 as oil prices and importer demand weigh",
-   "wall street futures rise as oil prices fall ahead of fed decision and technology earnings dow jones s p nasdaq"
+   "wall street futures rise as oil prices fall ahead of fed decision and technology earnings dow jones s p nasdaq",
+   "tsx futures rise as oil prices retreat",
+   "gold rises as lower oil prices ease inflation fears ahead of fed meeting",
+   "stocks see support ahead of busy week as crude oil prices ease",
+   "us stocks tick higher as oil prices ease a bit",
+   "us stocks tick higher as oil prices ease a bit national news 2news com",
+   "oil prices fall 2 on iran talks brent hits 114 51",
+   "interactive michigan gas prices surge 33 cents in a week as drivers feel pain at the pump",
+   "super el nio may soften winter energy squeeze",
+   "oil futures pull back amid middle east uncertainty",
+   "interactive detroit drivers are paying 4 87 a gallon what s that costing you",
+   "rand under pressure as oil prices and middle east tensions dominate week ahead",
+   "trump says making a fortune is more important than fixing gas prices",
+   "chevron nyse cvx reaches new 1 year high here s why",
+   "gas prices are trickling down but analyst says relief remains elusive",
+   "gas prices drop in birmingham averaging 3 75 per gallon"
   ],
   "TSLA:CALL": [
    "tesla stock consolidates after potential tesla spacex merger exploration increases uncertainty",
@@ -456,7 +478,8 @@
    "tesla don t short the narrative don t buy the valuation nasdaq tsla",
    "tesla s fsd reaches 10th eu country with latvia approval here s the road ahead for tesla",
    "tesla stock rallies as wall street backs fsd and robotaxis",
-   "tesla inc stock tsla opened up by 5 13 on oct 26 facts behind the movement"
+   "tesla inc stock tsla opened up by 5 13 on oct 26 facts behind the movement",
+   "tesla rises 6 as barclays upgrade cites spacex merger potential lucid drops 4 rivian slips"
   ],
   "XOM:CALL": [
    "trump uses defense act as fuel prices surge",
@@ -559,25 +582,38 @@
    "market wrap clear rebound in europe against falling oil price assets related to brazil in retreat",
    "avantis u s large cap value avlv adds exxon mobil on oct 22",
    "rupee falls for third straight session ends at 95 19 as oil prices and importer demand weigh",
-   "wall street futures rise as oil prices fall ahead of fed decision and technology earnings dow jones s p nasdaq"
+   "wall street futures rise as oil prices fall ahead of fed decision and technology earnings dow jones s p nasdaq",
+   "tsx futures rise as oil prices retreat",
+   "gold rises as lower oil prices ease inflation fears ahead of fed meeting",
+   "stocks see support ahead of busy week as crude oil prices ease",
+   "us stocks tick higher as oil prices ease a bit",
+   "us stocks tick higher as oil prices ease a bit national news 2news com",
+   "oil prices fall 2 on iran talks brent hits 114 51",
+   "interactive michigan gas prices surge 33 cents in a week as drivers feel pain at the pump",
+   "super el nio may soften winter energy squeeze",
+   "exxonmobil nyse xom hits new 1 year high still a buy",
+   "oil futures pull back amid middle east uncertainty",
+   "interactive detroit drivers are paying 4 87 a gallon what s that costing you",
+   "rand under pressure as oil prices and middle east tensions dominate week ahead",
+   "trump says making a fortune is more important than fixing gas prices",
+   "gas prices are trickling down but analyst says relief remains elusive",
+   "gas prices drop in birmingham averaging 3 75 per gallon"
   ],
   "JPM:PUT": [
    "bank of america may need a new ceo",
    "jpmorgan announces cash distributions for the jpmorgan etfs",
    "jamie dimon warns ai agents could be treacherous for banks but researcher says there may be another re",
    "is jpmorgan chase jpm undervalued as bond issuance and earnings strength meet a pullback",
-   "chase cardholders can now invest ultimate rewar"
+   "chase cardholders can now invest ultimate rewar",
+   "jpmorgan chase nyse jpm lifts interest income outlook as lending offsets trading slowdown"
+  ],
+  "COIN:PUT": [
+   "crypto price analysis btc eth hype qnt and icp october 26 quant gains 3 2 as bitcoin falls below 80 000 and ethereum wea",
+   "will xrp price crash ahead of november escrow unlock",
+   "stonex raises asset entities stock price target on bitcoin strategy"
   ]
  },
  "fired": {
-  "BAC:PUT:2026-10-30:51": [
-   "up0.25",
-   "down-0.15",
-   "down-0.3",
-   "sharp@2026-10-22T09:45-04:00",
-   "news:bank of america bac stock sees fair value cut after q3 and regulatory penalties",
-   "sharp@2026-10-26T09:46-04:00"
-  ],
   "INTC:PUT:2026-10-30:80": [
    "news:intel stock tumbles ahead of q3 earnings",
    "up0.25",
@@ -639,20 +675,10 @@
    "news:saudi oil output jumps 12 2 to 8 million bpd in september",
    "news:us dollar steadies ahead of fed decision as oil prices and treasury yields retreat",
    "news:update us equity futures rise pre bell as traders assess declining oil prices await fed rate decision this week",
-   "news:wall street futures rise as oil prices fall ahead of fed decision and technology earnings dow jones s p nasdaq"
-  ],
-  "TSLA:CALL:2026-10-28:390": [
-   "down-0.15",
-   "down-0.3",
-   "stock1",
-   "news:tesla stock drops as cybertruck exit hits australia and new zealand",
-   "up0.25",
-   "news:tesla stock rises in premarket as barclays upgrades rating and lifts price target by 20",
-   "news:barclays upgrades tesla says spacex merger now a key part of bull case",
-   "news:tesla stock slips following capital spending forecast reduction",
-   "news:tesla stock upgraded on spacex prospects takes a run at resistance",
-   "news:spacex s debt deal for gpus suggests tesla deal is logical next step yorkville ives says spcx nasdaq",
-   "news:tesla s fsd reaches 10th eu country with latvia approval here s the road ahead for tesla"
+   "news:wall street futures rise as oil prices fall ahead of fed decision and technology earnings dow jones s p nasdaq",
+   "news:oil prices fall 2 on iran talks brent hits 114 51",
+   "sharp@2026-10-26T10:16-04:00",
+   "news:oil futures pull back amid middle east uncertainty"
   ],
   "XOM:CALL:2026-10-30:190": [
    "down-0.15",
@@ -684,18 +710,17 @@
    "news:oil prices fall as traders weigh u s iran diplomacy saudi attacks",
    "news:saudi oil output jumps 12 2 to 8 million bpd in september",
    "news:oil prices retreat more than 2 as u s iran diplomatic efforts ease supply fears wti remains above 100",
-   "news:wall street futures rise as oil prices fall ahead of fed decision and technology earnings dow jones s p nasdaq"
+   "news:wall street futures rise as oil prices fall ahead of fed decision and technology earnings dow jones s p nasdaq",
+   "news:oil prices fall 2 on iran talks brent hits 114 51",
+   "news:oil futures pull back amid middle east uncertainty"
   ],
-  "JPM:PUT:2026-10-30:325": [
-   "down-0.15",
-   "down-0.3",
-   "stock1"
-  ]
+  "NFLX:PUT:2026-11-06:65": [],
+  "UBER:PUT:2026-10-30:66": [
+   "down-0.15"
+  ],
+  "COIN:PUT:2026-10-30:150": []
  },
- "stock_level": {
-  "TSLA:CALL:2026-10-28:390": 1,
-  "JPM:PUT:2026-10-30:325": 1
- },
+ "stock_level": {},
  "seen_macro": [
   "from venezuela to texas to jamnagar marco rubio s dash for energy",
   "food importer sues to block trump s 50 tariffs on canadian goods",
@@ -1055,10 +1080,27 @@
   "global market european shares flat as investors assess earnings france turmoil",
   "q2 results us fed decision crude oil may drive stock markets this week",
   "ai giant anthropic to make wall street debut next month could be biggest ever initial public sale of sto",
-  "global fx market summary central banks oil volatility and high earnings hurdles test global markets 26 october 2026"
+  "global fx market summary central banks oil volatility and high earnings hurdles test global markets 26 october 2026",
+  "the 19 people in the room when the fed sets interest rates",
+  "stock market rises as wall street looks to rebound after difficult week",
+  "stock market today oct 26 2026 s p 500 climbs as markets gear up for earnings fed decision",
+  "wall street s blockbuster stock split was just announced and it s anything but conventional",
+  "the fed decides on october 28 fidelity s dividend etf for rising rates returned 19 12 over the past year against jepi s ",
+  "why this week could test wall street even if the fed stays quiet",
+  "bulls insist arm s trio of multipliers justify its sky high valuation",
+  "the art of the tariff",
+  "wall street s smart money just suffered a shock not seen since the covid crash",
+  "coalition plans to scrap housing fund and schemes",
+  "us stock market today dow jones futures rise 0 4 s p 500 nasdaq futures gain ahead of wall street opening as oil prices ",
+  "tesla upgraded block downgraded wall street s top analyst calls",
+  "rand under pressure as oil prices and middle east tensions dominate week ahead",
+  "the dollar moves cautiously at the beginning of the week and awaits the federal reserve s decision",
+  "jpmorgan sees oil worth just 94 as iran conflict pushes brent above 115",
+  "bitfinex bitcoin tests 79 250 support as upcoming federal reserve rate decision looms",
+  "fomc meeting puts fed interest rate decision in focus as inflation rises"
  ],
  "sharp": {
-  "BAC:PUT:2026-10-30:51": 51.39,
-  "INTC:PUT:2026-10-30:80": 87.37
+  "INTC:PUT:2026-10-30:80": 87.37,
+  "CVX:CALL:2026-10-30:240": 232.145
  }
 }
