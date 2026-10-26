@@ -868,6 +868,8 @@ def evaluate(p, n, q, spot, spy_spot):
     pk_key = "peak" if live else "peak_after"      # بعد الإقفال لا نلوّث قمة القاعدة
     if pnl > p.get(pk_key, 0.0) + 1e-9:
         p[pk_key] = round(pnl, 3)
+        if pk_key == "peak_after":
+            p["peak_after_at"] = n.isoformat(timespec="minutes")      # للدراسة: متى بلغ العقد قمته بعد الإقفال (تسجيل فقط)
         changed = True
     mature = age >= MIN_AGE_MIN
     # دراسة صامتة: آخر ربح/خسارة مرصود (للمقارنة بين «بالقاعدة» و«لو تركته حتى الانتهاء»)
@@ -1012,6 +1014,16 @@ def live_rows(rows):
     return [(p, i) for p, i in rows if not is_closed(p) or closed_on(p, today)]
 
 
+def post_text(p):
+    """ماذا فعل العقد بعد إقفاله (تعرضه اللوحة والتقرير): ما بعد الهدف أو ما بعد الوقف. فارغ لغير المقفل."""
+    ci = closed_info(p)
+    if not ci:
+        return ""
+    import post_close
+    peak = p.get("peak_after")
+    return post_close.after_text("tp" if ci[0] == "tp" else "stop", p["entry"], peak, p.get("last_pnl"), TAKE_PROFIT)
+
+
 def board_png(rows):
     import cards
     rows = live_rows(rows)
@@ -1023,7 +1035,7 @@ def board_png(rows):
             lab = "🔒 مقفل بالهدف" if ci[0] == "tp" else "🔒 مقفل بالوقف"
             items.append({"name": f"{p['ticker']} {p['side']} {p['strike']:g}", "sub": f"{lab} · {date_ar(p['exp'])}",
                           "entry": p["entry"], "now": round(p["entry"] * (1 + lp), 2), "pnl": lp,
-                          "status": "tp" if ci[0] == "tp" else "stopped", "closed": True})
+                          "status": "tp" if ci[0] == "tp" else "stopped", "closed": True, "post": post_text(p)})
         else:
             items.append({"name": f"{p['ticker']} {p['side']} {p['strike']:g}", "sub": date_ar(p["exp"]),
                           "entry": p["entry"], "now": info["val"], "pnl": info["pnl"], "status": "open"})
@@ -1068,8 +1080,10 @@ def _closed_line(p):
     kind, _, lp = closed_info(p)
     hi = highest_pnl(p)
     top = f" | أعلى ربح وصله <b>{hi * 100:+.0f}%</b>" if hi > 0.01 else ""
+    post = post_text(p)
     return (f"{'🎯' if kind == 'tp' else '🛑'} <b>{ob.esc(p['ticker'])} {p['side']}</b> {p['strike']:,.1f} | "
-            f"{date_ar(p['exp'])}: ${p['entry'] * 100:,.0f} ← <b>{lp * p['entry'] * 100:+,.0f}$</b> ({lp * 100:+.0f}%){top}")
+            f"{date_ar(p['exp'])}: ${p['entry'] * 100:,.0f} ← <b>{lp * p['entry'] * 100:+,.0f}$</b> ({lp * 100:+.0f}%){top}"
+            + (f"\n   ↳ <i>{post}</i>" if post else ""))
 
 
 def _open_line(p, info):

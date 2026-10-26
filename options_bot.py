@@ -1670,10 +1670,16 @@ def daily_report_items(n):
     P = load_positions()
     today = n.date().isoformat()
     todays = [p for p in P["positions"] if p["time"][:10] == today]
-    last = {}
+    last, after = {}, {}
     try:
-        for r in pd.read_csv(TRACK_FILE).itertuples():
+        trk = pd.read_csv(TRACK_FILE)
+        for r in trk.itertuples():
             last[r.id] = float(r.val)
+        for pid, g in trk.groupby("id"):
+            g = g.sort_values("time")
+            idx = next((k for k, st in enumerate(g["status"]) if st in ("tp", "stopped")), None)
+            if idx is not None:
+                after[pid] = (g["status"].iloc[idx], [float(v) for v in g["pnl"].iloc[idx + 1:]])
     except Exception:
         pass
     items = []
@@ -1686,8 +1692,16 @@ def daily_report_items(n):
         else:
             val = last.get(p["id"], e)
             status, ex, pnl = "flat", val, (val - e) * 100 * q
+        post = ""
+        if status in ("tp", "stop") and p["id"] in after:
+            try:
+                import post_close
+                pkp, lst = post_close.from_path(after[p["id"]][1])
+                post = post_close.after_text(status, e, pkp, lst, TAKE_PROFIT)
+            except Exception:
+                post = ""
         items.append({"name": f"{p['root']} {p['strike']:,.0f} {p['side']}", "qty": q, "entry": e, "exit": ex,
-                      "status": status, "peak": pk, "pnl": pnl})
+                      "status": status, "peak": pk, "pnl": pnl, "post": post})
     return items
 
 

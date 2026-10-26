@@ -106,7 +106,7 @@ def daily_card(date_s, items, sl, tp, bot_name="SPX"):
         net += it["pnl"]
         peak_net += max(0.0, it["peak"] * e * 100 * it["qty"])
         rows.append({"style": st, "cells": [
-            f"<b>{ltr(it['name'])}</b><div class='dim'>{ltr('×' + str(it['qty']))}</div>", f"{e:.2f}", f"{it['exit']:.2f}",
+            f"<b>{ltr(it['name'])}</b><div class='dim'>{ltr('×' + str(it['qty']))}</div>{_post(it)}", f"{e:.2f}", f"{it['exit']:.2f}",
             f"{e * (1 - sl):.2f}", f"{e * (1 + tp):.2f}", f"<span class='dim'>{e * (1 + it['peak']):.2f}</span>",
             f"<span style='color:{'#35d07f' if it['pnl'] > 0 else ('#ff6b73' if it['pnl'] < 0 else '#aab2c5')}'>{ltr(_money(it['pnl']))}</span>"]})
     done = wins + losses
@@ -116,6 +116,11 @@ def daily_card(date_s, items, sl, tp, bot_name="SPX"):
     notes = [f"النتيجة تُحسب بقاعدة الخروج الفعلية: هدف +{tp * 100:.0f}% أو وقف -{sl * 100:.0f}%، وليس بأعلى سعر.",
              f"لو حُسبت الأرباح عند القمم (غير قابل للتنفيذ) لظهر ربح إجمالي {peak_net:,.0f} دولار، ولذلك لا نعتمده."]
     return make_card(f"تقرير {bot_name} اليومي", date_s, tiles, rows, notes, COLS_DAILY)
+
+
+def _post(it):
+    """سطر «ماذا فعل العقد بعد الإقفال» تحت الاسم إن وُجد (post_close)."""
+    return f"<div class='dim'>{esc(it['post'])}</div>" if it.get("post") else ""
 
 
 COLS_BOARD = ["العقد", "الدخول", "الآن", "التغير", "الوقف", "الهدف"]
@@ -139,7 +144,7 @@ def board_card(title, subtitle, items, sl, tp):
         net_n += (it["now"] - it["entry"]) * 100 * it.get("qty", 1)
         col = "#35d07f" if pn >= 0 else "#ff6b73"
         rows.append({"style": st, "cells": [
-            f"<b>{ltr(it['name'])}</b><div class='dim'>{esc(it.get('sub', ''))}</div>", f"{it['entry']:.2f}", f"{it['now']:.2f}",
+            f"<b>{ltr(it['name'])}</b><div class='dim'>{esc(it.get('sub', ''))}</div>{_post(it)}", f"{it['entry']:.2f}", f"{it['now']:.2f}",
             f"<span style='color:{col}'>{ltr(f'{pn * 100:+.0f}%')}</span>", f"{it['entry'] * (1 - sl):.2f}", f"{it['entry'] * (1 + tp):.2f}"]})
     any_closed = any(it.get("closed") for it in items)
     if any_closed:      # لوحة بمقفل وعائم: نفصل بينهما صراحة
