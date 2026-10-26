@@ -14,8 +14,8 @@
    "strength": "4.8",
    "occ": "HOOD261030P00089000",
    "peak_pnl": 0.037,
-   "close_pnl": -0.177,
-   "quotes": 37,
+   "close_pnl": -0.194,
+   "quotes": 38,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -34,8 +34,8 @@
    "strength": "8.4",
    "occ": "TSLA261102C00410000",
    "peak_pnl": 0.118,
-   "close_pnl": -0.064,
-   "quotes": 37,
+   "close_pnl": -0.061,
+   "quotes": 38,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -53,9 +53,9 @@
    "edge": "4.0",
    "strength": "4.7",
    "occ": "UBER261030P00066000",
-   "peak_pnl": 0.169,
-   "close_pnl": 0.169,
-   "quotes": 35,
+   "peak_pnl": 0.181,
+   "close_pnl": 0.181,
+   "quotes": 36,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -74,8 +74,8 @@
    "strength": "4.6",
    "occ": "COIN261030P00150000",
    "peak_pnl": 0.111,
-   "close_pnl": 0.037,
-   "quotes": 15,
+   "close_pnl": 0.01,
+   "quotes": 16,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -94,8 +94,28 @@
    "strength": "5.0",
    "occ": "XOM261030C00185000",
    "peak_pnl": 0.038,
-   "close_pnl": -0.008,
-   "quotes": 15,
+   "close_pnl": 0.004,
+   "quotes": 16,
+   "out": "",
+   "out_time": "",
+   "out_pnl": ""
+  },
+  {
+   "id": "20261026T1335|spx|daily_stop|SPX|CALL|7685|2026-10-26",
+   "project": "spx",
+   "tag": "daily_stop",
+   "sym": "SPX",
+   "side": "CALL",
+   "strike": 7685.0,
+   "exp": "2026-10-26",
+   "entry": 3.88,
+   "entry_time": "2026-10-26T13:35-04:00",
+   "edge": "8.25",
+   "strength": "10.0",
+   "occ": "SPXW261026C07685000",
+   "peak_pnl": 0.0,
+   "close_pnl": -0.144,
+   "quotes": 1,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -167,7 +187,8 @@
   "20261026T1312|stocks|same_side_cap|XOM|CALL|185|2026-10-30",
   "20261026T1312|stocks|same_side_cap|HOOD|PUT|87|2026-11-06",
   "20261026T1312|stocks|max_ideas_cap|UBER|PUT|66|2026-10-30",
-  "20261026T1312|stocks|open_same_dir|TSLA|CALL|407.5|2026-10-30"
+  "20261026T1312|stocks|open_same_dir|TSLA|CALL|407.5|2026-10-30",
+  "20261026T1335|spx|daily_stop|SPX|CALL|7685|2026-10-26"
  ],
  "last": {
   "spx|CALL|SPY": "2026-10-26T10:05-04:00",
@@ -180,7 +201,7 @@
   "stocks|HOOD|PUT|2026-10-26": "2026-10-26T10:12-04:00",
   "stocks|TSLA|CALL|2026-10-26": "2026-10-26T10:12-04:00",
   "stocks|UBER|PUT|2026-10-26": "2026-10-26T10:20-04:00",
-  "spx|CALL|SPX": "2026-10-26T11:05-04:00",
+  "spx|CALL|SPX": "2026-10-26T13:35-04:00",
   "stocks|COIN|PUT|2026-10-26": "2026-10-26T12:12-04:00",
   "stocks|XOM|CALL|2026-10-26": "2026-10-26T12:12-04:00"
  }
