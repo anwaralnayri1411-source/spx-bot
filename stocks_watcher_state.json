@@ -88,7 +88,8 @@
    "polen focus growth strategy trims starbucks corporation sbux as turnaround progress enters valuation",
    "weride inc wrd stock price news quote and history",
    "baidu and lyft push ahead with plans for a robotaxi service in london bidu nasdaq",
-   "rivian buys startup to turn 400 000 daily clips into 3d sims"
+   "rivian buys startup to turn 400 000 daily clips into 3d sims",
+   "uber nyse uber walks away from deal talks as hiring lawsuit tests its story"
   ],
   "DIS:CALL": [
    "skydance rises 5 as steep post merger slide pauses disney gains 2 netflix slips",
@@ -278,7 +279,10 @@
    "why nu holdings and mercadolibre stocks are plunging today and what wall street sees next",
    "intel server strength could easily offset a weak pc quarter in q3 nasdaq intc",
    "flex to report q2 earnings what s in the cards for the stock",
-   "intel stock holds buy rating near 87 ahead of q3 earnings driven by strong server growth despite pc market softness"
+   "intel stock holds buy rating near 87 ahead of q3 earnings driven by strong server growth despite pc market softness",
+   "chiho environmental group posts 2025 results as share trading remains suspended",
+   "fund update 641 998 intel intc shares added to gf fund management co ltd portfolio",
+   "intel and tsmc are vying for chip fabrication supremacy 1 offers superior value"
   ],
   "CVX:CALL": [
    "stocks see continued downward pressure from ai anxiety and oil prices",
@@ -444,7 +448,15 @@
    "trump says making a fortune is more important than fixing gas prices",
    "chevron nyse cvx reaches new 1 year high here s why",
    "gas prices are trickling down but analyst says relief remains elusive",
-   "gas prices drop in birmingham averaging 3 75 per gallon"
+   "gas prices drop in birmingham averaging 3 75 per gallon",
+   "tsx edges higher as oil prices ease",
+   "india s bpcl to cut russian oil imports due to higher prices",
+   "gas prices rise slightly",
+   "u s stocks tick higher as oil prices ease a bit",
+   "how much retirement income could 100 000 in these 3 dividend stocks generate",
+   "maine fire officials share heating safety tips as oil prices rise",
+   "market winners stall as oil prices revive inflation fears",
+   "will chevron nyse cvx keep its energy momentum going"
   ],
   "TSLA:CALL": [
    "tesla stock consolidates after potential tesla spacex merger exploration increases uncertainty",
@@ -597,7 +609,11 @@
    "rand under pressure as oil prices and middle east tensions dominate week ahead",
    "trump says making a fortune is more important than fixing gas prices",
    "gas prices are trickling down but analyst says relief remains elusive",
-   "gas prices drop in birmingham averaging 3 75 per gallon"
+   "gas prices drop in birmingham averaging 3 75 per gallon",
+   "tsx edges higher as oil prices ease",
+   "india s bpcl to cut russian oil imports due to higher prices",
+   "gas prices rise slightly",
+   "u s stocks tick higher as oil prices ease a bit"
   ],
   "JPM:PUT": [
    "bank of america may need a new ceo",
@@ -610,7 +626,13 @@
   "COIN:PUT": [
    "crypto price analysis btc eth hype qnt and icp october 26 quant gains 3 2 as bitcoin falls below 80 000 and ethereum wea",
    "will xrp price crash ahead of november escrow unlock",
-   "stonex raises asset entities stock price target on bitcoin strategy"
+   "stonex raises asset entities stock price target on bitcoin strategy",
+   "altcoin season 2026 will solana sui and render lead a 20 crypto rebound this week",
+   "bitcoin price breaks above 80 000 on binance s",
+   "cryptocurrency stocks slide as bitcoin hovers near 80 000 riot strategy and mara drop 4",
+   "strategy buys no bitcoin spends 205m repurchasing strc shares",
+   "galaxy says bitcoin bear market is over at 79 513",
+   "is bitcoin a good buy at 80 000 right now"
   ]
  },
  "fired": {
@@ -622,7 +644,13 @@
    "sharp@2026-10-23T10:40-04:00",
    "down-0.15",
    "news:intel intc unveils crescent island gpu d series for agentic ai",
-   "news:new street upgrades intel as cpu scarcity strengthens turnaround"
+   "news:new street upgrades intel as cpu scarcity strengthens turnaround",
+   "down-0.3",
+   "sharp@2026-10-26T10:46-04:00",
+   "sharp@2026-10-26T10:48-04:00",
+   "stock1",
+   "stock2",
+   "sharp@2026-10-26T11:01-04:00"
   ],
   "CVX:CALL:2026-10-30:240": [
    "down-0.15",
@@ -678,49 +706,21 @@
    "news:wall street futures rise as oil prices fall ahead of fed decision and technology earnings dow jones s p nasdaq",
    "news:oil prices fall 2 on iran talks brent hits 114 51",
    "sharp@2026-10-26T10:16-04:00",
-   "news:oil futures pull back amid middle east uncertainty"
-  ],
-  "XOM:CALL:2026-10-30:190": [
-   "down-0.15",
-   "news:us equity indexes mixed amid surging crude oil prices moderate buying in technology",
-   "news:aaa national average falls 6 cents crude oil nears 100 barrel",
-   "news:wall street mostly loses ground under pressure from rising oil prices",
-   "news:london stocks mark weekly fall as oil hits five month high ahead of budget",
-   "news:oil stocks rally as wti crude price tops 103 devon energy and diamondback energy gain 5 occidental petroleum rises 3",
-   "down-0.3",
-   "news:u s rig count holds steady as oil prices surge",
-   "news:dow falls more than 500 points as oil climbs on iran fears",
-   "news:equities mostly lower intraday as oil prices soar",
-   "news:update us equity indexes mixed as technology attempts recovery amid surging crude oil",
-   "news:oil prices climb as saudi attacks heighten supply concerns",
-   "news:update equities mostly lower intraday as oil prices soar",
-   "news:oil markets are on edge ahead of the weekend as midterm elections near and fresh u s strikes on iran are predicted",
-   "news:futures slip as big tech falters oil extends relentless advance",
-   "news:brent crude tops 116 as traders price escalating middle east conflict",
-   "news:oil prices rise to highest since late april on middle east fears",
-   "news:brent crude prices reach five month high amidst continued houthi attacks uae oil spill",
-   "news:oil prices at near three week high as us iran peace hopes fade",
-   "news:oil prices could rise to 150 a barrel if war on iran resumes",
-   "news:oil plunges more than 6 from near wartime highs as diplomacy over iran seemingly gathers pace",
-   "news:oil prices fall as us iran peace talks ease tensions but saudi attacks keep global supply risks high hindustan times",
-   "news:oil prices reach six month high amid middle east tensions",
-   "news:crude oil prices retreat as saudi infrastructure attacks keep supply risks in focus",
-   "news:european gas prices soar to four year high over winter supply fears",
-   "news:houthis claim attacks on saudi arabia s east west oil pipeline",
-   "news:oil prices fall as traders weigh u s iran diplomacy saudi attacks",
-   "news:saudi oil output jumps 12 2 to 8 million bpd in september",
-   "news:oil prices retreat more than 2 as u s iran diplomatic efforts ease supply fears wti remains above 100",
-   "news:wall street futures rise as oil prices fall ahead of fed decision and technology earnings dow jones s p nasdaq",
-   "news:oil prices fall 2 on iran talks brent hits 114 51",
-   "news:oil futures pull back amid middle east uncertainty"
+   "news:oil futures pull back amid middle east uncertainty",
+   "news:market winners stall as oil prices revive inflation fears"
   ],
   "NFLX:PUT:2026-11-06:65": [],
   "UBER:PUT:2026-10-30:66": [
    "down-0.15"
   ],
-  "COIN:PUT:2026-10-30:150": []
+  "COIN:PUT:2026-10-30:150": [
+   "sharp@2026-10-26T10:43-04:00",
+   "news:bitcoin price breaks above 80 000 on binance s"
+  ]
  },
- "stock_level": {},
+ "stock_level": {
+  "INTC:PUT:2026-10-30:80": 2
+ },
  "seen_macro": [
   "from venezuela to texas to jamnagar marco rubio s dash for energy",
   "food importer sues to block trump s 50 tariffs on canadian goods",
@@ -1097,10 +1097,25 @@
   "the dollar moves cautiously at the beginning of the week and awaits the federal reserve s decision",
   "jpmorgan sees oil worth just 94 as iran conflict pushes brent above 115",
   "bitfinex bitcoin tests 79 250 support as upcoming federal reserve rate decision looms",
-  "fomc meeting puts fed interest rate decision in focus as inflation rises"
+  "fomc meeting puts fed interest rate decision in focus as inflation rises",
+  "rabobank forecast federal reserve may hike another 25 basis points in december with rate cuts not until 2028",
+  "piper sandler shares 9 stocks and 5 etfs to tap into a thriving trade insulated from ai jitters",
+  "federal reserve set to announce interest rate decision wednesday",
+  "nasdaq futures up 160 points 5 things to know before wall street opens",
+  "us treasury yields hold steady ahead of fed rate decision pce inflation data and key us economic reports this week hindu",
+  "audi invests 4 billion in us factory amid tariff challenges",
+  "rba rate decision hinges on september quarter cpi data",
+  "wall st set for higher open as anthropic s ipo filing sharpens ai focus",
+  "mark zandi warns fed rate hike would be a policy misstep as growing economic risks mount ahead of this week s meeting",
+  "coreweave rout sends warning sign to rest of the stock market",
+  "economic calendar october 26 30 2026 for oanda xauusd by forexcitypro leemeenal",
+  "stock market rises as wall street looks to rebound after difficult week sp500",
+  "u s stocks advance ahead of key tech earnings fed decision",
+  "robinhood vs sofi wall street sees only one stock as a strong buy ahead of tomorrow s earnings"
  ],
  "sharp": {
-  "INTC:PUT:2026-10-30:80": 87.37,
-  "CVX:CALL:2026-10-30:240": 232.145
+  "INTC:PUT:2026-10-30:80": 89.75,
+  "CVX:CALL:2026-10-30:240": 232.145,
+  "COIN:PUT:2026-10-30:150": 159.975
  }
 }
