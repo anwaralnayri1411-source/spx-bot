@@ -344,7 +344,8 @@ VERDICT_FILES = (("مقارنة درجة الأخبار (Claude مقابل ال�
                   ("شبكة الوقف والهدف", "research/exit_grid_study_results.md"),
                   ("سحب السيولة + كسر الهيكل + FVG", "research/sweep_fvg_study_results.md"),
                   ("تكرار الفرضيات على صناديق وشركات", "research/replication_study_results.md"),
-                  ("FIBO ENTRY (BOS + 0.79)", "research/fibo_entry_study_results.md"))
+                  ("FIBO ENTRY والمنطقة الذهبية", "research/fibo_entry_study_results.md"),
+                  ("روتين ما قبل الافتتاح", "research/preopen_routine_study_results.md"))
 
 
 def sec_verdicts(texts):
