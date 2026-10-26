@@ -89,7 +89,9 @@
    "weride inc wrd stock price news quote and history",
    "baidu and lyft push ahead with plans for a robotaxi service in london bidu nasdaq",
    "rivian buys startup to turn 400 000 daily clips into 3d sims",
-   "uber nyse uber walks away from deal talks as hiring lawsuit tests its story"
+   "uber nyse uber walks away from deal talks as hiring lawsuit tests its story",
+   "tech ipo first day performance 10 listings compared",
+   "jpmorgan funds global focus fund high conviction stock picking backed by deep research"
   ],
   "DIS:CALL": [
    "skydance rises 5 as steep post merger slide pauses disney gains 2 netflix slips",
@@ -152,7 +154,8 @@
    "analysts offer insights on communication services companies at t t and netflix nflx",
    "sa asks netflix hit a 52 week low this week is now the time to buy nflx nasdaq",
    "what is behind the upward move in netflix nasdaq nflx",
-   "netflix co ceo greg peters just said we know that we can do better when it comes to u s engagement should investors be w"
+   "netflix co ceo greg peters just said we know that we can do better when it comes to u s engagement should investors be w",
+   "netflix nasdaq nflx has crashed over 50 five times before here is what the pattern reveals"
   ],
   "AVGO:PUT": [
    "3 artificial intelligence ai stocks that look like great buys right now",
@@ -282,7 +285,9 @@
    "intel stock holds buy rating near 87 ahead of q3 earnings driven by strong server growth despite pc market softness",
    "chiho environmental group posts 2025 results as share trading remains suspended",
    "fund update 641 998 intel intc shares added to gf fund management co ltd portfolio",
-   "intel and tsmc are vying for chip fabrication supremacy 1 offers superior value"
+   "intel and tsmc are vying for chip fabrication supremacy 1 offers superior value",
+   "intel just dropped 10 in a week is it time to sell or load up",
+   "new street bullish on intel to buy as cpu scarcity strengthens turnaround"
   ],
   "CVX:CALL": [
    "stocks see continued downward pressure from ai anxiety and oil prices",
@@ -456,7 +461,18 @@
    "how much retirement income could 100 000 in these 3 dividend stocks generate",
    "maine fire officials share heating safety tips as oil prices rise",
    "market winners stall as oil prices revive inflation fears",
-   "will chevron nyse cvx keep its energy momentum going"
+   "will chevron nyse cvx keep its energy momentum going",
+   "catalyst filled trading week ahead oil prices ease what s moving markets",
+   "tsx climbs on tech gains after anthropic s ipo filing softer oil prices boost sentiment",
+   "aaa gas prices remain unseasonably high",
+   "gas prices under trump eclipse highs of biden era federal data reveals",
+   "is wall street getting it all wrong about ai oil and bonds",
+   "u s futures climb ahead of big earnings week and another fed rate call",
+   "iran accuses us of confusing negotiation with dictation vows to put national interest over oil prices",
+   "oil slips but stays near six month highs on saudi attacks",
+   "european stocks advance as oil prices decline ahead of central bank decisions dax cac ftse100",
+   "gas prices now higher under trump than biden era average analysis finds",
+   "michigan gas prices a campaign issue are up as early voting starts"
   ],
   "TSLA:CALL": [
    "tesla stock consolidates after potential tesla spacex merger exploration increases uncertainty",
@@ -632,26 +648,14 @@
    "cryptocurrency stocks slide as bitcoin hovers near 80 000 riot strategy and mara drop 4",
    "strategy buys no bitcoin spends 205m repurchasing strc shares",
    "galaxy says bitcoin bear market is over at 79 513",
-   "is bitcoin a good buy at 80 000 right now"
+   "is bitcoin a good buy at 80 000 right now",
+   "tsx stock watch why bitcoin fund trust units class a tsx qbtc is drawing attention and what comes next",
+   "south korea weighs fourth delay on its crypto gains tax pushing it to 2029",
+   "bitcoin news strategy has 5 1 billion in cash to cover 3 4 years of dividends could it have to sell bitcoin again",
+   "canada opens consultation on draft stablecoin rules maintains ban on yields"
   ]
  },
  "fired": {
-  "INTC:PUT:2026-10-30:80": [
-   "news:intel stock tumbles ahead of q3 earnings",
-   "up0.25",
-   "news:intel in spotlight as wedbush says tool installation at az fab should aid revenue growth intc nasdaq",
-   "sharp@2026-10-23T09:46-04:00",
-   "sharp@2026-10-23T10:40-04:00",
-   "down-0.15",
-   "news:intel intc unveils crescent island gpu d series for agentic ai",
-   "news:new street upgrades intel as cpu scarcity strengthens turnaround",
-   "down-0.3",
-   "sharp@2026-10-26T10:46-04:00",
-   "sharp@2026-10-26T10:48-04:00",
-   "stock1",
-   "stock2",
-   "sharp@2026-10-26T11:01-04:00"
-  ],
   "CVX:CALL:2026-10-30:240": [
    "down-0.15",
    "news:oil prices continue to rise surpass 116 per barrel",
@@ -707,19 +711,27 @@
    "news:oil prices fall 2 on iran talks brent hits 114 51",
    "sharp@2026-10-26T10:16-04:00",
    "news:oil futures pull back amid middle east uncertainty",
-   "news:market winners stall as oil prices revive inflation fears"
+   "news:market winners stall as oil prices revive inflation fears",
+   "news:tsx climbs on tech gains after anthropic s ipo filing softer oil prices boost sentiment",
+   "news:oil slips but stays near six month highs on saudi attacks"
   ],
-  "NFLX:PUT:2026-11-06:65": [],
+  "NFLX:PUT:2026-11-06:65": [
+   "up0.25"
+  ],
   "UBER:PUT:2026-10-30:66": [
    "down-0.15"
   ],
   "COIN:PUT:2026-10-30:150": [
    "sharp@2026-10-26T10:43-04:00",
-   "news:bitcoin price breaks above 80 000 on binance s"
-  ]
+   "news:bitcoin price breaks above 80 000 on binance s",
+   "down-0.15",
+   "sharp@2026-10-26T11:21-04:00",
+   "stock1"
+  ],
+  "PLTR:CALL:2026-10-30:202.5": []
  },
  "stock_level": {
-  "INTC:PUT:2026-10-30:80": 2
+  "COIN:PUT:2026-10-30:150": 1
  },
  "seen_macro": [
   "from venezuela to texas to jamnagar marco rubio s dash for energy",
@@ -1111,11 +1123,17 @@
   "economic calendar october 26 30 2026 for oanda xauusd by forexcitypro leemeenal",
   "stock market rises as wall street looks to rebound after difficult week sp500",
   "u s stocks advance ahead of key tech earnings fed decision",
-  "robinhood vs sofi wall street sees only one stock as a strong buy ahead of tomorrow s earnings"
+  "robinhood vs sofi wall street sees only one stock as a strong buy ahead of tomorrow s earnings",
+  "tds group s expectations for federal reserve decisions this week",
+  "news by cnbc tv18 on tradingview 2026 10 26 cnbctv 3700a818b094b 0",
+  "investors take for granted a pause from the fed now but keep an interest rate hike in december on the radar",
+  "us stock market today live dow jones rises 105 points s p 500 gains 0 21 nasdaq climbs 0 28 at open as oil prices fed ra",
+  "two stock picks to capitalize on wall street s misguided ai fears",
+  "bitcoin analysis btc is falling on doubts about ai spending is it trading like a tech stock now",
+  "germany audi s 4 billion deal with trump comes at a tricky moment for the automotive hub"
  ],
  "sharp": {
-  "INTC:PUT:2026-10-30:80": 89.75,
   "CVX:CALL:2026-10-30:240": 232.145,
-  "COIN:PUT:2026-10-30:150": 159.975
+  "COIN:PUT:2026-10-30:150": 162.19
  }
 }

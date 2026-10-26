@@ -612,3 +612,10 @@ time,pos_id,ticker,side,event,detail,entry,val,pnl,spot,need,tdays,advice,reason
 2026-10-26T10:56-04:00,COIN:PUT:2026-10-30:150,COIN,PUT,macro_quiet,"against/weak/medium: U.S. stocks advance ahead of key tech earnings, Fed decision - TradingView",3.34,2.9,-0.1317,160.84,0.0882,5,أبقِ,خبر ضد العقد لكن تأثيره محدود، راقب
 2026-10-26T10:59-04:00,INTC:PUT:2026-10-30:80,INTC,PUT,stock,-2.01% منذ الدخول,1.8,0.98,-0.4556,89.385,0.1251,5,الأفضل الخروج,العقد تجاوز الوقف (-46%) | السهم يتحرك ضدك
 2026-10-26T11:01-04:00,INTC:PUT:2026-10-30:80,INTC,PUT,sharp,-1.42% في 15د,1.8,,,89.75,0.1287,5,فكّر بالخروج,السهم يتحرك ضدك
+2026-10-26T11:04-04:00,CVX:CALL:2026-10-30:240,CVX,CALL,news,"against/medium: TSX climbs on tech gains after Anthropic's IPO filing, softer oil prices boost sentiment - TradingView",1.46,1.17,-0.1986,232.21,0.0398,5,فكّر بالخروج,خبر ضد العقد
+2026-10-26T11:10-04:00,INTC:PUT:2026-10-30:80,INTC,PUT,news,against/medium: New Street bullish on Intel to Buy as CPU scarcity strengthens turnaround - Yahoo Finance Australia,1.8,0.87,-0.5167,90.16,0.1327,5,الأفضل الخروج,العقد تجاوز الوقف (-52%) | السهم يتحرك ضدك | خبر ضد العقد
+2026-10-26T11:10-04:00,COIN:PUT:2026-10-30:150,COIN,PUT,contract,-17%,3.34,2.78,-0.1677,161.11,0.0897,5,أبقِ,الفكرة قائمة لكن العقد -17%؛ التزم بالوقف عند −40%
+2026-10-26T11:15-04:00,NFLX:PUT:2026-11-06:65,NFLX,PUT,contract,+35%,1.39,1.88,0.3525,64.17,0.0087,10,أبقِ,لا جديد يغيّر فكرة الصفقة
+2026-10-26T11:21-04:00,COIN:PUT:2026-10-30:150,COIN,PUT,sharp,-0.98% في 15د,3.34,2.55,-0.2365,162.19,0.0958,5,فكّر بالخروج,السهم يتحرك ضدك
+2026-10-26T11:21-04:00,COIN:PUT:2026-10-30:150,COIN,PUT,stock,-1.24% منذ الدخول,3.34,2.55,-0.2365,162.19,0.0958,5,فكّر بالخروج,السهم يتحرك ضدك
+2026-10-26T11:26-04:00,CVX:CALL:2026-10-30:240,CVX,CALL,news,with/medium: Oil slips but stays near six-month highs on Saudi attacks - Yahoo Finance,1.46,1.25,-0.1438,232.43,0.0389,5,أبقِ,الخبر في صالح العقد
