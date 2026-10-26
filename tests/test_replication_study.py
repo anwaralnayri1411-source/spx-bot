@@ -85,7 +85,7 @@ def test_planted_effect_replicates_and_noise_does_not():
     verdicts = [rp.replicates(h, {g: stats0[(g, h)] for g in ("صناديق", "شركات")}) for h in rp.HYPS + ("SWEEP",)]
     assert verdicts.count("تتكرر") <= 1
     text = "\n".join(rp.report(stats, per, days, 5, "تجربة"))
-    assert "H-REPL" in text and "H-MOM" in text and "H-SWEEP" in text and text.count("⚖️") == 5
+    assert "H-REPL" in text and "H-MOM" in text and "H-SWEEP" in text and text.count("⚖️") == 6 and "H-PREV" in text
 
 
 def test_main_reads_a_folder_and_handles_empty(tmp_path, monkeypatch):
@@ -100,3 +100,32 @@ def test_main_reads_a_folder_and_handles_empty(tmp_path, monkeypatch):
     assert rp.main([str(base)]) == 0
     assert "H-LAST30" in (tmp_path / "r.md").read_text(encoding="utf-8")
     assert rp.main([str(tmp_path / "none")]) == 0
+
+
+def test_prev_verdict_waits_for_trades_requires_every_group_and_flags_reversal():
+    ok = (400, 0.2, {95.0: (0.05, 0.35), 99.6: (0.0, 0.4)})
+    bad = (400, 0.05, {95.0: (-0.1, 0.2), 99.6: (-0.2, 0.3)})
+    neg = (400, -0.3, {95.0: (-0.5, -0.1), 99.6: (-0.6, 0.0)})
+    assert rp.prev_verdict({"صناديق": ok, "شركات": ok}, ok, 400) == "تتحقق"
+    assert "لا حكم بعد" in rp.prev_verdict({"صناديق": ok, "شركات": ok}, ok, 100)
+    assert rp.prev_verdict({"صناديق": ok, "شركات": bad}, ok, 400) == "لا تتحقق"
+    assert rp.prev_verdict({"صناديق": neg, "شركات": neg}, neg, 400) == "عكسية"
+    assert "ناقصة" in rp.prev_verdict({"صناديق": ok, "شركات": None}, ok, 400)
+
+
+def test_split_sweep_returns_exec_and_prev_pairs():
+    ev = pd.DataFrame([
+        {"day": pd.Timestamp("2024-01-02"), "version": "exec", "kind": "real", "mode": "t15", "R": 1.0},
+        {"day": pd.Timestamp("2024-01-02"), "version": "exec", "kind": "placebo", "mode": "t15", "R": 0.5},
+        {"day": pd.Timestamp("2024-01-03"), "version": "prev", "kind": "real", "mode": "line", "R": 2.0},
+        {"day": pd.Timestamp("2024-01-03"), "version": "prev", "kind": "placebo", "mode": "line", "R": -1.0},
+        {"day": pd.Timestamp("2024-01-03"), "version": "oracle", "kind": "real", "mode": "line", "R": 9.0}])
+    (er, ep), (pr, pp) = rp.split_sweep(ev)
+    assert er["R"].tolist() == [1.0] and ep["R"].tolist() == [0.5] and pr["R"].tolist() == [2.0] and pp["R"].tolist() == [-1.0]
+
+
+def test_spy_joins_the_etf_group_for_prev_only():
+    ser = series(0.0, names=("SPY", "QQQ", "AAA"), n=300, seed0=70)
+    stats, per, days = rp.analyze(ser)
+    assert ("صناديق", "PREV") in stats and ("الكل", "PREV") in stats
+    assert all(sym != "SPY" for rows in per.values() for sym, _, _ in rows)                  # SPY خارج فرضيات H-REPL الأصلية

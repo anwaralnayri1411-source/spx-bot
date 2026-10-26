@@ -65,10 +65,30 @@ def last30_values(d):
     return pd.DataFrame({"day": B["day"].to_numpy()[m], "hyp": "LAST30", "val": (s * ex.to_numpy())[m]})
 
 
+def split_sweep(ev):
+    """من أحداث sw.run: ((حقيقي، وهمي) لنسخة exec بهدف 1.5R، (حقيقي، وهمي) لنسخة prev بهدف إغلاق أمس)."""
+    out = []
+    for ver, mode in (("exec", "t15"), ("prev", "line")):
+        sel = ev[(ev["version"] == ver) & (ev["mode"] == mode)]
+        out.append((sel[sel["kind"] == "real"][["day", "R"]], sel[sel["kind"] == "placebo"][["day", "R"]]))
+    return out
+
+
 def sweep_values(d):
-    ev = sw.run(d)
-    sel = ev[(ev["version"] == "exec") & (ev["mode"] == "t15")]
-    return sel[sel["kind"] == "real"][["day", "R"]], sel[sel["kind"] == "placebo"][["day", "R"]]
+    return split_sweep(sw.run(d))[0]
+
+
+MIN_PREV_REAL = 300
+
+
+def prev_verdict(by_group, pooled, n_real):
+    """H-PREV: يتحقق إن استثنى فاصل 95% لكل مجموعة وللمجمّع الصفر صعوداً بعد MIN_PREV_REAL صفقة حقيقية."""
+    if pooled is None or any(v is None for v in by_group.values()):
+        return "لا حكم (بيانات ناقصة)"
+    if n_real < MIN_PREV_REAL:
+        return f"لا حكم بعد ({n_real} من {MIN_PREV_REAL} صفقة حقيقية)"
+    ok = pooled[2][95.0][0] > 0 and all(v[2][95.0][0] > 0 for v in by_group.values())
+    return "تتحقق" if ok else ("عكسية" if pooled[2][95.0][1] < 0 else "لا تتحقق")
 
 
 def day_ci(df, all_days, levels=LEVELS, n=2000, seed=61, col="val"):
@@ -142,30 +162,48 @@ def fmt(v, pct=True):
 
 
 def analyze(series):
-    """series: {رمز: DataFrame شموع}. يرجع (stats[(مجموعة، hyp)] ونتائج الفرد per[(مجموعة، hyp)]=[(رمز، متوسط، t)]، أيام كل مجموعة)."""
-    groups = {"صناديق": [s for s in series if s in ETFS], "شركات": [s for s in series if s not in ETFS]}
+    """series: {رمز: DataFrame شموع}. يرجع (stats[(مجموعة، hyp)]، per[(مجموعة، hyp)]=[(رمز، متوسط، t)]، أيام كل مجموعة).
+    SPY (إن وُجد) يدخل مجموعة الصناديق لفرضية PREV فقط؛ فرضيات H-REPL الأصلية تبقى على QQQ/IWM/DIA والشركات."""
+    groups = {"صناديق": [s for s in series if s in ETFS or s == "SPY"], "شركات": [s for s in series if s not in ETFS and s != "SPY"]}
     stats, per, days_by_group = {}, {}, {}
+    all_prev_real, all_prev_plac, all_days = [], [], set()
     for gname, syms in groups.items():
         if not syms:
             continue
-        vals, reals, placs = [], [], []
-        all_days = set()
+        vals, reals, placs, preal, pplac = [], [], [], [], []
+        gdays = set()
         for s in syms:
             d = series[s]
-            all_days |= {pd.Timestamp(x) for x in d["t"].dt.date.unique()}
+            gdays |= {pd.Timestamp(x) for x in d["t"].dt.date.unique()}
+            ev = sw.run(d)
+            (_, _), (pr, pp) = split_sweep(ev)
+            preal.append(pr)
+            pplac.append(pp)
+            if s == "SPY":
+                continue
             v = pd.concat([sixty_minute_values(d), last30_values(d)], ignore_index=True)
             vals.append(v.assign(sym=s))
-            r, p = sweep_values(d)
+            (r, p), _ = split_sweep(ev)
             reals.append(r.assign(sym=s))
             placs.append(p.assign(sym=s))
-        days = sorted(all_days)
+        days = sorted(gdays)
         days_by_group[gname] = days
-        V = pd.concat(vals, ignore_index=True)
-        for h in HYPS:
-            sel = V[V["hyp"] == h]
-            stats[(gname, h)] = day_ci(sel, days)
-            per[(gname, h)] = [(s, *r) for s, g in sel.groupby("sym") if (r := per_series_t(g)) is not None]
-        stats[(gname, "SWEEP")] = diff_ci(pd.concat(reals, ignore_index=True), pd.concat(placs, ignore_index=True), days)
+        all_days |= gdays
+        if vals:
+            V = pd.concat(vals, ignore_index=True)
+            for h in HYPS:
+                sel = V[V["hyp"] == h]
+                stats[(gname, h)] = day_ci(sel, days)
+                per[(gname, h)] = [(s, *r) for s, g in sel.groupby("sym") if (r := per_series_t(g)) is not None]
+            stats[(gname, "SWEEP")] = diff_ci(pd.concat(reals, ignore_index=True), pd.concat(placs, ignore_index=True), days)
+        PR, PP = pd.concat(preal, ignore_index=True), pd.concat(pplac, ignore_index=True)
+        stats[(gname, "PREV")] = diff_ci(PR, PP, days)
+        all_prev_real.append(PR)
+        all_prev_plac.append(PP)
+    if all_prev_real:
+        AR, AP = pd.concat(all_prev_real, ignore_index=True), pd.concat(all_prev_plac, ignore_index=True)
+        stats[("الكل", "PREV")] = diff_ci(AR, AP, sorted(all_days))
+        stats[("الكل", "PREV_n")] = len(AR)
     return stats, per, days_by_group
 
 
@@ -187,6 +225,13 @@ def report(stats, per, days_by_group, n_series, meta):
                 sig = sum(1 for _, m, t in rows if t > 1.96)
                 L.append(f"- {g}: {pos} من {len(rows)} سلسلة بمتوسط موجب، {sig} منها بدلالة (t>1.96)؛ المتوقع بالصدفة نحو {0.025 * len(rows):.1f}.")
         L.append("")
+    pg = {g: stats[(g, "PREV")] for g in ("صناديق", "شركات") if (g, "PREV") in stats}
+    L += ["## H-PREV (تفسير المستخدم: خطا افتتاح وإغلاق أمس؛ الحقيقي − الوهمي بوحدة R، هدف إغلاق أمس)", "",
+          "| المجموعة | صفقات حقيقية | الفرق | فاصل 95% | فاصل 99.6% |", "|---|---|---|---|---|"]
+    for g in ("صناديق", "شركات", "الكل"):
+        if (g, "PREV") in stats:
+            L.append(f"| {g}{' (مع SPY)' if g == 'صناديق' else ''} | {fmt(stats[(g, 'PREV')], pct=False)} |")
+    L += ["", "⚖️ **H-PREV: " + prev_verdict(pg, stats.get(("الكل", "PREV")), stats.get(("الكل", "PREV_n"), 0)) + "**", ""]
     return L
 
 
@@ -202,6 +247,11 @@ def load_series(base=BARS_DIR):
                 continue
             if d["t"].dt.date.nunique() >= MIN_DAYS:
                 out[fn[:-7]] = d
+    if os.path.exists(ls.DATA):                       # SPY من ملفه (يدخل فرضية PREV فقط)
+        try:
+            out["SPY"] = ls.load(ls.DATA)
+        except Exception:  # noqa: BLE001
+            pass
     return out
 
 
@@ -211,7 +261,7 @@ def main(argv):
         print("لا بيانات سلاسل (شغّل bars_history.py أولاً).")
         return 0
     stats, per, days = analyze(series)
-    meta = f"{len(series)} سلسلة ({sum(1 for s in series if s in ETFS)} صناديق، {sum(1 for s in series if s not in ETFS)} شركات)"
+    meta = f"{len(series)} سلسلة ({sum(1 for s in series if s in ETFS or s == 'SPY')} صناديق مع SPY، {sum(1 for s in series if s not in ETFS and s != 'SPY')} شركات)"
     L = report(stats, per, days, len(series), meta)
     with open(OUT, "w", encoding="utf-8", newline="\n") as f:
         f.write("\n".join(L) + f"\n(آخر تشغيل {datetime.now():%Y-%m-%d})\n")

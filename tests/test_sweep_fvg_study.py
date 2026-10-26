@@ -146,3 +146,39 @@ def test_null_calibration_on_random_walks_rarely_confirms(tmp_path, monkeypatch)
         d2 = [x for x in days if x >= days[len(days) // 2]]
         hits += "تحققت" in sw.verdict(second, d2)
     assert hits <= 1
+
+
+def prev_day_arrays():
+    """يوم لاختبار H-PREV: مستوى السحب = افتتاح أمس 100، هدف = إغلاق أمس 101؛ سحب عند 3، كسر+فجوة عند 5، تثبيت عند 6، ارتداد للفجوة عند 7، هدف عند 8."""
+    bars = [(100.2, 100.4, 100.1, 100.3), (100.3, 100.35, 100.2, 100.25), (100.25, 100.3, 100.15, 100.2),
+            (100.2, 100.25, 99.8, 99.9), (99.9, 100.0, 99.85, 99.95), (100.3, 100.7, 100.3, 100.6),
+            (100.6, 100.7, 100.5, 100.65), (100.65, 100.7, 100.3, 100.5), (100.5, 101.1, 100.5, 101.0)]
+    bars += [(101.0, 101.05, 100.95, 101.0)] * (78 - len(bars))
+    a = np.array(bars, dtype=float)
+    return a[:, 0], a[:, 1], a[:, 2], a[:, 3]
+
+
+def test_confirmation_delays_entry_and_start_above_rejects_days_that_open_below_the_line():
+    o, h, l, c = prev_day_arrays()
+    s = sw.bull_setup(o, h, l, c, 100.0, confirm=2, start_above=True)
+    assert s is not None and s["k"] == 7 and s["entry"] == pytest.approx(100.3)
+    c2 = c.copy()
+    c2[6] = 99.9                                                                     # الشمعة التالية لا تغلق فوق الخط: لا تثبيت
+    assert sw.bull_setup(o, h, l, c2, 100.0, confirm=2, start_above=True) is None
+    o3 = o.copy()
+    o3[0] = 99.5                                                                     # اليوم يبدأ تحت الخط
+    assert sw.bull_setup(o3, h, l, c, 100.0, confirm=2, start_above=True) is None
+    assert sw.bull_setup(o3, h, l, c, 100.0, confirm=2, start_above=False) is not None
+
+
+def test_prev_events_use_yesterdays_open_as_level_and_close_as_target():
+    o, h, l, c = prev_day_arrays()
+    day = pd.Timestamp("2026-01-05")
+    ev = pd.DataFrame(sw.day_events_prev(day, o, h, l, c, prev=(100.0, 101.0)))
+    real = ev[ev["kind"] == "real"]
+    cost = 2 * sw.COST * 100.3 / 0.5
+    assert len(real) == 1 and real.iloc[0]["version"] == "prev" and real.iloc[0]["R"] == pytest.approx((101.0 - 100.3) / 0.5 - cost)
+    assert sw.day_events_prev(day, o, h, l, c, prev=(101.0, 100.0)) == [] or all(e["kind"] != "real" for e in sw.day_events_prev(day, o, h, l, c, prev=(101.0, 100.0)))
+    assert sw.day_events_prev(day, o, h, l, c, prev=None) == []
+    ev2 = sw.day_events_prev(day, o, h, l, c, prev=(100.0, 100.2))                  # هدف قريب جداً: R صغير لكنه موجب
+    assert all(e["R"] < 3 for e in ev2)

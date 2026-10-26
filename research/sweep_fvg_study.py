@@ -34,20 +34,24 @@ MIN_REAL = 150
 
 
 # ============================ دوال نقية ============================
-def bull_setup(o, h, l, c, level):
-    """إعداد شراء: سحب تحت level، استعادة وكسر هيكل مع FVG، ثم دخول عند الحد العلوي للفجوة. dict أو None."""
+def bull_setup(o, h, l, c, level, confirm=1, start_above=False):
+    """إعداد شراء: سحب تحت level، استعادة وكسر هيكل مع FVG، ثم دخول عند الحد العلوي للفجوة. dict أو None.
+    confirm>1: يلزم أن تغلق confirm شمعة متتالية (من شمعة الكسر) فوق level قبل الدخول. start_above: يشترط ألا يبدأ اليوم تحت level (خط من يوم سابق)."""
     n = len(c)
+    if start_above and o[0] < level:
+        return None
     i = next((t for t in range(1, min(SWEEP_LAST_BAR + 1, n)) if l[t] < level), None)
     if i is None:
         return None
     pre_hi = float(np.max(h[max(0, i - 3):i]))
     j = next((t for t in range(i + 1, min(i + STEP_WINDOW + 1, n))
-              if t >= 2 and c[t] > level and c[t] > pre_hi and l[t] > h[t - 2]), None)
+              if t >= 2 and c[t] > level and c[t] > pre_hi and l[t] > h[t - 2]
+              and all(t + q < n and c[t + q] > level for q in range(1, confirm))), None)
     if j is None:
         return None
     gap_top, gap_bot = float(l[j]), float(h[j - 2])
     stop = float(np.min(l[i:j + 1]))
-    for k in range(j + 1, min(j + STEP_WINDOW + 1, ENTRY_LAST_BAR + 1, n)):
+    for k in range(j + confirm, min(j + confirm + STEP_WINDOW, ENTRY_LAST_BAR + 1, n)):
         if c[k] < gap_bot:
             return None
         if l[k] <= gap_top:
@@ -73,14 +77,14 @@ def simulate(h, l, c, setup, target=None, hold_to_close=False):
     return (float(c[-1]) - entry) / risk - cost
 
 
-def day_trade(o, h, l, c, level, bias, mode="t15", target_price=None):
+def day_trade(o, h, l, c, level, bias, mode="t15", target_price=None, confirm=1, start_above=False):
     """نتيجة صفقة اليوم (R) أو None. bias +1 شراء / −1 بيع (يُعكس بالنفي). mode: t15 (1.5R) | close (احتفاظ) | line (هدف سعر target_price)."""
     if bias == 0:
         return None
     if bias < 0:
         o, h, l, c, level = -o, -l, -h, -c, -level
         target_price = None if target_price is None else -target_price
-    setup = bull_setup(o, h, l, c, level)
+    setup = bull_setup(o, h, l, c, level, confirm, start_above)
     if setup is None:
         return None
     if mode == "t15":
@@ -111,6 +115,21 @@ def day_events(day, o, h, l, c, prev):
     return ev
 
 
+def day_events_prev(day, o, h, l, c, prev):
+    """H-PREV (تفسير المستخدم): الخطان من شمعة أمس — الافتتاح مستوى السحب والإغلاق هدف. prev = (افتتاح أمس، إغلاق أمس) أو None."""
+    if prev is None:
+        return []
+    po, pc = float(prev[0]), float(prev[1])
+    bias = int(np.sign(pc - po))
+    ev = []
+    for kind, levels in (("real", [po]), ("placebo", [po * (1 + SHIFT), po * (1 - SHIFT)])):
+        for lv in levels:
+            r = day_trade(o, h, l, c, lv, bias, "line", target_price=pc, confirm=2, start_above=True)
+            if r is not None:
+                ev.append({"day": day, "version": "prev", "kind": kind, "mode": "line", "R": r})
+    return ev
+
+
 def run(d):
     events, prev = [], None
     for day, g in d.groupby(d["t"].dt.date):
@@ -120,6 +139,7 @@ def run(d):
             continue
         if not half and len(c) >= 78:
             events += day_events(pd.Timestamp(day), o, h, l, c, prev)
+            events += day_events_prev(pd.Timestamp(day), o, h, l, c, prev)
         prev = (float(o[0]), float(c[-1]))
     return pd.DataFrame(events, columns=["day", "version", "kind", "mode", "R"])
 
@@ -194,6 +214,7 @@ def report(ev, all_days, meta):
         L += [f"## {label}", "", "| الصنف | صفقات | رابحة | متوسط R | فاصل 95% |", "|---|---|---|---|---|"]
         for ver, kind, mode, name in (("exec", "real", "t15", "exec حقيقي، هدف 1.5R (الأساسي)"), ("exec", "placebo", "t15", "exec وهمي، هدف 1.5R"),
                                        ("exec", "real", "close", "exec حقيقي، احتفاظ للإغلاق"), ("exec", "placebo", "close", "exec وهمي، احتفاظ للإغلاق"),
+                                       ("prev", "real", "line", "prev (خطا أمس، هدف إغلاق أمس) حقيقي — H-PREV"), ("prev", "placebo", "line", "prev وهمي"),
                                        ("oracle", "real", "line", "oracle «الفيديو بأثر رجعي» (غير قابل للتنفيذ)")):
             sel = part[(part["version"] == ver) & (part["kind"] == kind) & (part["mode"] == mode)]
             L.append(fmt_row(name, sel, days))
