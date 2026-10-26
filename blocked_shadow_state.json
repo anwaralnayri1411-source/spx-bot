@@ -14,8 +14,8 @@
    "strength": "4.8",
    "occ": "HOOD261030P00089000",
    "peak_pnl": 0.037,
-   "close_pnl": -0.156,
-   "quotes": 28,
+   "close_pnl": -0.16,
+   "quotes": 29,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -34,8 +34,8 @@
    "strength": "8.4",
    "occ": "TSLA261102C00410000",
    "peak_pnl": 0.097,
-   "close_pnl": -0.088,
-   "quotes": 28,
+   "close_pnl": -0.097,
+   "quotes": 29,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -54,8 +54,8 @@
    "strength": "4.7",
    "occ": "UBER261030P00066000",
    "peak_pnl": 0.084,
-   "close_pnl": 0.048,
-   "quotes": 26,
+   "close_pnl": 0.012,
+   "quotes": 27,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -74,8 +74,8 @@
    "strength": "4.6",
    "occ": "COIN261030P00150000",
    "peak_pnl": 0.111,
-   "close_pnl": 0.094,
-   "quotes": 6,
+   "close_pnl": 0.074,
+   "quotes": 7,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -94,8 +94,8 @@
    "strength": "5.0",
    "occ": "XOM261030C00185000",
    "peak_pnl": 0.0,
-   "close_pnl": -0.042,
-   "quotes": 6,
+   "close_pnl": -0.045,
+   "quotes": 7,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -152,7 +152,12 @@
   "20261026T1212|stocks|same_side_cap|COIN|PUT|150|2026-10-30",
   "20261026T1212|stocks|same_side_cap|HOOD|PUT|87|2026-11-06",
   "20261026T1212|stocks|max_ideas_cap|XOM|CALL|185|2026-10-30",
-  "20261026T1212|stocks|open_same_dir|TSLA|CALL|410|2026-11-02"
+  "20261026T1212|stocks|open_same_dir|TSLA|CALL|410|2026-11-02",
+  "20261026T1242|stocks|same_side_cap|XOM|CALL|185|2026-10-30",
+  "20261026T1242|stocks|same_side_cap|COIN|PUT|150|2026-10-30",
+  "20261026T1242|stocks|same_side_cap|HOOD|PUT|87|2026-11-06",
+  "20261026T1242|stocks|max_ideas_cap|UBER|PUT|66|2026-10-30",
+  "20261026T1242|stocks|open_same_dir|TSLA|CALL|410|2026-11-02"
  ],
  "last": {
   "spx|CALL|SPY": "2026-10-26T10:05-04:00",
