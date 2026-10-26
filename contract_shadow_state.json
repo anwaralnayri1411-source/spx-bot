@@ -19,10 +19,10 @@
    "rule_out": "",
    "rule_time": "",
    "rule_pnl": "",
-   "peak_pnl": 0.0,
-   "close_pnl": -0.067,
+   "peak_pnl": 0.2,
+   "close_pnl": 0.2,
    "stale_quotes": 0,
-   "quotes": 4
+   "quotes": 5
   },
   {
    "date": "2026-10-26",
@@ -42,10 +42,10 @@
    "rule_out": "",
    "rule_time": "",
    "rule_pnl": "",
-   "peak_pnl": 0.017,
-   "close_pnl": 0.017,
+   "peak_pnl": 0.218,
+   "close_pnl": 0.218,
    "stale_quotes": 0,
-   "quotes": 4
+   "quotes": 5
   },
   {
    "date": "2026-10-26",
@@ -65,10 +65,10 @@
    "rule_out": "",
    "rule_time": "",
    "rule_pnl": "",
-   "peak_pnl": 0.0,
-   "close_pnl": -0.01,
+   "peak_pnl": 0.208,
+   "close_pnl": 0.208,
    "stale_quotes": 0,
-   "quotes": 4
+   "quotes": 5
   },
   {
    "date": "2026-10-26",
@@ -88,10 +88,10 @@
    "rule_out": "",
    "rule_time": "",
    "rule_pnl": "",
-   "peak_pnl": 0.026,
-   "close_pnl": 0.026,
+   "peak_pnl": 0.199,
+   "close_pnl": 0.199,
    "stale_quotes": 0,
-   "quotes": 4
+   "quotes": 5
   },
   {
    "date": "2026-10-26",
@@ -111,10 +111,10 @@
    "rule_out": "",
    "rule_time": "",
    "rule_pnl": "",
-   "peak_pnl": 0.026,
-   "close_pnl": 0.026,
+   "peak_pnl": 0.199,
+   "close_pnl": 0.199,
    "stale_quotes": 0,
-   "quotes": 4
+   "quotes": 5
   },
   {
    "date": "2026-10-26",
@@ -134,10 +134,10 @@
    "rule_out": "",
    "rule_time": "",
    "rule_pnl": "",
-   "peak_pnl": 0.0,
-   "close_pnl": -0.01,
+   "peak_pnl": 0.186,
+   "close_pnl": 0.186,
    "stale_quotes": 0,
-   "quotes": 4
+   "quotes": 5
   }
  ]
 }
