@@ -109,7 +109,38 @@ def test_report_has_both_verdicts_and_the_risk_profile():
     for d in days:
         for kind in ("base", "tool"):
             for side in ("put", "call"):
-                rows.append({"day": d, "kind": kind, "side": side, "short": 700.0, "credit": 0.5, "value": 0.0, "R": 0.2})
+                rows.append({"day": d, "kind": kind, "side": side, "short": 700.0, "p_short": 0.8, "p_long": 0.25, "settle": 705.0, "credit": 0.5, "value": 0.0, "R": 0.2})
+        rows.append({"day": d, "kind": "near", "side": "put", "short": 700.0, "p_short": 1.2, "p_long": 0.5, "settle": 705.0, "credit": 0.6, "value": 0.0, "R": 0.25})
     text = "\n".join(ps.report(pd.DataFrame(rows), "تجربة"))
-    assert text.count("⚖️") == 2 and "الكوندور الأساسي" in text and "أعمق هبوط" in text
-    assert "لا بيانات" in "\n".join(ps.report(pd.DataFrame(columns=["day", "kind", "side", "short", "credit", "value", "R"]), "x"))
+    assert text.count("⚖️") == 3 and "الكوندور الأساسي" in text and "أعمق هبوط" in text and "H-SELLPUT" in text
+    assert "لا بيانات" in "\n".join(ps.report(pd.DataFrame(columns=["day", "kind", "side", "short", "p_short", "p_long", "settle", "credit", "value", "R"]), "x"))
+
+
+def test_near_put_recomputes_credit_for_each_execution_model_and_settles_at_expiry():
+    df = pd.DataFrame([
+        {"day": pd.Timestamp("2026-01-05"), "kind": "near", "side": "put", "short": 698.0, "p_short": 1.20, "p_long": 0.50, "settle": 700.0},
+        {"day": pd.Timestamp("2026-01-06"), "kind": "near", "side": "put", "short": 698.0, "p_short": 1.20, "p_long": 0.50, "settle": 690.0},
+        {"day": pd.Timestamp("2026-01-07"), "kind": "near", "side": "put", "short": 698.0, "p_short": None, "p_long": 0.50, "settle": 700.0},
+        {"day": pd.Timestamp("2026-01-05"), "kind": "base", "side": "put", "short": 694.0, "p_short": 0.5, "p_long": 0.2, "settle": 700.0}])
+    mid, lim = ps.near_put(df, 0.0), ps.near_put(df, 0.015)
+    assert len(mid) == 2 and len(lim) == 2                                                 # بلا سعر: مستبعدة؛ base لا يدخل
+    c0 = 1.20 - 0.50 - 2 * ps.COMM
+    assert mid["credit"].iloc[0] == pytest.approx(c0) and lim["credit"].iloc[0] < mid["credit"].iloc[0]
+    assert mid["val"].iloc[0] == pytest.approx(c0 / (3 - c0)) and mid["val"].iloc[1] == pytest.approx(-1.0)
+    days = list(pd.bdate_range("2024-03-01", periods=320))
+    rng = np.random.default_rng(3)
+    good = pd.DataFrame({"day": days, "val": rng.normal(0.1, 0.4, 320)})
+    assert "H-SELLPUT: تحققت" in ps.sellput_verdict(good) and "لا حكم بعد" in ps.sellput_verdict(good.head(40))
+
+
+def test_plans_include_the_near_put_strike():
+    d = random_series(8, 4)
+    vix = pd.Series(16.0, index=pd.DatetimeIndex(sorted({pd.Timestamp(x) for x in d["t"].dt.date})))
+    import premium_sell_study as m
+    old = m.START
+    m.START = "2020-01-01"
+    try:
+        p = ps.build_plans(d, vix)[0]
+    finally:
+        m.START = old
+    assert p["strikes"][("near", "put")] == float(np.floor(p["S"] - 0.3 * p["em"])) and p["strikes"][("near", "put")] > p["strikes"][("base", "put")]

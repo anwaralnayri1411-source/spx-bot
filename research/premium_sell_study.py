@@ -41,6 +41,9 @@ MAX_GAP_MIN = 10
 MIN_DAYS_SELL = 300
 MIN_PAIRS = 150
 DAYS_PER_CALL = 5
+NEAR_EM = 0.3              # H-SELLPUT: بوت قصير أقرب إلى السعر
+EXEC = {"سوقي (3%)": 0.03, "محدد (1.5%) — الأساسي": 0.015, "الوسط (0%) — حد أعلى": 0.0}
+PRIMARY_EXEC = "محدد (1.5%) — الأساسي"
 
 
 # ============================ دوال نقية ============================
@@ -75,11 +78,11 @@ def first_open(bars, t0, gap=MAX_GAP_MIN):
     return float(sub["o"].iloc[0]) if len(sub) else None
 
 
-def credit_of(p_short, p_long):
-    """الائتمان الصافي للسهم بعد نصف الفرق والعمولة، أو None إن نقص سعر أو قلّ الائتمان."""
+def credit_of(p_short, p_long, h=HALF_SPREAD):
+    """الائتمان الصافي للسهم بعد نصف الفرق h والعمولة، أو None إن نقص سعر أو قلّ الائتمان."""
     if p_short is None or p_long is None:
         return None
-    c = p_short * (1 - HALF_SPREAD) - p_long * (1 + HALF_SPREAD) - 2 * COMM
+    c = p_short * (1 - h) - p_long * (1 + h) - 2 * COMM
     return c if c >= MIN_CREDIT else None
 
 
@@ -132,7 +135,7 @@ def build_plans(d, vix, holidays=()):
                 lv = pre.liquidity_levels(hist[-pre.HISTORY_DAYS:])
                 bp, bc = base_strikes(S, em)
                 tp, tc = tool_strikes(S, em, lv)
-                strikes = {("base", "put"): bp, ("base", "call"): bc}
+                strikes = {("base", "put"): bp, ("base", "call"): bc, ("near", "put"): float(math.floor(S - NEAR_EM * em))}
                 if tp is not None:
                     strikes[("tool", "put")] = tp
                 if tc is not None:
@@ -157,13 +160,35 @@ def evaluate(plans, bars):
     for p in plans:
         for (kind, side), short in p["strikes"].items():
             s_sym, l_sym = legs(side, short, p["exp"])
-            cr = credit_of(first_open(bars.get(s_sym), p["t0"]), first_open(bars.get(l_sym), p["t0"]))
-            if cr is None:
-                rows.append({"day": p["day"], "kind": kind, "side": side, "short": short, "credit": None, "value": None, "R": None})
-                continue
+            ps_, pl_ = first_open(bars.get(s_sym), p["t0"]), first_open(bars.get(l_sym), p["t0"])
+            cr = credit_of(ps_, pl_)
             val = spread_value(side, short, p["close_exp"])
-            rows.append({"day": p["day"], "kind": kind, "side": side, "short": short, "credit": cr, "value": val, "R": side_r(cr, val)})
-    return pd.DataFrame(rows, columns=["day", "kind", "side", "short", "credit", "value", "R"])
+            rows.append({"day": p["day"], "kind": kind, "side": side, "short": short, "p_short": ps_, "p_long": pl_, "settle": p["close_exp"],
+                         "credit": cr, "value": val if cr is not None else None, "R": side_r(cr, val) if cr is not None else None})
+    return pd.DataFrame(rows, columns=["day", "kind", "side", "short", "p_short", "p_long", "settle", "credit", "value", "R"])
+
+
+def near_put(df, h):
+    """H-SELLPUT بنموذج تنفيذ نصف فرقه h على الصفقات نفسها: DataFrame(day, val, credit)."""
+    sub = df[(df["kind"] == "near") & (df["side"] == "put")]
+    out = []
+    for r in sub.itertuples():
+        if pd.isna(r.p_short) or pd.isna(r.p_long):
+            continue
+        cr = credit_of(float(r.p_short), float(r.p_long), h)
+        if cr is None or cr >= WIDTH:
+            continue
+        out.append({"day": r.day, "val": side_r(cr, spread_value("put", r.short, r.settle)), "credit": cr})
+    return pd.DataFrame(out, columns=["day", "val", "credit"])
+
+
+def sellput_verdict(primary):
+    days = sorted(set(primary["day"]))
+    s = rp.day_ci(primary, days) if len(primary) >= 30 else None
+    if s is None or s[0] < MIN_DAYS_SELL:
+        return f"H-SELLPUT: لا حكم بعد ({len(primary)} من {MIN_DAYS_SELL} يوماً)"
+    lo, hi = s[2][95.0]
+    return "H-SELLPUT: " + ("تحققت" if lo > 0 else "عكسية" if hi < 0 else "لم تتحقق") + f" (متوسط {s[1]:+.3f}R، فاصل {lo:+.3f}…{hi:+.3f})"
 
 
 def condors(df, kind):
@@ -220,10 +245,11 @@ def report(df, meta):
          "- **الفرضيتان المسجّلتان مسبقاً:** H-SELL (الكوندور الأساسي رابح بعد الكلفة) وH-SELLTOOL (البيع خلف مستويات السيولة أفضل من المسافة الثابتة).", ""]
     if df.empty:
         return L + ["لا بيانات."]
+    df = df.copy()
     miss = df["R"].isna().mean()
     L += [f"- صفقات بلا سعر عند الدخول (مستبعدة): {100 * miss:.0f}%", "",
           "| الصنف | الجهة | صفقات | متوسط الائتمان | رابحة | متوسط R | فاصل 95% | أيام الخسارة القصوى |", "|---|---|---|---|---|---|---|---|"]
-    for kind in ("base", "tool"):
+    for kind in ("base", "tool", "near"):
         for side in ("put", "call"):
             sub = df[(df["kind"] == kind) & (df["side"] == side) & df["R"].notna()]
             if len(sub) == 0:
@@ -238,7 +264,22 @@ def report(df, meta):
         L += [f"- أيام: {len(cb)}، متوسط R {cb['val'].mean():+.3f}، رابحة {100 * rpf['win']:.0f}%، أيام الخسارة القصوى {100 * rpf['maxloss']:.1f}%",
               f"- أسوأ 5 أيام: {', '.join(f'{x:+.2f}R' for x in rpf['worst'])}؛ أعمق هبوط تراكمي {rpf['dd']:+.1f}R"]
     v1, v2 = verdicts(cb, paired(df))
-    L += ["", "⚖️ **" + v1 + "**", "", "⚖️ **" + v2 + "**"]
+    L += ["", "⚖️ **" + v1 + "**", "", "⚖️ **" + v2 + "**", "",
+          "## H-SELLPUT: بوت قريب (0.3 × الحركة الضمنية) بثلاثة نماذج تنفيذ على الصفقات نفسها", "",
+          "| التنفيذ | صفقات | متوسط الائتمان | رابحة | متوسط R | فاصل 95% | أيام الخسارة القصوى | أعمق هبوط تراكمي |", "|---|---|---|---|---|---|---|---|"]
+    primary = None
+    for name, h in EXEC.items():
+        np_ = near_put(df, h)
+        if name == PRIMARY_EXEC:
+            primary = np_
+        if len(np_) == 0:
+            L.append(f"| {name} | 0 | - | - | - | - | - | - |")
+            continue
+        s = rp.day_ci(np_, sorted(set(np_["day"]))) if len(np_) >= 30 else None
+        ci = "-" if s is None else f"{s[2][95.0][0]:+.3f}…{s[2][95.0][1]:+.3f}"
+        rk = risk_profile(np_["val"].to_numpy())
+        L.append(f"| {name} | {len(np_)} | {np_['credit'].mean():.2f}$ | {100 * rk['win']:.0f}% | {np_['val'].mean():+.3f}R | {ci} | {100 * rk['maxloss']:.1f}% | {rk['dd']:+.1f}R |")
+    L += ["", "⚖️ **" + sellput_verdict(primary if primary is not None else pd.DataFrame(columns=["day", "val"])) + "**"]
     return L
 
 
