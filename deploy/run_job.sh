@@ -179,8 +179,9 @@ main() {
       msg="real price check refresh" ;;
     weekly_learning)
       group=weekly-learning; envs="TG"
-      cmds=("$py research/weekly_learning.py")
-      files="research/weekly_learning.md"
+      cmds=("$py research/combo_report.py" "$py research/weekly_learning.py")
+      keepgoing=1
+      files="research/combo_report_results.md research/weekly_learning.md"
       msg="weekly learning summary" ;;
     stocks_watcher)
       group=stocks-watcher; envs="TG ALPACA ANTHROPIC LQS TASTY"; long=1

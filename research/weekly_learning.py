@@ -346,7 +346,8 @@ VERDICT_FILES = (("مقارنة درجة الأخبار (Claude مقابل ال�
                   ("تكرار الفرضيات على صناديق وشركات", "research/replication_study_results.md"),
                   ("FIBO ENTRY والمنطقة الذهبية", "research/fibo_entry_study_results.md"),
                   ("روتين ما قبل الافتتاح", "research/preopen_routine_study_results.md"),
-                  ("بيع الأقساط بمخاطرة محددة", "research/premium_sell_study_results.md"))
+                  ("بيع الأقساط بمخاطرة محددة", "research/premium_sell_study_results.md"),
+                  ("الدمج: إشارة قوية + اتفاق الزخم", "research/combo_report_results.md"))
 
 
 def sec_verdicts(texts):
