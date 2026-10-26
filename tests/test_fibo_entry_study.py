@@ -115,9 +115,34 @@ def test_verdict_rules_and_report(tmp_path, monkeypatch):
     ok = {"n": 400, "mean": 0.2, "ci": {95.0: (0.05, 0.35), 99.6: (0.0, 0.4)}, "tp": 0.3, "sl": 0.6}
     bad = {"n": 400, "mean": 0.0, "ci": {95.0: (-0.2, 0.2), 99.6: (-0.3, 0.3)}, "tp": 0.25, "sl": 0.6}
     assert fe.verdict({"صناديق (مع SPY)": ok, "شركات": ok}, ok) == "H-FIBO: تحققت"
-    assert fe.verdict({"صناديق (مع SPY)": ok, "شركات": bad}, ok) == "H-FIBO: لم تتحقق"
+    assert fe.verdict({"صناديق (مع SPY)": ok, "شركات": bad}, ok, "H-FIBOZ") == "H-FIBOZ: لم تتحقق"
     assert "لا حكم بعد" in fe.verdict({"صناديق (مع SPY)": ok, "شركات": ok}, dict(ok, n=100))
-    text = "\n".join(fe.report({"صناديق (مع SPY)": ok, "شركات": bad, "الكل": ok}, "تجربة"))
-    assert "⚖️" in text and "H-FIBO" in text
+    text = "\n".join(fe.report({"fib79": {"صناديق (مع SPY)": ok, "شركات": bad, "الكل": ok}, "zone": {"صناديق (مع SPY)": ok, "شركات": ok, "الكل": ok}}, "تجربة"))
+    assert text.count("⚖️") == 2 and "H-FIBO: لم تتحقق" in text and "H-FIBOZ: تحققت" in text
     monkeypatch.setattr(fe, "OUT", str(tmp_path / "r.md"))
     assert fe.main([str(tmp_path / "none")]) == 0
+
+
+def test_zone_entry_uses_the_first_fvg_overlapping_the_golden_zone():
+    o, h, l, c = arrays()
+    leg = 6.0
+    e = fe.zone_entry(h, l, 6, 12, 105.0, leg)
+    assert e == pytest.approx(105 - 0.618 * leg)                                    # الفجوة [101.0، 102.2] تغطي أعلى المنطقة 101.292
+    t, r, kind = fe.bull_trade(o, h, l, c, "zone")
+    entry, stop = 105 - 0.618 * leg, 99 - 0.05 * leg
+    cost = 2 * fe.COST * entry / (entry - stop)
+    assert t == 16 and kind == "tp" and r == pytest.approx((105 - entry) / (entry - stop) - cost) and 1.3 < r < 1.5
+
+
+def test_zone_mode_skips_setups_without_an_overlapping_fvg():
+    o, h, l, c = arrays({10: (102.3, 103.5, 100.9, 103.4)})                           # تُلغى فجوة الشمعة 10
+    assert fe.zone_entry(h, l, 6, 12, 105.0, 6.0) is None
+    assert fe.bull_trade(o, h, l, c, "zone") is None
+    assert fe.bull_trade(o, h, l, c, "fib79") is not None                              # نسخة 0.79 لا تحتاج فجوة
+
+
+def test_analyze_returns_both_modes(monkeypatch):
+    monkeypatch.setattr(fe, "LEG_MAX", 0.03)
+    ser = {"SPY": random_series(300, 5), "AAA": random_series(300, 6)}
+    out = fe.analyze(ser)
+    assert set(out) == {"fib79", "zone"} and "الكل" in out["fib79"]

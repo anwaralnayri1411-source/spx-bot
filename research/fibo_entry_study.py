@@ -33,6 +33,8 @@ STOP_BUF = 0.05
 ENTRY_LAST = 23            # آخر شمعة 15 دقيقة يجوز أن تنفَّذ فيها (تبدأ 15:15)
 COST = 0.00002
 MIN_TRADES = 300
+ZONE_TOP, ZONE_BOT = 0.618, 0.706     # «المنطقة الذهبية» (H-FIBOZ)
+MODES = {"fib79": "H-FIBO", "zone": "H-FIBOZ"}
 
 
 # ============================ دوال نقية ============================
@@ -65,8 +67,18 @@ def simulate(h, l, c, fill_t, entry, stop, target):
     return (float(c[-1]) - entry) / risk - cost, "eod"
 
 
-def bull_trade(o, h, l, c):
-    """أول تنفيذ في إعداد صاعد: (فهرس شمعة التنفيذ، R، نوع الخروج) أو None."""
+def zone_entry(h, l, a, hi, H, leg):
+    """H-FIBOZ: أعلى تقاطع بين أول فجوة FVG صاعدة داخل الساق (بين L عند a وH عند hi) والمنطقة الذهبية 0.618–0.706، أو None."""
+    z_top, z_bot = H - ZONE_TOP * leg, H - ZONE_BOT * leg
+    for j in range(a + 2, hi + 1):
+        g_bot, g_top = h[j - 2], l[j]
+        if g_top > g_bot and g_top >= z_bot and g_bot <= z_top:
+            return float(min(g_top, z_top))
+    return None
+
+
+def bull_trade(o, h, l, c, mode="fib79"):
+    """أول تنفيذ في إعداد صاعد: (فهرس شمعة التنفيذ، R، نوع الخروج) أو None. mode: fib79 (H-FIBO) أو zone (H-FIBOZ)."""
     n = len(c)
     ph, pl = pivot_highs(h), pivot_lows(l)
     best = None
@@ -95,7 +107,13 @@ def bull_trade(o, h, l, c):
         t0 = hi + K
         if t0 >= n:
             continue
-        E, S = H - FIB * leg, L - STOP_BUF * leg
+        S = L - STOP_BUF * leg
+        if mode == "fib79":
+            E = H - FIB * leg
+        else:
+            E = zone_entry(h, l, a, hi, H, leg)
+            if E is None:
+                continue
         if c[t0] <= E:
             continue
         for t in range(t0 + 1, min(ENTRY_LAST + 1, n)):
@@ -112,10 +130,10 @@ def bull_trade(o, h, l, c):
     return best
 
 
-def day_trade(o, h, l, c):
+def day_trade(o, h, l, c, mode="fib79"):
     """أول تنفيذ (صاعد أو هابط بالمرآة) في اليوم: (R، نوع الخروج، اتجاه) أو None. المدخلات شموع 15 دقيقة."""
-    up = bull_trade(o, h, l, c)
-    dn = bull_trade(-o, -l, -h, -c)
+    up = bull_trade(o, h, l, c, mode)
+    dn = bull_trade(-o, -l, -h, -c, mode)
     cands = [(t, r, k, d) for (res, d) in ((up, 1), (dn, -1)) if res for (t, r, k) in [res]]
     if not cands:
         return None
@@ -123,7 +141,7 @@ def day_trade(o, h, l, c):
     return r, kind, d
 
 
-def run_series(d):
+def run_series(d, mode="fib79"):
     """DataFrame(day, R, kind, dir) لسلسلة واحدة (شموع 5 دقائق بتنسيق levels_study.load)."""
     rows = []
     for day, g in d.groupby(d["t"].dt.date):
@@ -131,7 +149,7 @@ def run_series(d):
         if half or len(g) < 78:
             continue
         o, h, l, c = agg15(*(g[k].to_numpy(float) for k in ("o", "h", "l", "c")))
-        res = day_trade(o, h, l, c)
+        res = day_trade(o, h, l, c, mode)
         if res:
             rows.append({"day": pd.Timestamp(day), "R": res[0], "kind": res[1], "dir": res[2]})
     return pd.DataFrame(rows, columns=["day", "R", "kind", "dir"])
@@ -149,16 +167,16 @@ def group_stats(frames, days):
     return {"n": n, "mean": mean, "ci": lv, "tp": float((df["kind"] == "tp").mean()), "sl": float((df["kind"] == "sl").mean())}
 
 
-def verdict(by_group, pooled):
+def verdict(by_group, pooled, name="H-FIBO"):
     if pooled is None or any(v is None for v in by_group.values()):
-        return "H-FIBO: لا حكم (بيانات ناقصة)"
+        return f"{name}: لا حكم (بيانات ناقصة)"
     if pooled["n"] < MIN_TRADES:
-        return f"H-FIBO: لا حكم بعد ({pooled['n']} من {MIN_TRADES} صفقة)"
+        return f"{name}: لا حكم بعد ({pooled['n']} من {MIN_TRADES} صفقة)"
     lo = [v["ci"][95.0][0] for v in by_group.values()]
     hi = pooled["ci"][95.0][1]
     if all(x > 0 for x in lo) and pooled["ci"][95.0][0] > 0:
-        return "H-FIBO: تحققت"
-    return "H-FIBO: عكسية" if hi < 0 else "H-FIBO: لم تتحقق"
+        return f"{name}: تحققت"
+    return f"{name}: عكسية" if hi < 0 else f"{name}: لم تتحقق"
 
 
 def fmt(v):
@@ -167,31 +185,35 @@ def fmt(v):
     return f"{v['n']} | {100 * v['tp']:.0f}% | {v['mean']:+.3f}R | {v['ci'][95.0][0]:+.3f}…{v['ci'][95.0][1]:+.3f} | {v['ci'][99.6][0]:+.3f}…{v['ci'][99.6][1]:+.3f}"
 
 
-def report(stats, meta):
-    L = ["# استراتيجية FIBO ENTRY (BOS + فيبوناتشي 0.79) على 15 دقيقة (نتائج آلية)", "", f"- {meta}",
-         "- قراءة فقط. R بعد كلفة 0.002% لكل جهة. تحت السير العشوائي: متوسط R ≈ 0 قبل الكلفة، ونسبة بلوغ الهدف ≈ 25% (الوقف عند 5% من الساق تحت القاع والدخول عند 0.79).",
-         "- **الفرضية المسجّلة مسبقاً H-FIBO:** متوسط R بعد الكلفة > 0 بفاصل 95% في كل مجموعة وفي المجموع بعد 300 صفقة. خطوة «خط الاتجاه» غير منفذة (ذاتية).", "",
-         "| المجموعة | صفقات | بلوغ الهدف | متوسط R | فاصل 95% | فاصل 99.6% |", "|---|---|---|---|---|---|"]
-    for g in ("صناديق (مع SPY)", "شركات", "الكل"):
-        L.append(f"| {g} | {fmt(stats.get(g))} |")
-    by_group = {g: stats.get(g) for g in ("صناديق (مع SPY)", "شركات")}
-    L += ["", "⚖️ **" + verdict(by_group, stats.get("الكل")) + "**"]
+def report(stats_by_mode, meta):
+    """stats_by_mode: {mode: {مجموعة: إحصاءة}}."""
+    L = ["# FIBO ENTRY و«المنطقة الذهبية + FVG» على 15 دقيقة (نتائج آلية)", "", f"- {meta}",
+         "- قراءة فقط. R بعد كلفة 0.002% لكل جهة. تحت السير العشوائي: متوسط R ≈ 0 قبل الكلفة. القواعد نفسها في النسختين والفرق شرط الدخول فقط.",
+         "- **الفرضيتان المسجّلتان مسبقاً:** متوسط R بعد الكلفة > 0 بفاصل 95% في كل مجموعة وفي المجموع بعد 300 صفقة. خطوة «خط الاتجاه» غير منفذة (ذاتية).", ""]
+    titles = {"fib79": "H-FIBO: دخول عند 0.79 (عائد/مخاطرة نحو 3)", "zone": "H-FIBOZ: المنطقة الذهبية 0.618–0.706 + FVG (عائد/مخاطرة نحو 1.4)"}
+    for mode, stats in stats_by_mode.items():
+        L += [f"## {titles.get(mode, mode)}", "", "| المجموعة | صفقات | بلوغ الهدف | متوسط R | فاصل 95% | فاصل 99.6% |", "|---|---|---|---|---|---|"]
+        for g in ("صناديق (مع SPY)", "شركات", "الكل"):
+            L.append(f"| {g} | {fmt(stats.get(g))} |")
+        by_group = {g: stats.get(g) for g in ("صناديق (مع SPY)", "شركات")}
+        L += ["", "⚖️ **" + verdict(by_group, stats.get("الكل"), MODES.get(mode, mode)) + "**", ""]
     return L
 
 
-def analyze(series):
+def analyze(series, modes=tuple(MODES)):
+    """{mode: {مجموعة: إحصاءة}} لكل نسخة."""
     groups = {"صناديق (مع SPY)": [s for s in series if s in rp.ETFS or s == "SPY"], "شركات": [s for s in series if s not in rp.ETFS and s != "SPY"]}
-    stats, all_frames, all_days = {}, [], set()
-    for gname, syms in groups.items():
-        frames, days = [], set()
-        for s in syms:
-            frames.append(run_series(series[s]).assign(sym=s))
-            days |= {pd.Timestamp(x) for x in series[s]["t"].dt.date.unique()}
-        stats[gname] = group_stats([f for f in frames if len(f)], sorted(days))
-        all_frames += [f for f in frames if len(f)]
-        all_days |= days
-    stats["الكل"] = group_stats(all_frames, sorted(all_days))
-    return stats
+    days_by = {g: sorted({pd.Timestamp(x) for s in syms for x in series[s]["t"].dt.date.unique()}) for g, syms in groups.items()}
+    out = {}
+    for mode in modes:
+        stats, all_frames = {}, []
+        for gname, syms in groups.items():
+            frames = [f for f in (run_series(series[s], mode).assign(sym=s) for s in syms) if len(f)]
+            stats[gname] = group_stats(frames, days_by[gname])
+            all_frames += frames
+        stats["الكل"] = group_stats(all_frames, sorted(set(days_by["صناديق (مع SPY)"]) | set(days_by["شركات"])))
+        out[mode] = stats
+    return out
 
 
 def main(argv):
