@@ -14,8 +14,8 @@
    "strength": "4.8",
    "occ": "HOOD261030P00089000",
    "peak_pnl": 0.037,
-   "close_pnl": -0.228,
-   "quotes": 13,
+   "close_pnl": -0.265,
+   "quotes": 14,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -34,8 +34,8 @@
    "strength": "8.4",
    "occ": "TSLA261102C00410000",
    "peak_pnl": 0.097,
-   "close_pnl": 0.097,
-   "quotes": 13,
+   "close_pnl": 0.015,
+   "quotes": 14,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -54,8 +54,8 @@
    "strength": "4.7",
    "occ": "UBER261030P00066000",
    "peak_pnl": 0.036,
-   "close_pnl": 0.036,
-   "quotes": 11,
+   "close_pnl": -0.012,
+   "quotes": 12,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -74,8 +74,8 @@
    "strength": "10.0",
    "occ": "SPXW261026C07720000",
    "peak_pnl": 0.0,
-   "close_pnl": -0.306,
-   "quotes": 4,
+   "close_pnl": -0.399,
+   "quotes": 5,
    "out": "",
    "out_time": "",
    "out_pnl": ""
