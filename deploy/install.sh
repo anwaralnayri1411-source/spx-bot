@@ -6,7 +6,7 @@ U=/etc/systemd/system
 
 # job | OnCalendar (عدة مواعيد بفاصلة منقوطة)
 SCHEDULE='
-bot|Mon..Fri *-*-* 13..21:00/5:20
+bot|Mon..Fri *-*-* 13..21:05,35:00
 spx_monitor|Mon..Fri *-*-* 13..21:00/5:00
 stocks|Mon..Fri *-*-* 14,15:20:00;Mon..Fri *-*-* 17,19:00:00;Mon..Fri *-*-* 13..21:12,42:00
 commands|Mon..Fri *-*-* 13..21:03/15:00
