@@ -20,9 +20,9 @@
    "rule_time": "11:07",
    "rule_pnl": 0.517,
    "peak_pnl": 1.45,
-   "close_pnl": -0.842,
+   "close_pnl": -0.825,
    "stale_quotes": 0,
-   "quotes": 47
+   "quotes": 48
   },
   {
    "date": "2026-10-26",
@@ -43,9 +43,9 @@
    "rule_time": "11:12",
    "rule_pnl": 0.689,
    "peak_pnl": 1.134,
-   "close_pnl": -0.546,
+   "close_pnl": -0.504,
    "stale_quotes": 0,
-   "quotes": 47
+   "quotes": 48
   },
   {
    "date": "2026-10-26",
@@ -66,9 +66,9 @@
    "rule_time": "11:07",
    "rule_pnl": 0.542,
    "peak_pnl": 1.094,
-   "close_pnl": -0.656,
+   "close_pnl": -0.646,
    "stale_quotes": 0,
-   "quotes": 47
+   "quotes": 48
   },
   {
    "date": "2026-10-26",
@@ -89,9 +89,9 @@
    "rule_time": "11:12",
    "rule_pnl": 0.616,
    "peak_pnl": 0.974,
-   "close_pnl": -0.371,
+   "close_pnl": -0.331,
    "stale_quotes": 0,
-   "quotes": 47
+   "quotes": 48
   },
   {
    "date": "2026-10-26",
@@ -112,9 +112,9 @@
    "rule_time": "11:12",
    "rule_pnl": 0.616,
    "peak_pnl": 0.974,
-   "close_pnl": -0.371,
+   "close_pnl": -0.331,
    "stale_quotes": 0,
-   "quotes": 47
+   "quotes": 48
   },
   {
    "date": "2026-10-26",
@@ -135,9 +135,9 @@
    "rule_time": "11:12",
    "rule_pnl": 0.667,
    "peak_pnl": 1.147,
-   "close_pnl": -0.598,
+   "close_pnl": -0.578,
    "stale_quotes": 0,
-   "quotes": 47
+   "quotes": 48
   },
   {
    "date": "2026-10-26",
@@ -158,9 +158,9 @@
    "rule_time": "12:57",
    "rule_pnl": -0.408,
    "peak_pnl": 0.447,
-   "close_pnl": -0.526,
+   "close_pnl": -0.5,
    "stale_quotes": 0,
-   "quotes": 23
+   "quotes": 24
   },
   {
    "date": "2026-10-26",
@@ -181,9 +181,9 @@
    "rule_time": "13:02",
    "rule_pnl": -0.506,
    "peak_pnl": 0.468,
-   "close_pnl": -0.299,
+   "close_pnl": -0.234,
    "stale_quotes": 0,
-   "quotes": 23
+   "quotes": 24
   },
   {
    "date": "2026-10-26",
@@ -204,9 +204,9 @@
    "rule_time": "13:02",
    "rule_pnl": -0.529,
    "peak_pnl": 0.558,
-   "close_pnl": -0.365,
+   "close_pnl": -0.346,
    "stale_quotes": 0,
-   "quotes": 23
+   "quotes": 24
   }
  ]
 }
