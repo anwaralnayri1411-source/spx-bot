@@ -19,9 +19,9 @@
    "r5040_pnl": 0.55,
    "t60_time": "",
    "t60_pnl": "",
-   "peak_pnl": 0.76,
-   "close_pnl": 0.76,
-   "quotes": 3
+   "peak_pnl": 1.07,
+   "close_pnl": 1.07,
+   "quotes": 4
   },
   {
    "date": "2026-10-26",
@@ -36,14 +36,14 @@
    "entry_time": "2026-10-26T10:38-04:00",
    "entry_spot": 764.94,
    "entry": 2.48,
-   "r5040_out": "",
-   "r5040_time": "",
-   "r5040_pnl": "",
+   "r5040_out": "tp",
+   "r5040_time": "10:58",
+   "r5040_pnl": 0.5,
    "t60_time": "",
    "t60_pnl": "",
-   "peak_pnl": 0.411,
-   "close_pnl": 0.411,
-   "quotes": 3
+   "peak_pnl": 0.5,
+   "close_pnl": 0.5,
+   "quotes": 4
   },
   {
    "date": "2026-10-26",
@@ -63,9 +63,9 @@
    "r5040_pnl": 0.666,
    "t60_time": "",
    "t60_pnl": "",
-   "peak_pnl": 0.946,
-   "close_pnl": 0.946,
-   "quotes": 3
+   "peak_pnl": 1.501,
+   "close_pnl": 1.501,
+   "quotes": 4
   },
   {
    "date": "2026-10-26",
@@ -80,14 +80,14 @@
    "entry_time": "2026-10-26T10:38-04:00",
    "entry_spot": 7674.66,
    "entry": 25.08,
-   "r5040_out": "",
-   "r5040_time": "",
-   "r5040_pnl": "",
+   "r5040_out": "tp",
+   "r5040_time": "10:58",
+   "r5040_pnl": 0.5,
    "t60_time": "",
    "t60_pnl": "",
-   "peak_pnl": 0.366,
-   "close_pnl": 0.366,
-   "quotes": 3
+   "peak_pnl": 0.5,
+   "close_pnl": 0.5,
+   "quotes": 4
   }
  ],
  "skipped": []
