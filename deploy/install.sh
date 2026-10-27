@@ -18,6 +18,7 @@ pro_rules_shadow|Mon..Fri *-*-* 13..21:08/5:00
 structure_shadow|Mon..Fri *-*-* 13..21:09/5:00
 candidates_shadow|Mon..Fri *-*-* 13..21:01/5:00
 flow_shadow|Mon..Fri *-*-* 19,20:45:00
+best_shadow|Mon..Fri *-*-* 13..21:00/5:20
 gex|Mon..Fri *-*-* 13:50:00;Mon..Fri *-*-* 21:45:00
 shadow|Mon..Fri *-*-* 21:40:00
 weekly|Fri *-*-* 21:30:00

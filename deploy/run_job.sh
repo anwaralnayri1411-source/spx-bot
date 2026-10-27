@@ -120,6 +120,11 @@ main() {
       cmds=("$py candidates_shadow.py" "$py candidates_shadow.py --report")
       files="candidates_shadow_state.json candidates_shadow_log.csv research/candidates_shadow_results.md data_gaps_candidates_shadow_log.csv"
       msg="candidates shadow log" ;;
+    best_shadow)
+      group=best-shadow; envs="ALPACA TASTY"; keepgoing=1
+      cmds=("$py best_shadow.py" "$py best_shadow.py --report")
+      files="best_shadow_state.json best_shadow_log.csv research/best_shadow_results.md"
+      msg="best shadow log" ;;
     flow_shadow)
       group=flow-shadow; envs="TASTY ALPACA"
       cmds=("$py flow_shadow.py" "$py flow_shadow.py --report")
