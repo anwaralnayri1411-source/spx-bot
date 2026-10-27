@@ -1,0 +1,2 @@
+time,mode,status,ratio,ratio_src,added,yahoo_last,yahoo_age_min,live_age_min,S_yahoo,S_live,r30_yahoo,r30_live,bull_yahoo,bear_yahoo,bull_live,bear_live,side_yahoo,side_live
+2026-10-27T10:05-04:00,shadow,ok,10.03389,overlap,3,2026-10-27 09:50,15.1,5.1,7689.66,7685.36,0.0,-0.00216,0,0,0,1.25,PUT,PUT
