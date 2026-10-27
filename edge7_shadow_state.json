@@ -1,6 +1,67 @@
 {
- "open": [],
+ "open": [
+  {
+   "entry_time": "2026-10-27T11:35-04:00",
+   "side": "CALL",
+   "role": "bot",
+   "contract": "SPXW261028C07720000",
+   "strike": 7720,
+   "exp": "2026-10-28",
+   "edge": 8.25,
+   "bot_sent": 0,
+   "reasons": "مخاطر الأخبار والجيوسياسة مرتفعة: 5 من 7 شركات قيا",
+   "spot": 7718.97,
+   "entry": 26.1,
+   "entry_src": "tasty",
+   "val30": ""
+  },
+  {
+   "entry_time": "2026-10-27T11:35-04:00",
+   "side": "PUT",
+   "role": "opp",
+   "contract": "SPXW261028P07720000",
+   "strike": 7720,
+   "exp": "2026-10-28",
+   "edge": 8.25,
+   "bot_sent": 0,
+   "reasons": "مخاطر الأخبار والجيوسياسة مرتفعة: 5 من 7 شركات قيا",
+   "spot": 7718.97,
+   "entry": 26.1,
+   "entry_src": "tasty",
+   "val30": ""
+  },
+  {
+   "entry_time": "2026-10-27T11:35-04:00",
+   "side": "CALL",
+   "role": "spy_bot",
+   "contract": "SPY261028C00769000",
+   "strike": 769,
+   "exp": "2026-10-28",
+   "edge": 8.25,
+   "bot_sent": 0,
+   "reasons": "مخاطر الأخبار والجيوسياسة مرتفعة: 5 من 7 شركات قيا",
+   "spot": 769.39,
+   "entry": 3.14,
+   "entry_src": "tasty",
+   "val30": ""
+  },
+  {
+   "entry_time": "2026-10-27T11:35-04:00",
+   "side": "PUT",
+   "role": "spy_opp",
+   "contract": "SPY261028P00769000",
+   "strike": 769,
+   "exp": "2026-10-28",
+   "edge": 8.25,
+   "bot_sent": 0,
+   "reasons": "مخاطر الأخبار والجيوسياسة مرتفعة: 5 من 7 شركات قيا",
+   "spot": 769.39,
+   "entry": 2.65,
+   "entry_src": "tasty",
+   "val30": ""
+  }
+ ],
  "last": {
-  "CALL": "2026-10-26T14:35-04:00"
+  "CALL": "2026-10-27T11:35-04:00"
  }
 }
