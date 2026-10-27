@@ -1,4 +1,26 @@
 {
- "open": [],
- "last": {}
+ "open": [
+  {
+   "variant": "S",
+   "entry_time": "2026-10-27T11:15-04:00",
+   "side": "CALL",
+   "edge": 7.25,
+   "mom": 1,
+   "f30": -1,
+   "rsweep": 0,
+   "strike": 769,
+   "exp": "2026-10-28",
+   "spot": 769.46,
+   "side_occ": "SPY261028C00769000",
+   "opp_occ": "SPY261028P00769000",
+   "side_entry": 3.25,
+   "opp_entry": 2.7,
+   "src": "alpaca"
+  }
+ ],
+ "last": {
+  "S": {
+   "CALL": "2026-10-27T11:15-04:00"
+  }
+ }
 }
