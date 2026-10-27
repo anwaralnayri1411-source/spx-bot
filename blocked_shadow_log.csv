@@ -12,3 +12,4 @@ id,project,tag,sym,side,strike,exp,entry_time,entry,edge,strength,out,out_time,o
 20261026T1535|spx|late_entry|SPX|CALL|7685|2026-10-26,spx,late_entry,SPX,CALL,7685.0,2026-10-26,2026-10-26T15:35-04:00,1.78,5.0,6.0,final,2026-10-26T15:37-04:00,-0.14,0.0,1
 20261026T1012|stocks|same_side_cap|HOOD|PUT|89|2026-10-30,stocks,same_side_cap,HOOD,PUT,89.0,2026-10-30,2026-10-26T10:12-04:00,2.94,5.5,4.8,stop,2026-10-27T09:42-04:00,-0.48,0.037,67
 20261026T1012|stocks|open_same_dir|TSLA|CALL|410|2026-11-02,stocks,open_same_dir,TSLA,CALL,410.0,2026-11-02,2026-10-26T10:12-04:00,3.3,9.0,8.4,tp,2026-10-27T09:42-04:00,0.564,0.564,67
+20261026T1212|stocks|max_ideas_cap|XOM|CALL|185|2026-10-30,stocks,max_ideas_cap,XOM,CALL,185.0,2026-10-30,2026-10-26T12:12-04:00,2.65,5.0,5.0,stop,2026-10-27T10:27-04:00,-0.404,0.079,53
