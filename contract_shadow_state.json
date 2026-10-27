@@ -20,9 +20,9 @@
    "rule_time": "12:32",
    "rule_pnl": -0.423,
    "peak_pnl": 0.269,
-   "close_pnl": -0.577,
+   "close_pnl": -0.654,
    "stale_quotes": 0,
-   "quotes": 8
+   "quotes": 9
   },
   {
    "date": "2026-10-27",
@@ -38,14 +38,14 @@
    "entry": 7.9,
    "bot_entry": 2.96,
    "qty_budget": 0.475,
-   "status": "open",
-   "rule_out": "",
-   "rule_time": "",
-   "rule_pnl": "",
+   "status": "closed",
+   "rule_out": "stop",
+   "rule_time": "12:52",
+   "rule_pnl": -0.481,
    "peak_pnl": 0.215,
-   "close_pnl": -0.38,
+   "close_pnl": -0.481,
    "stale_quotes": 0,
-   "quotes": 8
+   "quotes": 9
   },
   {
    "date": "2026-10-27",
@@ -66,9 +66,9 @@
    "rule_time": "12:47",
    "rule_pnl": -0.446,
    "peak_pnl": 0.232,
-   "close_pnl": -0.446,
+   "close_pnl": -0.536,
    "stale_quotes": 0,
-   "quotes": 8
+   "quotes": 9
   }
  ]
 }
