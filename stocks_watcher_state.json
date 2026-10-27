@@ -180,7 +180,10 @@
    "these 3 stocks could rally after the fed decision",
    "netflix nflx hires apple executive to grow its podcast business",
    "netflix stock price is down 32 per cent this year what led to this downfall check predicted target price",
-   "netflix stock price is down 32 per cent this year what led to this downfall check predicted target price market value"
+   "netflix stock price is down 32 per cent this year what led to this downfall check predicted target price market value",
+   "netflix not winning on attention winning on economics nasdaq nflx",
+   "netflix stock nears its cheapest valuation in a decade here s what s worrying investors",
+   "citigroup cuts target from usd 100 00 to usd 85 00 for netflix stock"
   ],
   "AVGO:PUT": [
    "3 artificial intelligence ai stocks that look like great buys right now",
@@ -256,7 +259,9 @@
    "options volatility and implied earnings moves today october 27 2026",
    "tech stocks struggle as the rest of the s p 500 stages its biggest comeback in 35 years",
    "servicenow google cloud expand partnership to advance agentic ai",
-   "new buy rating for palantir technologies pltr the technology giant"
+   "new buy rating for palantir technologies pltr the technology giant",
+   "palantir stock holds steady amid consolidation near 196 6 support",
+   "palantir put strategy aims to cash in on potential earnings volatility"
   ],
   "GOOGL:PUT": [
    "wall street continues to systematically undervalue alphabet so i continue to buy",
@@ -669,7 +674,9 @@
    "tesla rises 6 as barclays upgrade cites spacex merger potential lucid drops 4 rivian slips",
    "tesla s strong quarter has a catch nasdaq tsla",
    "tesla says cybercab factory is so efficient it doesn t need to run every day",
-   "analysts are bullish on these consumer cyclical stocks tesla tsla marriott international mar"
+   "analysts are bullish on these consumer cyclical stocks tesla tsla marriott international mar",
+   "us stock market update tesla tsla us opens higher and surges over 2 6 market cap approaches 1 6 trillion",
+   "tesla moves to future proof cybercabs with lfp battery technology tesla stock nasdaq tsla surges"
   ],
   "XOM:CALL": [
    "trump uses defense act as fuel prices surge",
@@ -977,7 +984,11 @@
    "jason calacanis predicts bitcoin will never reclaim its price peak here s why",
    "investor jason calacanis predicts bitcoin will drop 28 to 57k and never hit its all time high again",
    "squid price today quid to usd live price marketcap and chart",
-   "elon musk s grok ai predicts an unbelievable xrp price"
+   "elon musk s grok ai predicts an unbelievable xrp price",
+   "coin price prediction futures contract clings to lower bollinger band as underlying equity attracts 205 250 analyst pric",
+   "xrp price warning will xrp crash below 1 after death cross signal",
+   "bitcoin xrp and ethereum 3x etfs face delay until november 30",
+   "how low could pi network price go if bitcoin drops below 75k after us midterm elections"
   ],
   "HOOD:PUT": [
    "prediction could bitcoin reach a new all time high before the 2028 halving",
@@ -1080,7 +1091,10 @@
    "boeing reports mixed q3 results record backlog stock tumbles",
    "ba stock falls 10 approaching 150 support as boeing reports third quarter results",
    "boeing co stock ba moved down by 9 88 on oct 27 drivers behind the movement",
-   "boeing s cash flow outlook disappoints but analysts see recovery potential ba nyse"
+   "boeing s cash flow outlook disappoints but analysts see recovery potential ba nyse",
+   "boeing plunges 10 after earnings report and delivery target cut one of the worst days in the stock s history",
+   "why did boeing stock crash after earnings",
+   "boeing stock price forecast stock plunges 10 after q3 results technicals signal another 9 drop to 155"
   ]
  },
  "fired": {
@@ -1128,9 +1142,12 @@
   ],
   "TSLA:CALL:2026-10-30:412.5": [
    "down-0.15",
-   "up0.25"
+   "up0.25",
+   "news:tesla moves to future proof cybercabs with lfp battery technology tesla stock nasdaq tsla surges"
   ],
-  "NFLX:PUT:2026-11-06:62": [],
+  "NFLX:PUT:2026-11-06:62": [
+   "news:citigroup cuts target from usd 100 00 to usd 85 00 for netflix stock"
+  ],
   "AAPL:CALL:2026-10-30:347.5": [
    "news:loop capital lowers apple stock price target on iphone shipment concerns",
    "up0.25"
@@ -1142,7 +1159,8 @@
    "sharp@2026-10-27T11:41-04:00",
    "news:boeing stock plunges to 18 mth low on production delays cash flow outlook ba nyse",
    "news:boeing reports mixed q3 results record backlog stock tumbles",
-   "news:ba stock falls 10 approaching 150 support as boeing reports third quarter results"
+   "news:ba stock falls 10 approaching 150 support as boeing reports third quarter results",
+   "news:boeing plunges 10 after earnings report and delivery target cut one of the worst days in the stock s history"
   ]
  },
  "stock_level": {
@@ -1674,7 +1692,10 @@
   "stock market today oct 27 2026 s p 500 climbs as wall street gears up for earnings fed meeting",
   "fed rate decision inflation and weak hiring point in opposite directions",
   "bitcoin slips below 80 000 as cryptocurrencies weaken ahead of fed decision",
-  "gold hovers near 4 000 ahead of fed decision here s everything to know"
+  "gold hovers near 4 000 ahead of fed decision here s everything to know",
+  "2 40pm markets update",
+  "understanding trump s tariff reversals",
+  "forced to sell bananas cm yogi responds after comedian harsh gujral jokes about up crime"
  ],
  "sharp": {
   "COIN:PUT:2026-10-30:150": 162.19,
