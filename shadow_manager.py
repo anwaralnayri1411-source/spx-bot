@@ -556,6 +556,80 @@ def build_roles(summary, dis, day):
     return "\n".join(md), "\n".join(tg)[:3900]
 
 
+# ============================ ظروف السوق (H-CONTEXT) ============================
+CTX_MIN = 20
+FACTORS = (("vix", "VIX أمس"), ("range", "مدى أمس"), ("trend", "اتجاه أمس"), ("gap", "فجوة الافتتاح"), ("event", "يوم حدث"), ("tod", "وقت اليوم"))
+
+
+def daily_context(spy, vix, events, days):
+    """{يوم: ظروفه} بفئات H-CONTEXT الثابتة. spy: DataFrame (Open/High/Low/Close) بفهرس تواريخ، vix: Series إغلاق، events: مجموعة تواريخ أحداث."""
+    out = {}
+    for d in days:
+        dd = date.fromisoformat(d)
+        prev = spy[spy.index < dd]
+        if len(prev) < 21 or dd not in spy.index:
+            continue
+        p = prev.iloc[-1]
+        rng = (prev["High"] - prev["Low"]) / prev["Close"]
+        rel = float(rng.iloc[-1] / rng.iloc[-21:-1].mean())
+        v = vix[vix.index < dd]
+        vl = float(v.iloc[-1]) if len(v) else None
+        gap = float(spy.loc[dd, "Open"]) / float(p["Close"]) - 1
+        out[d] = {"vix": None if vl is None else ("منخفض" if vl < 15 else "متوسط" if vl < 22 else "مرتفع"),
+                  "range": "ضيق" if rel < 0.8 else "واسع" if rel > 1.2 else "عادي",
+                  "trend": "صاعد" if p["Close"] > p["Open"] else "هابط",
+                  "gap": "صعود" if gap >= 0.003 else "هبوط" if gap <= -0.003 else "بلا فجوة",
+                  "event": "نعم" if dd in events else "لا"}
+    return out
+
+
+def tod(t):
+    return "الافتتاح" if t < "10:30" else "المنتصف" if t < "14:00" else "الإغلاق"
+
+
+def load_context(days):
+    """ظروف الأيام من بيانات ياهو اليومية (الماضي لا يتأخر) وتقويم أحداث البوت. {} عند الفشل."""
+    try:
+        import yfinance as yf
+        import options_bot as ob
+        spy = yf.Ticker("SPY").history(period="1y")[["Open", "High", "Low", "Close"]]
+        spy.index = [x.date() for x in spy.index]
+        vix = yf.Ticker("^VIX").history(period="1y")["Close"]
+        vix.index = [x.date() for x in vix.index]
+        events = {e for d in days for e, _ in ob.upcoming_events(date.fromisoformat(d), 0)}
+        return daily_context(spy, vix, events, days)
+    except Exception as e:  # noqa: BLE001
+        print("ظروف السوق:", type(e).__name__)
+        return {}
+
+
+def context_line(c):
+    if not c:
+        return "📋 ظروف اليوم: غير متاحة"
+    return f"📋 <b>ظروف اليوم</b>: VIX {c['vix'] or '-'} | مدى أمس {c['range']} | أمس {c['trend']} | فجوة {c['gap']} | يوم حدث: {c['event']}"
+
+
+def context_breakdown(res, ctx):
+    """markdown: نتيجة كل ظل (المقياس نفسه في لوحة التقييم) حسب كل عامل. وصفي؛ لا رقم في خانة أقل من 20 حدثاً."""
+    L = ["", "## النتائج حسب ظروف السوق (H-CONTEXT، وصفي)", "",
+         f"الخانة بأقل من {CTX_MIN} حدثاً تظهر بعددها فقط. أي قاعدة مشروطة بالظروف تحتاج فرضية جديدة واختباراً على أيام لاحقة.", ""]
+    for k, r in res.items():
+        evs = [e for e in r["events"] if e["day"] in ctx]
+        if len(evs) < 10:
+            continue
+        L += [f"### {LABELS[k]} ({len(evs)} حدثاً)", "", "| العامل | الفئة | أحداث | المتوسط |", "|---|---|---|---|"]
+        for f, fname in FACTORS:
+            groups = {}
+            for e in evs:
+                cat = tod(e["t"]) if f == "tod" else ctx[e["day"]].get(f)
+                if cat:
+                    groups.setdefault(cat, []).append(metric(e))
+            for cat, v in sorted(groups.items()):
+                L.append(f"| {fname} | {cat} | {len(v)} | {pc(float(np.mean(v))) if len(v) >= CTX_MIN else '-'} |")
+        L.append("")
+    return L
+
+
 # ============================ التناغم اليومي ============================
 def _ts(t):
     """وقت السجل بلا منطقة زمنية (كل السجلات بتوقيت نيويورك): «2026-10-26T10:31-04:00» أو «2026-10-26 10:31»."""
@@ -781,8 +855,12 @@ def main(argv):
     watch = [(label, last_date(f)[0]) for f, label in WATCH_ONLY if os.path.exists(os.path.join(ROOT, f))]
     md, tg = build(res, crows, day, harmony_for(day, shadows), watch, dis)
     md2, tg2 = build_roles(direction_summary(drows), dis, day)
+    ctx = load_context(sorted({e["day"] for r in res.values() for e in r["events"]} | {day}))
+    lines = tg.split("\n")
+    tg = "\n".join(lines[:2] + [context_line(ctx.get(day))] + lines[2:])[:3900]
+    md3 = "\n".join(context_breakdown(res, ctx))
     with open(OUT, "w", encoding="utf-8", newline="\n") as f:
-        f.write(md + "\n" + md2 + "\n")
+        f.write(md + "\n" + md2 + "\n" + md3 + "\n")
     print(tg + "\n\n" + tg2)
     if not no_send:
         ok = send(tg)

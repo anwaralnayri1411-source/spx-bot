@@ -152,3 +152,21 @@ def test_best_adapter_scores_30_minute_skill():
     rows = [{"variant": "SC", "status": "closed", "entry_time": "2026-10-28T10:30-04:00", "side": "CALL", "side_entry": "2.0", "opp_entry": "2.0", "side_30": "2.6", "opp_30": "1.4"}]
     ev, tried, valid = sm.from_best(rows, "SC")
     assert tried == valid == 1 and ev[0]["skill"] == pytest.approx(0.3) and ev[0]["t"] == "10:30"
+
+
+def test_daily_context_categories_and_breakdown():
+    import pandas as pd
+    days = pd.bdate_range("2026-09-01", periods=30)
+    idx = [d.date() for d in days]
+    spy = pd.DataFrame({"Open": [700.0] * 30, "High": [701.0] * 30, "Low": [699.0] * 30, "Close": [700.5] * 30}, index=idx)
+    spy.loc[idx[-2], ["High", "Low"]] = [703.0, 697.0]                       # أمس مدى واسع
+    spy.loc[idx[-1], "Open"] = 703.0                                          # فجوة صعود
+    vix = pd.Series([25.0] * 30, index=idx)
+    ctx = sm.daily_context(spy, vix, {idx[-1]}, [idx[-1].isoformat()])
+    c = ctx[idx[-1].isoformat()]
+    assert c == {"vix": "مرتفع", "range": "واسع", "trend": "صاعد", "gap": "صعود", "event": "نعم"}
+    assert "VIX مرتفع" in sm.context_line(c) and sm.tod("10:05") == "الافتتاح" and sm.tod("15:00") == "الإغلاق"
+    d = idx[-1].isoformat()
+    res = {"cand_mom": {"events": [sm.ev(d, "10:05", 1, 0.1, 0.1, 200)] * 25}}
+    text = "\n".join(sm.context_breakdown(res, ctx))
+    assert "| VIX أمس | مرتفع | 25 | +10.0% |" in text and "| وقت اليوم | الافتتاح | 25 |" in text
