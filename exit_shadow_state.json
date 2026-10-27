@@ -14,14 +14,14 @@
    "entry_time": "2026-10-27T12:08-04:00",
    "entry_spot": 7730.68,
    "entry": 2.47,
-   "r5040_out": "",
-   "r5040_time": "",
-   "r5040_pnl": "",
+   "r5040_out": "stop",
+   "r5040_time": "12:28",
+   "r5040_pnl": -0.421,
    "t60_time": "",
    "t60_pnl": "",
    "peak_pnl": 0.0,
-   "close_pnl": -0.36,
-   "quotes": 3
+   "close_pnl": -0.421,
+   "quotes": 4
   },
   {
    "date": "2026-10-27",
@@ -42,8 +42,8 @@
    "t60_time": "",
    "t60_pnl": "",
    "peak_pnl": 0.0,
-   "close_pnl": -0.088,
-   "quotes": 3
+   "close_pnl": -0.1,
+   "quotes": 4
   }
  ],
  "skipped": []
