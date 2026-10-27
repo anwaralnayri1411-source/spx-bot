@@ -179,7 +179,8 @@
    "why is netflix stock sliding today",
    "these 3 stocks could rally after the fed decision",
    "netflix nflx hires apple executive to grow its podcast business",
-   "netflix stock price is down 32 per cent this year what led to this downfall check predicted target price"
+   "netflix stock price is down 32 per cent this year what led to this downfall check predicted target price",
+   "netflix stock price is down 32 per cent this year what led to this downfall check predicted target price market value"
   ],
   "AVGO:PUT": [
    "3 artificial intelligence ai stocks that look like great buys right now",
@@ -253,7 +254,9 @@
    "fiserv price target lowered to 48 from 50 at bmo capital",
    "pltr stock earnings preview what to expect from palantir s q3 report",
    "options volatility and implied earnings moves today october 27 2026",
-   "tech stocks struggle as the rest of the s p 500 stages its biggest comeback in 35 years"
+   "tech stocks struggle as the rest of the s p 500 stages its biggest comeback in 35 years",
+   "servicenow google cloud expand partnership to advance agentic ai",
+   "new buy rating for palantir technologies pltr the technology giant"
   ],
   "GOOGL:PUT": [
    "wall street continues to systematically undervalue alphabet so i continue to buy",
@@ -665,7 +668,8 @@
    "tesla inc stock tsla opened up by 5 13 on oct 26 facts behind the movement",
    "tesla rises 6 as barclays upgrade cites spacex merger potential lucid drops 4 rivian slips",
    "tesla s strong quarter has a catch nasdaq tsla",
-   "tesla says cybercab factory is so efficient it doesn t need to run every day"
+   "tesla says cybercab factory is so efficient it doesn t need to run every day",
+   "analysts are bullish on these consumer cyclical stocks tesla tsla marriott international mar"
   ],
   "XOM:CALL": [
    "trump uses defense act as fuel prices surge",
@@ -959,7 +963,21 @@
    "bitcoin price prediction a 6 percent range in fed week what you can do now",
    "bitcoin price faces pullback risk as hyperliquid whales turn net short",
    "btc news market turbulence puts 80k support to the test",
-   "experts say the mcrib s return is not linked to the bitcoin price surge"
+   "experts say the mcrib s return is not linked to the bitcoin price surge",
+   "coinbase wallet returns as base app rebrand ends after 14 months",
+   "crypto continues to weaken ahead of fed rate decision",
+   "crypto market structure explained liquidity venues",
+   "btc price on oct 27 2026 at 1pm edt crypto prediction market",
+   "now is the time to accumulate bitcoin galaxy says",
+   "bitcoin faces further downside as oil surge ai fears weigh on risk appetite",
+   "tony edward comments on xrp 10 000 price predictions",
+   "royal caribbean stock jumps after earnings beat and outlook upgrade",
+   "experts debunk mcrib bitcoin price link fed ra",
+   "bitcoin price tightest in months at 80 300 ahe",
+   "jason calacanis predicts bitcoin will never reclaim its price peak here s why",
+   "investor jason calacanis predicts bitcoin will drop 28 to 57k and never hit its all time high again",
+   "squid price today quid to usd live price marketcap and chart",
+   "elon musk s grok ai predicts an unbelievable xrp price"
   ],
   "HOOD:PUT": [
    "prediction could bitcoin reach a new all time high before the 2028 halving",
@@ -1051,11 +1069,18 @@
   ],
   "AAPL:CALL": [
    "loop capital lowers apple stock price target on iphone shipment concerns",
-   "apple aapl vs msft and googl is the post earnings selloff creating a long term buying opportunity"
+   "apple aapl vs msft and googl is the post earnings selloff creating a long term buying opportunity",
+   "aapl trades flat as consolidation near 346 65 reflects muted momentum"
   ],
   "BA:PUT": [
    "boeing nyse ba sets new 52 week low on disappointing earnings",
-   "boeing drops 9 as commercial jet losses overshadow positive cash flow ge aerospace ticks up rtx holds steady"
+   "boeing drops 9 as commercial jet losses overshadow positive cash flow ge aerospace ticks up rtx holds steady",
+   "why is boeing stock falling today",
+   "boeing stock plunges to 18 mth low on production delays cash flow outlook ba nyse",
+   "boeing reports mixed q3 results record backlog stock tumbles",
+   "ba stock falls 10 approaching 150 support as boeing reports third quarter results",
+   "boeing co stock ba moved down by 9 88 on oct 27 drivers behind the movement",
+   "boeing s cash flow outlook disappoints but analysts see recovery potential ba nyse"
   ]
  },
  "fired": {
@@ -1088,13 +1113,18 @@
    "news:ark invest sells 15 million of its own bitcoin etf as price falls",
    "news:crypto news today bitcoin inflow strategy inc halts btc purchase ethereum fixed validator deposit flaw",
    "news:crypto market faces pressure as bitcoin slides below 80 000 before fed decision",
-   "news:bitcoin etfs see 110m inflow after 774m outfl"
+   "news:bitcoin etfs see 110m inflow after 774m outfl",
+   "news:crypto continues to weaken ahead of fed rate decision",
+   "news:bitcoin faces further downside as oil surge ai fears weigh on risk appetite",
+   "news:bitcoin price tightest in months at 80 300 ahe"
   ],
   "PLTR:CALL:2026-10-30:202.5": [
    "news:palantir stock within 7 of its 52 week high as earnings and target hikes fuel buzz",
    "sharp@2026-10-27T09:47-04:00",
    "down-0.15",
-   "news:tech stocks struggle as the rest of the s p 500 stages its biggest comeback in 35 years"
+   "news:tech stocks struggle as the rest of the s p 500 stages its biggest comeback in 35 years",
+   "up0.25",
+   "news:new buy rating for palantir technologies pltr the technology giant"
   ],
   "TSLA:CALL:2026-10-30:412.5": [
    "down-0.15",
@@ -1109,7 +1139,10 @@
    "news:boeing nyse ba sets new 52 week low on disappointing earnings",
    "news:boeing drops 9 as commercial jet losses overshadow positive cash flow ge aerospace ticks up rtx holds steady",
    "down-0.15",
-   "sharp@2026-10-27T11:41-04:00"
+   "sharp@2026-10-27T11:41-04:00",
+   "news:boeing stock plunges to 18 mth low on production delays cash flow outlook ba nyse",
+   "news:boeing reports mixed q3 results record backlog stock tumbles",
+   "news:ba stock falls 10 approaching 150 support as boeing reports third quarter results"
   ]
  },
  "stock_level": {
@@ -1635,7 +1668,13 @@
   "are interest rates actually not high market expectations point to an average u s short term interest rate of 4 3 over th",
   "news champi s support won t reverse market trend",
   "jpmorgan ceo warns of 5 risks threatening us stocks and bonds",
-  "brent oil risk premium persists amid middle east tensions commerzbank"
+  "brent oil risk premium persists amid middle east tensions commerzbank",
+  "why canada could be impacted by who wins the u s midterms",
+  "nasdaq opens higher as chip stocks rally oil prices fall ahead of fed decision",
+  "stock market today oct 27 2026 s p 500 climbs as wall street gears up for earnings fed meeting",
+  "fed rate decision inflation and weak hiring point in opposite directions",
+  "bitcoin slips below 80 000 as cryptocurrencies weaken ahead of fed decision",
+  "gold hovers near 4 000 ahead of fed decision here s everything to know"
  ],
  "sharp": {
   "COIN:PUT:2026-10-30:150": 162.19,
