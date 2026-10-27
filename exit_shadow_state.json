@@ -1,5 +1,50 @@
 {
  "date": "2026-10-27",
- "items": [],
+ "items": [
+  {
+   "date": "2026-10-27",
+   "sym": "SPX",
+   "pos_id": "SPX:CALL:7745:2026-10-27",
+   "variant": "bot",
+   "side": "CALL",
+   "strike": 7745.0,
+   "exp": "2026-10-27",
+   "occ": "SPXW261027C07745000",
+   "sig_time": "2026-10-27T12:05-04:00",
+   "entry_time": "2026-10-27T12:08-04:00",
+   "entry_spot": 7730.68,
+   "entry": 2.47,
+   "r5040_out": "",
+   "r5040_time": "",
+   "r5040_pnl": "",
+   "t60_time": "",
+   "t60_pnl": "",
+   "peak_pnl": 0.0,
+   "close_pnl": "",
+   "quotes": 0
+  },
+  {
+   "date": "2026-10-27",
+   "sym": "SPX",
+   "pos_id": "SPX:CALL:7745:2026-10-27",
+   "variant": "atm1",
+   "side": "CALL",
+   "strike": 7730.0,
+   "exp": "2026-10-28",
+   "occ": "SPXW261028C07730000",
+   "sig_time": "2026-10-27T12:05-04:00",
+   "entry_time": "2026-10-27T12:08-04:00",
+   "entry_spot": 7730.68,
+   "entry": 27.15,
+   "r5040_out": "",
+   "r5040_time": "",
+   "r5040_pnl": "",
+   "t60_time": "",
+   "t60_pnl": "",
+   "peak_pnl": 0.0,
+   "close_pnl": "",
+   "quotes": 0
+  }
+ ],
  "skipped": []
 }
