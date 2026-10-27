@@ -14,8 +14,8 @@
    "strength": "4.7",
    "occ": "UBER261030P00066000",
    "peak_pnl": 0.446,
-   "close_pnl": 0.096,
-   "quotes": 78,
+   "close_pnl": 0.193,
+   "quotes": 79,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -34,8 +34,8 @@
    "strength": "4.6",
    "occ": "COIN261030P00150000",
    "peak_pnl": 0.111,
-   "close_pnl": -0.017,
-   "quotes": 58,
+   "close_pnl": -0.037,
+   "quotes": 59,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -54,8 +54,8 @@
    "strength": "4.0",
    "occ": "COIN261030P00150000",
    "peak_pnl": 0.006,
-   "close_pnl": -0.107,
-   "quotes": 8,
+   "close_pnl": -0.125,
+   "quotes": 9,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -74,8 +74,8 @@
    "strength": "7.0",
    "occ": "PLTR261030C00200000",
    "peak_pnl": 0.069,
-   "close_pnl": 0.04,
-   "quotes": 8,
+   "close_pnl": 0.059,
+   "quotes": 9,
    "out": "",
    "out_time": "",
    "out_pnl": ""
