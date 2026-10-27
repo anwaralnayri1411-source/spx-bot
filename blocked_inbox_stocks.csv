@@ -82,3 +82,6 @@ id,time,project,tag,sym,root,side,strike,exp,entry,spot,edge,strength
 20261026T1512|stocks|max_ideas_cap|HOOD|PUT|89|2026-10-30,2026-10-26T15:12-04:00,stocks,max_ideas_cap,HOOD,HOOD,PUT,89.0,2026-10-30,2.76,92.97,5.0,4.8
 20261026T1512|stocks|open_same_dir|TSLA|CALL|405|2026-10-30,2026-10-26T15:12-04:00,stocks,open_same_dir,TSLA,TSLA,CALL,405.0,2026-10-30,3.52,394.81,8.0,9.4
 20261026T1512|stocks|open_same_dir|XOM|CALL|185|2026-10-30,2026-10-26T15:12-04:00,stocks,open_same_dir,XOM,XOM,CALL,185.0,2026-10-30,2.93,184.54,5.5,5.8
+20261027T1012|stocks|same_side_cap|COIN|PUT|150|2026-10-30,2026-10-27T10:12-04:00,stocks,same_side_cap,COIN,COIN,PUT,150.0,2026-10-30,3.28,159.4,4.5,4.0
+20261027T1012|stocks|max_ideas_cap|BA|PUT|182.5|2026-10-30,2026-10-27T10:12-04:00,stocks,max_ideas_cap,BA,BA,PUT,182.5,2026-10-30,2.18,185.25,5.0,5.0
+20261027T1012|stocks|open_same_dir|PLTR|CALL|200|2026-10-30,2026-10-27T10:12-04:00,stocks,open_same_dir,PLTR,PLTR,CALL,200.0,2026-10-30,3.21,197.76,4.0,7.0
