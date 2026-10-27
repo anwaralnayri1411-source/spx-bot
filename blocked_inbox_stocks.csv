@@ -97,3 +97,6 @@ id,time,project,tag,sym,root,side,strike,exp,entry,spot,edge,strength
 20261027T1142|stocks|same_side_cap|COIN|PUT|145|2026-11-06,2026-10-27T11:42-04:00,stocks,same_side_cap,COIN,COIN,PUT,145.0,2026-11-06,3.32,159.9,4.5,3.5
 20261027T1142|stocks|max_ideas_cap|BA|PUT|170|2026-10-30,2026-10-27T11:42-04:00,stocks,max_ideas_cap,BA,BA,PUT,170.0,2026-10-30,2.81,170.41,7.5,7.1
 20261027T1142|stocks|open_same_dir|PLTR|CALL|202.5|2026-10-30,2026-10-27T11:42-04:00,stocks,open_same_dir,PLTR,PLTR,CALL,202.5,2026-10-30,2.87,199.92,5.5,8.0
+20261027T1212|stocks|same_side_cap|COIN|PUT|145|2026-11-06,2026-10-27T12:12-04:00,stocks,same_side_cap,COIN,COIN,PUT,145.0,2026-11-06,3.28,160.03,3.5,3.2
+20261027T1212|stocks|max_ideas_cap|BA|PUT|165|2026-11-06,2026-10-27T12:12-04:00,stocks,max_ideas_cap,BA,BA,PUT,165.0,2026-11-06,2.08,169.74,8.0,7.4
+20261027T1212|stocks|open_same_dir|PLTR|CALL|205|2026-10-30,2026-10-27T12:12-04:00,stocks,open_same_dir,PLTR,PLTR,CALL,205.0,2026-10-30,2.38,201.49,5.5,8.0
