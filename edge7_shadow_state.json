@@ -13,7 +13,7 @@
    "spot": 7718.97,
    "entry": 26.1,
    "entry_src": "tasty",
-   "val30": ""
+   "val30": 33.43
   },
   {
    "entry_time": "2026-10-27T11:35-04:00",
@@ -28,7 +28,7 @@
    "spot": 7718.97,
    "entry": 26.1,
    "entry_src": "tasty",
-   "val30": ""
+   "val30": 20.78
   },
   {
    "entry_time": "2026-10-27T11:35-04:00",
@@ -43,7 +43,7 @@
    "spot": 769.39,
    "entry": 3.14,
    "entry_src": "tasty",
-   "val30": ""
+   "val30": 3.87
   },
   {
    "entry_time": "2026-10-27T11:35-04:00",
@@ -58,7 +58,7 @@
    "spot": 769.39,
    "entry": 2.65,
    "entry_src": "tasty",
-   "val30": ""
+   "val30": 2.18
   }
  ],
  "last": {
