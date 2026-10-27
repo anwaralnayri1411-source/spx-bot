@@ -359,6 +359,183 @@ def council_verdict(rows):
     return "H-COUNCIL: " + ("تحققت (" + d + ")" if lo > 0 else "عكسية (" + d + ")" if hi < 0 else "لم تتحقق (" + d + " يشمل الصفر)"), m, ci
 
 
+# ============================ أدوار الظلال: درجة الاتجاه والمخالفة (H-ROLE) ============================
+HORIZONS = (15, 30, 60)
+DIR_MIN_N, DIR_MIN_DAYS, DISSENT_MIN = 40, 25, 30
+DIRECTION = os.path.join(ROOT, "shadow_manager_direction.csv")
+DIR_KEYS = ("cand_mom", "cand_f30", "cand_agree", "edge7", "mom_live", "mom_delayed", "bot_spx", "struct_vert", "struct_em05")
+VOTER_LABELS = {"mom": "زخم آخر ساعة", "f30": "أول 30 دقيقة", "edge7": "إشارة البوت القوية", "momentum": "ظل الزخم"}
+
+
+def opinions(cand_rows, shadows):
+    """{ظل: [(يوم، وقت، جهة)]}: آراء الاتجاه. للمرشحين كل موعد فيه رأي (مغلقاً كان العقد أم لا)؛ والباقي من أحداث الظل."""
+    out = {}
+    for key, col in (("cand_mom", "mom"), ("cand_f30", "f30"), ("cand_agree", "agree")):
+        out[key] = [(r["day"], r.get("slot", ""), s) for r in cand_rows if r.get("day") and (s := sgn(r.get(col)))]
+    for k in DIR_KEYS[3:]:
+        out[k] = [(e["day"], e["t"], e["side"]) for e in shadows.get(k, ([], 0, 0))[0] if e["side"] and e["t"]]
+    return out
+
+
+def spy_minutes(days):
+    """{يوم: Series إغلاق SPY لكل دقيقة بوقت نهايتها (نيويورك، بلا منطقة)}: Alpaca SIP، وإلا ياهو (آخر 7 أيام)."""
+    import pandas as pd
+    out = {}
+    if not days:
+        return out
+    try:
+        import urllib.parse
+        import live_quotes as lq
+        q = urllib.parse.urlencode({"timeframe": "1Min", "start": f"{min(days)}T13:00:00Z", "end": f"{max(days)}T21:30:00Z",
+                                    "feed": "sip", "adjustment": "raw", "limit": 10000})
+        bars, tok = [], None
+        while True:
+            d = lq._get(f"{lq.DATA}/v2/stocks/SPY/bars?{q}" + (f"&page_token={tok}" if tok else ""))
+            bars += d.get("bars") or []
+            tok = d.get("next_page_token")
+            if not tok:
+                break
+        idx = pd.DatetimeIndex([pd.Timestamp(b["t"]) for b in bars]).tz_convert("America/New_York").tz_localize(None) + pd.Timedelta(minutes=1)
+        s = pd.Series([float(b["c"]) for b in bars], index=idx)
+    except Exception as e:  # noqa: BLE001
+        print("Alpaca (دقائق SPY):", type(e).__name__, "← ياهو")
+        try:
+            import yfinance as yf
+            h = yf.Ticker("SPY").history(period="7d", interval="1m")["Close"]
+            s = pd.Series(h.values, index=h.index.tz_convert("America/New_York").tz_localize(None) + pd.Timedelta(minutes=1))
+        except Exception as e2:  # noqa: BLE001
+            print("ياهو (دقائق SPY):", type(e2).__name__)
+            return out
+    for d in days:
+        g = s[s.index.date == date.fromisoformat(d)]
+        if len(g):
+            out[d] = g
+    return out
+
+
+def move(px, day, t, h):
+    """حركة SPY النسبية من الوقت t (HH:MM) إلى t+h دقيقة في اليوم نفسه، أو None."""
+    from datetime import timedelta
+    s = px.get(day)
+    if s is None or not t:
+        return None
+    t0 = datetime.fromisoformat(f"{day}T{t}")
+    t1 = t0 + timedelta(minutes=h)
+    if (t1.hour, t1.minute) > (16, 0):
+        return None
+    a, b = s[s.index <= t0], s[s.index <= t1]
+    if a.empty or b.empty or (t0 - a.index[-1]).total_seconds() > 300 or (t1 - b.index[-1]).total_seconds() > 300:
+        return None
+    return float(b.iloc[-1] / a.iloc[-1] - 1)
+
+
+def direction_rows(ops, px):
+    out = []
+    for k, lst in ops.items():
+        for day, t, side in lst:
+            r = {"shadow": k, "day": day, "t": t, "side": side}
+            for h in HORIZONS:
+                m = move(px, day, t, h)
+                r[f"m{h}"] = None if m is None else side * m
+            out.append(r)
+    return out
+
+
+def direction_summary(rows):
+    """{ظل: dict} عند 30 دقيقة (الأساسية) مع 15 و60 وصفياً."""
+    res = {}
+    for k in DIR_KEYS:
+        rs = [r for r in rows if r["shadow"] == k and r["m30"] is not None]
+        if not rs:
+            continue
+        by = {}
+        for r in rs:
+            by.setdefault(r["day"], []).append(r["m30"])
+        res[k] = {"n": len(rs), "days": len(by), "mean": float(np.mean([r["m30"] for r in rs])), "hit": float(np.mean([r["m30"] > 0 for r in rs])),
+                  "ci": boot(by), **{f"mean{h}": (float(np.mean(v)) if (v := [r[f"m{h}"] for r in rows if r["shadow"] == k and r[f"m{h}"] is not None]) else None)
+                                     for h in (15, 60)}}
+    return res
+
+
+def dissent(council_rows, px):
+    """مواعيد الخلاف: الأقلية ومن كان محقاً بعد 15/30/60 دقيقة. التعادل 2 مقابل 2 بلا أقلية."""
+    out = []
+    for c in council_rows:
+        if c["state"] != "خلاف":
+            continue
+        votes = {k: c[k] for k in ("mom", "f30", "edge7", "momentum") if c[k]}
+        up = [k for k, v in votes.items() if v > 0]
+        dn = [k for k, v in votes.items() if v < 0]
+        if len(up) == len(dn):
+            out.append({"day": c["day"], "slot": c["slot"], "minority": [], "side": 0, **{f"right{h}": None for h in HORIZONS}})
+            continue
+        mino, side = (up, 1) if len(up) < len(dn) else (dn, -1)
+        r = {"day": c["day"], "slot": c["slot"], "minority": mino, "side": side}
+        for h in HORIZONS:
+            m = move(px, c["day"], c["slot"], h)
+            r[f"right{h}"] = None if m is None or m == 0 else (side * m > 0)
+        out.append(r)
+    return out
+
+
+def dissent_text(d):
+    """سطر المخالف لموعد خلاف: «المخالف: زخم آخر ساعة ⬇️ ضد 3 ⬆️»."""
+    if not d or not d["minority"]:
+        return "تعادل"
+    return f"المخالف: {'، '.join(VOTER_LABELS[k] for k in d['minority'])} {ARROW[d['side']]}"
+
+
+def write_direction(rows):
+    cols = ["shadow", "day", "t", "side"] + [f"m{h}" for h in HORIZONS]
+    with open(DIRECTION, "w", encoding="utf-8", newline="") as f:
+        w = csv.DictWriter(f, fieldnames=cols)
+        w.writeheader()
+        for r in rows:
+            w.writerow({c: ("" if r.get(c) is None else (round(r[c], 6) if isinstance(r[c], float) else r[c])) for c in cols})
+
+
+def build_roles(summary, dis, day):
+    """رسالة ثانية (تيليجرام) وقسم markdown: درجة الاتجاه لكل ظل والمخالفة."""
+    tg = ["🧭 <b>أدوار الظلال: قراءة الاتجاه</b> (H-ROLE)", "<i>حركة SPY في جهة رأي الظل بعد 30 دقيقة، بلا علاقة بالعقد</i>", ""]
+    md = ["", "## أدوار الظلال: قراءة الاتجاه (H-ROLE)", "", "حركة SPY في جهة الرأي (الأساسية 30 دقيقة؛ 15 و60 وصفياً).", "",
+          "| الظل | آراء | أيام | إصابة 30د | متوسط 30د | فاصل 95% | 15د | 60د | الحكم |", "|---|---|---|---|---|---|---|---|---|"]
+    for k, s in sorted(summary.items(), key=lambda kv: -kv[1]["mean"]):
+        if s["n"] < DIR_MIN_N or s["days"] < DIR_MIN_DAYS or not s["ci"]:
+            v = f"لا حكم بعد ({s['n']}/{DIR_MIN_N}، {s['days']}/{DIR_MIN_DAYS} يوماً)"
+        else:
+            v = "يقرأ الاتجاه" if s["ci"][0] > 0 else "عكسي" if s["ci"][1] < 0 else "لا يتفوق"
+        tg.append(f"• <b>{LABELS[k]}</b>: آراء {s['n']} | إصابة {100 * s['hit']:.0f}% | {100 * s['mean']:+.3f}%")
+        ci = "-" if not s["ci"] else f"{100 * s['ci'][0]:+.3f}…{100 * s['ci'][1]:+.3f}%"
+        m15 = "-" if s["mean15"] is None else f"{100 * s['mean15']:+.3f}%"
+        m60 = "-" if s["mean60"] is None else f"{100 * s['mean60']:+.3f}%"
+        md.append(f"| {LABELS[k]} | {s['n']} | {s['days']} | {100 * s['hit']:.0f}% | {100 * s['mean']:+.3f}% | {ci} | {m15} | {m60} | {v} |")
+    real = [d for d in dis if d["minority"]]
+    tg += ["", f"⚔️ <b>المخالفة</b>: مواعيد خلاف {len(dis)} (منها تعادل {len(dis) - len(real)})"]
+    md += ["", "## المخالفة: حين يخالف صوت الأغلبية، من كان محقاً؟", ""]
+    for h in HORIZONS:
+        v = [d[f"right{h}"] for d in real if d[f"right{h}"] is not None]
+        line = f"الأقلية محقة بعد {h}د: {sum(v)} من {len(v)}" + (f" ({100 * sum(v) / len(v):.0f}%)" if v else "")
+        tg.append("   " + line)
+        md.append(f"- {line}")
+    v30 = [d["right30"] for d in real if d["right30"] is not None]
+    md += ["", "⚖️ H-ROLE (المخالفة): " + (f"لا حكم بعد ({len(v30)} من {DISSENT_MIN} موعد خلاف)" if len(v30) < DISSENT_MIN else
+                                         f"الأقلية محقة {100 * np.mean(v30):.0f}% عند 30د")]
+    who = {}
+    for d in real:
+        for k in d["minority"]:
+            if d["right30"] is not None:
+                who.setdefault(k, []).append(d["right30"])
+    if who:
+        tg.append("   حسب المخالف (30د): " + "، ".join(f"{VOTER_LABELS[k]} {sum(v)}/{len(v)}" for k, v in who.items()))
+        md.append("- حسب المخالف (30د): " + "، ".join(f"{VOTER_LABELS[k]} {sum(v)}/{len(v)}" for k, v in who.items()))
+    today = [d for d in real if d["day"] == day]
+    for d in today:
+        res = "؛ ".join(f"{h}د {'✅' if d[f'right{h}'] else '❌' if d[f'right{h}'] is False else '➖'}" for h in HORIZONS)
+        tg.append(f"   اليوم {d['slot']}: {dissent_text(d)} ← {res}")
+    tg += ["", "⚠️ الحكم بعد 40 رأياً على 25 يوماً لكل ظل، و30 موعد خلاف. تعليمي وليس توصية."]
+    return "\n".join(md), "\n".join(tg)[:3900]
+
+
 # ============================ التناغم اليومي ============================
 def _ts(t):
     """وقت السجل بلا منطقة زمنية (كل السجلات بتوقيت نيويورك): «2026-10-26T10:31-04:00» أو «2026-10-26 10:31»."""
@@ -455,7 +632,7 @@ def quote_line(q):
             f"⚠️ أسعار العقود: {len(bad)} من {n} مقارنة فرقها فوق {100 * QUOTE_MAX_DIFF:.0f}% (الوسيط {100 * med:.1f}%)")
 
 
-def build(res, council_rows, day, harmony, watch):
+def build(res, council_rows, day, harmony, watch, dis=None):
     """(نص markdown، نص تيليجرام HTML)."""
     d = date.fromisoformat(day)
     head = f"🧭 <b>مدير الظلال</b> | {DAYS_AR[d.weekday()]} {d:%d/%m/%Y}"
@@ -487,7 +664,9 @@ def build(res, council_rows, day, harmony, watch):
         for c in today_c:
             v = " ".join(ARROW[c[x]] for x in ("mom", "f30", "edge7", "momentum"))
             res_txt = f" → {c['decision']} {pc(c['ret'])}" if c["decision"] else ""
-            tg.append(f"   {c['slot']}: {v} | {c['state']}{res_txt}")
+            d = next((x for x in (dis or []) if x["day"] == c["day"] and x["slot"] == c["slot"]), None)
+            who = f" ({dissent_text(d)})" if c["state"] == "خلاف" and d is not None else ""
+            tg.append(f"   {c['slot']}: {v} | {c['state']}{who}{res_txt}")
     verdict, m, ci = council_verdict(council_rows)
     states = {}
     for c in council_rows:
@@ -574,13 +753,21 @@ def main(argv):
     res = evaluate(shadows)
     crows = council(cand, shadows["edge7"][0], shadows["mom_live"][0])
     write_council(crows)
+    ops = opinions(cand, shadows)
+    px = spy_minutes(sorted({d for lst in ops.values() for d, _, _ in lst}))
+    drows = direction_rows(ops, px)
+    write_direction(drows)
+    dis = dissent(crows, px)
     watch = [(label, last_date(f)[0]) for f, label in WATCH_ONLY if os.path.exists(os.path.join(ROOT, f))]
-    md, tg = build(res, crows, day, harmony_for(day, shadows), watch)
+    md, tg = build(res, crows, day, harmony_for(day, shadows), watch, dis)
+    md2, tg2 = build_roles(direction_summary(drows), dis, day)
     with open(OUT, "w", encoding="utf-8", newline="\n") as f:
-        f.write(md + "\n")
-    print(tg)
+        f.write(md + "\n" + md2 + "\n")
+    print(tg + "\n\n" + tg2)
     if not no_send:
         ok = send(tg)
+        if ok:
+            send(tg2)
         print("أُرسل:", ok)
         if ok:
             state["last_sent"] = day

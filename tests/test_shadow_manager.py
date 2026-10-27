@@ -115,3 +115,34 @@ def test_main_outside_window_does_not_send(monkeypatch):
     monkeypatch.setattr(sm, "ny_now", lambda: datetime(2026, 10, 26, 12, 0))
     monkeypatch.setattr(sm, "send", lambda t: pytest.fail("لا يجب الإرسال"))
     assert sm.main([]) == 0
+
+
+def minute_series(day, start="09:30", n=390, base=700.0, step=0.01):
+    import pandas as pd
+    idx = pd.date_range(f"{day} {start}", periods=n, freq="1min") + pd.Timedelta(minutes=1)
+    return pd.Series([base + step * i for i in range(n)], index=idx)
+
+
+def test_move_signs_and_bounds():
+    px = {"2026-10-26": minute_series("2026-10-26")}
+    m = sm.move(px, "2026-10-26", "10:30", 30)
+    assert m == pytest.approx(0.30 / 700.59, rel=1e-6)          # سعر 10:30 = نهاية شمعة 10:29
+    assert sm.move(px, "2026-10-26", "15:45", 30) is None          # بعد 16:00
+    assert sm.move(px, "2026-10-27", "10:30", 30) is None          # بلا بيانات
+
+
+def test_direction_scores_and_dissent_minority():
+    px = {"2026-10-26": minute_series("2026-10-26", step=-0.01)}   # السوق يهبط
+    cand = [cand_row("2026-10-26", "12:30", -1, 1, 0.1, 0.1)]
+    ops = sm.opinions(cand, {k: ([], 0, 0) for k in sm.DIR_KEYS})
+    rows = sm.direction_rows(ops, px)
+    s = sm.direction_summary(rows)
+    assert s["cand_mom"]["hit"] == 1.0 and s["cand_f30"]["hit"] == 0.0 and s["cand_mom"]["mean"] > 0
+    crow = {"day": "2026-10-26", "slot": "12:30", "mom": -1, "f30": 1, "edge7": 1, "momentum": 1, "state": "خلاف"}
+    d = sm.dissent([crow], px)[0]
+    assert d["minority"] == ["mom"] and d["side"] == -1 and d["right30"] is True
+    assert "زخم آخر ساعة" in sm.dissent_text(d)
+    tie = sm.dissent([dict(crow, f30=-1, momentum=None)], px)[0]       # 2 مقابل 1؟ لا: mom وf30 هبوط، edge7 صعود → الأقلية edge7
+    assert tie["minority"] == ["edge7"]
+    md, tg = sm.build_roles(s, [d], "2026-10-26")
+    assert "قراءة الاتجاه" in tg and "الأقلية محقة بعد 30د: 1 من 1" in tg and "اليوم 12:30: المخالف: زخم آخر ساعة" in tg
