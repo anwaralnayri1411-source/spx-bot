@@ -15,7 +15,7 @@
    "occ": "UBER261030P00066000",
    "peak_pnl": 0.446,
    "close_pnl": 0.108,
-   "quotes": 76,
+   "quotes": 77,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -34,8 +34,8 @@
    "strength": "4.6",
    "occ": "COIN261030P00150000",
    "peak_pnl": 0.111,
-   "close_pnl": -0.034,
-   "quotes": 56,
+   "close_pnl": -0.02,
+   "quotes": 57,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -54,8 +54,8 @@
    "strength": "4.0",
    "occ": "COIN261030P00150000",
    "peak_pnl": 0.006,
-   "close_pnl": -0.122,
-   "quotes": 6,
+   "close_pnl": -0.11,
+   "quotes": 7,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -73,9 +73,9 @@
    "edge": "4.0",
    "strength": "7.0",
    "occ": "PLTR261030C00200000",
-   "peak_pnl": 0.037,
-   "close_pnl": 0.037,
-   "quotes": 6,
+   "peak_pnl": 0.069,
+   "close_pnl": 0.069,
+   "quotes": 7,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -180,7 +180,8 @@
   "20261027T1012|stocks|open_same_dir|PLTR|CALL|200|2026-10-30",
   "20261027T1020|stocks|same_side_cap|COIN|PUT|150|2026-10-30",
   "20261027T1020|stocks|max_ideas_cap|BA|PUT|182.5|2026-10-30",
-  "20261027T1020|stocks|open_same_dir|PLTR|CALL|200|2026-10-30"
+  "20261027T1020|stocks|open_same_dir|PLTR|CALL|200|2026-10-30",
+  "20261027T1042|stocks|max_ideas_cap|COIN|PUT|150|2026-10-30"
  ],
  "last": {
   "spx|CALL|SPY": "2026-10-26T10:05-04:00",
