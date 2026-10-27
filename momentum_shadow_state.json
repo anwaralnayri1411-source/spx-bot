@@ -1,7 +1,103 @@
 {
  "date": "2026-10-27",
- "open": [],
- "await": [],
- "last": {},
- "count": {}
+ "open": [
+  {
+   "date": "2026-10-27",
+   "defn": "live",
+   "role": "opposite",
+   "side": "CALL",
+   "strike": 766.0,
+   "sig_time": "2026-10-27T10:09-04:00",
+   "r30": -0.00253,
+   "entry_time": "2026-10-27T10:09-04:00",
+   "entry_spy": 766.18,
+   "entry": 1.37,
+   "exit": "",
+   "exit_time": "",
+   "pnl": 0.19,
+   "peak": 0.365,
+   "spy_after_60": "",
+   "spy_move_pts": "",
+   "checks": 23,
+   "stale": 0,
+   "at_ext": 0,
+   "occ": "SPY261027C00766000"
+  }
+ ],
+ "await": [
+  {
+   "date": "2026-10-27",
+   "defn": "delayed",
+   "role": "signal",
+   "side": "PUT",
+   "strike": 766.0,
+   "sig_time": "2026-10-27T10:02-04:00",
+   "r30": -0.00275,
+   "entry_time": "2026-10-27T10:02-04:00",
+   "entry_spy": 765.76,
+   "entry": 1.6,
+   "exit": "stop",
+   "exit_time": "10:30",
+   "pnl": -0.431,
+   "peak": 0.0,
+   "spy_after_60": "",
+   "spy_move_pts": "",
+   "checks": 28,
+   "stale": 0,
+   "at_ext": 1,
+   "occ": "SPY261027P00766000"
+  },
+  {
+   "date": "2026-10-27",
+   "defn": "delayed",
+   "role": "opposite",
+   "side": "CALL",
+   "strike": 766.0,
+   "sig_time": "2026-10-27T10:02-04:00",
+   "r30": -0.00275,
+   "entry_time": "2026-10-27T10:02-04:00",
+   "entry_spy": 765.76,
+   "entry": 1.21,
+   "exit": "tp",
+   "exit_time": "10:31",
+   "pnl": 0.545,
+   "peak": 0.545,
+   "spy_after_60": "",
+   "spy_move_pts": "",
+   "checks": 29,
+   "stale": 0,
+   "at_ext": 1,
+   "occ": "SPY261027C00766000"
+  },
+  {
+   "date": "2026-10-27",
+   "defn": "live",
+   "role": "signal",
+   "side": "PUT",
+   "strike": 766.0,
+   "sig_time": "2026-10-27T10:09-04:00",
+   "r30": -0.00253,
+   "entry_time": "2026-10-27T10:09-04:00",
+   "entry_spy": 766.18,
+   "entry": 1.25,
+   "exit": "stop",
+   "exit_time": "10:31",
+   "pnl": -0.424,
+   "peak": 0.24,
+   "spy_after_60": "",
+   "spy_move_pts": "",
+   "checks": 22,
+   "stale": 0,
+   "at_ext": 0,
+   "occ": "SPY261027P00766000"
+  }
+ ],
+ "last": {
+  "delayed": "2026-10-27T10:02-04:00",
+  "live": "2026-10-27T10:09-04:00"
+ },
+ "count": {
+  "delayed": 1,
+  "live": 1
+ }
 }
