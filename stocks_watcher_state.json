@@ -184,7 +184,10 @@
    "netflix stock price is down 32 per cent this year what led to this downfall check predicted target price market value",
    "netflix not winning on attention winning on economics nasdaq nflx",
    "netflix stock nears its cheapest valuation in a decade here s what s worrying investors",
-   "citigroup cuts target from usd 100 00 to usd 85 00 for netflix stock"
+   "citigroup cuts target from usd 100 00 to usd 85 00 for netflix stock",
+   "netflix nasdaq nflx hits new 1 year low what s next",
+   "cerebras systems oracle partner to bring ai inference to oci",
+   "netflix earnings grow faster despite slower rev"
   ],
   "AVGO:PUT": [
    "3 artificial intelligence ai stocks that look like great buys right now",
@@ -263,7 +266,8 @@
    "new buy rating for palantir technologies pltr the technology giant",
    "palantir stock holds steady amid consolidation near 196 6 support",
    "palantir put strategy aims to cash in on potential earnings volatility",
-   "a p e of 168 vs an 8 3 billion quarter which defense stock wins between palantir nasdaq pltr and rtx nyse rtx"
+   "a p e of 168 vs an 8 3 billion quarter which defense stock wins between palantir nasdaq pltr and rtx nyse rtx",
+   "palantir stocks rise as november results approach"
   ],
   "GOOGL:PUT": [
    "wall street continues to systematically undervalue alphabet so i continue to buy",
@@ -679,7 +683,8 @@
    "analysts are bullish on these consumer cyclical stocks tesla tsla marriott international mar",
    "us stock market update tesla tsla us opens higher and surges over 2 6 market cap approaches 1 6 trillion",
    "tesla moves to future proof cybercabs with lfp battery technology tesla stock nasdaq tsla surges",
-   "tesla rises 4 as ark reiterates 4 400 long term price target on robotaxi thesis rivian gains 3 lucid holds steady"
+   "tesla rises 4 as ark reiterates 4 400 long term price target on robotaxi thesis rivian gains 3 lucid holds steady",
+   "rbc capital remains a buy on tesla tsla"
   ],
   "XOM:CALL": [
    "trump uses defense act as fuel prices surge",
@@ -997,7 +1002,15 @@
    "brazilian companies turned to stablecoins on election day to dodge a currency crash",
    "cryptocurrencies price prediction xrp dogecoin cryptos american wrap 27 october",
    "btc price on oct 27 2026 at 2pm edt crypto prediction market",
-   "about ryder system inc rstock"
+   "about ryder system inc rstock",
+   "china ai bubble bursts 480 billion gone so why is bitcoin not crashing",
+   "2 fed debates could move bitcoin and gold now that a hold is priced in",
+   "crypto news iran war talks send oil lower but bitcoin price",
+   "will bitcoin btc price hit 30k before 100k here s what chatgpt predicts",
+   "bitcoin 80 427 loses the ai capital race before fed day reclaim of 82 500 unlocks 85 000",
+   "fintechzoom traffic 22 750 monthly visits 40 bangladesh",
+   "how fomc and cpi move bitcoin a 2026 macro calendar",
+   "mara moves 1 000 btc to bitgo what it means for bitcoin"
   ],
   "HOOD:PUT": [
    "prediction could bitcoin reach a new all time high before the 2028 halving",
@@ -1091,7 +1104,8 @@
    "loop capital lowers apple stock price target on iphone shipment concerns",
    "apple aapl vs msft and googl is the post earnings selloff creating a long term buying opportunity",
    "aapl trades flat as consolidation near 346 65 reflects muted momentum",
-   "what is going on with apple stock on tuesday"
+   "what is going on with apple stock on tuesday",
+   "apple stock trades flat after openai trade secrets lawsuit emerges"
   ],
   "BA:PUT": [
    "boeing nyse ba sets new 52 week low on disappointing earnings",
@@ -1105,7 +1119,9 @@
    "boeing plunges 10 after earnings report and delivery target cut one of the worst days in the stock s history",
    "why did boeing stock crash after earnings",
    "boeing stock price forecast stock plunges 10 after q3 results technicals signal another 9 drop to 155",
-   "ba stock drops 10 approaching 150 support as boeing reports third quarter results"
+   "ba stock drops 10 approaching 150 support as boeing reports third quarter results",
+   "boeing ba stock trades down here is why",
+   "boeing stock plunges after earnings 737 progress is not fast enough"
   ]
  },
  "fired": {
@@ -1165,18 +1181,6 @@
    "news:loop capital lowers apple stock price target on iphone shipment concerns",
    "up0.25",
    "down-0.15"
-  ],
-  "BA:PUT:2026-10-30:170": [
-   "news:boeing nyse ba sets new 52 week low on disappointing earnings",
-   "news:boeing drops 9 as commercial jet losses overshadow positive cash flow ge aerospace ticks up rtx holds steady",
-   "down-0.15",
-   "sharp@2026-10-27T11:41-04:00",
-   "news:boeing stock plunges to 18 mth low on production delays cash flow outlook ba nyse",
-   "news:boeing reports mixed q3 results record backlog stock tumbles",
-   "news:ba stock falls 10 approaching 150 support as boeing reports third quarter results",
-   "news:boeing plunges 10 after earnings report and delivery target cut one of the worst days in the stock s history",
-   "down-0.3",
-   "news:ba stock drops 10 approaching 150 support as boeing reports third quarter results"
   ]
  },
  "stock_level": {
@@ -1717,12 +1721,13 @@
   "sensex nifty end nearly flat as crude oil fed caution weigh on sentiment",
   "mortgage rates at 7 38 as fed decision nears",
   "lula s reelection leaves trump s latin american power play one giant short",
-  "the fed s october meeting starts today here s what you need to know"
+  "the fed s october meeting starts today here s what you need to know",
+  "valero energy corp stock vlo moved down by 7 93 on oct 27 drivers behind the movement",
+  "fed likely to wait on another rate hike as inflation pressures mount"
  ],
  "sharp": {
   "COIN:PUT:2026-10-30:150": 162.19,
   "UBER:PUT:2026-10-30:66": 66.56,
-  "PLTR:CALL:2026-10-30:202.5": 197.66,
-  "BA:PUT:2026-10-30:170": 171.19
+  "PLTR:CALL:2026-10-30:202.5": 197.66
  }
 }
