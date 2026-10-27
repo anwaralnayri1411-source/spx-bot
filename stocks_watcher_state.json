@@ -108,7 +108,8 @@
    "key food shoppers can order groceries when needed or schedule delivery with uber eats",
    "wall street analysts see uber uber as a buy should you invest",
    "doordash reportedly near 17 billion instacart deal why investors are uneasy",
-   "maplebear inc cart stock price news quote history"
+   "maplebear inc cart stock price news quote history",
+   "doordash is close to buying instacart for 17 billion after uber walked away"
   ],
   "DIS:CALL": [
    "skydance rises 5 as steep post merger slide pauses disney gains 2 netflix slips",
@@ -176,7 +177,9 @@
    "netflix stock falls as weak momentum dominates the session",
    "why is netflix stock sliding today by investing com",
    "why is netflix stock sliding today",
-   "these 3 stocks could rally after the fed decision"
+   "these 3 stocks could rally after the fed decision",
+   "netflix nflx hires apple executive to grow its podcast business",
+   "netflix stock price is down 32 per cent this year what led to this downfall check predicted target price"
   ],
   "AVGO:PUT": [
    "3 artificial intelligence ai stocks that look like great buys right now",
@@ -248,7 +251,9 @@
    "palantir stock nears 52 week high as q3 earnings and target hikes drive buzz",
    "crexendo highlights collaboration with nuso at 2026 netsapiens user group",
    "fiserv price target lowered to 48 from 50 at bmo capital",
-   "pltr stock earnings preview what to expect from palantir s q3 report"
+   "pltr stock earnings preview what to expect from palantir s q3 report",
+   "options volatility and implied earnings moves today october 27 2026",
+   "tech stocks struggle as the rest of the s p 500 stages its biggest comeback in 35 years"
   ],
   "GOOGL:PUT": [
    "wall street continues to systematically undervalue alphabet so i continue to buy",
@@ -658,7 +663,9 @@
    "tesla s fsd reaches 10th eu country with latvia approval here s the road ahead for tesla",
    "tesla stock rallies as wall street backs fsd and robotaxis",
    "tesla inc stock tsla opened up by 5 13 on oct 26 facts behind the movement",
-   "tesla rises 6 as barclays upgrade cites spacex merger potential lucid drops 4 rivian slips"
+   "tesla rises 6 as barclays upgrade cites spacex merger potential lucid drops 4 rivian slips",
+   "tesla s strong quarter has a catch nasdaq tsla",
+   "tesla says cybercab factory is so efficient it doesn t need to run every day"
   ],
   "XOM:CALL": [
    "trump uses defense act as fuel prices surge",
@@ -946,7 +953,13 @@
    "michael saylor compares bitcoin s value to learning a language",
    "coinbase global nasdaq coin why crypto stocks split instead of moving together",
    "can bitcoin hedge an ai bubble analysts split on near term risks and longer term price scenarios",
-   "bitcoin price holds steady at 80k says gemini"
+   "bitcoin price holds steady at 80k says gemini",
+   "bitcoin rises 26 since spacex ipo as anthropic s 1 9t ipo looms testing crypto s resilience amid market shifts",
+   "stonex lifts strive price target 34 to 43 on bitcoin strategy",
+   "bitcoin price prediction a 6 percent range in fed week what you can do now",
+   "bitcoin price faces pullback risk as hyperliquid whales turn net short",
+   "btc news market turbulence puts 80k support to the test",
+   "experts say the mcrib s return is not linked to the bitcoin price surge"
   ],
   "HOOD:PUT": [
    "prediction could bitcoin reach a new all time high before the 2028 halving",
@@ -1080,10 +1093,12 @@
   "PLTR:CALL:2026-10-30:202.5": [
    "news:palantir stock within 7 of its 52 week high as earnings and target hikes fuel buzz",
    "sharp@2026-10-27T09:47-04:00",
-   "down-0.15"
+   "down-0.15",
+   "news:tech stocks struggle as the rest of the s p 500 stages its biggest comeback in 35 years"
   ],
   "TSLA:CALL:2026-10-30:412.5": [
-   "down-0.15"
+   "down-0.15",
+   "up0.25"
   ],
   "NFLX:PUT:2026-11-06:62": [],
   "AAPL:CALL:2026-10-30:347.5": [
@@ -1092,7 +1107,9 @@
   ],
   "BA:PUT:2026-10-30:170": [
    "news:boeing nyse ba sets new 52 week low on disappointing earnings",
-   "news:boeing drops 9 as commercial jet losses overshadow positive cash flow ge aerospace ticks up rtx holds steady"
+   "news:boeing drops 9 as commercial jet losses overshadow positive cash flow ge aerospace ticks up rtx holds steady",
+   "down-0.15",
+   "sharp@2026-10-27T11:41-04:00"
   ]
  },
  "stock_level": {
@@ -1609,11 +1626,21 @@
   "here s why who wins in the u s midterms could impact canada",
   "wall street drifts as broadcom and other ai related stocks support the market",
   "bitcoin btc slides below 80 000 ahead of fed rate decision",
-  "chinese dip buyers step in as gold rebounds above 4 047 ahead of federal reserve decision"
+  "chinese dip buyers step in as gold rebounds above 4 047 ahead of federal reserve decision",
+  "wall st on pace for higher open as oil pulls back ahead of fed decision",
+  "tech firms gain on anthropic ipo optimism hsbc slumps in london",
+  "federal reserve rate hike expectations shift to december cnbc survey shows",
+  "u s asks to keep collecting trump s tariffs after court loss",
+  "crypto continues to weaken ahead of fed rate decision",
+  "are interest rates actually not high market expectations point to an average u s short term interest rate of 4 3 over th",
+  "news champi s support won t reverse market trend",
+  "jpmorgan ceo warns of 5 risks threatening us stocks and bonds",
+  "brent oil risk premium persists amid middle east tensions commerzbank"
  ],
  "sharp": {
   "COIN:PUT:2026-10-30:150": 162.19,
   "UBER:PUT:2026-10-30:66": 66.56,
-  "PLTR:CALL:2026-10-30:202.5": 197.66
+  "PLTR:CALL:2026-10-30:202.5": 197.66,
+  "BA:PUT:2026-10-30:170": 171.19
  }
 }
