@@ -890,6 +890,7 @@ def _pick_all(side, ch, S, T, c, exp):
     return contracts
 
 
+LIVE_CMP = {}   # آخر مقارنة ياهو/لحظي في هذا التشغيل (يقرؤها best_shadow؛ تسجيل فقط)
 BAR_KEYS = ("S", "age", "ema9", "ema21", "r30", "gap", "prev_close", "orb", "day_hl", "range1h", "pivots", "pd_hl")
 
 
@@ -958,6 +959,8 @@ def _live_bars(ix, n):
 
 def _log_live_bars(n, m, info, c, other, bull, bear):
     """يسجّل المقارنة بين نسختي الشموع (اتجاه البوت ونقاطه بكل منهما). لا يغيّر شيئاً في القرار."""
+    LIVE_CMP.clear()
+    LIVE_CMP["status"] = info.get("status") if m != "0" else "off"
     if m == "0":
         return
     try:
@@ -973,6 +976,7 @@ def _log_live_bars(n, m, info, c, other, bull, bear):
             row.update(S_yahoo=round(y[0]["S"], 2), S_live=round(l[0]["S"], 2), r30_yahoo=round(y[0]["r30"], 5), r30_live=round(l[0]["r30"], 5),
                        bull_yahoo=round(y[1], 2), bear_yahoo=round(y[2], 2), bull_live=round(l[1], 2), bear_live=round(l[2], 2),
                        side_yahoo="CALL" if y[1] > y[2] else "PUT", side_live="CALL" if l[1] > l[2] else "PUT")
+            LIVE_CMP.update(yahoo=(y[1], y[2], y[0]["S"]), live=(l[1], l[2], l[0]["S"]), info=dict(info))
         live_bars.log(row)
     except Exception as e:
         print("live_bars مقارنة:", type(e).__name__)
