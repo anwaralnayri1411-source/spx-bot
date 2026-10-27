@@ -348,7 +348,8 @@ VERDICT_FILES = (("مقارنة درجة الأخبار (Claude مقابل ال�
                   ("روتين ما قبل الافتتاح", "research/preopen_routine_study_results.md"),
                   ("بيع الأقساط بمخاطرة محددة", "research/premium_sell_study_results.md"),
                   ("الدمج: إشارة قوية + اتفاق الزخم", "research/combo_report_results.md"),
-                  ("مدير الظلال: المجلس", "research/shadow_manager_results.md"))
+                  ("مدير الظلال: المجلس", "research/shadow_manager_results.md"),
+                  ("الأفضل مجتمعين", "research/best_shadow_results.md"))
 
 
 def sec_verdicts(texts):

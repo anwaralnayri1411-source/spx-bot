@@ -146,3 +146,9 @@ def test_direction_scores_and_dissent_minority():
     assert tie["minority"] == ["edge7"]
     md, tg = sm.build_roles(s, [d], "2026-10-26")
     assert "قراءة الاتجاه" in tg and "الأقلية محقة بعد 30د: 1 من 1" in tg and "اليوم 12:30: المخالف: زخم آخر ساعة" in tg
+
+
+def test_best_adapter_scores_30_minute_skill():
+    rows = [{"variant": "SC", "status": "closed", "entry_time": "2026-10-28T10:30-04:00", "side": "CALL", "side_entry": "2.0", "opp_entry": "2.0", "side_30": "2.6", "opp_30": "1.4"}]
+    ev, tried, valid = sm.from_best(rows, "SC")
+    assert tried == valid == 1 and ev[0]["skill"] == pytest.approx(0.3) and ev[0]["t"] == "10:30"

@@ -39,7 +39,9 @@ WATCH_ONLY = (("gex_outcomes.csv", "جدران الخيارات (GEX)"), ("news_
 LABELS = {"cand_mom": "زخم آخر ساعة (mom)", "cand_f30": "أول 30 دقيقة (f30)", "cand_agree": "اتفاق الاثنين (agree)",
           "edge7": "إشارة البوت القوية (edge7)", "mom_live": "ظل الزخم الحي", "mom_delayed": "ظل الزخم المتأخر",
           "struct_vert": "سبريد شراء (vert)", "struct_em05": "عقد بعيد (em05)", "struct_ic": "كوندور حديدي",
-          "bot_spx": "توصيات البوت SPX/SPY", "stocks": "عقود الشركات"}
+          "bot_spx": "توصيات البوت SPX/SPY", "stocks": "عقود الشركات",
+          "best_S": "الأفضل: القوية (ظل)", "best_SC": "الأفضل: القوية + الإجماع (ظل)", "best_SR": "الأفضل: القوية + عكس السحب (ظل)",
+          "best_C": "الأفضل: الإجماع (ظل)"}
 STAGE_ICON = {"مراقَب": "👁", "مرشّح": "🎓", "عضو": "⭐"}
 ARROW = {1: "⬆️", -1: "⬇️", 0: "➖", None: "➖"}
 DAYS_AR = ("الاثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة", "السبت", "الأحد")
@@ -180,12 +182,28 @@ def from_stocks(positions):
     return out, tried, len(out)
 
 
+def from_best(rows, variant):
+    """ظل «الأفضل مجتمعين» (H-BEST): عائد عقد الجهة ومهارته على المعاكس عند 30 دقيقة (الأساسية)."""
+    out, tried = [], 0
+    for r in rows:
+        if r.get("variant") != variant or r.get("status") not in ("closed", "no_quote"):
+            continue
+        tried += 1
+        se, oe, sx, ox = (num(r.get(k)) for k in ("side_entry", "opp_entry", "side_30", "opp_30"))
+        if None in (se, oe, sx, ox) or se <= 0 or oe <= 0:
+            continue
+        rs, ro = sx / se - 1, ox / oe - 1
+        out.append(ev(r["entry_time"][:10], hhmm(r["entry_time"]), 1 if r.get("side") == "CALL" else -1, rs, rs - (rs + ro) / 2, 100 * se))
+    return out, tried, len(out)
+
+
 def load(data=None):
     """{key: (events, tried, valid)} لكل ظل ذي مقياس موحّد، بترتيب ثابت (مهم لبوابة التنوع)."""
     d = data or {}
     cand = d.get("cand", read_csv("candidates_shadow_log.csv"))
     mom = d.get("momentum", read_csv("momentum_shadow_log.csv"))
     struct = d.get("structure", read_csv("structure_shadow_log.csv"))
+    best = d["best"] if "best" in d else read_csv("best_shadow_log.csv")
     if "stocks" in d:
         positions = d["stocks"]
     else:
@@ -197,7 +215,8 @@ def load(data=None):
             "edge7": from_edge7(d.get("edge7", read_csv("edge7_shadow_log.csv"))),
             "mom_live": from_momentum(mom, "live"), "mom_delayed": from_momentum(mom, "delayed"),
             "struct_vert": from_structure(struct, "vert"), "struct_em05": from_structure(struct, "em05"), "struct_ic": from_structure(struct, "ic"),
-            "bot_spx": from_bot(d.get("bot", read_csv("zero_dte_log.csv"))), "stocks": from_stocks(positions)}
+            "bot_spx": from_bot(d.get("bot", read_csv("zero_dte_log.csv"))), "stocks": from_stocks(positions),
+            **{f"best_{v}": from_best(best, v) for v in ("S", "SC", "SR", "C")}}
 
 
 # ============================ إحصاء ============================
@@ -363,7 +382,8 @@ def council_verdict(rows):
 HORIZONS = (15, 30, 60)
 DIR_MIN_N, DIR_MIN_DAYS, DISSENT_MIN = 40, 25, 30
 DIRECTION = os.path.join(ROOT, "shadow_manager_direction.csv")
-DIR_KEYS = ("cand_mom", "cand_f30", "cand_agree", "edge7", "mom_live", "mom_delayed", "bot_spx", "struct_vert", "struct_em05")
+DIR_KEYS = ("cand_mom", "cand_f30", "cand_agree", "edge7", "mom_live", "mom_delayed", "bot_spx", "struct_vert", "struct_em05",
+            "best_S", "best_SC", "best_SR", "best_C")
 VOTER_LABELS = {"mom": "زخم آخر ساعة", "f30": "أول 30 دقيقة", "edge7": "إشارة البوت القوية", "momentum": "ظل الزخم"}
 
 
