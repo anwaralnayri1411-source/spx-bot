@@ -14,8 +14,8 @@
    "strength": "4.7",
    "occ": "UBER261030P00066000",
    "peak_pnl": 0.446,
-   "close_pnl": 0.217,
-   "quotes": 81,
+   "close_pnl": 0.205,
+   "quotes": 82,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -34,8 +34,8 @@
    "strength": "4.6",
    "occ": "COIN261030P00150000",
    "peak_pnl": 0.111,
-   "close_pnl": 0.017,
-   "quotes": 61,
+   "close_pnl": -0.04,
+   "quotes": 62,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -54,8 +54,8 @@
    "strength": "4.0",
    "occ": "COIN261030P00150000",
    "peak_pnl": 0.006,
-   "close_pnl": -0.076,
-   "quotes": 11,
+   "close_pnl": -0.128,
+   "quotes": 12,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -73,9 +73,9 @@
    "edge": "4.0",
    "strength": "7.0",
    "occ": "PLTR261030C00200000",
-   "peak_pnl": 0.178,
-   "close_pnl": 0.178,
-   "quotes": 11,
+   "peak_pnl": 0.184,
+   "close_pnl": 0.184,
+   "quotes": 12,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -93,9 +93,9 @@
    "edge": "6.25",
    "strength": "9.4",
    "occ": "SPXW261027C07735000",
-   "peak_pnl": 0.0,
-   "close_pnl": -0.198,
-   "quotes": 2,
+   "peak_pnl": 0.286,
+   "close_pnl": 0.286,
+   "quotes": 3,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -113,9 +113,9 @@
    "edge": "6.25",
    "strength": "9.4",
    "occ": "SPY261028C00770000",
-   "peak_pnl": 0.0,
-   "close_pnl": -0.029,
-   "quotes": 2,
+   "peak_pnl": 0.122,
+   "close_pnl": 0.122,
+   "quotes": 3,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -223,7 +223,9 @@
   "20261027T1020|stocks|open_same_dir|PLTR|CALL|200|2026-10-30",
   "20261027T1042|stocks|max_ideas_cap|COIN|PUT|150|2026-10-30",
   "20261027T1105|spx|news_risk|SPX|CALL|7735|2026-10-27",
-  "20261027T1105|spx|news_risk|SPY|CALL|770|2026-10-28"
+  "20261027T1105|spx|news_risk|SPY|CALL|770|2026-10-28",
+  "20261027T1112|stocks|max_ideas_cap|BA|PUT|167.5|2026-10-30",
+  "20261027T1112|stocks|open_same_dir|PLTR|CALL|202.5|2026-10-30"
  ],
  "last": {
   "spx|CALL|SPY": "2026-10-27T11:05-04:00",
