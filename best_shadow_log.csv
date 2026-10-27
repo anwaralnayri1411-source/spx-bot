@@ -1,2 +1,3 @@
 variant,entry_time,side,edge,mom,f30,rsweep,strike,exp,spot,side_occ,opp_occ,side_entry,opp_entry,src,side_15,opp_15,side_30,opp_30,side_60,opp_60,exit_time,status
 S,2026-10-27T11:15-04:00,CALL,7.25,1,-1,0,769,2026-10-28,769.46,SPY261028C00769000,SPY261028P00769000,3.25,2.7,alpaca,3.24,2.66,3.72,2.29,3.55,2.35,2026-10-27T12:15-04:00,closed
+S,2026-10-27T13:15-04:00,CALL,7.0,-1,-1,0,770,2026-10-28,769.67,SPY261028C00770000,SPY261028P00770000,2.71,3.0,alpaca,2.64,3.0,2.79,2.77,2.49,2.93,2026-10-27T14:15-04:00,closed
