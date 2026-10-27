@@ -106,7 +106,8 @@
    "doordash is nearing a deal to buy instacart report says",
    "lyft double edged economy and short term earnings worries nasdaq lyft",
    "key food shoppers can order groceries when needed or schedule delivery with uber eats",
-   "wall street analysts see uber uber as a buy should you invest"
+   "wall street analysts see uber uber as a buy should you invest",
+   "doordash reportedly near 17 billion instacart deal why investors are uneasy"
   ],
   "DIS:CALL": [
    "skydance rises 5 as steep post merger slide pauses disney gains 2 netflix slips",
@@ -173,7 +174,8 @@
    "netflix nasdaq nflx has crashed over 50 five times before here is what the pattern reveals",
    "netflix stock falls as weak momentum dominates the session",
    "why is netflix stock sliding today by investing com",
-   "why is netflix stock sliding today"
+   "why is netflix stock sliding today",
+   "these 3 stocks could rally after the fed decision"
   ],
   "AVGO:PUT": [
    "3 artificial intelligence ai stocks that look like great buys right now",
@@ -243,7 +245,8 @@
    "why palantir stock pltr still looks attractive ahead of q3 earnings",
    "ollie s bargain outlet price target raised to 125 from 124 at rbc capital",
    "palantir stock nears 52 week high as q3 earnings and target hikes drive buzz",
-   "crexendo highlights collaboration with nuso at 2026 netsapiens user group"
+   "crexendo highlights collaboration with nuso at 2026 netsapiens user group",
+   "fiserv price target lowered to 48 from 50 at bmo capital"
   ],
   "GOOGL:PUT": [
    "wall street continues to systematically undervalue alphabet so i continue to buy",
@@ -922,7 +925,18 @@
    "two analysts present million dollar scenarios for bitcoin btc here are the expected prices and possible dates",
    "bitcoin moves over 5 billion in value but miners collect just 185 000 in transaction fees",
    "ark invest sells 15 million of its own bitcoin etf as price falls",
-   "japan s top yen stablecoin falls short of its target in a disappointing first year"
+   "japan s top yen stablecoin falls short of its target in a disappointing first year",
+   "crypto news today bitcoin inflow strategy inc halts btc purchase ethereum fixed validator deposit flaw",
+   "crypto com og com launch regulated crypto perpetuals in us with 5x leverage",
+   "btc price range on oct 27 2026 at 11am edt crypto prediction market",
+   "mcdonald s mcrib doesn t actually boost bitcoin s price sorry everyone",
+   "nasdaq 100 comes onchain as janus henderson and centrifuge launch first licensed fund",
+   "crypto market faces pressure as bitcoin slides below 80 000 before fed decision",
+   "bitcoin price up 26 since spacex debut as anthropic ipo looms",
+   "current price of ethereum for october 27 2026",
+   "bitcoin etfs see 110m inflow after 774m outfl",
+   "claude ai s bitcoin and solana price predictions for 2027 could apeing be the best crypto to invest before stage 10",
+   "investor who called the ai boom predicts a bitcoin crash"
   ],
   "HOOD:PUT": [
    "prediction could bitcoin reach a new all time high before the 2028 halving",
@@ -1005,7 +1019,15 @@
    "two analysts present million dollar scenarios for bitcoin btc here are the expected prices and possible dates",
    "robinhood markets secures dubai approval to offer bitcoin crypto and stock trading in the middle east",
    "bitcoin moves over 5 billion in value but miners collect just 185 000 in transaction fees",
-   "ark invest sells 15 million of its own bitcoin etf as price falls"
+   "ark invest sells 15 million of its own bitcoin etf as price falls",
+   "crypto news today bitcoin inflow strategy inc halts btc purchase ethereum fixed validator deposit flaw",
+   "crypto com og com launch regulated crypto perpetuals in us with 5x leverage",
+   "btc price range on oct 27 2026 at 11am edt crypto prediction market",
+   "mcdonald s mcrib doesn t actually boost bitcoin s price sorry everyone",
+   "robinhood to access ripple s infrastructure across stablecoins institutional markets treasury management"
+  ],
+  "AAPL:CALL": [
+   "loop capital lowers apple stock price target on iphone shipment concerns"
   ]
  },
  "fired": {
@@ -1035,34 +1057,26 @@
    "news:bitcoin hovers near 80 000 as ai stock jitters spill into crypto",
    "news:gold below 4 000 bitcoin below 80 000 why safe havens failed in the ai stock selloff",
    "news:bitcoin and ethereum etfs shed 226m in recent outflows",
-   "news:ark invest sells 15 million of its own bitcoin etf as price falls"
+   "news:ark invest sells 15 million of its own bitcoin etf as price falls",
+   "news:crypto news today bitcoin inflow strategy inc halts btc purchase ethereum fixed validator deposit flaw",
+   "news:crypto market faces pressure as bitcoin slides below 80 000 before fed decision",
+   "news:bitcoin etfs see 110m inflow after 774m outfl"
   ],
   "PLTR:CALL:2026-10-30:202.5": [
    "news:palantir stock within 7 of its 52 week high as earnings and target hikes fuel buzz",
    "sharp@2026-10-27T09:47-04:00",
    "down-0.15"
   ],
-  "HOOD:PUT:2026-10-30:91": [
-   "stock2",
-   "down-0.15",
-   "news:bitcoin drops below 80 000 as crypto ignores asian tech rally fed meeting begins",
-   "down-0.3",
-   "news:with bitcoin under 80k two whales send btc worth 206m to coinbase",
-   "news:bitcoin price drops as strategy pauses btc purchases ahead of fed decision",
-   "news:bitcoin hovers near 80 000 as ai stock jitters spill into crypto",
-   "news:gold below 4 000 bitcoin below 80 000 why safe havens failed in the ai stock selloff",
-   "stock3",
-   "news:robinhood ripple partner for stablecoin infrastructure",
-   "sharp@2026-10-27T09:47-04:00",
-   "news:bitcoin and ethereum etfs shed 226m in recent outflows",
-   "news:robinhood markets secures dubai approval to offer bitcoin crypto and stock trading in the middle east"
+  "TSLA:CALL:2026-10-30:412.5": [
+   "down-0.15"
   ],
-  "TSLA:CALL:2026-10-30:412.5": [],
-  "NFLX:PUT:2026-11-06:62": []
+  "NFLX:PUT:2026-11-06:62": [],
+  "AAPL:CALL:2026-10-30:347.5": [
+   "news:loop capital lowers apple stock price target on iphone shipment concerns"
+  ]
  },
  "stock_level": {
-  "COIN:PUT:2026-10-30:150": 1,
-  "HOOD:PUT:2026-10-30:91": 3
+  "COIN:PUT:2026-10-30:150": 1
  },
  "seen_macro": [
   "from venezuela to texas to jamnagar marco rubio s dash for energy",
@@ -1562,12 +1576,20 @@
   "wall street drifts as broadcom and other ai related stocks help support the market",
   "gold prices hold near 4 000 as traders await fed rate decision amid inflation concerns hindustan times",
   "the federal reserve s decision is approaching does it pave the way for a rate hike in december",
-  "experts agree fed policy outlook and geopolitical tensions keep us dollar bid"
+  "experts agree fed policy outlook and geopolitical tensions keep us dollar bid",
+  "trump says canada trade deal coming soon",
+  "business conditions monthly august 2026",
+  "us dollar climbs as investors brace for hawkish federal reserve decision",
+  "no favouritism cm yogi highlights up s push on startups msmes jobs at toi youth icons summit",
+  "stock market says alphabet is ai loser",
+  "fomc decision on october 28 sets up major test for bitcoin and ethereum",
+  "gold steady as dollar strength weighs ahead of fed decision",
+  "verizon stock q3 a 9 shareholder yield while the market chases spacex myths nyse vz",
+  "egypt stresses global energy security cooperation at moscow gas summit"
  ],
  "sharp": {
   "COIN:PUT:2026-10-30:150": 162.19,
   "UBER:PUT:2026-10-30:66": 66.56,
-  "PLTR:CALL:2026-10-30:202.5": 197.66,
-  "HOOD:PUT:2026-10-30:91": 95.905
+  "PLTR:CALL:2026-10-30:202.5": 197.66
  }
 }
