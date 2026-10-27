@@ -14,8 +14,8 @@
    "strength": "4.7",
    "occ": "UBER261030P00066000",
    "peak_pnl": 0.446,
-   "close_pnl": 0.072,
-   "quotes": 129,
+   "close_pnl": 0.012,
+   "quotes": 130,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -34,8 +34,8 @@
    "strength": "4.6",
    "occ": "COIN261030P00150000",
    "peak_pnl": 0.111,
-   "close_pnl": -0.158,
-   "quotes": 109,
+   "close_pnl": -0.195,
+   "quotes": 110,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -54,8 +54,8 @@
    "strength": "4.0",
    "occ": "COIN261030P00150000",
    "peak_pnl": 0.006,
-   "close_pnl": -0.235,
-   "quotes": 59,
+   "close_pnl": -0.268,
+   "quotes": 60,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -74,8 +74,8 @@
    "strength": "7.0",
    "occ": "PLTR261030C00200000",
    "peak_pnl": 0.461,
-   "close_pnl": 0.243,
-   "quotes": 59,
+   "close_pnl": 0.162,
+   "quotes": 60,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -94,8 +94,8 @@
    "strength": "9.4",
    "occ": "SPY261028C00770000",
    "peak_pnl": 0.318,
-   "close_pnl": 0.212,
-   "quotes": 50,
+   "close_pnl": 0.314,
+   "quotes": 51,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -114,8 +114,8 @@
    "strength": "7.1",
    "occ": "TSLA261102C00417500",
    "peak_pnl": 0.197,
-   "close_pnl": 0.163,
-   "quotes": 47,
+   "close_pnl": 0.15,
+   "quotes": 48,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -133,9 +133,9 @@
    "edge": "7.5",
    "strength": "10.0",
    "occ": "SPY261028C00771000",
-   "peak_pnl": 0.031,
-   "close_pnl": 0.031,
-   "quotes": 33,
+   "peak_pnl": 0.14,
+   "close_pnl": 0.14,
+   "quotes": 34,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -153,9 +153,9 @@
    "edge": "8.0",
    "strength": "10.0",
    "occ": "SPY261028C00770000",
-   "peak_pnl": 0.264,
-   "close_pnl": 0.264,
-   "quotes": 11,
+   "peak_pnl": 0.37,
+   "close_pnl": 0.37,
+   "quotes": 12,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -306,7 +306,9 @@
   "20261027T1500|stocks|open_same_dir|PLTR|CALL|202.5|2026-10-30",
   "20261027T1512|stocks|same_side_cap|COIN|PUT|150|2026-10-30",
   "20261027T1512|stocks|max_ideas_cap|BA|PUT|167.5|2026-11-06",
-  "20261027T1512|stocks|open_same_dir|PLTR|CALL|202.5|2026-10-30"
+  "20261027T1512|stocks|open_same_dir|PLTR|CALL|202.5|2026-10-30",
+  "20261027T1535|spx|late_entry|SPX|CALL|7735|2026-10-27",
+  "20261027T1535|spx|late_entry|SPY|CALL|772|2026-10-28"
  ],
  "last": {
   "spx|CALL|SPY": "2026-10-27T14:35-04:00",
