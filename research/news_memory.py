@@ -44,6 +44,9 @@ TZ = "America/New_York"
 MODEL = "claude-haiku-5-5"
 BATCH = 80
 MIN_PRIOR = 3
+# أسهم خارج قائمة بوت الشركات تُتابَع أخبارها هنا فقط (بطلب المستخدم 27/10/2026: «النيوكلاود» بعد هبوطها 45–65%
+# عن قمة منتصف 2026 مع مخاوف تمويل وديون البنية التحتية للذكاء الاصطناعي). لا تدخل قياس أخبار السياسة العامة.
+EXTRA = {"CRWV": "CoreWeave", "NBIS": "Nebius Group", "IREN": "IREN Limited", "APLD": "Applied Digital"}
 
 EVENTS = ["earnings_beat", "earnings_miss", "guidance_up", "guidance_down", "analyst_upgrade", "analyst_downgrade",
           "deal_merger", "contract_product", "regulation", "lawsuit_probe", "management", "tariffs_trade",
@@ -71,7 +74,7 @@ OUT_COLS = ["key", "ticker", "src_ticker", "time_utc", "t0", "overnight", "event
 
 def names():
     import stocks_bot as sb
-    return {tk: v[0] for tk, v in sb.WATCHLIST.items()}
+    return {**{tk: v[0] for tk, v in sb.WATCHLIST.items()}, **EXTRA}
 
 
 # ============================ التصنيف (Claude) ============================
@@ -147,14 +150,14 @@ def ask(text):
 def classify(heads):
     """heads: [(ticker, title)] ← قائمة بنفس الطول من القواميس أو None لكل عنوان تعذّر تصنيفه."""
     from concurrent.futures import ThreadPoolExecutor
-    tickers = sorted(SECTOR)
+    tickers = sorted(set(SECTOR) | set(EXTRA))
     out = [None] * len(heads)
     starts = list(range(0, len(heads), BATCH))
     with ThreadPoolExecutor(4) as ex:
         for s, items in zip(starts, ex.map(lambda s: ask(prompt(heads[s:s + BATCH], tickers)) or [], starts)):
             for it in items:
                 if 0 <= it["i"] < min(BATCH, len(heads) - s):
-                    it["affected"] = [t for t in it["affected"] if t in SECTOR]
+                    it["affected"] = [t for t in it["affected"] if t in SECTOR or t in EXTRA]
                     out[s + it["i"]] = it
     return out
 
