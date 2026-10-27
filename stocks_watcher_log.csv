@@ -748,3 +748,7 @@ time,pos_id,ticker,side,event,detail,entry,val,pnl,spot,need,tdays,advice,reason
 2026-10-27T10:50-04:00,COIN:PUT:2026-10-30:150,COIN,PUT,news,"with/medium: Crypto Market Faces Pressure As Bitcoin Slides Below $80,000 Before Fed Decision - News Agency of Nigeria",3.34,2.89,-0.1347,159.15,0.0785,4,أبقِ,الخبر في صالح العقد
 2026-10-27T10:56-04:00,COIN:PUT:2026-10-30:150,COIN,PUT,news,against/medium: Bitcoin ETFs see $110M inflow after $774M outfl... - Pluang,3.34,2.89,-0.1347,159.45,0.0802,4,فكّر بالخروج,خبر ضد العقد
 2026-10-27T10:56-04:00,AAPL:CALL:2026-10-30:347.5,AAPL,CALL,news,against/medium: Loop Capital Lowers Apple Stock Price Target on iPhone Shipment Concerns - Barchart.com,2.75,2.72,-0.0109,346.21,0.0117,4,فكّر بالخروج,خبر ضد العقد
+2026-10-27T11:16-04:00,COIN:PUT:2026-10-30:150,COIN,PUT,macro,"with/strong/medium: Bitcoin (BTC) Slides Below $80,000 Ahead of Fed Rate Decision - TipRanks",3.34,2.9,-0.1317,159.065,0.078,4,أبقِ,الخبر في صالح العقد
+2026-10-27T11:19-04:00,AAPL:CALL:2026-10-30:347.5,AAPL,CALL,contract,+25%,2.75,3.44,0.2509,347.61,0.0076,4,أبقِ,لا جديد يغيّر فكرة الصفقة
+2026-10-27T11:31-04:00,BA:PUT:2026-10-30:170,BA,PUT,news,with/medium: Boeing (NYSE:BA) Sets New 52-Week Low on Disappointing Earnings - MarketBeat,3.33,2.9,-0.1291,169.81,0.0185,4,أبقِ,الخبر في صالح العقد
+2026-10-27T11:31-04:00,BA:PUT:2026-10-30:170,BA,PUT,news,"with/medium: Boeing Drops 9% as Commercial Jet Losses Overshadow Positive Cash Flow; GE Aerospace Ticks Up, RTX Holds Steady - 24/7 Wall St.",3.33,2.9,-0.1291,169.81,0.0185,4,أبقِ,الخبر في صالح العقد
