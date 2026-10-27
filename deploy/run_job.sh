@@ -178,9 +178,9 @@ main() {
       files="research/real_price_check_results.md research/real_price_check_trades.csv"
       msg="real price check refresh" ;;
     shadow_manager)
-      group=shadow-manager; envs="TG"
+      group=shadow-manager; envs="TG ALPACA"
       cmds=("$py shadow_manager.py")
-      files="shadow_manager_council.csv shadow_manager_state.json research/shadow_manager_results.md"
+      files="shadow_manager_council.csv shadow_manager_direction.csv shadow_manager_state.json research/shadow_manager_results.md"
       msg="shadow manager daily" ;;
     weekly_learning)
       group=weekly-learning; envs="TG"
