@@ -1,3 +1,3 @@
 id,entry,entry_spot,max_adverse_pct,peak_pnl,final_pnl,current_rule,suspect_stale_price,thesis_0.15,thesis_0.25,thesis_0.35
-SPY:CALL:771:2026-10-28,2.73,770.64,0.202,0.022,-0.117,no stop,False,stop 12:45 pnl -22%,لم يُفعَّل,لم يُفعَّل
-SPY:CALL:770:2026-10-28,2.56,769.48,0.051,0.281,0.148,no stop,False,لم يُفعَّل,لم يُفعَّل,لم يُفعَّل
+SPY:CALL:771:2026-10-28,2.73,770.64,0.202,0.022,-0.165,no stop,False,stop 12:45 pnl -22%,لم يُفعَّل,لم يُفعَّل
+SPY:CALL:770:2026-10-28,2.56,769.48,0.051,0.281,0.133,no stop,False,لم يُفعَّل,لم يُفعَّل,لم يُفعَّل
