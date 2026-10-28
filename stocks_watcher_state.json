@@ -902,7 +902,15 @@
    "the oil giants are raking in more cash here s what they ll do with it",
    "energy stocks and industry news oil gas solar coal and nuclear energy",
    "aaa idaho gas news for the week of october 28 2026",
-   "world oil prices fall iran talks ease supply concerns"
+   "world oil prices fall iran talks ease supply concerns",
+   "iowa gas prices rise slightly as diesel prices fall",
+   "palladium price enters oversold zone in high impact week",
+   "ct fuel industry warns of tight supplies and rising costs ahead of winter",
+   "reading gulf anxiety in the oil price",
+   "third quarter oil profits climb from beijing to houston on higher prices and refining gains",
+   "canadian oil discount exceeds 30 amid gulf coast pressures",
+   "demand for firewood spikes as heating costs soar in mass",
+   "refiner stocks just had their worst day since the tariff shock"
   ],
   "JPM:PUT": [
    "bank of america may need a new ceo",
@@ -913,9 +921,6 @@
    "jpmorgan chase nyse jpm lifts interest income outlook as lending offsets trading slowdown"
   ],
   "COIN:PUT": [
-   "crypto price analysis btc eth hype qnt and icp october 26 quant gains 3 2 as bitcoin falls below 80 000 and ethereum wea",
-   "will xrp price crash ahead of november escrow unlock",
-   "stonex raises asset entities stock price target on bitcoin strategy",
    "altcoin season 2026 will solana sui and render lead a 20 crypto rebound this week",
    "bitcoin price breaks above 80 000 on binance s",
    "cryptocurrency stocks slide as bitcoin hovers near 80 000 riot strategy and mara drop 4",
@@ -1312,7 +1317,10 @@
    "jason calacanis bets bitcoin will never hit a n",
    "bitcoin could hit 1 6m by 2036 with 34 3 annu",
    "bitcoin price climbs above 81 000 on binance hitting 81 280 in spot trading",
-   "coinbase vs interactive brokers which financial stock has more long term upside"
+   "coinbase vs interactive brokers which financial stock has more long term upside",
+   "fed holds rates but dissent keeps bitcoin gold and tech stocks under pressure",
+   "bitcoin price before the fed decision btc near 81 000",
+   "pepe soars 17 daily did justin sun fuel the pump"
   ],
   "HOOD:PUT": [
    "prediction could bitcoin reach a new all time high before the 2028 halving",
@@ -1508,7 +1516,11 @@
    "jason calacanis bets bitcoin will never hit a n",
    "bitcoin could hit 1 6m by 2036 with 34 3 annu",
    "bitcoin price climbs above 81 000 on binance hitting 81 280 in spot trading",
-   "robinhood s crypto revenue fell 55 in a year is retail money leaving crypto"
+   "robinhood s crypto revenue fell 55 in a year is retail money leaving crypto",
+   "fed holds rates but dissent keeps bitcoin gold and tech stocks under pressure",
+   "bitcoin price before the fed decision btc near 81 000",
+   "pepe soars 17 daily did justin sun fuel the pump",
+   "robinhood gets 160 bernstein target as infrastructure business shift offsets q4 concerns"
   ],
   "AAPL:CALL": [
    "loop capital lowers apple stock price target on iphone shipment concerns",
@@ -1607,7 +1619,8 @@
    "news:fed holds interest rates steady at 3 75 to 4 as bitcoin approaches 81k",
    "news:institutional sell off in bitcoin etfs as sovereign funds step in",
    "news:bitcoin near 80 8k as fed holds rates two officials seek hike",
-   "news:bitcoin price climbs above 81 000 on binance hitting 81 280 in spot trading"
+   "news:bitcoin price climbs above 81 000 on binance hitting 81 280 in spot trading",
+   "news:fed holds rates but dissent keeps bitcoin gold and tech stocks under pressure"
   ],
   "BA:PUT:2026-11-06:165": [
    "down-0.15",
@@ -1639,7 +1652,9 @@
    "news:bitcoin price returns to 81k as federal reserve holds rates steady",
    "news:bitcoin briefly hits 81k as fed holds rates st",
    "news:robinhood shares fall as crypto markets chill drives profit miss",
-   "news:bitcoin near 80 8k as fed holds rates two officials seek hike"
+   "news:bitcoin near 80 8k as fed holds rates two officials seek hike",
+   "news:fed holds rates but dissent keeps bitcoin gold and tech stocks under pressure",
+   "news:robinhood gets 160 bernstein target as infrastructure business shift offsets q4 concerns"
   ],
   "XOM:CALL:2026-11-06:185": [
    "news:world bank warns energy prices will jump 32 this year",
@@ -1661,7 +1676,8 @@
    "news:oil prices rise on yemen fighting saudi refinery attack",
    "news:us pain at the pump worsens after more us iran fighting lifts oil prices",
    "news:global stocks hold gains after fed decision oil prices jump",
-   "news:world oil prices fall iran talks ease supply concerns"
+   "news:world oil prices fall iran talks ease supply concerns",
+   "news:refiner stocks just had their worst day since the tariff shock"
   ]
  },
  "stock_level": {
@@ -1670,17 +1686,6 @@
   "BA:PUT:2026-11-06:165": 1
  },
  "seen_macro": [
-  "worldwide drops for ai stocks send wall street toward its worst day since july as oil prices jump",
-  "3 30pm markets update",
-  "sinking ai stocks undercut markets worldwide as oil climbs to its highest price since may",
-  "nyse is getting trounced in the battle for wall street s biggest ipos",
-  "sensex nifty decline as geopolitical tensions and rising oil prices pressure markets",
-  "morning brief global ai trade under pressure japan inflation rises above boj target eurozone pmis missed expectations",
-  "stock market today s p 500 nasdaq 100 futures mixed ahead of global pmi data western digital newmont",
-  "world shares are mixed after wall street s ai related losses while oil prices jump",
-  "sticky september inflation data sustains bank of japan s tightening trajectory",
-  "sensex nifty end lower as rising crude oil prices weigh on markets",
-  "us pmi data due friday as crypto traders eye fed rate decision",
   "where they stand michele tafoya and peggy flanagan on trump s tariffs",
   "when it comes to trump s economy these numbers matter before mid terms",
   "how to turn a 5 000 investment into 1 500 in passive income 4 stocks to buy",
@@ -2269,7 +2274,18 @@
   "how can us fed fomc meeting outcome impact indian stock market sensex nifty to rise experts decode",
   "federal reserve keeps interest rates unchanged in final vote before midterms",
   "fed holds us interest rates steady despite inflation fears",
-  "us federal reserve holds interest rates steady as inflation remains elevated"
+  "us federal reserve holds interest rates steady as inflation remains elevated",
+  "fed holds interest rates despite high inflation data as midterms loom",
+  "us federal reserve leaves interest rates unchanged",
+  "federal reserve leaves rates unchanged as workforce productivity rises",
+  "u s stocks slightly higher after fed keeps interest rates unchanged",
+  "fed leaves interest rates unchanged despite inflation in the us",
+  "federal reserve will hold fewer interest rate meetings in coming years",
+  "fed keeps interest rates unchanged but two officials dissented in favor of a rate hike",
+  "federal reserve keeps interest rates unchanged",
+  "trump says us will beat china in ai as technology emerges",
+  "qatar led mediators push iran nuclear proposal for sanctions relief and asset access",
+  "the bond market swings but us stocks remain steady after the fed says it won t raise interest rates"
  ],
  "sharp": {
   "COIN:PUT:2026-10-30:150": 162.19,
