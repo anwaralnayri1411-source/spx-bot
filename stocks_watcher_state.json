@@ -883,7 +883,12 @@
    "washington gas prices continue october decline but remain well above year ago levels",
    "ubs sees 110 brent by year end as gulf flows stay below prewar levels",
    "europe s stoxx 600 subdued as earnings and oil prices weigh",
-   "exxonmobil xom stock still looks undervalued on its 231 run"
+   "exxonmobil xom stock still looks undervalued on its 231 run",
+   "midwest gasoline supplies hit lowest on record",
+   "china secures massive discount on russian gas as moscow s leverage weakens",
+   "federal reserve leaves interest rates unchanged despite rising inflation",
+   "oil prices rise after ship attacks us iran talks deadlock",
+   "nothing else matters if oil keeps climbing"
   ],
   "JPM:PUT": [
    "bank of america may need a new ceo",
@@ -1259,7 +1264,17 @@
    "forget ai wintermute explains why bitcoin s next move now depends on oil",
    "blackrock resumes buying bitcoin as price reclaims 81 000",
    "most long term bitcoin holders underwater at current price levels market talk",
-   "coinbase is pitching agents and tokenized stocks its october 29 report has to show revenue holding up"
+   "coinbase is pitching agents and tokenized stocks its october 29 report has to show revenue holding up",
+   "analyst sets bitcoin price target ahead of october s fomc",
+   "altcoin speculation has slowed down can november break bitcoin s 60 grip",
+   "bitcoin spot etfs attract 175 99m as all 12 avoid outflows",
+   "bitcoin btc shows a major sign of strength price rally incoming",
+   "intel corporation coinbase tokenized stock intcc chart",
+   "will china s stock market crash hit bitcoin price",
+   "bitcoin spot etfs attract 175 99 million as all 12 funds avoid outflows",
+   "btc price on oct 28 2026 at 3pm edt crypto prediction market",
+   "fed holds interest rates steady at 3 75 to 4 as bitcoin approaches 81k",
+   "bitcoin long term holder losses deepen sparking selling pressure risk on rebound to 85 000"
   ],
   "HOOD:PUT": [
    "prediction could bitcoin reach a new all time high before the 2028 halving",
@@ -1419,7 +1434,19 @@
    "forget ai wintermute explains why bitcoin s next move now depends on oil",
    "blackrock resumes buying bitcoin as price reclaims 81 000",
    "most long term bitcoin holders underwater at current price levels market talk",
-   "robinhood slides wendy s rallies stock movers"
+   "robinhood slides wendy s rallies stock movers",
+   "robinhood adds eight stock and etf tokens to its chain",
+   "analyst sets bitcoin price target ahead of october s fomc",
+   "bitcoin surges above 81 000 ahead of fed decision will btc price rally toward 88k or drop to 76k",
+   "altcoin speculation has slowed down can november break bitcoin s 60 grip",
+   "robinhood markets nasdaq hood price target cut to 128 00 by analysts at the goldman sachs group",
+   "bitcoin spot etfs attract 175 99m as all 12 avoid outflows",
+   "bitcoin btc shows a major sign of strength price rally incoming",
+   "will china s stock market crash hit bitcoin price",
+   "bitcoin spot etfs attract 175 99 million as all 12 funds avoid outflows",
+   "btc price on oct 28 2026 at 3pm edt crypto prediction market",
+   "fed holds interest rates steady at 3 75 to 4 as bitcoin approaches 81k",
+   "bitcoin long term holder losses deepen sparking selling pressure risk on rebound to 85 000"
   ],
   "AAPL:CALL": [
    "loop capital lowers apple stock price target on iphone shipment concerns",
@@ -1462,7 +1489,10 @@
    "boeing ba stock trades down here is why",
    "boeing stock plunges after earnings 737 progress is not fast enough",
    "boeing has a record 745 billion backlog and can t build the planes fast enough",
-   "boeing s defense revenue booms but the 737 calls the shots"
+   "boeing s defense revenue booms but the 737 calls the shots",
+   "boeing stock nyse ba slips as new backlog size revealed",
+   "boeing de risks free cash flow outlook shares may stay range bound rbc says",
+   "boeing stock hits fresh 18 month low after slew of price target cuts bofa says turnaround story is still intact"
   ]
  },
  "fired": {
@@ -1508,7 +1538,9 @@
    "news:us spot bitcoin etfs turn positive for 2026 after 4 6b rebound",
    "news:bitcoin is stuck below 85k as etf demand fades and volatility hits 2023 levels",
    "news:coinbase earnings wall street divided on trading rebound after robinhood crypto revenue sinks 55",
-   "news:blackrock resumes buying bitcoin as price reclaims 81 000"
+   "news:blackrock resumes buying bitcoin as price reclaims 81 000",
+   "news:bitcoin spot etfs attract 175 99 million as all 12 funds avoid outflows",
+   "news:fed holds interest rates steady at 3 75 to 4 as bitcoin approaches 81k"
   ],
   "NFLX:PUT:2026-11-06:62": [
    "news:citigroup cuts target from usd 100 00 to usd 85 00 for netflix stock",
@@ -1517,7 +1549,8 @@
   "BA:PUT:2026-11-06:165": [
    "down-0.15",
    "down-0.3",
-   "stock1"
+   "stock1",
+   "news:boeing stock hits fresh 18 month low after slew of price target cuts bofa says turnaround story is still intact"
   ],
   "HOOD:PUT:2026-11-06:90": [
    "sharp@2026-10-28T10:44-04:00",
@@ -1535,7 +1568,8 @@
    "news:barclays issues pessimistic forecast for robinhood markets nasdaq hood stock price",
    "news:robinhood tumbles after q3 earnings miss analysts cut price targets",
    "news:robinhood earnings miss crypto weakness fail to shake wall street s bullish outlook",
-   "news:blackrock resumes buying bitcoin as price reclaims 81 000"
+   "news:blackrock resumes buying bitcoin as price reclaims 81 000",
+   "news:robinhood markets nasdaq hood price target cut to 128 00 by analysts at the goldman sachs group"
   ],
   "XOM:CALL:2026-11-06:185": [
    "news:world bank warns energy prices will jump 32 this year",
@@ -1551,7 +1585,9 @@
    "news:trump says billions of barrels of venezuelan oil will soon lower gas prices",
    "news:crude oil prices surge amid middle east tensions colgate palmolive cl dividend stability in focus",
    "news:equinor raises oil and gas output forecast as operating profit doubles",
-   "news:ubs sees 110 brent by year end as gulf flows stay below prewar levels"
+   "news:ubs sees 110 brent by year end as gulf flows stay below prewar levels",
+   "news:midwest gasoline supplies hit lowest on record",
+   "news:oil prices rise after ship attacks us iran talks deadlock"
   ]
  },
  "stock_level": {
@@ -1560,35 +1596,6 @@
   "BA:PUT:2026-11-06:165": 1
  },
  "seen_macro": [
-  "why is bitcoin falling below 82 400 despite 1 1 billion in etf inflows",
-  "here are thursday s top wall street analyst research calls alcoa block constellation energy dick s sporting goods dutch ",
-  "us stock market today s p 500 futures fall on hot uk inflation surprise",
-  "dow jones futures today trading lower 0 56 to 0 68 amid multi day tech led rally major corporate earnings escalating geo",
-  "palantir stock is holding above a key technical level why wall street sees 24 upside",
-  "markets bet warsh holds rates steady but he won t say so himself",
-  "3 u s lender stocks built for higher interest rates",
-  "netflix tesla and meta earnings put wall street s cautious mood back in focus",
-  "us stock market today s p 500 futures slip on weak housing and consumer strain",
-  "canadian stock market today tsx futures firm on oil strength and rate crosswinds",
-  "former new york fed president dudley ai investment will push the federal reserve onto a rate roller coaster",
-  "wall st set for lower open as ai jitters rekindle oil gains",
-  "war in iran federal reserve rate hike weigh on real estate investor outlook according to fall 2026 rcn capital investor ",
-  "gold falls 2 to below 4 100 as markets weigh fed outlook",
-  "more fed hikes are priced in are ai stocks headed for another drop",
-  "top cd rates today oct 22 2026 lock in up to up to 5 25",
-  "doug ford sounds alarm on stellantis talks on chinese evs",
-  "oil hits 112 again after saudi attacks will petrol and diesel get costlier",
-  "us bank stocks fall up to 25 despite strong earnings what is wall street afraid of",
-  "taking stock bear attack continues for 3rd day nifty below 22 700 sensex down 460 points",
-  "sensex plunges over 400 points nifty slips below 22 700 amid rising crude prices geopolitical tensions",
-  "stock market crash today sensex nifty extend losses 5 key reasons behind the fall and top losers",
-  "indian markets end lower as rising crude prices weak asian cues weigh",
-  "bitcoin falls below 85 000 despite 1b etf inf",
-  "sensex plunges nifty dips below 22 700 amid rising crude oil geopolitical tensions",
-  "rupee slumps 44 paise against us dollar amid oil price surge",
-  "the day in trade eu building momentum on uk reset ahead of summit and fresh legal case launched against trump s tariffs",
-  "mortgage rate history 1970s to 2026",
-  "green stocks oct 22 market falls as crude oil surge and geopolitical tensions weigh on sentiment",
   "what different us midterm outcomes could mean for markets",
   "the fed s dilemma can markets damp inflation or is another rate hike necessary",
   "gold hits two month low as oil rally fuels inflation fears silver declines",
@@ -2159,7 +2166,36 @@
   "why analysts say the us stock market may be on the cusp of a double digit rally",
   "will fed chair warsh give clear signs of another hike before year end",
   "watch live fed chair kevin warsh speaks as rates expected to hold steady",
-  "steve moore says fed should hold rates steady with inflation fight still job number one"
+  "steve moore says fed should hold rates steady with inflation fight still job number one",
+  "canada not in a position right now to agree to u s trade deal carney says",
+  "federal reserve decision nears 3 7 inflation vs jobs slump tenses market",
+  "bitcoin holds above 80 000 as cryptocurrencies await federal reserve decision",
+  "trump xi talks could mean 6 billion of us gas for china",
+  "ukoil brent price 112 050 chg 2 560",
+  "fed rate decision today here s what goldman strategist has to say about interest rates",
+  "federal reserve expected to hold interest rates steady",
+  "swiss franc remains under pressure as traders await fed interest rate decision",
+  "federal reserve makes interest rate decision ahead of midterms",
+  "us federal reserve expected to hold interest rates steady ahead of midterm elections",
+  "fed holds rates steady despite concerns over inflation",
+  "federal reserve leaves interest rates unchanged despite rising inflation",
+  "fed holds rates amid treasury yield surge",
+  "fed pauses interest rate hikes for now as key midterm election looms",
+  "sofi is still down 35 this year did today just mark the bottom for sofi stock",
+  "us fed holds interest rates steady amid inflation concerns ahead of us midterms",
+  "us federal reserve makes interest rate decision",
+  "federal reserve holds interest rates steady even as inflation remains high",
+  "fed pauses its hikes crypto gets five dates to watch",
+  "fed leaves interest rates unchanged as expected",
+  "fed holds interest rates steady even as inflation remains stubborn",
+  "what is happening with us interest rates",
+  "fed holds us interest rates despite inflation surge",
+  "federal reserve hits pause on rate hikes despite resurgent inflation",
+  "federal reserve holds interest rates steady",
+  "fed interest rate decision today rates remain unchanged at 3 75 4",
+  "us fed holds interest rates steady despite lingering inflation concerns",
+  "fed holds interest rates steady but investors bet on december rate hike",
+  "fed leaves rates steady as governor lisa cook dissents"
  ],
  "sharp": {
   "COIN:PUT:2026-10-30:150": 162.19,
