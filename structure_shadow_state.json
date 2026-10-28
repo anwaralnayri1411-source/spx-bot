@@ -39,8 +39,58 @@
    "capital": 2.37,
    "entry_cash": 0.63,
    "peak": 0.11,
-   "last_pnl": -0.04,
-   "quotes": 71,
+   "last_pnl": 0.04,
+   "quotes": 72,
+   "t60_pnl": "",
+   "t60_time": "",
+   "eod_pnl": "",
+   "eod_time": "",
+   "hold_pnl": "",
+   "hold_time": "",
+   "managed_pnl": "",
+   "managed_out": "",
+   "managed_time": ""
+  },
+  {
+   "id": "20261028T1034|ic|day-2026-10-28",
+   "kind": "ic",
+   "pos_id": "day-2026-10-28",
+   "date": "2026-10-28",
+   "side": "BOTH",
+   "exp": "2026-10-29",
+   "entry_time": "2026-10-28T10:34-04:00",
+   "entry_spot": 770.87,
+   "legs": [
+    {
+     "occ": "SPY261029P00764000",
+     "strike": 764.0,
+     "side": "PUT",
+     "qty": -1
+    },
+    {
+     "occ": "SPY261029P00761000",
+     "strike": 761.0,
+     "side": "PUT",
+     "qty": 1
+    },
+    {
+     "occ": "SPY261029C00778000",
+     "strike": 778.0,
+     "side": "CALL",
+     "qty": -1
+    },
+    {
+     "occ": "SPY261029C00781000",
+     "strike": 781.0,
+     "side": "CALL",
+     "qty": 1
+    }
+   ],
+   "capital": 2.11,
+   "entry_cash": 0.89,
+   "peak": 0.0,
+   "last_pnl": "",
+   "quotes": 0,
    "t60_pnl": "",
    "t60_time": "",
    "eod_pnl": "",
@@ -63,6 +113,7 @@
  ],
  "condor_days": [
   "2026-10-26",
-  "2026-10-27"
+  "2026-10-27",
+  "2026-10-28"
  ]
 }
