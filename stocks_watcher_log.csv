@@ -866,3 +866,7 @@ time,pos_id,ticker,side,event,detail,entry,val,pnl,spot,need,tdays,advice,reason
 2026-10-28T10:23-04:00,COIN:PUT:2026-10-30:150,COIN,PUT,macro_quiet,against/weak/medium: Federal Reserve Set to Make Rate Decision Today: Here's What to Expect - CoinCodex,3.34,2.94,-0.1198,158.62,0.0754,3,أبقِ,خبر ضد العقد لكن تأثيره محدود، راقب
 2026-10-28T10:23-04:00,HOOD:PUT:2026-11-06:90,HOOD,PUT,macro_quiet,against/weak/medium: Federal Reserve Set to Make Rate Decision Today: Here's What to Expect - CoinCodex,3.29,3.08,-0.0638,91.22,0.0494,8,أبقِ,خبر ضد العقد لكن تأثيره محدود، راقب
 2026-10-28T10:27-04:00,BA:PUT:2026-11-06:165,BA,PUT,contract,-18%,3.29,2.7,-0.1793,166.27,0.0274,8,أبقِ,الفكرة قائمة لكن العقد -18%؛ التزم بالوقف عند −40%
+2026-10-28T10:44-04:00,HOOD:PUT:2026-11-06:90,HOOD,PUT,sharp,-0.82% في 15د,3.29,2.84,-0.1368,91.99,0.0574,8,فكّر بالخروج,السهم يتحرك ضدك
+2026-10-28T10:56-04:00,COIN:PUT:2026-10-30:150,COIN,PUT,news,against/medium: Bitcoin Price Tops USD 80K as ETF Flows Rise Before Fed Vote - Analytics Insight,3.34,2.97,-0.1108,158.36,0.0739,3,فكّر بالخروج,خبر ضد العقد
+2026-10-28T10:56-04:00,HOOD:PUT:2026-11-06:90,HOOD,PUT,news,with/medium: Robinhood Markets (NASDAQ:HOOD) Shares Gap Down on Analyst Downgrade - MarketBeat,3.29,2.82,-0.1429,91.83,0.0558,8,أبقِ,الخبر في صالح العقد
+2026-10-28T11:01-04:00,HOOD:PUT:2026-11-06:90,HOOD,PUT,news,with/medium: Robinhood Stock Drops. What’s Overshadowing the Earnings Beat. - Barron's,3.29,2.9,-0.1185,91.735,0.0548,8,أبقِ,الخبر في صالح العقد

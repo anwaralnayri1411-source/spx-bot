@@ -118,7 +118,8 @@
    "lyft lyft vs uber and dash can record riders and margin expansion close the gap with larger rivals",
    "uber stock hits 52 week low at 65 41 usd by investing com",
    "uber stock hits 52 week low at 65 41 usd",
-   "bill ackman s test for a great stock should be enormously valuable even if markets shut for 20 years"
+   "bill ackman s test for a great stock should be enormously valuable even if markets shut for 20 years",
+   "earnings preview uber technologies uber q3 earnings expected to decline"
   ],
   "DIS:CALL": [
    "skydance rises 5 as steep post merger slide pauses disney gains 2 netflix slips",
@@ -840,7 +841,10 @@
    "tsx edges higher as oil prices ease",
    "india s bpcl to cut russian oil imports due to higher prices",
    "gas prices rise slightly",
-   "u s stocks tick higher as oil prices ease a bit"
+   "u s stocks tick higher as oil prices ease a bit",
+   "us oil inventories fall again as prices rise",
+   "a freaking fortune how the iran war rescued big oil s bottom line",
+   "chevron vs occidental petroleum big oil sees revenue surge as prices leap in 2026"
   ],
   "JPM:PUT": [
    "bank of america may need a new ceo",
@@ -1149,7 +1153,17 @@
    "bittensor price prediction can tao recover above usd 270 after recent decline",
    "bitcoin etf inflows hit 176m as btc price clim",
    "btc usd forecast today 28 10 5 signals point to 100k",
-   "is the uptober tradition breaking in bitcoin analyst points to us midterm elections shares critical data"
+   "is the uptober tradition breaking in bitcoin analyst points to us midterm elections shares critical data",
+   "fomc meeting today bitcoin gold and silver price outlook ahead of fed rate decision",
+   "google to preview a new crypto security system as private key hacks mount",
+   "coinbase q3 earnings face falling estimates can usdc stem the slide",
+   "wall street veteran sees bigger returns in crypto than ai stocks",
+   "bitcoin option buyers face a fed week premium that can fade after the decision",
+   "which five stocks reporting on october 29 coinbase nasdaq coin starbucks nasdaq sbux mastercard nyse ma pinterest nyse p",
+   "bitwise raises bitcoin price target to 1 6 million by 2036",
+   "bitcoin price tops usd 80k as etf flows rise before fed vote",
+   "bitcoin projected to hit 1 6m by 2036 with 34",
+   "wall street giant dtcc launches tokenization for stocks etfs and u s treasuries"
   ],
   "HOOD:PUT": [
    "prediction could bitcoin reach a new all time high before the 2028 halving",
@@ -1238,7 +1252,13 @@
    "btc price range on oct 27 2026 at 11am edt crypto prediction market",
    "mcdonald s mcrib doesn t actually boost bitcoin s price sorry everyone",
    "robinhood to access ripple s infrastructure across stablecoins institutional markets treasury management",
-   "is the uptober tradition breaking in bitcoin analyst points to us midterm elections shares critical data"
+   "is the uptober tradition breaking in bitcoin analyst points to us midterm elections shares critical data",
+   "bitcoin option buyers face a fed week premium that can fade after the decision",
+   "bitwise raises bitcoin price target to 1 6 million by 2036",
+   "bitcoin price tops usd 80k as etf flows rise before fed vote",
+   "bitcoin projected to hit 1 6m by 2036 with 34",
+   "robinhood markets nasdaq hood shares gap down on analyst downgrade",
+   "robinhood stock drops what s overshadowing the earnings beat"
   ],
   "AAPL:CALL": [
    "loop capital lowers apple stock price target on iphone shipment concerns",
@@ -1283,14 +1303,6 @@
   ]
  },
  "fired": {
-  "UBER:PUT:2026-10-30:66": [
-   "down-0.15",
-   "sharp@2026-10-26T15:34-04:00",
-   "up0.25",
-   "news:bernstein sets usd 95 target for uber technologies stock",
-   "news:uber stock hits 52 week low at 65 41 usd by investing com",
-   "news:uber stock hits 52 week low at 65 41 usd"
-  ],
   "COIN:PUT:2026-10-30:150": [
    "sharp@2026-10-26T10:43-04:00",
    "news:bitcoin price breaks above 80 000 on binance s",
@@ -1328,40 +1340,27 @@
    "news:coinbase denies internal breach as amplitude security incident hits user contact info",
    "news:top analyst cuts coinbase target bets on prediction markets",
    "news:coinbase and ripple team up to expand access to ripple s stablecoin coin nasdaq",
-   "news:bitcoin nears 82k as morgan stanley calls correction mostly over"
+   "news:bitcoin nears 82k as morgan stanley calls correction mostly over",
+   "news:bitcoin price tops usd 80k as etf flows rise before fed vote"
   ],
   "NFLX:PUT:2026-11-06:62": [
    "news:citigroup cuts target from usd 100 00 to usd 85 00 for netflix stock",
    "up0.25"
   ],
-  "AAPL:CALL:2026-10-30:347.5": [
-   "news:loop capital lowers apple stock price target on iphone shipment concerns",
-   "up0.25",
-   "down-0.15",
-   "news:apple addresses foldable screen display defects in newly launched iphone duo",
-   "news:google apple hit with 47 6m fine in south korea over unfair app market practices aapl nasdaq",
-   "news:apple in spotlight as monness crespi hardt ups price target on new products aapl nasdaq",
-   "down-0.3",
-   "news:new buy rating for apple aapl the technology giant",
-   "news:apple aapl unveils m6 macs with siri ai and creator studio upgrades"
-  ],
   "BA:PUT:2026-11-06:165": [
    "down-0.15"
   ],
-  "HOOD:PUT:2026-11-06:90": []
+  "HOOD:PUT:2026-11-06:90": [
+   "sharp@2026-10-28T10:44-04:00",
+   "news:robinhood markets nasdaq hood shares gap down on analyst downgrade",
+   "news:robinhood stock drops what s overshadowing the earnings beat"
+  ],
+  "XOM:CALL:2026-11-06:185": []
  },
  "stock_level": {
   "COIN:PUT:2026-10-30:150": 1
  },
  "seen_macro": [
-  "idea of partnering with u s is under attack in canada hoekstra says",
-  "lawsuit filed challenging trump s tariffs on canada",
-  "trump sued over canadian tariffs in latest legal challenge",
-  "new lawsuit filed challenging trump s tariffs on canada",
-  "sensex slumps over 900 points from day high nifty settles near 22 800 know what triggered the fall",
-  "oil tops 110 as middle east tensions revive supply fears",
-  "netflix stock sinks as wall street lowers price targets after streamer s q3 earnings and q4 revenue forecast miss",
-  "wall street to open in green nasdaq futures lead gains as ai space stocks surge in premarket trade",
   "explained what the u s federal reserve does and why it matters to australia",
   "oil prices jump 2 as iran talks falter and u s inventories tighten brent climbs above 110",
   "us futures mostly higher as wall street digests earnings from spacex netflix",
@@ -1953,10 +1952,18 @@
   "canada reports limited progress in trade talks with us",
   "federal reserve expected to pass on interest rate hike for now",
   "bank of canada rate decision hike to 2 50",
-  "federal reserve set to make rate decision today here s what to expect"
+  "federal reserve set to make rate decision today here s what to expect",
+  "federal reserve likely to skip rate hike despite elevated inflation",
+  "u s federal reserve expected to hold interest rates steady",
+  "watch live fed chair warsh holds briefing after latest interest rate decision",
+  "federal reserve october hold likely december hike expected abn amro",
+  "update us equity futures slightly higher pre bell as traders await fed rate decision big tech earnings",
+  "u s stocks edge higher ahead of federal reserve decision on interest rates",
+  "federal reserve interest rate decision looms as inflation and gas prices impact consumers",
+  "nasdaq composite morning wrap 28 10 2026 tech in focus oil up what next"
  ],
  "sharp": {
   "COIN:PUT:2026-10-30:150": 162.19,
-  "UBER:PUT:2026-10-30:66": 66.56
+  "HOOD:PUT:2026-11-06:90": 91.99
  }
 }
