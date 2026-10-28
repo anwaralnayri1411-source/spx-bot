@@ -216,7 +216,8 @@
    "netflix stock analysis trades at 61 87 down 1 04",
    "netflix stock trades at 61 87 down 1 04 below daily support",
    "netflix s video podcast push is far from over",
-   "netflix price increases are no longer providing unchecked upside downgrade nflx"
+   "netflix price increases are no longer providing unchecked upside downgrade nflx",
+   "ernest wong s top picks for oct 28 2026"
   ],
   "AVGO:PUT": [
    "3 artificial intelligence ai stocks that look like great buys right now",
@@ -892,7 +893,16 @@
    "unusual oil trades detected on buzzy offshore crypto exchange",
    "fuel trucking costs could continue to rise",
    "oil prices rise on yemen fighting saudi refinery attack",
-   "us stocks remain steady after the federal reserve says it won t raise interest rates"
+   "us stocks remain steady after the federal reserve says it won t raise interest rates",
+   "us pain at the pump worsens after more us iran fighting lifts oil prices",
+   "gas prices continue to drop across socal",
+   "larry kudlow slams media coverage of gas prices highlights consumer spending boom",
+   "global stocks hold gains after fed decision oil prices jump",
+   "why the shipping industry is turning its attention to nuclear power",
+   "the oil giants are raking in more cash here s what they ll do with it",
+   "energy stocks and industry news oil gas solar coal and nuclear energy",
+   "aaa idaho gas news for the week of october 28 2026",
+   "world oil prices fall iran talks ease supply concerns"
   ],
   "JPM:PUT": [
    "bank of america may need a new ceo",
@@ -1291,7 +1301,18 @@
    "crypto price analysis eth xrp pepe hype and near october 28 pepe gains 14 5 as xrp clears resistance and hyperliquid mac",
    "bitcoin long term holders face rising losses with selling pressure risk if btc reclaims 85 000",
    "bitfinex reveals insights on btc behavior post fomc meetings",
-   "btc whale opens 94 6m short before fomc does he know something"
+   "btc whale opens 94 6m short before fomc does he know something",
+   "btc cost basis quantile bands indicator by thescalpingant",
+   "bitcoin near 80 8k as fed holds rates two officials seek hike",
+   "glassnode sees bitcoin testing 78k as etf buying support fades",
+   "jason calacanis bleak bitcoin prediction draws 3m in rival bets but he won t bite",
+   "bearish options flow identified in coinbase with shares down 1 2",
+   "jpmorgan coca cola dell also say no to okx ice tokenized stock trading plan",
+   "btc price on oct 28 2026 at 4pm edt crypto prediction market",
+   "jason calacanis bets bitcoin will never hit a n",
+   "bitcoin could hit 1 6m by 2036 with 34 3 annu",
+   "bitcoin price climbs above 81 000 on binance hitting 81 280 in spot trading",
+   "coinbase vs interactive brokers which financial stock has more long term upside"
   ],
   "HOOD:PUT": [
    "prediction could bitcoin reach a new all time high before the 2028 halving",
@@ -1478,7 +1499,16 @@
    "bitfinex reveals insights on btc behavior post fomc meetings",
    "btc whale opens 94 6m short before fomc does he know something",
    "robinhood shares fall as crypto markets chill drives profit miss",
-   "robinhood reveals its dark horse as stock token haunts earnings call"
+   "robinhood reveals its dark horse as stock token haunts earnings call",
+   "btc cost basis quantile bands indicator by thescalpingant",
+   "bitcoin near 80 8k as fed holds rates two officials seek hike",
+   "glassnode sees bitcoin testing 78k as etf buying support fades",
+   "jason calacanis bleak bitcoin prediction draws 3m in rival bets but he won t bite",
+   "btc price on oct 28 2026 at 4pm edt crypto prediction market",
+   "jason calacanis bets bitcoin will never hit a n",
+   "bitcoin could hit 1 6m by 2036 with 34 3 annu",
+   "bitcoin price climbs above 81 000 on binance hitting 81 280 in spot trading",
+   "robinhood s crypto revenue fell 55 in a year is retail money leaving crypto"
   ],
   "AAPL:CALL": [
    "loop capital lowers apple stock price target on iphone shipment concerns",
@@ -1525,7 +1555,8 @@
    "boeing stock nyse ba slips as new backlog size revealed",
    "boeing de risks free cash flow outlook shares may stay range bound rbc says",
    "boeing stock hits fresh 18 month low after slew of price target cuts bofa says turnaround story is still intact",
-   "boeing nyse ba stock price target cut by bnp paribas exane"
+   "boeing nyse ba stock price target cut by bnp paribas exane",
+   "boeing got its max 10 approval but q3 delivered a reality check"
   ]
  },
  "fired": {
@@ -1574,11 +1605,9 @@
    "news:blackrock resumes buying bitcoin as price reclaims 81 000",
    "news:bitcoin spot etfs attract 175 99 million as all 12 funds avoid outflows",
    "news:fed holds interest rates steady at 3 75 to 4 as bitcoin approaches 81k",
-   "news:institutional sell off in bitcoin etfs as sovereign funds step in"
-  ],
-  "NFLX:PUT:2026-11-06:62": [
-   "news:citigroup cuts target from usd 100 00 to usd 85 00 for netflix stock",
-   "up0.25"
+   "news:institutional sell off in bitcoin etfs as sovereign funds step in",
+   "news:bitcoin near 80 8k as fed holds rates two officials seek hike",
+   "news:bitcoin price climbs above 81 000 on binance hitting 81 280 in spot trading"
   ],
   "BA:PUT:2026-11-06:165": [
    "down-0.15",
@@ -1609,7 +1638,8 @@
    "news:hood stock hits near 3 month lows as analysts trim targets but bulls call it a buying opportunity",
    "news:bitcoin price returns to 81k as federal reserve holds rates steady",
    "news:bitcoin briefly hits 81k as fed holds rates st",
-   "news:robinhood shares fall as crypto markets chill drives profit miss"
+   "news:robinhood shares fall as crypto markets chill drives profit miss",
+   "news:bitcoin near 80 8k as fed holds rates two officials seek hike"
   ],
   "XOM:CALL:2026-11-06:185": [
    "news:world bank warns energy prices will jump 32 this year",
@@ -1628,7 +1658,10 @@
    "news:ubs sees 110 brent by year end as gulf flows stay below prewar levels",
    "news:midwest gasoline supplies hit lowest on record",
    "news:oil prices rise after ship attacks us iran talks deadlock",
-   "news:oil prices rise on yemen fighting saudi refinery attack"
+   "news:oil prices rise on yemen fighting saudi refinery attack",
+   "news:us pain at the pump worsens after more us iran fighting lifts oil prices",
+   "news:global stocks hold gains after fed decision oil prices jump",
+   "news:world oil prices fall iran talks ease supply concerns"
   ]
  },
  "stock_level": {
@@ -1637,31 +1670,6 @@
   "BA:PUT:2026-11-06:165": 1
  },
  "seen_macro": [
-  "apple stock defies ai trade swings emerges as wall street s hedge against tech volatility",
-  "silver crashes 8 590 kg to a 7 month low gold hits 2 month low what s driving the selloff in precious metals",
-  "the fed is raising rates again here s what it means for savers banking advice u s news",
-  "stock market today s p 500 dow jones nasdaq 100 futures drop following asian market sell off middle e",
-  "given no choice by trump canada embraces asia to save auto heartland squeezed by u s tariffs",
-  "should you buy coinbase stock under 170",
-  "germany s new approach to global trade trumponomics",
-  "interest rate predictions for next week october 27 28 2026",
-  "bitcoin slides towards 81 000 on oil surge",
-  "why is us stock market down today dow jones slips 200 points s p 500 falls 1 25 nasdaq climbs 1 04 as spacex rally ai de",
-  "oct 22 sensex falls 460 pts for third day as oil risks weigh nifty slips below 22 700",
-  "us 10 year yield falls below 5 as investors flock to safe havens",
-  "tech selloff deepens as flight into treasurys drives yields lower",
-  "wall street sinks as nasdaq falls over 2 on ai cost worries",
-  "meta sinks 6 10 year yield falls below 5 stock market today meta platforms nasdaq meta",
-  "graham s republican runoff opponent gives little support for incumbent s campaign",
-  "meta tumbles 6 on ai spending fears 10 year yield falls below 5 stock market today",
-  "mcguirewoods lawyers author chapter for seventh edition of gir s the guide to sanctions",
-  "allianz investment management the federal reserve and other central banks are expected to raise interest rates by anothe",
-  "the federal reserve is not expected to raise interest rates next week what conditions would be required to change this o",
-  "asx set to slide as wall street falls oil at highest since may",
-  "why is the stock market down today tech stocks plummet as oil tops 112 and geopolitical crises shake wall street",
-  "wall street plunges as ai fatigue bites mega caps and middle east escalation sends brent crude surging past 112",
-  "long end us yield hits one month low as ai fears fuel haven bid",
-  "u s stocks fall as tech selloff deepens",
   "worldwide drops for ai stocks send wall street toward its worst day since july as oil prices jump",
   "3 30pm markets update",
   "sinking ai stocks undercut markets worldwide as oil climbs to its highest price since may",
@@ -2236,7 +2244,32 @@
   "federal reserve keeps rates unchanged despite elevated inflation gives little signal of next move",
   "us stocks remain steady after the federal reserve says it won t raise interest rates",
   "federal reserve holds rates at 3 75 4 two officials favor another hike",
-  "federal reserve holds interest rates steady despite inflation concerns"
+  "federal reserve holds interest rates steady despite inflation concerns",
+  "lula s election win in brazil is a relief for china",
+  "fed leaves rates unchanged as it awaits accumulation of more information",
+  "us stocks remain steady after the federal reserve says it won t raise interest rates national news 2news com",
+  "federal reserve holds interest rates steady as midterm elections loom",
+  "us fed holds interest rates steady despite surging inflation",
+  "federal reserve leaves interest rates unchanged",
+  "trump s federal reserve holds interest rates steady despite soaring inflation concerns",
+  "fed pauses interest rates as cre market preps for december hike",
+  "fed plans to eliminate some rate setting meetings chairman warsh says",
+  "fed leaves rates unchanged what it means for credit cards mortgages auto loans and savings accounts",
+  "federal reserve holds interest rates steady as midterm elections loom abc news",
+  "breaking federal reserve holds interest rates at 3 75 4 amid rising inflation december rate hike bets near 80",
+  "federal reserve leaves interest rates unchanged amid inflation concerns",
+  "fed holds us interest rates ahead of midterm elections",
+  "alphabet is only up 3 this year will today s earnings report make or break googl stock",
+  "fed holds rates mortgage relief unlikely economists say",
+  "bank of canada raises key interest rate to 2 5 per cent",
+  "federal reserve keeps rates unchanged despite elevated inflation",
+  "wall street wavers as federal reserve holds key rate steady pending more data",
+  "u s stocks are mixed after fed keeps interest rates unchanged comp ind",
+  "uzbekistan u s deepening trade relations after business summit investment council official says",
+  "how can us fed fomc meeting outcome impact indian stock market sensex nifty to rise experts decode",
+  "federal reserve keeps interest rates unchanged in final vote before midterms",
+  "fed holds us interest rates steady despite inflation fears",
+  "us federal reserve holds interest rates steady as inflation remains elevated"
  ],
  "sharp": {
   "COIN:PUT:2026-10-30:150": 162.19,
