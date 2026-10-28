@@ -1,7 +1,103 @@
 {
  "date": "2026-10-28",
- "open": [],
- "await": [],
- "last": {},
- "count": {}
+ "open": [
+  {
+   "date": "2026-10-28",
+   "defn": "delayed",
+   "role": "signal",
+   "side": "CALL",
+   "strike": 772.0,
+   "sig_time": "2026-10-28T14:36-04:00",
+   "r30": 0.00254,
+   "entry_time": "2026-10-28T14:36-04:00",
+   "entry_spy": 772.39,
+   "entry": 2.16,
+   "exit": "",
+   "exit_time": "",
+   "pnl": -0.333,
+   "peak": 0.13,
+   "spy_after_60": "",
+   "spy_move_pts": "",
+   "checks": 10,
+   "stale": 0,
+   "at_ext": 1,
+   "occ": "SPY261028C00772000"
+  },
+  {
+   "date": "2026-10-28",
+   "defn": "delayed",
+   "role": "opposite",
+   "side": "PUT",
+   "strike": 772.0,
+   "sig_time": "2026-10-28T14:36-04:00",
+   "r30": 0.00254,
+   "entry_time": "2026-10-28T14:36-04:00",
+   "entry_spy": 772.39,
+   "entry": 1.7,
+   "exit": "",
+   "exit_time": "",
+   "pnl": 0.271,
+   "peak": 0.271,
+   "spy_after_60": "",
+   "spy_move_pts": "",
+   "checks": 10,
+   "stale": 0,
+   "at_ext": 1,
+   "occ": "SPY261028P00772000"
+  },
+  {
+   "date": "2026-10-28",
+   "defn": "live",
+   "role": "signal",
+   "side": "CALL",
+   "strike": 773.0,
+   "sig_time": "2026-10-28T14:37-04:00",
+   "r30": 0.00334,
+   "entry_time": "2026-10-28T14:37-04:00",
+   "entry_spy": 773.1,
+   "entry": 1.89,
+   "exit": "",
+   "exit_time": "",
+   "pnl": -0.466,
+   "peak": 0.0,
+   "spy_after_60": "",
+   "spy_move_pts": "",
+   "checks": 9,
+   "stale": 0,
+   "at_ext": 1,
+   "occ": "SPY261028C00773000"
+  }
+ ],
+ "await": [
+  {
+   "date": "2026-10-28",
+   "defn": "live",
+   "role": "opposite",
+   "side": "PUT",
+   "strike": 773.0,
+   "sig_time": "2026-10-28T14:37-04:00",
+   "r30": 0.00334,
+   "entry_time": "2026-10-28T14:37-04:00",
+   "entry_spy": 773.1,
+   "entry": 1.88,
+   "exit": "tp",
+   "exit_time": "14:46",
+   "pnl": 0.516,
+   "peak": 0.516,
+   "spy_after_60": "",
+   "spy_move_pts": "",
+   "checks": 9,
+   "stale": 0,
+   "at_ext": 1,
+   "occ": "SPY261028P00773000"
+  }
+ ],
+ "last": {
+  "delayed": "2026-10-28T14:36-04:00",
+  "live": "2026-10-28T14:37-04:00"
+ },
+ "count": {
+  "delayed": 1,
+  "live": 1
+ }
 }
