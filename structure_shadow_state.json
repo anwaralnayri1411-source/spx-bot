@@ -39,8 +39,8 @@
    "capital": 2.37,
    "entry_cash": 0.63,
    "peak": 0.03,
-   "last_pnl": -0.07,
-   "quotes": 60,
+   "last_pnl": -0.04,
+   "quotes": 61,
    "t60_pnl": "",
    "t60_time": "",
    "eod_pnl": "",
@@ -57,7 +57,9 @@
   "SPX:CALL:7695:2026-10-26",
   "SPX:CALL:7690:2026-10-26",
   "SPX:CALL:7745:2026-10-27",
-  "SPX:CALL:7725:2026-10-27"
+  "SPX:CALL:7725:2026-10-27",
+  "SPY:CALL:771:2026-10-28",
+  "SPY:CALL:770:2026-10-28"
  ],
  "condor_days": [
   "2026-10-26",
