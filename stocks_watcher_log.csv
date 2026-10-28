@@ -857,3 +857,12 @@ time,pos_id,ticker,side,event,detail,entry,val,pnl,spot,need,tdays,advice,reason
 2026-10-28T09:51-04:00,UBER:PUT:2026-10-30:66,UBER,PUT,macro_quiet,"against/weak/medium: Inflation set to hit 5% by year-end as fuel price hikes take hold, but it's not all bad news - IOL",0.93,0.97,0.043,65.55,0.0073,3,أبقِ,خبر ضد العقد لكن تأثيره محدود، راقب
 2026-10-28T09:51-04:00,NFLX:PUT:2026-11-06:62,NFLX,PUT,macro_quiet,"against/weak/medium: Inflation set to hit 5% by year-end as fuel price hikes take hold, but it's not all bad news - IOL",0.89,0.9,0.0112,62.63,0.0243,8,أبقِ,خبر ضد العقد لكن تأثيره محدود، راقب
 2026-10-28T09:58-04:00,AAPL:CALL:2026-10-30:347.5,AAPL,CALL,contract,-33%,2.75,1.83,-0.3345,344.93,0.0154,3,فكّر بالخروج,العقد خسر 33% (الوقف عند −40%)
+2026-10-28T10:04-04:00,COIN:PUT:2026-10-30:150,COIN,PUT,news,against/medium: Bitcoin Nears $82K as Morgan Stanley Calls Correction Mostly Over - Bitbo,3.34,2.56,-0.2335,159.69,0.0816,3,فكّر بالخروج,خبر ضد العقد
+2026-10-28T10:07-04:00,PLTR:CALL:2026-10-30:202.5,PLTR,CALL,sharp,-1.30% في 15د,2.77,,,193.535,0.0606,3,فكّر بالخروج,السهم يتحرك ضدك
+2026-10-28T10:07-04:00,PLTR:CALL:2026-10-30:202.5,PLTR,CALL,stock,-2.50% منذ الدخول,2.77,,,193.535,0.0606,3,فكّر بالخروج,السهم يتحرك ضدك
+2026-10-28T10:08-04:00,TSLA:CALL:2026-10-30:412.5,TSLA,CALL,sharp,-0.77% في 15د,3.0,,,398.8,0.0419,3,فكّر بالخروج,السهم يتحرك ضدك
+2026-10-28T10:10-04:00,AAPL:CALL:2026-10-30:347.5,AAPL,CALL,news,"with/medium: New Buy Rating for Apple (AAPL), the Technology Giant - The Globe and Mail",2.75,1.81,-0.3418,345.14,0.0148,3,فكّر بالخروج,العقد خسر 34% (الوقف عند −40%)
+2026-10-28T10:21-04:00,AAPL:CALL:2026-10-30:347.5,AAPL,CALL,news,with/medium: Apple (AAPL) Unveils M6 Macs With Siri AI And Creator Studio Upgrades - Simply Wall St,2.75,1.76,-0.36,344.89,0.0155,3,فكّر بالخروج,العقد خسر 36% (الوقف عند −40%)
+2026-10-28T10:23-04:00,COIN:PUT:2026-10-30:150,COIN,PUT,macro_quiet,against/weak/medium: Federal Reserve Set to Make Rate Decision Today: Here's What to Expect - CoinCodex,3.34,2.94,-0.1198,158.62,0.0754,3,أبقِ,خبر ضد العقد لكن تأثيره محدود، راقب
+2026-10-28T10:23-04:00,HOOD:PUT:2026-11-06:90,HOOD,PUT,macro_quiet,against/weak/medium: Federal Reserve Set to Make Rate Decision Today: Here's What to Expect - CoinCodex,3.29,3.08,-0.0638,91.22,0.0494,8,أبقِ,خبر ضد العقد لكن تأثيره محدود، راقب
+2026-10-28T10:27-04:00,BA:PUT:2026-11-06:165,BA,PUT,contract,-18%,3.29,2.7,-0.1793,166.27,0.0274,8,أبقِ,الفكرة قائمة لكن العقد -18%؛ التزم بالوقف عند −40%

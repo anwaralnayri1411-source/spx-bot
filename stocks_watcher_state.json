@@ -117,7 +117,8 @@
    "uber adds 300 grocery stores through uber eats for uber technologies stock",
    "lyft lyft vs uber and dash can record riders and margin expansion close the gap with larger rivals",
    "uber stock hits 52 week low at 65 41 usd by investing com",
-   "uber stock hits 52 week low at 65 41 usd"
+   "uber stock hits 52 week low at 65 41 usd",
+   "bill ackman s test for a great stock should be enormously valuable even if markets shut for 20 years"
   ],
   "DIS:CALL": [
    "skydance rises 5 as steep post merger slide pauses disney gains 2 netflix slips",
@@ -207,7 +208,8 @@
    "etfs are net sellers of netflix nflx on oct 26",
    "wall street is treating netflix like it s broken but i m still bullish nasdaq nflx",
    "youtube is beating netflix in the living room but crypto bettors doubt a 12 billion ad quarter for the",
-   "what did netflix nasdaq nflx say about its ad goal this quarter"
+   "what did netflix nasdaq nflx say about its ad goal this quarter",
+   "netflix s advertising business expands rapidly can momentum continue"
   ],
   "AVGO:PUT": [
    "3 artificial intelligence ai stocks that look like great buys right now",
@@ -1137,7 +1139,17 @@
    "bitcoin etf inflows climb to 176m as btc rebounds above 80k",
    "fed meeting today traders price a 95 hold and a 79 december hike what does it mean for crypto",
    "coinbase q3 2026 earnings preview trading revenue usdc and costs",
-   "why corporate bitcoin treasuries are becoming a market structure story"
+   "why corporate bitcoin treasuries are becoming a market structure story",
+   "polymarket us launches 5 minute bitcoin ethereum solana and xrp predictions",
+   "bitcoin nears 82k as morgan stanley calls correction mostly over",
+   "how bitcoin pushed its way over the 65 000 marker",
+   "bitwise raises bitcoin price target to 1 6m by 2036 publishes 2027 bitcoin long term capital market assumptions",
+   "bitcoin s fight to break 85k continues says glassnode",
+   "why is crypto market up today surge or crash after fed decision",
+   "bittensor price prediction can tao recover above usd 270 after recent decline",
+   "bitcoin etf inflows hit 176m as btc price clim",
+   "btc usd forecast today 28 10 5 signals point to 100k",
+   "is the uptober tradition breaking in bitcoin analyst points to us midterm elections shares critical data"
   ],
   "HOOD:PUT": [
    "prediction could bitcoin reach a new all time high before the 2028 halving",
@@ -1225,7 +1237,8 @@
    "crypto com og com launch regulated crypto perpetuals in us with 5x leverage",
    "btc price range on oct 27 2026 at 11am edt crypto prediction market",
    "mcdonald s mcrib doesn t actually boost bitcoin s price sorry everyone",
-   "robinhood to access ripple s infrastructure across stablecoins institutional markets treasury management"
+   "robinhood to access ripple s infrastructure across stablecoins institutional markets treasury management",
+   "is the uptober tradition breaking in bitcoin analyst points to us midterm elections shares critical data"
   ],
   "AAPL:CALL": [
    "loop capital lowers apple stock price target on iphone shipment concerns",
@@ -1245,7 +1258,12 @@
    "if you d invested 10 000 in apple stock 10 years ago here s how much you d have today",
    "the post jobs post cook era begins what john ternus must prove in his debut call",
    "apple is moving against the nasdaq for the first time on record",
-   "seeking clues to apple aapl q4 earnings a peek into wall street projections for key metrics"
+   "seeking clues to apple aapl q4 earnings a peek into wall street projections for key metrics",
+   "new buy rating for apple aapl the technology giant",
+   "jpmorgan u s quality factor etf jqua adds apple and microsoft on oct 26",
+   "apple stock consolidates near 346 38 support as buyer support persists",
+   "apple s 2 000 iphone duo faces crackgate days after launch",
+   "apple aapl unveils m6 macs with siri ai and creator studio upgrades"
   ],
   "BA:PUT": [
    "boeing nyse ba sets new 52 week low on disappointing earnings",
@@ -1309,25 +1327,8 @@
    "news:coinbase customer data hit in analytics vendor breach funds not impacted",
    "news:coinbase denies internal breach as amplitude security incident hits user contact info",
    "news:top analyst cuts coinbase target bets on prediction markets",
-   "news:coinbase and ripple team up to expand access to ripple s stablecoin coin nasdaq"
-  ],
-  "PLTR:CALL:2026-10-30:202.5": [
-   "news:palantir stock within 7 of its 52 week high as earnings and target hikes fuel buzz",
-   "sharp@2026-10-27T09:47-04:00",
-   "down-0.15",
-   "news:tech stocks struggle as the rest of the s p 500 stages its biggest comeback in 35 years",
-   "up0.25",
-   "news:new buy rating for palantir technologies pltr the technology giant",
-   "down-0.3",
-   "stock1",
-   "sharp@2026-10-28T09:49-04:00"
-  ],
-  "TSLA:CALL:2026-10-30:412.5": [
-   "down-0.15",
-   "up0.25",
-   "news:tesla moves to future proof cybercabs with lfp battery technology tesla stock nasdaq tsla surges",
-   "sharp@2026-10-28T09:45-04:00",
-   "down-0.3"
+   "news:coinbase and ripple team up to expand access to ripple s stablecoin coin nasdaq",
+   "news:bitcoin nears 82k as morgan stanley calls correction mostly over"
   ],
   "NFLX:PUT:2026-11-06:62": [
    "news:citigroup cuts target from usd 100 00 to usd 85 00 for netflix stock",
@@ -1340,22 +1341,19 @@
    "news:apple addresses foldable screen display defects in newly launched iphone duo",
    "news:google apple hit with 47 6m fine in south korea over unfair app market practices aapl nasdaq",
    "news:apple in spotlight as monness crespi hardt ups price target on new products aapl nasdaq",
-   "down-0.3"
-  ]
+   "down-0.3",
+   "news:new buy rating for apple aapl the technology giant",
+   "news:apple aapl unveils m6 macs with siri ai and creator studio upgrades"
+  ],
+  "BA:PUT:2026-11-06:165": [
+   "down-0.15"
+  ],
+  "HOOD:PUT:2026-11-06:90": []
  },
  "stock_level": {
-  "COIN:PUT:2026-10-30:150": 1,
-  "PLTR:CALL:2026-10-30:202.5": 1
+  "COIN:PUT:2026-10-30:150": 1
  },
  "seen_macro": [
-  "we asked chrystia freeland how canada should handle trump s trade threats here s her advice",
-  "bitgo research finds bitcoin s cpi reaction strengthens",
-  "the era of stocks being the only viable investment option has ended baird strategas",
-  "experts warn of interest rate hike new mortgages could cost buyers thousands more",
-  "no canada u s trade deal expected before american midterm elections sources",
-  "wall street rises with investors rotating into healthcare and value stocks",
-  "trump says us trade deal with india is pretty close",
-  "us stocks rise after companies deliver strong profits and oil prices retreat",
   "idea of partnering with u s is under attack in canada hoekstra says",
   "lawsuit filed challenging trump s tariffs on canada",
   "trump sued over canadian tariffs in latest legal challenge",
@@ -1947,12 +1945,18 @@
   "federal reserve officials weigh financial conditions in rate decision",
   "news by cnbc tv18 on tradingview 2026 10 28 cnbctv d5eafcb60094b 0",
   "president trump s steel and aluminum tariffs 1 0 vs 2 0",
-  "fed expected to leave interest rates unchanged in october"
+  "fed expected to leave interest rates unchanged in october",
+  "us fed rate decision tonight will kevin warsh hold rates or signal another hike",
+  "repo rate increased to 7 00 business reporter interest rate payments from banks and other financial institutions will in",
+  "fed likely to hold rates steady says wolfe research s roth analysts see inflation risks keeping december hike in play",
+  "3 regional bank stocks built for higher us interest rates",
+  "canada reports limited progress in trade talks with us",
+  "federal reserve expected to pass on interest rate hike for now",
+  "bank of canada rate decision hike to 2 50",
+  "federal reserve set to make rate decision today here s what to expect"
  ],
  "sharp": {
   "COIN:PUT:2026-10-30:150": 162.19,
-  "UBER:PUT:2026-10-30:66": 66.56,
-  "PLTR:CALL:2026-10-30:202.5": 195.75,
-  "TSLA:CALL:2026-10-30:412.5": 401.99
+  "UBER:PUT:2026-10-30:66": 66.56
  }
 }
