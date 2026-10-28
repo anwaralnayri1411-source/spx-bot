@@ -27,3 +27,4 @@ id,time,project,tag,sym,root,side,strike,exp,entry,spot,edge,strength
 20261028T1135|spx|event_day|SPY|CALL|772|2026-10-29,2026-10-28T11:35-04:00,spx,event_day,SPY,SPY,CALL,772.0,2026-10-29,2.87,771.2,4.25,4.9
 20261028T1205|spx|event_day|SPY|CALL|772|2026-10-29,2026-10-28T12:05-04:00,spx,event_day,SPY,SPY,CALL,772.0,2026-10-29,3.04,771.5,3.5,5.2
 20261028T1305|spx|event_day|SPY|CALL|773|2026-10-29,2026-10-28T13:05-04:00,spx,event_day,SPY,SPY,CALL,773.0,2026-10-29,2.72,771.84,3.0,4.5
+20261028T1505|spx|late_entry+event_day|SPY|CALL|773|2026-10-29,2026-10-28T15:05-04:00,spx,late_entry+event_day,SPY,SPY,CALL,773.0,2026-10-29,2.56,772.07,5.25,7.9
