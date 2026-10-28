@@ -910,7 +910,8 @@
    "third quarter oil profits climb from beijing to houston on higher prices and refining gains",
    "canadian oil discount exceeds 30 amid gulf coast pressures",
    "demand for firewood spikes as heating costs soar in mass",
-   "refiner stocks just had their worst day since the tariff shock"
+   "refiner stocks just had their worst day since the tariff shock",
+   "consumer confidence up in october as gas prices ease"
   ],
   "JPM:PUT": [
    "bank of america may need a new ceo",
@@ -921,10 +922,6 @@
    "jpmorgan chase nyse jpm lifts interest income outlook as lending offsets trading slowdown"
   ],
   "COIN:PUT": [
-   "altcoin season 2026 will solana sui and render lead a 20 crypto rebound this week",
-   "bitcoin price breaks above 80 000 on binance s",
-   "cryptocurrency stocks slide as bitcoin hovers near 80 000 riot strategy and mara drop 4",
-   "strategy buys no bitcoin spends 205m repurchasing strc shares",
    "galaxy says bitcoin bear market is over at 79 513",
    "is bitcoin a good buy at 80 000 right now",
    "tsx stock watch why bitcoin fund trust units class a tsx qbtc is drawing attention and what comes next",
@@ -1320,7 +1317,11 @@
    "coinbase vs interactive brokers which financial stock has more long term upside",
    "fed holds rates but dissent keeps bitcoin gold and tech stocks under pressure",
    "bitcoin price before the fed decision btc near 81 000",
-   "pepe soars 17 daily did justin sun fuel the pump"
+   "pepe soars 17 daily did justin sun fuel the pump",
+   "federal reserve holds key interest rates",
+   "sk hynix inc tokenized stock coinbase price skhyc price today live chart usd converter market capitalization",
+   "how listed stocks are impacted by bitcoin weekend moves",
+   "grant cardone challenges bitcoin bear to 1 million bet"
   ],
   "HOOD:PUT": [
    "prediction could bitcoin reach a new all time high before the 2028 halving",
@@ -1520,7 +1521,10 @@
    "fed holds rates but dissent keeps bitcoin gold and tech stocks under pressure",
    "bitcoin price before the fed decision btc near 81 000",
    "pepe soars 17 daily did justin sun fuel the pump",
-   "robinhood gets 160 bernstein target as infrastructure business shift offsets q4 concerns"
+   "robinhood gets 160 bernstein target as infrastructure business shift offsets q4 concerns",
+   "federal reserve holds key interest rates",
+   "how listed stocks are impacted by bitcoin weekend moves",
+   "grant cardone challenges bitcoin bear to 1 million bet"
   ],
   "AAPL:CALL": [
    "loop capital lowers apple stock price target on iphone shipment concerns",
@@ -1568,7 +1572,8 @@
    "boeing de risks free cash flow outlook shares may stay range bound rbc says",
    "boeing stock hits fresh 18 month low after slew of price target cuts bofa says turnaround story is still intact",
    "boeing nyse ba stock price target cut by bnp paribas exane",
-   "boeing got its max 10 approval but q3 delivered a reality check"
+   "boeing got its max 10 approval but q3 delivered a reality check",
+   "jpmorgan chase co has lowered expectations for boeing nyse ba stock price"
   ]
  },
  "fired": {
@@ -1620,14 +1625,16 @@
    "news:institutional sell off in bitcoin etfs as sovereign funds step in",
    "news:bitcoin near 80 8k as fed holds rates two officials seek hike",
    "news:bitcoin price climbs above 81 000 on binance hitting 81 280 in spot trading",
-   "news:fed holds rates but dissent keeps bitcoin gold and tech stocks under pressure"
+   "news:fed holds rates but dissent keeps bitcoin gold and tech stocks under pressure",
+   "driver"
   ],
   "BA:PUT:2026-11-06:165": [
    "down-0.15",
    "down-0.3",
    "stock1",
    "news:boeing stock hits fresh 18 month low after slew of price target cuts bofa says turnaround story is still intact",
-   "news:boeing nyse ba stock price target cut by bnp paribas exane"
+   "news:boeing nyse ba stock price target cut by bnp paribas exane",
+   "news:jpmorgan chase co has lowered expectations for boeing nyse ba stock price"
   ],
   "HOOD:PUT:2026-11-06:90": [
    "sharp@2026-10-28T10:44-04:00",
@@ -1686,11 +1693,6 @@
   "BA:PUT:2026-11-06:165": 1
  },
  "seen_macro": [
-  "where they stand michele tafoya and peggy flanagan on trump s tariffs",
-  "when it comes to trump s economy these numbers matter before mid terms",
-  "how to turn a 5 000 investment into 1 500 in passive income 4 stocks to buy",
-  "indian equities fall for fourth day as west asia tensions drive oil prices higher",
-  "oil prices hit five month high what happens next",
   "share market today nifty 50 bank nifty oct 23 2026",
   "the bond market is sending a dire warning to wall street about the ai infrastructure build out but is anyone paying atte",
   "us dollar weakens as yen surges and investors assess federal reserve outlook",
@@ -2285,7 +2287,12 @@
   "federal reserve keeps interest rates unchanged",
   "trump says us will beat china in ai as technology emerges",
   "qatar led mediators push iran nuclear proposal for sanctions relief and asset access",
-  "the bond market swings but us stocks remain steady after the fed says it won t raise interest rates"
+  "the bond market swings but us stocks remain steady after the fed says it won t raise interest rates",
+  "text of the bank of canada s latest policy interest rate decision",
+  "sandisk is still down 23 in the past month did today just mark the bottom for sndk stock",
+  "following the us federal reserve s lead arab central banks keep interest rates unchanged",
+  "us federal reserve keeps rates unchanged leaves door open to further hikes",
+  "federal reserve keeps rates unchanged despite elevated inflation national news 2news com"
  ],
  "sharp": {
   "COIN:PUT:2026-10-30:150": 162.19,
