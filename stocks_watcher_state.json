@@ -213,7 +213,9 @@
    "netflix s advertising business expands rapidly can momentum continue",
    "youtube alphabet s crown jewel worth more than disney and netflix goog nasdaq",
    "netflix stock is falling after earnings why morningstar sees it rising 30",
-   "netflix stock analysis trades at 61 87 down 1 04"
+   "netflix stock analysis trades at 61 87 down 1 04",
+   "netflix stock trades at 61 87 down 1 04 below daily support",
+   "netflix s video podcast push is far from over"
   ],
   "AVGO:PUT": [
    "3 artificial intelligence ai stocks that look like great buys right now",
@@ -868,7 +870,16 @@
    "crude oil prices rally on report that persian gulf is on notice for us military attack on iran",
    "trump says billions of barrels of venezuelan oil will soon lower gas prices",
    "gold slips on higher oil prices ahead of fed decision",
-   "gas prices for 10 28 26 national average down another 2 cents"
+   "gas prices for 10 28 26 national average down another 2 cents",
+   "crude oil prices surge amid middle east tensions colgate palmolive cl dividend stability in focus",
+   "riverside county gas prices drop for 26th straight day",
+   "crypto perp trades during oil frenzy raise spoofing specter",
+   "equinor raises oil and gas output forecast as operating profit doubles",
+   "apa corporation apa advances as higher oil prices and free cash flow strengthen its outlook",
+   "ubs data shows russian oil exports only 10 below pre war levels",
+   "energy crisis shapes uk budget as chancellor faces pressure over defence spendin",
+   "hvac contractors prepare customers for higher heating oil prices",
+   "washington gas prices continue october decline but remain well above year ago levels"
   ],
   "JPM:PUT": [
    "bank of america may need a new ceo",
@@ -1218,7 +1229,12 @@
    "nearly 90 of large businesses are embracing tokenized cash to speed up payments dbs",
    "samara asset group ceo bitcoin treasury companies a disservice to shareholders",
    "about trump media technology group xstock",
-   "bitwise raises bitcoin price forecast to 1 6m by 2036 citing strong institutional demand and limited supply"
+   "bitwise raises bitcoin price forecast to 1 6m by 2036 citing strong institutional demand and limited supply",
+   "bitcoin price target 2036 raised to 1 6 million by bitwise",
+   "coindesk live at stellar meridian 2026 video playlist",
+   "bitcoin s next move is now tied to oil prices says wintermute",
+   "coinbase earnings wall street divided on trading rebound after robinhood crypto revenue sinks 55",
+   "bitcoin is becoming collateral for traditional corporate borrowing"
   ],
   "HOOD:PUT": [
    "prediction could bitcoin reach a new all time high before the 2028 halving",
@@ -1351,7 +1367,13 @@
    "barclays issues pessimistic forecast for robinhood markets nasdaq hood stock price",
    "robinhood tumbles after q3 earnings miss analysts cut price targets",
    "does ai agent risk reach four stocks robinhood nasdaq hood sofi nasdaq sofi microsoft nasdaq msft and broadcom nasdaq av",
-   "bitwise raises bitcoin price forecast to 1 6m by 2036 citing strong institutional demand and limited supply"
+   "bitwise raises bitcoin price forecast to 1 6m by 2036 citing strong institutional demand and limited supply",
+   "how vulnerable is robinhood nasdaq hood to order mistakes with shares down about 8",
+   "bitcoin price target 2036 raised to 1 6 million by bitwise",
+   "bitcoin analysis what s next for btc after the fed meeting",
+   "bitcoin s next move is now tied to oil prices says wintermute",
+   "robinhood earnings miss crypto weakness fail to shake wall street s bullish outlook",
+   "bitcoin is becoming collateral for traditional corporate borrowing"
   ],
   "AAPL:CALL": [
    "loop capital lowers apple stock price target on iphone shipment concerns",
@@ -1393,7 +1415,8 @@
    "ba stock drops 10 approaching 150 support as boeing reports third quarter results",
    "boeing ba stock trades down here is why",
    "boeing stock plunges after earnings 737 progress is not fast enough",
-   "boeing has a record 745 billion backlog and can t build the planes fast enough"
+   "boeing has a record 745 billion backlog and can t build the planes fast enough",
+   "boeing s defense revenue booms but the 737 calls the shots"
   ]
  },
  "fired": {
@@ -1437,7 +1460,8 @@
    "news:bitcoin nears 82k as morgan stanley calls correction mostly over",
    "news:bitcoin price tops usd 80k as etf flows rise before fed vote",
    "news:us spot bitcoin etfs turn positive for 2026 after 4 6b rebound",
-   "news:bitcoin is stuck below 85k as etf demand fades and volatility hits 2023 levels"
+   "news:bitcoin is stuck below 85k as etf demand fades and volatility hits 2023 levels",
+   "news:coinbase earnings wall street divided on trading rebound after robinhood crypto revenue sinks 55"
   ],
   "NFLX:PUT:2026-11-06:62": [
    "news:citigroup cuts target from usd 100 00 to usd 85 00 for netflix stock",
@@ -1462,7 +1486,8 @@
    "news:bitcoin is stuck below 85k as etf demand fades and volatility hits 2023 levels",
    "news:robinhood stock falls over 4 after hours as crypto revenue drops 55 despite",
    "news:barclays issues pessimistic forecast for robinhood markets nasdaq hood stock price",
-   "news:robinhood tumbles after q3 earnings miss analysts cut price targets"
+   "news:robinhood tumbles after q3 earnings miss analysts cut price targets",
+   "news:robinhood earnings miss crypto weakness fail to shake wall street s bullish outlook"
   ],
   "XOM:CALL:2026-11-06:185": [
    "news:world bank warns energy prices will jump 32 this year",
@@ -1475,7 +1500,9 @@
    "news:energy prices to climb 32 this year as global shocks mount world bank says",
    "news:ubs bank expects oil prices to remain high with brent reaching 110 dollars until the end of 2026",
    "news:crude oil prices rally on report that persian gulf is on notice for us military attack on iran",
-   "news:trump says billions of barrels of venezuelan oil will soon lower gas prices"
+   "news:trump says billions of barrels of venezuelan oil will soon lower gas prices",
+   "news:crude oil prices surge amid middle east tensions colgate palmolive cl dividend stability in focus",
+   "news:equinor raises oil and gas output forecast as operating profit doubles"
   ]
  },
  "stock_level": {
@@ -1484,10 +1511,6 @@
   "BA:PUT:2026-11-06:165": 1
  },
  "seen_macro": [
-  "stock market today sensex falls 460 points nifty closes below 22 700 media fmcg and it stocks drag",
-  "has america hit peak protectionism",
-  "gold holds near 4 125 as fed rate outlook and middle east tensions vie for direction",
-  "ta 35 falls 1 0 percent at midday as tech stocks slide",
   "nasdaq futures crash over 500 points 5 things to know before wall street opens",
   "sensex tanks 460 points as nifty slips below 22 700 media stocks lead losses",
   "treasury yields fall as middle east tensions lift oil prices",
@@ -2083,7 +2106,11 @@
   "federal reserve likely to hold in october ahead of expected december hike abn amro",
   "sk hynix vertiv rescue ai trade as oil tops 102 before fed stock market today",
   "usmca on an annual clock canada s autonomy push meets washington s leverage",
-  "wall street may be underestimating this magnificent seven stock"
+  "wall street may be underestimating this magnificent seven stock",
+  "key bessent trade adviser leaves treasury for netflix",
+  "only one wall street economist expects a fed hike this week ishares 1 3 year treasury bond etf nasdaq",
+  "the federal reserve will release its interest rate decision today here s what to watch",
+  "fed rate decision wednesday economists expect hold at 3 75 4 news and statistics"
  ],
  "sharp": {
   "COIN:PUT:2026-10-30:150": 162.19,
