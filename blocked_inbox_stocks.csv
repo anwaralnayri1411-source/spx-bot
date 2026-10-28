@@ -152,3 +152,6 @@ id,time,project,tag,sym,root,side,strike,exp,entry,spot,edge,strength
 20261028T1342|stocks|same_side_cap|XOM|CALL|185|2026-11-06,2026-10-28T13:42-04:00,stocks,same_side_cap,XOM,XOM,CALL,185.0,2026-11-06,2.98,182.52,5.0,4.8
 20261028T1342|stocks|max_ideas_cap|AVGO|CALL|357.5|2026-11-02,2026-10-28T13:42-04:00,stocks,max_ideas_cap,AVGO,AVGO,CALL,357.5,2026-11-02,3.46,348.23,5.5,7.5
 20261028T1342|stocks|open_same_dir|TSLA|CALL|410|2026-11-02,2026-10-28T13:42-04:00,stocks,open_same_dir,TSLA,TSLA,CALL,410.0,2026-11-02,3.33,401.62,6.5,8.6
+20261028T1412|stocks|same_side_cap|NFLX|PUT|61|2026-11-06,2026-10-28T14:12-04:00,stocks,same_side_cap,NFLX,NFLX,PUT,61.0,2026-11-06,0.9,61.66,3.5,6.9
+20261028T1412|stocks|max_ideas_cap|XOM|CALL|185|2026-11-06,2026-10-28T14:12-04:00,stocks,max_ideas_cap,XOM,XOM,CALL,185.0,2026-11-06,3.02,182.78,5.5,5.5
+20261028T1412|stocks|open_same_dir|TSLA|CALL|412.5|2026-11-02,2026-10-28T14:12-04:00,stocks,open_same_dir,TSLA,TSLA,CALL,412.5,2026-11-02,2.7,402.14,5.5,7.5
