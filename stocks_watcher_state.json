@@ -210,7 +210,8 @@
    "wall street is treating netflix like it s broken but i m still bullish nasdaq nflx",
    "youtube is beating netflix in the living room but crypto bettors doubt a 12 billion ad quarter for the",
    "what did netflix nasdaq nflx say about its ad goal this quarter",
-   "netflix s advertising business expands rapidly can momentum continue"
+   "netflix s advertising business expands rapidly can momentum continue",
+   "youtube alphabet s crown jewel worth more than disney and netflix goog nasdaq"
   ],
   "AVGO:PUT": [
    "3 artificial intelligence ai stocks that look like great buys right now",
@@ -844,7 +845,14 @@
    "u s stocks tick higher as oil prices ease a bit",
    "us oil inventories fall again as prices rise",
    "a freaking fortune how the iran war rescued big oil s bottom line",
-   "chevron vs occidental petroleum big oil sees revenue surge as prices leap in 2026"
+   "chevron vs occidental petroleum big oil sees revenue surge as prices leap in 2026",
+   "energy briefs fighting impacts world crude oil prices",
+   "heating your home with oil could cost 750 more this winter read this before you pay the price",
+   "world bank warns energy prices will jump 32 this year",
+   "european gas prices jump above 100 on fears of iran war escalation",
+   "xle s price has surged but its dividend barely moved",
+   "diminishing inventories begin to impact oil prices",
+   "global conflicts spur historic comeback for oil refining profits"
   ],
   "JPM:PUT": [
    "bank of america may need a new ceo",
@@ -1163,7 +1171,17 @@
    "bitwise raises bitcoin price target to 1 6 million by 2036",
    "bitcoin price tops usd 80k as etf flows rise before fed vote",
    "bitcoin projected to hit 1 6m by 2036 with 34",
-   "wall street giant dtcc launches tokenization for stocks etfs and u s treasuries"
+   "wall street giant dtcc launches tokenization for stocks etfs and u s treasuries",
+   "bitcoin treasury datavault ai plunges 50 after firm says it can t access its btc",
+   "zcash zec price prediction whale goes long before fomc announcement as h s pattern puts 1 350 in focus",
+   "bitcoin struggles below 87 000 as investor cos",
+   "fdic insures bank deposits up to 250k unlike bitcoin which has no price guarantee",
+   "btc price on oct 28 2026 at 12pm edt crypto prediction market",
+   "bitwise raises bitcoin target to 1 6 million by 2036",
+   "galaxy asset management now is the time to buy bitcoin",
+   "bitwise raises bitcoin target to 1 6 million as institutions keep buying",
+   "fed rate decision what markets and bitcoin traders can expect",
+   "analyst warns bitcoin price could drop to 77k after fomc"
   ],
   "HOOD:PUT": [
    "prediction could bitcoin reach a new all time high before the 2028 halving",
@@ -1258,7 +1276,18 @@
    "bitcoin price tops usd 80k as etf flows rise before fed vote",
    "bitcoin projected to hit 1 6m by 2036 with 34",
    "robinhood markets nasdaq hood shares gap down on analyst downgrade",
-   "robinhood stock drops what s overshadowing the earnings beat"
+   "robinhood stock drops what s overshadowing the earnings beat",
+   "zcash zec price prediction whale goes long before fomc announcement as h s pattern puts 1 350 in focus",
+   "bitcoin struggles below 87 000 as investor cos",
+   "fdic insures bank deposits up to 250k unlike bitcoin which has no price guarantee",
+   "btc price on oct 28 2026 at 12pm edt crypto prediction market",
+   "bitwise raises bitcoin target to 1 6 million by 2036",
+   "cardinal launches yield perp for btc farming arbitrum",
+   "galaxy asset management now is the time to buy bitcoin",
+   "bitwise raises bitcoin target to 1 6 million as institutions keep buying",
+   "fed rate decision what markets and bitcoin traders can expect",
+   "robinhood stock is slipping after earnings top reasons to buy the dip",
+   "analyst warns bitcoin price could drop to 77k after fomc"
   ],
   "AAPL:CALL": [
    "loop capital lowers apple stock price target on iphone shipment concerns",
@@ -1348,28 +1377,29 @@
    "up0.25"
   ],
   "BA:PUT:2026-11-06:165": [
-   "down-0.15"
+   "down-0.15",
+   "down-0.3",
+   "stock1"
   ],
   "HOOD:PUT:2026-11-06:90": [
    "sharp@2026-10-28T10:44-04:00",
    "news:robinhood markets nasdaq hood shares gap down on analyst downgrade",
-   "news:robinhood stock drops what s overshadowing the earnings beat"
+   "news:robinhood stock drops what s overshadowing the earnings beat",
+   "stock1",
+   "down-0.15"
   ],
-  "XOM:CALL:2026-11-06:185": []
+  "XOM:CALL:2026-11-06:185": [
+   "news:world bank warns energy prices will jump 32 this year",
+   "news:european gas prices jump above 100 on fears of iran war escalation",
+   "news:global conflicts spur historic comeback for oil refining profits"
+  ]
  },
  "stock_level": {
-  "COIN:PUT:2026-10-30:150": 1
+  "COIN:PUT:2026-10-30:150": 1,
+  "HOOD:PUT:2026-11-06:90": 1,
+  "BA:PUT:2026-11-06:165": 1
  },
  "seen_macro": [
-  "explained what the u s federal reserve does and why it matters to australia",
-  "oil prices jump 2 as iran talks falter and u s inventories tighten brent climbs above 110",
-  "us futures mostly higher as wall street digests earnings from spacex netflix",
-  "nasdaq futures rise 160 points 5 things to know before wall street opens",
-  "us stock market today dow jones futures edge higher s p 500 and nasdaq futures rise as ai stocks rebound brent crude top",
-  "tesla earnings today wall street s last minute verdict on tsla stock",
-  "gold steadies as conflicting iran signals cloud path for rates",
-  "brookings paper offers broad plan to shrink fed balance sheet",
-  "fed interest rate predictions for october 2026",
   "will modi walk away from a trade deal with trump",
   "commentary why is capital leaving money market funds as rates rise deborah cunningham",
   "trump says he does not care about usmca as us canada plan trade talks",
@@ -1960,7 +1990,16 @@
   "update us equity futures slightly higher pre bell as traders await fed rate decision big tech earnings",
   "u s stocks edge higher ahead of federal reserve decision on interest rates",
   "federal reserve interest rate decision looms as inflation and gas prices impact consumers",
-  "nasdaq composite morning wrap 28 10 2026 tech in focus oil up what next"
+  "nasdaq composite morning wrap 28 10 2026 tech in focus oil up what next",
+  "canada uae seal trade deal carney expands global commerce",
+  "u s stocks hold steady as the countdown ticks to a federal reserve decision on interest rates",
+  "bond yields rise slightly ahead of fed rates decision",
+  "fed rate decision could trigger bitcoin rally or crypto sell off as warsh signals december outlook",
+  "9am markets update",
+  "buy 10 shares of nvidia today here s what different 2030 scenarios could look like",
+  "wall street flashes red as experts fear stock market crash is coming",
+  "the bank of canada raises interest rates for the first time since 2023",
+  "live federal reserve expected to hold rates steady today"
  ],
  "sharp": {
   "COIN:PUT:2026-10-30:150": 162.19,
