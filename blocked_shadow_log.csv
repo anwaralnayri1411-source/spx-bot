@@ -30,3 +30,4 @@ id,project,tag,sym,side,strike,exp,entry_time,entry,edge,strength,out,out_time,o
 20261028T1505|spx|late_entry+event_day|SPY|CALL|773|2026-10-29,spx,late_entry+event_day,SPY,CALL,773.0,2026-10-29,2026-10-28T15:05-04:00,2.56,5.25,7.9,stop,2026-10-29T09:32-04:00,-0.789,0.0,12
 20261027T1012|stocks|same_side_cap|COIN|PUT|150|2026-10-30,stocks,same_side_cap,COIN,PUT,150.0,2026-10-30,2026-10-27T10:12-04:00,3.28,4.5,4.0,stop,2026-10-29T09:42-04:00,-0.421,0.006,139
 20261028T1020|stocks|same_side_cap|AAPL|CALL|355|2026-11-04,stocks,same_side_cap,AAPL,CALL,355.0,2026-11-04,2026-10-28T10:20-04:00,3.22,4.5,4.0,tp,2026-10-29T09:52-04:00,0.547,0.547,68
+20261026T1212|stocks|same_side_cap|COIN|PUT|150|2026-10-30,stocks,same_side_cap,COIN,PUT,150.0,2026-10-30,2026-10-26T12:12-04:00,2.98,6.5,4.6,stop,2026-10-29T09:57-04:00,-0.416,0.111,192

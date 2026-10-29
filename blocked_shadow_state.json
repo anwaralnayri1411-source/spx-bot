@@ -1,26 +1,6 @@
 {
  "open": [
   {
-   "id": "20261026T1212|stocks|same_side_cap|COIN|PUT|150|2026-10-30",
-   "project": "stocks",
-   "tag": "same_side_cap",
-   "sym": "COIN",
-   "side": "PUT",
-   "strike": 150.0,
-   "exp": "2026-10-30",
-   "entry": 2.98,
-   "entry_time": "2026-10-26T12:12-04:00",
-   "edge": "6.5",
-   "strength": "4.6",
-   "occ": "COIN261030P00150000",
-   "peak_pnl": 0.111,
-   "close_pnl": -0.359,
-   "quotes": 191,
-   "out": "",
-   "out_time": "",
-   "out_pnl": ""
-  },
-  {
    "id": "20261028T1012|stocks|same_side_cap|UBER|PUT|65|2026-11-06",
    "project": "stocks",
    "tag": "same_side_cap",
@@ -34,8 +14,8 @@
    "strength": "5.2",
    "occ": "UBER261106P00065000",
    "peak_pnl": 0.065,
-   "close_pnl": -0.02,
-   "quotes": 69,
+   "close_pnl": 0.053,
+   "quotes": 70,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -54,8 +34,8 @@
    "strength": "3.2",
    "occ": "COIN261106P00145000",
    "peak_pnl": 0.0,
-   "close_pnl": -0.273,
-   "quotes": 69,
+   "close_pnl": -0.321,
+   "quotes": 70,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -74,8 +54,8 @@
    "strength": "5.2",
    "occ": "XOM261106C00185000",
    "peak_pnl": 0.238,
-   "close_pnl": 0.011,
-   "quotes": 68,
+   "close_pnl": 0.1,
+   "quotes": 69,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -94,8 +74,8 @@
    "strength": "6.9",
    "occ": "NFLX261106P00061000",
    "peak_pnl": 0.058,
-   "close_pnl": -0.174,
-   "quotes": 63,
+   "close_pnl": -0.244,
+   "quotes": 64,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -114,8 +94,8 @@
    "strength": "5.8",
    "occ": "CVX261106C00235000",
    "peak_pnl": 0.003,
-   "close_pnl": -0.193,
-   "quotes": 52,
+   "close_pnl": -0.172,
+   "quotes": 53,
    "out": "",
    "out_time": "",
    "out_pnl": ""
