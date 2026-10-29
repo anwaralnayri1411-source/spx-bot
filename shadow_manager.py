@@ -38,7 +38,7 @@ WATCH_ONLY = (("gex_outcomes.csv", "جدران الخيارات (GEX)"), ("news_
               ("shadow_ob_score_log.csv", "مناطق الطلب"), ("stocks_sector_log.csv", "قطاعات الشركات"), ("flow_shadow_log.csv", "التدفق"))
 LABELS = {"cand_mom": "زخم آخر ساعة (mom)", "cand_f30": "أول 30 دقيقة (f30)", "cand_agree": "اتفاق الاثنين (agree)",
           "edge7": "إشارة البوت القوية (edge7)", "mom_live": "ظل الزخم الحي", "mom_delayed": "ظل الزخم المتأخر",
-          "struct_vert": "سبريد شراء (vert)", "struct_em05": "عقد بعيد (em05)", "struct_ic": "كوندور حديدي",
+          "struct_vert": "سبريد شراء (vert)", "struct_em05": "عقد بعيد (em05)", "struct_dir": "اتجاه توصية البوت في ظل الهيكل (vert/em05)", "struct_ic": "كوندور حديدي",
           "bot_spx": "توصيات البوت SPX/SPY", "stocks": "عقود الشركات",
           "best_S": "الأفضل: القوية (ظل)", "best_SC": "الأفضل: القوية + الإجماع (ظل)", "best_SR": "الأفضل: القوية + عكس السحب (ظل)",
           "best_C": "الأفضل: الإجماع (ظل)"}
@@ -288,7 +288,7 @@ def evaluate(shadows):
         top2 = sorted(days, key=lambda d: -sum(vb[d]))[:2]
         recent = boot({d: vb[d] for d in days[-DEMOTE_DAYS:]}) if len(days) >= DEMOTE_DAYS else None
         res[k] = {"n": len(events), "days": len(days), "quality": (valid / tried) if tried else None, "tried": tried,
-                  "mean": mean_of(vb, days), "ci": ci, "skill_kind": "مهارة" if events and all(e["skill"] is not None for e in events) else "عائد",
+                  "mean": mean_of(vb, days), "median": float(np.median([x for d in days for x in vb[d]])) if days else None, "ci": ci, "skill_kind": "مهارة" if events and all(e["skill"] is not None for e in events) else "عائد",
                   "h1": mean_of(vb, days[:half]) if half else None, "h2": mean_of(vb, days[half:]) if half else None,
                   "no_top2": mean_of(vb, [d for d in days if d not in top2]) if len(days) > 2 else None,
                   "dd": drawdown_usd(events), "recent_hi": recent[1] if recent else None, "by_day": vb, "events": events}
@@ -382,7 +382,7 @@ def council_verdict(rows):
 HORIZONS = (15, 30, 60)
 DIR_MIN_N, DIR_MIN_DAYS, DISSENT_MIN = 40, 25, 30
 DIRECTION = os.path.join(ROOT, "shadow_manager_direction.csv")
-DIR_KEYS = ("cand_mom", "cand_f30", "cand_agree", "edge7", "mom_live", "mom_delayed", "bot_spx", "struct_vert", "struct_em05",
+DIR_KEYS = ("cand_mom", "cand_f30", "cand_agree", "edge7", "mom_live", "mom_delayed", "bot_spx", "struct_vert",
             "best_S", "best_SC", "best_SR", "best_C")
 VOTER_LABELS = {"mom": "زخم آخر ساعة", "f30": "أول 30 دقيقة", "edge7": "إشارة البوت القوية", "momentum": "ظل الزخم"}
 
@@ -524,11 +524,12 @@ def build_roles(summary, dis, day):
             v = f"لا حكم بعد ({s['n']}/{DIR_MIN_N}، {s['days']}/{DIR_MIN_DAYS} يوماً)"
         else:
             v = "يقرأ الاتجاه" if s["ci"][0] > 0 else "عكسي" if s["ci"][1] < 0 else "لا يتفوق"
-        tg.append(f"• <b>{LABELS[k]}</b>: آراء {s['n']} | إصابة {100 * s['hit']:.0f}% | {100 * s['mean']:+.3f}%")
+        name = LABELS["struct_dir"] if k == "struct_vert" else LABELS[k]
+        tg.append(f"• <b>{name}</b>: آراء {s['n']} | إصابة {100 * s['hit']:.0f}% | {100 * s['mean']:+.3f}%")
         ci = "-" if not s["ci"] else f"{100 * s['ci'][0]:+.3f}…{100 * s['ci'][1]:+.3f}%"
         m15 = "-" if s["mean15"] is None else f"{100 * s['mean15']:+.3f}%"
         m60 = "-" if s["mean60"] is None else f"{100 * s['mean60']:+.3f}%"
-        md.append(f"| {LABELS[k]} | {s['n']} | {s['days']} | {100 * s['hit']:.0f}% | {100 * s['mean']:+.3f}% | {ci} | {m15} | {m60} | {v} |")
+        md.append(f"| {name} | {s['n']} | {s['days']} | {100 * s['hit']:.0f}% | {100 * s['mean']:+.3f}% | {ci} | {m15} | {m60} | {v} |")
     real = [d for d in dis if d["minority"]]
     tg += ["", f"⚔️ <b>المخالفة</b>: مواعيد خلاف {len(dis)} (منها تعادل {len(dis) - len(real)})"]
     md += ["", "## المخالفة: حين يخالف صوت الأغلبية، من كان محقاً؟", ""]
@@ -726,25 +727,47 @@ def quote_line(q):
             f"⚠️ أسعار العقود: {len(bad)} من {n} مقارنة فرقها فوق {100 * QUOTE_MAX_DIFF:.0f}% (الوسيط {100 * med:.1f}%)")
 
 
+def highlights(res):
+    """حتى 3 نقاط آلية: خاسر بوضوح (الفاصل كله تحت الصفر)، رابح بوضوح (كله فوقه)، والأقرب للحكم."""
+    out = []
+    neg = [k for k, r in res.items() if r["ci"] and r["ci"][1] < 0]
+    pos = [k for k, r in res.items() if r["ci"] and r["ci"][0] > 0]
+    for k in sorted(neg, key=lambda k: res[k]["mean"])[:1]:
+        r = res[k]
+        out.append(f"⚠️ <b>{LABELS[k]}</b> خاسر بوضوح: متوسط {pc(r['mean'])}، وسيط {pc(r['median'])} على {r['n']} حدثاً (الفاصل كله تحت الصفر)")
+    for k in sorted(pos, key=lambda k: -res[k]["mean"])[:1]:
+        r = res[k]
+        out.append(f"✅ <b>{LABELS[k]}</b> رابح بوضوح: متوسط {pc(r['mean'])}، وسيط {pc(r['median'])} على {r['n']} حدثاً (الفاصل كله فوق الصفر)")
+    near = sorted((k for k, r in res.items() if r["n"] and k not in neg + pos), key=lambda k: -res[k]["n"] / CAND_N)[:1]
+    for k in near:
+        r = res[k]
+        out.append(f"⏳ الأقرب للحكم: <b>{LABELS[k]}</b> ({r['n']} من {CAND_N} حدثاً، متوسط {pc(r['mean'])}، وسيط {pc(r['median'])})")
+    return ["📌 <b>أهم ما في التقرير</b>"] + out if out else []
+
+
 def build(res, council_rows, day, harmony, watch, dis=None):
     """(نص markdown، نص تيليجرام HTML)."""
     d = date.fromisoformat(day)
     head = f"🧭 <b>مدير الظلال</b> | {DAYS_AR[d.weekday()]} {d:%d/%m/%Y}"
-    tg = [head, "<i>تقرير ما بعد الإغلاق: تسجيل فقط، لا يغيّر أي توصية</i>", "", "📊 <b>تقييم الظلال</b> (منذ بدايتها)"]
+    tg = [head, "<i>تقرير ما بعد الإغلاق: تسجيل فقط، لا يغيّر أي توصية</i>", ""] + highlights(res) + ["", "📊 <b>ظلال عملت اليوم</b> (المتوسط والوسيط منذ بدايتها)"]
     md = [f"# مدير الظلال: تقرير {day} (نتائج آلية، ظل)", "", "القواعد مسجّلة مسبقاً في research/decision_rules.md البند 7.", "",
-          "| الظل | المرحلة | الأحداث | الأيام | المقياس | المتوسط | فاصل 95% | الجودة | أقصى تراجع | الحالة | ينقصه |", "|---|---|---|---|---|---|---|---|---|---|---|"]
+          "| الظل | المرحلة | الأحداث | الأيام | المقياس | المتوسط | الوسيط | فاصل 95% | الجودة | أقصى تراجع | الحالة | ينقصه |", "|---|---|---|---|---|---|---|---|---|---|---|---|"]
+    quiet = 0
     order = sorted(res, key=lambda k: ({"عضو": 0, "مرشّح": 1, "مراقَب": 2}[res[k]["stage"]], -res[k]["n"]))
     for k in order:
         r = res[k]
         if r["tried"] == 0:
             continue
         today = [e for e in r["events"] if e["day"] == day]
-        t_today = f" | اليوم {len(today)}: {pc(float(np.mean([metric(e) for e in today])))}" if today else ""
-        tg.append(f"{STAGE_ICON[r['stage']]} <b>{LABELS[k]}</b>: أحداث {r['n']} · أيام {r['days']} | {r['skill_kind']} {pc(r['mean'])}{ci_txt(r['ci'])} | {r['status']}{t_today}")
-        if r["missing"]:
-            tg.append(f"    ↳ ينقصه للمرحلة التالية: {'، '.join(r['missing'][:3])}")
-        md.append(f"| {LABELS[k]} | {r['stage']} | {r['n']} | {r['days']} | {r['skill_kind']} | {pc(r['mean'])} | {ci_txt(r['ci']).strip() or '-'} | "
+        if today:
+            tg.append(f"{STAGE_ICON[r['stage']]} <b>{LABELS[k]}</b>: اليوم {len(today)}: {pc(float(np.mean([metric(e) for e in today])))} | "
+                      f"منذ البداية {r['n']}: متوسط {pc(r['mean'])}، وسيط {pc(r['median'])}")
+        else:
+            quiet += 1
+        md.append(f"| {LABELS[k]} | {r['stage']} | {r['n']} | {r['days']} | {r['skill_kind']} | {pc(r['mean'])} | {pc(r['median'])} | {ci_txt(r['ci']).strip() or '-'} | "
                   f"{pc(r['quality'], False)} | {r['dd']:,.0f}$ | {r['status']} | {'، '.join(r['missing']) or '-'} |")
+    if quiet:
+        tg.append(f"➖ {quiet} ظلال بلا أحداث اليوم (الجدول الكامل في الملف)")
     n_sp, worst, bad = harmony["spot"]
     tg += ["", "🤝 <b>التناغم اليوم</b>",
            (f"✅ اتساق سعر المؤشر بين الظلال: {n_sp} مقارنة، أقصى فرق {100 * worst:.2f}%" if not bad else f"⚠️ اختلاف سعر المؤشر بين الظلال: {'؛ '.join(bad[:3])}") if n_sp else "➖ اتساق سعر المؤشر: لا قراءات متزامنة اليوم",

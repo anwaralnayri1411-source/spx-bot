@@ -106,7 +106,7 @@ def test_report_has_all_sections_and_fits_telegram():
     crows = sm.council([cand_row("2026-10-26", "10:30", 1, 1, 0.44, -0.42)], [], [])
     harmony = {"spot": (3, 0.0004, []), "quotes": (10, 0.01, []), "bad_rows": [], "gaps": 0, "silent": ["ظل التدفق"]}
     md, tg = sm.build(res, crows, "2026-10-26", harmony, [("الأخبار", "2026-10-23")])
-    for part in ("مدير الظلال", "تقييم الظلال", "التناغم اليوم", "H-COUNCIL", "لم يسجّل اليوم: ظل التدفق", "الأخبار (23/10)", "10:30"):
+    for part in ("مدير الظلال", "أهم ما في التقرير", "ظلال عملت اليوم", "وسيط", "التناغم اليوم", "H-COUNCIL", "لم يسجّل اليوم: ظل التدفق", "الأخبار (23/10)", "10:30"):
         assert part in tg
     assert len(tg) <= 3900 and "⚖️ H-COUNCIL" in md
 
