@@ -38,18 +38,18 @@
    ],
    "capital": 2.11,
    "entry_cash": 0.89,
-   "peak": 0.26,
-   "last_pnl": 0.26,
-   "quotes": 60,
+   "peak": 0.48,
+   "last_pnl": 0.48,
+   "quotes": 61,
    "t60_pnl": "",
    "t60_time": "",
    "eod_pnl": "",
    "eod_time": "",
    "hold_pnl": "",
    "hold_time": "",
-   "managed_pnl": "",
-   "managed_out": "",
-   "managed_time": ""
+   "managed_pnl": 0.48,
+   "managed_out": "tp",
+   "managed_time": "2026-10-29T09:34-04:00"
   }
  ],
  "done_recs": [
