@@ -14,8 +14,8 @@
    "strength": "5.2",
    "occ": "UBER261106P00065000",
    "peak_pnl": 0.065,
-   "close_pnl": -0.085,
-   "quotes": 81,
+   "close_pnl": -0.093,
+   "quotes": 82,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -34,8 +34,8 @@
    "strength": "3.2",
    "occ": "COIN261106P00145000",
    "peak_pnl": 0.0,
-   "close_pnl": -0.324,
-   "quotes": 81,
+   "close_pnl": -0.233,
+   "quotes": 82,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -54,8 +54,8 @@
    "strength": "5.2",
    "occ": "XOM261106C00185000",
    "peak_pnl": 0.238,
-   "close_pnl": -0.057,
-   "quotes": 80,
+   "close_pnl": -0.134,
+   "quotes": 81,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -74,8 +74,8 @@
    "strength": "6.9",
    "occ": "NFLX261106P00061000",
    "peak_pnl": 0.058,
-   "close_pnl": -0.186,
-   "quotes": 75,
+   "close_pnl": -0.174,
+   "quotes": 76,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -94,8 +94,8 @@
    "strength": "5.8",
    "occ": "CVX261106C00235000",
    "peak_pnl": 0.003,
-   "close_pnl": -0.255,
-   "quotes": 64,
+   "close_pnl": -0.306,
+   "quotes": 65,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -114,8 +114,8 @@
    "strength": "7.5",
    "occ": "NFLX261106P00062000",
    "peak_pnl": 0.175,
-   "close_pnl": 0.126,
-   "quotes": 9,
+   "close_pnl": 0.117,
+   "quotes": 10,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -134,8 +134,8 @@
    "strength": "3.4",
    "occ": "MSTR261106P00130000",
    "peak_pnl": 0.0,
-   "close_pnl": -0.186,
-   "quotes": 9,
+   "close_pnl": -0.223,
+   "quotes": 10,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -154,8 +154,28 @@
    "strength": "8.0",
    "occ": "HOOD261106P00089000",
    "peak_pnl": 0.0,
-   "close_pnl": -0.092,
-   "quotes": 9,
+   "close_pnl": -0.104,
+   "quotes": 10,
+   "out": "",
+   "out_time": "",
+   "out_pnl": ""
+  },
+  {
+   "id": "20261029T1105|spx|news_risk|SPY|PUT|769|2026-10-30",
+   "project": "spx",
+   "tag": "news_risk",
+   "sym": "SPY",
+   "side": "PUT",
+   "strike": 769.0,
+   "exp": "2026-10-30",
+   "entry": 2.49,
+   "entry_time": "2026-10-29T11:05-04:00",
+   "edge": "3.25",
+   "strength": "4.9",
+   "occ": "SPY261030P00769000",
+   "peak_pnl": 0.068,
+   "close_pnl": 0.068,
+   "quotes": 1,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -363,7 +383,8 @@
   "20261029T1020|stocks|same_side_cap|NFLX|PUT|62|2026-11-06",
   "20261029T1020|stocks|same_side_cap|MSTR|PUT|130|2026-11-06",
   "20261029T1020|stocks|open_same_dir|HOOD|PUT|89|2026-11-06",
-  "20261029T1042|stocks|open_same_dir|HOOD|PUT|89|2026-11-06"
+  "20261029T1042|stocks|open_same_dir|HOOD|PUT|89|2026-11-06",
+  "20261029T1105|spx|news_risk|SPY|PUT|769|2026-10-30"
  ],
  "last": {
   "spx|CALL|SPY": "2026-10-28T15:05-04:00",
@@ -393,6 +414,7 @@
   "stocks|AVGO|CALL|2026-10-28": "2026-10-28T13:00-04:00",
   "stocks|NFLX|PUT|2026-10-29": "2026-10-29T10:12-04:00",
   "stocks|MSTR|PUT|2026-10-29": "2026-10-29T10:12-04:00",
-  "stocks|HOOD|PUT|2026-10-29": "2026-10-29T10:12-04:00"
+  "stocks|HOOD|PUT|2026-10-29": "2026-10-29T10:12-04:00",
+  "spx|PUT|SPY": "2026-10-29T11:05-04:00"
  }
 }
