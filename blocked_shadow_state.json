@@ -14,8 +14,8 @@
    "strength": "5.2",
    "occ": "UBER261106P00065000",
    "peak_pnl": 0.065,
-   "close_pnl": 0.024,
-   "quotes": 73,
+   "close_pnl": 0.008,
+   "quotes": 74,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -34,8 +34,8 @@
    "strength": "3.2",
    "occ": "COIN261106P00145000",
    "peak_pnl": 0.0,
-   "close_pnl": -0.285,
-   "quotes": 73,
+   "close_pnl": -0.33,
+   "quotes": 74,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -54,8 +54,8 @@
    "strength": "5.2",
    "occ": "XOM261106C00185000",
    "peak_pnl": 0.238,
-   "close_pnl": 0.119,
-   "quotes": 72,
+   "close_pnl": 0.126,
+   "quotes": 73,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -74,8 +74,8 @@
    "strength": "6.9",
    "occ": "NFLX261106P00061000",
    "peak_pnl": 0.058,
-   "close_pnl": -0.291,
-   "quotes": 67,
+   "close_pnl": -0.221,
+   "quotes": 68,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -94,8 +94,8 @@
    "strength": "5.8",
    "occ": "CVX261106C00235000",
    "peak_pnl": 0.003,
-   "close_pnl": -0.131,
-   "quotes": 56,
+   "close_pnl": -0.116,
+   "quotes": 57,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -113,9 +113,9 @@
    "edge": "4.5",
    "strength": "7.5",
    "occ": "NFLX261106P00062000",
-   "peak_pnl": 0.0,
-   "close_pnl": 0.0,
-   "quotes": 1,
+   "peak_pnl": 0.01,
+   "close_pnl": 0.01,
+   "quotes": 2,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -134,8 +134,8 @@
    "strength": "3.4",
    "occ": "MSTR261106P00130000",
    "peak_pnl": 0.0,
-   "close_pnl": -0.058,
-   "quotes": 1,
+   "close_pnl": -0.088,
+   "quotes": 2,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -154,8 +154,8 @@
    "strength": "8.0",
    "occ": "HOOD261106P00089000",
    "peak_pnl": 0.0,
-   "close_pnl": -0.028,
-   "quotes": 1,
+   "close_pnl": -0.072,
+   "quotes": 2,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -359,7 +359,10 @@
   "20261028T1512|stocks|open_same_dir|TSLA|CALL|412.5|2026-11-02",
   "20261029T1012|stocks|same_side_cap|NFLX|PUT|62|2026-11-06",
   "20261029T1012|stocks|same_side_cap|MSTR|PUT|130|2026-11-06",
-  "20261029T1012|stocks|open_same_dir|HOOD|PUT|89|2026-11-06"
+  "20261029T1012|stocks|open_same_dir|HOOD|PUT|89|2026-11-06",
+  "20261029T1020|stocks|same_side_cap|NFLX|PUT|62|2026-11-06",
+  "20261029T1020|stocks|same_side_cap|MSTR|PUT|130|2026-11-06",
+  "20261029T1020|stocks|open_same_dir|HOOD|PUT|89|2026-11-06"
  ],
  "last": {
   "spx|CALL|SPY": "2026-10-28T15:05-04:00",
