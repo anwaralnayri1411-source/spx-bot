@@ -28,3 +28,4 @@ id,project,tag,sym,side,strike,exp,entry_time,entry,edge,strength,out,out_time,o
 20261028T1305|spx|event_day|SPY|CALL|773|2026-10-29,spx,event_day,SPY,CALL,773.0,2026-10-29,2026-10-28T13:05-04:00,2.72,3.0,4.5,stop,2026-10-29T09:32-04:00,-0.801,0.199,34
 20261028T1300|stocks|max_ideas_cap|AVGO|CALL|360|2026-11-02,stocks,max_ideas_cap,AVGO,CALL,360.0,2026-11-02,2026-10-28T13:00-04:00,2.88,5.5,6.5,stop,2026-10-29T09:32-04:00,-0.847,0.226,34
 20261028T1505|spx|late_entry+event_day|SPY|CALL|773|2026-10-29,spx,late_entry+event_day,SPY,CALL,773.0,2026-10-29,2026-10-28T15:05-04:00,2.56,5.25,7.9,stop,2026-10-29T09:32-04:00,-0.789,0.0,12
+20261027T1012|stocks|same_side_cap|COIN|PUT|150|2026-10-30,stocks,same_side_cap,COIN,PUT,150.0,2026-10-30,2026-10-27T10:12-04:00,3.28,4.5,4.0,stop,2026-10-29T09:42-04:00,-0.421,0.006,139
