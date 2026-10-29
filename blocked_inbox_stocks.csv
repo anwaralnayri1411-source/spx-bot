@@ -180,3 +180,5 @@ id,time,project,tag,sym,root,side,strike,exp,entry,spot,edge,strength
 20261029T1142|stocks|same_side_cap|HOOD|PUT|91|2026-11-06,2026-10-29T11:42-04:00,stocks,same_side_cap,HOOD,HOOD,PUT,91.0,2026-11-06,2.86,92.08,5.5,8.0
 20261029T1142|stocks|same_side_cap|NFLX|PUT|62|2026-11-06,2026-10-29T11:42-04:00,stocks,same_side_cap,NFLX,NFLX,PUT,62.0,2026-11-06,0.99,62.23,3.5,6.9
 20261029T1142|stocks|open_same_dir|BA|PUT|172.5|2026-11-06,2026-10-29T11:42-04:00,stocks,open_same_dir,BA,BA,PUT,172.5,2026-11-06,2.8,173.43,5.5,8.0
+20261029T1212|stocks|same_side_cap|HOOD|PUT|91|2026-11-06,2026-10-29T12:12-04:00,stocks,same_side_cap,HOOD,HOOD,PUT,91.0,2026-11-06,2.87,91.97,4.5,7.5
+20261029T1212|stocks|open_same_dir|BA|PUT|170|2026-11-06,2026-10-29T12:12-04:00,stocks,open_same_dir,BA,BA,PUT,170.0,2026-11-06,1.63,173.71,4.5,7.5
