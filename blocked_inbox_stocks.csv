@@ -172,3 +172,5 @@ id,time,project,tag,sym,root,side,strike,exp,entry,spot,edge,strength
 20261029T1020|stocks|same_side_cap|MSTR|PUT|130|2026-11-06,2026-10-29T10:20-04:00,stocks,same_side_cap,MSTR,MSTR,PUT,130.0,2026-11-06,2.64,140.99,3.5,3.4
 20261029T1020|stocks|open_same_dir|HOOD|PUT|89|2026-11-06,2026-10-29T10:20-04:00,stocks,open_same_dir,HOOD,HOOD,PUT,89.0,2026-11-06,2.33,91.19,5.5,8.0
 20261029T1042|stocks|open_same_dir|HOOD|PUT|89|2026-11-06,2026-10-29T10:42-04:00,stocks,open_same_dir,HOOD,HOOD,PUT,89.0,2026-11-06,2.36,91.28,4.5,7.5
+20261029T1112|stocks|same_side_cap|BA|PUT|170|2026-11-06,2026-10-29T11:12-04:00,stocks,same_side_cap,BA,BA,PUT,170.0,2026-11-06,2.3,172.17,5.5,7.8
+20261029T1112|stocks|open_same_dir|HOOD|PUT|89|2026-11-06,2026-10-29T11:12-04:00,stocks,open_same_dir,HOOD,HOOD,PUT,89.0,2026-11-06,2.17,91.54,5.5,8.0
