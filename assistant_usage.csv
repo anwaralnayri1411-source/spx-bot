@@ -1,0 +1,4 @@
+time,model,input,output,cache_write,cache_read,usd,tools,status
+2026-10-30T18:56:28-04:00,claude-haiku-5-5,9368,1935,2762,5524,0.0023,open_positions recommendation_history spx_status,ok
+2026-10-30T18:57:55-04:00,claude-haiku-5-5,2237,1114,0,5524,0.00084,spx_status spx_scan_now,ok
+2026-10-30T18:59:15-04:00,claude-haiku-5-5,3305,1309,0,5524,0.00104,spx_status,ok
