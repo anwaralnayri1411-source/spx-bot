@@ -294,12 +294,20 @@ def answer(text, n, client=None):
     return reply, dict(u, usd=usd, tools=used, status=status)
 
 
+def to_html(text):
+    """**غامق** من النموذج إلى <b> تيليجرام، وعناوين # إلى غامق، وكل ما عداه نص مهرَّب."""
+    t = ob.esc(text)
+    t = re.sub(r"(?m)^#{1,6}\s*(.+)$", r"**\1**", t)
+    return re.sub(r"\*\*(.+?)\*\*", r"<b>\1</b>", t).replace("**", "")
+
+
 def send_private(text):
-    """للمستخدم وحده (TELEGRAM_CHAT_ID)، بلا نسخ للمشاهدين، نص عادي مقسّم لحد تيليجرام."""
+    """للمستخدم وحده (TELEGRAM_CHAT_ID)، بلا نسخ للمشاهدين، مقسّم لحد تيليجرام؛ خطأ التنسيق → نص عادي."""
     ob.log_message(text)
     if not ob.TOKEN or not ob.CHAT_ID:
         print(text)
         return
+    text = to_html(text)
     parts, cur = [], ""
     for line in text.split("\n"):
         if len(cur) + len(line) + 1 > 3800 and cur:
@@ -310,8 +318,11 @@ def send_private(text):
     parts.append(cur)
     for p in parts:
         try:
-            requests.post(f"https://api.telegram.org/bot{ob.TOKEN}/sendMessage",
-                          data={"chat_id": ob.CHAT_ID, "text": p}, timeout=15)
+            r = requests.post(f"https://api.telegram.org/bot{ob.TOKEN}/sendMessage",
+                              data={"chat_id": ob.CHAT_ID, "text": p, "parse_mode": "HTML"}, timeout=15)
+            if not r.ok:
+                requests.post(f"https://api.telegram.org/bot{ob.TOKEN}/sendMessage",
+                              data={"chat_id": ob.CHAT_ID, "text": html.unescape(re.sub(r"</?b>", "", p))}, timeout=15)
         except requests.RequestException as e:
             print("تعذر إرسال رد المساعد:", e)
 
