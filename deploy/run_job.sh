@@ -36,9 +36,9 @@ main() {
       files="stocks_log.csv stocks_track.csv messages_stocks_bot.jsonl stocks_state.json stocks_positions.json stocks_shadow_log.csv stocks_flow_log.csv live_quotes_stocks_log.csv stocks_sector_live_log.csv data_gaps_stocks_log.csv blocked_inbox_stocks.csv pro_inbox_stocks.csv stocks_rule_compare_log.csv"
       msg="update stocks state" ;;
     commands)
-      group=commands-bot; envs="TG ALPACA LQS TASTY"
+      group=commands-bot; envs="TG ALPACA LQ LQS TASTY ANTHROPIC"   # ANTHROPIC/LQ: مساعد المحادثة (assistant.py)
       cmds=("$py commands_bot.py --loop")   # يرد خلال ثوانٍ: 14 دقيقة انتظار طويل ثم الحفظ، والمؤقت كل 15 دقيقة
-      files="commands_state.json messages_commands_bot.jsonl stocks_mine.json"
+      files="commands_state.json messages_commands_bot.jsonl stocks_mine.json assistant_history.json assistant_usage.csv"
       msg="update commands state" ;;
     preopen)
       group=spx-bot; envs="TG"; extra_env="FORCE=0 RESEND=0"   # مجموعة البوت نفسها: يحفظان levels_log وmgt_compare_log معاً فلا يتعارضان

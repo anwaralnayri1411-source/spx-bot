@@ -121,6 +121,7 @@ def help_text():
             "• <code>/spx</code> حالة SPX وآخر إشارة\n"
             "• <code>/سعر NVDA 1.95</code> سعر دخولك الفعلي لعقد اشتريته (وعدد العقود اختياري: <code>/سعر NVDA 1.95 2</code>)\n\n"
             "🔘 تحت كل توصية شركات زرّان: <b>👀 مراقبة</b> أو <b>🛒 اشتريت</b>.\n"
+            "💬 أو اكتب سؤالك بكلامك، مثل: <i>ابحث لي عن توصية في SPX</i> أو <i>ليش دخلت INTC؟</i> (المساعد يقرأ ويشرح فقط).\n"
             "⚡ اختصارات: الأزرار تحت خانة الكتابة، وقائمة زر «/»، واكتب رمز السهم وحده (مثل <code>NVDA</code>) لتحليله.\n"
             "⏱️ أرد خلال ثوانٍ في أي وقت.\n"
             "📉 البيانات مجانية ومتأخرة نحو 15 دقيقة.")
@@ -351,6 +352,9 @@ def process(ups, st, n):
             continue            # نتجاهل أي شخص غيرك
         cmd, arg = parse(m.get("text"))
         if cmd is None:
+            if (m.get("text") or "").strip():
+                import assistant          # رسالة حرة: مساعد المحادثة (قراءة وشرح فقط، يرد عليك وحدك)
+                assistant.handle_text(m["text"].strip(), n)
             continue
         try:
             out = price_text(m.get("text"), n) if cmd == "price" else handle(cmd, arg, n)
