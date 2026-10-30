@@ -38,3 +38,4 @@ id,time,project,tag,sym,root,side,strike,exp,entry,spot,edge,strength
 20261029T1435|spx|news_risk|SPY|PUT|767|2026-10-30,2026-10-29T14:35-04:00,spx,news_risk,SPY,SPY,PUT,767.0,2026-10-30,2.62,766.95,4.0,6.0
 20261029T1505|spx|late_entry+news_risk|SPX|PUT|7700|2026-10-29,2026-10-29T15:05-04:00,spx,late_entry+news_risk,SPX,SPXW,PUT,7700.0,2026-10-29,3.62,7701.49,4.5,6.8
 20261029T1505|spx|late_entry+news_risk|SPY|PUT|767|2026-10-30,2026-10-29T15:05-04:00,spx,late_entry+news_risk,SPY,SPY,PUT,767.0,2026-10-30,2.13,767.69,4.5,6.8
+20261030T1005|spx|news_risk|SPY|PUT|760|2026-11-02,2026-10-30T10:05-04:00,spx,news_risk,SPY,SPY,PUT,760.0,2026-11-02,3.04,760.43,5.5,8.2
