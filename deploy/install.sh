@@ -9,7 +9,7 @@ SCHEDULE='
 bot|Mon..Fri *-*-* 13..21:05,35:00
 spx_monitor|Mon..Fri *-*-* 13..21:00/5:00
 stocks|Mon..Fri *-*-* 14,15:20:00;Mon..Fri *-*-* 17,19:00:00;Mon..Fri *-*-* 13..21:12,42:00
-commands|Mon..Fri *-*-* 13..21:03/15:00
+commands|*-*-* *:03/15:00
 preopen|Mon..Fri *-*-* 12,13:41:00;Mon..Fri *-*-* 13,14:03,23:00
 contract_shadow|Mon..Fri *-*-* 13..21:02/5:00
 exit_shadow|Mon..Fri *-*-* 13..21:03/5:00
