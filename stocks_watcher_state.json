@@ -46,7 +46,8 @@
    "walmart vs costco which big box giant stock is the smarter buy",
    "walmart launches 120 walmart and sam s club bundle what you need to know",
    "how wmt tgt bj are betting big on ai powered shopping",
-   "walmart stock november 19 2026 is walmart s next report date for walmart stock"
+   "walmart stock november 19 2026 is walmart s next report date for walmart stock",
+   "investors snack on mondelez walmart as tech stocks rocked"
   ],
   "UBER:PUT": [
    "why is hertz htz stock soaring today",
@@ -397,7 +398,10 @@
    "intel corp stock intc moved down by 28 65 on oct 30 drivers behind the movement",
    "intel stock falls 30 past its 1974 record",
    "intel s ai business grew 78 so why did the stock just crash 30",
-   "intel s ai business grew 78 but stock drops 30 on weak revenue forecast"
+   "intel s ai business grew 78 but stock drops 30 on weak revenue forecast",
+   "amd stock dives alongside other semiconductor shares and investors can blame intel intc",
+   "intel stock rout wipes 12 billion off uncle sam s stake",
+   "why intel stock price down today intc shares plunged 29 today despite strong earnings how the ai memor"
   ],
   "CVX:CALL": [
    "stocks see continued downward pressure from ai anxiety and oil prices",
@@ -2011,12 +2015,15 @@
    "putin calls spacex ceo elon musk truly a genius for having 5 000 satellites in orbit while russia is only taking the fir"
   ],
   "NVDA:PUT": [
-   "nvidia stock is set for its worst month in a year time to buy the dip"
+   "nvidia stock is set for its worst month in a year time to buy the dip",
+   "nvidia stock analyst estimates ratings"
   ],
   "AMZN:PUT": [
    "amazon com price target lowered to 300 from 325 at scotiabank",
    "amazon sees best nfl start ever prime video hits profitability are investors undervaluing streaming",
-   "da davidson reiterates amazon stock neutral rating on aws growth"
+   "da davidson reiterates amazon stock neutral rating on aws growth",
+   "will amazon nasdaq amzn turn ai spending into growth",
+   "amazon stock slips on q3 earnings amid 220b ai spending push"
   ]
  },
  "fired": {
@@ -2033,7 +2040,9 @@
    "news:intel nasdaq intc plunges over 25 on weak pc outlook dragging dell technologies nyse dell and hp inc nyse hpq lower amid",
    "news:intel stock plunges nearly 30 on pace for its worst day since 1974"
   ],
-  "NVDA:PUT:2026-11-04:205": [],
+  "NVDA:PUT:2026-11-04:205": [
+   "up0.25"
+  ],
   "AMZN:PUT:2026-11-06:235": [
    "sharp@2026-10-30T11:11-04:00",
    "down-0.15",
@@ -2045,14 +2054,6 @@
   "INTC:PUT:2026-11-13:65": 2
  },
  "seen_macro": [
-  "why is us stock market up today dow jones rises 0 5 s p 500 gains 0 9 nasdaq climbs 1 3 as oil prices ease check what in",
-  "prediction can xrp reach 100 by 2030",
-  "bitcoin price teeters at 80 000 as traders wait on fed",
-  "federal reserve meeting rice experts available to discuss interest rates inflation and economic outlook",
-  "brent crude oil price forecast 2026 surge above 100 explained",
-  "cart stock draws wall street s attention after report of potential sale discussions a look at some key analyst takes",
-  "btc price hits 79 250 marking deepest drop since july",
-  "u s stocks climb amid shaky trading in markets worldwide",
   "asx set to edge up wall street climbs anthropic files for ipo",
   "the fed s interest rate decision is imminent how will the m futubull community",
   "bank of america still forecasts fed rate hike this week but with low confidence",
@@ -2644,7 +2645,15 @@
   "treasuries extend monthly advance as tech giants stumble",
   "wall street sell off continues as investors question returns on monster ai splurge",
   "wall street s bloodbath continues as tech trade drags markets after discouraging earnings reports",
-  "eur usd forecast us mid term elections and employment data take center stage"
+  "eur usd forecast us mid term elections and employment data take center stage",
+  "us stocks today nasdaq tumbles over 2 s p 1 at open as amazon intel add to ai spending woes",
+  "the cost of money itself is on the ballot as voters struggle with pricey car loans mortgages and credit card debt",
+  "tech sell off grips wall street as investors worry about ai spending",
+  "halloween carnage on wall street as 2trillion share price slump sparks fears of stock market crash",
+  "sensex gains 308 points nifty reclaims 23 000 as it and pharma stocks lead recovery",
+  "geopolitical tensions fuel refining boom as five major oil giants rake in 56 3 billion in a single quarter",
+  "us aluminum group urges north america to align on tariffs",
+  "meet the underrated artificial intelligence ai stock that could soar 255 in a year according to wall street"
  ],
  "sharp": {
   "INTC:PUT:2026-11-13:65": 67.315,
