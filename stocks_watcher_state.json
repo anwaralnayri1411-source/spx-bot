@@ -52,7 +52,10 @@
    "moderately bullish activity in at t with shares up 2 37",
    "walmart stock wmt lights up as it invests in home battery group base power",
    "why is caredx stock cdna up 18 today",
-   "3 penny stocks to watch today october 30"
+   "3 penny stocks to watch today october 30",
+   "option traders moderately bearish in uber with shares down 1 25",
+   "walmart wmt partners with base power to expand home energy sol",
+   "more than 20 000 texas homes have base batteries walmart is bringing sign ups to stores"
   ],
   "UBER:PUT": [
    "why is hertz htz stock soaring today",
@@ -419,7 +422,9 @@
    "intel plunges 30 in worst single day performance since 1974 and historical data shows just a 47 8 win rate for buying no",
    "why intel stock price down today how the ai memory crunch and weak pc demand hit its forecast and could",
    "sa asks is intel s stock a buy hold or sell after the monster sell off intc nasdaq",
-   "why intel intc stock is trading lower today"
+   "why intel intc stock is trading lower today",
+   "jim cramer reveals 3 stocks to buy plus why he is not selling the intel plunge",
+   "da davidson has lowered expectations for intel nasdaq intc stock price"
   ],
   "CVX:CALL": [
    "stocks see continued downward pressure from ai anxiety and oil prices",
@@ -1194,17 +1199,6 @@
    "jpmorgan chase nyse jpm lifts interest income outlook as lending offsets trading slowdown"
   ],
   "COIN:PUT": [
-   "bitcoin s 81k hold amid market turmoil signals strong market confidence says blockstream cmo",
-   "musk warns ai debt markets have shut off for most firms coindesk videos",
-   "coinbase target cut to 250 robinhood to benefit from prediction markets bernstein",
-   "btc price range on oct 26 2026 at 1pm edt crypto prediction market",
-   "tom lee says crypto faced same risk off forces behind ai sell off bmnr asst add to crypto treasuries as mstr skips bitco",
-   "btc price on oct 26 2026 at 3pm edt crypto prediction market",
-   "the bitcoin bull market is finally here according to strategy s michael saylor could bitcoin hit a price of 100 000 in 2",
-   "bitcoin price prediction one more oil spike from 70k alphapepe approaches its binance listing whilst on presale",
-   "bitcoin price stands at 80 401 40 usd as etfs draw 301 2 million usd",
-   "btc price hits 79 250 marking deepest drop since july",
-   "bitcoin could replace real estate as a major st",
    "btc price on oct 26 2026 at 2pm edt prediction market",
    "anthropic could be worth more than bitcoin by year end polymarket traders say",
    "bitcoin s bear market is over galaxy says",
@@ -1593,7 +1587,18 @@
    "theoretical 30 000 qubit quantum machine threatens 6 million exposed bitcoin researchers warn",
    "bitcoin price prediction btc must hold this key level as analysts warn of a drop to 73k",
    "1 gmec to idr live exchange rate",
-   "bitcoin price analysis how far could btc crash if 80k support breaks"
+   "bitcoin price analysis how far could btc crash if 80k support breaks",
+   "coinbase stock hits two year low as analyst cuts and binance hack weigh",
+   "binance hack why bitcoin didn t crash like it did in 2018",
+   "coinbase coin misses revenue estimates as users fall armstrong sets up new share sales",
+   "coinbase is down 26 in october hold on to coin stock or drop it like a hot potato",
+   "nasdaq 100 enters correction falls 10 from october high",
+   "bitcoin gains help swell tether s buffer to 8b",
+   "bitcoin price prediction the next opportunity may be an early",
+   "btc price on oct 30 2026 at 4pm edt prediction market",
+   "bitcoin price forecast from lyn alden she outlines scenarios of 1 million and 2 million",
+   "bitcoin drops as markets digest multbillion dollar binance hack",
+   "option traders moderately bearish in coinbase with shares down 14 17"
   ],
   "HOOD:PUT": [
    "prediction could bitcoin reach a new all time high before the 2028 halving",
@@ -2050,7 +2055,10 @@
    "amazon is spending billions to win the ai race will the gamble pay off",
    "amazon nasdaq amzn stock falls after earnings as us 220 billion ai spending plan raises fears",
    "amazon amzn stock after q3 earnings buy the dip sell or hold",
-   "amzn analysts split after earnings td cowen says amazon selloff is overdone mizuho raises target"
+   "amzn analysts split after earnings td cowen says amazon selloff is overdone mizuho raises target",
+   "wells fargo company issues pessimistic forecast for amazon com nasdaq amzn stock price",
+   "morgan stanley issues pessimistic forecast for amazon com nasdaq amzn stock price",
+   "wedbush has lowered expectations for amazon com nasdaq amzn stock price"
   ]
  },
  "fired": {
@@ -2072,7 +2080,8 @@
    "news:why is intel stock down today weak forecast pc slump",
    "news:intel on course for worst day ever triggers global chip rout",
    "news:intel suffers worst stock thrashing in decades on weak forecast",
-   "news:why intel stock price down today how the ai memory crunch and weak pc demand hit its forecast and could"
+   "news:why intel stock price down today how the ai memory crunch and weak pc demand hit its forecast and could",
+   "news:da davidson has lowered expectations for intel nasdaq intc stock price"
   ],
   "AMZN:PUT:2026-11-06:235": [
    "sharp@2026-10-30T11:11-04:00",
@@ -2080,24 +2089,29 @@
    "news:amazon com price target lowered to 300 from 325 at scotiabank",
    "news:amazon stock premarket amzn sinks 7 4 to 225 71 as 77 billion capex spooks investors",
    "news:amazon nasdaq amzn stock falls after earnings as us 220 billion ai spending plan raises fears",
-   "news:amzn analysts split after earnings td cowen says amazon selloff is overdone mizuho raises target"
+   "news:amzn analysts split after earnings td cowen says amazon selloff is overdone mizuho raises target",
+   "up0.25",
+   "news:wells fargo company issues pessimistic forecast for amazon com nasdaq amzn stock price",
+   "news:morgan stanley issues pessimistic forecast for amazon com nasdaq amzn stock price",
+   "news:wedbush has lowered expectations for amazon com nasdaq amzn stock price"
   ],
   "WMT:CALL:2026-11-13:124": [
-   "news:walmart stock wmt lights up as it invests in home battery group base power"
+   "news:walmart stock wmt lights up as it invests in home battery group base power",
+   "news:walmart wmt partners with base power to expand home energy sol"
   ],
-  "COIN:PUT:2026-11-06:130": []
+  "COIN:PUT:2026-11-06:130": [
+   "news:coinbase stock hits two year low as analyst cuts and binance hack weigh",
+   "news:coinbase coin misses revenue estimates as users fall armstrong sets up new share sales",
+   "news:nasdaq 100 enters correction falls 10 from october high",
+   "sharp@2026-10-30T15:09-04:00",
+   "down-0.15",
+   "news:bitcoin drops as markets digest multbillion dollar binance hack"
+  ]
  },
  "stock_level": {
   "INTC:PUT:2026-11-13:65": 2
  },
  "seen_macro": [
-  "us stock market today s p 500 futures ease as oil supply concerns build",
-  "here are tuesday s top wall street analyst research calls broadcom conoco phillips hubspot mercadolibre moderna occident",
-  "we will examine supreme court defers sir form 6 plea as ec defends unanimous decisions",
-  "wall street points higher in heavy week of earnings gm heads to nasdaq after 115 years on the nyse",
-  "brent middle east tensions sustain oil risk premium commerzbank",
-  "trump s tariff offensive pushes canada to seek energy markets beyond us",
-  "federal reserve faces pressure to raise rates again as inflation persists",
   "supermicro smci is growing faster than wall street can trust",
   "analysis bond investors are thinking less about the fed and more about ai deficits",
   "what is the state of the uk economy heading into the budget",
@@ -2690,10 +2704,18 @@
   "skipping a rate hike doesn t change monetary policy destination fomc s logan us10y",
   "fed officials signal more interest rate increases ahead",
   "the sell off for tech stocks deepens and drags wall street toward its worst day since june",
-  "why bright horizons bfam shares are plunging today"
+  "why bright horizons bfam shares are plunging today",
+  "the fed s ai puzzle will high rates slow the boom",
+  "colombia holds interest rates steady for november",
+  "gold rate silver price today why is gold price down today when will gold recover from its worst trading",
+  "analyst drops sharp take on fed rate hikes",
+  "stock market today nasdaq dives over 3 s p 500 and dow tank as ai reckoning grips wall street",
+  "federal reserve expected to maintain interest rates amid earnings reports and economic data",
+  "real wages 2026 why consumer stocks feel it first"
  ],
  "sharp": {
   "INTC:PUT:2026-11-13:65": 67.315,
-  "AMZN:PUT:2026-11-06:235": 241.12
+  "AMZN:PUT:2026-11-06:235": 241.12,
+  "COIN:PUT:2026-11-06:130": 138.71
  }
 }
