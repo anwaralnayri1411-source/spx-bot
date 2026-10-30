@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """H-FLOWLVL: دمج Volume Profile وPOC والأوردر فلو بإعدادات متداولي التدفق (اختبار فقط). بطلب المستخدم 30/10/2026.
 
-البيانات: ملفات الأوردر فلو بالدقيقة (orderflow_<SYM>_1m.csv.gz: شراء/بيع عدواني بقاعدة التيك، وإغلاق). ملف الحجم لليوم السابق من الحجم
+البيانات (بطلب المستخدم: المؤشرات والشركات معاً، لا SPY وحده): ملفات الأوردر فلو بالدقيقة لـSPY وQQQ وDIA وIWM و10 شركات (orderflow_<SYM>_1m.csv.gz: شراء/بيع عدواني بقاعدة التيك، وإغلاق). ملف الحجم لليوم السابق من الحجم
 الكلي بالدقيقة على سعر الإغلاق، بخانة 0.065% من السعر. المستويات: POC وVAH وVAL للأمس، وأقرب POC غير ملموس من أيام العينة السابقة.
 الإعدادات (مسجّلة قبل التشغيل؛ لكل إعداد نسختان: «مع شرط التدفق» و«بدونه» على الأحداث نفسها):
   S1 الامتصاص: أول ملامسة بعد 10:00 لأي مستوى من الأربعة قادماً من جهة الافتتاح. الشرط: في الدقائق الخمس حتى الملامسة،
@@ -12,7 +12,7 @@
   S3 اختراق المنطقة قليلة التداول: أول دخول بعد 10:00 لخانة حجمها أمس < 20% من خانة POC. الشرط: اختلال 5 دقائق في جهة الحركة (آخر 5 دقائق)
      ≥ المئين 75. الصفقة: جهة الحركة، عائد 30 دقيقة.
   المقياس: الزيادة على عشوائي بالمزيج نفسه (إزالة متوسط كل رمز)، ومعاينة بالأيام. الفرضية لكل إعداد: «مع الشرط» > 0 وأعلى من «بدونه».
-  الحكم: BH بمعدل 5% على الثلاثة (قيمة p لـ«مع الشرط»)، ثم الحاجز: SPY 0.03% (30د) و0.10% (S2)؛ الشركات 0.25% و0.30%.
+  الحكم: BH بمعدل 5% على قيم «مع الشرط» لمجموعتي المؤشرات والشركات، ثم الحاجز: المؤشرات 0.03% (30د) و0.10% (S2)؛ الشركات 0.25% و0.30%.
 تحفظ مسبق: العينة نحو 40 يوماً لكل رمز؛ أحداث «مع الشرط» قد تكون عشرات فقط، فالنتيجة مؤشر أولي لا حكم نهائي.
 تشغيل: SPXBOT_DATA=/opt/spxbot/data python research/flow_levels_test.py [--syms SPY,DIS,...]   المخرج: research/flow_levels_test_results.md
 """
@@ -33,8 +33,9 @@ DATA = os.getenv("SPXBOT_DATA", "/opt/spxbot/data")
 OUT = os.path.join(HERE, "flow_levels_test_results.md")
 BIN, LVN = 0.00065, 0.20
 Q, QUIET = 75, 0.0005
-DEFAULT = "SPY,DIS,UBER,SOFI,HOOD,INTC,BA,PFE,XOM,JPM,WMT"
-HURDLE = {"SPY": {"S1": 0.0003, "S2": 0.0010, "S3": 0.0003}, "stk": {"S1": 0.0025, "S2": 0.0030, "S3": 0.0025}}
+DEFAULT = "SPY,QQQ,DIA,IWM,DIS,UBER,SOFI,HOOD,INTC,BA,PFE,XOM,JPM,WMT"
+INDEX_ETFS = {"SPY", "QQQ", "DIA", "IWM"}       # المؤشرات نفسها بلا حجم، فنستعمل صناديقها
+HURDLE = {"idx": {"S1": 0.0003, "S2": 0.0010, "S3": 0.0003}, "stk": {"S1": 0.0025, "S2": 0.0030, "S3": 0.0025}}
 
 
 def day_profile(g):
@@ -152,7 +153,7 @@ def report(df, meta):
     if df.empty:
         return L + ["لا أحداث."]
     verdicts, prim = [], []
-    for grp, sub_all in (("SPY", df[df["sym"] == "SPY"]), ("الشركات", df[df["sym"] != "SPY"])):
+    for grp, sub_all in (("المؤشرات (SPY/QQQ/DIA/IWM)", df[df["sym"].isin(INDEX_ETFS)]), ("الشركات", df[~df["sym"].isin(INDEX_ETFS)])):
         if sub_all.empty:
             continue
         L += [f"## {grp}", "", "| الإعداد | النسخة | أحداث | الزيادة | p | في الجهة الصحيحة |", "|---|---|---|---|---|---|"]
@@ -171,7 +172,7 @@ def report(df, meta):
         passed = bh(np.array([x[2]["p"] for x in prim]), 0.05)
         for (grp, k, s, w), ok in zip(prim, passed):
             better = w is None or s["mean"] > w["mean"]
-            hz = HURDLE["SPY" if grp == "SPY" else "stk"][k]
+            hz = HURDLE["stk" if grp == "الشركات" else "idx"][k]
             good = bool(ok) and s["mean"] > 0 and better
             verdicts.append(f"⚖️ {grp} — {NAMES[k]}: " + (("تحققت" + ("" if s["mean"] > hz else f" لكن دون حاجز التكلفة {100 * hz:.2f}%")) if good else "لم تتحقق")
                             + f" (مع الشرط {100 * s['mean']:+.3f}%" + ("" if w is None else f"، بدونه {100 * w['mean']:+.3f}%") + f"، p {s['p']:.3f})")
