@@ -62,12 +62,24 @@ def t_open_positions():
     return _txt(_cb().status_text(n))
 
 
+def _live_line(sym):
+    """سطر السعر اللحظي (Tastytrade ثم Alpaca) بجانب نصوص الأوامر التي تقرأ ياهو المتأخر."""
+    try:
+        import live_quotes as lq
+        px, src = lq.spot(sym)
+    except Exception as e:
+        return f"\n[السعر اللحظي: تعذر ({type(e).__name__})]"
+    return (f"\n[السعر اللحظي الآن {px:,.2f} من {src}؛ الأرقام أعلاه من ياهو متأخرة ~15د]" if px
+            else "\n[لا سعر لحظي الآن (السوق مغلق أو المصدر لا يرد)؛ الأرقام أعلاه من ياهو]")
+
+
 def t_company(ticker):
-    return _txt(_cb().company_text((ticker or "").upper().lstrip("$"), ob.now_ny()))
+    tk = (ticker or "").upper().lstrip("$")
+    return _txt(_cb().company_text(tk, ob.now_ny())) + _live_line(tk)
 
 
 def t_spx_status():
-    return _txt(_cb().spx_text(ob.now_ny()))
+    return _txt(_cb().spx_text(ob.now_ny())) + _live_line("SPX")
 
 
 def t_spx_scan():
