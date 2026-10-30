@@ -1,7 +1,68 @@
 {
- "open": [],
+ "open": [
+  {
+   "entry_time": "2026-10-30T13:35-04:00",
+   "side": "PUT",
+   "role": "bot",
+   "contract": "SPXW261102P07575000",
+   "strike": 7575,
+   "exp": "2026-11-02",
+   "edge": 7.5,
+   "bot_sent": 0,
+   "reasons": "مخاطر الأخبار والجيوسياسة مرتفعة: VIX قفز 23% في ي",
+   "spot": 7573.9,
+   "entry": 36.69,
+   "entry_src": "alpaca",
+   "val30": ""
+  },
+  {
+   "entry_time": "2026-10-30T13:35-04:00",
+   "side": "CALL",
+   "role": "opp",
+   "contract": "SPXW261102C07575000",
+   "strike": 7575,
+   "exp": "2026-11-02",
+   "edge": 7.5,
+   "bot_sent": 0,
+   "reasons": "مخاطر الأخبار والجيوسياسة مرتفعة: VIX قفز 23% في ي",
+   "spot": 7573.9,
+   "entry": 36.89,
+   "entry_src": "alpaca",
+   "val30": ""
+  },
+  {
+   "entry_time": "2026-10-30T13:35-04:00",
+   "side": "PUT",
+   "role": "spy_bot",
+   "contract": "SPY261102P00755000",
+   "strike": 755,
+   "exp": "2026-11-02",
+   "edge": 7.5,
+   "bot_sent": 0,
+   "reasons": "مخاطر الأخبار والجيوسياسة مرتفعة: VIX قفز 23% في ي",
+   "spot": 755.01,
+   "entry": 3.77,
+   "entry_src": "alpaca",
+   "val30": ""
+  },
+  {
+   "entry_time": "2026-10-30T13:35-04:00",
+   "side": "CALL",
+   "role": "spy_opp",
+   "contract": "SPY261102C00755000",
+   "strike": 755,
+   "exp": "2026-11-02",
+   "edge": 7.5,
+   "bot_sent": 0,
+   "reasons": "مخاطر الأخبار والجيوسياسة مرتفعة: VIX قفز 23% في ي",
+   "spot": 755.01,
+   "entry": 3.92,
+   "entry_src": "alpaca",
+   "val30": ""
+  }
+ ],
  "last": {
   "CALL": "2026-10-27T13:35-04:00",
-  "PUT": "2026-10-30T12:05-04:00"
+  "PUT": "2026-10-30T13:35-04:00"
  }
 }
