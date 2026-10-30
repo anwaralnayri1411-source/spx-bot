@@ -1942,6 +1942,12 @@ def monitor_positions(n, force=False):
         save_positions(P)
 
 
+def legacy_slot(n):
+    """فحص يقع في موعد البوت القديم :05/:35 (دقائق 5–9 و35–39). منذ 31/10/2026 يفحص البوت بعد اكتمال كل شمعة 5د،
+    والظلال المصممة على :05/:35 (الإشارات التجريبية، فلتر الأخبار، الإشارة القوية) تبقى على مواعيدها فلا تختلط عيّناتها."""
+    return (n.minute - 5) % 30 < 5
+
+
 def run_once(force=False):
     n = now_ny()
     if not force and not in_window(n):
@@ -1977,7 +1983,7 @@ def run_once(force=False):
     has_signal = bool(a["contracts"])
     if has_signal:
         _live_prices(a)
-    if not force:
+    if not force and legacy_slot(n):
         try:   # إشارات تجريبية صامتة للتعلم (لا تغيّر التوصية)
             import signals_extra
             signals_extra.snapshot(n, a["side"] if has_signal else "")
@@ -1988,16 +1994,17 @@ def run_once(force=False):
             news_shadow.snapshot(n, a)
         except Exception as e:
             print("تعذر تسجيل ظل فلتر الأخبار:", e)
-        try:   # ظل الحجب: عقود حجبتها الشروط تُتابَع بلا إرسال لنعرف هل كان الحجب في صالحنا (تسجيل فقط)
-            import blocked_shadow
-            blocked_shadow.log_spx(n, a)
-        except Exception as e:
-            print("تعذر تسجيل ظل الحجب:", e)
         try:   # ظل الإشارة القوية (فرق ≥ 7) بعقد على السعر لغد وخروج بعد 60د: تسجيل فقط (لا يغيّر التوصية)
             import edge7_shadow
             edge7_shadow.snapshot(n, a)
         except Exception as e:
             print("تعذر تسجيل ظل الإشارة القوية:", e)
+    if not force:
+        try:   # ظل الحجب: عقود حجبتها الشروط تُتابَع بلا إرسال لنعرف هل كان الحجب في صالحنا (تسجيل فقط)
+            import blocked_shadow
+            blocked_shadow.log_spx(n, a)
+        except Exception as e:
+            print("تعذر تسجيل ظل الحجب:", e)
     log_line = log_summary()
 
     if force:
