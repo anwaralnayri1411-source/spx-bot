@@ -59,7 +59,8 @@
    "segro updates market on share capital and voting rights",
    "blue coast hotels discloses default on redeemable preference shares",
    "dam capital sets up esop trust to administer 2024 stock option scheme",
-   "ramkrishna forgings posts q2 h1 fy27 investor presentation"
+   "ramkrishna forgings posts q2 h1 fy27 investor presentation",
+   "atlantaa flags msrdc re tender for bhandara gadchiroli expressway project"
   ],
   "UBER:PUT": [
    "why is hertz htz stock soaring today",
@@ -430,7 +431,9 @@
    "jim cramer reveals 3 stocks to buy plus why he is not selling the intel plunge",
    "da davidson has lowered expectations for intel nasdaq intc stock price",
    "intel stock rout wipes 12 billion off uncle sam s stake intel nasdaq intc",
-   "intel q3 the market is right rating upgrade nasdaq intc"
+   "intel q3 the market is right rating upgrade nasdaq intc",
+   "intel don t bet your house on recovery rating upgrade nasdaq intc",
+   "what are wall street analysts target price for intel stock"
   ],
   "CVX:CALL": [
    "stocks see continued downward pressure from ai anxiety and oil prices",
@@ -1205,7 +1208,6 @@
    "jpmorgan chase nyse jpm lifts interest income outlook as lending offsets trading slowdown"
   ],
   "COIN:PUT": [
-   "btc price range on oct 26 2026 at 2pm edt crypto prediction market",
    "prediction could bitcoin reach a new all time high before the 2028 halving",
    "bitcoin and gold rank last of 21 asset classes can they rebound talkmarkets",
    "bitcoin price prediction btc falls below 80 000 ahead of fed meeting",
@@ -1604,7 +1606,8 @@
    "sentiment will take a hit binance 6 3 billion hack rattles bitcoin crypto market",
    "bitcoin price metrics hint at rebound as 1 6b liquidations follow binance hack",
    "coinbase leads crypto stock selloff following 6 3b binance hack",
-   "coinbase ceo brian armstrong and 2 insiders file to sell up to 2b in stock"
+   "coinbase ceo brian armstrong and 2 insiders file to sell up to 2b in stock",
+   "bitcoin price prediction btc dips after binance hack but eyes 90k this year as alphapepe offers 100x presale entry"
   ],
   "HOOD:PUT": [
    "prediction could bitcoin reach a new all time high before the 2028 halving",
@@ -2121,17 +2124,16 @@
    "stock2",
    "news:coinbase leads crypto stock selloff following 6 3b binance hack",
    "sharp@2026-10-30T15:46-04:00",
-   "news:coinbase ceo brian armstrong and 2 insiders file to sell up to 2b in stock"
+   "news:coinbase ceo brian armstrong and 2 insiders file to sell up to 2b in stock",
+   "stock3",
+   "sharp@2026-10-30T15:59-04:00"
   ]
  },
  "stock_level": {
   "INTC:PUT:2026-11-13:65": 2,
-  "COIN:PUT:2026-11-06:130": 2
+  "COIN:PUT:2026-11-06:130": 3
  },
  "seen_macro": [
-  "moderna stock mrna falls 3 as analysts question 80 billion valuation despite ceo s defense of cancer vaccine",
-  "what the fed s rate decision means for your bank accounts loans credit cards and investments",
-  "tech firms track wall st rally on mixed day for stock markets",
   "moody s mark zandi is worried about a fed misstep if it hikes interest rates when economic risks are piling up",
   "nasdaq futures up 140 points 5 things to know before wall street opens",
   "why are gold and silver prices falling today silver breaks its july low and gold could drop toward 3 90",
@@ -2728,11 +2730,14 @@
   "trump maintains tariffs despite rising cost concerns",
   "trump s commerce department s intel stake fell by more than 10 billion in a day as stock craters",
   "fed s musalem us central bank to hike interest rates again soon",
-  "us dollar weekly forecast bulls face a key test"
+  "us dollar weekly forecast bulls face a key test",
+  "fed officials signal more interest rate increases ahead and markets believe it",
+  "trump tariffs retain support despite rising consumer costs",
+  "the fed held interest rates steady but these officials see more hikes coming soon"
  ],
  "sharp": {
   "INTC:PUT:2026-11-13:65": 67.315,
   "AMZN:PUT:2026-11-06:235": 241.12,
-  "COIN:PUT:2026-11-06:130": 141.65
+  "COIN:PUT:2026-11-06:130": 143.21
  }
 }
