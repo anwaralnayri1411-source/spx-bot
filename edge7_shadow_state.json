@@ -13,7 +13,7 @@
    "spot": 7608.05,
    "entry": 33.82,
    "entry_src": "alpaca",
-   "val30": ""
+   "val30": 30.3
   },
   {
    "entry_time": "2026-10-30T10:35-04:00",
@@ -28,7 +28,7 @@
    "spot": 7608.05,
    "entry": 34.74,
    "entry_src": "alpaca",
-   "val30": ""
+   "val30": 36.3
   },
   {
    "entry_time": "2026-10-30T10:35-04:00",
@@ -43,7 +43,7 @@
    "spot": 758.46,
    "entry": 3.19,
    "entry_src": "alpaca",
-   "val30": ""
+   "val30": 2.89
   },
   {
    "entry_time": "2026-10-30T10:35-04:00",
@@ -58,7 +58,7 @@
    "spot": 758.46,
    "entry": 3.85,
    "entry_src": "alpaca",
-   "val30": ""
+   "val30": 4.09
   }
  ],
  "last": {
