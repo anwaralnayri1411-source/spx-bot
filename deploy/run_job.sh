@@ -21,7 +21,7 @@ main() {
   local -a cmds=() after=()
   case "$job" in
     bot)
-      group=spx-bot; envs="TG ALPACA LQ TASTY"; extra_env="FORCE=0"
+      group=spx-bot; envs="TG ALPACA LQ TASTY"; extra_env="FORCE=0 LIVE_BARS_SPX=1"   # القرار من الشموع اللحظية (31/10/2026)؛ بقية المهام تبقى shadow (best_shadow يحتاجها)
       cmds=("$py options_bot.py")
       files="zero_dte_log.csv messages_options_bot.jsonl bot_state.json spx_positions.json spx_track.csv live_quotes_log.csv signals_extra_log.csv levels_log.csv mgt_compare_log.csv news_shadow_log.csv edge7_shadow_state.json edge7_shadow_log.csv data_gaps_spx_log.csv blocked_inbox_spx.csv live_bars_log.csv spy_rule_compare_log.csv"
       msg="update bot state" ;;
@@ -36,7 +36,7 @@ main() {
       files="stocks_log.csv stocks_track.csv messages_stocks_bot.jsonl stocks_state.json stocks_positions.json stocks_shadow_log.csv stocks_flow_log.csv live_quotes_stocks_log.csv stocks_sector_live_log.csv data_gaps_stocks_log.csv blocked_inbox_stocks.csv pro_inbox_stocks.csv stocks_rule_compare_log.csv"
       msg="update stocks state" ;;
     commands)
-      group=commands-bot; envs="TG ALPACA LQ LQS TASTY ANTHROPIC"   # ANTHROPIC/LQ: مساعد المحادثة (assistant.py)
+      group=commands-bot; envs="TG ALPACA LQ LQS TASTY ANTHROPIC"; extra_env="LIVE_BARS_SPX=1"   # ANTHROPIC/LQ: مساعد المحادثة؛ فحصه لـSPX بشموع البوت نفسها
       cmds=("$py commands_bot.py --loop")   # يرد خلال ثوانٍ: 14 دقيقة انتظار طويل ثم الحفظ، والمؤقت كل 15 دقيقة
       files="commands_state.json messages_commands_bot.jsonl stocks_mine.json assistant_history.json assistant_usage.csv"
       msg="update commands state" ;;
