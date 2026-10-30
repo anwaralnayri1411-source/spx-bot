@@ -55,7 +55,11 @@
    "3 penny stocks to watch today october 30",
    "option traders moderately bearish in uber with shares down 1 25",
    "walmart wmt partners with base power to expand home energy sol",
-   "more than 20 000 texas homes have base batteries walmart is bringing sign ups to stores"
+   "more than 20 000 texas homes have base batteries walmart is bringing sign ups to stores",
+   "segro updates market on share capital and voting rights",
+   "blue coast hotels discloses default on redeemable preference shares",
+   "dam capital sets up esop trust to administer 2024 stock option scheme",
+   "ramkrishna forgings posts q2 h1 fy27 investor presentation"
   ],
   "UBER:PUT": [
    "why is hertz htz stock soaring today",
@@ -424,7 +428,9 @@
    "sa asks is intel s stock a buy hold or sell after the monster sell off intc nasdaq",
    "why intel intc stock is trading lower today",
    "jim cramer reveals 3 stocks to buy plus why he is not selling the intel plunge",
-   "da davidson has lowered expectations for intel nasdaq intc stock price"
+   "da davidson has lowered expectations for intel nasdaq intc stock price",
+   "intel stock rout wipes 12 billion off uncle sam s stake intel nasdaq intc",
+   "intel q3 the market is right rating upgrade nasdaq intc"
   ],
   "CVX:CALL": [
    "stocks see continued downward pressure from ai anxiety and oil prices",
@@ -1199,11 +1205,6 @@
    "jpmorgan chase nyse jpm lifts interest income outlook as lending offsets trading slowdown"
   ],
   "COIN:PUT": [
-   "btc price on oct 26 2026 at 2pm edt prediction market",
-   "anthropic could be worth more than bitcoin by year end polymarket traders say",
-   "bitcoin s bear market is over galaxy says",
-   "strategy mstr pauses bitcoin buying and spends 205 million on preferred stock",
-   "leon wankum says bitcoin could absorb real estate s monetary value",
    "btc price range on oct 26 2026 at 2pm edt crypto prediction market",
    "prediction could bitcoin reach a new all time high before the 2028 halving",
    "bitcoin and gold rank last of 21 asset classes can they rebound talkmarkets",
@@ -1598,7 +1599,12 @@
    "btc price on oct 30 2026 at 4pm edt prediction market",
    "bitcoin price forecast from lyn alden she outlines scenarios of 1 million and 2 million",
    "bitcoin drops as markets digest multbillion dollar binance hack",
-   "option traders moderately bearish in coinbase with shares down 14 17"
+   "option traders moderately bearish in coinbase with shares down 14 17",
+   "crypto news why are bitcoin ethereum and xrp prices crashing today",
+   "sentiment will take a hit binance 6 3 billion hack rattles bitcoin crypto market",
+   "bitcoin price metrics hint at rebound as 1 6b liquidations follow binance hack",
+   "coinbase leads crypto stock selloff following 6 3b binance hack",
+   "coinbase ceo brian armstrong and 2 insiders file to sell up to 2b in stock"
   ],
   "HOOD:PUT": [
    "prediction could bitcoin reach a new all time high before the 2028 halving",
@@ -2058,7 +2064,9 @@
    "amzn analysts split after earnings td cowen says amazon selloff is overdone mizuho raises target",
    "wells fargo company issues pessimistic forecast for amazon com nasdaq amzn stock price",
    "morgan stanley issues pessimistic forecast for amazon com nasdaq amzn stock price",
-   "wedbush has lowered expectations for amazon com nasdaq amzn stock price"
+   "wedbush has lowered expectations for amazon com nasdaq amzn stock price",
+   "amazon com nasdaq amzn stock rating reaffirmed as buy by rosenblatt securities",
+   "amzn stock set to drop for third straight week amazon taps 80b credit line to fund ai capex"
   ]
  },
  "fired": {
@@ -2105,21 +2113,22 @@
    "news:nasdaq 100 enters correction falls 10 from october high",
    "sharp@2026-10-30T15:09-04:00",
    "down-0.15",
-   "news:bitcoin drops as markets digest multbillion dollar binance hack"
+   "news:bitcoin drops as markets digest multbillion dollar binance hack",
+   "stock1",
+   "sharp@2026-10-30T15:23-04:00",
+   "down-0.3",
+   "news:sentiment will take a hit binance 6 3 billion hack rattles bitcoin crypto market",
+   "stock2",
+   "news:coinbase leads crypto stock selloff following 6 3b binance hack",
+   "sharp@2026-10-30T15:46-04:00",
+   "news:coinbase ceo brian armstrong and 2 insiders file to sell up to 2b in stock"
   ]
  },
  "stock_level": {
-  "INTC:PUT:2026-11-13:65": 2
+  "INTC:PUT:2026-11-13:65": 2,
+  "COIN:PUT:2026-11-06:130": 2
  },
  "seen_macro": [
-  "supermicro smci is growing faster than wall street can trust",
-  "analysis bond investors are thinking less about the fed and more about ai deficits",
-  "what is the state of the uk economy heading into the budget",
-  "gold steadies above 4 000 with fed rate decision in focus",
-  "the dollar is waiting for the federal reserve s decision interest rates and bond yields shape its path",
-  "gold falls below 4 000 as investors await federal reserve rate decision",
-  "the fed is expected to hold interest rates steady but warsh may signal more hikes ahead",
-  "ustr offers china a subsidy reprieve while issuing the eu a new threat on airbus",
   "moderna stock mrna falls 3 as analysts question 80 billion valuation despite ceo s defense of cancer vaccine",
   "what the fed s rate decision means for your bank accounts loans credit cards and investments",
   "tech firms track wall st rally on mixed day for stock markets",
@@ -2711,11 +2720,19 @@
   "analyst drops sharp take on fed rate hikes",
   "stock market today nasdaq dives over 3 s p 500 and dow tank as ai reckoning grips wall street",
   "federal reserve expected to maintain interest rates amid earnings reports and economic data",
-  "real wages 2026 why consumer stocks feel it first"
+  "real wages 2026 why consumer stocks feel it first",
+  "commentary the trump chaotic presidency continues fraser institute",
+  "psx falls 0 47 as rising oil prices and us iran tensions weigh on sentiment",
+  "yen gains after boj holds rates dollar slips",
+  "wall street slides as ai cash burn worries spark tech selloff",
+  "trump maintains tariffs despite rising cost concerns",
+  "trump s commerce department s intel stake fell by more than 10 billion in a day as stock craters",
+  "fed s musalem us central bank to hike interest rates again soon",
+  "us dollar weekly forecast bulls face a key test"
  ],
  "sharp": {
   "INTC:PUT:2026-11-13:65": 67.315,
   "AMZN:PUT:2026-11-06:235": 241.12,
-  "COIN:PUT:2026-11-06:130": 138.71
+  "COIN:PUT:2026-11-06:130": 141.65
  }
 }
