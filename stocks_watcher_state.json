@@ -388,7 +388,14 @@
    "silicon shock intel s 25 valuation reset",
    "intel a major technical buy signal triggers after the 25 plunge rating upgrade intc",
    "amd s stock slides after intel earnings reveal two big issues",
-   "trump s commerce department s intel stake fell by more than 10 billion in a day as stock craters"
+   "trump s commerce department s intel stake fell by more than 10 billion in a day as stock craters",
+   "intel s bizarre math worst stock collapse in 52 years could add billions to its profit",
+   "intel nasdaq intc shares gap down following analyst downgrade",
+   "intel nasdaq intc plunges over 25 on weak pc outlook dragging dell technologies nyse dell and hp inc nyse hpq lower amid",
+   "intel wait for a bottom before catching this falling knife rating upgrade nasdaq intc",
+   "intel stock plunges nearly 30 on pace for its worst day since 1974",
+   "intel corp stock intc moved down by 28 65 on oct 30 drivers behind the movement",
+   "intel stock falls 30 past its 1974 record"
   ],
   "CVX:CALL": [
    "stocks see continued downward pressure from ai anxiety and oil prices",
@@ -2004,7 +2011,10 @@
   "NVDA:PUT": [
    "nvidia stock is set for its worst month in a year time to buy the dip"
   ],
-  "AMZN:PUT": []
+  "AMZN:PUT": [
+   "amazon com price target lowered to 300 from 325 at scotiabank",
+   "amazon sees best nfl start ever prime video hits profitability are investors undervaluing streaming"
+  ]
  },
  "fired": {
   "INTC:PUT:2026-11-13:65": [
@@ -2015,18 +2025,23 @@
    "stock2",
    "sharp@2026-10-30T10:39-04:00",
    "news:amd s stock slides after intel earnings reveal two big issues",
-   "news:trump s commerce department s intel stake fell by more than 10 billion in a day as stock craters"
+   "news:trump s commerce department s intel stake fell by more than 10 billion in a day as stock craters",
+   "news:intel nasdaq intc shares gap down following analyst downgrade",
+   "news:intel nasdaq intc plunges over 25 on weak pc outlook dragging dell technologies nyse dell and hp inc nyse hpq lower amid",
+   "news:intel stock plunges nearly 30 on pace for its worst day since 1974"
   ],
   "NVDA:PUT:2026-11-04:205": [],
-  "AMZN:PUT:2026-11-06:235": []
+  "AMZN:PUT:2026-11-06:235": [
+   "sharp@2026-10-30T11:11-04:00",
+   "down-0.15",
+   "news:amazon com price target lowered to 300 from 325 at scotiabank"
+  ],
+  "WMT:CALL:2026-11-13:124": []
  },
  "stock_level": {
   "INTC:PUT:2026-11-13:65": 2
  },
  "seen_macro": [
-  "not nvidia this chip stock has more upside according to wall street",
-  "nasdaq today live nasdaq composite jumps 1 25 as ai stocks rally after anthropic ipo filing oil prices ease check big te",
-  "brazilian markets crash after lula s surprise election win stuns investors",
   "opinion politics of india us trade ties can strategic convergence survive economic friction",
   "sandisk stock is back on wall street s radar here s where i see it going",
   "many consumers face higher borrowing costs after the fed s first interest rate hike in more than three years took place ",
@@ -2623,9 +2638,13 @@
   "tanker attack pushes oil higher inflation fears weigh on gold as spot prices fall below 3 910 down more than 110 in a si",
   "us employment cost growth stable stays below inflation",
   "spot gold plunges 3 to breach 3 900 what caused the drop in gold prices",
-  "tech stock selloff deepens on earnings oil rises markets wrap"
+  "tech stock selloff deepens on earnings oil rises markets wrap",
+  "silver price crash deepens as oct losses hit 45 000 kg gold falls to 7 month low why are precious metals sinking",
+  "us embassies tighten security as iran threat reaches advanced stages",
+  "treasuries extend monthly advance as tech giants stumble"
  ],
  "sharp": {
-  "INTC:PUT:2026-11-13:65": 67.315
+  "INTC:PUT:2026-11-13:65": 67.315,
+  "AMZN:PUT:2026-11-06:235": 241.12
  }
 }
