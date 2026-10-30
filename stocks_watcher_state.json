@@ -47,7 +47,8 @@
    "walmart launches 120 walmart and sam s club bundle what you need to know",
    "how wmt tgt bj are betting big on ai powered shopping",
    "walmart stock november 19 2026 is walmart s next report date for walmart stock",
-   "investors snack on mondelez walmart as tech stocks rocked"
+   "investors snack on mondelez walmart as tech stocks rocked",
+   "walmart stock wmt lights up as it makes investment in battery group base power"
   ],
   "UBER:PUT": [
    "why is hertz htz stock soaring today",
@@ -407,7 +408,10 @@
    "intel s plunge today makes it october s worst s p 500 stock accenture is the biggest winner",
    "after intel s historic stock drop analysts say there s no reason to buy the dip",
    "intel nasdaq intc stock price target cut by truist financial",
-   "deadly blast hit intel s factory and it has a hidden bill that nobody can yet calculate"
+   "deadly blast hit intel s factory and it has a hidden bill that nobody can yet calculate",
+   "why is intel stock down today weak forecast pc slump",
+   "intel on course for worst day ever triggers global chip rout",
+   "intel suffers worst stock thrashing in decades on weak forecast"
   ],
   "CVX:CALL": [
    "stocks see continued downward pressure from ai anxiety and oil prices",
@@ -2035,7 +2039,8 @@
    "amazon s record margins couldn t stop the sell off here s why",
    "amazon wall street hates the bill i like the price nasdaq amzn",
    "amazon stock premarket amzn sinks 7 4 to 225 71 as 77 billion capex spooks investors",
-   "amazon is spending billions to win the ai race will the gamble pay off"
+   "amazon is spending billions to win the ai race will the gamble pay off",
+   "amazon nasdaq amzn stock falls after earnings as us 220 billion ai spending plan raises fears"
   ]
  },
  "fired": {
@@ -2052,13 +2057,18 @@
    "news:intel nasdaq intc plunges over 25 on weak pc outlook dragging dell technologies nyse dell and hp inc nyse hpq lower amid",
    "news:intel stock plunges nearly 30 on pace for its worst day since 1974",
    "news:intel nasdaq intc stock price target cut by truist financial",
-   "news:deadly blast hit intel s factory and it has a hidden bill that nobody can yet calculate"
+   "news:deadly blast hit intel s factory and it has a hidden bill that nobody can yet calculate",
+   "up0.25",
+   "news:why is intel stock down today weak forecast pc slump",
+   "news:intel on course for worst day ever triggers global chip rout",
+   "news:intel suffers worst stock thrashing in decades on weak forecast"
   ],
   "AMZN:PUT:2026-11-06:235": [
    "sharp@2026-10-30T11:11-04:00",
    "down-0.15",
    "news:amazon com price target lowered to 300 from 325 at scotiabank",
-   "news:amazon stock premarket amzn sinks 7 4 to 225 71 as 77 billion capex spooks investors"
+   "news:amazon stock premarket amzn sinks 7 4 to 225 71 as 77 billion capex spooks investors",
+   "news:amazon nasdaq amzn stock falls after earnings as us 220 billion ai spending plan raises fears"
   ],
   "WMT:CALL:2026-11-13:124": []
  },
@@ -2066,15 +2076,6 @@
   "INTC:PUT:2026-11-13:65": 2
  },
  "seen_macro": [
-  "fed expected to hold rates steady but warsh may point way to more hikes",
-  "why the federal reserve matters more to crypto market than many investors realise",
-  "bitcoin price prediction analysts warn 77k support could break",
-  "fed rate hikes are coming but not this week cnbc survey",
-  "tech optimism undergirds wall street pre bell asia up europe off",
-  "share market today nifty 50 bank nifty oct 27 2026",
-  "fed is expected to hold rates steady but warsh may signal more hikes ahead",
-  "crude us yields and valuations where dsp mf sees opportunities in indian markets",
-  "india russian oil imports india denies us pressure claims",
   "rbi may hike repo rate to 6 25 by h1 2027 warns deutsche bank as inflation risks persist",
   "brazil is nobody s backyard lula s historic fourth term victory puts trump s latin america strategy to the test",
   "10k crore loss amid diwali delhi traders renew appeal to rahul gandhi over ramlila rally",
@@ -2665,7 +2666,16 @@
   "stock market today intel flirts with worst day on record apple nasdaq aapl",
   "brent crude approaches 120 amid rising supply risks",
   "the sell off for tech stocks worsens and overwhelms wall street",
-  "fed officials are already saying they ll need to get back to hiking rates"
+  "fed officials are already saying they ll need to get back to hiking rates",
+  "bitcoin holds steady near 77 000 amid inflatio",
+  "week ahead for fx bonds u s midterms jobs data in focus boe expected to raise rates",
+  "fed s logan sees two more hikes but says pace can be gradual",
+  "fed needs at least two more rate hikes logan says",
+  "fed s logan calls for two more rate hikes pause won t alter path",
+  "opinion the federal reserve s hawkish hold",
+  "federal reserve signals need for at least two more rate hikes logan says",
+  "fed s musalem and logan signal more interest rate hikes",
+  "fed needs to implement at least two more rate increases dallas fed s logan says"
  ],
  "sharp": {
   "INTC:PUT:2026-11-13:65": 67.315,
