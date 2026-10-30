@@ -384,7 +384,11 @@
    "intel and tsmc are vying for chip fabrication supremacy 1 offers superior value",
    "intel just dropped 10 in a week is it time to sell or load up",
    "new street bullish on intel to buy as cpu scarcity strengthens turnaround",
-   "nasdaq drops 2 as amazon and intel results weigh on market sentiments"
+   "nasdaq drops 2 as amazon and intel results weigh on market sentiments",
+   "silicon shock intel s 25 valuation reset",
+   "intel a major technical buy signal triggers after the 25 plunge rating upgrade intc",
+   "amd s stock slides after intel earnings reveal two big issues",
+   "trump s commerce department s intel stake fell by more than 10 billion in a day as stock craters"
   ],
   "CVX:CALL": [
    "stocks see continued downward pressure from ai anxiety and oil prices",
@@ -1997,27 +2001,29 @@
    "td cowen remains a buy on boeing ba",
    "putin calls spacex ceo elon musk truly a genius for having 5 000 satellites in orbit while russia is only taking the fir"
   ],
-  "NVDA:PUT": []
+  "NVDA:PUT": [
+   "nvidia stock is set for its worst month in a year time to buy the dip"
+  ],
+  "AMZN:PUT": []
  },
  "fired": {
   "INTC:PUT:2026-11-13:65": [
-   "news:nasdaq drops 2 as amazon and intel results weigh on market sentiments"
+   "news:nasdaq drops 2 as amazon and intel results weigh on market sentiments",
+   "stock1",
+   "down-0.15",
+   "sharp@2026-10-30T10:37-04:00",
+   "stock2",
+   "sharp@2026-10-30T10:39-04:00",
+   "news:amd s stock slides after intel earnings reveal two big issues",
+   "news:trump s commerce department s intel stake fell by more than 10 billion in a day as stock craters"
   ],
-  "NVDA:PUT:2026-11-04:205": []
+  "NVDA:PUT:2026-11-04:205": [],
+  "AMZN:PUT:2026-11-06:235": []
  },
- "stock_level": {},
+ "stock_level": {
+  "INTC:PUT:2026-11-13:65": 2
+ },
  "seen_macro": [
-  "us stock market wall street rebounds as anthropic ipo filing lifts tech shares ahead of fed decision",
-  "the world has passed peak trump",
-  "federal reserve is likely to hold interest rates steady in october here s what that means for consumers",
-  "wall street in rally mode as ai stocks stabilize",
-  "weekly market commentary",
-  "trump tariff reversal could cut costs for us energy firms but will likely leave broader flows unchanged",
-  "xrp holds near 1 29 ahead of federal reserve rate decision as aviva tokenizes 50 million fund slice",
-  "interest rate forecast for tomorrow fed expected to hold rates at 3 75 4 00",
-  "wall st eyes best day in a month as anthropic s ipo filing propels ai stocks",
-  "fed interest rate decision inflation rises ahead of october fomc meeting",
-  "hotter than expected september cpi reopens october hike debate",
   "not nvidia this chip stock has more upside according to wall street",
   "nasdaq today live nasdaq composite jumps 1 25 as ai stocks rally after anthropic ipo filing oil prices ease check big te",
   "brazilian markets crash after lula s surprise election win stuns investors",
@@ -2606,7 +2612,20 @@
   "ai risk and the fed prometeia examines the rate gap",
   "us lng producers eye bonanza if trump and xi can ease tariffs",
   "us stock futures tumble as intel and amazon lead tech rout oil jumps on middle east risks dow jones s p nasdaq wall stre",
-  "fed s barkin indicates backing for gradual rate increases"
+  "fed s barkin indicates backing for gradual rate increases",
+  "big tech s scary october has a twist dow on track for biggest monthly lead over nasdaq since 2022",
+  "u s futures fall as amazon intel and alphabet weigh on wall street",
+  "stock market today oct 30 2026 s p 500 sinks as amazon intel losses shake wall street",
+  "gold slides over 2 5 to yearly lows as risk off mood offers little support",
+  "us dollar weakens as technology selloff drives treasury yields lower",
+  "fed s barkin warns ai investment is adding to us inflation as rate hike debate intensifies",
+  "the federal reserve holds rates at 4 as divisions emerge among policymakers",
+  "tanker attack pushes oil higher inflation fears weigh on gold as spot prices fall below 3 910 down more than 110 in a si",
+  "us employment cost growth stable stays below inflation",
+  "spot gold plunges 3 to breach 3 900 what caused the drop in gold prices",
+  "tech stock selloff deepens on earnings oil rises markets wrap"
  ],
- "sharp": {}
+ "sharp": {
+  "INTC:PUT:2026-11-13:65": 67.315
+ }
 }
