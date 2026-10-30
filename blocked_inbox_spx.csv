@@ -49,3 +49,4 @@ id,time,project,tag,sym,root,side,strike,exp,entry,spot,edge,strength
 20261030T1405|spx|news_risk|SPY|PUT|753|2026-11-02,2026-10-30T14:05-04:00,spx,news_risk,SPY,SPY,PUT,753.0,2026-11-02,3.73,753.49,8.75,10.0
 20261030T1435|spx|news_risk|SPY|PUT|749|2026-11-02,2026-10-30T14:35-04:00,spx,news_risk,SPY,SPY,PUT,749.0,2026-11-02,3.81,750.56,8.75,10.0
 20261030T1505|spx|late_entry+news_risk|SPY|PUT|751|2026-11-02,2026-10-30T15:05-04:00,spx,late_entry+news_risk,SPY,SPY,PUT,751.0,2026-11-02,3.73,752.04,8.75,10.0
+20261030T1535|spx|late_entry+news_risk|SPY|PUT|752|2026-11-02,2026-10-30T15:35-04:00,spx,late_entry+news_risk,SPY,SPY,PUT,752.0,2026-11-02,3.5,753.04,6.25,9.4
