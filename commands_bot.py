@@ -1,4 +1,6 @@
-"""أوامر تلجرام: اكتب للبوت وسيرد عند أول تشغيل مجدول (كل ~15 دقيقة أثناء الجلسة).
+"""أوامر تلجرام: اكتب للبوت ويرد خلال ثوانٍ أثناء ساعات التشغيل (--loop: انتظار طويل لرسائل تيليجرام 14 دقيقة،
+ثم يخرج فيحفظ run_job الملفات ويعيد المؤقت تشغيله كل 15 دقيقة). بلا --loop: قراءة واحدة كما كان.
+اختصارات: قائمة الأوامر في زر «/» (setMyCommands، بأسماء لاتينية) وأزرار ثابتة تحت خانة الكتابة، ورمز سهم وحده = /تحديث.
 الأوامر:
   /تحديث NVDA   تحليل شركة + عقودك المفتوحة عليها + آخر توصية
   /حالة         كل العقود المفتوحة الآن
@@ -11,6 +13,8 @@ import copy
 import json
 import os
 import re
+import sys
+import time
 
 import pandas as pd
 import requests
@@ -28,6 +32,21 @@ ALIASES = {"update": "company", "تحديث": "company", "شركة": "company", 
            "spx": "spx", "سعر": "price", "price": "price", "help": "help", "مساعدة": "help", "start": "help", "مساعده": "help"}
 
 
+LOOP_S = 14 * 60       # مدة التشغيل الواحد في وضع --loop (المؤقت كل 15 دقيقة)
+POLL_S = 25            # انتظار تيليجرام الطويل: يرجع فور وصول رسالة
+MENU = [("status", "العقود المفتوحة"), ("board", "لوحة العقود بصورة"), ("report", "تقرير SPX اليومي"),
+        ("spx", "حالة SPX وآخر إشارة"), ("update", "تحليل شركة: /update NVDA"), ("help", "قائمة الأوامر")]
+KEYBOARD = json.dumps({"keyboard": [["حالة", "لوحة", "تقرير"], ["spx", "مساعدة"]],
+                       "resize_keyboard": True, "is_persistent": True}, ensure_ascii=False)
+TICKER = re.compile(r"^\$?[A-Za-z]{1,5}$")
+
+
+def set_menu():
+    """قائمة الأوامر في زر «/» بتيليجرام (تيليجرام يقبل أسماء لاتينية فقط)."""
+    if TOKEN:
+        _tg("setMyCommands", {"commands": json.dumps([{"command": c, "description": d} for c, d in MENU], ensure_ascii=False)})
+
+
 def load_state():
     try:
         with open(STATE_FILE, encoding="utf-8") as f:
@@ -41,13 +60,13 @@ def save_state(s):
         json.dump(s, f)
 
 
-def fetch_updates(offset):
+def fetch_updates(offset, wait=0):
     if not TOKEN:
         print("لا يوجد TELEGRAM_TOKEN.")
         return []
     try:
         r = requests.get(f"https://api.telegram.org/bot{TOKEN}/getUpdates",
-                         params={"offset": offset, "timeout": 0, "allowed_updates": json.dumps(["message", "callback_query"])}, timeout=20)
+                         params={"offset": offset, "timeout": wait, "allowed_updates": json.dumps(["message", "callback_query"])}, timeout=wait + 20)
         data = r.json()
         return data.get("result", []) if data.get("ok") else []
     except Exception as e:
@@ -63,6 +82,8 @@ def parse(text):
     parts = t.split()
     word = parts[0].lstrip("/").split("@")[0].lower()
     cmd = ALIASES.get(word)
+    if cmd is None and len(parts) == 1 and TICKER.match(t):
+        return "company", t.lstrip("$").upper()      # اختصار: رمز السهم وحده = /تحديث
     if cmd is None:
         return None, None
     arg = parts[1].upper() if len(parts) > 1 else None
@@ -100,7 +121,8 @@ def help_text():
             "• <code>/spx</code> حالة SPX وآخر إشارة\n"
             "• <code>/سعر NVDA 1.95</code> سعر دخولك الفعلي لعقد اشتريته (وعدد العقود اختياري: <code>/سعر NVDA 1.95 2</code>)\n\n"
             "🔘 تحت كل توصية شركات زرّان: <b>👀 مراقبة</b> أو <b>🛒 اشتريت</b>.\n"
-            "⏱️ أرد عند أول فحص مجدول، وقد يتأخر 15 دقيقة أو أكثر.\n"
+            "⚡ اختصارات: الأزرار تحت خانة الكتابة، وقائمة زر «/»، واكتب رمز السهم وحده (مثل <code>NVDA</code>) لتحليله.\n"
+            "⏱️ أرد خلال ثوانٍ أثناء ساعات التشغيل (أيام التداول).\n"
             "📉 البيانات مجانية ومتأخرة نحو 15 دقيقة.")
 
 
@@ -311,12 +333,7 @@ def handle(cmd, arg, n):
     return company_text(arg, n)
 
 
-def main():
-    st = load_state()
-    ups = fetch_updates(st.get("offset", 0))
-    if not ups:
-        return
-    n = ob.now_ny()
+def process(ups, st, n):
     for u in ups:
         st["offset"] = max(st.get("offset", 0), u["update_id"] + 1)
         cq = u.get("callback_query")
@@ -339,12 +356,29 @@ def main():
             out = price_text(m.get("text"), n) if cmd == "price" else handle(cmd, arg, n)
             if isinstance(out, tuple):
                 ob.send_photo(out[1], out[2])
+            elif cmd == "help":
+                ob.log_message(out)
+                _tg("sendMessage", {"chat_id": CHAT_ID, "text": out, "parse_mode": "HTML", "reply_markup": KEYBOARD})
             else:
                 ob.send_telegram(out)
         except Exception as e:
             ob.send_telegram(f"⚠️ تعذر تنفيذ الأمر: {ob.esc(e)}")
-    save_state(st)
+
+
+def main(argv=()):
+    loop = "--loop" in argv
+    end = time.monotonic() + (LOOP_S if loop else 0)
+    st = load_state()
+    if loop:
+        set_menu()
+    while True:
+        ups = fetch_updates(st.get("offset", 0), POLL_S if loop else 0)
+        if ups:
+            process(ups, st, ob.now_ny())
+            save_state(st)
+        if time.monotonic() + POLL_S > end:
+            break
 
 
 if __name__ == "__main__":
-    main()
+    main(sys.argv[1:])

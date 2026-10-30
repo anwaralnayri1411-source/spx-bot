@@ -37,7 +37,7 @@ main() {
       msg="update stocks state" ;;
     commands)
       group=commands-bot; envs="TG ALPACA LQS TASTY"
-      cmds=("$py commands_bot.py")
+      cmds=("$py commands_bot.py --loop")   # يرد خلال ثوانٍ: 14 دقيقة انتظار طويل ثم الحفظ، والمؤقت كل 15 دقيقة
       files="commands_state.json messages_commands_bot.jsonl stocks_mine.json"
       msg="update commands state" ;;
     preopen)
