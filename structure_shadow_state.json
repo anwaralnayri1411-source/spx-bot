@@ -1,57 +1,6 @@
 {
  "date": null,
- "items": [
-  {
-   "id": "20261029T1034|ic|day-2026-10-29",
-   "kind": "ic",
-   "pos_id": "day-2026-10-29",
-   "date": "2026-10-29",
-   "side": "BOTH",
-   "exp": "2026-10-30",
-   "entry_time": "2026-10-29T10:34-04:00",
-   "entry_spot": 769.73,
-   "legs": [
-    {
-     "occ": "SPY261030P00763000",
-     "strike": 763.0,
-     "side": "PUT",
-     "qty": -1
-    },
-    {
-     "occ": "SPY261030P00760000",
-     "strike": 760.0,
-     "side": "PUT",
-     "qty": 1
-    },
-    {
-     "occ": "SPY261030C00777000",
-     "strike": 777.0,
-     "side": "CALL",
-     "qty": -1
-    },
-    {
-     "occ": "SPY261030C00780000",
-     "strike": 780.0,
-     "side": "CALL",
-     "qty": 1
-    }
-   ],
-   "capital": 2.38,
-   "entry_cash": 0.62,
-   "peak": 0.21,
-   "last_pnl": 0.21,
-   "quotes": 60,
-   "t60_pnl": "",
-   "t60_time": "",
-   "eod_pnl": "",
-   "eod_time": "",
-   "hold_pnl": "",
-   "hold_time": "",
-   "managed_pnl": "",
-   "managed_out": "",
-   "managed_time": ""
-  }
- ],
+ "items": [],
  "done_recs": [
   "SPY:CALL:765:2026-10-26",
   "SPX:CALL:7695:2026-10-26",
