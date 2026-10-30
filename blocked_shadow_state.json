@@ -14,8 +14,8 @@
    "strength": "5.2",
    "occ": "UBER261106P00065000",
    "peak_pnl": 0.065,
-   "close_pnl": -0.089,
-   "quotes": 141,
+   "close_pnl": -0.105,
+   "quotes": 142,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -34,8 +34,8 @@
    "strength": "5.8",
    "occ": "CVX261106C00235000",
    "peak_pnl": 0.154,
-   "close_pnl": 0.122,
-   "quotes": 124,
+   "close_pnl": 0.119,
+   "quotes": 125,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -54,8 +54,8 @@
    "strength": "7.5",
    "occ": "NFLX261106P00062000",
    "peak_pnl": 0.214,
-   "close_pnl": -0.146,
-   "quotes": 69,
+   "close_pnl": -0.165,
+   "quotes": 70,
    "out": "",
    "out_time": "",
    "out_pnl": ""
