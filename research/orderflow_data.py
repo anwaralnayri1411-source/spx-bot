@@ -4,7 +4,8 @@
 جهة كل صفقة بقاعدة التيك: سعر أعلى من آخر سعر مختلف = شراء عدواني (+1)، أدنى = بيع عدواني (−1)، والمساوي يرث جهة سابقه.
 لكل دقيقة (ساعات السوق): حجم الشراء، حجم البيع، عدد الصفقات، وإغلاق الدقيقة. قابل للاستئناف: يتخطى الأيام المحفوظة.
 الملف خارج شجرة git: SPXBOT_DATA/orderflow_SPY_1m.csv.gz. يحتاج ALPACA_KEY/ALPACA_SECRET (الخادم). ثقيل: ملايين الصفقات يومياً.
-تشغيل: python research/orderflow_data.py [--days 40] [--sym SPY]
+لا يُحفظ التنزيل الخام: الصفقات تُجمَّع بالدقيقة في الذاكرة ثم تُضاف إلى الملف المضغوط فوراً.
+تشغيل: python research/orderflow_data.py [--days 40] [--sym SPY | --syms DIS,UBER,...]
 """
 import gzip
 import json
@@ -81,10 +82,16 @@ def fetch_day(sym, day):
 
 def main(argv):
     days_n = int(argv[argv.index("--days") + 1]) if "--days" in argv else 40
-    sym = argv[argv.index("--sym") + 1] if "--sym" in argv else "SPY"
+    syms = argv[argv.index("--syms") + 1].split(",") if "--syms" in argv else [argv[argv.index("--sym") + 1] if "--sym" in argv else "SPY"]
     if not (os.getenv("ALPACA_KEY") and os.getenv("ALPACA_SECRET")):
         print("يحتاج ALPACA_KEY وALPACA_SECRET (الخادم).")
         return 0
+    for sym in syms:
+        fetch_symbol(sym.strip().upper(), days_n)
+    return 0
+
+
+def fetch_symbol(sym, days_n):
     path = os.path.join(DATA, f"orderflow_{sym}_1m.csv.gz")
     old = pd.read_csv(path, parse_dates=["t"]) if os.path.exists(path) else pd.DataFrame(columns=["t", "buy", "sell", "n", "close"])
     have = set(pd.to_datetime(old["t"]).dt.date) if len(old) else set()
@@ -103,8 +110,7 @@ def main(argv):
         new = not os.path.exists(path)
         with gzip.open(path, "at", encoding="utf-8", newline="") as f:
             agg.to_csv(f, index=False, header=new, lineterminator="\n")
-        print(f"{k + 1}/{len(todo)} {day}: {len(px):,} صفقة، {len(agg)} دقيقة")
-    return 0
+        print(f"{sym} {k + 1}/{len(todo)} {day}: {len(px):,} صفقة، {len(agg)} دقيقة")
 
 
 if __name__ == "__main__":

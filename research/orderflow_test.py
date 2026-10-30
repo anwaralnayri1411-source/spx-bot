@@ -12,7 +12,9 @@
   OFC الدمج مع المستوى (وصفي لصغر العينة): أول ملامسة لـPOC الأمس (من ملف الحجم بالدقيقة) بعد 10:00 قادماً من جهة الافتتاح؛
       «مع الضغط» = اختلال 5 دقائق عند الملامسة في جهة الارتداد (> 0)، مقابل «بلا ضغط» (≤ 0). عائد 30 دقيقة في جهة الارتداد للمجموعتين.
   المقياس: الزيادة على عشوائي بالمزيج نفسه، ومعاينة بالأيام.
-تشغيل: SPXBOT_DATA=/opt/spxbot/data python research/orderflow_test.py   المخرج: research/orderflow_test_results.md
+H-OFLOWS (30/10/2026، بطلب المستخدم): الاختبارات نفسها بلا تعديل على شركات متوسطة السيولة (--syms)، عتبة المئين 90 لكل سهم على حدة،
+  وإزالة متوسط كل سهم، وحاجز تكلفة عقد الشركات (14–21 يوماً دلتا 0.45): 0.25% لـ30 دقيقة و0.30% حتى الإغلاق.
+تشغيل: SPXBOT_DATA=/opt/spxbot/data python research/orderflow_test.py [--syms DIS,UBER,...]   المخرج: research/orderflow_test_results.md (أو ..._stocks_results.md)
 """
 import os
 import sys
@@ -29,6 +31,7 @@ OUT = os.path.join(HERE, "orderflow_test_results.md")
 IMB = 0.15
 BIN = 0.00065
 HURDLE = {"OF1": 0.0003, "OF2": 0.0003, "OF3": 0.0010}
+HURDLE_STK = {"OF1": 0.0025, "OF2": 0.0025, "OF3": 0.0030}
 
 
 def load(path=None):
@@ -135,7 +138,8 @@ def analyze(d, imb=None):
 def stats(sub, n=3000, seed=73):
     if sub["day"].nunique() < 8:
         return None
-    x = sub["side"] * (sub["raw"] - sub["raw"].mean())
+    mu = sub.groupby("sym")["raw"].transform("mean") if "sym" in sub else sub["raw"].mean()
+    x = sub["side"] * (sub["raw"] - mu)
     S = x.groupby(sub["day"]).sum().values
     N = x.groupby(sub["day"]).size().values
     idx = np.random.default_rng(seed).integers(0, len(S), (n, len(S)))
@@ -153,7 +157,8 @@ def half_txt(x):
     return "-" if not x else f"{100 * x['mean']:+.3f}%"
 
 
-def report(df, meta):
+def report(df, meta, hurdle=None):
+    hurdle = hurdle or HURDLE
     L = ["# H-OFLOW: الأوردر فلو على SPY (قاعدة التيك على كل الصفقات، عينة أيام أخيرة)", "", f"- {meta}",
          "- الزيادة = الفرق عن عشوائي بالمزيج نفسه. العينة صغيرة: الحكم يحتاج p < 0.05 على كل الأيام وموجباً في النصفين، ثم حاجز التكلفة.", "",
          "| الاختبار | أحداث | أيام | الزيادة | p | في الجهة الصحيحة | النصف الأول | النصف الثاني |", "|---|---|---|---|---|---|---|---|"]
@@ -179,22 +184,42 @@ def report(df, meta):
         passed = bh(np.array([x[1]["p"] for x in prim]), 0.05)
         for (k, s, a, b, base), okp in zip(prim, passed):
             ok = bool(okp) and a and b and a["mean"] > 0 and b["mean"] > 0
-            cost = s["mean"] > HURDLE[base]
+            cost = s["mean"] > hurdle[base]
             verdicts.append(f"⚖️ {NAMES[k]}: " + (("تحققت" + ("" if cost else " لكن دون حاجز التكلفة")) if ok else "لم تتحقق") + f" (الزيادة {100 * s['mean']:+.3f}%، p {s['p']:.3f})")
     return L + [""] + verdicts
 
 
-def main():
-    d = load()
-    thr = threshold(d)
-    df = analyze(d, thr)
-    days = sorted(set(d.index.date))
-    L = report(df, f"{len(days)} يوم تداول ({days[0]} → {days[-1]})، عتبة الاختلال (المئين 90) = {thr:.3f}")
-    with open(OUT, "w", encoding="utf-8", newline="\n") as f:
+def main(argv=()):
+    if "--syms" in argv:
+        parts, info = [], []
+        for sym in argv[argv.index("--syms") + 1].split(","):
+            p = os.path.join(DATA, f"orderflow_{sym}_1m.csv.gz")
+            if not os.path.exists(p):
+                print("لا ملف:", sym)
+                continue
+            d = load(p)
+            thr = threshold(d)
+            x = analyze(d, thr)
+            x["sym"] = sym
+            parts.append(x)
+            info.append(f"{sym} {thr:.2f}")
+        df = pd.concat(parts) if parts else pd.DataFrame()
+        days = sorted(df["day"].unique()) if len(df) else ["-"]
+        L = report(df, f"{len(parts)} شركة، {len(days)} يوم تداول ({days[0]} → {days[-1]})؛ عتبات الاختلال: {'، '.join(info)}", HURDLE_STK)
+        L[0] = L[0].replace("على SPY", "على الشركات (H-OFLOWS)")
+        out = OUT.replace("_results.md", "_stocks_results.md")
+    else:
+        d = load()
+        thr = threshold(d)
+        df = analyze(d, thr)
+        days = sorted(set(d.index.date))
+        L = report(df, f"{len(days)} يوم تداول ({days[0]} → {days[-1]})، عتبة الاختلال (المئين 90) = {thr:.3f}")
+        out = OUT
+    with open(out, "w", encoding="utf-8", newline="\n") as f:
         f.write("\n".join(L) + f"\n(آخر تشغيل {datetime.now():%Y-%m-%d})\n")
     print("\n".join(L))
     return 0
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    sys.exit(main(sys.argv[1:]))
