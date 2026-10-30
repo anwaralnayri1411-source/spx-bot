@@ -357,6 +357,97 @@ def pick_contracts(side, chains, S, rv, closes=None):
     return picked
 
 
+# عقد الشركات (منذ 30/10/2026 بطلب المستخدم، بعد H-STKCONTRACT على 1,381 دخولاً بأسعار حقيقية: +2.4 نقطة للصفقة مقابل القاعدة القديمة):
+# انتهاء بعد 14–21 يوماً، أقرب دلتا إلى 0.45 (لا أقل من 0.30)، سعر 80–350$، عرض وطلب موجودان. الخروج +50%/−40% كما هو.
+NEXT_DTE_MIN, NEXT_DTE_MAX, NEXT_TARGET_DELTA, NEXT_MIN_DELTA = 14, 21, 0.45, 0.30
+RULE_COMPARE_LOG = "stocks_rule_compare_log.csv"
+
+
+def get_chains_next(t, today):
+    """سلاسل الانتهاءات بعد 14–21 يوماً (لاختيار العقد فقط؛ إشارات التدفق ما زالت من get_chains)."""
+    out = []
+    for e in (t.options or []):
+        try:
+            dte = (date.fromisoformat(e) - today).days
+        except Exception:
+            continue
+        if NEXT_DTE_MIN <= dte <= NEXT_DTE_MAX:
+            try:
+                ch = t.option_chain(e)
+                out.append((e, dte, ch.calls.copy(), ch.puts.copy()))
+            except Exception as ex:
+                data_gaps.note("stocks", "option_chain_next", ex, e)
+    return out
+
+
+def pick_next(side, chains, S, rv, closes=None):
+    """القاعدة الجديدة: من العقود بعرض وطلب، فرق ≤ MAX_SPREAD، سيولة كافية، سعر 80–350$ ودلتا ≥ 0.30: الأقرب دلتا إلى 0.45.
+    يرجع [عقد] بالحقول نفسها التي يستعملها البوت (والدرجة بالمعادلة نفسها للعرض فقط)."""
+    best = None
+    today = ob.now_ny().date()
+    for exp, dte, calls, puts in chains:
+        df = calls if side == "CALL" else puts
+        df = df[(df["strike"] / S - 1).abs() <= 0.15]
+        T = max(dte, 0.5) / 365
+        for _, r in df.iterrows():
+            bid = 0 if pd.isna(r.get("bid")) else float(r["bid"])
+            ask = 0 if pd.isna(r.get("ask")) else float(r["ask"])
+            if bid <= 0 or ask <= 0:
+                continue
+            price, spr = ask, (ask - bid) / ((ask + bid) / 2)
+            cost = price * 100
+            if not (CONTRACT_MIN_USD <= cost <= CONTRACT_MAX_USD) or spr > MAX_SPREAD:
+                continue
+            oi = 0 if pd.isna(r.get("openInterest")) else float(r["openInterest"])
+            vol = 0 if pd.isna(r.get("volume")) else float(r["volume"])
+            if oi < MIN_OI and vol < MIN_VOL:
+                continue
+            iv = r.get("impliedVolatility")
+            if iv is None or pd.isna(iv) or iv < 0.05:
+                iv = max(rv, 0.2)
+            iv, K = float(iv), float(r["strike"])
+            delta = ob.abs_delta(S, K, T, iv, side)
+            if delta < NEXT_MIN_DELTA:
+                continue
+            if best is not None and abs(delta - NEXT_TARGET_DELTA) >= abs(best["delta"] - NEXT_TARGET_DELTA):
+                continue
+            be = K + price if side == "CALL" else K - price
+            z = abs(be - S) / (S * iv * math.sqrt(T))
+            tdays = max(1, int(np.busday_count(today, date.fromisoformat(exp))))
+            need = abs(be / S - 1)
+            hs = hist_stats(closes, tdays, need, side) if closes is not None else None
+            liq = (2 if oi >= 1000 else (1.5 if oi >= 300 else (1 if oi >= 150 else 0.5))) + (1 if spr <= 0.10 else (0.5 if spr <= 0.20 else 0))
+            dp = 3 if delta >= 0.35 else (2 if delta >= 0.25 else (1 if delta >= 0.15 else 0.5))
+            rp = 4 if z <= 0.5 else (3 if z <= 0.9 else (2 if z <= 1.3 else 1))
+            fr = vol / max(oi, 1.0)
+            flow = 1.0 + (0.5 if fr >= 1.5 else 0.0) if vol >= MIN_VOL and fr >= 0.5 else 0.0
+            richness = iv / rv if rv > 0 else 1.0
+            adj = -1.0 if richness >= 1.6 else (0.5 if richness <= 1.0 else 0.0)
+            best = {"exp": exp, "dte": dte, "strike": K, "price": price, "cost": cost, "be": be, "delta": delta,
+                    "prob": ob.prob_beyond(S, be, T, iv, side), "z": z, "oi": oi, "vol": vol, "iv": iv,
+                    "score": max(0.0, min(10.0, liq + dp + rp + flow + adj)), "flow": flow, "rich": richness, "need": need, "hist": hs, "spr": spr,
+                    "em_iv": iv * math.sqrt(max(dte, 0.5) / 365), "em_rv": rv * math.sqrt(tdays / 252)}
+    return [best] if best else []
+
+
+def _rule_compare(tk, side, new, old):
+    """ظل (تسجيل فقط): عقد القاعدة الجديدة بجانب ما كانت القديمة ستختاره، للمقارنة الحية."""
+    try:
+        import csv
+        k, o = (new[0] if new else {}), (old[0] if old else {})
+        row = {"time": ob.now_ny().isoformat(timespec="minutes"), "ticker": tk, "side": side,
+               "new_exp": k.get("exp", ""), "new_strike": k.get("strike", ""), "new_price": round(k["price"], 2) if k else "", "new_delta": round(k["delta"], 3) if k else "",
+               "old_exp": o.get("exp", ""), "old_strike": o.get("strike", ""), "old_price": round(o["price"], 2) if o else "", "old_delta": round(o["delta"], 3) if o else ""}
+        fresh = not os.path.exists(RULE_COMPARE_LOG)
+        with open(RULE_COMPARE_LOG, "a", encoding="utf-8", newline="") as f:
+            w = csv.DictWriter(f, fieldnames=list(row))
+            if fresh:
+                w.writeheader()
+            w.writerow(row)
+    except Exception as e:
+        print("تعذر تسجيل مقارنة قاعدة العقد:", type(e).__name__)
+
+
 def tier(score):
     return "🟩" if score >= 7.5 else ("🟨" if score >= 6.0 else "🟧")
 
@@ -1410,7 +1501,8 @@ def analyze(force):
             watch.append((tk, "تحذير سوق: لا نقترح Call الآن"))
             try:   # ظل الحجب (تسجيل فقط): العقد الذي كان سيُقترح لولا تحذير السوق
                 Sx = intraday_price(t, s["info"]["S"])
-                cx = pick_contracts(side, _live_chains(chains, side, Sx), Sx, s["info"]["rv"], s["info"]["closes"])
+                cx = (pick_next(side, _live_chains(get_chains_next(t, today), side, Sx), Sx, s["info"]["rv"], s["info"]["closes"])
+                      or pick_contracts(side, _live_chains(chains, side, Sx), Sx, s["info"]["rv"], s["info"]["closes"]))
                 if cx:
                     blocked.append({"tag": "market_warning", "ticker": tk, "side": side, "edge": edge,
                                     "strength": min(10.0, abs(edge) * 1.1), "S": Sx, "contracts": cx})
@@ -1418,7 +1510,11 @@ def analyze(force):
                 print("تعذر التقاط عقد ظل الحجب:", tk, e)
             continue
         S = intraday_price(t, s["info"]["S"])
-        contracts = pick_contracts(side, _live_chains(chains, side, S), S, s["info"]["rv"], s["info"]["closes"])
+        new = pick_next(side, _live_chains(get_chains_next(t, today), side, S), S, s["info"]["rv"], s["info"]["closes"])
+        old = pick_contracts(side, _live_chains(chains, side, S), S, s["info"]["rv"], s["info"]["closes"])
+        # القاعدة الجديدة أولاً؛ وإن لم تجد عقداً ضمن السعر (أسهم غالية جداً أو رخيصة جداً) تبقى القاعدة القديمة كما كانت
+        contracts = new or old
+        _rule_compare(tk, side, new, old)
         if contracts:   # القوة = نصف قوة الاتجاه + نصف درجة أفضل عقد (حتى لا تتشابه كل الفرص)
             s["strength"] = round(0.5 * min(10.0, abs(edge) * 1.1) + 0.5 * contracts[0]["score"], 1)
         if contracts and dates["earn"] is not None and any(
