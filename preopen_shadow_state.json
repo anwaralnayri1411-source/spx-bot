@@ -3,47 +3,47 @@
  "plan_date": "2026-10-30",
  "prev_close": 7720.39,
  "es_night": -0.0076,
- "snap_date": "2026-10-29",
+ "snap_date": "2026-10-30",
  "snap": {
-  "time": "2026-10-29T09:46-04:00",
-  "open": 7699.61,
-  "S945": 7715.85,
+  "time": "2026-10-30T09:46-04:00",
+  "open": 7632.98,
+  "S945": 7625.27,
   "src": "tasty",
-  "prev_close": 7743.98,
-  "gap": -0.00573,
+  "prev_close": 7720.39,
+  "gap": -0.01132,
   "side": "PUT",
-  "confirm": false,
+  "confirm": true,
   "legs": [
    {
     "role": "rule",
     "side": "PUT",
     "contract": "bot",
-    "strike": 7610.0,
-    "entry_live": 0.35,
+    "strike": 7520.0,
+    "entry_live": 1.05,
     "live_src": "tasty"
    },
    {
     "role": "rule",
     "side": "PUT",
     "contract": "atm",
-    "strike": 7715.0,
-    "entry_live": 15.8,
+    "strike": 7625.0,
+    "entry_live": 18.2,
     "live_src": "tasty"
    },
    {
     "role": "opp",
     "side": "CALL",
     "contract": "bot",
-    "strike": 7825.0,
-    "entry_live": 0.2,
+    "strike": 7735.0,
+    "entry_live": 0.55,
     "live_src": "tasty"
    },
    {
     "role": "opp",
     "side": "CALL",
     "contract": "atm",
-    "strike": 7715.0,
-    "entry_live": 16.8,
+    "strike": 7625.0,
+    "entry_live": 20.2,
     "live_src": "tasty"
    }
   ]
