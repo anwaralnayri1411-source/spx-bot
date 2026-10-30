@@ -406,7 +406,8 @@
    "chip stocks lose 1 trillion as intel sinks 28 intel nasdaq intc",
    "intel s plunge today makes it october s worst s p 500 stock accenture is the biggest winner",
    "after intel s historic stock drop analysts say there s no reason to buy the dip",
-   "intel nasdaq intc stock price target cut by truist financial"
+   "intel nasdaq intc stock price target cut by truist financial",
+   "deadly blast hit intel s factory and it has a hidden bill that nobody can yet calculate"
   ],
   "CVX:CALL": [
    "stocks see continued downward pressure from ai anxiety and oil prices",
@@ -2030,7 +2031,11 @@
    "da davidson reiterates amazon stock neutral rating on aws growth",
    "will amazon nasdaq amzn turn ai spending into growth",
    "amazon stock slips on q3 earnings amid 220b ai spending push",
-   "amazon aws above 40 through 2028 nasdaq amzn"
+   "amazon aws above 40 through 2028 nasdaq amzn",
+   "amazon s record margins couldn t stop the sell off here s why",
+   "amazon wall street hates the bill i like the price nasdaq amzn",
+   "amazon stock premarket amzn sinks 7 4 to 225 71 as 77 billion capex spooks investors",
+   "amazon is spending billions to win the ai race will the gamble pay off"
   ]
  },
  "fired": {
@@ -2046,12 +2051,14 @@
    "news:intel nasdaq intc shares gap down following analyst downgrade",
    "news:intel nasdaq intc plunges over 25 on weak pc outlook dragging dell technologies nyse dell and hp inc nyse hpq lower amid",
    "news:intel stock plunges nearly 30 on pace for its worst day since 1974",
-   "news:intel nasdaq intc stock price target cut by truist financial"
+   "news:intel nasdaq intc stock price target cut by truist financial",
+   "news:deadly blast hit intel s factory and it has a hidden bill that nobody can yet calculate"
   ],
   "AMZN:PUT:2026-11-06:235": [
    "sharp@2026-10-30T11:11-04:00",
    "down-0.15",
-   "news:amazon com price target lowered to 300 from 325 at scotiabank"
+   "news:amazon com price target lowered to 300 from 325 at scotiabank",
+   "news:amazon stock premarket amzn sinks 7 4 to 225 71 as 77 billion capex spooks investors"
   ],
   "WMT:CALL:2026-11-13:124": []
  },
@@ -2059,15 +2066,6 @@
   "INTC:PUT:2026-11-13:65": 2
  },
  "seen_macro": [
-  "ai is surprisingly profitable what that means for the stock market",
-  "fed preview rate hikes will likely wait until december",
-  "oil nasdaq 100 gold what s moving the markets this week",
-  "donald trump s biggest mistake ever everyone missies starting a trade war with canada that is jacking up inflation",
-  "ai is surprisingly profitable anthropic s ipo filing proves that",
-  "gold trades below 4 000 as fed rate outlook and iran diplomacy shape market attention",
-  "does the big short s michael burry know something wall street doesn t he s deepened his bet against some of the stock ma",
-  "stock market today oct 27 2026 nasdaq futures edge lower as wall street gears up for earnings fed meeting",
-  "gold holds above 4 000 as silver struggles ahead of fed decision",
   "fed expected to hold rates steady but warsh may point way to more hikes",
   "why the federal reserve matters more to crypto market than many investors realise",
   "bitcoin price prediction analysts warn 77k support could break",
@@ -2658,7 +2656,16 @@
   "fed s musalem says more rate hikes needed soon to tame inflation",
   "st louis fed s musalem another rate hike needed soon",
   "steady labor market not a concern for the fed",
-  "fed s musalem calls for rate hike soon as policy remains too loose"
+  "fed s musalem calls for rate hike soon as policy remains too loose",
+  "silver drops below 50",
+  "hold the rate the fed can t pump oil",
+  "gold tumbles nearly 3 to yearly lows as risk off mood offers little support",
+  "a federal reserve member warns about the dangers of artificial intelligence on inflation",
+  "5 etfs to buy for rising interest rates",
+  "stock market today intel flirts with worst day on record apple nasdaq aapl",
+  "brent crude approaches 120 amid rising supply risks",
+  "the sell off for tech stocks worsens and overwhelms wall street",
+  "fed officials are already saying they ll need to get back to hiking rates"
  ],
  "sharp": {
   "INTC:PUT:2026-11-13:65": 67.315,
