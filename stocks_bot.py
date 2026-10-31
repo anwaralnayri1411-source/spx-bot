@@ -1346,6 +1346,31 @@ def completed_volume(df, n):
     return float(v.iloc[-1])
 
 
+LIVE_PX_LOG = "stocks_live_px_log.csv"
+
+
+def live_daily(df, tk, n):
+    """منذ 31/10/2026 (بطلب المستخدم «عدل الى لحظي»): شمعة اليوم في الشارت اليومي تُغلق على السعر اللحظي
+    (Tastytrade ثم Alpaca) بدل ياهو المتأخر ~15د؛ الأيام السابقة كما هي. يرجع (الشارت، السعر اللحظي أو None)."""
+    if df is None or not len(df) or not _live_on() or df.index[-1].date() != n.date():
+        return df, None
+    import live_quotes as lq
+    px = lq.spot(tk)[0]
+    if not px:
+        return df, None
+    d = df.copy()
+    k = d.index[-1]
+    d.loc[k, "Close"] = px
+    d.loc[k, "High"] = max(float(d.loc[k, "High"]), px)
+    d.loc[k, "Low"] = min(float(d.loc[k, "Low"]), px)
+    return d, px
+
+
+def legacy_slot(n):
+    """فحص في موعد الإيقاع القديم :12/:42 (منذ 31/10 الفحص كل 15 دقيقة): الدراسة الصامتة تبقى على عيّنتها القديمة."""
+    return (n.minute - 12) % 30 < 15
+
+
 def intraday_price(t, fallback):
     px = _live_px(t)
     if px:
@@ -1429,6 +1454,7 @@ def analyze(force):
     spy = bars("SPY")
     if spy is None:
         raise RuntimeError("تعذر قراءة بيانات السوق (SPY)")
+    spy = live_daily(spy, "SPY", n)[0]
     spyc = spy["Close"].astype(float)
     spy5 = float(spyc.iloc[-1] / spyc.iloc[-6] - 1)
     spy_up = float(spyc.iloc[-1]) > float(spyc.rolling(20).mean().iloc[-1])
@@ -1447,14 +1473,19 @@ def analyze(force):
         except Exception:
             drv[key] = None
 
-    scored = []
+    scored, px_rows = [], []
     for tk, (name, dkey) in WATCHLIST.items():
         df = bars(tk)
         if df is None:
             continue
         try:
-            bull, bear, why, info = tech_points(df, spy5, drv.get(dkey) if dkey in ("btc", "oil") else None,
-                                                completed_volume(df, n))
+            d_drv = drv.get(dkey) if dkey in ("btc", "oil") else None
+            dfl, px = live_daily(df, tk, n)
+            bull, bear, why, info = tech_points(dfl, spy5, d_drv, completed_volume(df, n))
+            if px:      # للمقارنة: النقاط نفسها بسعر ياهو (تسجيل فقط)
+                by, ry, _, _ = tech_points(df, spy5, d_drv, completed_volume(df, n))
+                px_rows.append([n.isoformat(timespec="minutes"), tk, round(float(df["Close"].iloc[-1]), 2), round(px, 2),
+                                by, ry, bull, bear])
         except Exception as e:
             print("تخطي", tk, e)
             continue
@@ -1535,7 +1566,12 @@ def analyze(force):
             blocked.append(_blocked_idea("same_side_cap", i))   # لظل الحجب (تسجيل فقط)
     ideas = kept
     blocked += [_blocked_idea("max_ideas_cap", i) for i in ideas[MAX_IDEAS:]]
-    if in_window(n):      # دراسة صامتة، وأي خطأ فيها لا يؤثر على التوصيات
+    if px_rows and in_window(n) and not force:
+        try:
+            _append_csv(LIVE_PX_LOG, ["time", "ticker", "yahoo_close", "live", "bull_yahoo", "bear_yahoo", "bull_live", "bear_live"], px_rows)
+        except Exception as e:
+            print("تعذر تسجيل مقارنة السعر اللحظي:", e)
+    if in_window(n) and legacy_slot(n):      # دراسة صامتة، وأي خطأ فيها لا يؤثر على التوصيات
         try:
             shadow_log(n, scored, flow_rows, spy5, spy_up)
         except Exception as e:

@@ -33,7 +33,7 @@ main() {
     stocks)
       group=stocks-bot; envs="TG ALPACA LQS TASTY"; extra_env="FORCE=0 BOT_MODE=scan"
       cmds=("$py stocks_bot.py")
-      files="stocks_log.csv stocks_track.csv messages_stocks_bot.jsonl stocks_state.json stocks_positions.json stocks_shadow_log.csv stocks_flow_log.csv live_quotes_stocks_log.csv stocks_sector_live_log.csv data_gaps_stocks_log.csv blocked_inbox_stocks.csv pro_inbox_stocks.csv stocks_rule_compare_log.csv"
+      files="stocks_log.csv stocks_track.csv messages_stocks_bot.jsonl stocks_state.json stocks_positions.json stocks_shadow_log.csv stocks_flow_log.csv live_quotes_stocks_log.csv stocks_sector_live_log.csv data_gaps_stocks_log.csv blocked_inbox_stocks.csv pro_inbox_stocks.csv stocks_rule_compare_log.csv stocks_live_px_log.csv"
       msg="update stocks state" ;;
     commands)
       group=commands-bot; envs="TG ALPACA LQ LQS TASTY ANTHROPIC"; extra_env="LIVE_BARS_SPX=1"   # ANTHROPIC/LQ: مساعد المحادثة؛ فحصه لـSPX بشموع البوت نفسها
