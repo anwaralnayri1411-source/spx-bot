@@ -132,10 +132,12 @@ def company_text(tk, n):
         return "اكتب رمز الشركة مثل: <code>/تحديث NVDA</code>"
     t = yf.Ticker(tk)
     df = t.history(period="6mo")
+    if df is not None:
+        df = df.dropna(subset=["Close"])      # ياهو يرجع أحياناً شمعة اليوم بلا إغلاق (كما يفعل فحص البوت)
     if df is None or len(df) < 55:
         return f"لا أجد بيانات كافية للرمز {ob.esc(tk)}."
     df = sb.live_daily(df, tk, n)[0]          # شمعة اليوم بالسعر اللحظي كما في فحص البوت
-    spy = sb.live_daily(yf.Ticker("SPY").history(period="6mo"), "SPY", n)[0]["Close"].astype(float)
+    spy = sb.live_daily(yf.Ticker("SPY").history(period="6mo").dropna(subset=["Close"]), "SPY", n)[0]["Close"].astype(float)
     spy5 = float(spy.iloc[-1] / spy.iloc[-6] - 1)
     drv = None
     bull, bear, why, info = sb.tech_points(df, spy5, drv, sb.completed_volume(df, n))
