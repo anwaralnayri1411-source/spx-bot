@@ -17,7 +17,9 @@ def snapshot(n, a):
     shock = a["shock"]
     raw = abs(a["bull"] - a["bear"])
     news = [r for r in a["reasons"] if r.startswith(NEWS_PREFIX)]
-    if news and raw >= ob.MIN_EDGE:
+    if a.get("news_half") and a.get("contracts"):
+        kind = "allowed_half"       # منذ 31/10/2026: مستوى 3 لا يمنع، التوصية بنصف الكمية (H-NEWSHALF)
+    elif news and raw >= ob.MIN_EDGE:
         kind = "blocked"
     elif shock.get("level") == 2 and raw >= ob.MIN_EDGE > a["edge"]:
         kind = "weakened"

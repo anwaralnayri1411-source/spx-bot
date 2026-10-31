@@ -1094,8 +1094,8 @@ def analyze(force):
                 reasons.append(f"صدور {nm} اليوم؛ ننتظر ما بعد 10:00 (نيويورك) حتى تهدأ الحركة الأولى.")
         else:
             reasons.append(f"حدث كبير اليوم: {nm}. التقلب يصعب توقعه.")
-    if shock["level"] >= 3:
-        reasons.append("مخاطر الأخبار والجيوسياسة مرتفعة: " + "، ".join(shock["flags"][:2]) + ".")
+    # منذ 31/10/2026 (بقرار المستخدم، H-NEWSHALF في CLAUDE.md): صدمة مستوى 3 لا تمنع؛ التوصية بنصف الكمية مع تحذير
+    news_half = shock["level"] >= 3
     if edge < MIN_EDGE:
         reasons.append(f"لا اتجاه واضح (صعود {bull:.1f} مقابل هبوط {bear:.1f}).")
 
@@ -1103,6 +1103,9 @@ def analyze(force):
     REJ.clear()
     if not reasons:
         contracts = _pick_all(side, ch, S, T, c, exp)
+        if news_half:
+            for k in contracts:
+                k["half"] = True
         if not contracts:
             reasons.append(f"لا توجد عقود {('Call' if side == 'CALL' else 'Put')} بسعر ${CONTRACT_MIN_USD}-${CONTRACT_MAX_USD} "
                            "مع سيولة كافية الآن." + (" [رُفض: " + "، ".join(f"{k} {v}" for k, v in sorted(REJ.items(), key=lambda x: -x[1])) + "]" if REJ else ""))
@@ -1125,15 +1128,17 @@ def analyze(force):
     return {"c": c, "shock": shock, "heads": heads, "events": events, "rows": rows, "bull": bull, "bear": bear,
             "edge": edge, "side": side, "strength": strength, "reasons": reasons, "contracts": contracts,
             "exp": exp, "is_test": is_test, "today": today, "block_tags": block_tags,
-            "blocked_contracts": blocked_contracts}
+            "blocked_contracts": blocked_contracts, "news_half": news_half}
 
 
 # ====================== الكمية والمستويات والخطة ======================
-def qty_for(cost):
-    """عدد العقود بحيث لا تتجاوز الخسارة عند الوقف ميزانية المخاطرة (عقد واحد على الأقل)."""
+def qty_for(cost, half=False):
+    """عدد العقود بحيث لا تتجاوز الخسارة عند الوقف ميزانية المخاطرة (عقد واحد على الأقل).
+    half: صدمة أخبار مستوى 3 (منذ 31/10/2026) → نصف الكمية."""
     per_loss = cost * STOP_LOSS
     q = int(RISK_BUDGET_USD // per_loss) if per_loss > 0 else 1
-    return max(1, min(MAX_QTY, q)), per_loss
+    q = max(1, min(MAX_QTY, q))
+    return (max(1, q // 2) if half else q), per_loss
 
 
 def index_levels(k, side, hold_min=None):
@@ -1306,7 +1311,7 @@ def instrument_block(sym, ks, side, S_idx):
     if not ks:
         return [f"{title}", "لا عقد مناسب لميزانيتك وسيولتك الآن."]
     k0 = ks[0]
-    q, per = qty_for(k0["cost"])
+    q, per = qty_for(k0["cost"], k0.get("half"))
     sp = k0.get("spot", S_idx)
     need = abs(k0["be"] - sp) / sp * 100
     mark = tier(k0["score"]) + ("🔥" if k0.get("flow", 0) >= 1 else "")
@@ -1354,6 +1359,9 @@ def signal_message(a):
         L.append("")
         L += instrument_block(sym, groups.get(sym, []), side, S)
     L.append("")
+    if a.get("news_half"):
+        L.append("⚠️ <b>أخبار مرتفعة المخاطر:</b> " + esc("، ".join(a["shock"]["flags"][:2])) + ". الكمية المقترحة نصف المعتاد (عقد واحد على الأقل)؛ خفّف حجمك.")
+        L.append("")
     L.append("ادخل بسعر العقد المذكور أو أقل، ولا تلاحق السعر إن ارتفع العقد أكثر من 10% قبل دخولك. "
              f"⏰ لا دخول بعد {ry_time(*no_entry(now_ny()))}")
     if c["age"] >= 5:
@@ -1366,7 +1374,7 @@ def signal_message(a):
 def ticket_lines(sym, k0, side):
     """سطور تذكرة الدخول المختصرة لعقد واحد: دخول، تكلفة، هدف، وقف، أقصى خسارة."""
     call = side == "CALL"
-    q, per = qty_for(k0["cost"])
+    q, per = qty_for(k0["cost"], k0.get("half"))
     tp_p, sl_p = k0["price"] * (1 + TAKE_PROFIT), k0["price"] * (1 - STOP_LOSS)
     lv = index_levels(k0, side)
     f = (lambda x: f"{x:,.2f}") if sym == "SPY" else (lambda x: f"{x:,.0f}")
@@ -1579,7 +1587,7 @@ def add_positions(n, a):
         if sym in seen:
             continue
         seen.add(sym)
-        q, _ = qty_for(k["cost"])
+        q, _ = qty_for(k["cost"], k.get("half"))
         kexp = k.get("exp", a["exp"])
         pid = f"{sym}:{a['side']}:{k['strike']:g}:{kexp}"
         if any(p["id"] == pid for p in P["positions"]):
@@ -1587,7 +1595,7 @@ def add_positions(n, a):
         P["positions"].append({"id": pid, "sym": sym, "root": root_sym(k), "side": a["side"], "strike": float(k["strike"]),
                                "exp": kexp, "entry": round(float(k["price"]), 2), "qty": q,
                                "time": n.isoformat(timespec="minutes"), "entry_spot": round(k.get("spot", a["c"]["S"]), 2),
-                               "status": "open", "peak": 0.0, "alerts": {}})
+                               "status": "open", "peak": 0.0, "alerts": {}, "news_half": bool(k.get("half"))})
         if k.get("price_src"):
             P["positions"][-1].update(entry_src=k["price_src"], entry_yahoo=round(float(k.get("yahoo_price", k["price"])), 2))
         _live_entry(P["positions"][-1])
