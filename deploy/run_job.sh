@@ -288,7 +288,13 @@ prepare_tree() {
       chmod +x "$dir/.git/hooks/pre-push"
     fi
   fi
-  git -C "$dir" fetch -q origin main || return 1
+  # GitHub يرفض اتصال SSH أحياناً لحظياً (publickey)؛ ثلاث محاولات قبل الاستسلام
+  local try
+  for try in 1 2 3; do
+    git -C "$dir" fetch -q origin main && break
+    [ "$try" = 3 ] && return 1
+    sleep $((try * 5))
+  done
   git -C "$dir" rebase --abort 2>/dev/null
   git -C "$dir" stash clear 2>/dev/null
   git -C "$dir" reset -q --hard && git -C "$dir" clean -fdq &&
