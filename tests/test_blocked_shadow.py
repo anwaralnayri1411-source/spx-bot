@@ -36,9 +36,16 @@ def test_exit_rules_match_the_bots():
 
 def test_spx_reason_prefixes_still_match_the_bot_messages():
     src = open(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "options_bot.py"), encoding="utf-8").read()
-    for pre, _ in bs._SPX_PREFIX:
-        assert pre in src, pre
+    retired = {"news_risk"}     # منذ 31/10/2026 صدمة مستوى 3 لا تمنع (H-NEWSHALF)؛ الوسم باقٍ لقراءة السجلات القديمة
+    for pre, tag in bs._SPX_PREFIX:
+        assert pre in src or tag in retired, pre
     assert bs.WEAK_PREFIX in src
+
+
+def test_news_level3_halves_quantity_instead_of_blocking():
+    q, _ = ob.qty_for(40)
+    assert ob.qty_for(40, half=True)[0] == max(1, q // 2)
+    assert ob.qty_for(1000, half=True)[0] == 1
 
 
 # ---------------- التصنيف ----------------
