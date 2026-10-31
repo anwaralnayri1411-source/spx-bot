@@ -1896,14 +1896,56 @@ def daily_report_png(n):
     return cards.daily_card(n.strftime("%Y-%m-%d"), items, STOP_LOSS, TAKE_PROFIT)
 
 
+STALE_READS = 3          # قراءات متتالية بنفس السعر بالضبط قبل التحذير
+STALE_SPOT_MOVE = 0.002  # وحركة الأصل منذ بدء التجمّد (0.2%) تجعل ثبات السعر مشبوهاً
+
+
+def _note_stale_quote(p, val, spot, n):
+    """تحذير في السجل فقط (بلا رسالة تيليجرام): سعر العقد لا يتغير بينما الأصل يتحرك (غالباً lastPrice قديم من ياهو
+    حين يكون bid/ask صفراً، كما حدث لـ SPX:PUT:7680 في 16/10/2026). يخزّن العدّاد في المركز ويُصفَّر عند أي تغيّر."""
+    try:
+        if p.get("sv") is not None and abs(val - p["sv"]) < 1e-9:
+            p["sn"] = p.get("sn", 1) + 1
+        else:
+            p["sv"], p["sn"], p["ss"] = val, 1, spot
+        s0 = p.get("ss")
+        if p["sn"] >= STALE_READS and spot and s0 and abs(spot - s0) / s0 >= STALE_SPOT_MOVE:
+            print(f"⚠️ سعر عقد {p.get('id')} ثابت {val:.2f} منذ {p['sn']} قراءات بينما {p.get('sym')} تحرك "
+                  f"{(spot - s0) / s0 * 100:+.2f}% — مصدر السعر قد يكون قديماً ({n.isoformat(timespec='minutes')})")
+    except Exception as e:
+        print("تعذر فحص ثبات السعر:", e)
+
+
+def _expired_rows(expired, n):
+    """صف «expired» واحد في spx_track.csv لكل عقد انتهى أجله (بآخر قيم مسجلة، فلا يغيّر قمة ولا آخر نتيجة في الدراسات)،
+    حتى لا يبدو العقد المنتهي «open» إلى الأبد. لا يكرر صفاً موجوداً."""
+    rows = []
+    try:
+        if not expired or not os.path.exists(TRACK_FILE):
+            return rows
+        trk = pd.read_csv(TRACK_FILE)
+        done = set(trk.loc[trk["status"] == "expired", "id"])
+        for p in expired:
+            g = trk[trk["id"] == p["id"]]
+            if g.empty or p["id"] in done:
+                continue
+            r = g.iloc[-1]
+            rows.append([n.isoformat(timespec="minutes"), p["id"], "expired",
+                         "" if pd.isna(r["spot"]) else r["spot"], r["val"], r["pnl"]])
+    except Exception as e:
+        print("تعذر تسجيل انتهاء العقد:", e)
+    return rows
+
+
 def monitor_positions(n, force=False):
     """يتابع إشارات اليوم المفتوحة. تنبيه مختصر عند الهدف أو الوقف أو التراجع أو قرب الانتهاء، وصمت بعد الوقف."""
     P = load_positions()
     today = n.date().isoformat()
     keep = [p for p in P["positions"] if p["exp"] >= today]
+    expired = [p for p in P["positions"] if p["exp"] < today]
     dirty = len(keep) != len(P["positions"])
     P["positions"] = keep
-    msgs, track = [], []
+    msgs, track = [], ([] if force else _expired_rows(expired, n))
     for p0 in keep:
         p = copy.deepcopy(p0) if force else p0
         yq, z = spx_quote(p), _live_quote(p)
@@ -1915,6 +1957,8 @@ def monitor_positions(n, force=False):
         val, spr, spot = q
         before = json.dumps(p, sort_keys=True)
         pnl, new = eval_position(p, n, val, spot)
+        if not force:
+            _note_stale_quote(p, val, spot, n)
         if json.dumps(p, sort_keys=True) != before:
             dirty = True
         track.append([n.isoformat(timespec="minutes"), p["id"], p["status"], "" if spot is None else round(spot, 2),
