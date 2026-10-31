@@ -187,6 +187,16 @@ main() {
       cmds=("$py shadow_manager.py")
       files="shadow_manager_council.csv shadow_manager_direction.csv shadow_manager_state.json research/shadow_manager_results.md"
       msg="shadow manager daily" ;;
+    analyst)
+      group=analyst; envs="TG ANTHROPIC"   # المحلل الذكي (H-ANALYST): قراءة وتقرير فقط، لـ TELEGRAM_CHAT_ID وحده
+      cmds=("$py analyst.py")
+      files="analyst_cards.csv analyst_state.json analyst_usage.csv messages_analyst.jsonl research/analyst_journal.md"
+      msg="analyst daily" ;;
+    analyst_weekly)
+      group=analyst; envs="TG ANTHROPIC"
+      cmds=("$py analyst.py --weekly")
+      files="analyst_cards.csv analyst_state.json analyst_usage.csv messages_analyst.jsonl research/analyst_journal.md research/analyst_results.md"
+      msg="analyst weekly" ;;
     weekly_learning)
       group=weekly-learning; envs="TG"
       cmds=("$py research/combo_report.py" "$py research/weekly_learning.py")
