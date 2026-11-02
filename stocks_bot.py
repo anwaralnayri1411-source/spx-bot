@@ -43,6 +43,10 @@ MAX_SPREAD = 0.30
 MIN_EDGE = 3.5              # أقل فرق بين نقاط الصعود والهبوط لإعطاء فرصة
 MIN_CONTRACT_SCORE = 5.0
 MAX_IDEAS = 3
+MAX_IDEAS_DAY = 3           # H-SFIX (3/11/2026): حدود يومية فوق حدود كل فحص؛ المحجوب يُتابَع في ظل الحجب (daily_cap)
+MAX_SAME_SIDE_DAY = 2
+NEWS_LOG = "news_memory_log.csv"   # تصنيف Claude للأخبار (ذاكرة الأخبار)؛ يصل كل تشغيل من git
+NEWS_CMP_LOG = "stocks_news_compare_log.csv"
 MAX_SAME_SIDE = 2           # لا أكثر من فرصتين في نفس الاتجاه (الأسهم مترابطة)
 FINALISTS = 12              # عدد الشركات التي تُفحص بعمق (أخبار + سلسلة الخيارات)
 MIN_TDAYS = 3               # أقل مدة للعقد بأيام التداول: العقود الأقصر تأكلها سرعة التآكل قبل أن يتحرك السهم
@@ -246,6 +250,40 @@ def get_chains(t, today):
             data_gaps.note("stocks", "option_chain", ex, e)
             continue
     return out
+
+
+_NEWS_CACHE = {}
+
+
+def ai_news_points(tk, n, hours=24):
+    """H-SFIX: نقاط الأخبار من تصنيف Claude (أخبار السهم الجديدة، أهمية متوسطة/عالية، آخر 24 ساعة): متوقع صعوده +1
+    (عالية +1.5) وهبوطه بالمثل، بسقف نقطتين. يرجع (صعود، هبوط، سبب) أو None إن لا تصنيف للسهم."""
+    if "df" not in _NEWS_CACHE:
+        try:
+            d = pd.read_csv(NEWS_LOG, dtype=str, keep_default_na=False)
+            d = d[(d["new"] == "1") & d["importance"].isin(["medium", "high"]) & d["expect"].isin(["up", "down"])]
+            d["ts"] = pd.to_datetime(d["time_utc"], utc=True)
+            _NEWS_CACHE["df"] = d
+        except Exception as e:  # noqa: BLE001
+            print("تعذر قراءة تصنيف الأخبار:", type(e).__name__)
+            _NEWS_CACHE["df"] = None
+    d = _NEWS_CACHE["df"]
+    if d is None or not len(d):
+        return None
+    now = pd.Timestamp(n).tz_convert("UTC") if pd.Timestamp(n).tzinfo else pd.Timestamp(n, tz="UTC")
+    g = d[(d["ticker"] == tk) & (d["ts"] > now - pd.Timedelta(hours=hours)) & (d["ts"] <= now)]
+    if not len(g):
+        return None
+    w = g["importance"].map({"medium": 1.0, "high": 1.5})
+    up, dn = float(w[g["expect"] == "up"].sum()), float(w[g["expect"] == "down"].sum())
+    net = up - dn
+    if net == 0:
+        return 0.0, 0.0, None
+    p = min(2.0, abs(net))
+    top = g.sort_values("ts").iloc[-1]["title"][:80]
+    if net > 0:
+        return p, 0.0, ("bull", f"أخبار إيجابية بتصنيف Claude ({int((g['expect'] == 'up').sum())} صعود مقابل {int((g['expect'] == 'down').sum())} هبوط): {top}")
+    return 0.0, p, ("bear", f"أخبار سلبية بتصنيف Claude ({int((g['expect'] == 'down').sum())} هبوط مقابل {int((g['expect'] == 'up').sum())} صعود): {top}")
 
 
 def flow_points(chains):
@@ -1498,7 +1536,7 @@ def analyze(force):
     scored.sort(key=lambda x: -abs(x["bull"] - x["bear"]))
     finalists = [s for s in scored if abs(s["bull"] - s["bear"]) >= 2.0][:FINALISTS]
 
-    ideas, watch, flow_rows = [], [], []
+    ideas, watch, flow_rows, news_cmp = [], [], [], []
     blocked = []   # blocked_shadow: ideas blocked by rules, log only
     geo_heads = ob.fetch_rss("geopolitical tensions markets") if any(s["dkey"] == "geo" for s in finalists) else []
     for s in finalists:
@@ -1507,7 +1545,10 @@ def analyze(force):
         heads = ob.fetch_rss(f"{s['name']} stock")
         if s["dkey"] == "geo":
             heads = heads + geo_heads
-        nb, ne, nwhy = news_points(heads)
+        wb, we, wwhy = news_points(heads)
+        ai = ai_news_points(tk, n)
+        nb, ne, nwhy = ai if ai is not None else (wb, we, wwhy)   # H-SFIX: تصنيف Claude أولاً، وعدّ الكلمات احتياط
+        news_cmp.append([n.isoformat(timespec="minutes"), tk, wb - we, "" if ai is None else ai[0] - ai[1], "ai" if ai is not None else "words"])
         s["bull"] += nb
         s["bear"] += ne
         if nwhy:
@@ -1566,6 +1607,11 @@ def analyze(force):
             blocked.append(_blocked_idea("same_side_cap", i))   # لظل الحجب (تسجيل فقط)
     ideas = kept
     blocked += [_blocked_idea("max_ideas_cap", i) for i in ideas[MAX_IDEAS:]]
+    if news_cmp and in_window(n) and not force:
+        try:
+            _append_csv(NEWS_CMP_LOG, ["time", "ticker", "words_net", "ai_net", "used"], news_cmp)
+        except Exception as e:
+            print("تعذر تسجيل مقارنة الأخبار:", e)
     if px_rows and in_window(n) and not force:
         try:
             _append_csv(LIVE_PX_LOG, ["time", "ticker", "yahoo_close", "live", "bull_yahoo", "bear_yahoo", "bull_live", "bear_live"], px_rows)
@@ -1790,6 +1836,18 @@ def details_message(a, ideas, log_line):
 
 
 # ====================== التشغيل ======================
+def daily_caps(ideas, sent):
+    """H-SFIX: (المسموح، المحجوب) بعد حدود اليوم: MAX_IDEAS_DAY إجمالاً وMAX_SAME_SIDE_DAY للاتجاه، محسوبة مع توصيات اليوم
+    السابقة (مفاتيح sent بصيغة TICKER:SIDE). الأفكار مرتبة بالقوة مسبقاً."""
+    sides = [k.split(":")[1] for k in sent]
+    kept, capped = [], []
+    for i in ideas:
+        n_all = len(sides) + len(kept)
+        n_side = sides.count(i["side"]) + sum(1 for x in kept if x["side"] == i["side"])
+        (capped if n_all >= MAX_IDEAS_DAY or n_side >= MAX_SAME_SIDE_DAY else kept).append(i)
+    return kept, capped
+
+
 def do_scan(n, force, P):
     try:
         a = analyze(force)
@@ -1827,6 +1885,11 @@ def do_scan(n, force, P):
             held.append(_blocked_idea("open_same_dir", i))
             continue
         new.append(i)
+    # H-SFIX: حدود يومية (state["sent"] يحمل توصيات اليوم)؛ المحجوب يذهب لظل الحجب بوسم daily_cap
+    new, capped = daily_caps(new, state["sent"])
+    for i in capped:
+        a["watch"].insert(0, (i["ticker"], "الحد اليومي للتوصيات"))
+        held.append(_blocked_idea("daily_cap", i))
     try:   # ظل الحجب: أفكار حجبتها الشروط تُتابَع بلا إرسال لنعرف هل كان الحجب في صالحنا (تسجيل فقط)
         import blocked_shadow
         blocked_shadow.log_stocks(n, a.get("blocked", []) + held)

@@ -209,3 +209,31 @@ def test_watcher_silent_after_target_even_if_bought(monkeypatch):
     monkeypatch.setattr(sw.sb, "mine_for", lambda p, mine: {"mode": "bought", "price": 2.1})
     out = sw.watched_positions(datetime(2026, 11, 3, 10, 0))
     assert [p["ticker"] for p in out] == ["PFE"]          # الهدف: صمت؛ الوقف وأنت ما زلت تملكه: يتابع
+
+
+def test_daily_caps_count_earlier_sends():
+    import stocks_bot as sb
+    ideas = [{"ticker": t, "side": s} for t, s in (("A", "CALL"), ("B", "CALL"), ("C", "PUT"), ("D", "PUT"))]
+    kept, capped = sb.daily_caps(ideas, {})
+    assert [i["ticker"] for i in kept] == ["A", "B", "C"] and [i["ticker"] for i in capped] == ["D"]
+    kept, capped = sb.daily_caps(ideas, {"X:CALL": "t", "Y:CALL": "t"})
+    assert [i["ticker"] for i in kept] == ["C"]                       # الكول بلغ حده (2) والإجمالي 3
+
+
+def test_ai_news_points(tmp_path, monkeypatch):
+    import stocks_bot as sb
+    import pandas as pd
+    from datetime import datetime, timezone
+    p = tmp_path / "news.csv"
+    pd.DataFrame([
+        {"time_utc": "2026-11-03T14:00:00+00:00", "ticker": "NVDA", "title": "Nvidia beats", "new": "1", "importance": "high", "expect": "up"},
+        {"time_utc": "2026-11-03T13:00:00+00:00", "ticker": "NVDA", "title": "old", "new": "1", "importance": "medium", "expect": "down"},
+        {"time_utc": "2026-11-01T13:00:00+00:00", "ticker": "NVDA", "title": "too old", "new": "1", "importance": "high", "expect": "down"},
+        {"time_utc": "2026-11-03T13:30:00+00:00", "ticker": "NVDA", "title": "low", "new": "1", "importance": "low", "expect": "down"},
+    ]).to_csv(p, index=False)
+    monkeypatch.setattr(sb, "NEWS_LOG", str(p))
+    sb._NEWS_CACHE.clear()
+    n = datetime(2026, 11, 3, 15, 0, tzinfo=timezone.utc)
+    b, e, why = sb.ai_news_points("NVDA", n)
+    assert b == 0.5 and e == 0.0 and why[0] == "bull" and "Claude" in why[1]
+    assert sb.ai_news_points("AAPL", n) is None
