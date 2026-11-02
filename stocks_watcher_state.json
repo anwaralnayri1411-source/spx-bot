@@ -255,7 +255,10 @@
    "visa inc announces enhanced capabilities across commercial card growth virtual card security and agentic commerce for co",
    "wall street analysts think vistra vst is a good investment is it",
    "swiping to record highs why visa remains a fortress",
-   "ibm stock price forecast pulls back to 240 ahead of earnings could drop another 16"
+   "ibm stock price forecast pulls back to 240 ahead of earnings could drop another 16",
+   "visa raises dividend by 16 can v stock continue its gains",
+   "visa raises quarterly dividend by 16",
+   "promising financial stocks to keep an eye on november 2nd"
   ],
   "PLTR:CALL": [
    "palantir sees ark invest reduce position and uk fund review pltr remains under pressure",
@@ -464,7 +467,8 @@
    "intel s 30 collapse finally changes the setup rating upgrade nasdaq intc",
    "amd just dropped 16 in a month is it time to sell or load up",
    "intel stock price prediction downward momentum persists as volatility stays elevated",
-   "intel corp stock intc moved down by 4 33 on nov 2 key drivers unveiled"
+   "intel corp stock intc moved down by 4 33 on nov 2 key drivers unveiled",
+   "intel the pc hangover is just beginning nasdaq intc"
   ],
   "CVX:CALL": [
    "stocks see continued downward pressure from ai anxiety and oil prices",
@@ -834,7 +838,8 @@
    "cvna q3 earnings miss on higher costs despite record sales",
    "tesla s profits took a hit is it building something worth the cost",
    "tesla inc stock tsla moved up by 3 31 on nov 2 drivers behind the movement",
-   "tesla stock rallies as buyer support continues after latvia approves full self driving"
+   "tesla stock rallies as buyer support continues after latvia approves full self driving",
+   "what makes tesla nasdaq tsla more than just an ev maker"
   ],
   "XOM:CALL": [
    "trump uses defense act as fuel prices surge",
@@ -2124,11 +2129,14 @@
    "rivian surges 6 in one session adding over 1 billion in market cap",
    "why did lucid stock just pop",
    "rivian extends post earnings rally after ubs flips bullish rivn nasdaq",
-   "rivian stock rallies as r2 demand ai and upgrade fuel momentum"
+   "rivian stock rallies as r2 demand ai and upgrade fuel momentum",
+   "ubs upgrade lifts rivian rivn shares 12 1 on strong r2 demand and margin outlook",
+   "how will rivian automotive nasdaq rivn scale its next ev line"
   ],
   "PFE:CALL": [
    "pfizer q3 preview analysts look to obesity pipeline amid diverging growth expectations pfe nyse",
-   "more trick than treat dan niles flags ai risks in big tech earnings"
+   "more trick than treat dan niles flags ai risks in big tech earnings",
+   "altria vs pfizer which dividend stock pays you more in 10 years"
   ]
  },
  "fired": {
@@ -2163,25 +2171,23 @@
   "RIVN:CALL:2026-11-20:13.5": [
    "sharp@2026-11-02T11:22-05:00",
    "news:rivian extends post earnings rally after ubs flips bullish rivn nasdaq",
-   "sharp@2026-11-02T11:55-05:00"
+   "sharp@2026-11-02T11:55-05:00",
+   "news:ubs upgrade lifts rivian rivn shares 12 1 on strong r2 demand and margin outlook"
   ],
   "PFE:CALL:2026-11-20:30": [],
   "TSLA:CALL:2026-11-06:430": [
    "down-0.15",
-   "news:tesla stock rallies as buyer support continues after latvia approves full self driving"
+   "news:tesla stock rallies as buyer support continues after latvia approves full self driving",
+   "sharp@2026-11-02T12:31-05:00"
   ],
-  "V:CALL:2026-11-06:430": []
+  "V:CALL:2026-11-06:430": [
+   "news:visa raises quarterly dividend by 16"
+  ]
  },
  "stock_level": {
   "INTC:PUT:2026-11-13:65": 2
  },
  "seen_macro": [
-  "major brokerages expect fed to hold rates ahead of policy meeting",
-  "israel s election too close to call and the ebola outbreak reaches grim milestone",
-  "us fed fomc meeting live updates hike or hold wall street awaits warsh s verdict",
-  "brian sozzi interest rates remain below historical highs amid federal reserve updates",
-  "oil markets brace for wider middle east conflict after saudi refinery attack",
-  "us hits chinese trailers with tariffs to aid domestic producers",
   "factbox major brokerages expect fed to hold rates ahead of policy meeting",
   "fed is widely expected to hold interest rates steady with december hike in sight",
   "us stock market today s p 500 futures edge higher on fed decision watch",
@@ -2775,11 +2781,18 @@
   "trump s tariffs are on the ballot in michigan",
   "my new dispatch article on the legal case against trump s section 338 tariffs targeting canadian imports",
   "us stock market today dow spikes 400 points s p nasdaq rebound on cooler oil nvidia amazon gain",
-  "trade setup for nov 3 nifty bulls eye 23 600 breakout as oil reprieve supports case for sustained rebound"
+  "trade setup for nov 3 nifty bulls eye 23 600 breakout as oil reprieve supports case for sustained rebound",
+  "5 stocks favored by brokers amid the prevalent market turbulence",
+  "wall st rises as oil falls heading into us midterm elections more earnings",
+  "us stocks rebound as oil prices fall ahead of midterms",
+  "fed will vote on rates less often what that could mean for borrowers",
+  "federal reserve cuts rate setting votes raising risk of slower borrowing relief",
+  "us dollar falls to five week low as oil prices retreat ahead of midterm elections"
  ],
  "sharp": {
   "INTC:PUT:2026-11-13:65": 67.315,
   "DIS:CALL:2026-11-20:115": 112.63,
-  "RIVN:CALL:2026-11-20:13.5": 13.38
+  "RIVN:CALL:2026-11-20:13.5": 13.38,
+  "TSLA:CALL:2026-11-06:430": 409.04
  }
 }
