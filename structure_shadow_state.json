@@ -1,6 +1,77 @@
 {
  "date": null,
- "items": [],
+ "items": [
+  {
+   "id": "20261102T0949|vert|SPX:CALL:7665:2026-11-02",
+   "kind": "vert",
+   "pos_id": "SPX:CALL:7665:2026-11-02",
+   "date": "2026-11-02",
+   "side": "CALL",
+   "exp": "2026-11-03",
+   "entry_time": "2026-11-02T09:49-05:00",
+   "entry_spot": 760.34,
+   "legs": [
+    {
+     "occ": "SPY261103C00760000",
+     "strike": 760.0,
+     "side": "CALL",
+     "qty": 1
+    },
+    {
+     "occ": "SPY261103C00763000",
+     "strike": 763.0,
+     "side": "CALL",
+     "qty": -1
+    }
+   ],
+   "capital": 1.54,
+   "entry_cash": -1.54,
+   "peak": 0.0,
+   "last_pnl": "",
+   "quotes": 0,
+   "t60_pnl": "",
+   "t60_time": "",
+   "eod_pnl": "",
+   "eod_time": "",
+   "hold_pnl": "",
+   "hold_time": "",
+   "managed_pnl": "",
+   "managed_out": "",
+   "managed_time": ""
+  },
+  {
+   "id": "20261102T0949|em05|SPX:CALL:7665:2026-11-02",
+   "kind": "em05",
+   "pos_id": "SPX:CALL:7665:2026-11-02",
+   "date": "2026-11-02",
+   "side": "CALL",
+   "exp": "2026-11-03",
+   "entry_time": "2026-11-02T09:49-05:00",
+   "entry_spot": 760.34,
+   "legs": [
+    {
+     "occ": "SPY261103C00765000",
+     "strike": 765.0,
+     "side": "CALL",
+     "qty": 1
+    }
+   ],
+   "capital": 1.17,
+   "entry_cash": -1.17,
+   "peak": 0.0,
+   "last_pnl": "",
+   "quotes": 0,
+   "t60_pnl": "",
+   "t60_time": "",
+   "eod_pnl": "",
+   "eod_time": "",
+   "hold_pnl": "",
+   "hold_time": "",
+   "managed_pnl": "",
+   "managed_out": "",
+   "managed_time": ""
+  }
+ ],
  "done_recs": [
   "SPY:CALL:765:2026-10-26",
   "SPX:CALL:7695:2026-10-26",
@@ -8,7 +79,8 @@
   "SPX:CALL:7745:2026-10-27",
   "SPX:CALL:7725:2026-10-27",
   "SPY:CALL:771:2026-10-28",
-  "SPY:CALL:770:2026-10-28"
+  "SPY:CALL:770:2026-10-28",
+  "SPX:CALL:7665:2026-11-02"
  ],
  "condor_days": [
   "2026-10-26",
