@@ -1,0 +1,2 @@
+time,kind,model,input,output,usd,status
+2026-11-01T21:57:08-05:00,classify,claude-haiku-5-5,3505,7177,0.00394,end_turn
