@@ -20,9 +20,9 @@
    "rule_time": "",
    "rule_pnl": "",
    "peak_pnl": 0.0,
-   "close_pnl": -0.083,
+   "close_pnl": -0.139,
    "stale_quotes": 0,
-   "quotes": 4
+   "quotes": 5
   },
   {
    "date": "2026-11-02",
@@ -43,9 +43,9 @@
    "rule_time": "",
    "rule_pnl": "",
    "peak_pnl": 0.072,
-   "close_pnl": 0.066,
+   "close_pnl": 0.05,
    "stale_quotes": 0,
-   "quotes": 4
+   "quotes": 5
   },
   {
    "date": "2026-11-02",
@@ -66,9 +66,9 @@
    "rule_time": "",
    "rule_pnl": "",
    "peak_pnl": 0.078,
-   "close_pnl": 0.055,
+   "close_pnl": 0.047,
    "stale_quotes": 0,
-   "quotes": 4
+   "quotes": 5
   }
  ]
 }
