@@ -202,6 +202,16 @@ main() {
       cmds=("$py news_watch.py")
       files="news_watch_log.csv news_watch_state.json news_watch_nights.csv news_watch_usage.csv messages_news_watch.jsonl"
       msg="news watch" ;;
+    spx_flow)
+      group=spx-flow; envs="TASTY"   # مراقب سيولة SPX اللحظي (H-SPXFLOW): تسجيل فقط؛ الخام spx_flow_raw/ يبقى على الخادم
+      cmds=("$py spx_flow_watch.py")
+      files="spx_flow_log.csv"
+      msg="spx flow snapshot" ;;
+    spx_flow_eval)
+      group=spx-flow; envs="TASTY"
+      cmds=("$py spx_flow_watch.py --eval")
+      files="spx_flow_log.csv research/spx_flow_results.md"
+      msg="spx flow eval" ;;
     analyst_weekly)
       group=analyst; envs="TG ANTHROPIC"
       cmds=("$py analyst.py --weekly")
