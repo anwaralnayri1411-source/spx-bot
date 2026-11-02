@@ -164,3 +164,19 @@ def test_send_only_to_owner(tmp_path, monkeypatch):
     assert an.send("**عنوان**\n" + "سطر\n" * 2000)
     assert len(sent) >= 2 and {d["chat_id"] for d in sent} == {"111"}
     assert sent[0]["text"].startswith("<b>عنوان</b>")
+
+
+def test_flow_context_reads_observer():
+    import analyst as an
+    from datetime import datetime
+    rows = []
+    for i, (t, spot, cp, pp) in enumerate([("10:00", 7600, 0, 0), ("10:15", 7610, 0, 5e6), ("10:30", 7615, 0, 5e6), ("10:40", 7630, 0, 0)]):
+        rows.append({"date": "2026-11-02", "time": t, "spot": str(spot), "call_wall": "7640", "put_wall": "7580", "net_gex_m": "120",
+                     "call_prem": str(cp), "put_prem": str(pp)})
+    fl = pd.DataFrame(rows)
+    c = an.flow_context("2026-11-02", datetime(2026, 11, 2, 10, 42), "CALL", fl)
+    assert c == {"fl_gex": "موجبة", "fl_wall": "قرب جدار ضدها", "fl_lean": "ضد", "fl_div": "ضد"}
+    p = an.flow_context("2026-11-02", datetime(2026, 11, 2, 10, 42), "PUT", fl)
+    assert p["fl_wall"] == "قرب جدار معها" and p["fl_lean"] == "مع" and p["fl_div"] == "مع"
+    assert an.flow_context("2026-10-30", datetime(2026, 10, 30, 10, 42), "CALL", fl) == {"fl_gex": "", "fl_wall": "", "fl_lean": "", "fl_div": ""}
+    assert an.flow_context("2026-11-02", datetime(2026, 11, 2, 9, 50), "CALL", fl)["fl_gex"] == "قبل أول لقطة"

@@ -46,11 +46,13 @@ FEATURES = (("tod", "وقت اليوم"), ("ctx_vix", "VIX"), ("ctx_range", "م�
             ("ctx_event", "يوم حدث"), ("r30_b", "حركة 30د"), ("r60_b", "حركة 60د"), ("rday_b", "حركة اليوم"), ("pos_b", "الموقع في مدى اليوم"),
             ("cand_mom", "زخم آخر ساعة"), ("cand_f30", "أول 30 دقيقة"), ("edge7", "إشارة قوية edge7"), ("mom_live", "الزخم الحي"),
             ("live_side", "الشموع اللحظية"), ("news", "الأخبار"),
+            ("fl_gex", "الغاما (المراقب)"), ("fl_wall", "الجدران"), ("fl_lean", "ميل التدفق 30د"), ("fl_div", "تباعد الشد"),
             ("s_news", "أخبار الشركة"), ("s_flow", "تدفق الخيارات"), ("s_delta", "دلتا العقد"), ("s_dte", "أيام العقد"),
             ("s_earn", "أرباح داخل العقد"), ("s_exdiv", "توزيعات داخل العقد"))
 CARD_COLS = ["project", "id", "day", "time", "sym", "side", "strike", "exp", "entry", "tod",
              "ctx_vix", "ctx_range", "ctx_trend", "ctx_gap", "ctx_event", "gap", "r30", "r60", "rday", "pos",
              "r30_b", "r60_b", "rday_b", "pos_b", "cand_mom", "cand_f30", "edge7", "mom_live", "live_side", "news_level", "news_kind", "news",
+             "fl_gex", "fl_wall", "fl_lean", "fl_div",
              "s_news", "s_flow", "s_delta", "s_dte", "s_earn", "s_exdiv",
              "exit_kind", "exit_ret", "exit_time", "mins", "peak_before", "after_peak", "last", "hold_ret"]
 
@@ -197,9 +199,48 @@ def shadow_context(day, t, side, logs):
     return out
 
 
+WALL_NEAR = 0.0025      # الجدار «قريب» إن كان ضمن 0.25% من السعر
+
+
+def flow_context(day, t, side, fl):
+    """قراءات مراقب السيولة (H-SPXFLOW) آخر لقطة قبل التوصية: الغاما، والجدار القريب (ضد الصفقة/معها)، وميل التدفق
+    في آخر 30د، وتباعد «شد الحبل» عن السعر. فارغ = المراقب لم يكن يعمل ذلك اليوم (قبل 2/11/2026)."""
+    out = {"fl_gex": "", "fl_wall": "", "fl_lean": "", "fl_div": ""}
+    if not len(fl) or not (fl["date"] == day).any():
+        return out
+    g = fl[fl["date"] == day].sort_values("time").reset_index(drop=True)
+    hm = t.strftime("%H:%M")
+    past = g[g["time"] <= hm]
+    if not len(past):
+        out["fl_gex"] = "قبل أول لقطة"
+        return out
+    i = past.index[-1]
+    r = g.loc[i]
+    S, gx = num(r["spot"]), num(r["net_gex_m"])
+    out["fl_gex"] = "" if gx is None else "موجبة" if gx > 0 else "سالبة"
+    cw, pw = num(r["call_wall"]), num(r["put_wall"])
+    near = lambda w: S and w and abs(w / S - 1) <= WALL_NEAR
+    against, support = (cw, pw) if side == "CALL" else (pw, cw)
+    out["fl_wall"] = "قرب جدار ضدها" if near(against) else "قرب جدار معها" if near(support) else "بعيدة"
+    cp = pd.to_numeric(g["call_prem"], errors="coerce").fillna(0) - pd.to_numeric(g["put_prem"], errors="coerce").fillna(0)
+    t30 = (t - timedelta(minutes=30)).strftime("%H:%M")
+    out["fl_lean"] = side_rel(float(cp[(g["time"] > t30) & (g.index <= i)].sum()) or None, side) or "محايد"
+    drift, spots = cp.cumsum(), pd.to_numeric(g["spot"], errors="coerce")
+    back = g.index[g["time"] <= t30]
+    div = 0
+    if len(back) and i > 0:
+        j = back[-1]
+        if spots[i] >= spots[:i].max() and drift[i] < drift[j]:
+            div = -1
+        elif spots[i] <= spots[:i].min() and drift[i] > drift[j]:
+            div = 1
+    out["fl_div"] = "لا" if div == 0 else side_rel(div, side)
+    return out
+
+
 def load_logs():
     return {"cand": read("candidates_shadow_log.csv"), "edge7": read("edge7_shadow_log.csv"), "mom": read("momentum_shadow_log.csv"),
-            "live_bars": read("live_bars_log.csv"), "news": read("news_shadow_log.csv")}
+            "live_bars": read("live_bars_log.csv"), "news": read("news_shadow_log.csv"), "flow": read("spx_flow_log.csv")}
 
 
 # ============================ النتائج ============================
@@ -245,6 +286,7 @@ def spx_cards(bars, logs, ctx):
         c.update(f, r30_b=move_b(f["r30"], r.side), r60_b=move_b(f["r60"], r.side), rday_b=move_b(f["rday"], r.side),
                  pos_b="" if f["pos"] is None else "أعلى المدى" if f["pos"] >= 2 / 3 else "أدنى المدى" if f["pos"] <= 1 / 3 else "وسط المدى")
         c.update(shadow_context(r.date, t, r.side, logs))
+        c.update(flow_context(r.date, t, r.side, logs.get("flow", pd.DataFrame())))
         if c["news_kind"] == "allowed_half":
             c["news"] = "نصف كمية"
         c.update(path_outcome(track_rows(track, pid), t))
@@ -397,7 +439,8 @@ def opposite_overlaps(day, cards, now=None):
 def card_line(c):
     ctx = [c["tod"]]
     if c["project"] == "spx":
-        for k, label in (("r30_b", "30د"), ("cand_mom", "mom"), ("cand_f30", "f30"), ("edge7", "edge7"), ("mom_live", "زخم حي"), ("live_side", "لحظي")):
+        for k, label in (("r30_b", "30د"), ("cand_mom", "mom"), ("cand_f30", "f30"), ("edge7", "edge7"), ("mom_live", "زخم حي"), ("live_side", "لحظي"),
+                         ("fl_gex", "غاما"), ("fl_wall", "جدران"), ("fl_lean", "تدفق"), ("fl_div", "تباعد")):
             if c.get(k):
                 ctx.append(f"{label} {c[k]}")
         if c.get("news"):
@@ -472,7 +515,7 @@ def daily_text(F):
 def facts_for_model(F):
     def slim(c):
         keep = ("time", "sym", "side", "strike", "tod", "ctx_vix", "ctx_range", "ctx_trend", "ctx_gap", "ctx_event", "r30_b", "r60_b", "rday_b",
-                "pos_b", "cand_mom", "cand_f30", "edge7", "mom_live", "live_side", "news", "s_news", "s_flow", "s_delta", "s_dte", "s_earn",
+                "pos_b", "cand_mom", "cand_f30", "edge7", "mom_live", "live_side", "news", "fl_gex", "fl_wall", "fl_lean", "fl_div", "s_news", "s_flow", "s_delta", "s_dte", "s_earn",
                 "s_exdiv", "exit_kind", "mins")
         d = {k: c[k] for k in keep if c.get(k) not in (None, "")}
         for k in ("exit_ret", "peak_before", "after_peak", "last", "hold_ret"):
@@ -492,7 +535,7 @@ DAILY_SYSTEM = """أنت «المحلل» في مشروع «عين السوق»:
 تصلك حقائق اليوم بصيغة JSON حسبها الكود من السجلات. معاني الحقول:
 - tod وقت اليوم. ctx_vix/ctx_range/ctx_trend/ctx_gap/ctx_event: ظروف اليوم (VIX أمس، مدى أمس، اتجاه شمعة أمس، فجوة الافتتاح، يوم حدث مجدول).
 - r30_b/r60_b/rday_b: حركة SPX خلال 30 و60 دقيقة قبل التوصية ومنذ الافتتاح، نسبةً إلى اتجاه الصفقة («مع الاتجاه» = المؤشر كان يتحرك في اتجاه الصفقة قبل الدخول). pos_b: موقع السعر في مدى اليوم لحظة التوصية.
-- cand_mom: ظل «زخم آخر ساعة» في آخر موعد قبل التوصية. cand_f30: ظل «اتجاه أول 30 دقيقة من الجلسة». edge7: هل سجّل ظل الإشارة القوية (فرق نقاط ≥7) الاتجاه نفسه خلال 10 دقائق. mom_live: آخر إشارة من ظل الزخم الحي قبلها. live_side: اتجاه البوت بالشموع اللحظية في الفحص نفسه. news: الأخبار وقت التوصية.
+- cand_mom: ظل «زخم آخر ساعة» في آخر موعد قبل التوصية. cand_f30: ظل «اتجاه أول 30 دقيقة من الجلسة». edge7: هل سجّل ظل الإشارة القوية (فرق نقاط ≥7) الاتجاه نفسه خلال 10 دقائق. mom_live: آخر إشارة من ظل الزخم الحي قبلها. live_side: اتجاه البوت بالشموع اللحظية في الفحص نفسه. news: الأخبار وقت التوصية. fl_gex/fl_wall/fl_lean/fl_div: مراقب السيولة (منذ 2/11) آخر لقطة قبل التوصية: نوع الغاما، جدار OI ضمن 0.25% (ضد الصفقة أو معها)، ميل صافي علاوة الكول−البوت في آخر 30د بالنسبة للصفقة، وتباعد «شد الحبل» عن قمة/قاع الجلسة؛ كلها فرضيات قيد القياس (H-SPXFLOW) لا قواعد.
 - exit_kind/exit_ret_pct: أول خروج بقاعدة البوت (هدف +50% أو وقف −40%) وعائده. mins: دقائق حتى الخروج. peak_before_pct: أعلى ربح قبل الخروج. after_peak_pct: أعلى ربح بعد الخروج (المتابعة تستمر بعده). hold_ret_pct: الاحتفاظ حتى الانتهاء.
 - الشركات: s_news أخبار الشركة، s_flow تدفق الخيارات (مع/ضد الاتجاه)، s_delta بُعد العقد، s_dte أيام العقد، s_earn/s_exdiv أرباح أو توزيعات داخل عمر العقد.
 - blocked: توصيات منعتها قواعد البوت اليوم ونتيجتها في الظل. tot_spx/tot_stocks: الحصيلة منذ بداية السجلات، وليست لليوم. health: مشاكل التشغيل.
