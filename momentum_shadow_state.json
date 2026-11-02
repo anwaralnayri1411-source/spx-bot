@@ -1,7 +1,103 @@
 {
  "date": "2026-11-02",
- "open": [],
- "await": [],
- "last": {},
- "count": {}
+ "open": [
+  {
+   "date": "2026-11-02",
+   "defn": "live",
+   "role": "opposite",
+   "side": "PUT",
+   "strike": 762.0,
+   "sig_time": "2026-11-02T10:18-05:00",
+   "r30": 0.00251,
+   "entry_time": "2026-11-02T10:18-05:00",
+   "entry_spy": 762.11,
+   "entry": 1.64,
+   "exit": "",
+   "exit_time": "",
+   "pnl": -0.335,
+   "peak": 0.0,
+   "spy_after_60": "",
+   "spy_move_pts": "",
+   "checks": 14,
+   "stale": 0,
+   "at_ext": 1,
+   "occ": "SPY261102P00762000"
+  },
+  {
+   "date": "2026-11-02",
+   "defn": "delayed",
+   "role": "opposite",
+   "side": "PUT",
+   "strike": 762.0,
+   "sig_time": "2026-11-02T10:19-05:00",
+   "r30": 0.00259,
+   "entry_time": "2026-11-02T10:19-05:00",
+   "entry_spy": 762.38,
+   "entry": 1.57,
+   "exit": "",
+   "exit_time": "",
+   "pnl": -0.306,
+   "peak": 0.0,
+   "spy_after_60": "",
+   "spy_move_pts": "",
+   "checks": 13,
+   "stale": 0,
+   "at_ext": 1,
+   "occ": "SPY261102P00762000"
+  }
+ ],
+ "await": [
+  {
+   "date": "2026-11-02",
+   "defn": "live",
+   "role": "signal",
+   "side": "CALL",
+   "strike": 762.0,
+   "sig_time": "2026-11-02T10:18-05:00",
+   "r30": 0.00251,
+   "entry_time": "2026-11-02T10:18-05:00",
+   "entry_spy": 762.11,
+   "entry": 1.74,
+   "exit": "tp",
+   "exit_time": "10:27",
+   "pnl": 0.557,
+   "peak": 0.557,
+   "spy_after_60": "",
+   "spy_move_pts": "",
+   "checks": 9,
+   "stale": 0,
+   "at_ext": 1,
+   "occ": "SPY261102C00762000"
+  },
+  {
+   "date": "2026-11-02",
+   "defn": "delayed",
+   "role": "signal",
+   "side": "CALL",
+   "strike": 762.0,
+   "sig_time": "2026-11-02T10:19-05:00",
+   "r30": 0.00259,
+   "entry_time": "2026-11-02T10:19-05:00",
+   "entry_spy": 762.38,
+   "entry": 1.77,
+   "exit": "tp",
+   "exit_time": "10:27",
+   "pnl": 0.531,
+   "peak": 0.531,
+   "spy_after_60": "",
+   "spy_move_pts": "",
+   "checks": 8,
+   "stale": 0,
+   "at_ext": 1,
+   "occ": "SPY261102C00762000"
+  }
+ ],
+ "last": {
+  "live": "2026-11-02T10:18-05:00",
+  "delayed": "2026-11-02T10:19-05:00"
+ },
+ "count": {
+  "live": 1,
+  "delayed": 1
+ }
 }
