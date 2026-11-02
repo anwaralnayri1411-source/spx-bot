@@ -14,8 +14,8 @@
    "strength": "5.2",
    "occ": "UBER261106P00065000",
    "peak_pnl": 0.073,
-   "close_pnl": -0.348,
-   "quotes": 214,
+   "close_pnl": -0.397,
+   "quotes": 215,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -34,8 +34,8 @@
    "strength": "7.5",
    "occ": "NFLX261106P00062000",
    "peak_pnl": 0.252,
-   "close_pnl": -0.136,
-   "quotes": 142,
+   "close_pnl": -0.097,
+   "quotes": 143,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -54,8 +54,8 @@
    "strength": "6.8",
    "occ": "BA261120P00167500",
    "peak_pnl": 0.38,
-   "close_pnl": -0.355,
-   "quotes": 70,
+   "close_pnl": -0.366,
+   "quotes": 71,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -74,8 +74,8 @@
    "strength": "6.5",
    "occ": "HOOD261120P00080000",
    "peak_pnl": 0.216,
-   "close_pnl": -0.325,
-   "quotes": 70,
+   "close_pnl": -0.364,
+   "quotes": 71,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -95,7 +95,7 @@
    "occ": "SNAP261120P00006000",
    "peak_pnl": 0.01,
    "close_pnl": -0.214,
-   "quotes": 70,
+   "quotes": 71,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -114,8 +114,8 @@
    "strength": "4.2",
    "occ": "WMT261120C00126000",
    "peak_pnl": 0.28,
-   "close_pnl": 0.257,
-   "quotes": 70,
+   "close_pnl": 0.131,
+   "quotes": 71,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -134,8 +134,8 @@
    "strength": "8.9",
    "occ": "INTC261113P00065000",
    "peak_pnl": 0.303,
-   "close_pnl": 0.05,
-   "quotes": 54,
+   "close_pnl": 0.034,
+   "quotes": 55,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -154,8 +154,8 @@
    "strength": "7.2",
    "occ": "PFE261120C00030000",
    "peak_pnl": 0.009,
-   "close_pnl": -0.278,
-   "quotes": 43,
+   "close_pnl": -0.287,
+   "quotes": 44,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -174,8 +174,8 @@
    "strength": "7.2",
    "occ": "NFLX261120P00062000",
    "peak_pnl": 0.208,
-   "close_pnl": -0.006,
-   "quotes": 43,
+   "close_pnl": -0.034,
+   "quotes": 44,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -194,8 +194,8 @@
    "strength": "6.8",
    "occ": "SPXW261102C07660000",
    "peak_pnl": 0.057,
-   "close_pnl": -0.141,
-   "quotes": 3,
+   "close_pnl": 0.047,
+   "quotes": 4,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -213,9 +213,9 @@
    "edge": "4.5",
    "strength": "6.8",
    "occ": "SPY261103C00761000",
-   "peak_pnl": 0.045,
-   "close_pnl": -0.011,
-   "quotes": 3,
+   "peak_pnl": 0.079,
+   "close_pnl": 0.079,
+   "quotes": 4,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -597,7 +597,9 @@
   "20261102T1000|spx|repeat_side|SPX|CALL|7665|2026-11-02",
   "20261102T1000|spx|repeat_side|SPY|CALL|761|2026-11-03",
   "20261102T1005|spx|repeat_side|SPX|CALL|7665|2026-11-02",
-  "20261102T1005|spx|repeat_side|SPY|CALL|761|2026-11-03"
+  "20261102T1005|spx|repeat_side|SPY|CALL|761|2026-11-03",
+  "20261102T1010|spx|repeat_side|SPX|CALL|7660|2026-11-02",
+  "20261102T1010|spx|repeat_side|SPY|CALL|761|2026-11-03"
  ],
  "last": {
   "spx|CALL|SPY": "2026-11-02T09:50-05:00",
