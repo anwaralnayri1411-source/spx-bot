@@ -46,13 +46,13 @@ FEATURES = (("tod", "وقت اليوم"), ("ctx_vix", "VIX"), ("ctx_range", "م�
             ("ctx_event", "يوم حدث"), ("r30_b", "حركة 30د"), ("r60_b", "حركة 60د"), ("rday_b", "حركة اليوم"), ("pos_b", "الموقع في مدى اليوم"),
             ("cand_mom", "زخم آخر ساعة"), ("cand_f30", "أول 30 دقيقة"), ("edge7", "إشارة قوية edge7"), ("mom_live", "الزخم الحي"),
             ("live_side", "الشموع اللحظية"), ("news", "الأخبار"),
-            ("fl_gex", "الغاما (المراقب)"), ("fl_wall", "الجدران"), ("fl_lean", "ميل التدفق 30د"), ("fl_div", "تباعد الشد"),
+            ("fl_gex", "الغاما (المراقب)"), ("fl_wall", "الجدران"), ("fl_lean", "ميل التدفق 30د"), ("fl_div", "تباعد الشد"), ("addon", "إضافة على رابح"),
             ("s_news", "أخبار الشركة"), ("s_flow", "تدفق الخيارات"), ("s_delta", "دلتا العقد"), ("s_dte", "أيام العقد"),
             ("s_earn", "أرباح داخل العقد"), ("s_exdiv", "توزيعات داخل العقد"))
 CARD_COLS = ["project", "id", "day", "time", "sym", "side", "strike", "exp", "entry", "tod",
              "ctx_vix", "ctx_range", "ctx_trend", "ctx_gap", "ctx_event", "gap", "r30", "r60", "rday", "pos",
              "r30_b", "r60_b", "rday_b", "pos_b", "cand_mom", "cand_f30", "edge7", "mom_live", "live_side", "news_level", "news_kind", "news",
-             "fl_gex", "fl_wall", "fl_lean", "fl_div",
+             "fl_gex", "fl_wall", "fl_lean", "fl_div", "addon",
              "s_news", "s_flow", "s_delta", "s_dte", "s_earn", "s_exdiv",
              "exit_kind", "exit_ret", "exit_time", "mins", "peak_before", "after_peak", "last", "hold_ret"]
 
@@ -269,6 +269,22 @@ def track_rows(track, pid):
     return sorted([(ts(r.time), r.status, num(r.pnl)) for r in g.itertuples()], key=lambda x: x[0] or datetime.min)
 
 
+def addon_flag(z, track, r, t):
+    """H-ADDON: «نعم» إن سبقتها اليوم توصية SPX بالاتجاه نفسه بلغت الهدف (أول tp في المتابعة) قبل وقت الدخول."""
+    if r.symbol.lstrip("^") != "SPX":
+        return ""
+    for q in z[(z["date"] == r.date) & (z["side"] == r.side) & (z["time"] < r.time)].itertuples():
+        if q.symbol.lstrip("^") != "SPX":
+            continue
+        pid = f"SPX:{q.side}:{float(q.strike):g}:{q.expiry}"
+        rows = track_rows(track, pid)
+        hit = next((tt for tt, st, _ in rows if st in ("tp", "stopped")), None) if rows else None
+        first = next((st for tt, st, _ in rows if st in ("tp", "stopped")), None) if rows else None
+        if first == "tp" and hit and hit <= t:
+            return "نعم"
+    return "لا"
+
+
 def spx_cards(bars, logs, ctx):
     z, track = read("zero_dte_log.csv"), read("spx_track.csv")
     out = []
@@ -287,6 +303,7 @@ def spx_cards(bars, logs, ctx):
                  pos_b="" if f["pos"] is None else "أعلى المدى" if f["pos"] >= 2 / 3 else "أدنى المدى" if f["pos"] <= 1 / 3 else "وسط المدى")
         c.update(shadow_context(r.date, t, r.side, logs))
         c.update(flow_context(r.date, t, r.side, logs.get("flow", pd.DataFrame())))
+        c["addon"] = addon_flag(z, track, r, t)
         if c["news_kind"] == "allowed_half":
             c["news"] = "نصف كمية"
         c.update(path_outcome(track_rows(track, pid), t))

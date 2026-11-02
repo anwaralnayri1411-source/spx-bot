@@ -45,6 +45,7 @@ MAX_CONTRACTS = 3           # عدد العقود المعروضة
 TAKE_PROFIT = 0.50          # جني الربح عند +50% من سعر الدخول
 STOP_LOSS = 0.40            # وقف الخسارة عند -40%
 REPEAT_MINUTES = 90         # لا نكرر نفس الاتجاه قبل هذه المدة
+ADDON_MAX = 3               # H-ADDON: أقصى توصيات SPX بالاتجاه نفسه في اليوم حين يُرفع منع التكرار بعد بلوغ الهدف
 RISK_BUDGET_USD = 150       # أقصى خسارة تقبلها في الصفقة الواحدة عند الوقف (عدّلها حسب حسابك)
 MAX_QTY = 5                 # سقف عدد العقود المقترح
 TARGET_MAX_EM = 0.25         # أقصى مسافة لهدف الخطة من نقطة الدخول (جزء من الحركة اليومية المتوقعة)
@@ -1398,6 +1399,11 @@ def signal_message(a):
     if a.get("news_half"):
         L.append("⚠️ <b>أخبار مرتفعة المخاطر:</b> " + esc("، ".join(a["shock"]["flags"][:2])) + ". الكمية المقترحة نصف المعتاد (عقد واحد على الأقل)؛ خفّف حجمك.")
         L.append("")
+    if a.get("addon"):
+        pv = a["addon"]
+        L.append(f"➕ <b>إضافة على رابح:</b> عقد {side} السابق ({pv['strike']:,.0f}، {pv['time'][11:16]}) بلغ الهدف والقوة مستمرة. "
+                 "عقد جديد مستقل بهدفه ووقفه.")
+        L.append("")
     L += liquidity_lines(side, S, now_ny())
     L.append("ادخل بسعر العقد المذكور أو أقل، ولا تلاحق السعر إن ارتفع العقد أكثر من 10% قبل دخولك. "
              f"⏰ لا دخول بعد {ry_time(*no_entry(now_ny()))}")
@@ -1448,6 +1454,10 @@ def send_signal(a):
     alt_sep = bool(alt) and sym != ALT_SYMBOL      # بطاقة SPY منفصلة (لا تكرار إن كان العقد الرئيسي هو SPY نفسه)
     if alt_sep:
         cap.append("↳ توصية SPY منفصلة في الرد التالي")
+    if a.get("addon"):
+        pv = a["addon"]
+        cap.append(f"➕ <b>إضافة على رابح:</b> عقد {side} السابق ({pv['strike']:,.0f}، {pv['time'][11:16]}) بلغ الهدف.")
+    cap += [x for x in liquidity_lines(side, S, now_ny()) if x]
     cap.append(f"⏰ لا دخول بعد {ry_time(*no_entry(now_ny()))} | 📍 SPX {S:,.1f}")
     nd = groups.get("NDX")
     if c["age"] >= 5:
@@ -1613,6 +1623,18 @@ def save_positions(d):
             json.dump(d, f, ensure_ascii=False)
     except Exception as e:
         print("تعذر حفظ المراكز:", e)
+
+
+def addon_after_target(side, n, P=None):
+    """H-ADDON (2/11/2026): «إضافة على رابح» = آخر عقد SPX اليوم بالاتجاه نفسه بلغ الهدف، ولا عقد SPX بالاتجاه نفسه مفتوح،
+    وعدد عقود الاتجاه نفسه اليوم أقل من ADDON_MAX. يرجع العقد السابق (للرسالة) أو None."""
+    P = P if P is not None else load_positions()
+    today = n.date().isoformat()
+    same = sorted((p for p in P["positions"] if p.get("sym") == SYMBOL.lstrip("^") and p["side"] == side
+                   and p["time"][:10] == today), key=lambda p: p["time"])
+    if not same or len(same) >= ADDON_MAX or any(p["status"] == "open" for p in same) or same[-1]["status"] != "tp":
+        return None
+    return same[-1]
 
 
 def add_positions(n, a):
@@ -2122,6 +2144,10 @@ def run_once(force=False):
         except Exception:
             recent = False
 
+    prev_tp = addon_after_target(a["side"], n) if (has_signal and recent and not force) else None
+    if prev_tp:          # H-ADDON: العقد السابق بالاتجاه نفسه بلغ الهدف → إضافة على رابح بدل الحجب
+        recent = False
+        a["addon"] = prev_tp
     if has_signal and recent and not force:
         try:   # ظل الحجب: إشارة مكررة قبل REPEAT_MINUTES لم تُرسل (تسجيل فقط)
             import blocked_shadow

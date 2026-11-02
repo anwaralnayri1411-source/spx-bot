@@ -196,3 +196,15 @@ def test_tracks_peak_profit():
     assert p["peak"] == pytest.approx(0.3)
     ob.eval_position(p, NOON, 2.2, 7703.0)
     assert p["peak"] == pytest.approx(0.3)                                # القمة لا تنخفض
+
+
+def test_addon_after_target_rules():
+    n = datetime.fromisoformat("2026-11-02T11:00-05:00")
+    mk = lambda t, st, side="CALL", sym="SPX": {"sym": sym, "side": side, "time": f"2026-11-02T{t}-05:00", "status": st, "strike": 7665.0}
+    assert ob.addon_after_target("CALL", n, {"positions": [mk("09:45", "tp")]})["strike"] == 7665.0
+    assert ob.addon_after_target("CALL", n, {"positions": [mk("09:45", "open")]}) is None            # لا إضافة على مفتوح
+    assert ob.addon_after_target("CALL", n, {"positions": [mk("09:45", "stopped")]}) is None         # ولا على خاسر
+    assert ob.addon_after_target("CALL", n, {"positions": [mk("09:45", "tp"), mk("10:30", "open")]}) is None
+    assert ob.addon_after_target("CALL", n, {"positions": [mk("09:45", "tp", sym="SPY")]}) is None   # SPX فقط
+    assert ob.addon_after_target("PUT", n, {"positions": [mk("09:45", "tp")]}) is None
+    assert ob.addon_after_target("CALL", n, {"positions": [mk("09:45", "tp"), mk("10:05", "tp"), mk("10:40", "tp")]}) is None  # الحد 3
