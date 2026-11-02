@@ -98,3 +98,4 @@ id,time,project,tag,sym,root,side,strike,exp,entry,spot,edge,strength
 20261102T1450|spx|repeat_side|SPY|PUT|753|2026-11-03,2026-11-02T14:50-05:00,spx,repeat_side,SPY,SPY,PUT,753.0,2026-11-03,3.42,753.35,6.25,9.4
 20261102T1455|spx|repeat_side|SPY|PUT|753|2026-11-03,2026-11-02T14:55-05:00,spx,repeat_side,SPY,SPY,PUT,753.0,2026-11-03,3.05,754.12,4.0,6.0
 20261102T1500|spx|late_entry|SPY|PUT|754|2026-11-03,2026-11-02T15:00-05:00,spx,late_entry,SPY,SPY,PUT,754.0,2026-11-03,2.96,755.1,4.0,6.0
+20261102T1505|spx|late_entry|SPY|PUT|754|2026-11-03,2026-11-02T15:05-05:00,spx,late_entry,SPY,SPY,PUT,754.0,2026-11-03,2.86,755.36,4.0,6.0
