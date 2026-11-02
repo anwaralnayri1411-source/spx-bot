@@ -14,8 +14,8 @@
    "strength": "7.5",
    "occ": "NFLX261106P00062000",
    "peak_pnl": 0.252,
-   "close_pnl": 0.019,
-   "quotes": 154,
+   "close_pnl": 0.097,
+   "quotes": 155,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -34,8 +34,8 @@
    "strength": "6.5",
    "occ": "HOOD261120P00080000",
    "peak_pnl": 0.216,
-   "close_pnl": -0.314,
-   "quotes": 82,
+   "close_pnl": -0.311,
+   "quotes": 83,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -55,7 +55,7 @@
    "occ": "SNAP261120P00006000",
    "peak_pnl": 0.01,
    "close_pnl": -0.153,
-   "quotes": 82,
+   "quotes": 83,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -74,8 +74,8 @@
    "strength": "4.2",
    "occ": "WMT261120C00126000",
    "peak_pnl": 0.28,
-   "close_pnl": 0.257,
-   "quotes": 82,
+   "close_pnl": 0.251,
+   "quotes": 83,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -94,8 +94,8 @@
    "strength": "8.9",
    "occ": "INTC261113P00065000",
    "peak_pnl": 0.303,
-   "close_pnl": 0.279,
-   "quotes": 66,
+   "close_pnl": 0.248,
+   "quotes": 67,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -114,8 +114,8 @@
    "strength": "7.2",
    "occ": "PFE261120C00030000",
    "peak_pnl": 0.009,
-   "close_pnl": -0.157,
-   "quotes": 55,
+   "close_pnl": -0.148,
+   "quotes": 56,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -134,8 +134,8 @@
    "strength": "7.2",
    "occ": "NFLX261120P00062000",
    "peak_pnl": 0.208,
-   "close_pnl": 0.084,
-   "quotes": 55,
+   "close_pnl": 0.067,
+   "quotes": 56,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -154,8 +154,8 @@
    "strength": "7.2",
    "occ": "NVDA261109P00205000",
    "peak_pnl": 0.167,
-   "close_pnl": 0.11,
-   "quotes": 11,
+   "close_pnl": 0.09,
+   "quotes": 12,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -174,8 +174,8 @@
    "strength": "5.6",
    "occ": "WMT261120C00128000",
    "peak_pnl": 0.071,
-   "close_pnl": 0.071,
-   "quotes": 11,
+   "close_pnl": 0.04,
+   "quotes": 12,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -194,8 +194,8 @@
    "strength": "5.2",
    "occ": "AVGO261106P00317500",
    "peak_pnl": 0.0,
-   "close_pnl": -0.098,
-   "quotes": 11,
+   "close_pnl": -0.154,
+   "quotes": 12,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -214,8 +214,8 @@
    "strength": "5.7",
    "occ": "V261113C00430000",
    "peak_pnl": 0.139,
-   "close_pnl": 0.139,
-   "quotes": 11,
+   "close_pnl": 0.128,
+   "quotes": 12,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -234,8 +234,8 @@
    "strength": "8.7",
    "occ": "COIN261106P00135000",
    "peak_pnl": 0.147,
-   "close_pnl": 0.131,
-   "quotes": 11,
+   "close_pnl": 0.147,
+   "quotes": 12,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -254,8 +254,8 @@
    "strength": "7.8",
    "occ": "INTC261120P00062500",
    "peak_pnl": 0.182,
-   "close_pnl": 0.182,
-   "quotes": 11,
+   "close_pnl": 0.136,
+   "quotes": 12,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -274,8 +274,8 @@
    "strength": "4.8",
    "occ": "DIS261120C00115000",
    "peak_pnl": 0.0,
-   "close_pnl": -0.076,
-   "quotes": 8,
+   "close_pnl": -0.067,
+   "quotes": 9,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -293,9 +293,29 @@
    "edge": "6.5",
    "strength": "6.6",
    "occ": "PFE261120C00030000",
-   "peak_pnl": 0.046,
-   "close_pnl": 0.046,
-   "quotes": 8,
+   "peak_pnl": 0.057,
+   "close_pnl": 0.057,
+   "quotes": 9,
+   "out": "",
+   "out_time": "",
+   "out_pnl": ""
+  },
+  {
+   "id": "20261102T1112|stocks|same_side_cap|MSTR|PUT|130|2026-11-06",
+   "project": "stocks",
+   "tag": "same_side_cap",
+   "sym": "MSTR",
+   "side": "PUT",
+   "strike": 130.0,
+   "exp": "2026-11-06",
+   "entry": 3.16,
+   "entry_time": "2026-11-02T11:12-05:00",
+   "edge": "3.5",
+   "strength": "6.7",
+   "occ": "MSTR261106P00130000",
+   "peak_pnl": 0.0,
+   "close_pnl": -0.025,
+   "quotes": 1,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -715,7 +735,13 @@
   "20261102T1057|stocks|same_side_cap|NVDA|PUT|205|2026-11-09",
   "20261102T1057|stocks|open_same_dir|COIN|PUT|135|2026-11-06",
   "20261102T1057|stocks|open_same_dir|INTC|PUT|62.5|2026-11-20",
-  "20261102T1057|stocks|open_same_dir|WMT|CALL|128|2026-11-20"
+  "20261102T1057|stocks|open_same_dir|WMT|CALL|128|2026-11-20",
+  "20261102T1112|stocks|same_side_cap|NVDA|PUT|205|2026-11-09",
+  "20261102T1112|stocks|same_side_cap|MSTR|PUT|130|2026-11-06",
+  "20261102T1112|stocks|same_side_cap|WMT|CALL|130|2026-11-20",
+  "20261102T1112|stocks|max_ideas_cap|V|CALL|430|2026-11-06",
+  "20261102T1112|stocks|open_same_dir|COIN|PUT|135|2026-11-06",
+  "20261102T1112|stocks|open_same_dir|INTC|PUT|60|2026-11-20"
  ],
  "last": {
   "spx|CALL|SPY": "2026-11-02T09:50-05:00",
@@ -770,6 +796,7 @@
   "stocks|COIN|PUT|2026-11-02": "2026-11-02T10:12-05:00",
   "stocks|INTC|PUT|2026-11-02": "2026-11-02T10:12-05:00",
   "stocks|DIS|CALL|2026-11-02": "2026-11-02T10:27-05:00",
-  "stocks|PFE|CALL|2026-11-02": "2026-11-02T10:27-05:00"
+  "stocks|PFE|CALL|2026-11-02": "2026-11-02T10:27-05:00",
+  "stocks|MSTR|PUT|2026-11-02": "2026-11-02T11:12-05:00"
  }
 }
