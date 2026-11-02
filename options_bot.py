@@ -1342,6 +1342,42 @@ def instrument_block(sym, ks, side, S_idx):
     return L
 
 
+FLOW_LOG = "spx_flow_log.csv"   # مراقب سيولة SPX (H-SPXFLOW)
+
+
+def liquidity_lines(side, S, n, path=FLOW_LOG):
+    """سطر إعلامي من آخر لقطة لمراقب السيولة (≤15 دقيقة): نوع الغاما والجدران وميل التدفق آخر 30د، وتنبيه إن كان
+    التدفق عكس التوصية أو كانت قرب جدار ضدها في يوم ارتداد. لا يغيّر التوصية (بطلب المستخدم 2/11/2026)؛ فارغ إن لا قراءة."""
+    try:
+        fl = pd.read_csv(path, dtype={"time": str})
+        g = fl[(fl["date"] == n.date().isoformat()) & (fl["time"] <= n.strftime("%H:%M"))].sort_values("time")
+        if not len(g):
+            return []
+        r = g.iloc[-1]
+        h, m = map(int, r["time"].split(":"))
+        if (n.hour * 60 + n.minute) - (h * 60 + m) > 15:
+            return []
+        t30 = (n - timedelta(minutes=30)).strftime("%H:%M")
+        w = g[g["time"] > t30]
+        lean = float(w["call_prem"].fillna(0).sum() - w["put_prem"].fillna(0).sum())
+        pos = float(r["net_gex_m"]) > 0
+        cw, pw = r.get("call_wall"), r.get("put_wall")
+        lean_txt = "يميل للكول" if lean > 0 else ("يميل للبوت" if lean < 0 else "محايد")
+        L = ["🧭 <b>السيولة (تجريبي):</b> " + ("غاما موجبة: يوم ارتداد" if pos else "غاما سالبة: يوم اندفاع")
+             + (f" | أرضية {pw:,.0f}" if pd.notna(pw) else "") + (f" · سقف {cw:,.0f}" if pd.notna(cw) else "")
+             + f" | التدفق 30د: {lean_txt}"]
+        sg = 1 if side == "CALL" else -1
+        if lean * sg < 0:
+            L.append("⚠️ التدفق عكس هذه التوصية.")
+        wall = cw if side == "CALL" else pw
+        if pos and pd.notna(wall) and abs(float(wall) / S - 1) <= 0.0025:
+            L.append(f"⚠️ قريبة من {'السقف' if side == 'CALL' else 'الأرضية'} {float(wall):,.0f} في يوم ارتداد: احتمال الارتداد عكسها.")
+        L.append("<i>للمعلومة فقط، لم يُختبر بعد (H-SPXFLOW).</i>")
+        return L + [""]
+    except Exception:  # noqa: BLE001
+        return []
+
+
 def signal_message(a):
     c, side, S = a["c"], a["side"], a["c"]["S"]
     call = side == "CALL"
@@ -1362,6 +1398,7 @@ def signal_message(a):
     if a.get("news_half"):
         L.append("⚠️ <b>أخبار مرتفعة المخاطر:</b> " + esc("، ".join(a["shock"]["flags"][:2])) + ". الكمية المقترحة نصف المعتاد (عقد واحد على الأقل)؛ خفّف حجمك.")
         L.append("")
+    L += liquidity_lines(side, S, now_ny())
     L.append("ادخل بسعر العقد المذكور أو أقل، ولا تلاحق السعر إن ارتفع العقد أكثر من 10% قبل دخولك. "
              f"⏰ لا دخول بعد {ry_time(*no_entry(now_ny()))}")
     if c["age"] >= 5:
