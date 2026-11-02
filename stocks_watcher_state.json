@@ -2158,29 +2158,20 @@
    "news:ubs upgrade lifts rivian rivn shares 12 1 on strong r2 demand and margin outlook",
    "stock1",
    "sharp@2026-11-02T12:45-05:00",
-   "down-0.15"
+   "down-0.15",
+   "stock2"
   ],
   "PFE:CALL:2026-11-20:30": [
    "up0.25"
-  ],
-  "TSLA:CALL:2026-11-06:430": [
-   "down-0.15",
-   "news:tesla stock rallies as buyer support continues after latvia approves full self driving",
-   "sharp@2026-11-02T12:31-05:00",
-   "stock1",
-   "down-0.3"
   ],
   "V:CALL:2026-11-06:430": [
    "news:visa raises quarterly dividend by 16"
   ]
  },
  "stock_level": {
-  "RIVN:CALL:2026-11-20:13.5": 1,
-  "TSLA:CALL:2026-11-06:430": 1
+  "RIVN:CALL:2026-11-20:13.5": 2
  },
  "seen_macro": [
-  "futures mixed ahead of the fed s rate decision investors await big tech earnings",
-  "tech sector rally continues with fed expected to leave benchmark interest rate alone",
   "fed likely to go into wait and see mode on rates",
   "fed officials not aligned on weight of financial conditions",
   "us stock market today s p 500 futures edge up on durable demand optimism",
@@ -2778,11 +2769,12 @@
   "wall st rises as oil falls heading into us midterm elections",
   "dow rises 1 oil sinks 7 on iran peace hopes stock market today",
   "user",
-  "fed chair kevin warsh is cutting the number of rate setting votes"
+  "fed chair kevin warsh is cutting the number of rate setting votes",
+  "markets news and analysis",
+  "one magnificent 7 stock could have a massive ai opportunity by 2028"
  ],
  "sharp": {
   "DIS:CALL:2026-11-20:115": 112.63,
-  "RIVN:CALL:2026-11-20:13.5": 13.27,
-  "TSLA:CALL:2026-11-06:430": 409.04
+  "RIVN:CALL:2026-11-20:13.5": 13.27
  }
 }
