@@ -105,3 +105,16 @@ def test_main_gate(monkeypatch, capsys):
     monkeypatch.setattr(fw, "datetime", type("D", (), {"now": staticmethod(lambda tz=None: datetime(2026, 11, 1, 10, 0, tzinfo=fw.NY))}))
     fw.main([])
     assert not called and "خارج" in capsys.readouterr().out          # الأحد
+
+
+def test_f4_divergence_signals():
+    rows = []
+    for i in range(30):
+        t = (pd.Timestamp("09:35") + pd.Timedelta(minutes=5 * i)).strftime("%H:%M")
+        up = t <= "10:30"
+        rows.append({"date": "2026-11-02", "time": t, "spot": 7600 + i if up else 7611 - (i - 11), "call_prem": 0.0 if up else 0.0,
+                     "put_prem": 1000.0 if t > "10:00" and up else 0.0, "net_gex_m": 1.0})
+    o = fw.outcomes(pd.DataFrame(rows))
+    f4 = fw.f4_divergence(o)
+    hit = f4[f4.time == "10:30"]
+    assert len(hit) == 1 and hit.kind.iloc[0] == "bear" and hit.y.iloc[0] > 0   # قمة جديدة والشد يهبط ← هبط السعر بعدها

@@ -3,7 +3,7 @@
 
 كل 5 دقائق 9:35–16:00 نيويورك: عقود SPXW 0DTE ضمن ±1.5% من SPX من Tastytrade (OI، الحجم، الإغريقيات، العرض/الطلب)،
 ومنها جدارا OI والحجم، وصافي GEX ونقطة الانقلاب، والتدفق المصنّف (فرق الحجم منذ اللقطة السابقة بجهة آخر سعر من المنتصف).
-بعد الإغلاق (--eval): نتائج الفرضيات F1/F2/F3 في research/spx_flow_results.md.
+بعد الإغلاق (--eval): نتائج الفرضيات F1–F4 في research/spx_flow_results.md.
 الملفات: spx_flow_log.csv (ملخص، يُحفظ في git)، SPXBOT_DATA/spx_flow_raw/YYYY-MM-DD.csv.gz (خام، على الخادم فقط).
 تشغيل: python spx_flow_watch.py [--eval] [--force]
 """
@@ -27,7 +27,7 @@ BAND = 0.015                 # ±1.5% من السعر
 START, END = dtime(9, 35), dtime(16, 0)
 TOUCH = 0.001                # F1: اقتراب ضمن 0.1% من الجدار
 BARRIER = 0.0003             # F3: حاجز 0.03% لحركة 30 دقيقة
-MIN_F1, MIN_F2, MIN_F3 = 40, 15, 300
+MIN_F1, MIN_F2, MIN_F3, MIN_F4 = 40, 15, 300, 40
 COLS = ["date", "time", "spot", "call_wall", "call_wall_oi", "put_wall", "put_wall_oi", "vol_call_wall", "vol_put_wall",
         "net_gex_m", "flip", "call_prem", "put_prem", "net_delta", "contracts"]
 RAW_COLS = ["time", "symbol", "side", "strike", "oi", "volume", "gamma", "delta", "iv", "bid", "ask", "last"]
@@ -244,6 +244,28 @@ def f3_obs(o):
     return pd.DataFrame(rows, columns=["date", "time", "y"])
 
 
+def f4_divergence(o):
+    """تباعد «شد الحبل»: SPX عند أعلى (أدنى) سعر في الجلسة والشد التراكمي (كول − بوت) أقل (أعلى) مما كان قبل 30د
+    → إشارة عكس السعر؛ y = الإشارة × عائد 30د التالية. عند كل نصف ساعة 10:30–15:30."""
+    rows = []
+    for d, g in o.groupby("date"):
+        g = g.sort_values("time").reset_index(drop=True)
+        drift = (g.call_prem - g.put_prem).cumsum()
+        for i, r in g.iterrows():
+            if r.time < "10:30" or r.time > "15:30" or r.time[-2:] not in ("00", "30") or pd.isna(r.r30) or i == 0:
+                continue
+            back = (pd.Timestamp(d + " " + r.time) - pd.Timedelta(minutes=30)).strftime("%H:%M")
+            past = g.index[g.time <= back]
+            if not len(past):
+                continue
+            j, prior = past[-1], g.spot.iloc[:i]
+            if r.spot >= prior.max() and drift[i] < drift[j]:
+                rows.append({"date": d, "time": r.time, "kind": "bear", "y": -r.r30})
+            elif r.spot <= prior.min() and drift[i] > drift[j]:
+                rows.append({"date": d, "time": r.time, "kind": "bull", "y": r.r30})
+    return pd.DataFrame(rows, columns=["date", "time", "kind", "y"])
+
+
 def bh(ps, q=0.05):
     """Benjamini-Hochberg: قائمة نجاح/فشل بالترتيب نفسه."""
     idx = [i for i, p in enumerate(ps) if not np.isnan(p)]
@@ -261,11 +283,11 @@ def evaluate():
     if not os.path.exists(LOG):
         return "لا سجل بعد."
     o = outcomes(pd.read_csv(LOG, dtype={"time": str}))
-    f1, f2, f3 = f1_touches(o), f2_days(o), f3_obs(o)
+    f1, f2, f3, f4 = f1_touches(o), f2_days(o), f3_obs(o), f4_divergence(o)
     pos, neg = f2[f2.gex > 0], f2[f2.gex < 0]
     L = ["# نتائج H-SPXFLOW (مراقب سيولة SPX اللحظي)", "",
          f"الأيام: {o.date.nunique()} | اللقطات: {len(o)} | آخر تحديث: {datetime.now(NY):%Y-%m-%d %H:%M} نيويورك", ""]
-    ps, ready = [np.nan] * 3, [len(f1) >= MIN_F1, len(pos) >= MIN_F2 and len(neg) >= MIN_F2, len(f3) >= MIN_F3]
+    ps, ready = [np.nan] * 4, [len(f1) >= MIN_F1, len(pos) >= MIN_F2 and len(neg) >= MIN_F2, len(f3) >= MIN_F3, len(f4) >= MIN_F4]
     # F1
     if len(f1):
         lo, hi = boot_ci(f1.y, f1.date)
@@ -292,8 +314,15 @@ def evaluate():
                  f"[{lo:+.3%}، {hi:+.3%}] (الحاجز {BARRIER:+.2%}) | صحيح الجهة {(f3.y > 0).mean():.0%}")
     else:
         L.append(f"- **F3 ميل التدفق:** لا ملاحظات بعد (الحد {MIN_F3}).")
+    if len(f4):
+        lo, hi = boot_ci(f4.y, f4.date)
+        ps[3] = boot_p(np.asarray(f4.y) - BARRIER, f4.date)
+        L.append(f"- **F4 تباعد الشد:** {len(f4)} حدثاً (الحد {MIN_F4}؛ هابط {(f4.kind == 'bear').sum()} / صاعد {(f4.kind == 'bull').sum()}) | "
+                 f"متوسط العائد في جهة الإشارة 30د {f4.y.mean():+.3%} [{lo:+.3%}، {hi:+.3%}] (الحاجز {BARRIER:+.2%})")
+    else:
+        L.append(f"- **F4 تباعد الشد:** لا أحداث بعد (الحد {MIN_F4}).")
     ok = bh(ps)
-    L += ["", "**الحكم:** " + (" | ".join(f"F{i + 1}: " + ("ثبت" if ok[i] else "لم يثبت") for i in range(3)) if all(ready)
+    L += ["", "**الحكم:** " + (" | ".join(f"F{i + 1}: " + ("ثبت" if ok[i] else "لم يثبت") for i in range(4)) if all(ready)
                               else "قبل اكتمال العينة — وصفي فقط، لا حكم."), "",
           "تحفظ: تصنيف الشراء/البيع تقريبي (لقطة كل 5 دقائق)، وافتراض موقف صانع السوق قد يكون خاطئاً، وحركة المؤشر ليست ربح العقد."]
     os.makedirs(os.path.dirname(RESULTS), exist_ok=True)
