@@ -2142,7 +2142,8 @@
   "PFE:CALL": [
    "pfizer q3 preview analysts look to obesity pipeline amid diverging growth expectations pfe nyse",
    "more trick than treat dan niles flags ai risks in big tech earnings",
-   "altria vs pfizer which dividend stock pays you more in 10 years"
+   "altria vs pfizer which dividend stock pays you more in 10 years",
+   "pfizer stock hits 52 week high at 30 68 usd by investing com"
   ]
  },
  "fired": {
@@ -2183,7 +2184,9 @@
    "sharp@2026-11-02T12:45-05:00",
    "down-0.15"
   ],
-  "PFE:CALL:2026-11-20:30": [],
+  "PFE:CALL:2026-11-20:30": [
+   "up0.25"
+  ],
   "TSLA:CALL:2026-11-06:430": [
    "down-0.15",
    "news:tesla stock rallies as buyer support continues after latvia approves full self driving",
