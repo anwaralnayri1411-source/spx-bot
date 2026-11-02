@@ -148,7 +148,10 @@
    "netflix has lost nearly half its value in a year",
    "netflix has 2 problems behind the stock slide and they aren t youtube co ceo ted sarandos says",
    "netflix sinks 7 as soft q4 outlook sparks wave of price target cuts spotify slips disney holds steady",
-   "netflix nflx can local language hits improve returns on content spending"
+   "netflix nflx can local language hits improve returns on content spending",
+   "what is putting walt disney nyse dis in the spotlight",
+   "solana handled 3 9 billion of tokenized stock trades in october can it take wall street s business from ethereum",
+   "sphere entertainment tops communications services stocks in short interest alphabet sees the lowest exposure"
   ],
   "NFLX:PUT": [
    "djt stock plummets to new lows trump appeal fades as 2026 midterms draw closer",
@@ -259,7 +262,9 @@
    "visa raises dividend by 16 can v stock continue its gains",
    "visa raises quarterly dividend by 16",
    "promising financial stocks to keep an eye on november 2nd",
-   "visa stocks rise 2 4 with higher cantor target facing a payments mix test"
+   "visa stocks rise 2 4 with higher cantor target facing a payments mix test",
+   "dow jones top gainers nov 2 2026 us session",
+   "visa inc stock v moved up by 3 14 on nov 2 what investors need to know"
   ],
   "PLTR:CALL": [
    "palantir sees ark invest reduce position and uk fund review pltr remains under pressure",
@@ -2137,7 +2142,12 @@
    "rivian extends post earnings rally after ubs flips bullish rivn nasdaq",
    "rivian stock rallies as r2 demand ai and upgrade fuel momentum",
    "ubs upgrade lifts rivian rivn shares 12 1 on strong r2 demand and margin outlook",
-   "how will rivian automotive nasdaq rivn scale its next ev line"
+   "how will rivian automotive nasdaq rivn scale its next ev line",
+   "rivian stock jumps 10 here s why",
+   "rivn stock hits fresh 52 week lows after partner volkswagen reportedly weighs xpeng software for european cars",
+   "rivian soars 9 on ubs upgrade after selloff initial r2 demand looks solid",
+   "rivian stock pops as r2 demand and ai push lift outlook",
+   "rivian stock rivn defies bofa s sell rating jumps 10 here s why"
   ],
   "PFE:CALL": [
    "pfizer q3 preview analysts look to obesity pipeline amid diverging growth expectations pfe nyse",
@@ -2164,22 +2174,24 @@
    "down-0.15",
    "stock2",
    "sharp@2026-11-02T14:50-05:00",
-   "stock3"
+   "stock3",
+   "news:rivn stock hits fresh 52 week lows after partner volkswagen reportedly weighs xpeng software for european cars",
+   "news:rivian soars 9 on ubs upgrade after selloff initial r2 demand looks solid",
+   "news:rivian stock rivn defies bofa s sell rating jumps 10 here s why",
+   "sharp@2026-11-02T15:36-05:00"
   ],
   "PFE:CALL:2026-11-20:30": [
    "up0.25"
   ],
   "V:CALL:2026-11-06:430": [
-   "news:visa raises quarterly dividend by 16"
+   "news:visa raises quarterly dividend by 16",
+   "down-0.15"
   ]
  },
  "stock_level": {
   "RIVN:CALL:2026-11-20:13.5": 3
  },
  "seen_macro": [
-  "fed set to announce interest rate decision today will rates go up",
-  "tech stocks rebounding ahead of u s interest rate announcement",
-  "here are wednesday s top wall street analyst research calls enphase energy f5 marvell technology msg rangers pentair sil",
   "fomc meeting live today fed rate decision warsh s next move bitcoin price updates",
   "oct 27 has historically marked the stock market s autumn bottom",
   "markets expect fed to hold interest rates analysts see another potential hike in december",
@@ -2776,10 +2788,13 @@
   "one magnificent 7 stock could have a massive ai opportunity by 2028",
   "gbp usd price forecast gbp usd 1 3423 hits highest since mid september as boe hike to 4 00 priced above 90 1 3475 breako",
   "labour bureau prepares to revise cpi iw base year expand coverage",
-  "helmerich payne dht holdings vitesse energy highpeak energy and borr drilling shares plummet what you need to know"
+  "helmerich payne dht holdings vitesse energy highpeak energy and borr drilling shares plummet what you need to know",
+  "what ai investment means for the fed s fight against inflation",
+  "surprising us iran peace talks gold and silver surge oil prices fall",
+  "analysis structural economic shifts threaten american households with prolonged inflation"
  ],
  "sharp": {
   "DIS:CALL:2026-11-20:115": 112.63,
-  "RIVN:CALL:2026-11-20:13.5": 13.14
+  "RIVN:CALL:2026-11-20:13.5": 13.035
  }
 }

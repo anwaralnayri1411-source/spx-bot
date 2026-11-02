@@ -1650,3 +1650,11 @@ time,pos_id,ticker,side,event,detail,entry,val,pnl,spot,need,tdays,advice,reason
 2026-11-02T14:27-05:00,TSLA:CALL:2026-11-06:430,TSLA,CALL,stock,-2.02% منذ الدخول,3.43,,,404.49,0.0715,5,فكّر بالخروج,السهم يتحرك ضدك
 2026-11-02T14:50-05:00,RIVN:CALL:2026-11-20:13.5,RIVN,CALL,sharp,-0.83% في 15د,0.81,,,13.14,0.089,15,فكّر بالخروج,السهم يتحرك ضدك
 2026-11-02T15:14-05:00,RIVN:CALL:2026-11-20:13.5,RIVN,CALL,stock,-3.00% منذ الدخول,0.81,,,13.075,0.0945,15,فكّر بالخروج,السهم يتحرك ضدك
+2026-11-02T15:24-05:00,DIS:CALL:2026-11-20:115,DIS,CALL,macro,"with/weak/medium: Surprising US-Iran Peace Talks: Gold and Silver Surge, Oil Prices Fall - CryptoRank",3.64,3.34,-0.0824,113.22,0.0479,15,أبقِ,الخبر في صالح العقد
+2026-11-02T15:24-05:00,RIVN:CALL:2026-11-20:13.5,RIVN,CALL,macro,"with/strong/medium: Surprising US-Iran Peace Talks: Gold and Silver Surge, Oil Prices Fall - CryptoRank",0.81,0.63,-0.2222,13.2,0.0841,15,فكّر بالخروج,السهم يتحرك ضدك
+2026-11-02T15:24-05:00,V:CALL:2026-11-06:430,V,CALL,macro,"with/weak/medium: Surprising US-Iran Peace Talks: Gold and Silver Surge, Oil Prices Fall - CryptoRank",3.15,2.94,-0.0667,425.92,0.017,5,أبقِ,الخبر في صالح العقد
+2026-11-02T15:35-05:00,RIVN:CALL:2026-11-20:13.5,RIVN,CALL,news,against/medium: RIVN Stock Hits Fresh 52-Week Lows After Partner Volkswagen Reportedly Weighs Xpeng Software For European Cars - Stocktwits,0.81,0.58,-0.284,13.065,0.0953,15,فكّر بالخروج,السهم يتحرك ضدك
+2026-11-02T15:35-05:00,RIVN:CALL:2026-11-20:13.5,RIVN,CALL,news,with/medium: Rivian Soars 9% on UBS Upgrade After Selloff: “Initial R2 Demand Looks Solid” - TIKR.com,0.81,0.58,-0.284,13.065,0.0953,15,فكّر بالخروج,السهم يتحرك ضدك
+2026-11-02T15:35-05:00,RIVN:CALL:2026-11-20:13.5,RIVN,CALL,news,"with/medium: Rivian Stock (RIVN) Defies BofA’s Sell Rating, Jumps 10% — Here’s Why - TipRanks",0.81,0.58,-0.284,13.065,0.0953,15,فكّر بالخروج,السهم يتحرك ضدك
+2026-11-02T15:36-05:00,RIVN:CALL:2026-11-20:13.5,RIVN,CALL,sharp,-1.21% في 15د,0.81,,,13.035,0.0978,15,فكّر بالخروج,السهم يتحرك ضدك
+2026-11-02T15:47-05:00,V:CALL:2026-11-06:430,V,CALL,contract,-15%,3.15,2.67,-0.1524,425.26,0.0186,5,أبقِ,الفكرة قائمة لكن العقد -15%؛ التزم بالوقف عند −40%
