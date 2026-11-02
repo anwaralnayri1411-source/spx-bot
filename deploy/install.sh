@@ -45,7 +45,7 @@ shadow_manager|Mon..Fri *-*-* 20,21:25:00
 weekly_learning|Sat *-*-* 09:00:00
 analyst|Mon..Fri *-*-* 20,21:50:00
 analyst_weekly|Sat *-*-* 09:40:00
-news_watch|*-*-* *:04/15:00
+news_watch|*-*-* *:04/30:00
 strategy_lab|Sat *-*-1..7 10:00:00
 levels_study|Sat *-*-1..7 10:30:00
 signals_batch|Sat *-*-1..7 11:00:00
