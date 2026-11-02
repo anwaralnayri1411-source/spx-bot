@@ -17,11 +17,11 @@
    "r5040_out": "tp",
    "r5040_time": "10:18",
    "r5040_pnl": 0.823,
-   "t60_time": "",
-   "t60_pnl": "",
+   "t60_time": "10:48",
+   "t60_pnl": 0.721,
    "peak_pnl": 2.407,
-   "close_pnl": 0.965,
-   "quotes": 11
+   "close_pnl": 0.721,
+   "quotes": 12
   },
   {
    "date": "2026-11-02",
@@ -39,11 +39,11 @@
    "r5040_out": "tp",
    "r5040_time": "10:28",
    "r5040_pnl": 0.61,
-   "t60_time": "",
-   "t60_pnl": "",
+   "t60_time": "10:48",
+   "t60_pnl": 0.322,
    "peak_pnl": 0.61,
-   "close_pnl": 0.384,
-   "quotes": 11
+   "close_pnl": 0.322,
+   "quotes": 12
   }
  ],
  "skipped": []
