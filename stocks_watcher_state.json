@@ -833,7 +833,8 @@
    "if you invest 1 000 in tesla today here s what it could be worth by 2030",
    "cvna q3 earnings miss on higher costs despite record sales",
    "tesla s profits took a hit is it building something worth the cost",
-   "tesla inc stock tsla moved up by 3 31 on nov 2 drivers behind the movement"
+   "tesla inc stock tsla moved up by 3 31 on nov 2 drivers behind the movement",
+   "tesla stock rallies as buyer support continues after latvia approves full self driving"
   ],
   "XOM:CALL": [
    "trump uses defense act as fuel prices surge",
@@ -2122,7 +2123,8 @@
    "why rivian rivn stock is up today",
    "rivian surges 6 in one session adding over 1 billion in market cap",
    "why did lucid stock just pop",
-   "rivian extends post earnings rally after ubs flips bullish rivn nasdaq"
+   "rivian extends post earnings rally after ubs flips bullish rivn nasdaq",
+   "rivian stock rallies as r2 demand ai and upgrade fuel momentum"
   ],
   "PFE:CALL": [
    "pfizer q3 preview analysts look to obesity pipeline amid diverging growth expectations pfe nyse",
@@ -2154,35 +2156,26 @@
    "news:intel nasdaq intc stock moved down to hold by freedom broker",
    "news:ubs group issues pessimistic forecast for intel nasdaq intc stock price"
   ],
-  "WMT:CALL:2026-11-13:124": [
-   "news:walmart stock wmt lights up as it invests in home battery group base power",
-   "news:walmart wmt partners with base power to expand home energy sol",
-   "up0.25"
-  ],
   "DIS:CALL:2026-11-20:115": [
    "sharp@2026-11-02T10:36-05:00",
    "down-0.15"
   ],
   "RIVN:CALL:2026-11-20:13.5": [
    "sharp@2026-11-02T11:22-05:00",
-   "news:rivian extends post earnings rally after ubs flips bullish rivn nasdaq"
+   "news:rivian extends post earnings rally after ubs flips bullish rivn nasdaq",
+   "sharp@2026-11-02T11:55-05:00"
   ],
   "PFE:CALL:2026-11-20:30": [],
   "TSLA:CALL:2026-11-06:430": [
-   "down-0.15"
-  ]
+   "down-0.15",
+   "news:tesla stock rallies as buyer support continues after latvia approves full self driving"
+  ],
+  "V:CALL:2026-11-06:430": []
  },
  "stock_level": {
   "INTC:PUT:2026-11-13:65": 2
  },
  "seen_macro": [
-  "fed likely holds rates in october but may hike in december amid stubborn inflation",
-  "stock markets decline in early trade sensex drops",
-  "after canada fires back with retaliatory tariffs trump and carney move to ease trade war in 2 sectors as south africa br",
-  "5 things to watch for in this week s federal reserve meeting",
-  "rand waiting for fed rates decision",
-  "supreme court rules that trump s sweeping emergency tariffs are illegal",
-  "the ai boom is starting to break time tested stock market signals",
   "major brokerages expect fed to hold rates ahead of policy meeting",
   "israel s election too close to call and the ebola outbreak reaches grim milestone",
   "us fed fomc meeting live updates hike or hold wall street awaits warsh s verdict",
@@ -2775,11 +2768,18 @@
   "us dollar forecast nordea warns rising debt costs could weigh",
   "stock market today oil slides on middle east hopes as wall street rebounds gold price gains 2",
   "stock market today nov 2 2026 dow rises ahead of apple s earnings report",
-  "what monday s futures rebound means as midterms and apple earnings near"
+  "what monday s futures rebound means as midterms and apple earnings near",
+  "why penny stock inovio pharmaceuticals ino is skyrocketing over 200 today and how much upside wall street sees from here",
+  "these 9 words from kevin warsh about interest rates should worry every investor",
+  "how the bank of canada rate hike could affect your finances according to our experts",
+  "trump s tariffs are on the ballot in michigan",
+  "my new dispatch article on the legal case against trump s section 338 tariffs targeting canadian imports",
+  "us stock market today dow spikes 400 points s p nasdaq rebound on cooler oil nvidia amazon gain",
+  "trade setup for nov 3 nifty bulls eye 23 600 breakout as oil reprieve supports case for sustained rebound"
  ],
  "sharp": {
   "INTC:PUT:2026-11-13:65": 67.315,
   "DIS:CALL:2026-11-20:115": 112.63,
-  "RIVN:CALL:2026-11-20:13.5": 13.49
+  "RIVN:CALL:2026-11-20:13.5": 13.38
  }
 }
