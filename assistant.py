@@ -178,6 +178,67 @@ def t_research(name=""):
     return f"{hits[0]} (الأحدث):{more}\n{s[:6000]}" + ("\n…(مقتطع)" if len(s) > 6000 else "")
 
 
+LIVE = os.getenv("SPXBOT_LIVE", "/opt/spxbot/live")
+
+
+def _fresh_csv(name, group):
+    """أحدث نسخة من سجل مهمة أخرى: شجرتها على الخادم أولاً (أحدث من نسخة GitHub في شجرة هذه المهمة)."""
+    for p in (os.path.join(LIVE, group, name), os.path.join(os.path.dirname(os.path.abspath(__file__)), name)):
+        if os.path.exists(p):
+            try:
+                return pd.read_csv(p, dtype=str, keep_default_na=False)
+            except Exception:
+                pass
+    return pd.DataFrame()
+
+
+def t_news(ticker="", hours=24):
+    """أخبار السوق والشركة من مصادر البوت: مراقب الأخبار خارج الجلسة، والعقود الآجلة، ومستوى صدمة الأخبار بقواعد البوت الآن،
+    وذاكرة أخبار الشركات. قراءة فقط."""
+    import news_watch as nw
+    n = ob.now_ny()
+    tk = (ticker or "").upper().lstrip("$")
+    hours = max(1, min(int(hours or 24), 96))
+    cut = (pd.Timestamp.now(tz="UTC") - pd.Timedelta(hours=hours)).isoformat()
+    L = [f"وقت القراءة {n:%Y-%m-%d %H:%M} نيويورك | آخر {hours} ساعة"]
+    w = _fresh_csv("news_watch_log.csv", "news-watch")
+    if len(w):
+        w = w[(w["time_utc"] >= cut) & (w["new"] == "1") & w["importance"].isin(["high", "medium"])]
+        w = w[(w["scope"] == "market") | (w["ticker"] == tk)] if tk else w[w["scope"].isin(["market", "company"])]
+        w = w.sort_values("time_utc").drop_duplicates("cluster")          # أول عنوان للحدث
+        w = w.assign(r=w["importance"].map({"high": 0, "medium": 1})).sort_values(["r", "time_utc"], ascending=[True, False]).head(10)
+    L.append("\n== مراقب الأخبار خارج الجلسة (Claude يصنّف العناوين؛ الاتجاه توقّع غير مختبر) ==")
+    if len(w):
+        for r in w.itertuples():
+            t = pd.Timestamp(r.time_utc).tz_convert("America/New_York")
+            L.append(f"[{nw.IMP_AR.get(r.importance, r.importance)}] {t:%m-%d %H:%M} — {r.topic} — الأثر المتوقع: "
+                     f"{nw.DIR_AR.get(r.direction, '-')}{' — ' + r.ticker if r.ticker else ''}\n  {r.title}")
+    else:
+        L.append("لا أخبار مهمة مسجّلة في هذه الفترة (المراقب يعمل خارج الجلسة فقط، كل 30 دقيقة، منذ 2/11/2026).")
+    try:
+        ref = nw.last_close(n)
+        L.append("\n" + nw.fut_line({k: nw.fut_move(nw.fut_bars(s), n, ref) for k, s in (("ES", "ES=F"), ("NQ", "NQ=F"))})
+                 + f" | الإغلاق المرجعي {ref:%m-%d %H:%M}")
+    except Exception as e:
+        L.append(f"\nالعقود الآجلة: تعذر ({type(e).__name__})")
+    try:
+        sh = ob.market_shock(ob.fetch_headlines())
+        L.append(f"\n== صدمة الأخبار بقواعد بوت SPX الآن: المستوى {sh['level']} (1 هادئ، 2 متوسط، 3 مرتفع) ==\n"
+                 + ("\n".join(f"- {x}" for x in sh["flags"]) or "- لا أسباب")
+                 + "\n(القاعدة: حتى 30/10/2026 كان المستوى 3 يمنع أي توصية؛ منذ جلسة 2/11 لا يمنعها بل نصف الكمية مع تحذير. "
+                 + "VIX والشركات القيادية من ياهو بتغيّرها اليومي" + ("؛ خارج الجلسة هي أرقام آخر جلسة.)" if not ob.in_window(n) else ".)"))
+    except Exception as e:
+        L.append(f"\nصدمة الأخبار: تعذر الحساب ({type(e).__name__})")
+    if tk:
+        m = _fresh_csv("news_memory_log.csv", "news-memory")
+        if len(m):
+            m = m[(m["ticker"] == tk) & (m["time_utc"] >= cut) & (m["new"] == "1")].sort_values("time_utc", ascending=False).head(8)
+        L.append(f"\n== أخبار {tk} في ذاكرة الأخبار (أيام التداول) ==")
+        L += ([f"{pd.Timestamp(r.time_utc).tz_convert('America/New_York'):%m-%d %H:%M} [{r.importance}] {r.event} "
+               f"(متوقع: {r.expect}) — {r.title}" for r in m.itertuples()] if len(m) else ["لا أخبار جديدة مسجّلة لها في هذه الفترة."])
+    return "\n".join(L)
+
+
 TOOL_FUNCS = {
     "open_positions": (t_open_positions, "العقود المفتوحة الآن لبوت الشركات مع ربحها الحالي.", {}),
     "company_analysis": (t_company, "تحليل شركة بنقاط بوت الشركات (الميل الفني، المتوسطات، RSI) وعقود البوت المفتوحة عليها وآخر توصياته لها.",
@@ -197,6 +258,11 @@ TOOL_FUNCS = {
                     "strike": {"type": "number", "description": "سعر التنفيذ (اختياري)"}}),
     "earnings_date": (t_earnings, "موعد الأرباح القادمة وآخر أرباح ومفاجأتها لشركة من قائمة البوت.",
                       {"ticker": {"type": "string", "description": "رمز السهم"}}),
+    "market_news": (t_news, "أخبار السوق والشركات من مصادر البوت: أهم أخبار الليل والعطلة المصنّفة (الأهمية والاتجاه المتوقع)، "
+                    "وحركة العقود الآجلة ES/NQ منذ آخر إغلاق، ومستوى صدمة الأخبار بقواعد بوت SPX الآن وأسبابه، "
+                    "واختيارياً أخبار شركة محددة. استعمله لأي سؤال عن الأخبار أو وضع السوق قبل الافتتاح.",
+                    {"ticker": {"type": "string", "description": "رمز شركة اختياري، فارغ = السوق"},
+                     "hours": {"type": "integer", "description": "الفترة بالساعات (1-96، افتراضي 24)"}}),
     "research_results": (t_research, "نتائج اختباراتنا المحفوظة. بلا اسم: قائمة الملفات؛ بالاسم (جزء منه مثل pead): محتوى الملف.",
                          {"name": {"type": "string", "description": "جزء من اسم الملف، فارغ = القائمة"}}),
 }
@@ -302,7 +368,10 @@ def answer(text, n, client=None):
     log_usage({"time": n.isoformat(timespec="seconds"), "model": MODEL, **u, "usd": round(usd, 5),
                "tools": " ".join(used), "status": status})
     reply = reply or "لم أجد ما أقوله. جرّب صياغة أخرى."
-    save_hist(hist + [{"role": "user", "content": text}, {"role": "assistant", "content": reply}])
+    # مصدر الرد يُحفظ معه حتى لا يتراجع النموذج لاحقاً عن أرقام جاءت من أداة لا يرى نتيجتها (حدث 30/10 و1/11)
+    src = (f"\n[مصدر هذا الرد: نتائج الأدوات {'، '.join(used)} وقت {n:%Y-%m-%d %H:%M} نيويورك]" if used
+           else f"\n[هذا الرد بلا أدوات، {n:%Y-%m-%d %H:%M} نيويورك]")
+    save_hist(hist + [{"role": "user", "content": text}, {"role": "assistant", "content": reply + src}])
     return reply, dict(u, usd=usd, tools=used, status=status)
 
 
