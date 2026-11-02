@@ -170,11 +170,15 @@ def test_target_fires_at_plus_fifty_percent():
     assert [k for k, _ in new] == ["tp"] and p["status"] == "tp"
 
 
-def test_giveback_after_target():
+def test_silent_after_target():
     p = pos()
     ob.eval_position(p, NOON, 3.2, 7720.0)                                # بلغ الهدف، القمة +60%
-    _, new = ob.eval_position(p, NOON, 2.3, 7712.0)                       # الربح تراجع إلى +15% (أقل من نصف القمة)
-    assert "giveback" in [k for k, _ in new]
+    _, new = ob.eval_position(p, NOON, 2.3, 7712.0)                       # تراجع إلى +15%: لا رسالة
+    assert new == []
+    _, new = ob.eval_position(p, NOON, 1.0, 7690.0)                       # نزل حتى −50%: لا رسالة وقف، تبقى رابحة
+    assert new == [] and p["status"] == "tp" and p["peak"] == pytest.approx(0.6)
+    late = datetime.fromisoformat("2026-10-19T15:35-04:00")
+    assert ob.eval_position(p, late, 1.0, 7690.0)[1] == []                # ولا تنبيه آخر 30 دقيقة
 
 
 def test_final_half_hour_warns_once_and_depends_on_moneyness():

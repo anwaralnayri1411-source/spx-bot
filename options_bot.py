@@ -1807,16 +1807,16 @@ def eval_position(p, n, val, spot):
             new.append((kind, text))
     if pnl > p.get("peak", 0.0):
         p["peak"] = round(pnl, 3)
-    live = p["status"] != "stopped"
+    # بعد الهدف: الصفقة رابحة ومغلقة بالقاعدة، والمتابعة صامتة (لا وقف ولا تراجع ولا آخر 30 دقيقة) بطلب المستخدم 2/11/2026؛
+    # الحالة تبقى "tp" والتتبع في spx_track يستمر لقياس ما بعد الهدف.
+    live = p["status"] == "open"
     if live and age >= MIN_AGE_MIN and pnl <= -STOP_LOSS:
         fire("stop", f"وصل وقف الخسارة (-{STOP_LOSS * 100:.0f}%). الخروج يحدّ الخسارة.")
         p["status"] = "stopped"
     if live and pnl >= TAKE_PROFIT:
         fire("tp", f"وصل هدف الربح (+{TAKE_PROFIT * 100:.0f}%). فكّر بجني الربح أو ارفع وقفك إلى سعر دخولك.")
-        if p["status"] == "open":
-            p["status"] = "tp"
-    if live and p["status"] == "tp" and p.get("peak", 0) >= TAKE_PROFIT and pnl <= p["peak"] * GIVEBACK:
-        fire("giveback", f"الربح تراجع من +{p['peak'] * 100:.0f}% إلى {pnl * 100:+.0f}%. احمِ ما تبقى.")
+        p["status"] = "tp"
+    live = live and p["status"] == "open"
     if (live and p["status"] == "open" and p.get("exp", "") > p["time"][:10] and age >= DECAY_MIN_AGE and pnl <= -DECAY_LOSS
             and spot and p.get("entry_spot")):
         adverse = (p["entry_spot"] - spot) / p["entry_spot"] if p["side"] == "CALL" else (spot - p["entry_spot"]) / p["entry_spot"]
