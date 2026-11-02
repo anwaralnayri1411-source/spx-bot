@@ -1634,3 +1634,8 @@ time,pos_id,ticker,side,event,detail,entry,val,pnl,spot,need,tdays,advice,reason
 2026-11-02T12:20-05:00,PFE:CALL:2026-11-20:30,PFE,CALL,macro_quiet,"against/weak/medium: Federal Reserve cuts rate-setting votes, raising risk of slower borrowing relief - Traders Union",0.88,0.92,0.0455,30.515,0.012,15,أبقِ,خبر ضد العقد لكن تأثيره محدود، راقب
 2026-11-02T12:20-05:00,V:CALL:2026-11-06:430,V,CALL,macro_quiet,"against/weak/medium: Federal Reserve cuts rate-setting votes, raising risk of slower borrowing relief - Traders Union",3.15,2.83,-0.1016,425.915,0.017,5,أبقِ,خبر ضد العقد لكن تأثيره محدود، راقب
 2026-11-02T12:31-05:00,TSLA:CALL:2026-11-06:430,TSLA,CALL,sharp,-0.88% في 15د,3.43,,,409.04,0.0596,5,فكّر بالخروج,السهم يتحرك ضدك
+2026-11-02T12:37-05:00,RIVN:CALL:2026-11-20:13.5,RIVN,CALL,stock,-1.00% منذ الدخول,0.81,,,13.345,0.0723,15,أبقِ,لا جديد يغيّر فكرة الصفقة
+2026-11-02T12:40-05:00,TSLA:CALL:2026-11-06:430,TSLA,CALL,stock,-1.07% منذ الدخول,3.43,2.28,-0.3353,408.4,0.0613,5,فكّر بالخروج,العقد خسر 34% (الوقف عند −40%)
+2026-11-02T12:40-05:00,TSLA:CALL:2026-11-06:430,TSLA,CALL,contract,-34%,3.43,2.28,-0.3353,408.4,0.0613,5,فكّر بالخروج,العقد خسر 34% (الوقف عند −40%)
+2026-11-02T12:45-05:00,RIVN:CALL:2026-11-20:13.5,RIVN,CALL,sharp,-0.79% في 15د,0.81,0.67,-0.1728,13.27,0.0784,15,فكّر بالخروج,السهم يتحرك ضدك
+2026-11-02T12:45-05:00,RIVN:CALL:2026-11-20:13.5,RIVN,CALL,contract,-17%,0.81,0.67,-0.1728,13.27,0.0784,15,فكّر بالخروج,السهم يتحرك ضدك

@@ -258,7 +258,8 @@
    "ibm stock price forecast pulls back to 240 ahead of earnings could drop another 16",
    "visa raises dividend by 16 can v stock continue its gains",
    "visa raises quarterly dividend by 16",
-   "promising financial stocks to keep an eye on november 2nd"
+   "promising financial stocks to keep an eye on november 2nd",
+   "visa stocks rise 2 4 with higher cantor target facing a payments mix test"
   ],
   "PLTR:CALL": [
    "palantir sees ark invest reduce position and uk fund review pltr remains under pressure",
@@ -2172,20 +2173,27 @@
    "sharp@2026-11-02T11:22-05:00",
    "news:rivian extends post earnings rally after ubs flips bullish rivn nasdaq",
    "sharp@2026-11-02T11:55-05:00",
-   "news:ubs upgrade lifts rivian rivn shares 12 1 on strong r2 demand and margin outlook"
+   "news:ubs upgrade lifts rivian rivn shares 12 1 on strong r2 demand and margin outlook",
+   "stock1",
+   "sharp@2026-11-02T12:45-05:00",
+   "down-0.15"
   ],
   "PFE:CALL:2026-11-20:30": [],
   "TSLA:CALL:2026-11-06:430": [
    "down-0.15",
    "news:tesla stock rallies as buyer support continues after latvia approves full self driving",
-   "sharp@2026-11-02T12:31-05:00"
+   "sharp@2026-11-02T12:31-05:00",
+   "stock1",
+   "down-0.3"
   ],
   "V:CALL:2026-11-06:430": [
    "news:visa raises quarterly dividend by 16"
   ]
  },
  "stock_level": {
-  "INTC:PUT:2026-11-13:65": 2
+  "INTC:PUT:2026-11-13:65": 2,
+  "RIVN:CALL:2026-11-20:13.5": 1,
+  "TSLA:CALL:2026-11-06:430": 1
  },
  "seen_macro": [
   "factbox major brokerages expect fed to hold rates ahead of policy meeting",
@@ -2792,7 +2800,7 @@
  "sharp": {
   "INTC:PUT:2026-11-13:65": 67.315,
   "DIS:CALL:2026-11-20:115": 112.63,
-  "RIVN:CALL:2026-11-20:13.5": 13.38,
+  "RIVN:CALL:2026-11-20:13.5": 13.27,
   "TSLA:CALL:2026-11-06:430": 409.04
  }
 }
