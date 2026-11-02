@@ -49,6 +49,7 @@ news_watch|*-*-* *:04/30:00
 spx_flow|Mon..Fri *-*-* 13..21:02/5:00
 spx_flow_eval|Mon..Fri *-*-* 21:20:00
 level_signals|Mon..Fri *-*-* 13..21:03/5:00
+news_decay|Sat *-*-* 08:15:00
 strategy_lab|Sat *-*-1..7 10:00:00
 levels_study|Sat *-*-1..7 10:30:00
 signals_batch|Sat *-*-1..7 11:00:00

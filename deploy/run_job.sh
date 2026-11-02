@@ -207,6 +207,11 @@ main() {
       cmds=("$py level_signals.py")
       files="level_signals_log.csv level_signals_state.json messages_level_signals.jsonl"
       msg="level signals" ;;
+    news_decay)
+      group=news-decay; envs="ALPACA"   # منحنى أثر الخبر (H-NEWSDECAY، N2/N3): تحديث شموع 5د ثم الدراسة، أسبوعياً
+      cmds=("$py research/bars_history.py --from $(date -u -d '-14 days' +%Y-%m-%d) --only AAPL,MSFT,NVDA,AMZN,GOOGL,META,TSLA,AVGO,AMD,NFLX,PLTR,UBER,MA,V,JPM,BAC,DIS,WMT,INTC,SOFI,F,PFE,SNAP,MU,RIVN,T,BA,XOM,CVX,COIN,MSTR,HOOD,LMT,SPY" "$py research/news_decay_study.py")
+      files="research/news_decay_results.md"
+      msg="news decay weekly" ;;
     spx_flow)
       group=spx-flow; envs="TASTY"   # مراقب سيولة SPX اللحظي (H-SPXFLOW): تسجيل فقط؛ الخام spx_flow_raw/ يبقى على الخادم
       cmds=("$py spx_flow_watch.py")

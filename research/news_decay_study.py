@@ -24,6 +24,8 @@ LOG = os.path.join(ROOT, "news_memory_log.csv")
 OUT = os.path.join(HERE, "news_decay_results.md")
 MIN_INIT = 0.005
 MIN_N1 = 150
+OOS_FROM = "2026-11-03"       # N2/N3: أخبار من هذا اليوم فقط (خارج عينة الاكتشاف)
+MIN_N2_BIG, MIN_N2_SMALL, MIN_N3 = 60, 100, 100
 N_BOOT = 4000
 STAGES = (("c_2h", "+30د → ساعتين"), ("c_close", "+30د → الإغلاق"), ("c_next", "+30د → إغلاق الغد"), ("c_3d", "+30د → +3 أيام"))
 EVENT_AR = {"analyst_upgrade": "ترقية محلل", "analyst_downgrade": "تخفيض محلل", "earnings_beat": "أرباح فوق التوقع",
@@ -115,7 +117,7 @@ def signed(r):
     return {"init": r["init"], **{c: s * r["a" + c[1:]] for c, _ in STAGES}}
 
 
-def boot(v, days, n=N_BOOT, seed=0):
+def boot(v, days, n=N_BOOT, seed=0, q=(2.5, 97.5)):
     v, days = np.asarray(v, float), np.asarray(days)
     ok = ~np.isnan(v)
     v, days = v[ok], days[ok]
@@ -125,7 +127,7 @@ def boot(v, days, n=N_BOOT, seed=0):
     by = {d: v[days == d] for d in u}
     rng = np.random.default_rng(seed)
     ms = [np.mean(np.concatenate([by[d] for d in rng.choice(u, len(u))])) for _ in range(n)]
-    return float(np.mean(v)), tuple(np.percentile(ms, [2.5, 97.5]))
+    return float(np.mean(v)), tuple(np.percentile(ms, list(q)))
 
 
 def run(news):
@@ -146,8 +148,9 @@ def run(news):
             p = path(px, spy, t0)
             if p is None:
                 continue
+            ex = {"up": 1, "down": -1}.get(r.expect, 0)
             rows.append({"ticker": tk, "day": str(t0.date()), "event": r.event, "importance": r.importance, "expect": r.expect,
-                         "inside": gap is None, "gap": gap, **signed(p)})
+                         "inside": gap is None, "gap": gap, "claude_next": ex * p["a_next"] if ex else np.nan, **signed(p)})
             if cand_days:                      # ضابط: وقت عشوائي 10:00–15:00 في يوم بلا خبر للسهم نفسه
                 d = cand_days[rng.integers(len(cand_days))]
                 tt = pd.Timestamp.combine(d, dtime(10, 0)) + timedelta(minutes=5 * int(rng.integers(0, 60)))
@@ -163,6 +166,53 @@ def stage_row(name, g):
         v = g[c].dropna()
         cells.append(f"{v.mean() * 100:+.2f}% ({(v > 0).mean() * 100:.0f}%)" if len(v) else "-")
     return f"| {name} | {len(g)} | {g['init'].abs().mean() * 100:.2f}% | " + " | ".join(cells) + " |"
+
+
+def boot_diff(a, b, n=N_BOOT, seed=2, q=(2.5, 97.5)):
+    """فرق المتوسطين (a − b) بإعادة معاينة الأيام المشتركة."""
+    a, b = a.dropna(subset=["v"]), b.dropna(subset=["v"])
+    u = np.unique(np.r_[a["day"].values, b["day"].values])
+    if len(u) < 3 or not len(a) or not len(b):
+        return np.nan, (np.nan, np.nan)
+    ba = {d: g["v"].values for d, g in a.groupby("day")}
+    bb = {d: g["v"].values for d, g in b.groupby("day")}
+    rng = np.random.default_rng(seed)
+    out = []
+    for _ in range(n):
+        s_ = rng.choice(u, len(u))
+        xa = np.concatenate([ba.get(d, np.array([])) for d in s_])
+        xb = np.concatenate([bb.get(d, np.array([])) for d in s_])
+        if len(xa) and len(xb):
+            out.append(xa.mean() - xb.mean())
+    return float(a["v"].mean() - b["v"].mean()), tuple(np.percentile(out, list(q)))
+
+
+def oos_section(ev):
+    """N2 وN3 على أخبار OOS_FROM فصاعداً فقط، مع تصحيح BH على الاثنتين عند اكتمال العينتين."""
+    o = ev[(ev["day"] >= OOS_FROM) & (ev["init"].abs() >= MIN_INIT)]
+    big = o[o["init"].abs() >= 0.015][["day", "c_next"]].rename(columns={"c_next": "v"})
+    small = o[o["init"].abs() < 0.015][["day", "c_next"]].rename(columns={"c_next": "v"})
+    d2, (lo2, hi2) = boot_diff(big, small)
+    opp = o[o["expect"].isin(["up", "down"]) & (np.sign(o["init"]) != o["expect"].map({"up": 1, "down": -1}))]
+    m3, (lo3, hi3) = boot(opp["claude_next"], opp["day"])
+    nb, ns, n3 = big["v"].notna().sum(), small["v"].notna().sum(), opp["claude_next"].notna().sum()
+    ready = nb >= MIN_N2_BIG and ns >= MIN_N2_SMALL and n3 >= MIN_N3
+    if not nb and not ns and not n3:
+        return ["", f"## N2 وN3 (أخبار من {OOS_FROM} فقط، خارج عينة الاكتشاف)", "", "- لا أحداث بعد.",
+                "⚖️ **N2 وN3: لا حكم بعد (العينة أقل من الحد).**"]
+    L = ["", f"## N2 وN3 (أخبار من {OOS_FROM} فقط، خارج عينة الاكتشاف)", "",
+         f"- **N2** (كبير − صغير، +30د → إغلاق الغد): {d2 * 100:+.2f} نقطة [{lo2 * 100:+.2f}، {hi2 * 100:+.2f}] — كبير {nb} (الحد {MIN_N2_BIG})، صغير {ns} (الحد {MIN_N2_SMALL}).",
+         f"- **N3** (اندفاع عكس Claude، الحركة بإشارة Claude): {m3 * 100:+.2f}% [{lo3 * 100:+.2f}، {hi3 * 100:+.2f}] — {n3} حدثاً (الحد {MIN_N3})."]
+    if not ready:
+        L.append("⚖️ **N2 وN3: لا حكم بعد (العينة أقل من الحد).**")
+        return L
+    # BH بمعدل 5% على فرضيتين: إن استثنى فاصل 95% الصفر في الاثنتين تمرّان معاً؛ وإلا تمرّ الواحدة فقط إن استثنى فاصل 97.5% الصفر.
+    a95, b95 = lo2 > 0, lo3 > 0
+    a975 = boot_diff(big, small, q=(1.25, 98.75))[1][0] > 0
+    b975 = boot(opp["claude_next"], opp["day"], q=(1.25, 98.75))[1][0] > 0
+    n2, n3_ok = (a95, b95) if (a95 and b95) else (a975, b975)
+    L.append(f"⚖️ **N2: {'تحققت' if n2 else 'لم تتحقق'} | N3: {'تحققت' if n3_ok else 'لم تتحقق'}** (تصحيح BH بمعدل 5%)")
+    return L
 
 
 def report(ev, ctrl):
@@ -193,6 +243,7 @@ def report(ev, ctrl):
     L += ["", "## الفرضية N1", "",
           f"- +30د → إغلاق الغد بإشارة الاندفاع: {m * 100:+.2f}% [{lo * 100:+.2f}، {hi * 100:+.2f}] على {n1} حدثاً (الحد {MIN_N1}).",
           f"⚖️ **N1: {'لا حكم بعد (العينة أقل من الحد)' if n1 < MIN_N1 else ('استمرار مثبت → اتبع الخبر بعد 30د' if lo > 0 else ('تلاشٍ مثبت → اعكسه بعد 30د' if hi < 0 else 'لم تتحقق'))}**",
+          *oos_section(ev),
           "", "تحفظ: وقت النشر في Google News قد يتأخر عن الحدث؛ عينة أيام قليلة في سوق واحد؛ حركة السهم ليست ربح العقد."]
     return "\n".join(L) + "\n"
 
