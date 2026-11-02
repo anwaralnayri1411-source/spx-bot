@@ -676,10 +676,10 @@ def to_html(text):
     return re.sub(r"\*\*(.+?)\*\*", r"<b>\1</b>", t).replace("**", "")
 
 
-def send(text):
-    """إلى TELEGRAM_CHAT_ID وحده، مقسّم لحد تيليجرام؛ خطأ التنسيق → نص عادي. يحفظ النص في messages_analyst.jsonl."""
+def send(text, src="analyst"):
+    """إلى TELEGRAM_CHAT_ID وحده، مقسّم لحد تيليجرام؛ خطأ التنسيق → نص عادي. يحفظ النص في messages_<src>.jsonl."""
     try:
-        with open(os.path.join(ROOT, "messages_analyst.jsonl"), "a", encoding="utf-8") as f:
+        with open(os.path.join(ROOT, f"messages_{src}.jsonl"), "a", encoding="utf-8") as f:
             f.write(json.dumps({"t": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S"), "text": text}, ensure_ascii=False) + "\n")
     except Exception:  # noqa: BLE001
         pass
