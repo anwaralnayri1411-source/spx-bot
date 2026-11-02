@@ -37,6 +37,7 @@ news_memory_eval|Mon..Fri *-*-* 22:50:00
 news_score|Mon..Fri *-*-* 22:55:00
 spx_cache|Mon..Fri *-*-* 22:20:00
 tail_log|Mon..Fri *-*-* 22:30:00
+camarilla_shadow|Mon..Fri *-*-* 22:35:00
 real_price_check|Sat *-*-* 08:00:00
 stocks_exit_study|Sat *-*-* 08:30:00
 stocks_contract_replay|Sat *-*-* 08:45:00

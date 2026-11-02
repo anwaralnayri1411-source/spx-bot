@@ -100,6 +100,11 @@ main() {
       cmds=("$py research/tail_log.py")
       files="tail_log_days.csv tail_log_events.csv"
       msg="tail log" ;;
+    camarilla_shadow)
+      group=camarilla-shadow
+      cmds=("$py research/camarilla_shadow.py" "$py research/camarilla_shadow.py --report")
+      files="camarilla_shadow_log.csv research/camarilla_shadow_results.md"
+      msg="camarilla shadow log" ;;
     exit_shadow)
       group=exit-shadow; envs="ALPACA TASTY"; gate="gate_signal_today exit_shadow_state.json"
       cmds=("$py exit_shadow.py" "$py exit_shadow.py --report")
