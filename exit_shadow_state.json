@@ -19,9 +19,9 @@
    "r5040_pnl": "",
    "t60_time": "",
    "t60_pnl": "",
-   "peak_pnl": 0.0,
-   "close_pnl": -0.256,
-   "quotes": 4
+   "peak_pnl": 0.18,
+   "close_pnl": 0.18,
+   "quotes": 5
   },
   {
    "date": "2026-11-02",
@@ -41,9 +41,9 @@
    "r5040_pnl": "",
    "t60_time": "",
    "t60_pnl": "",
-   "peak_pnl": 0.0,
-   "close_pnl": -0.082,
-   "quotes": 4
+   "peak_pnl": 0.096,
+   "close_pnl": 0.096,
+   "quotes": 5
   }
  ],
  "skipped": []
