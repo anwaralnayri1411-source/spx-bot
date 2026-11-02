@@ -19,9 +19,9 @@
    "r5040_pnl": 0.823,
    "t60_time": "",
    "t60_pnl": "",
-   "peak_pnl": 1.922,
-   "close_pnl": 1.922,
-   "quotes": 7
+   "peak_pnl": 2.407,
+   "close_pnl": 2.407,
+   "quotes": 8
   },
   {
    "date": "2026-11-02",
@@ -36,14 +36,14 @@
    "entry_time": "2026-11-02T09:48-05:00",
    "entry_spot": 7625.61,
    "entry": 32.8,
-   "r5040_out": "",
-   "r5040_time": "",
-   "r5040_pnl": "",
+   "r5040_out": "tp",
+   "r5040_time": "10:28",
+   "r5040_pnl": 0.61,
    "t60_time": "",
    "t60_pnl": "",
-   "peak_pnl": 0.495,
-   "close_pnl": 0.495,
-   "quotes": 7
+   "peak_pnl": 0.61,
+   "close_pnl": 0.61,
+   "quotes": 8
   }
  ],
  "skipped": []
