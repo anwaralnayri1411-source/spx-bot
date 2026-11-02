@@ -21,6 +21,17 @@
    "time": "2026-10-15T14:14-04:00",
    "price": null,
    "qty": null
+  },
+  "DIS:CALL:2026-11-20:115|2026-11-02": {
+   "mode": "bought",
+   "ticker": "DIS",
+   "side": "CALL",
+   "exp": "2026-11-20",
+   "strike": 115.0,
+   "day": "2026-11-02",
+   "time": "2026-11-02T10:20-05:00",
+   "price": null,
+   "qty": null
   }
  }
 }
