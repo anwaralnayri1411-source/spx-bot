@@ -1601,3 +1601,5 @@ time,pos_id,ticker,side,event,detail,entry,val,pnl,spot,need,tdays,advice,reason
 2026-11-02T10:24-05:00,INTC:PUT:2026-11-13:65,INTC,PUT,macro_quiet,"against/weak/medium: US stocks open higher as AI trade steadies, oil falls - Yahoo Finance",3.25,3.38,0.04,64.06,0.0361,10,أبقِ,خبر ضد العقد لكن تأثيره محدود، راقب
 2026-11-02T10:24-05:00,WMT:CALL:2026-11-13:124,WMT,CALL,macro_quiet,"with/weak/medium: US stocks open higher as AI trade steadies, oil falls - Yahoo Finance",2.25,2.98,0.3244,125.31,0.0075,10,أبقِ,الخبر في صالح العقد
 2026-11-02T10:24-05:00,DIS:CALL:2026-11-20:115,DIS,CALL,macro_quiet,"with/weak/medium: US stocks open higher as AI trade steadies, oil falls - Yahoo Finance",3.64,3.45,-0.0522,113.485,0.0454,15,أبقِ,الخبر في صالح العقد
+2026-11-02T10:36-05:00,DIS:CALL:2026-11-20:115,DIS,CALL,sharp,-0.80% في 15د,3.64,,,112.63,0.0534,15,فكّر بالخروج,السهم يتحرك ضدك
+2026-11-02T10:38-05:00,DIS:CALL:2026-11-20:115,DIS,CALL,contract,-19%,3.64,2.96,-0.1868,112.61,0.0535,15,أبقِ,الفكرة قائمة لكن العقد -19%؛ التزم بالوقف عند −40%

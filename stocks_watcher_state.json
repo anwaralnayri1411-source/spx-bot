@@ -66,7 +66,8 @@
    "one way holdings llc buys 12 734 shares of walmart inc wmt",
    "use of walmart target in house agents down in october says morgan stanley",
    "walmart stock is wall street bullish or bearish",
-   "why investors fled to eli lilly walmart and energy"
+   "why investors fled to eli lilly walmart and energy",
+   "can walmart s expanded sparky ai boost holiday shopping and sales"
   ],
   "UBER:PUT": [
    "why is hertz htz stock soaring today",
@@ -460,7 +461,8 @@
    "amd stock 511 before results options price a 9 move",
    "true freedom investing llc purchases 16 470 shares of intel corporation intc",
    "down 44 9 in 4 weeks here s why intel intc looks ripe for a turnaround",
-   "intel s 30 collapse finally changes the setup rating upgrade nasdaq intc"
+   "intel s 30 collapse finally changes the setup rating upgrade nasdaq intc",
+   "amd just dropped 16 in a month is it time to sell or load up"
   ],
   "CVX:CALL": [
    "stocks see continued downward pressure from ai anxiety and oil prices",
@@ -2113,7 +2115,12 @@
    "amazon stock climbs after phillip securities upgrade to buy",
    "amazon stock price target raised to 330 by phillip securities"
   ],
-  "RIVN:CALL": []
+  "RIVN:CALL": [
+   "why rivian rivn stock is up today"
+  ],
+  "PFE:CALL": [
+   "pfizer q3 preview analysts look to obesity pipeline amid diverging growth expectations pfe nyse"
+  ]
  },
  "fired": {
   "INTC:PUT:2026-11-13:65": [
@@ -2145,18 +2152,17 @@
    "news:walmart wmt partners with base power to expand home energy sol",
    "up0.25"
   ],
-  "DIS:CALL:2026-11-20:115": [],
-  "RIVN:CALL:2026-11-20:13.5": []
+  "DIS:CALL:2026-11-20:115": [
+   "sharp@2026-11-02T10:36-05:00",
+   "down-0.15"
+  ],
+  "RIVN:CALL:2026-11-20:13.5": [],
+  "PFE:CALL:2026-11-20:30": []
  },
  "stock_level": {
   "INTC:PUT:2026-11-13:65": 2
  },
  "seen_macro": [
-  "fed likely to wait on another rate hike as inflation pressures mount",
-  "interest on central bank reserves is neither a tax nor a market price",
-  "the fed is expected to hold rates steady warsh will have to explain why",
-  "federal reserve expected to hold interest rates steady in last decision before midterm elections",
-  "finance expert says xrp is in a dangerous position here s why",
   "asx set to edge up tech stocks drive wall street higher",
   "navigating headwinds stock market weekly roundup august 24 28 2026",
   "mark cuban says everything is a meme stock wall street sees opportunity in spacex nvidia and micron stocks",
@@ -2751,9 +2757,15 @@
   "us stocks open higher as ai trade steadies oil falls",
   "ocbc cuts gold price forecasts to us 4 250 on fed tightening fears",
   "tesla samsung challenge trump s new vietnam tariffs report",
-  "canadian energy stocks fall as oil prices retreat on easing middle east tensions"
+  "canadian energy stocks fall as oil prices retreat on easing middle east tensions",
+  "oracle upgraded reddit downgraded wall street s top analyst calls",
+  "what 10 000 invested in this magnificent seven stock could be worth by 2030",
+  "buy dollars in installments hold short term bonds",
+  "we ve been set back 100 years harvard professor takes trump to task",
+  "dow jones futures forecast wall street outlook after the us stock market rebound"
  ],
  "sharp": {
-  "INTC:PUT:2026-11-13:65": 67.315
+  "INTC:PUT:2026-11-13:65": 67.315,
+  "DIS:CALL:2026-11-20:115": 112.63
  }
 }
