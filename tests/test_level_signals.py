@@ -64,11 +64,17 @@ def test_halt_check():
     assert not ls.halt_check(mk([]))
 
 
-def test_opposite_open_note():
-    bot = pd.DataFrame([{"date": "2026-11-02", "time": "09:45", "side": "CALL", "strike": "7665.0", "result": ""},
-                        {"date": "2026-11-02", "time": "10:15", "side": "CALL", "strike": "7670.0", "result": "ربح"}])
-    assert ls.opposite_open("PUT", "2026-11-02", bot) == ("09:45", "7665.0")
-    assert ls.opposite_open("CALL", "2026-11-02", bot) is None
+def test_opposites_closed_by_rule_or_open():
+    bot = pd.DataFrame([{"date": "2026-11-02", "time": "09:45", "symbol": "^SPX", "expiry": "2026-11-02", "side": "CALL", "strike": "7665.0"},
+                        {"date": "2026-11-02", "time": "09:45", "symbol": "SPY", "expiry": "2026-11-03", "side": "CALL", "strike": "761.0"},
+                        {"date": "2026-11-02", "time": "10:15", "symbol": "^SPX", "expiry": "2026-11-02", "side": "PUT", "strike": "7600.0"}])
+    track = pd.DataFrame([{"id": "SPX:CALL:7665:2026-11-02", "status": "open"}, {"id": "SPX:CALL:7665:2026-11-02", "status": "tp"},
+                          {"id": "SPX:CALL:7665:2026-11-02", "status": "stopped"}])
+    own = pd.DataFrame([{"date": "2026-11-02", "time": "11:00", "side": "CALL", "strike": "7610", "status": "مفتوحة"}])
+    o = ls.opposites("PUT", "2026-11-02", bot, track, own)
+    assert o == [("09:45", "SPX", "7665", "هدف"), ("09:45", "SPY", "761", "مفتوح"), ("11:00", "SPX", "7610", "مفتوح")]
+    assert ls.opposites("CALL", "2026-11-02", bot, track, None) == [("10:15", "SPX", "7600", "مفتوح")]
+    assert ls.opposites("CALL", "2026-11-02", None, None, None) == []
 
 
 def test_track_exits_and_messages(tmp_path, monkeypatch, capsys):
@@ -87,8 +93,10 @@ def test_track_exits_and_messages(tmp_path, monkeypatch, capsys):
 def test_entry_message_has_note_and_label():
     r = {"side": "PUT", "kind": "رفض عند مقاومة", "level": "7650", "tags": "رقم دائري", "spot": "7645", "strike": "7640",
          "entry": "3.20", "time": "11:00"}
-    msg = ls.entry_message(r, {}, {"gex": 10.0, "lean": 0.0}, ("09:45", "7665.0"))
-    assert "تجريبية" in msg and "CALL مفتوحة" in msg and "$320" in msg and "محايد" in msg
+    msg = ls.entry_message(r, {}, {"gex": 10.0, "lean": 0.0}, [("09:45", "SPX", "7665", "هدف"), ("10:00", "SPY", "761", "مفتوح")])
+    assert "تجريبية" in msg and "$320" in msg and "محايد" in msg
+    assert "بلغ الهدف: يُعتبر مغلقاً" in msg and "فأغلق الـCALL أولاً، ولا تجمع بين العقدين" in msg
+    assert "مغلقاً" not in ls.entry_message(r, {}, {"gex": 10.0, "lean": 0.0}, [])
 
 
 def test_main_gate(monkeypatch, capsys):

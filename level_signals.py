@@ -26,6 +26,7 @@ LOG = os.path.join(ROOT, "level_signals_log.csv")
 STATE = os.path.join(ROOT, "level_signals_state.json")
 FLOW_LOG = os.path.join(ROOT, "spx_flow_log.csv")
 BOT_LOG = os.path.join(ROOT, "zero_dte_log.csv")
+BOT_TRACK = os.path.join(ROOT, "spx_track.csv")
 START, LAST_ENTRY, CLOSE_AT, END = dtime(9, 50), dtime(15, 0), dtime(15, 55), dtime(16, 0)
 TOUCH = 0.0005            # لمس المستوى ضمن 0.05%
 MAX_PER_DAY = 3
@@ -138,13 +139,24 @@ def halt_check(log):
     return streak >= HALT_STREAK
 
 
-def opposite_open(side, day, bot):
-    """توصية البوت المعاكسة المفتوحة اليوم (وقت، سترايك) أو None — لملاحظة الشريعة الإعلامية."""
-    if bot is None or not len(bot):
-        return None
-    opp = "PUT" if side == "CALL" else "CALL"
-    g = bot[(bot["date"] == day) & (bot["side"] == opp) & (bot["result"] == "")]
-    return (g.iloc[-1]["time"], g.iloc[-1]["strike"]) if len(g) else None
+def opposites(side, day, bot, track, own):
+    """العقود المعاكسة اليوم على SPX/SPY (توصيات البوت وفرص المستويات): [(الوقت، الرمز، السترايك، الحالة)].
+    الحالة «هدف»/«وقف» = أُغلق بالقاعدة (أول هدف أو وقف في المتابعة) فلا يُعدّ مفتوحاً؛ «مفتوح» = لم يبلغ أياً منهما.
+    لملاحظة الشريعة الإعلامية: لا جمع بين CALL وPUT على الأصل نفسه."""
+    opp, out = ("PUT" if side == "CALL" else "CALL"), []
+    first = {}
+    if track is not None and len(track):
+        for r in track[track["status"].isin(["tp", "stopped"])].itertuples():
+            first.setdefault(r.id, "هدف" if r.status == "tp" else "وقف")
+    if bot is not None and len(bot):
+        for r in bot[(bot["date"] == day) & (bot["side"] == opp)].itertuples():
+            sym = r.symbol.lstrip("^")
+            pid = f"{sym}:{opp}:{float(r.strike):g}:{r.expiry}"
+            out.append((r.time, sym, f"{float(r.strike):g}", first.get(pid, "مفتوح")))
+    if own is not None and len(own):
+        for r in own[(own["date"] == day) & (own["side"] == opp)].itertuples():
+            out.append((r.time, "SPX", f"{float(r.strike):g}", "مفتوح" if r.status == "مفتوحة" else r.status))
+    return out
 
 
 def entry_message(r, k, fs, opp):
@@ -154,8 +166,13 @@ def entry_message(r, k, fs, opp):
          f"العقد: **SPXW {float(r['strike']):,.0f} {r['side']}** اليوم | دخول ≈ ${float(r['entry']):.2f} (${float(r['entry']) * 100:,.0f})",
          f"🎯 هدف +50% (${float(r['entry']) * 1.5:.2f}) · 🛑 وقف −40% (${float(r['entry']) * 0.6:.2f}) · إغلاق 3:55",
          f"القراءة: غاما موجبة (يوم ارتداد) · ميل التدفق 30د: {'مع الجهة' if fs['lean'] else 'محايد'}"]
-    if opp:
-        L.append(f"ℹ️ للبوت توصية {('PUT' if r['side'] == 'CALL' else 'CALL')} مفتوحة على SPX ({opp[0]}، سترايك {opp[1]}). القرار لك.")
+    o_side = "PUT" if r["side"] == "CALL" else "CALL"
+    for t, sym, k_, state in opp or []:
+        if state == "مفتوح":
+            L.append(f"⚠️ لديك {o_side} مفتوح ({sym} {k_}، {t}) لم يبلغ هدفاً ولا وقفاً، والقراءة الآن عكسه: "
+                     f"إن أردت هذه الصفقة فأغلق الـ{o_side} أولاً، ولا تجمع بين العقدين.")
+        else:
+            L.append(f"ℹ️ عقد {o_side} ({sym} {k_}، {t}) بلغ {'الهدف' if state == 'هدف' else 'الوقف'}: يُعتبر مغلقاً بالقاعدة، وهذه صفقة جديدة.")
     L.append("⚠️ تجريبية (H-LEVELSIG): تُقاس منفصلة عن البوت، ولم تُختبر تاريخياً بهذا الفلتر. القرار قرارك.")
     return "\n".join(L)
 
@@ -264,7 +281,8 @@ def scan(n, st, log, no_send):
     if bar is None:
         return log
     res, sup = plan_levels(bf, vix, vwap, fs)
-    bot = pd.read_csv(BOT_LOG, dtype=str, keep_default_na=False) if os.path.exists(BOT_LOG) else None
+    rd = lambda p: pd.read_csv(p, dtype=str, keep_default_na=False) if os.path.exists(p) else None
+    bot, trk = rd(BOT_LOG), rd(BOT_TRACK)
     for sig in detect(bar, res, sup):
         why = allowed(sig, st, fs, n, st.get("halted"))
         if why:
@@ -283,7 +301,7 @@ def scan(n, st, log, no_send):
              "gex": f"{fs['gex']:.0f}", "lean": f"{fs['lean']:.0f}", "status": "مفتوحة", "exit_time": "", "exit_ret": "", "last_ret": ""}
         log = pd.concat([log, pd.DataFrame([r])], ignore_index=True)
         st["sent"].append({"level": r["level"], "side": side, "time": n.isoformat()})
-        send(entry_message(r, k, fs, opposite_open(side, day, bot)), no_send)
+        send(entry_message(r, k, fs, opposites(side, day, bot, trk, log)), no_send)
     return log
 
 
