@@ -1,7 +1,68 @@
 {
- "open": [],
+ "open": [
+  {
+   "entry_time": "2026-11-02T10:35-05:00",
+   "side": "CALL",
+   "role": "bot",
+   "contract": "SPXW261103C07650000",
+   "strike": 7650,
+   "exp": "2026-11-03",
+   "edge": 7.75,
+   "bot_sent": 1,
+   "reasons": "",
+   "spot": 7650.03,
+   "entry": 28.82,
+   "entry_src": "alpaca",
+   "val30": ""
+  },
+  {
+   "entry_time": "2026-11-02T10:35-05:00",
+   "side": "PUT",
+   "role": "opp",
+   "contract": "SPXW261103P07650000",
+   "strike": 7650,
+   "exp": "2026-11-03",
+   "edge": 7.75,
+   "bot_sent": 1,
+   "reasons": "",
+   "spot": 7650.03,
+   "entry": 27.82,
+   "entry_src": "alpaca",
+   "val30": ""
+  },
+  {
+   "entry_time": "2026-11-02T10:35-05:00",
+   "side": "CALL",
+   "role": "spy_bot",
+   "contract": "SPY261103C00763000",
+   "strike": 763,
+   "exp": "2026-11-03",
+   "edge": 7.75,
+   "bot_sent": 1,
+   "reasons": "",
+   "spot": 762.63,
+   "entry": 2.71,
+   "entry_src": "alpaca",
+   "val30": ""
+  },
+  {
+   "entry_time": "2026-11-02T10:35-05:00",
+   "side": "PUT",
+   "role": "spy_opp",
+   "contract": "SPY261103P00763000",
+   "strike": 763,
+   "exp": "2026-11-03",
+   "edge": 7.75,
+   "bot_sent": 1,
+   "reasons": "",
+   "spot": 762.63,
+   "entry": 3.03,
+   "entry_src": "alpaca",
+   "val30": ""
+  }
+ ],
  "last": {
-  "CALL": "2026-10-27T13:35-04:00",
+  "CALL": "2026-11-02T10:35-05:00",
   "PUT": "2026-10-30T13:35-04:00"
  }
 }
