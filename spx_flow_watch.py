@@ -4,7 +4,7 @@
 كل 5 دقائق 9:35–16:00 نيويورك: عقود SPXW 0DTE ضمن ±1.5% من SPX من Tastytrade (OI، الحجم، الإغريقيات، العرض/الطلب)،
 ومنها جدارا OI والحجم، وصافي GEX ونقطة الانقلاب، والتدفق المصنّف (فرق الحجم منذ اللقطة السابقة بجهة آخر سعر من المنتصف).
 بعد الإغلاق (--eval): نتائج الفرضيات F1/F2/F3 في research/spx_flow_results.md.
-الملفات: spx_flow_log.csv (ملخص، يُحفظ في git)، spx_flow_raw/YYYY-MM-DD.csv.gz (خام، على الخادم فقط لحجمه).
+الملفات: spx_flow_log.csv (ملخص، يُحفظ في git)، SPXBOT_DATA/spx_flow_raw/YYYY-MM-DD.csv.gz (خام، على الخادم فقط).
 تشغيل: python spx_flow_watch.py [--eval] [--force]
 """
 import csv
@@ -21,7 +21,7 @@ import pandas as pd
 ROOT = os.path.dirname(os.path.abspath(__file__))
 NY = ZoneInfo("America/New_York")
 LOG = os.path.join(ROOT, "spx_flow_log.csv")
-RAW_DIR = os.path.join(ROOT, "spx_flow_raw")
+RAW_DIR = os.path.join(os.getenv("SPXBOT_DATA", "/opt/spxbot/data"), "spx_flow_raw")   # خارج شجرة git: الشجرة تُنظَّف قبل كل تشغيل
 RESULTS = os.path.join(ROOT, "research", "spx_flow_results.md")
 BAND = 0.015                 # ±1.5% من السعر
 START, END = dtime(9, 35), dtime(16, 0)
