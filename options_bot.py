@@ -1086,7 +1086,7 @@ def analyze(force):
     strength = min(10.0, edge * 1.5)
 
     # ----- شروط المنع -----
-    if market_day(n) and no_entry(n) <= (n.hour, n.minute) < session_end(n):
+    if market_day(n) and no_entry(n) <= (n.hour, n.minute) <= session_end(n):   # يشمل دقيقة الإغلاق (16:00): كانت تفلت (2/11/2026)
         reasons.append("بعد وقت آخر دخول (قرب الإغلاق، والزمن يأكل قيمة العقد بسرعة).")
     if any(d == today for d, _ in events):
         nm = next(nm for d, nm in events if d == today)
@@ -1414,8 +1414,22 @@ def signal_message(a):
     return "\n".join(L)
 
 
-def ticket_lines(sym, k0, side):
-    """سطور تذكرة الدخول المختصرة لعقد واحد: دخول، تكلفة، هدف، وقف، أقصى خسارة."""
+AR_DAYS = ("الاثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة", "السبت", "الأحد")
+
+
+def exp_label(exp, today=None):
+    """تاريخ انتهاء العقد للعرض: «اليوم الاثنين 2/11» / «غداً الثلاثاء 3/11» / «الجمعة 6/11»."""
+    try:
+        d = date.fromisoformat(str(exp)[:10])
+    except Exception:  # noqa: BLE001
+        return str(exp or "")
+    today = today or now_ny().date()
+    pre = "اليوم " if d == today else ("غداً " if (d - today).days == 1 else "")
+    return f"{pre}{AR_DAYS[d.weekday()]} {d.day}/{d.month}"
+
+
+def ticket_lines(sym, k0, side, exp=None):
+    """سطور تذكرة الدخول المختصرة لعقد واحد: دخول (مع تاريخ الانتهاء)، تكلفة، هدف، وقف، أقصى خسارة."""
     call = side == "CALL"
     q, per = qty_for(k0["cost"], k0.get("half"))
     tp_p, sl_p = k0["price"] * (1 + TAKE_PROFIT), k0["price"] * (1 - STOP_LOSS)
@@ -1423,7 +1437,8 @@ def ticket_lines(sym, k0, side):
     f = (lambda x: f"{x:,.2f}") if sym == "SPY" else (lambda x: f"{x:,.0f}")
     tp_t = f" ← {sym} ≈ {f(lv[0])}" if lv else ""
     sl_t = f" ← {sym} ≈ {f(lv[1])}" if lv else ""
-    return [f"✅ <b>الدخول:</b> {root_sym(k0)} {k0['strike']:,.0f} {side} ×{q}",
+    exp = exp or k0.get("exp")
+    return [f"✅ <b>الدخول:</b> {root_sym(k0)} {k0['strike']:,.0f} {side} ×{q}" + (f" | 🗓 ينتهي {exp_label(exp)}" if exp else ""),
             f"💵 بسعر حتى <b>{k0['price']:.2f}</b> | تكلفة <b>${k0['cost']:,.0f}</b> للعقد",
             f"🎯 الهدف <b>{tp_p:.2f}</b> (+{TAKE_PROFIT * 100:.0f}%){tp_t}",
             f"🛑 الوقف <b>{sl_p:.2f}</b> (-{STOP_LOSS * 100:.0f}%){sl_t}",
@@ -1449,7 +1464,7 @@ def send_signal(a):
     sym = k0.get("sym", SYMBOL).lstrip("^")
     dot = "🟢" if side == "CALL" else "🔴"
     title = "SPX" if sym == "SPX" else f"{sym} (اتجاه SPX)"
-    cap = [f"🔔 <b>توصية {title} | {side} {dot}</b> | ⭐ {a['strength']:.0f}/10 #توصية"] + ticket_lines(sym, k0, side)
+    cap = [f"🔔 <b>توصية {title} | {side} {dot}</b> | ⭐ {a['strength']:.0f}/10 #توصية"] + ticket_lines(sym, k0, side, k0.get("exp", a["exp"]))
     alt = groups.get(ALT_SYMBOL) if ALT_SYMBOL else None
     alt_sep = bool(alt) and sym != ALT_SYMBOL      # بطاقة SPY منفصلة (لا تكرار إن كان العقد الرئيسي هو SPY نفسه)
     if alt_sep:
@@ -1486,7 +1501,7 @@ def send_alt_card(a, ka, side, dot, reply_to=None):
     """بطاقة SPY منفصلة: نفس اتجاه SPX بعقد ETF أرخص (نظام تسوية مختلف)."""
     try:
         import cards
-        cap = [f"🔔 <b>توصية {root_sym(ka)} (اتجاه SPX) | {side} {dot}</b> #توصية"] + ticket_lines(ka.get("sym", ALT_SYMBOL), ka, side) + [
+        cap = [f"🔔 <b>توصية {root_sym(ka)} (اتجاه SPX) | {side} {dot}</b> #توصية"] + ticket_lines(ka.get("sym", ALT_SYMBOL), ka, side, ka.get("exp", a["exp"])) + [
             f"🗓 عقد اليوم التالي ({ka.get('exp', a['exp'])}) بدلتا {ka['delta']:.2f}: أقرب للسعر وتآكله اليومي أبطأ من عقد اليوم نفسه." if ka.get("exp", a["exp"]) != a["exp"] else "",
             "ℹ️ الاتجاه مأخوذ من تحليل SPX. SPY عقد أصغر (≈ عُشر SPX) وتسويته بأسهم لا نقداً.",
             "⚠️ <i>تعليمي وليست توصية.</i>"]
@@ -1503,7 +1518,7 @@ def send_ndx_card(a, kn, side, dot, reply_to=None):
     """بطاقة NDXP (ناسداك 100): نفس اتجاه SPX بعقد أرخص بعيد عن السعر."""
     try:
         import cards
-        cap = [f"🔔 <b>توصية NDXP | {side} {dot}</b> #توصية"] + ticket_lines("NDX", kn, side) + [
+        cap = [f"🔔 <b>توصية NDXP | {side} {dot}</b> #توصية"] + ticket_lines("NDX", kn, side, kn.get("exp", a["exp"])) + [
             "ℹ️ الاتجاه مأخوذ من تحليل SPX. NDXP أوسع حركة وأقل سيولة، وفرق السعر أكبر.",
             "⚠️ <i>تعليمي وليست توصية.</i>"]
         png = cards.contract_card("entry", f"{root_sym(kn)} {kn['strike']:,.0f} {side}",

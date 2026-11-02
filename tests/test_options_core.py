@@ -208,3 +208,18 @@ def test_addon_after_target_rules():
     assert ob.addon_after_target("CALL", n, {"positions": [mk("09:45", "tp", sym="SPY")]}) is None   # SPX فقط
     assert ob.addon_after_target("PUT", n, {"positions": [mk("09:45", "tp")]}) is None
     assert ob.addon_after_target("CALL", n, {"positions": [mk("09:45", "tp"), mk("10:05", "tp"), mk("10:40", "tp")]}) is None  # الحد 3
+
+
+def test_exp_label_and_ticket_date():
+    from datetime import date
+    t = date(2026, 11, 2)
+    assert ob.exp_label("2026-11-02", t) == "اليوم الاثنين 2/11"
+    assert ob.exp_label("2026-11-03", t) == "غداً الثلاثاء 3/11"
+    assert ob.exp_label("2026-11-06", t) == "الجمعة 6/11"
+    k = {"strike": 752.0, "price": 3.42, "cost": 342.0, "sym": "SPY", "exp": "2026-11-03", "spr": 0.02}
+    assert "🗓 ينتهي" in ob.ticket_lines("SPY", k, "PUT")[0]
+
+
+def test_late_entry_includes_close_minute():
+    n = datetime.fromisoformat("2026-11-02T16:00-05:00")
+    assert ob.no_entry(n) <= (n.hour, n.minute) <= ob.session_end(n)
