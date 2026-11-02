@@ -20,8 +20,8 @@
    "t60_time": "",
    "t60_pnl": "",
    "peak_pnl": 0.0,
-   "close_pnl": -0.122,
-   "quotes": 3
+   "close_pnl": -0.256,
+   "quotes": 4
   },
   {
    "date": "2026-11-02",
@@ -42,8 +42,8 @@
    "t60_time": "",
    "t60_pnl": "",
    "peak_pnl": 0.0,
-   "close_pnl": -0.028,
-   "quotes": 3
+   "close_pnl": -0.082,
+   "quotes": 4
   }
  ],
  "skipped": []
