@@ -22,7 +22,7 @@
    "peak_pnl": 2.306,
    "close_pnl": -0.986,
    "stale_quotes": 0,
-   "quotes": 62
+   "quotes": 63
   },
   {
    "date": "2026-11-02",
@@ -45,7 +45,7 @@
    "peak_pnl": 1.298,
    "close_pnl": -0.989,
    "stale_quotes": 0,
-   "quotes": 62
+   "quotes": 63
   },
   {
    "date": "2026-11-02",
@@ -68,7 +68,7 @@
    "peak_pnl": 1.687,
    "close_pnl": -0.988,
    "stale_quotes": 0,
-   "quotes": 62
+   "quotes": 63
   }
  ]
 }
