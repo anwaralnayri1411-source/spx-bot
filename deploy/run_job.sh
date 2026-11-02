@@ -202,6 +202,11 @@ main() {
       cmds=("$py news_watch.py")
       files="news_watch_log.csv news_watch_state.json news_watch_nights.csv news_watch_usage.csv messages_news_watch.jsonl"
       msg="news watch" ;;
+    level_signals)
+      group=level-signals; envs="TG ALPACA LQ TASTY"; extra_env="LIVE_BARS_SPX=1"   # توصيات المستويات التجريبية (H-LEVELSIG): لـ TELEGRAM_CHAT_ID وحده
+      cmds=("$py level_signals.py")
+      files="level_signals_log.csv level_signals_state.json messages_level_signals.jsonl"
+      msg="level signals" ;;
     spx_flow)
       group=spx-flow; envs="TASTY"   # مراقب سيولة SPX اللحظي (H-SPXFLOW): تسجيل فقط؛ الخام spx_flow_raw/ يبقى على الخادم
       cmds=("$py spx_flow_watch.py")
