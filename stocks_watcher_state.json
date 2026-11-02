@@ -65,7 +65,8 @@
    "walmart inc wmt is a trending stock facts to know before betting on it",
    "one way holdings llc buys 12 734 shares of walmart inc wmt",
    "use of walmart target in house agents down in october says morgan stanley",
-   "walmart stock is wall street bullish or bearish"
+   "walmart stock is wall street bullish or bearish",
+   "why investors fled to eli lilly walmart and energy"
   ],
   "UBER:PUT": [
    "why is hertz htz stock soaring today",
@@ -2111,7 +2112,8 @@
    "amazon stock rises as phillip securities upgrades to buy raises target to 330",
    "amazon stock climbs after phillip securities upgrade to buy",
    "amazon stock price target raised to 330 by phillip securities"
-  ]
+  ],
+  "RIVN:CALL": []
  },
  "fired": {
   "INTC:PUT:2026-11-13:65": [
@@ -2138,86 +2140,18 @@
    "news:intel nasdaq intc stock moved down to hold by freedom broker",
    "news:ubs group issues pessimistic forecast for intel nasdaq intc stock price"
   ],
-  "AMZN:PUT:2026-11-06:235": [
-   "sharp@2026-10-30T11:11-04:00",
-   "down-0.15",
-   "news:amazon com price target lowered to 300 from 325 at scotiabank",
-   "news:amazon stock premarket amzn sinks 7 4 to 225 71 as 77 billion capex spooks investors",
-   "news:amazon nasdaq amzn stock falls after earnings as us 220 billion ai spending plan raises fears",
-   "news:amzn analysts split after earnings td cowen says amazon selloff is overdone mizuho raises target",
-   "up0.25",
-   "news:wells fargo company issues pessimistic forecast for amazon com nasdaq amzn stock price",
-   "news:morgan stanley issues pessimistic forecast for amazon com nasdaq amzn stock price",
-   "news:wedbush has lowered expectations for amazon com nasdaq amzn stock price",
-   "stock1",
-   "down-0.3",
-   "news:mizuho raises amazon stock price target to 335 on aws outlook",
-   "stock2",
-   "stock3",
-   "stock4",
-   "sharp@2026-11-02T09:46-05:00",
-   "news:mizuho raises amazon stock price target to 335 on aws outlook by investing com",
-   "news:amazon stock price target raised to 330 by phillip securities"
-  ],
   "WMT:CALL:2026-11-13:124": [
    "news:walmart stock wmt lights up as it invests in home battery group base power",
    "news:walmart wmt partners with base power to expand home energy sol",
    "up0.25"
   ],
-  "COIN:PUT:2026-11-06:130": [
-   "news:coinbase stock hits two year low as analyst cuts and binance hack weigh",
-   "news:coinbase coin misses revenue estimates as users fall armstrong sets up new share sales",
-   "news:nasdaq 100 enters correction falls 10 from october high",
-   "sharp@2026-10-30T15:09-04:00",
-   "down-0.15",
-   "news:bitcoin drops as markets digest multbillion dollar binance hack",
-   "stock1",
-   "sharp@2026-10-30T15:23-04:00",
-   "down-0.3",
-   "news:sentiment will take a hit binance 6 3 billion hack rattles bitcoin crypto market",
-   "stock2",
-   "news:coinbase leads crypto stock selloff following 6 3b binance hack",
-   "sharp@2026-10-30T15:46-04:00",
-   "news:coinbase ceo brian armstrong and 2 insiders file to sell up to 2b in stock",
-   "stock3",
-   "sharp@2026-10-30T15:59-04:00",
-   "news:bitcoin price prediction 643m etf exodus erases 64 of 2026 inflows",
-   "news:binance got hacked for 6 3 billion is coinbase stock the winner btig h c wainwright analysts think so",
-   "news:bitcoin etfs see 643m outflow wiping out 64 of 2026 net inflows amid price resistance near 80k",
-   "news:morgan stanley downgrades coinbase to underweight cuts price target to 120",
-   "news:wall street analysts are slashing price targets on coinbase stock here s why",
-   "news:coinbase has been battered over the past month morgan stanley says steer clear",
-   "news:buy sell or hold today s top upgrades and downgrades amazon com coinbase global crowdstrike formfactor gamestop l3harris",
-   "news:this coinbase analyst turns bearish here are top 5 downgrades for monday",
-   "news:coinbase stock coin falls as morgan stanley says sell slashes price target by 53",
-   "news:canaccord genuity group issues pessimistic forecast for coinbase global nasdaq coin stock price",
-   "news:coinbase downgraded at morgan stanely price target slashed 53 on weak earnings outlook",
-   "news:analyst loses confidence in coinbase cuts price target by 53",
-   "news:coinbase downgraded to sell equivalent at morgan stanley on downside risk to earnings coin nasdaq",
-   "news:morgan stanley turns bearish on coinbase halves price target to 120 and cuts rating to underweight",
-   "news:strategy buys 811 btc for 65 5m holdings reach 849 327 bitcoin"
-  ]
+  "DIS:CALL:2026-11-20:115": [],
+  "RIVN:CALL:2026-11-20:13.5": []
  },
  "stock_level": {
-  "INTC:PUT:2026-11-13:65": 2,
-  "COIN:PUT:2026-11-06:130": 3,
-  "AMZN:PUT:2026-11-06:235": 4
+  "INTC:PUT:2026-11-13:65": 2
  },
  "seen_macro": [
-  "stock market today oct 27 2026 s p 500 climbs as wall street gears up for earnings fed meeting",
-  "fed rate decision inflation and weak hiring point in opposite directions",
-  "bitcoin slips below 80 000 as cryptocurrencies weaken ahead of fed decision",
-  "gold hovers near 4 000 ahead of fed decision here s everything to know",
-  "2 40pm markets update",
-  "understanding trump s tariff reversals",
-  "forced to sell bananas cm yogi responds after comedian harsh gujral jokes about up crime",
-  "fed meeting begins today will interest rates go up again",
-  "broadcom and other ai stocks lift wall street closer to its record",
-  "sensex nifty end nearly flat as crude oil fed caution weigh on sentiment",
-  "mortgage rates at 7 38 as fed decision nears",
-  "lula s reelection leaves trump s latin american power play one giant short",
-  "the fed s october meeting starts today here s what you need to know",
-  "valero energy corp stock vlo moved down by 7 93 on oct 27 drivers behind the movement",
   "fed likely to wait on another rate hike as inflation pressures mount",
   "interest on central bank reserves is neither a tax nor a market price",
   "the fed is expected to hold rates steady warsh will have to explain why",
@@ -2803,11 +2737,23 @@
   "oil refineries share rs15 billion burden to prevent rs15 petrol price hike",
   "gold trims intraday gains as fed rate bets cap recovery",
   "marvell plunges 13 on lumentum takeover rumors make your 3 5 year bet right now",
-  "an updated outlook for interest rates in 2026 and 2027"
+  "an updated outlook for interest rates in 2026 and 2027",
+  "apple earnings midterms jobs data put markets to the test 3 charts to watch this week",
+  "coin stock sees split view on wall street after binance hack shifts sentiment",
+  "why are us stock futures rising today dow jones s p",
+  "aud usd signal forecast ahead of rba decision us nfp data talkmarkets",
+  "snapshot us stock index futures jump as oil falls about 6",
+  "if the fed raises interest rates again in 2026 i predict these etfs will be the smartest buys",
+  "wti crude plunges 6 below 100 what caused the sharp drop in oil prices",
+  "milan stock market extends gains awaiting wall street banks and cement makers up a2a and iren down",
+  "why the bull market may be changing not ending",
+  "us midterm elections 2026 3 market risks investors should watch as democrats lead in prediction markets",
+  "us stocks open higher as ai trade steadies oil falls",
+  "ocbc cuts gold price forecasts to us 4 250 on fed tightening fears",
+  "tesla samsung challenge trump s new vietnam tariffs report",
+  "canadian energy stocks fall as oil prices retreat on easing middle east tensions"
  ],
  "sharp": {
-  "INTC:PUT:2026-11-13:65": 67.315,
-  "AMZN:PUT:2026-11-06:235": 250.04,
-  "COIN:PUT:2026-11-06:130": 143.21
+  "INTC:PUT:2026-11-13:65": 67.315
  }
 }
