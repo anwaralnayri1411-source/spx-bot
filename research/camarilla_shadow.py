@@ -85,9 +85,108 @@ def report_lines(log):
     return L
 
 
+BOT_LOG = os.path.join(ROOT, "zero_dte_log.csv")
+MIN_COMPARE = 30     # أقل من هذا من التوصيات/الإشارات لا نحكم في المقارنة
+
+
+def read_bot_recs(path=BOT_LOG, start=START_DATE, end=END_DATE):
+    """توصيات بوت SPX (date، time، side) من zero_dte_log.csv لفترة الظل فقط."""
+    if not os.path.exists(path):
+        return []
+    out = []
+    with open(path, encoding="utf-8", newline="") as f:
+        for r in csv.DictReader(f):
+            try:
+                if start <= date.fromisoformat(r["date"]) <= end and r["side"] in ("CALL", "PUT"):
+                    out.append({"date": r["date"], "time": r["time"], "side": r["side"]})
+            except (KeyError, ValueError):
+                continue
+    return out
+
+
+def bot_hit_close(rec, day):
+    """هل اتجه SPX في صالح توصية البوت من وقتها حتى الإغلاق؟ (True/False) أو None. السعر عند أول شمعة تبدأ عند الوقت أو بعده."""
+    hh, mm = (int(x) for x in rec["time"].split(":"))
+    for i, t in enumerate(day["t"]):
+        if (t.hour, t.minute) >= (hh, mm):
+            move = float(day["c"][-1]) - float(day["o"][i])
+            return (move > 0) if rec["side"] == "CALL" else (move < 0)
+    return None
+
+
+def compare(log, recs, days):
+    """مقارنة كاماريلا ببوت SPX: اتفاق الاتجاه في اليوم الواحد، ونسبة إصابة اتجاه السوق حتى الإغلاق لكل منهما. قراءة فقط."""
+    by_day = {}
+    for r in recs:
+        by_day.setdefault(r["date"], []).append(r)
+    cam = {}
+    for r in log:
+        cam.setdefault(r["date"], []).append(r)
+    agree = disagree = only_cam = 0
+    cam_hits, bot_hits = [], []
+    r_agree, r_other = [], []
+    for d, rows in cam.items():
+        day = days.get(date.fromisoformat(d))
+        if day is None:
+            continue
+        for r in rows:
+            side = 1 if r["side"] == "CALL" else -1
+            cam_hits.append(side * (float(day["c"][-1]) - float(r["entry"])) > 0)
+        bots = {b["side"] for b in by_day.get(d, [])}
+        sides = {r["side"] for r in rows}
+        if not bots:
+            only_cam += 1
+        elif bots == sides:
+            agree += 1
+            r_agree += [float(r["r"]) for r in rows]
+        else:
+            disagree += 1
+            r_other += [float(r["r"]) for r in rows]
+    for d, rs in by_day.items():
+        day = days.get(date.fromisoformat(d))
+        if day is None:
+            continue
+        for b in rs:
+            h = bot_hit_close(b, day)
+            if h is not None:
+                bot_hits.append(h)
+    return {"agree": agree, "disagree": disagree, "only_cam": only_cam, "cam_hits": cam_hits, "bot_hits": bot_hits,
+            "r_agree": r_agree, "r_other": r_other}
+
+
+def compare_lines(c):
+    def pct(h):
+        return f"{sum(h)}/{len(h)} = {sum(h) / len(h):.0%}" if h else "-"
+
+    def mean(x):
+        return f"{sum(x) / len(x):+.2f} (n={len(x)})" if x else "-"
+
+    small = len(c["cam_hits"]) < MIN_COMPARE or len(c["bot_hits"]) < MIN_COMPARE
+    L = ["", "## مقارنة مع بوت SPX (قراءة فقط)", "",
+         "- اتجاه كاماريلا (CALL/PUT) مقابل توصيات البوت في اليوم نفسه، ثم نسبة إصابة اتجاه SPX من وقت الإشارة حتى الإغلاق لكل منهما.",
+         "- لا تقارن R بنتائج العقود: هذه حركة المؤشر وليست أسعار خيارات.", "",
+         "| البند | القيمة |", "|---|---|",
+         f"| أيام اتفق فيها الاتجاه | {c['agree']} |",
+         f"| أيام اختلف فيها الاتجاه | {c['disagree']} |",
+         f"| أيام إشارة كاماريلا بلا توصية للبوت | {c['only_cam']} |",
+         f"| إصابة كاماريلا حتى الإغلاق | {pct(c['cam_hits'])} |",
+         f"| إصابة البوت حتى الإغلاق | {pct(c['bot_hits'])} |",
+         f"| متوسط R لكاماريلا عند الاتفاق مع البوت | {mean(c['r_agree'])} |",
+         f"| متوسط R لكاماريلا عند الاختلاف | {mean(c['r_other'])} |", ""]
+    if small:
+        L.append(f"⚖️ **لا حكم**: أقل من {MIN_COMPARE} في إحدى العينتين.")
+    L.append("")
+    return L
+
+
 def main(argv):
     if "--report" in argv:
-        lines = report_lines(read_log())
+        log = read_log()
+        lines = report_lines(log)
+        try:
+            lines += compare_lines(compare(log, read_bot_recs(), cs.load_days()))
+        except Exception as e:      # المقارنة إضافية ولا توقف التقرير الأساسي
+            lines.append(f"تعذرت المقارنة مع البوت: {e}")
         with open(REPORT, "w", encoding="utf-8") as f:
             f.write("\n".join(lines))
         print("\n".join(lines))

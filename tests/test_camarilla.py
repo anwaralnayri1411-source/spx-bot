@@ -133,6 +133,34 @@ def test_shadow_rows_only_after_start_and_complete_days_and_no_duplicates():
     assert sh.new_rows(days, {("2026-11-02", "break")}) == []
 
 
+def test_bot_hit_close_uses_bar_at_or_after_rec_time():
+    o = np.full(78, 100.0)
+    c = np.full(78, 100.0)
+    c[-1] = 103.0
+    o[3] = 101.0                           # 09:45
+    day = make_day("2026-11-02", o=o, c=c)
+    assert sh.bot_hit_close({"time": "09:45", "side": "CALL"}, day) is True      # 103 > 101
+    assert sh.bot_hit_close({"time": "09:45", "side": "PUT"}, day) is False
+    assert sh.bot_hit_close({"time": "17:00", "side": "CALL"}, day) is None      # بعد آخر شمعة
+
+
+def test_compare_agreement_and_hits(tmp_path):
+    c = np.full(78, 100.0)
+    c[-1] = 103.0
+    day = make_day("2026-11-02", o=np.full(78, 100.0), c=c)
+    days = {date(2026, 11, 2): day}
+    log = [{"date": "2026-11-02", "strat": "break", "side": "CALL", "entry": "101.0", "r": "0.8"}]
+    same = sh.compare(log, [{"date": "2026-11-02", "time": "10:00", "side": "CALL"}], days)
+    assert (same["agree"], same["disagree"], same["only_cam"]) == (1, 0, 0)
+    assert same["cam_hits"] == [True] and same["bot_hits"] == [True] and same["r_agree"] == [0.8]
+    opp = sh.compare(log, [{"date": "2026-11-02", "time": "10:00", "side": "PUT"}], days)
+    assert (opp["agree"], opp["disagree"]) == (0, 1) and opp["bot_hits"] == [False] and opp["r_other"] == [0.8]
+    none = sh.compare(log, [], days)
+    assert none["only_cam"] == 1
+    text = "\n".join(sh.compare_lines(same))
+    assert "لا حكم" in text and "اتفق" in text
+
+
 def test_shadow_log_append_and_report(tmp_path):
     p = tmp_path / "log.csv"
     row = {"date": "2026-11-02", "strat": "break", "side": "CALL", "time": "09:50", "entry": 111.0, "stop": 107.75,
