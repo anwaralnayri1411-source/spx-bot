@@ -469,7 +469,8 @@
    "amd just dropped 16 in a month is it time to sell or load up",
    "intel stock price prediction downward momentum persists as volatility stays elevated",
    "intel corp stock intc moved down by 4 33 on nov 2 key drivers unveiled",
-   "intel the pc hangover is just beginning nasdaq intc"
+   "intel the pc hangover is just beginning nasdaq intc",
+   "amd slides 3 ahead of earnings as pc worries linger intel drops 5 nvidia edges higher"
   ],
   "CVX:CALL": [
    "stocks see continued downward pressure from ai anxiety and oil prices",
@@ -840,7 +841,11 @@
    "tesla s profits took a hit is it building something worth the cost",
    "tesla inc stock tsla moved up by 3 31 on nov 2 drivers behind the movement",
    "tesla stock rallies as buyer support continues after latvia approves full self driving",
-   "what makes tesla nasdaq tsla more than just an ev maker"
+   "what makes tesla nasdaq tsla more than just an ev maker",
+   "midday fly by s p warns on meta s credit marvell to acquire lumentum",
+   "fans release tesla roadster themed browser game tesla stock nasdaq tsla gains",
+   "m a news data center cooler omen ai spirits up 16m aquatic labs acquisition",
+   "shopify shop faces q3 earnings tomorrow here s what analysts expect"
   ],
   "XOM:CALL": [
    "trump uses defense act as fuel prices surge",
@@ -2196,9 +2201,6 @@
   "TSLA:CALL:2026-11-06:430": 1
  },
  "seen_macro": [
-  "factbox major brokerages expect fed to hold rates ahead of policy meeting",
-  "fed is widely expected to hold interest rates steady with december hike in sight",
-  "us stock market today s p 500 futures edge higher on fed decision watch",
   "patience expected from fed in final rate decision before midterms",
   "indian markets end lower as it weakness and crude oil concerns weigh on sentiment",
   "futures mixed ahead of the fed s rate decision investors await big tech earnings",
@@ -2795,7 +2797,10 @@
   "us stocks rebound as oil prices fall ahead of midterms",
   "fed will vote on rates less often what that could mean for borrowers",
   "federal reserve cuts rate setting votes raising risk of slower borrowing relief",
-  "us dollar falls to five week low as oil prices retreat ahead of midterm elections"
+  "us dollar falls to five week low as oil prices retreat ahead of midterm elections",
+  "the reckoning nobody wants to discuss ai wall street political power and the illusion of infinite growth",
+  "wall st rises as oil falls heading into us midterm elections",
+  "dow rises 1 oil sinks 7 on iran peace hopes stock market today"
  ],
  "sharp": {
   "INTC:PUT:2026-11-13:65": 67.315,

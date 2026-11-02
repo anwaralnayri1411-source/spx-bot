@@ -1639,3 +1639,9 @@ time,pos_id,ticker,side,event,detail,entry,val,pnl,spot,need,tdays,advice,reason
 2026-11-02T12:40-05:00,TSLA:CALL:2026-11-06:430,TSLA,CALL,contract,-34%,3.43,2.28,-0.3353,408.4,0.0613,5,فكّر بالخروج,العقد خسر 34% (الوقف عند −40%)
 2026-11-02T12:45-05:00,RIVN:CALL:2026-11-20:13.5,RIVN,CALL,sharp,-0.79% في 15د,0.81,0.67,-0.1728,13.27,0.0784,15,فكّر بالخروج,السهم يتحرك ضدك
 2026-11-02T12:45-05:00,RIVN:CALL:2026-11-20:13.5,RIVN,CALL,contract,-17%,0.81,0.67,-0.1728,13.27,0.0784,15,فكّر بالخروج,السهم يتحرك ضدك
+2026-11-02T13:17-05:00,INTC:PUT:2026-11-13:65,INTC,PUT,macro_quiet,"against/weak/medium: Dow Rises 1%, Oil Sinks 7% on Iran Peace Hopes: Stock Market Today - Benzinga",3.25,4.81,0.48,61.825,0.0012,10,أبقِ,خبر ضد العقد لكن تأثيره محدود، راقب
+2026-11-02T13:17-05:00,DIS:CALL:2026-11-20:115,DIS,CALL,macro_quiet,"with/weak/medium: Dow Rises 1%, Oil Sinks 7% on Iran Peace Hopes: Stock Market Today - Benzinga",3.64,3.4,-0.0659,113.625,0.0441,15,أبقِ,الخبر في صالح العقد
+2026-11-02T13:17-05:00,RIVN:CALL:2026-11-20:13.5,RIVN,CALL,macro_quiet,"with/weak/medium: Dow Rises 1%, Oil Sinks 7% on Iran Peace Hopes: Stock Market Today - Benzinga",0.81,0.75,-0.0741,13.405,0.0675,15,أبقِ,الخبر في صالح العقد
+2026-11-02T13:17-05:00,PFE:CALL:2026-11-20:30,PFE,CALL,macro_quiet,"against/weak/medium: Dow Rises 1%, Oil Sinks 7% on Iran Peace Hopes: Stock Market Today - Benzinga",0.88,1.09,0.2386,30.7,0.0059,15,أبقِ,خبر ضد العقد لكن تأثيره محدود، راقب
+2026-11-02T13:17-05:00,TSLA:CALL:2026-11-06:430,TSLA,CALL,macro_quiet,"with/weak/medium: Dow Rises 1%, Oil Sinks 7% on Iran Peace Hopes: Stock Market Today - Benzinga",3.43,2.42,-0.2945,408.87,0.0601,5,أبقِ,الخبر في صالح العقد | الفكرة قائمة لكن العقد -29%؛ التزم بالوقف عند −40%
+2026-11-02T13:17-05:00,V:CALL:2026-11-06:430,V,CALL,macro_quiet,"with/weak/medium: Dow Rises 1%, Oil Sinks 7% on Iran Peace Hopes: Stock Market Today - Benzinga",3.15,3.28,0.0413,426.6,0.0154,5,أبقِ,الخبر في صالح العقد
