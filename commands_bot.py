@@ -136,12 +136,12 @@ def company_text(tk, n):
         df = df.dropna(subset=["Close"])      # ياهو يرجع أحياناً شمعة اليوم بلا إغلاق (كما يفعل فحص البوت)
     if df is None or len(df) < 55:
         return f"لا أجد بيانات كافية للرمز {ob.esc(tk)}."
-    df = sb.live_daily(df, tk, n)[0]          # شمعة اليوم بالسعر اللحظي كما في فحص البوت
+    df, live_px = sb.live_daily(df, tk, n)    # شمعة اليوم بالسعر اللحظي كما في فحص البوت
     spy = sb.live_daily(yf.Ticker("SPY").history(period="6mo").dropna(subset=["Close"]), "SPY", n)[0]["Close"].astype(float)
     spy5 = float(spy.iloc[-1] / spy.iloc[-6] - 1)
     drv = None
     bull, bear, why, info = sb.tech_points(df, spy5, drv, sb.completed_volume(df, n))
-    S = sb.spot_now(t) or info["S"]
+    S = live_px or sb.spot_now(t) or info["S"]
     c = df["Close"].astype(float)
     day = float(c.iloc[-1] / c.iloc[-2] - 1)
     edge = bull - bear
@@ -168,7 +168,8 @@ def company_text(tk, n):
                 L.append(f"{r['time'][:10]} | {r['side']} {r['strike']} {r['exp']} | دخول {r['price']}")
     except Exception:
         pass
-    L += ["", "⚠️ <i>تعليمي وليست توصية. البيانات متأخرة ~15 دقيقة.</i>"]
+    L += ["", "⚠️ <i>تعليمي وليست توصية. " + ("السعر وشمعة اليوم لحظية.</i>" if live_px
+                                               else "البيانات من ياهو متأخرة ~15 دقيقة.</i>")]
     return "\n".join(L)
 
 
@@ -185,11 +186,17 @@ def status_text(n):
 
 def spx_text(n):
     L = ["🏛️ <b>SPX الآن</b>"]
+    src = None                                # مصدر السعر اللحظي (Tastytrade ثم Alpaca)، وإلا ياهو المتأخر
     try:
-        h = yf.Ticker("^SPX").history(period="5d", interval="5m")["Close"].dropna()
         d = yf.Ticker("^SPX").history(period="7d")["Close"].dropna()
         prev = float(d[[x.date() < n.date() for x in d.index]].iloc[-1])
-        L.append(f"📍 {float(h.iloc[-1]):,.1f} ({(float(h.iloc[-1]) / prev - 1) * 100:+.2f}% عن إغلاق أمس)")
+        px = None
+        if sb._live_on():
+            import live_quotes as lq
+            px, src = lq.spot("SPX")
+        if not px:
+            px = float(yf.Ticker("^SPX").history(period="5d", interval="5m")["Close"].dropna().iloc[-1])
+        L.append(f"📍 {px:,.1f} ({(px / prev - 1) * 100:+.2f}% عن إغلاق أمس)")
     except Exception:
         L.append("تعذر قراءة سعر SPX.")
     vix, pct = ob.vix_info()
@@ -209,7 +216,8 @@ def spx_text(n):
             L.append(f"🗂️ آخر إشارة: {r['date']} {r['time']} | {r['symbol']} {r['side']} {r['strike']} | دخول {r['price']} | {r['result'] or 'مفتوحة'}")
     except Exception:
         pass
-    L += ["", "⚠️ <i>تعليمي وليست توصية. البيانات متأخرة ~15 دقيقة.</i>"]
+    L += ["", "⚠️ <i>تعليمي وليست توصية. " + (f"السعر لحظي من {src}.</i>" if src
+                                               else "السعر من ياهو متأخر ~15 دقيقة.</i>")]
     return "\n".join(L)
 
 

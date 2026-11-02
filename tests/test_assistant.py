@@ -44,6 +44,7 @@ def test_market_news_tool(tmp_path, monkeypatch):
 
 def test_market_news_tool_without_logs(tmp_path, monkeypatch):
     monkeypatch.setattr(asst, "LIVE", str(tmp_path / "none"))
+    monkeypatch.setattr(asst, "_fresh_csv", lambda name, group: pd.DataFrame())   # لا نسخة المستودع من السجلات
     monkeypatch.setattr(nw, "fut_bars", lambda s: None)
     monkeypatch.setattr(ob, "fetch_headlines", lambda: {"market": [], "geo": []})
     monkeypatch.setattr(ob, "market_shock", lambda h: {"level": 1, "flags": []})
@@ -74,3 +75,20 @@ def test_history_keeps_reply_source(tmp_path, monkeypatch):
     assert "[مصدر" not in reply                                               # المستخدم لا يرى السطر
     h = json.load(open(tmp_path / "h.json", encoding="utf-8"))
     assert h[-1]["content"].endswith("[مصدر هذا الرد: نتائج الأدوات market_news وقت 2026-11-02 08:00 نيويورك]")
+
+
+def test_spx_text_labels_live_source(monkeypatch):
+    import commands_bot as cb
+    import live_quotes as lq
+    idx = pd.DatetimeIndex([pd.Timestamp("2026-10-30", tz="America/New_York")])
+    fake = SimpleNamespace(history=lambda **k: pd.DataFrame({"Close": [7580.0]}, index=idx))
+    monkeypatch.setattr(cb.yf, "Ticker", lambda s: fake)
+    monkeypatch.setattr(cb.ob, "vix_info", lambda: (None, None))
+    monkeypatch.setattr(cb.sb, "_live_on", lambda: True)
+    monkeypatch.setattr(lq, "spot", lambda s: (7616.6, "Tastytrade"))
+    n = datetime.fromisoformat("2026-11-02T10:00-05:00")
+    out = cb.spx_text(n)
+    assert "7,616.6" in out and "السعر لحظي من Tastytrade" in out and "متأخر" not in out
+    monkeypatch.setattr(lq, "spot", lambda s: (None, None))
+    out = cb.spx_text(n)
+    assert "7,580.0" in out and "ياهو متأخر ~15" in out
