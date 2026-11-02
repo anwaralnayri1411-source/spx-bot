@@ -35,8 +35,8 @@
     "exdiv_in_life": false
    },
    "entry_live": 1.39,
-   "last_pnl": 1.273,
-   "last_at": "2026-11-02T11:12-05:00",
+   "last_pnl": 1.187,
+   "last_at": "2026-11-02T11:27-05:00",
    "closed": {
     "kind": "tp",
     "time": "2026-10-26T12:12-04:00",
@@ -80,8 +80,8 @@
     "exdiv_in_life": false
    },
    "entry_live": 0.89,
-   "last_pnl": 0.18,
-   "last_at": "2026-11-02T11:12-05:00",
+   "last_pnl": 0.101,
+   "last_at": "2026-11-02T11:27-05:00",
    "closed": {
     "kind": "tp",
     "time": "2026-10-28T15:12-04:00",
@@ -127,8 +127,8 @@
     "exdiv_in_life": false
    },
    "entry_live": 3.29,
-   "last_pnl": -0.945,
-   "last_at": "2026-11-02T10:42-05:00",
+   "last_pnl": -0.951,
+   "last_at": "2026-11-02T11:27-05:00",
    "closed": {
     "kind": "stop",
     "time": "2026-10-29T10:12-04:00",
@@ -171,8 +171,8 @@
     "exdiv_in_life": false
    },
    "entry_live": 3.19,
-   "last_pnl": 0.544,
-   "last_at": "2026-11-02T11:12-05:00",
+   "last_pnl": 0.526,
+   "last_at": "2026-11-02T11:27-05:00",
    "closed": {
     "kind": "tp",
     "time": "2026-10-30T10:12-04:00",
@@ -217,8 +217,8 @@
     "exdiv_in_life": false
    },
    "entry_live": 2.65,
-   "last_pnl": -0.433,
-   "last_at": "2026-11-02T11:12-05:00",
+   "last_pnl": -0.485,
+   "last_at": "2026-11-02T11:27-05:00",
    "closed": {
     "kind": "tp",
     "time": "2026-10-30T10:12-04:00",
@@ -263,8 +263,8 @@
     "exdiv_in_life": false
    },
    "entry_live": 2.49,
-   "last_pnl": -0.423,
-   "last_at": "2026-11-02T11:12-05:00",
+   "last_pnl": -0.407,
+   "last_at": "2026-11-02T11:27-05:00",
    "closed": {
     "kind": "stop",
     "time": "2026-10-29T11:42-04:00",
@@ -310,8 +310,8 @@
     "exdiv_in_life": false
    },
    "entry_live": 2.63,
-   "last_pnl": 0.58,
-   "last_at": "2026-11-02T11:12-05:00",
+   "last_pnl": 0.297,
+   "last_at": "2026-11-02T11:27-05:00",
    "closed": {
     "kind": "stop",
     "time": "2026-10-30T10:12-04:00",
@@ -333,7 +333,7 @@
    "strength": 8.9,
    "earn": "2027-01-28",
    "status": "open",
-   "peak": 0.262,
+   "peak": 0.274,
    "alerts": {
     "broken": "2026-10-30T10:42-04:00"
    },
@@ -355,8 +355,8 @@
     "exdiv_in_life": false
    },
    "entry_live": 3.32,
-   "last_pnl": 0.24,
-   "last_at": "2026-11-02T11:12-05:00"
+   "last_pnl": 0.274,
+   "last_at": "2026-11-02T11:27-05:00"
   },
   {
    "id": "NVDA:PUT:2026-11-04:205",
@@ -393,8 +393,8 @@
     "exdiv_in_life": false
    },
    "entry_live": 2.55,
-   "last_pnl": -0.261,
-   "last_at": "2026-11-02T11:12-05:00",
+   "last_pnl": -0.144,
+   "last_at": "2026-11-02T11:27-05:00",
    "closed": {
     "kind": "tp",
     "time": "2026-10-30T13:00-04:00",
@@ -439,8 +439,8 @@
     "exdiv_in_life": false
    },
    "entry_live": 3.22,
-   "last_pnl": -0.906,
-   "last_at": "2026-11-02T11:12-05:00",
+   "last_pnl": -0.891,
+   "last_at": "2026-11-02T11:27-05:00",
    "closed": {
     "kind": "stop",
     "time": "2026-11-02T09:57-05:00",
@@ -459,9 +459,11 @@
    "entry_spy": 758.45,
    "strength": 7.0,
    "earn": "2026-11-19",
-   "status": "open",
-   "peak": 0.48,
-   "alerts": {},
+   "status": "tp",
+   "peak": 0.52,
+   "alerts": {
+    "tp": "2026-11-02T11:27-05:00"
+   },
    "entry_src": "alpaca",
    "entry_yahoo": 2.31,
    "entry_spr": 0.059,
@@ -481,8 +483,13 @@
     "exdiv_in_life": false
    },
    "entry_live": 2.31,
-   "last_pnl": 0.476,
-   "last_at": "2026-11-02T11:12-05:00"
+   "last_pnl": 0.52,
+   "last_at": "2026-11-02T11:27-05:00",
+   "closed": {
+    "kind": "tp",
+    "time": "2026-11-02T11:27-05:00",
+    "pnl": 0.5
+   }
   },
   {
    "id": "COIN:PUT:2026-11-06:130",
@@ -522,8 +529,8 @@
     "exdiv_in_life": false
    },
    "entry_live": 3.25,
-   "last_pnl": -0.488,
-   "last_at": "2026-11-02T11:12-05:00",
+   "last_pnl": -0.396,
+   "last_at": "2026-11-02T11:27-05:00",
    "closed": {
     "kind": "stop",
     "time": "2026-11-02T09:57-05:00",
@@ -563,8 +570,8 @@
     "exdiv_in_life": false
    },
    "entry_live": 3.58,
-   "last_pnl": -0.14,
-   "last_at": "2026-11-02T11:12-05:00"
+   "last_pnl": -0.121,
+   "last_at": "2026-11-02T11:27-05:00"
   },
   {
    "id": "RIVN:CALL:2026-11-20:13.5",
@@ -599,8 +606,8 @@
     "exdiv_in_life": false
    },
    "entry_live": 0.85,
-   "last_pnl": 0.062,
-   "last_at": "2026-11-02T11:12-05:00"
+   "last_pnl": 0.037,
+   "last_at": "2026-11-02T11:27-05:00"
   },
   {
    "id": "PFE:CALL:2026-11-20:30",
@@ -636,8 +643,8 @@
     "exdiv_in_life": true
    },
    "entry_live": 0.85,
-   "last_pnl": -0.011,
-   "last_at": "2026-11-02T11:12-05:00"
+   "last_pnl": 0.0,
+   "last_at": "2026-11-02T11:27-05:00"
   },
   {
    "id": "TSLA:CALL:2026-11-06:430",
@@ -672,8 +679,8 @@
     "exdiv_in_life": false
    },
    "entry_live": 3.43,
-   "last_pnl": 0.012,
-   "last_at": "2026-11-02T11:12-05:00"
+   "last_pnl": -0.152,
+   "last_at": "2026-11-02T11:27-05:00"
   }
  ],
  "summary_date": "2026-10-30"
