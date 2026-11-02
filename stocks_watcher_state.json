@@ -2143,7 +2143,10 @@
    "pfizer q3 preview analysts look to obesity pipeline amid diverging growth expectations pfe nyse",
    "more trick than treat dan niles flags ai risks in big tech earnings",
    "altria vs pfizer which dividend stock pays you more in 10 years",
-   "pfizer stock hits 52 week high at 30 68 usd by investing com"
+   "pfizer stock hits 52 week high at 30 68 usd by investing com",
+   "meta plans new bond sale as ai spending soars",
+   "is pfizer nyse pfe building a stronger future in metabolic medicine",
+   "rivian stock rivn defies bofa s sell rating jumps 10 here s why"
   ]
  },
  "fired": {
@@ -2159,7 +2162,9 @@
    "stock1",
    "sharp@2026-11-02T12:45-05:00",
    "down-0.15",
-   "stock2"
+   "stock2",
+   "sharp@2026-11-02T14:50-05:00",
+   "stock3"
   ],
   "PFE:CALL:2026-11-20:30": [
    "up0.25"
@@ -2169,12 +2174,9 @@
   ]
  },
  "stock_level": {
-  "RIVN:CALL:2026-11-20:13.5": 2
+  "RIVN:CALL:2026-11-20:13.5": 3
  },
  "seen_macro": [
-  "fed likely to go into wait and see mode on rates",
-  "fed officials not aligned on weight of financial conditions",
-  "us stock market today s p 500 futures edge up on durable demand optimism",
   "fed set to announce interest rate decision today will rates go up",
   "tech stocks rebounding ahead of u s interest rate announcement",
   "here are wednesday s top wall street analyst research calls enphase energy f5 marvell technology msg rangers pentair sil",
@@ -2771,10 +2773,13 @@
   "user",
   "fed chair kevin warsh is cutting the number of rate setting votes",
   "markets news and analysis",
-  "one magnificent 7 stock could have a massive ai opportunity by 2028"
+  "one magnificent 7 stock could have a massive ai opportunity by 2028",
+  "gbp usd price forecast gbp usd 1 3423 hits highest since mid september as boe hike to 4 00 priced above 90 1 3475 breako",
+  "labour bureau prepares to revise cpi iw base year expand coverage",
+  "helmerich payne dht holdings vitesse energy highpeak energy and borr drilling shares plummet what you need to know"
  ],
  "sharp": {
   "DIS:CALL:2026-11-20:115": 112.63,
-  "RIVN:CALL:2026-11-20:13.5": 13.27
+  "RIVN:CALL:2026-11-20:13.5": 13.14
  }
 }
