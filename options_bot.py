@@ -1317,7 +1317,8 @@ def instrument_block(sym, ks, side, S_idx):
     need = abs(k0["be"] - sp) / sp * 100
     mark = tier(k0["score"]) + ("🔥" if k0.get("flow", 0) >= 1 else "")
     L = [title,
-         f"{mark} <b>{root_sym(k0)} {k0['strike']:,.0f} {word}</b> ×{q} | 💵 ${k0['cost']:,.0f} للعقد",
+         f"{mark} <b>{root_sym(k0)} {k0['strike']:,.0f} {word}</b> ×{q} | 💵 ${k0['cost']:,.0f} للعقد"
+         + (f" | 🗓 ينتهي {exp_label(k0['exp'])}" if k0.get("exp") else ""),
          f"├ 🟢 <b>دخول</b> بسعر حتى <b>{k0['price']:.2f}</b> | يحتاج {sgn}{need:.2f}% للتعادل"
          + (f" · {SRC_NOTE[k0['price_src']]}" if k0.get("price_src") in SRC_NOTE else "")]
     tp_p, sl_p = k0["price"] * (1 + TAKE_PROFIT), k0["price"] * (1 - STOP_LOSS)
@@ -1388,6 +1389,7 @@ def signal_message(a):
     L = [f"🔔 <b>توصية SPX | {word} {dot}</b> | ⭐ {a['strength']:.0f}/10 | 📍 SPX {S:,.1f}{when} #توصية"]
     groups = {}
     for k in a["contracts"]:
+        k.setdefault("exp", a["exp"])          # عقود SPX بلا مفتاح انتهاء: انتهاء الإشارة نفسه (لعرض التاريخ)
         groups.setdefault(k.get("sym", SYMBOL).lstrip("^"), []).append(k)
     order = [SYMBOL.lstrip("^")] + ([ALT_SYMBOL] if ALT_SYMBOL else [])
     for sym in order:
@@ -1915,7 +1917,7 @@ def follow_payload(p, val, pnl, spot, text, kind, src=""):
            f"💵 دخول <b>{p['entry']:.2f}</b> ← الآن <b>{val:.2f}</b> | <b>{pnl * 100:+.0f}%</b> ({pl:+,.0f}$ على ×{p.get('qty', 1)})",
            f"🛑 الوقف {stop_p:.2f} | 🎯 الهدف {tp_p:.2f}", text,
            f"⚠️ القرار قرارك | 🕒 {now_ny().astimezone(RY).strftime('%H:%M')} الرياض{note}"]
-    when = "انتهاء اليوم" if p.get("exp", now_ny().date().isoformat()) == now_ny().date().isoformat() else f"انتهاء {p['exp']}"
+    when = f"ينتهي {exp_label(p.get('exp') or now_ny().date().isoformat())}"
     args = (("follow", name, (when + (f" · {p['sym']} {spot:,.0f}" if spot else "")), val, pnl,
              p["entry"], stop_p, tp_p), {"now": val, "badge": head,
                                          "foot": f"وقت الرصد {now_ny().astimezone(RY).strftime('%H:%M')} الرياض{note} | SPX إصدار 17"})
