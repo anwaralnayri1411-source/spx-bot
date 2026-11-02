@@ -1,6 +1,7 @@
 {
  "date": "2026-11-02",
- "open": [
+ "open": [],
+ "await": [
   {
    "date": "2026-11-02",
    "defn": "delayed",
@@ -12,13 +13,13 @@
    "entry_time": "2026-11-02T14:06-05:00",
    "entry_spy": 756.26,
    "entry": 1.27,
-   "exit": "",
-   "exit_time": "",
-   "pnl": -0.102,
-   "peak": 0.0,
+   "exit": "tp",
+   "exit_time": "14:21",
+   "pnl": 0.559,
+   "peak": 0.559,
    "spy_after_60": "",
    "spy_move_pts": "",
-   "checks": 11,
+   "checks": 15,
    "stale": 0,
    "at_ext": 1,
    "occ": "SPY261102P00756000"
@@ -34,19 +35,18 @@
    "entry_time": "2026-11-02T14:06-05:00",
    "entry_spy": 756.26,
    "entry": 1.52,
-   "exit": "",
-   "exit_time": "",
-   "pnl": -0.053,
+   "exit": "stop",
+   "exit_time": "14:24",
+   "pnl": -0.428,
    "peak": 0.079,
    "spy_after_60": "",
    "spy_move_pts": "",
-   "checks": 11,
+   "checks": 18,
    "stale": 0,
    "at_ext": 1,
    "occ": "SPY261102C00756000"
   }
  ],
- "await": [],
  "last": {
   "live": "2026-11-02T12:45-05:00",
   "delayed": "2026-11-02T14:06-05:00"
