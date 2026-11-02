@@ -2147,30 +2147,6 @@
   ]
  },
  "fired": {
-  "INTC:PUT:2026-11-13:65": [
-   "news:nasdaq drops 2 as amazon and intel results weigh on market sentiments",
-   "stock1",
-   "down-0.15",
-   "sharp@2026-10-30T10:37-04:00",
-   "stock2",
-   "sharp@2026-10-30T10:39-04:00",
-   "news:amd s stock slides after intel earnings reveal two big issues",
-   "news:trump s commerce department s intel stake fell by more than 10 billion in a day as stock craters",
-   "news:intel nasdaq intc shares gap down following analyst downgrade",
-   "news:intel nasdaq intc plunges over 25 on weak pc outlook dragging dell technologies nyse dell and hp inc nyse hpq lower amid",
-   "news:intel stock plunges nearly 30 on pace for its worst day since 1974",
-   "news:intel nasdaq intc stock price target cut by truist financial",
-   "news:deadly blast hit intel s factory and it has a hidden bill that nobody can yet calculate",
-   "up0.25",
-   "news:why is intel stock down today weak forecast pc slump",
-   "news:intel on course for worst day ever triggers global chip rout",
-   "news:intel suffers worst stock thrashing in decades on weak forecast",
-   "news:why intel stock price down today how the ai memory crunch and weak pc demand hit its forecast and could",
-   "news:da davidson has lowered expectations for intel nasdaq intc stock price",
-   "news:intel in focus as gf lowers price target says foundry catalyst still intact intc nasdaq",
-   "news:intel nasdaq intc stock moved down to hold by freedom broker",
-   "news:ubs group issues pessimistic forecast for intel nasdaq intc stock price"
-  ],
   "DIS:CALL:2026-11-20:115": [
    "sharp@2026-11-02T10:36-05:00",
    "down-0.15"
@@ -2199,13 +2175,10 @@
   ]
  },
  "stock_level": {
-  "INTC:PUT:2026-11-13:65": 2,
   "RIVN:CALL:2026-11-20:13.5": 1,
   "TSLA:CALL:2026-11-06:430": 1
  },
  "seen_macro": [
-  "patience expected from fed in final rate decision before midterms",
-  "indian markets end lower as it weakness and crude oil concerns weigh on sentiment",
   "futures mixed ahead of the fed s rate decision investors await big tech earnings",
   "tech sector rally continues with fed expected to leave benchmark interest rate alone",
   "fed likely to go into wait and see mode on rates",
@@ -2803,10 +2776,11 @@
   "us dollar falls to five week low as oil prices retreat ahead of midterm elections",
   "the reckoning nobody wants to discuss ai wall street political power and the illusion of infinite growth",
   "wall st rises as oil falls heading into us midterm elections",
-  "dow rises 1 oil sinks 7 on iran peace hopes stock market today"
+  "dow rises 1 oil sinks 7 on iran peace hopes stock market today",
+  "user",
+  "fed chair kevin warsh is cutting the number of rate setting votes"
  ],
  "sharp": {
-  "INTC:PUT:2026-11-13:65": 67.315,
   "DIS:CALL:2026-11-20:115": 112.63,
   "RIVN:CALL:2026-11-20:13.5": 13.27,
   "TSLA:CALL:2026-11-06:430": 409.04
