@@ -354,3 +354,8 @@ id,time,project,tag,sym,root,side,strike,exp,entry,spot,edge,strength
 20261102T1142|stocks|max_ideas_cap|V|CALL|430|2026-11-06,2026-11-02T11:42-05:00,stocks,max_ideas_cap,V,V,CALL,430.0,2026-11-06,2.83,425.72,4.0,6.7
 20261102T1142|stocks|open_same_dir|COIN|PUT|135|2026-11-06,2026-11-02T11:42-05:00,stocks,open_same_dir,COIN,COIN,PUT,135.0,2026-11-06,3.46,139.97,9.5,9.0
 20261102T1142|stocks|open_same_dir|INTC|PUT|60|2026-11-20,2026-11-02T11:42-05:00,stocks,open_same_dir,INTC,INTC,PUT,60.0,2026-11-20,2.46,62.64,7.0,8.1
+20261102T1157|stocks|same_side_cap|NVDA|PUT|205|2026-11-06,2026-11-02T11:57-05:00,stocks,same_side_cap,NVDA,NVDA,PUT,205.0,2026-11-06,3.23,206.87,5.0,7.8
+20261102T1157|stocks|same_side_cap|MSTR|PUT|130|2026-11-06,2026-11-02T11:57-05:00,stocks,same_side_cap,MSTR,MSTR,PUT,130.0,2026-11-06,3.09,134.78,3.5,6.7
+20261102T1157|stocks|max_ideas_cap|WMT|CALL|130|2026-11-20,2026-11-02T11:57-05:00,stocks,max_ideas_cap,WMT,WMT,CALL,130.0,2026-11-20,3.01,126.3,7.5,6.1
+20261102T1157|stocks|open_same_dir|COIN|PUT|135|2026-11-06,2026-11-02T11:57-05:00,stocks,open_same_dir,COIN,COIN,PUT,135.0,2026-11-06,3.24,140.24,9.5,9.0
+20261102T1157|stocks|open_same_dir|INTC|PUT|60|2026-11-20,2026-11-02T11:57-05:00,stocks,open_same_dir,INTC,INTC,PUT,60.0,2026-11-20,2.46,62.7,7.0,8.1
