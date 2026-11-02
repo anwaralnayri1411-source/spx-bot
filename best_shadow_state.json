@@ -36,7 +36,9 @@
    "opp_occ": "SPY261103P00763000",
    "side_entry": 2.77,
    "opp_entry": 3.02,
-   "src": "alpaca"
+   "src": "alpaca",
+   "side_15": 2.54,
+   "opp_15": 3.16
   },
   {
    "variant": "C",
@@ -53,7 +55,9 @@
    "opp_occ": "SPY261103P00763000",
    "side_entry": 2.77,
    "opp_entry": 3.02,
-   "src": "alpaca"
+   "src": "alpaca",
+   "side_15": 2.57,
+   "opp_15": 3.16
   }
  ],
  "last": {
