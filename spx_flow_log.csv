@@ -1,0 +1,2 @@
+date,time,spot,call_wall,call_wall_oi,put_wall,put_wall_oi,vol_call_wall,vol_put_wall,net_gex_m,flip,call_prem,put_prem,net_delta,contracts
+2026-11-02,10:17,7643.29,7750.0,5349.0,7600.0,5248.0,7650.0,7600.0,9058.82,7608.9,0.0,0.0,0.0,92
