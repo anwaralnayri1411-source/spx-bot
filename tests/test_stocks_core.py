@@ -196,3 +196,16 @@ def test_malformed_api_key_is_refused_without_printing_it(monkeypatch, capsys):
 def test_missing_api_key_returns_none_quietly(monkeypatch):
     monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)
     assert sw.ask_claude("hi", sw.NEWS_SCHEMA) is None
+
+
+def test_watcher_silent_after_target_even_if_bought(monkeypatch):
+    import stocks_watcher as sw
+    from datetime import datetime
+    pos = [{"ticker": "DIS", "side": "CALL", "strike": 115.0, "exp": "2026-11-20", "time": "2026-11-02T10:00-05:00", "entry": 2.0,
+            "status": "tp", "closed": {"kind": "tp", "time": "2026-11-02T11:00-05:00", "pnl": 0.5}, "alerts": {}},
+           {"ticker": "PFE", "side": "CALL", "strike": 30.0, "exp": "2026-11-20", "time": "2026-11-02T10:00-05:00", "entry": 1.0,
+            "status": "stopped", "closed": {"kind": "stop", "time": "2026-11-02T11:00-05:00", "pnl": -0.4}, "alerts": {}}]
+    monkeypatch.setattr(sw, "read_repo_json", lambda name: {"positions": pos} if name == "stocks_positions.json" else {"items": {}})
+    monkeypatch.setattr(sw.sb, "mine_for", lambda p, mine: {"mode": "bought", "price": 2.1})
+    out = sw.watched_positions(datetime(2026, 11, 3, 10, 0))
+    assert [p["ticker"] for p in out] == ["PFE"]          # الهدف: صمت؛ الوقف وأنت ما زلت تملكه: يتابع

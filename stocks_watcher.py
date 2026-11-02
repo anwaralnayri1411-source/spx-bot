@@ -112,7 +112,8 @@ def watched_positions(n):
             continue
         m = sb.mine_for(p, mine)
         bought = bool(m and m.get("mode") == "bought")
-        if sb.is_closed(p) and not bought:
+        ci = sb.closed_info(p)
+        if sb.is_closed(p) and (not bought or (ci and ci[0] == "tp")):   # بلغ الهدف = رابح ومغلق بالقاعدة، صمت (بطلب المستخدم 2/11/2026)
             continue
         q = dict(p)
         q["_bought"] = bought
