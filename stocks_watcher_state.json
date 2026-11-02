@@ -462,7 +462,9 @@
    "true freedom investing llc purchases 16 470 shares of intel corporation intc",
    "down 44 9 in 4 weeks here s why intel intc looks ripe for a turnaround",
    "intel s 30 collapse finally changes the setup rating upgrade nasdaq intc",
-   "amd just dropped 16 in a month is it time to sell or load up"
+   "amd just dropped 16 in a month is it time to sell or load up",
+   "intel stock price prediction downward momentum persists as volatility stays elevated",
+   "intel corp stock intc moved down by 4 33 on nov 2 key drivers unveiled"
   ],
   "CVX:CALL": [
    "stocks see continued downward pressure from ai anxiety and oil prices",
@@ -830,7 +832,8 @@
    "rivian gains 5 as r2 ramp drives raised delivery outlook tesla falls 3 lucid slides 2 ford eases",
    "if you invest 1 000 in tesla today here s what it could be worth by 2030",
    "cvna q3 earnings miss on higher costs despite record sales",
-   "tesla s profits took a hit is it building something worth the cost"
+   "tesla s profits took a hit is it building something worth the cost",
+   "tesla inc stock tsla moved up by 3 31 on nov 2 drivers behind the movement"
   ],
   "XOM:CALL": [
    "trump uses defense act as fuel prices surge",
@@ -2116,10 +2119,14 @@
    "amazon stock price target raised to 330 by phillip securities"
   ],
   "RIVN:CALL": [
-   "why rivian rivn stock is up today"
+   "why rivian rivn stock is up today",
+   "rivian surges 6 in one session adding over 1 billion in market cap",
+   "why did lucid stock just pop",
+   "rivian extends post earnings rally after ubs flips bullish rivn nasdaq"
   ],
   "PFE:CALL": [
-   "pfizer q3 preview analysts look to obesity pipeline amid diverging growth expectations pfe nyse"
+   "pfizer q3 preview analysts look to obesity pipeline amid diverging growth expectations pfe nyse",
+   "more trick than treat dan niles flags ai risks in big tech earnings"
   ]
  },
  "fired": {
@@ -2156,17 +2163,19 @@
    "sharp@2026-11-02T10:36-05:00",
    "down-0.15"
   ],
-  "RIVN:CALL:2026-11-20:13.5": [],
-  "PFE:CALL:2026-11-20:30": []
+  "RIVN:CALL:2026-11-20:13.5": [
+   "sharp@2026-11-02T11:22-05:00",
+   "news:rivian extends post earnings rally after ubs flips bullish rivn nasdaq"
+  ],
+  "PFE:CALL:2026-11-20:30": [],
+  "TSLA:CALL:2026-11-06:430": [
+   "down-0.15"
+  ]
  },
  "stock_level": {
   "INTC:PUT:2026-11-13:65": 2
  },
  "seen_macro": [
-  "asx set to edge up tech stocks drive wall street higher",
-  "navigating headwinds stock market weekly roundup august 24 28 2026",
-  "mark cuban says everything is a meme stock wall street sees opportunity in spacex nvidia and micron stocks",
-  "us fed to hit pause on key policy rates tomorrow three key indicators to watch",
   "fed likely holds rates in october but may hike in december amid stubborn inflation",
   "stock markets decline in early trade sensex drops",
   "after canada fires back with retaliatory tariffs trump and carney move to ease trade war in 2 sectors as south africa br",
@@ -2762,10 +2771,15 @@
   "what 10 000 invested in this magnificent seven stock could be worth by 2030",
   "buy dollars in installments hold short term bonds",
   "we ve been set back 100 years harvard professor takes trump to task",
-  "dow jones futures forecast wall street outlook after the us stock market rebound"
+  "dow jones futures forecast wall street outlook after the us stock market rebound",
+  "us dollar forecast nordea warns rising debt costs could weigh",
+  "stock market today oil slides on middle east hopes as wall street rebounds gold price gains 2",
+  "stock market today nov 2 2026 dow rises ahead of apple s earnings report",
+  "what monday s futures rebound means as midterms and apple earnings near"
  ],
  "sharp": {
   "INTC:PUT:2026-11-13:65": 67.315,
-  "DIS:CALL:2026-11-20:115": 112.63
+  "DIS:CALL:2026-11-20:115": 112.63,
+  "RIVN:CALL:2026-11-20:13.5": 13.49
  }
 }
