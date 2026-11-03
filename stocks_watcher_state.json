@@ -1277,7 +1277,6 @@
    "jpmorgan chase nyse jpm lifts interest income outlook as lending offsets trading slowdown"
   ],
   "COIN:PUT": [
-   "mcdonald s mcrib doesn t actually boost bitcoin s price sorry everyone",
    "nasdaq 100 comes onchain as janus henderson and centrifuge launch first licensed fund",
    "crypto market faces pressure as bitcoin slides below 80 000 before fed decision",
    "bitcoin price up 26 since spacex debut as anthropic ipo looms",
@@ -1676,7 +1675,8 @@
    "morgan stanley turns bearish on coinbase halves price target to 120 and cuts rating to underweight",
    "bitcoin near usd 78 000 will us midterm elections determine its next move",
    "strategy buys 811 btc for 65 5m holdings reach 849 327 bitcoin",
-   "strategy bitcoin purchase today saylor orange hint stirs buy guesses"
+   "strategy bitcoin purchase today saylor orange hint stirs buy guesses",
+   "what mattered most in coinbase s latest quarter"
   ],
   "HOOD:PUT": [
    "prediction could bitcoin reach a new all time high before the 2028 halving",
@@ -2204,7 +2204,14 @@
    "thomson reuters reports strong third quarter revenue growth",
    "4 stocks to watch on tuesday pfe orcl shop and fisv sp500",
    "pfizer pfe vs astrazeneca azn which pharma stock offers a better dividend",
-   "pfizer raises full year outlook following third quarter beat"
+   "pfizer raises full year outlook following third quarter beat",
+   "fluence energy price target lowered to 7 from 9 at goldman sachs",
+   "pfizer stock pfe flat despite q3 beat and raised 2026 sales outlook here s why",
+   "meta launches 20 billion bond sale to fund ai expansion as big tech debt builds"
+  ],
+  "AAPL:PUT": [],
+  "PLTR:PUT": [
+   "palantir technologies inc stock pltr moved down by 4 49 on nov 3 key drivers unveiled"
   ]
  },
  "fired": {
@@ -2248,32 +2255,22 @@
    "news:pfizer reports q3 adjusted eps 87c consensus 73c",
    "news:earnings flash pfe pfizer reports q3 revenue 16 58b vs factset est of 15 85b",
    "news:pfe pfizer expects 2026 revenue range 62b to 64b vs factset est of 62 24b",
-   "news:pfizer raises full year outlook following third quarter beat"
+   "news:pfizer raises full year outlook following third quarter beat",
+   "sharp@2026-11-03T10:09-05:00"
   ],
-  "V:CALL:2026-11-06:430": [
-   "news:visa raises quarterly dividend by 16",
-   "down-0.15",
-   "stock1",
-   "down-0.3",
-   "news:visa inc receives a buy rating from dz bank",
-   "news:visa stock broadens china payments push with tencent mou",
-   "news:visa v signs two new deals to push ai commerce and digital payments"
-  ]
+  "AAPL:PUT:2026-11-09:325": [],
+  "PLTR:PUT:2026-11-06:165": [],
+  "BAC:PUT:2026-11-20:49": [
+   "down-0.15"
+  ],
+  "COIN:PUT:2026-11-06:140": [],
+  "NVDA:PUT:2026-11-06:205": []
  },
  "stock_level": {
   "RIVN:CALL:2026-11-20:13.5": 3,
-  "V:CALL:2026-11-06:430": 1,
   "DIS:CALL:2026-11-20:115": 1
  },
  "seen_macro": [
-  "repo rate increased to 7 00 business reporter interest rate payments from banks and other financial institutions will in",
-  "fed likely to hold rates steady says wolfe research s roth analysts see inflation risks keeping december hike in play",
-  "3 regional bank stocks built for higher us interest rates",
-  "canada reports limited progress in trade talks with us",
-  "federal reserve expected to pass on interest rate hike for now",
-  "bank of canada rate decision hike to 2 50",
-  "federal reserve set to make rate decision today here s what to expect",
-  "federal reserve likely to skip rate hike despite elevated inflation",
   "u s federal reserve expected to hold interest rates steady",
   "watch live fed chair warsh holds briefing after latest interest rate decision",
   "federal reserve october hold likely december hike expected abn amro",
@@ -2865,10 +2862,19 @@
   "view from europe us midterm elections unfulfilled economic promises",
   "us stocks drift in mixed early trading on wall street as apple falls",
   "rklb stock s next big breakthrough could change its long term growth outlook",
-  "stock market today dow s p 500 futures fall as amd earnings and us elections put wall street on edge"
+  "stock market today dow s p 500 futures fall as amd earnings and us elections put wall street on edge",
+  "four corners s2026 the president vs the fed four corners",
+  "republicans could pay political price for surging oil prices in us midterms",
+  "u s stocks drift in mixed early trading on wall street as apple falls",
+  "us midterm elections dow falls nearly 200 points s p 500 and nasdaq edge higher as polls begin",
+  "gold falls 0 81 silver slips 2 06 check 24k 22k rates in mumbai delhi bengaluru",
+  "wall street mixed as voters head to polls for midterm elections",
+  "apple drops with most of wall street but gains for other big tech stocks cushion the blow",
+  "federal reserve holds rates as december decision comes into focus"
  ],
  "sharp": {
   "DIS:CALL:2026-11-20:115": 112.63,
-  "RIVN:CALL:2026-11-20:13.5": 13.035
+  "RIVN:CALL:2026-11-20:13.5": 13.035,
+  "PFE:CALL:2026-11-20:30": 30.675
  }
 }
