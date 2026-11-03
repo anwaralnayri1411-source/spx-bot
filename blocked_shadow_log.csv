@@ -73,3 +73,4 @@ id,project,tag,sym,side,strike,exp,entry_time,entry,edge,strength,out,out_time,o
 20261102T1415|spx|repeat_side|SPY|PUT|756|2026-11-03,spx,repeat_side,SPY,PUT,756.0,2026-11-03,2026-11-02T14:15-05:00,2.91,5.25,7.9,tp,2026-11-02T14:37-05:00,0.515,0.515,5
 20261102T1227|stocks|max_ideas_cap|TSLA|CALL|427.5|2026-11-06,stocks,max_ideas_cap,TSLA,CALL,427.5,2026-11-06,2026-11-02T12:27-05:00,3.2,6.5,7.1,stop,2026-11-02T15:42-05:00,-0.425,0.0,36
 20261102T1545|spx|late_entry|SPY|PUT|752|2026-11-03,spx,late_entry,SPY,PUT,752.0,2026-11-03,2026-11-02T15:45-05:00,3.24,6.75,10.0,stop,2026-11-03T09:32-05:00,-0.466,0.065,4
+20261029T1012|stocks|same_side_cap|NFLX|PUT|62|2026-11-06,stocks,same_side_cap,NFLX,PUT,62.0,2026-11-06,2026-10-29T10:12-04:00,1.03,4.5,7.5,stop,2026-11-03T11:27-05:00,-0.417,0.252,229
