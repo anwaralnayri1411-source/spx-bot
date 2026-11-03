@@ -1,50 +1,10 @@
 {
- "date": "2026-11-02",
- "items": [
-  {
-   "date": "2026-11-02",
-   "sym": "SPX",
-   "pos_id": "SPX:CALL:7665:2026-11-02",
-   "variant": "bot",
-   "side": "CALL",
-   "strike": 7665.0,
-   "exp": "2026-11-02",
-   "occ": "SPXW261102C07665000",
-   "sig_time": "2026-11-02T09:45-05:00",
-   "entry_time": "2026-11-02T09:48-05:00",
-   "entry_spot": 7625.61,
-   "entry": 3.44,
-   "r5040_out": "tp",
-   "r5040_time": "10:18",
-   "r5040_pnl": 0.823,
-   "t60_time": "10:48",
-   "t60_pnl": 0.721,
-   "peak_pnl": 2.407,
-   "close_pnl": -0.965,
-   "quotes": 64
-  },
-  {
-   "date": "2026-11-02",
-   "sym": "SPX",
-   "pos_id": "SPX:CALL:7665:2026-11-02",
-   "variant": "atm1",
-   "side": "CALL",
-   "strike": 7625.0,
-   "exp": "2026-11-03",
-   "occ": "SPXW261103C07625000",
-   "sig_time": "2026-11-02T09:45-05:00",
-   "entry_time": "2026-11-02T09:48-05:00",
-   "entry_spot": 7625.61,
-   "entry": 32.8,
-   "r5040_out": "tp",
-   "r5040_time": "10:28",
-   "r5040_pnl": 0.61,
-   "t60_time": "10:48",
-   "t60_pnl": 0.322,
-   "peak_pnl": 0.61,
-   "close_pnl": -0.838,
-   "quotes": 86
-  }
- ],
- "skipped": []
+ "date": "2026-11-03",
+ "items": [],
+ "skipped": [
+  "SPY:CALL:761:2026-11-03",
+  "SPY:PUT:758:2026-11-03",
+  "SPY:PUT:756:2026-11-03",
+  "SPY:PUT:752:2026-11-03"
+ ]
 }
