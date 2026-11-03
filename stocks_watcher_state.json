@@ -392,7 +392,8 @@
    "google parent alphabet sees nearly 500bn ai led market cap wipeout largest in company history",
    "alphabet s jaw dropping number up to 1 08 trillion commitments vs 561 billion orders",
    "alphabet why ai won t kill search and where the chart says to buy nasdaq goog",
-   "alphabet raised 41 billion in one quarter to pay for ai"
+   "alphabet raised 41 billion in one quarter to pay for ai",
+   "alphabet stock tanks after earnings should investors buy the dip"
   ],
   "INTC:PUT": [
    "intel stock tumbles ahead of q3 earnings",
@@ -2135,7 +2136,9 @@
    "nvda stock rebounds off 200 support after nvidia ceo comments and anthropic expansion",
    "nvidia is extremely compelling right now and here s why",
    "nvda stock rebounds off 200 support after nvidia s ceo comments and anthropic expansion",
-   "nvidia rises 3 despite ai ceo s warning on chinese chip competition amd climbs 5 broadcom gains 3"
+   "nvidia rises 3 despite ai ceo s warning on chinese chip competition amd climbs 5 broadcom gains 3",
+   "nvidia stock climbs amid oil price drop",
+   "micron nvidia and amd lead chip stocks rebound"
   ],
   "AMZN:PUT": [
    "amazon com price target lowered to 300 from 325 at scotiabank",
@@ -2261,7 +2264,8 @@
    "apple nasdaq aapl stock price target cut by jpmorgan chase co",
    "buy apple stock aapl after earnings says bank of america",
    "apple aapl trials new health app and ai listening tools",
-   "apple aapl tests new health app and ai listening tools"
+   "apple aapl tests new health app and ai listening tools",
+   "apple stock at extreme overvaluation analysts see slowing revenue growth"
   ],
   "PLTR:PUT": [
    "palantir technologies inc stock pltr moved down by 4 49 on nov 3 key drivers unveiled"
@@ -2322,7 +2326,9 @@
    "news:pfizer stock pfe rises on q3 earnings beat and raised 2026 sales outlook",
    "news:pfizer pfe raises its outlook despite an 8 drop in quarterly net income",
    "news:pfizer raises 2026 outlook and names new cfo after earnings beat",
-   "news:nasdaq surges 1 pfizer posts upbeat q3 earnings"
+   "news:nasdaq surges 1 pfizer posts upbeat q3 earnings",
+   "down-0.3",
+   "stock1"
   ],
   "AAPL:PUT:2026-11-09:325": [
    "up0.25",
@@ -2339,7 +2345,8 @@
  },
  "stock_level": {
   "RIVN:CALL:2026-11-20:13.5": 3,
-  "DIS:CALL:2026-11-20:115": 1
+  "DIS:CALL:2026-11-20:115": 1,
+  "PFE:CALL:2026-11-20:30": 1
  },
  "seen_macro": [
   "rate volatility not fed movements is having biggest impact on borrower activity",
