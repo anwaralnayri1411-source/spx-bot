@@ -1,48 +1,5 @@
 {
- "open": [
-  {
-   "variant": "S",
-   "entry_time": "2026-11-03T10:55-05:00",
-   "side": "CALL",
-   "edge": 7.25,
-   "mom": 1,
-   "f30": 1,
-   "rsweep": 0,
-   "strike": 755,
-   "exp": "2026-11-04",
-   "spot": 755.5,
-   "side_occ": "SPY261104C00755000",
-   "opp_occ": "SPY261104P00755000",
-   "side_entry": 4.73,
-   "opp_entry": 4.13,
-   "src": "alpaca",
-   "side_15": 4.89,
-   "opp_15": 3.9,
-   "side_30": 4.67,
-   "opp_30": 4.0
-  },
-  {
-   "variant": "SC",
-   "entry_time": "2026-11-03T10:55-05:00",
-   "side": "CALL",
-   "edge": 7.25,
-   "mom": 1,
-   "f30": 1,
-   "rsweep": 0,
-   "strike": 755,
-   "exp": "2026-11-04",
-   "spot": 755.5,
-   "side_occ": "SPY261104C00755000",
-   "opp_occ": "SPY261104P00755000",
-   "side_entry": 4.73,
-   "opp_entry": 4.13,
-   "src": "alpaca",
-   "side_15": 4.96,
-   "opp_15": 3.78,
-   "side_30": 4.67,
-   "opp_30": 4.03
-  }
- ],
+ "open": [],
  "last": {
   "S": {
    "CALL": "2026-11-03T10:55-05:00"
