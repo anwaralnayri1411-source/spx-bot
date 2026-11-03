@@ -76,6 +76,39 @@
    "time": "2026-11-02T11:58-05:00",
    "price": null,
    "qty": null
+  },
+  "PLTR:PUT:2026-11-06:165|2026-11-03": {
+   "mode": "watch",
+   "ticker": "PLTR",
+   "side": "PUT",
+   "exp": "2026-11-06",
+   "strike": 165.0,
+   "day": "2026-11-03",
+   "time": "2026-11-03T10:14-05:00",
+   "price": null,
+   "qty": null
+  },
+  "BAC:PUT:2026-11-20:49|2026-11-03": {
+   "mode": "watch",
+   "ticker": "BAC",
+   "side": "PUT",
+   "exp": "2026-11-20",
+   "strike": 49.0,
+   "day": "2026-11-03",
+   "time": "2026-11-03T10:14-05:00",
+   "price": null,
+   "qty": null
+  },
+  "COIN:PUT:2026-11-06:140|2026-11-03": {
+   "mode": "watch",
+   "ticker": "COIN",
+   "side": "PUT",
+   "exp": "2026-11-06",
+   "strike": 140.0,
+   "day": "2026-11-03",
+   "time": "2026-11-03T10:14-05:00",
+   "price": null,
+   "qty": null
   }
  }
 }
