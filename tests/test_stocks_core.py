@@ -211,8 +211,10 @@ def test_watcher_silent_after_target_even_if_bought(monkeypatch):
     assert [p["ticker"] for p in out] == ["PFE"]          # الهدف: صمت؛ الوقف وأنت ما زلت تملكه: يتابع
 
 
-def test_daily_caps_count_earlier_sends():
+def test_daily_caps_count_earlier_sends(monkeypatch):
     import stocks_bot as sb
+    monkeypatch.setattr(sb, "MAX_IDEAS_DAY", 3)          # قيم التداول الفعلي (وضع الدراسة بلا حد)
+    monkeypatch.setattr(sb, "MAX_SAME_SIDE_DAY", 2)
     ideas = [{"ticker": t, "side": s} for t, s in (("A", "CALL"), ("B", "CALL"), ("C", "PUT"), ("D", "PUT"))]
     kept, capped = sb.daily_caps(ideas, {})
     assert [i["ticker"] for i in kept] == ["A", "B", "C"] and [i["ticker"] for i in capped] == ["D"]
