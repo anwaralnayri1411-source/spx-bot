@@ -1277,10 +1277,6 @@
    "jpmorgan chase nyse jpm lifts interest income outlook as lending offsets trading slowdown"
   ],
   "COIN:PUT": [
-   "nasdaq 100 comes onchain as janus henderson and centrifuge launch first licensed fund",
-   "crypto market faces pressure as bitcoin slides below 80 000 before fed decision",
-   "bitcoin price up 26 since spacex debut as anthropic ipo looms",
-   "current price of ethereum for october 27 2026",
    "bitcoin etfs see 110m inflow after 774m outfl",
    "claude ai s bitcoin and solana price predictions for 2027 could apeing be the best crypto to invest before stage 10",
    "investor who called the ai boom predicts a bitcoin crash",
@@ -1676,7 +1672,11 @@
    "bitcoin near usd 78 000 will us midterm elections determine its next move",
    "strategy buys 811 btc for 65 5m holdings reach 849 327 bitcoin",
    "strategy bitcoin purchase today saylor orange hint stirs buy guesses",
-   "what mattered most in coinbase s latest quarter"
+   "what mattered most in coinbase s latest quarter",
+   "strategy s bitcoin bet just produced a monster quarter here s the bigger question",
+   "tokenized stocks from robinhood binance and coinbase attract 130 5m in defi deposits",
+   "why is coinbase stock rallying today",
+   "xrp price outlook as analyst eyes 71 rally after bullish bollinger band breakout"
   ],
   "HOOD:PUT": [
    "prediction could bitcoin reach a new all time high before the 2028 halving",
@@ -2207,9 +2207,18 @@
    "pfizer raises full year outlook following third quarter beat",
    "fluence energy price target lowered to 7 from 9 at goldman sachs",
    "pfizer stock pfe flat despite q3 beat and raised 2026 sales outlook here s why",
-   "meta launches 20 billion bond sale to fund ai expansion as big tech debt builds"
+   "meta launches 20 billion bond sale to fund ai expansion as big tech debt builds",
+   "vakif menkul shares trigger daily portfolio disclosures",
+   "pfizer hikes guidance on solid third quarter names company vet as new cfo",
+   "pfe beats q3 earnings sales estimates raises 2026 guidance",
+   "pfizer pfe reports q3 earnings what key metrics have to say",
+   "pfizer promotes insider to cfo"
   ],
-  "AAPL:PUT": [],
+  "AAPL:PUT": [
+   "apple a record guidance with no earnings growth nasdaq aapl",
+   "apple nasdaq aapl stock slides despite us 114 5 billion revenue beat what went wrong",
+   "spain s competition watchdog plans to sanction apple amazon aapl nasdaq"
+  ],
   "PLTR:PUT": [
    "palantir technologies inc stock pltr moved down by 4 49 on nov 3 key drivers unveiled"
   ]
@@ -2256,27 +2265,47 @@
    "news:earnings flash pfe pfizer reports q3 revenue 16 58b vs factset est of 15 85b",
    "news:pfe pfizer expects 2026 revenue range 62b to 64b vs factset est of 62 24b",
    "news:pfizer raises full year outlook following third quarter beat",
-   "sharp@2026-11-03T10:09-05:00"
+   "sharp@2026-11-03T10:09-05:00",
+   "news:pfizer hikes guidance on solid third quarter names company vet as new cfo",
+   "news:pfe beats q3 earnings sales estimates raises 2026 guidance"
   ],
-  "AAPL:PUT:2026-11-09:325": [],
-  "PLTR:PUT:2026-11-06:165": [],
+  "AAPL:PUT:2026-11-09:325": [
+   "up0.25"
+  ],
+  "PLTR:PUT:2026-11-06:165": [
+   "sharp@2026-11-03T10:42-05:00",
+   "down-0.15",
+   "stock1",
+   "sharp@2026-11-03T10:49-05:00",
+   "down-0.3",
+   "sharp@2026-11-03T10:54-05:00",
+   "stock2",
+   "sharp@2026-11-03T10:57-05:00",
+   "stock3"
+  ],
   "BAC:PUT:2026-11-20:49": [
    "down-0.15"
   ],
-  "COIN:PUT:2026-11-06:140": [],
+  "COIN:PUT:2026-11-06:140": [
+   "sharp@2026-11-03T10:35-05:00",
+   "down-0.15",
+   "sharp@2026-11-03T10:40-05:00",
+   "stock1",
+   "stock2",
+   "down-0.3",
+   "sharp@2026-11-03T10:43-05:00",
+   "sharp@2026-11-03T10:49-05:00",
+   "stock3"
+  ],
   "NVDA:PUT:2026-11-06:205": []
  },
  "stock_level": {
   "RIVN:CALL:2026-11-20:13.5": 3,
-  "DIS:CALL:2026-11-20:115": 1
+  "DIS:CALL:2026-11-20:115": 1,
+  "COIN:PUT:2026-11-06:140": 3,
+  "PLTR:PUT:2026-11-06:165": 3
  },
  "seen_macro": [
-  "u s federal reserve expected to hold interest rates steady",
-  "watch live fed chair warsh holds briefing after latest interest rate decision",
-  "federal reserve october hold likely december hike expected abn amro",
-  "update us equity futures slightly higher pre bell as traders await fed rate decision big tech earnings",
-  "u s stocks edge higher ahead of federal reserve decision on interest rates",
-  "federal reserve interest rate decision looms as inflation and gas prices impact consumers",
   "nasdaq composite morning wrap 28 10 2026 tech in focus oil up what next",
   "canada uae seal trade deal carney expands global commerce",
   "u s stocks hold steady as the countdown ticks to a federal reserve decision on interest rates",
@@ -2870,11 +2899,19 @@
   "gold falls 0 81 silver slips 2 06 check 24k 22k rates in mumbai delhi bengaluru",
   "wall street mixed as voters head to polls for midterm elections",
   "apple drops with most of wall street but gains for other big tech stocks cushion the blow",
-  "federal reserve holds rates as december decision comes into focus"
+  "federal reserve holds rates as december decision comes into focus",
+  "gabby asare otchere darko writes connecting africa s wallets unlocking africa s trade smartly",
+  "indonesia s financial system remains stable minister says",
+  "stock market after midterm elections 10 things to know",
+  "ultra short bonds may be better bets than cash",
+  "us midterm elections what could they mean for the us dollar",
+  "fed chair kevin warsh s new plan could change how often us borrowers see interest rate relief"
  ],
  "sharp": {
   "DIS:CALL:2026-11-20:115": 112.63,
   "RIVN:CALL:2026-11-20:13.5": 13.035,
-  "PFE:CALL:2026-11-20:30": 30.675
+  "PFE:CALL:2026-11-20:30": 30.675,
+  "COIN:PUT:2026-11-06:140": 149.595,
+  "PLTR:PUT:2026-11-06:165": 175.215
  }
 }
