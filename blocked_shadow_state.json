@@ -14,8 +14,8 @@
    "strength": "7.5",
    "occ": "NFLX261106P00062000",
    "peak_pnl": 0.252,
-   "close_pnl": -0.311,
-   "quotes": 225,
+   "close_pnl": -0.35,
+   "quotes": 226,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -34,8 +34,8 @@
    "strength": "6.5",
    "occ": "HOOD261120P00080000",
    "peak_pnl": 0.216,
-   "close_pnl": -0.148,
-   "quotes": 153,
+   "close_pnl": -0.16,
+   "quotes": 154,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -55,7 +55,7 @@
    "occ": "PFE261120C00030000",
    "peak_pnl": 0.204,
    "close_pnl": -0.315,
-   "quotes": 126,
+   "quotes": 127,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -74,8 +74,8 @@
    "strength": "7.2",
    "occ": "NFLX261120P00062000",
    "peak_pnl": 0.208,
-   "close_pnl": -0.096,
-   "quotes": 126,
+   "close_pnl": -0.124,
+   "quotes": 127,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -94,8 +94,8 @@
    "strength": "5.6",
    "occ": "WMT261120C00128000",
    "peak_pnl": 0.409,
-   "close_pnl": 0.025,
-   "quotes": 82,
+   "close_pnl": 0.018,
+   "quotes": 83,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -115,7 +115,7 @@
    "occ": "V261113C00430000",
    "peak_pnl": 0.466,
    "close_pnl": -0.16,
-   "quotes": 82,
+   "quotes": 83,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -134,8 +134,8 @@
    "strength": "4.8",
    "occ": "DIS261120C00115000",
    "peak_pnl": 0.055,
-   "close_pnl": -0.105,
-   "quotes": 79,
+   "close_pnl": -0.055,
+   "quotes": 80,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -155,7 +155,7 @@
    "occ": "PFE261120C00030000",
    "peak_pnl": 0.494,
    "close_pnl": -0.149,
-   "quotes": 79,
+   "quotes": 80,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -175,7 +175,7 @@
    "occ": "RIVN261120C00013000",
    "peak_pnl": 0.0,
    "close_pnl": -0.108,
-   "quotes": 10,
+   "quotes": 11,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -193,9 +193,9 @@
    "edge": "5.5",
    "strength": "7.0",
    "occ": "V261106C00425000",
-   "peak_pnl": 0.147,
-   "close_pnl": 0.147,
-   "quotes": 10,
+   "peak_pnl": 0.253,
+   "close_pnl": 0.253,
+   "quotes": 11,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -215,7 +215,7 @@
    "occ": "PFE261120C00030000",
    "peak_pnl": 0.0,
    "close_pnl": -0.267,
-   "quotes": 10,
+   "quotes": 11,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -234,8 +234,8 @@
    "strength": "4.5",
    "occ": "DIS261120C00115000",
    "peak_pnl": 0.006,
-   "close_pnl": -0.05,
-   "quotes": 10,
+   "close_pnl": 0.003,
+   "quotes": 11,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -253,9 +253,9 @@
    "edge": "5.25",
    "strength": "7.9",
    "occ": "SPY261104C00756000",
-   "peak_pnl": 0.249,
-   "close_pnl": 0.249,
-   "quotes": 6,
+   "peak_pnl": 0.278,
+   "close_pnl": 0.278,
+   "quotes": 7,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -274,8 +274,8 @@
    "strength": "10.0",
    "occ": "SPXW261103C07615000",
    "peak_pnl": 0.101,
-   "close_pnl": 0.101,
-   "quotes": 2,
+   "close_pnl": 0.084,
+   "quotes": 3,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -863,7 +863,9 @@
   "20261103T1057|stocks|open_same_dir|RIVN|CALL|13|2026-11-20",
   "20261103T1057|stocks|open_same_dir|V|CALL|425|2026-11-06",
   "20261103T1057|stocks|open_same_dir|PFE|CALL|30|2026-11-20",
-  "20261103T1057|stocks|open_same_dir|DIS|CALL|115|2026-11-20"
+  "20261103T1057|stocks|open_same_dir|DIS|CALL|115|2026-11-20",
+  "20261103T1110|spx|repeat_side|SPX|CALL|7615|2026-11-03",
+  "20261103T1110|spx|repeat_side|SPY|CALL|757|2026-11-04"
  ],
  "last": {
   "spx|CALL|SPY": "2026-11-03T10:35-05:00",
