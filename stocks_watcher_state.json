@@ -157,7 +157,9 @@
    "disney just gained 9 in a month take profits or buy more",
    "walt disney dis starts major layoffs across multiple departments",
    "disney mickey mouse to lay off thousands",
-   "disney s new ceo is eyeing thousands of job cuts two weeks before earnings"
+   "disney s new ceo is eyeing thousands of job cuts two weeks before earnings",
+   "walt disney dis cuts jobs while pushing ahead with florida transport upgrades",
+   "disney eyes thousands of layoffs in fresh cost push"
   ],
   "NFLX:PUT": [
    "djt stock plummets to new lows trump appeal fades as 2026 midterms draw closer",
@@ -2212,7 +2214,11 @@
    "pfizer hikes guidance on solid third quarter names company vet as new cfo",
    "pfe beats q3 earnings sales estimates raises 2026 guidance",
    "pfizer pfe reports q3 earnings what key metrics have to say",
-   "pfizer promotes insider to cfo"
+   "pfizer promotes insider to cfo",
+   "novamarine and edge europe partner on autonomous naval drones",
+   "palantir price target raised to 250 from 223 at truist",
+   "apple stock falls chip stocks rebound as oil extends decline alphacheck",
+   "non covid portfolio steps up pfizer outpaces consensus and hikes guidance"
   ],
   "AAPL:PUT": [
    "apple a record guidance with no earnings growth nasdaq aapl",
@@ -2231,7 +2237,8 @@
    "news:walt disney dis starts major layoffs across multiple departments",
    "news:disney mickey mouse to lay off thousands",
    "stock1",
-   "news:disney s new ceo is eyeing thousands of job cuts two weeks before earnings"
+   "news:disney s new ceo is eyeing thousands of job cuts two weeks before earnings",
+   "news:disney eyes thousands of layoffs in fresh cost push"
   ],
   "RIVN:CALL:2026-11-20:13.5": [
    "sharp@2026-11-02T11:22-05:00",
@@ -2267,49 +2274,25 @@
    "news:pfizer raises full year outlook following third quarter beat",
    "sharp@2026-11-03T10:09-05:00",
    "news:pfizer hikes guidance on solid third quarter names company vet as new cfo",
-   "news:pfe beats q3 earnings sales estimates raises 2026 guidance"
+   "news:pfe beats q3 earnings sales estimates raises 2026 guidance",
+   "sharp@2026-11-03T11:03-05:00",
+   "down-0.15",
+   "news:non covid portfolio steps up pfizer outpaces consensus and hikes guidance"
   ],
   "AAPL:PUT:2026-11-09:325": [
-   "up0.25"
-  ],
-  "PLTR:PUT:2026-11-06:165": [
-   "sharp@2026-11-03T10:42-05:00",
-   "down-0.15",
-   "stock1",
-   "sharp@2026-11-03T10:49-05:00",
-   "down-0.3",
-   "sharp@2026-11-03T10:54-05:00",
-   "stock2",
-   "sharp@2026-11-03T10:57-05:00",
-   "stock3"
+   "up0.25",
+   "sharp@2026-11-03T11:09-05:00"
   ],
   "BAC:PUT:2026-11-20:49": [
    "down-0.15"
-  ],
-  "COIN:PUT:2026-11-06:140": [
-   "sharp@2026-11-03T10:35-05:00",
-   "down-0.15",
-   "sharp@2026-11-03T10:40-05:00",
-   "stock1",
-   "stock2",
-   "down-0.3",
-   "sharp@2026-11-03T10:43-05:00",
-   "sharp@2026-11-03T10:49-05:00",
-   "stock3"
   ],
   "NVDA:PUT:2026-11-06:205": []
  },
  "stock_level": {
   "RIVN:CALL:2026-11-20:13.5": 3,
-  "DIS:CALL:2026-11-20:115": 1,
-  "COIN:PUT:2026-11-06:140": 3,
-  "PLTR:PUT:2026-11-06:165": 3
+  "DIS:CALL:2026-11-20:115": 1
  },
  "seen_macro": [
-  "nasdaq composite morning wrap 28 10 2026 tech in focus oil up what next",
-  "canada uae seal trade deal carney expands global commerce",
-  "u s stocks hold steady as the countdown ticks to a federal reserve decision on interest rates",
-  "bond yields rise slightly ahead of fed rates decision",
   "fed rate decision could trigger bitcoin rally or crypto sell off as warsh signals december outlook",
   "9am markets update",
   "buy 10 shares of nvidia today here s what different 2030 scenarios could look like",
@@ -2905,13 +2888,16 @@
   "stock market after midterm elections 10 things to know",
   "ultra short bonds may be better bets than cash",
   "us midterm elections what could they mean for the us dollar",
-  "fed chair kevin warsh s new plan could change how often us borrowers see interest rate relief"
+  "fed chair kevin warsh s new plan could change how often us borrowers see interest rate relief",
+  "dow futures plunge 290 points 5 things to know before wall street opens",
+  "if you invest 10 000 in palantir today here s what it could be worth by 2030",
+  "section 301 investigations up as congress eyes trade authority",
+  "as iran conflict drags on fund managers see rising upside risk in energy markets"
  ],
  "sharp": {
   "DIS:CALL:2026-11-20:115": 112.63,
   "RIVN:CALL:2026-11-20:13.5": 13.035,
-  "PFE:CALL:2026-11-20:30": 30.675,
-  "COIN:PUT:2026-11-06:140": 149.595,
-  "PLTR:PUT:2026-11-06:165": 175.215
+  "PFE:CALL:2026-11-20:30": 30.32,
+  "AAPL:PUT:2026-11-09:325": 330.9
  }
 }
