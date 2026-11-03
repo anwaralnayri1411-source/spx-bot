@@ -1,13 +1,58 @@
 {
  "date": "2026-11-03",
- "open": [],
+ "open": [
+  {
+   "date": "2026-11-03",
+   "defn": "live",
+   "role": "signal",
+   "side": "CALL",
+   "strike": 757.0,
+   "sig_time": "2026-11-03T13:11-05:00",
+   "r30": 0.00253,
+   "entry_time": "2026-11-03T13:11-05:00",
+   "entry_spy": 756.68,
+   "entry": 0.93,
+   "exit": "",
+   "exit_time": "",
+   "pnl": -0.054,
+   "peak": 0.065,
+   "spy_after_60": "",
+   "spy_move_pts": "",
+   "checks": 5,
+   "stale": 0,
+   "at_ext": 1,
+   "occ": "SPY261103C00757000"
+  },
+  {
+   "date": "2026-11-03",
+   "defn": "live",
+   "role": "opposite",
+   "side": "PUT",
+   "strike": 757.0,
+   "sig_time": "2026-11-03T13:11-05:00",
+   "r30": 0.00253,
+   "entry_time": "2026-11-03T13:11-05:00",
+   "entry_spy": 756.68,
+   "entry": 1.33,
+   "exit": "",
+   "exit_time": "",
+   "pnl": -0.015,
+   "peak": 0.008,
+   "spy_after_60": "",
+   "spy_move_pts": "",
+   "checks": 5,
+   "stale": 0,
+   "at_ext": 1,
+   "occ": "SPY261103P00757000"
+  }
+ ],
  "await": [],
  "last": {
   "delayed": "2026-11-03T11:00-05:00",
-  "live": "2026-11-03T11:03-05:00"
+  "live": "2026-11-03T13:11-05:00"
  },
  "count": {
   "delayed": 1,
-  "live": 1
+  "live": 2
  }
 }
