@@ -2236,7 +2236,8 @@
    "q3 earnings jolts report on midterm voting day",
    "pfizer inc 2026 q3 results earnings call presentation nyse pfe 2026 11 03",
    "pfizer raises 2026 outlook and names new cfo after earnings beat",
-   "nasdaq surges 1 pfizer posts upbeat q3 earnings"
+   "nasdaq surges 1 pfizer posts upbeat q3 earnings",
+   "pfizer is pitched for its dividend the november 3 report has to show cash flow covers it"
   ],
   "AAPL:PUT": [
    "apple a record guidance with no earnings growth nasdaq aapl",
@@ -2247,7 +2248,8 @@
    "apple stock bofa recommends fixating on long term opportunity",
    "apple 2027 growth outlook faces scrutiny analysts see iphone upside flag services slowdown and margin risks",
    "sa analyst upgrades downgrades aapl intc pltr klac sp500",
-   "apple aapl stock faces pressure despite strong q4 earnings and climate goals"
+   "apple aapl stock faces pressure despite strong q4 earnings and climate goals",
+   "apple nasdaq aapl stock price target cut by jpmorgan chase co"
   ],
   "PLTR:PUT": [
    "palantir technologies inc stock pltr moved down by 4 49 on nov 3 key drivers unveiled"
@@ -2314,7 +2316,8 @@
    "up0.25",
    "sharp@2026-11-03T11:09-05:00",
    "news:aapl stock tumbles overnight on margin pressure from surging memory prices mu sndk inch higher",
-   "down-0.15"
+   "down-0.15",
+   "news:apple nasdaq aapl stock price target cut by jpmorgan chase co"
   ],
   "BAC:PUT:2026-11-20:49": [
    "down-0.15"
@@ -2326,11 +2329,6 @@
   "DIS:CALL:2026-11-20:115": 1
  },
  "seen_macro": [
-  "bank of canada rate hike squeezes employers 2027 pay and hiring plans",
-  "will the next congress block tariffs",
-  "briefs federal reserve likely to skip rate hike despite elevated inflation",
-  "federal reserve interest rates expected to hold in october",
-  "federal reserve set to issue interest rate decision as midterm elections loom",
   "dollar steady ahead of fed decision focus on uk budget",
   "america needs canada s aluminum trump s tariff exposed just how badly",
   "trump cheers canadian provincial election wins but analysts say they re no rebuke of carney",
@@ -2925,7 +2923,12 @@
   "silver hits 1 year low price on tuesday as gold also falls",
   "wall street the day after which indicators to watch closely after the midterms",
   "billionaire wall street pessimists are predicting an epic stock market crash will wipe out 80 of your 401 k",
-  "stronger us factory activity complicates bitcoin s hopes for lower rates"
+  "stronger us factory activity complicates bitcoin s hopes for lower rates",
+  "nextpower stock climbs as strong q2 sparks wall street forecast divide",
+  "green card update judge freezes reopening of 2027 us diversity visa lottery",
+  "us strikes iran amid trump s peace talks claim causing mixed signals for oil markets",
+  "asx set to slide tech stocks boost wall street",
+  "how wall street analysts think the midterms could affect the stock market"
  ],
  "sharp": {
   "DIS:CALL:2026-11-20:115": 112.63,
