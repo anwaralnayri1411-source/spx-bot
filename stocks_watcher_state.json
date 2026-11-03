@@ -154,7 +154,10 @@
    "sphere entertainment tops communications services stocks in short interest alphabet sees the lowest exposure",
    "dis stock analysis explained",
    "disney targets thousands of jobs in fresh cost cutting blitz report",
-   "disney just gained 9 in a month take profits or buy more"
+   "disney just gained 9 in a month take profits or buy more",
+   "walt disney dis starts major layoffs across multiple departments",
+   "disney mickey mouse to lay off thousands",
+   "disney s new ceo is eyeing thousands of job cuts two weeks before earnings"
   ],
   "NFLX:PUT": [
    "djt stock plummets to new lows trump appeal fades as 2026 midterms draw closer",
@@ -279,7 +282,9 @@
    "visa inc receives a buy rating from dz bank",
    "visa stock broadens china payments push with tencent mou",
    "visa shares weekly forecast advance stalls below resistance at 426 7 as technical signals flash overbought",
-   "expensify enters referral agreement with visa exfy nasdaq"
+   "expensify enters referral agreement with visa exfy nasdaq",
+   "visa v signs two new deals to push ai commerce and digital payments",
+   "35 etfs add to tesla tsla holdings on friday"
   ],
   "PLTR:CALL": [
    "palantir sees ark invest reduce position and uk fund review pltr remains under pressure",
@@ -2187,14 +2192,30 @@
    "pfizer pfe posts lower q3 profit but nine month operating cash flow rises to 8 83b",
    "s p giant hikes guidance on solid third quarter names new cfo",
    "pfizer beats expectations in q3 and raises its guidance is the stock due for a big rally",
-   "pfizer s eliquis price gains cover covid drop rapid earnings reaction"
+   "pfizer s eliquis price gains cover covid drop rapid earnings reaction",
+   "lly stock up almost 10 after a robust q3 time to buy sell or hold",
+   "pfizer reports q3 adjusted eps 87c consensus 73c",
+   "earnings flash pfe pfizer reports q3 revenue 16 58b vs factset est of 15 85b",
+   "pfe pfizer expects 2026 revenue range 62b to 64b vs factset est of 62 24b",
+   "pfizer q3 earnings snapshot",
+   "yum china announces 0 29 quarterly dividend",
+   "rtx s raytheon awarded darpa contract",
+   "dine brands rejects 39 per share takeover proposal",
+   "thomson reuters reports strong third quarter revenue growth",
+   "4 stocks to watch on tuesday pfe orcl shop and fisv sp500",
+   "pfizer pfe vs astrazeneca azn which pharma stock offers a better dividend",
+   "pfizer raises full year outlook following third quarter beat"
   ]
  },
  "fired": {
   "DIS:CALL:2026-11-20:115": [
    "sharp@2026-11-02T10:36-05:00",
    "down-0.15",
-   "news:disney targets thousands of jobs in fresh cost cutting blitz report"
+   "news:disney targets thousands of jobs in fresh cost cutting blitz report",
+   "news:walt disney dis starts major layoffs across multiple departments",
+   "news:disney mickey mouse to lay off thousands",
+   "stock1",
+   "news:disney s new ceo is eyeing thousands of job cuts two weeks before earnings"
   ],
   "RIVN:CALL:2026-11-20:13.5": [
    "sharp@2026-11-02T11:22-05:00",
@@ -2223,7 +2244,11 @@
    "news:pfizer hikes 2026 outlook names new cfo pfe nyse",
    "news:pfizer nyse pfe reports strong q3 2026 full year outlook slightly exceeds expectations",
    "news:pfizer pfe posts lower q3 profit but nine month operating cash flow rises to 8 83b",
-   "news:s p giant hikes guidance on solid third quarter names new cfo"
+   "news:s p giant hikes guidance on solid third quarter names new cfo",
+   "news:pfizer reports q3 adjusted eps 87c consensus 73c",
+   "news:earnings flash pfe pfizer reports q3 revenue 16 58b vs factset est of 15 85b",
+   "news:pfe pfizer expects 2026 revenue range 62b to 64b vs factset est of 62 24b",
+   "news:pfizer raises full year outlook following third quarter beat"
   ],
   "V:CALL:2026-11-06:430": [
    "news:visa raises quarterly dividend by 16",
@@ -2231,25 +2256,16 @@
    "stock1",
    "down-0.3",
    "news:visa inc receives a buy rating from dz bank",
-   "news:visa stock broadens china payments push with tencent mou"
+   "news:visa stock broadens china payments push with tencent mou",
+   "news:visa v signs two new deals to push ai commerce and digital payments"
   ]
  },
  "stock_level": {
   "RIVN:CALL:2026-11-20:13.5": 3,
-  "V:CALL:2026-11-06:430": 1
+  "V:CALL:2026-11-06:430": 1,
+  "DIS:CALL:2026-11-20:115": 1
  },
  "seen_macro": [
-  "us stock market today s p nasdaq jump as wall street bets rate pause ahead of fed verdict",
-  "dow jones holds steady ahead of fed rate decision",
-  "today s mortgage rates october 28 30 year fixed drops 9 basis points",
-  "inflation set to hit 5 by year end as fuel price hikes take hold but it s not all bad news",
-  "us stocks hold steady as the countdown ticks to a federal reserve decision on interest rates",
-  "jaaa federal reserve hikes should result in dividend growth and continued outperformance",
-  "federal reserve officials weigh financial conditions in rate decision",
-  "news by cnbc tv18 on tradingview 2026 10 28 cnbctv d5eafcb60094b 0",
-  "president trump s steel and aluminum tariffs 1 0 vs 2 0",
-  "fed expected to leave interest rates unchanged in october",
-  "us fed rate decision tonight will kevin warsh hold rates or signal another hike",
   "repo rate increased to 7 00 business reporter interest rate payments from banks and other financial institutions will in",
   "fed likely to hold rates steady says wolfe research s roth analysts see inflation risks keeping december hike in play",
   "3 regional bank stocks built for higher us interest rates",
@@ -2838,7 +2854,18 @@
   "fed rate hikes don t guarantee losses for stocks favors diversified portfolios wells fargo spy nysearca",
   "tesla wins trade zone status for texas megapacks but china tariffs stay",
   "as interest rates climb your credit card debt becomes a silent wealth tax",
-  "stock market today dow futures plunge 323 points apple sinks and iran strikes send oil soaring"
+  "stock market today dow futures plunge 323 points apple sinks and iran strikes send oil soaring",
+  "best high yield savings account rates for november 2026",
+  "georgia economist dr nikki finlay explains what 3 7 percent inflation slower hiring and a fed pause mean for households",
+  "premium comment 128bn tariff refunds the money has moved yet not everyone has been paid",
+  "policy markets boston 2026 what s driving u s rates credit markets",
+  "trump iran strikes push bitcoin below 77k amid rising oil prices and market liquidations",
+  "good news or bad wall street lowers the revenue bar for google search",
+  "gold recovers as oil prices slip traders track us iran developments",
+  "view from europe us midterm elections unfulfilled economic promises",
+  "us stocks drift in mixed early trading on wall street as apple falls",
+  "rklb stock s next big breakthrough could change its long term growth outlook",
+  "stock market today dow s p 500 futures fall as amd earnings and us elections put wall street on edge"
  ],
  "sharp": {
   "DIS:CALL:2026-11-20:115": 112.63,
