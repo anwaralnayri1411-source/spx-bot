@@ -1762,3 +1762,5 @@ time,pos_id,ticker,side,event,detail,entry,val,pnl,spot,need,tdays,advice,reason
 2026-11-03T12:31-05:00,RIVN:CALL:2026-11-20:13.5,RIVN,CALL,macro_quiet,against/weak/medium: Stronger US factory activity complicates Bitcoin’s hopes for lower rates - Cryptonews.net,0.81,0.68,-0.1605,13.265,0.0788,14,فكّر بالخروج,السهم يتحرك ضدك
 2026-11-03T12:39-05:00,PFE:CALL:2026-11-20:30,PFE,CALL,news,with/high: Nasdaq Surges 1%; Pfizer Posts Upbeat Q3 Earnings - Benzinga,0.88,0.73,-0.1705,30.375,0.0166,14,أبقِ,الخبر في صالح العقد | الفكرة قائمة لكن العقد -17%؛ التزم بالوقف عند −40%
 2026-11-03T12:45-05:00,DIS:CALL:2026-11-20:115,DIS,CALL,news,against/medium: Disney Layoffs Loom Across Workforce As Company Targets 20% Savings - Yahoo Finance,3.64,3.63,-0.0027,113.76,0.0429,14,فكّر بالخروج,خبر ضد العقد
+2026-11-03T12:52-05:00,DIS:CALL:2026-11-20:115,DIS,CALL,news,against/medium: Disney Plans Major Job Cuts Amid Cost-Cutting Measures - GuruFocus,3.64,3.53,-0.0302,113.755,0.0429,14,فكّر بالخروج,خبر ضد العقد
+2026-11-03T12:52-05:00,AAPL:PUT:2026-11-09:325,AAPL,PUT,contract,-20%,2.45,1.97,-0.1959,332.71,0.0305,5,أبقِ,الفكرة قائمة لكن العقد -20%؛ التزم بالوقف عند −40%
