@@ -31,7 +31,8 @@
    "bank of america names two directors as stock holds usd 350 0 billion value",
    "warren buffett put 10 billion into 2 banks when their stocks were under pressure here s what those deals teach today",
    "bank of america bac adds two directors to its board",
-   "banco santander sa stock san opened down by 4 05 on oct 26 what signal does it send"
+   "banco santander sa stock san opened down by 4 05 on oct 26 what signal does it send",
+   "bank of america offers 7 25 convertible preferred shares with 6 23 yield and potential 12 upside"
   ],
   "AMZN:CALL": [
    "starting jan 1 2027 amazon seasonal workers get day one health coverage if they work at least 30 hours a week",
@@ -160,7 +161,9 @@
    "disney s new ceo is eyeing thousands of job cuts two weeks before earnings",
    "walt disney dis cuts jobs while pushing ahead with florida transport upgrades",
    "disney eyes thousands of layoffs in fresh cost push",
-   "the walt disney company dis stock price news quote and history"
+   "the walt disney company dis stock price news quote and history",
+   "dis stock analysis gains 1 96 testing key resistance",
+   "disney weighs thousands of job cuts under new ceo d amaro"
   ],
   "NFLX:PUT": [
    "djt stock plummets to new lows trump appeal fades as 2026 midterms draw closer",
@@ -2123,7 +2126,8 @@
    "nvidia stock analyst estimates ratings",
    "nvidia time to lock in the profits nasdaq nvda",
    "nvidia stock up over 3 what s driving tuesday s rally",
-   "nvidia ceo gave go ahead on marvell s mega acquisition of lumentum"
+   "nvidia ceo gave go ahead on marvell s mega acquisition of lumentum",
+   "nvda stock rebounds off 200 support after nvidia ceo comments and anthropic expansion"
   ],
   "AMZN:PUT": [
    "amazon com price target lowered to 300 from 325 at scotiabank",
@@ -2224,7 +2228,10 @@
    "non covid portfolio steps up pfizer outpaces consensus and hikes guidance",
    "pfizer stock pfe rises on q3 earnings beat and raised 2026 sales outlook",
    "pfizer pfe raises its outlook despite an 8 drop in quarterly net income",
-   "pfizer q3 2026 earnings call transcript"
+   "pfizer q3 2026 earnings call transcript",
+   "q3 earnings jolts report on midterm voting day",
+   "pfizer inc 2026 q3 results earnings call presentation nyse pfe 2026 11 03",
+   "pfizer raises 2026 outlook and names new cfo after earnings beat"
   ],
   "AAPL:PUT": [
    "apple a record guidance with no earnings growth nasdaq aapl",
@@ -2232,7 +2239,8 @@
    "spain s competition watchdog plans to sanction apple amazon aapl nasdaq",
    "aapl stock tumbles overnight on margin pressure from surging memory prices mu sndk inch higher",
    "apple crushed earnings but its stock is dropping over memory chip prices",
-   "apple stock bofa recommends fixating on long term opportunity"
+   "apple stock bofa recommends fixating on long term opportunity",
+   "apple 2027 growth outlook faces scrutiny analysts see iphone upside flag services slowdown and margin risks"
   ],
   "PLTR:PUT": [
    "palantir technologies inc stock pltr moved down by 4 49 on nov 3 key drivers unveiled"
@@ -2247,7 +2255,8 @@
    "news:disney mickey mouse to lay off thousands",
    "stock1",
    "news:disney s new ceo is eyeing thousands of job cuts two weeks before earnings",
-   "news:disney eyes thousands of layoffs in fresh cost push"
+   "news:disney eyes thousands of layoffs in fresh cost push",
+   "news:disney weighs thousands of job cuts under new ceo d amaro"
   ],
   "RIVN:CALL:2026-11-20:13.5": [
    "sharp@2026-11-02T11:22-05:00",
@@ -2288,7 +2297,8 @@
    "down-0.15",
    "news:non covid portfolio steps up pfizer outpaces consensus and hikes guidance",
    "news:pfizer stock pfe rises on q3 earnings beat and raised 2026 sales outlook",
-   "news:pfizer pfe raises its outlook despite an 8 drop in quarterly net income"
+   "news:pfizer pfe raises its outlook despite an 8 drop in quarterly net income",
+   "news:pfizer raises 2026 outlook and names new cfo after earnings beat"
   ],
   "AAPL:PUT:2026-11-09:325": [
    "up0.25",
@@ -2305,15 +2315,6 @@
   "DIS:CALL:2026-11-20:115": 1
  },
  "seen_macro": [
-  "ahead of market 10 things that will decide stock market action on wednesday",
-  "china is building its way around europe s ev tariffs",
-  "trump says he does not care about usmca as us canada plan trade talks",
-  "ai giants funding ambitions test wall street s appetite for risk",
-  "bank of canada raises interest rates for the first time since 2023",
-  "dollar holds steady ahead of fed rate decision",
-  "stellantis stock stla jumps 14 as financial results top wall street estimates",
-  "us midterm elections why trump s pressure won t fade after the vote",
-  "bank of canada raises interest rate to 2 5 with more hikes to come",
   "bank of canada rate hike squeezes employers 2027 pay and hiring plans",
   "will the next congress block tariffs",
   "briefs federal reserve likely to skip rate hike despite elevated inflation",
@@ -2904,7 +2905,16 @@
   "3pm markets update",
   "what s happening to uk interest rates and what does it mean for mortgages",
   "tesla s texas megapack factory granted ftz status chinese tariffs still apply",
-  "nvidia and other big tech stocks lift wall street and make up for a drop by apple"
+  "nvidia and other big tech stocks lift wall street and make up for a drop by apple",
+  "wall street braces for midterm uncertainty as futures diverge",
+  "treasuries fall amid oil price swings strong job openings data",
+  "a democratic congress could curb the iran war but not trump s tariffs former ambassador says",
+  "why a midterm mauling for trump will not bring asia trade relief",
+  "gold turns lower again as volatile oil prices keep traders cautious",
+  "silver hits 1 year low price on tuesday as gold also falls",
+  "wall street the day after which indicators to watch closely after the midterms",
+  "billionaire wall street pessimists are predicting an epic stock market crash will wipe out 80 of your 401 k",
+  "stronger us factory activity complicates bitcoin s hopes for lower rates"
  ],
  "sharp": {
   "DIS:CALL:2026-11-20:115": 112.63,
