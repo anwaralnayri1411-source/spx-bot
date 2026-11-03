@@ -77,3 +77,4 @@ id,project,tag,sym,side,strike,exp,entry_time,entry,edge,strength,out,out_time,o
 20261103T1055|spx|repeat_side|SPX|CALL|7615|2026-11-03,spx,repeat_side,SPX,CALL,7615.0,2026-11-03,2026-11-03T10:55-05:00,3.58,7.25,10.0,stop,2026-11-03T11:32-05:00,-0.517,0.101,7
 20261103T1230|spx|repeat_side|SPX|CALL|7595|2026-11-03,spx,repeat_side,SPX,CALL,7595.0,2026-11-03,2026-11-03T12:30-05:00,4.17,6.0,9.0,tp,2026-11-03T13:12-05:00,0.6,0.6,8
 20261030T1242|stocks|market_warning|PFE|CALL|30|2026-11-20,stocks,market_warning,PFE,CALL,30.0,2026-11-20,2026-10-30T12:42-04:00,1.08,6.5,7.2,stop,2026-11-03T15:07-05:00,-0.417,0.204,170
+20261103T1012|stocks|open_same_dir|PFE|CALL|30|2026-11-20,stocks,open_same_dir,PFE,CALL,30.0,2026-11-20,2026-11-03T10:12-05:00,1.01,6.5,6.6,stop,2026-11-03T15:12-05:00,-0.406,0.0,55
