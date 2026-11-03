@@ -39,8 +39,8 @@
    "capital": 2.43,
    "entry_cash": 0.57,
    "peak": 0.01,
-   "last_pnl": -0.64,
-   "quotes": 71,
+   "last_pnl": -0.76,
+   "quotes": 72,
    "t60_pnl": "",
    "t60_time": "",
    "eod_pnl": "",
@@ -50,6 +50,56 @@
    "managed_pnl": -1.22,
    "managed_out": "stop",
    "managed_time": "2026-11-02T15:59-05:00"
+  },
+  {
+   "id": "20261103T1034|ic|day-2026-11-03",
+   "kind": "ic",
+   "pos_id": "day-2026-11-03",
+   "date": "2026-11-03",
+   "side": "BOTH",
+   "exp": "2026-11-04",
+   "entry_time": "2026-11-03T10:34-05:00",
+   "entry_spot": 754.16,
+   "legs": [
+    {
+     "occ": "SPY261104P00746000",
+     "strike": 746.0,
+     "side": "PUT",
+     "qty": -1
+    },
+    {
+     "occ": "SPY261104P00743000",
+     "strike": 743.0,
+     "side": "PUT",
+     "qty": 1
+    },
+    {
+     "occ": "SPY261104C00763000",
+     "strike": 763.0,
+     "side": "CALL",
+     "qty": -1
+    },
+    {
+     "occ": "SPY261104C00766000",
+     "strike": 766.0,
+     "side": "CALL",
+     "qty": 1
+    }
+   ],
+   "capital": 1.91,
+   "entry_cash": 1.09,
+   "peak": 0.0,
+   "last_pnl": "",
+   "quotes": 0,
+   "t60_pnl": "",
+   "t60_time": "",
+   "eod_pnl": "",
+   "eod_time": "",
+   "hold_pnl": "",
+   "hold_time": "",
+   "managed_pnl": "",
+   "managed_out": "",
+   "managed_time": ""
   }
  ],
  "done_recs": [
@@ -71,6 +121,7 @@
   "2026-10-27",
   "2026-10-28",
   "2026-10-29",
-  "2026-11-02"
+  "2026-11-02",
+  "2026-11-03"
  ]
 }
