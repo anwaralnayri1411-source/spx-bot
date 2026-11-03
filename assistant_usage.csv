@@ -9,3 +9,4 @@ time,model,input,output,cache_write,cache_read,usd,tools,status
 2026-11-02T08:37:29-05:00,claude-haiku-5-5,7724,1966,4480,4480,0.00236,company_analysis earnings_date,ok
 2026-11-02T08:39:18-05:00,claude-haiku-5-5,3860,1002,0,4480,0.00093,,ok
 2026-11-02T10:21:12-05:00,claude-haiku-5-5,3572,596,4521,0,0.00122,,ok
+2026-11-03T11:14:01-05:00,claude-haiku-5-5,7778,1739,4521,4521,0.00226,open_positions,ok
