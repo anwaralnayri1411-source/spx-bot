@@ -159,7 +159,8 @@
    "disney mickey mouse to lay off thousands",
    "disney s new ceo is eyeing thousands of job cuts two weeks before earnings",
    "walt disney dis cuts jobs while pushing ahead with florida transport upgrades",
-   "disney eyes thousands of layoffs in fresh cost push"
+   "disney eyes thousands of layoffs in fresh cost push",
+   "the walt disney company dis stock price news quote and history"
   ],
   "NFLX:PUT": [
    "djt stock plummets to new lows trump appeal fades as 2026 midterms draw closer",
@@ -2120,7 +2121,9 @@
   "NVDA:PUT": [
    "nvidia stock is set for its worst month in a year time to buy the dip",
    "nvidia stock analyst estimates ratings",
-   "nvidia time to lock in the profits nasdaq nvda"
+   "nvidia time to lock in the profits nasdaq nvda",
+   "nvidia stock up over 3 what s driving tuesday s rally",
+   "nvidia ceo gave go ahead on marvell s mega acquisition of lumentum"
   ],
   "AMZN:PUT": [
    "amazon com price target lowered to 300 from 325 at scotiabank",
@@ -2218,12 +2221,18 @@
    "novamarine and edge europe partner on autonomous naval drones",
    "palantir price target raised to 250 from 223 at truist",
    "apple stock falls chip stocks rebound as oil extends decline alphacheck",
-   "non covid portfolio steps up pfizer outpaces consensus and hikes guidance"
+   "non covid portfolio steps up pfizer outpaces consensus and hikes guidance",
+   "pfizer stock pfe rises on q3 earnings beat and raised 2026 sales outlook",
+   "pfizer pfe raises its outlook despite an 8 drop in quarterly net income",
+   "pfizer q3 2026 earnings call transcript"
   ],
   "AAPL:PUT": [
    "apple a record guidance with no earnings growth nasdaq aapl",
    "apple nasdaq aapl stock slides despite us 114 5 billion revenue beat what went wrong",
-   "spain s competition watchdog plans to sanction apple amazon aapl nasdaq"
+   "spain s competition watchdog plans to sanction apple amazon aapl nasdaq",
+   "aapl stock tumbles overnight on margin pressure from surging memory prices mu sndk inch higher",
+   "apple crushed earnings but its stock is dropping over memory chip prices",
+   "apple stock bofa recommends fixating on long term opportunity"
   ],
   "PLTR:PUT": [
    "palantir technologies inc stock pltr moved down by 4 49 on nov 3 key drivers unveiled"
@@ -2277,11 +2286,14 @@
    "news:pfe beats q3 earnings sales estimates raises 2026 guidance",
    "sharp@2026-11-03T11:03-05:00",
    "down-0.15",
-   "news:non covid portfolio steps up pfizer outpaces consensus and hikes guidance"
+   "news:non covid portfolio steps up pfizer outpaces consensus and hikes guidance",
+   "news:pfizer stock pfe rises on q3 earnings beat and raised 2026 sales outlook",
+   "news:pfizer pfe raises its outlook despite an 8 drop in quarterly net income"
   ],
   "AAPL:PUT:2026-11-09:325": [
    "up0.25",
-   "sharp@2026-11-03T11:09-05:00"
+   "sharp@2026-11-03T11:09-05:00",
+   "news:aapl stock tumbles overnight on margin pressure from surging memory prices mu sndk inch higher"
   ],
   "BAC:PUT:2026-11-20:49": [
    "down-0.15"
@@ -2293,18 +2305,6 @@
   "DIS:CALL:2026-11-20:115": 1
  },
  "seen_macro": [
-  "fed rate decision could trigger bitcoin rally or crypto sell off as warsh signals december outlook",
-  "9am markets update",
-  "buy 10 shares of nvidia today here s what different 2030 scenarios could look like",
-  "wall street flashes red as experts fear stock market crash is coming",
-  "the bank of canada raises interest rates for the first time since 2023",
-  "live federal reserve expected to hold rates steady today",
-  "us stock futures mixed on wednesday 5 things to know before wall street opens",
-  "interest rate decision today archives",
-  "s p 500 forecast spx flat ahead of fomc rate decision and tech earnings",
-  "transfer pricing dispute resolution in china how advisers can help",
-  "us fed meeting october 2026 date timing expectations and where to watch kevin warsh led fomc interest rate decision hind",
-  "federal reserve to announce its latest interest rate today here s what economists expect",
   "ahead of market 10 things that will decide stock market action on wednesday",
   "china is building its way around europe s ev tariffs",
   "trump says he does not care about usmca as us canada plan trade talks",
@@ -2892,7 +2892,19 @@
   "dow futures plunge 290 points 5 things to know before wall street opens",
   "if you invest 10 000 in palantir today here s what it could be worth by 2030",
   "section 301 investigations up as congress eyes trade authority",
-  "as iran conflict drags on fund managers see rising upside risk in energy markets"
+  "as iran conflict drags on fund managers see rising upside risk in energy markets",
+  "gold s bounce off 3 870 isn t a bottom yet",
+  "why is gold falling despite inflation gold s role as an inflation hedge in 2026",
+  "rupee extends gains for third day settles at 94 75 against the dollar",
+  "bitcoin faces fifth weekly loss as us midterms weigh in",
+  "prediction this artificial intelligence ai software stock will outperform palantir according to wall street hint it s si",
+  "today the crypto market is in motion bitcoin is being nudge",
+  "why is the us stock market split as americans vote in",
+  "fed rate hikes don t guarantee losses for stocks favors diversified portfolios wells fargo",
+  "3pm markets update",
+  "what s happening to uk interest rates and what does it mean for mortgages",
+  "tesla s texas megapack factory granted ftz status chinese tariffs still apply",
+  "nvidia and other big tech stocks lift wall street and make up for a drop by apple"
  ],
  "sharp": {
   "DIS:CALL:2026-11-20:115": 112.63,
