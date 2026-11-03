@@ -151,7 +151,10 @@
    "netflix nflx can local language hits improve returns on content spending",
    "what is putting walt disney nyse dis in the spotlight",
    "solana handled 3 9 billion of tokenized stock trades in october can it take wall street s business from ethereum",
-   "sphere entertainment tops communications services stocks in short interest alphabet sees the lowest exposure"
+   "sphere entertainment tops communications services stocks in short interest alphabet sees the lowest exposure",
+   "dis stock analysis explained",
+   "disney targets thousands of jobs in fresh cost cutting blitz report",
+   "disney just gained 9 in a month take profits or buy more"
   ],
   "NFLX:PUT": [
    "djt stock plummets to new lows trump appeal fades as 2026 midterms draw closer",
@@ -264,7 +267,19 @@
    "promising financial stocks to keep an eye on november 2nd",
    "visa stocks rise 2 4 with higher cantor target facing a payments mix test",
    "dow jones top gainers nov 2 2026 us session",
-   "visa inc stock v moved up by 3 14 on nov 2 what investors need to know"
+   "visa inc stock v moved up by 3 14 on nov 2 what investors need to know",
+   "state street fin sel sector spdr xlf sells berkshire jpmorgan on friday",
+   "visa inc v stock sold by trek financial llc",
+   "tsg advice partners llc makes new investment in visa inc v",
+   "visa inc v holdings lifted by summit wealth group llc co",
+   "23 large cap stocks hit 52 week highs on monday",
+   "40 s p 500 stocks hit 52 week highs on monday",
+   "2 dividend growth stocks to buy now one raised its payout 16 the other 71",
+   "will earnings beat change visa stock s narrative",
+   "visa inc receives a buy rating from dz bank",
+   "visa stock broadens china payments push with tencent mou",
+   "visa shares weekly forecast advance stalls below resistance at 426 7 as technical signals flash overbought",
+   "expensify enters referral agreement with visa exfy nasdaq"
   ],
   "PLTR:CALL": [
    "palantir sees ark invest reduce position and uk fund review pltr remains under pressure",
@@ -2159,13 +2174,27 @@
    "meta plans new bond sale as ai spending soars",
    "is pfizer nyse pfe building a stronger future in metabolic medicine",
    "rivian stock rivn defies bofa s sell rating jumps 10 here s why",
-   "amd could swing 90 7 billion after earnings"
+   "amd could swing 90 7 billion after earnings",
+   "pfizer inc 1pfe mi stock price news quote and history",
+   "pfizer just gained 12 in a month to a 52 week high take profits or buy more",
+   "pfizer pfe surpasses q3 earnings and revenue estimates",
+   "pfizer hikes full year outlook as newer products grow taps company veteran as new cfo",
+   "pfizer pfe releases q3 2026 earnings",
+   "earnings flash pfe pfizer posts q3 adjusted eps 0 87 per share vs factset est of 0 74",
+   "pfizer hikes 2026 outlook names new cfo pfe nyse",
+   "pfizer nyse pfe reports strong q3 2026 full year outlook slightly exceeds expectations",
+   "stocks making the biggest moves premarket pfizer apple palantir zebra technologies more",
+   "pfizer pfe posts lower q3 profit but nine month operating cash flow rises to 8 83b",
+   "s p giant hikes guidance on solid third quarter names new cfo",
+   "pfizer beats expectations in q3 and raises its guidance is the stock due for a big rally",
+   "pfizer s eliquis price gains cover covid drop rapid earnings reaction"
   ]
  },
  "fired": {
   "DIS:CALL:2026-11-20:115": [
    "sharp@2026-11-02T10:36-05:00",
-   "down-0.15"
+   "down-0.15",
+   "news:disney targets thousands of jobs in fresh cost cutting blitz report"
   ],
   "RIVN:CALL:2026-11-20:13.5": [
    "sharp@2026-11-02T11:22-05:00",
@@ -2186,42 +2215,30 @@
    "news:rivian stock rallies as earnings beat fuels r2 ai and autonomy push"
   ],
   "PFE:CALL:2026-11-20:30": [
-   "up0.25"
+   "up0.25",
+   "news:pfizer pfe surpasses q3 earnings and revenue estimates",
+   "news:pfizer hikes full year outlook as newer products grow taps company veteran as new cfo",
+   "news:pfizer pfe releases q3 2026 earnings",
+   "news:earnings flash pfe pfizer posts q3 adjusted eps 0 87 per share vs factset est of 0 74",
+   "news:pfizer hikes 2026 outlook names new cfo pfe nyse",
+   "news:pfizer nyse pfe reports strong q3 2026 full year outlook slightly exceeds expectations",
+   "news:pfizer pfe posts lower q3 profit but nine month operating cash flow rises to 8 83b",
+   "news:s p giant hikes guidance on solid third quarter names new cfo"
   ],
   "V:CALL:2026-11-06:430": [
    "news:visa raises quarterly dividend by 16",
-   "down-0.15"
+   "down-0.15",
+   "stock1",
+   "down-0.3",
+   "news:visa inc receives a buy rating from dz bank",
+   "news:visa stock broadens china payments push with tencent mou"
   ]
  },
  "stock_level": {
-  "RIVN:CALL:2026-11-20:13.5": 3
+  "RIVN:CALL:2026-11-20:13.5": 3,
+  "V:CALL:2026-11-06:430": 1
  },
  "seen_macro": [
-  "fed set to hold interest rates steady in last decision before midterms",
-  "oil surges 2 above 116 why houthi strike claims us midterms spark supply worries",
-  "warren buffett s blunt warning to wall street has reached deafening levels here s the 1 move you should make now",
-  "fed likely to hold rates steady ahead of midterms",
-  "us stock futures mixed ahead of alphabet microsoft earnings and federal reserve rate decision dow jones s p nasdaq wall ",
-  "fed rate decision today will bitcoin price rally or face another sell off",
-  "gold holds above 4 000 as traders look to fed rate decision",
-  "gold slips near 4 040 as investors assess fed policy and us dollar strength",
-  "us treasury yields rise ahead of fed interest rate decision 10 year yield tops 5 hindustan times",
-  "fed expected to hold rates steady in october hike seen in december",
-  "microsoft and alphabet report tonight wall street s earnings recovery has a catch",
-  "us stocks edge higher ahead of federal reserve decision on interest rates",
-  "saudi oil storage in singapore to boost resilience against disruptions",
-  "after kolkata s naked mob justice police parade 3 accused semi naked to reconstruct crime",
-  "brent crude oil rises to 115 as saudi refinery attack sparks supply fears",
-  "global market european shares waver as earnings rising oil weigh on sentiment",
-  "global shares are mixed after u s stock rally and oil prices gain more than 1",
-  "li gao urges cop31 debate on trade barriers for electric vehicles and solar panels 6 outlets compared",
-  "robinhood shares fall as crypto markets chill drives profit miss",
-  "new antidumping and countervailing duty orders pave way for relief from chinese manipulation for american trailer manufa",
-  "pause now hike later",
-  "us september advance goods trade balance 134 9 billion vs 130 2 billion expected",
-  "us midterm elections 2026 iowa s 3rd district tests whether democrats can win back trump voters again",
-  "i was trolled ravi kishan recalls his struggles urges youth to build skills lauds up s growth",
-  "trump says tariffs create wealth but families are paying more and buying less",
   "us stock market today s p nasdaq jump as wall street bets rate pause ahead of fed verdict",
   "dow jones holds steady ahead of fed rate decision",
   "today s mortgage rates october 28 30 year fixed drops 9 basis points",
@@ -2796,7 +2813,32 @@
   "the world braces as trump s canada tariff stand off escalates mcgeever",
   "riley exploration permian occidental petroleum permian resources matador resources and tidewater shares are falling what",
   "asx set to jump on rba day wall street rises as oil prices tumble",
-  "dallas fed president says at least two more rate hikes needed"
+  "dallas fed president says at least two more rate hikes needed",
+  "cautious sentiment in global markets",
+  "dow futures surge 290 points 5 things to know before wall street opens",
+  "peter schiff warns interest on national debt will pass social security next year the biggest line in the budget",
+  "wall street s most hated stocks are faring far better than its favorites",
+  "bist 100 holds near 10 960 as risks stay in focus",
+  "gold silver rates crash today what s behind plunging precious metals prices ahead of dhanteras diwali 2026 details",
+  "bux at 144 922 points as geopolitical risk weighs",
+  "saskatchewan seeks trade progress with u s and china",
+  "shopify s stock slides after earnings this is what s worrying wall street",
+  "amd faces high bar in q3 earnings to avoid intel s historic stock crash as wall street expects 92 profit jump",
+  "us stock market today s p 500 futures slip on firm manufacturing and jobs focus",
+  "stock market today s p 500 nasdaq 100 dow jones futures mixed as trump touts iran settlement hopes a",
+  "fed rate pause raises concerns over costs and global growth",
+  "micron pops but markets and wall street are poles apart on the stock",
+  "rate hikes could be coming history likes these 4 bank stocks",
+  "canadian stock market today tsx futures slip on first 2026 factory contraction concern",
+  "how markets price geopolitical risk why de escalation headlines can trigger major market moves",
+  "trump faces congress showdown as farm costs and subsidies reshape the agricultural debate",
+  "mortgage rates are falling even as a december fed hike looms",
+  "gold prices rise amid oil volatility and us rate concerns",
+  "trump says fed rate cuts could help the us balance its budget as debt pressures mount",
+  "fed rate hikes don t guarantee losses for stocks favors diversified portfolios wells fargo spy nysearca",
+  "tesla wins trade zone status for texas megapacks but china tariffs stay",
+  "as interest rates climb your credit card debt becomes a silent wealth tax",
+  "stock market today dow futures plunge 323 points apple sinks and iran strikes send oil soaring"
  ],
  "sharp": {
   "DIS:CALL:2026-11-20:115": 112.63,
