@@ -38,7 +38,9 @@
    "opp_entry": 4.13,
    "src": "alpaca",
    "side_15": 4.89,
-   "opp_15": 3.9
+   "opp_15": 3.9,
+   "side_30": 4.67,
+   "opp_30": 4.0
   },
   {
    "variant": "SC",
@@ -57,7 +59,9 @@
    "opp_entry": 4.13,
    "src": "alpaca",
    "side_15": 4.96,
-   "opp_15": 3.78
+   "opp_15": 3.78,
+   "side_30": 4.67,
+   "opp_30": 4.03
   }
  ],
  "last": {
