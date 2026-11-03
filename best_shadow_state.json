@@ -1,27 +1,6 @@
 {
  "open": [
   {
-   "variant": "SR",
-   "entry_time": "2026-11-03T13:45-05:00",
-   "side": "CALL",
-   "edge": 7.0,
-   "mom": 1,
-   "f30": 1,
-   "rsweep": 1,
-   "strike": 756,
-   "exp": "2026-11-04",
-   "spot": 756.46,
-   "side_occ": "SPY261104C00756000",
-   "opp_occ": "SPY261104P00756000",
-   "side_entry": 4.67,
-   "opp_entry": 4.06,
-   "src": "alpaca",
-   "side_15": 4.54,
-   "opp_15": 4.0,
-   "side_30": 4.03,
-   "opp_30": 4.51
-  },
-  {
    "variant": "C",
    "entry_time": "2026-11-03T14:05-05:00",
    "side": "CALL",
