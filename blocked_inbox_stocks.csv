@@ -521,3 +521,7 @@ id,time,project,tag,sym,root,side,strike,exp,entry,spot,edge,strength
 20261103T1427|stocks|open_same_dir|V|CALL|425|2026-11-06,2026-11-03T14:27-05:00,stocks,open_same_dir,V,V,CALL,425.0,2026-11-06,3.14,422.14,5.5,7.5
 20261103T1427|stocks|open_same_dir|PFE|CALL|29.5|2026-11-20,2026-11-03T14:27-05:00,stocks,open_same_dir,PFE,PFE,CALL,29.5,2026-11-20,1.05,30.3,6.5,6.6
 20261103T1427|stocks|open_same_dir|DIS|CALL|120|2026-11-20,2026-11-03T14:27-05:00,stocks,open_same_dir,DIS,DIS,CALL,120.0,2026-11-20,1.93,114.07,8.0,5.9
+20261103T1442|stocks|open_same_dir|RIVN|CALL|13|2026-11-20,2026-11-03T14:42-05:00,stocks,open_same_dir,RIVN,RIVN,CALL,13.0,2026-11-20,0.94,13.29,5.5,8.0
+20261103T1442|stocks|open_same_dir|V|CALL|425|2026-11-06,2026-11-03T14:42-05:00,stocks,open_same_dir,V,V,CALL,425.0,2026-11-06,3.43,422.4,5.5,7.5
+20261103T1442|stocks|open_same_dir|PFE|CALL|29.5|2026-11-20,2026-11-03T14:42-05:00,stocks,open_same_dir,PFE,PFE,CALL,29.5,2026-11-20,1.07,30.29,6.5,6.6
+20261103T1442|stocks|open_same_dir|DIS|CALL|120|2026-11-20,2026-11-03T14:42-05:00,stocks,open_same_dir,DIS,DIS,CALL,120.0,2026-11-20,2.03,113.97,8.0,5.7
