@@ -3,49 +3,16 @@
  "plan_date": "2026-11-03",
  "prev_close": 7541.4,
  "es_night": 0.001,
- "snap_date": "2026-11-02",
+ "snap_date": "2026-11-03",
  "snap": {
-  "time": "2026-11-02T09:46-05:00",
-  "open": 7610.83,
-  "S945": 7624.17,
+  "time": "2026-11-03T09:46-05:00",
+  "open": 7552.92,
+  "S945": 7565.93,
   "src": "tasty",
-  "prev_close": 7580.07,
-  "gap": 0.00406,
-  "side": "CALL",
-  "confirm": true,
-  "legs": [
-   {
-    "role": "rule",
-    "side": "CALL",
-    "contract": "bot",
-    "strike": 7750.0,
-    "entry_live": 0.25,
-    "live_src": "tasty"
-   },
-   {
-    "role": "rule",
-    "side": "CALL",
-    "contract": "atm",
-    "strike": 7625.0,
-    "entry_live": 16.0,
-    "live_src": "tasty"
-   },
-   {
-    "role": "opp",
-    "side": "PUT",
-    "contract": "bot",
-    "strike": 7500.0,
-    "entry_live": 0.35,
-    "live_src": "tasty"
-   },
-   {
-    "role": "opp",
-    "side": "PUT",
-    "contract": "atm",
-    "strike": 7625.0,
-    "entry_live": 15.9,
-    "live_src": "tasty"
-   }
-  ]
+  "prev_close": 7541.4,
+  "gap": 0.00153,
+  "side": "",
+  "confirm": false,
+  "legs": []
  }
 }
