@@ -55,12 +55,13 @@ def trades(start=PAPER_START):
             if pd.notna(x):
                 out.append({"strategy": "levels", "day": r.date, "closed": r.status != "مفتوحة", "usd": float(r.entry) * 100 * x})
     ru = _read("earnings_runup_log.csv")
-    if len(ru):
+    if len(ru):                                    # مال السوق: عقدان؛ «نصف» = الأول بيع عند +100%
         for r in ru[ru["date"] >= start].itertuples():
-            if r.status != "مفتوحة" and r.pnl_usd:
+            if r.pnl_usd:
                 out.append({"strategy": "runup", "day": r.date, "closed": True, "usd": float(r.pnl_usd)})
             elif r.last_ret:
-                out.append({"strategy": "runup", "day": r.date, "closed": False, "usd": float(r.entry) * 100 * float(r.last_ret)})
+                e, x = float(r.entry) * 100, float(r.last_ret)
+                out.append({"strategy": "runup", "day": r.date, "closed": False, "usd": e * (1.0 + x) if r.status == "نصف" else 2 * e * x})
     b = _read("blocked_shadow_log.csv")
     if len(b):
         b = b[(b["project"] == "stocks") & b["tag"].isin(["earn_in_life", "btc_against"]) & (b["entry_time"].str[:10] >= start)]

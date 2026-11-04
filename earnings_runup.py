@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """انجراف ما قبل الأرباح (H-PAPER R3، مسجّل في CLAUDE.md 4/11/2026 بطلب المستخدم). توصيات تجريبية، والحكم بالدولار بعد شهر.
 
-مرة يومياً بعد 10:30 نيويورك: لشركات قائمة بوت الشركات التي إعلانها بعد 5–10 أيام تداول، CALL بدلتا ≈ 0.45 **ينتهي قبل الإعلان**
-(يوم الإعلان إن كان بعد الإغلاق، وإلا قبله بيوم)، تكلفته 100–600$. حد 3 في اليوم، ومرة واحدة لكل إعلان.
-كل تشغيل (كل 30 دقيقة): متابعة المفتوح: هدف +50% أو وقف −40% أو إغلاق في آخر جلسة قبل الإعلان (15:30).
+طريقة «مال السوق» (H-EXITPLAN، بطلب المستخدم 4/11/2026): مرة يومياً بعد 10:30 نيويورك، لشركات قائمة بوت الشركات التي إعلانها
+بعد 5–10 أيام تداول: **عقدان** CALL بدلتا ≈ 0.45 (100–600$ للعقد) ينتهيان **بعد يوم رد الفعل D0**. حد 3 في اليوم، ومرة لكل إعلان.
+كل تشغيل (كل 30 دقيقة): قبل الإعلان −40% للاثنين؛ عند +100% يُباع الأول (يسترد رأس المال) ويبقى الثاني حتى إغلاق D0؛
+وإن لم يتضاعف حتى آخر جلسة قبل الإعلان (15:30) يُباع الاثنان.
 إيقاف آلي: صافٍ −500$ أو 5 خسائر متتالية. الرسائل إلى TELEGRAM_CHAT_ID وحده («📅 فرصة ما قبل الأرباح (تجريبية)»).
 الملفات: earnings_runup_log.csv، earnings_runup_state.json، messages_earnings_runup.jsonl.
 تشغيل: python earnings_runup.py [--no-send] [--force]
@@ -27,12 +28,13 @@ COST_MIN, COST_MAX = 100.0, 600.0
 DELTA_T, DELTA_MIN, DELTA_MAX = 0.45, 0.30, 0.60
 MAX_SPREAD, MIN_OI = 0.30, 100
 MAX_PER_DAY = 3
-TP, SL = 0.50, -0.40
+TP2, SL, QTY = 1.00, -0.40, 2
 HALT_USD, HALT_STREAK = -500.0, 5
 SCAN_FROM, END = dtime(10, 30), dtime(16, 0)
 EXIT_AT = dtime(15, 30)
-COLS = ["id", "date", "time", "ticker", "earn_ts", "exit_day", "exp", "strike", "occ", "entry", "spot", "delta", "status",
+COLS = ["id", "date", "time", "ticker", "earn_ts", "exit_day", "d0", "exp", "strike", "occ", "entry", "spot", "delta", "status",
         "exit_time", "exit_ret", "pnl_usd", "last_ret"]
+DONE = ("مال السوق", "وقف", "إغلاق")
 
 
 # ====================== دوال صافية ======================
@@ -52,10 +54,15 @@ def exit_day(earn_ts):
     return d
 
 
-def pick_expiry(options, today, last):
-    """أبعد انتهاء ≤ last وبعد اليوم بيومين على الأقل، أو None."""
-    ok = [e for e in options if today + timedelta(days=2) <= date.fromisoformat(e) <= last]
-    return max(ok) if ok else None
+def reaction_day(exit_d):
+    """يوم رد الفعل D0 = أول يوم عمل بعد آخر جلسة قبل الإعلان."""
+    return pd.Timestamp(np.busday_offset(np.datetime64(exit_d), 1, roll="forward")).date()
+
+
+def pick_expiry(options, d0, max_days=10):
+    """أول انتهاء ≥ D0 وخلال max_days يوماً منه، أو None (العقد يعبر الإعلان)."""
+    ok = [e for e in options if d0 <= date.fromisoformat(e) <= d0 + timedelta(days=max_days)]
+    return min(ok) if ok else None
 
 
 def bs_delta(S, K, T, iv):
@@ -86,7 +93,7 @@ def pick_call(calls, S, T):
 
 
 def halted(log):
-    done = log[log["status"].isin(["هدف", "وقف", "إغلاق"])]
+    done = log[log["status"].isin(DONE)]
     pnl = pd.to_numeric(done["pnl_usd"], errors="coerce").dropna()
     if pnl.sum() <= HALT_USD:
         return True
@@ -97,18 +104,22 @@ def halted(log):
 
 
 def entry_message(r):
-    return (f"📅 **فرصة ما قبل الأرباح (تجريبية)** | {r['ticker']} 🟢 CALL\n"
-            f"الإعلان: {r['earn_ts'][:16].replace('T', ' ')} نيويورك | الخروج: {r['exit_day']} قبل الإغلاق (قبل الإعلان)\n"
-            f"العقد: **{r['ticker']} {float(r['strike']):g} CALL** ينتهي {r['exp']} (قبل الإعلان) | دلتا {float(r['delta']):.2f}\n"
-            f"دخول ≈ ${float(r['entry']):.2f} (${float(r['entry']) * 100:,.0f}) | 🎯 +50% · 🛑 −40%\n"
-            "الفكرة: الأسهم تميل للصعود في الأسبوع الذي يسبق الإعلان (+0.88% في المتوسط، H-EARNPRE)، ونخرج قبل النتيجة فلا نقامر عليها.\n"
+    e = float(r["entry"])
+    return (f"📅 **فرصة ما قبل الأرباح — مال السوق (تجريبية)** | {r['ticker']} 🟢 CALL ×{QTY}\n"
+            f"الإعلان: {r['earn_ts'][:16].replace('T', ' ')} نيويورك | يوم رد الفعل: {r['d0']}\n"
+            f"العقد: **{r['ticker']} {float(r['strike']):g} CALL** ينتهي {r['exp']} | دلتا {float(r['delta']):.2f}\n"
+            f"دخول ≈ ${e:.2f} للعقد (${e * 100 * QTY:,.0f} للعقدين)\n"
+            f"الخطة: 🛑 −40% للاثنين قبل الإعلان (${e * 0.6:.2f}) · عند **+100%** (${e * 2:.2f}) بِع عقداً واحداً فتسترد رأس مالك، "
+            f"وأكمل بالثاني حتى إغلاق يوم رد الفعل · إن لم يتضاعف حتى {r['exit_day']} قبل الإغلاق فبِع الاثنين قبل الإعلان.\n"
+            "الأساس: اختبار 848 إعلاناً بأسعار حقيقية (H-EXITPLAN): +3% للصفقة، و36% رابحة.\n"
             "⚠️ تجريبية (H-PAPER): تُقاس بالدولار وتُلغى إن خسرت. القرار قرارك.")
 
 
-def exit_message(r, status, ret):
-    icon = {"هدف": "✅", "وقف": "🛑", "إغلاق": "⏹️"}[status]
-    return (f"{icon} **ما قبل الأرباح** {r['ticker']} {float(r['strike']):g} CALL: {status} {ret * 100:+.0f}% "
-            f"(${float(r['entry']) * ret * 100:+,.0f} للعقد)")
+def exit_message(r, status, usd, note=""):
+    icon = {"نصف": "💰", "مال السوق": "✅", "وقف": "🛑", "إغلاق": "⏹️"}[status]
+    head = {"نصف": "تضاعف العقد: بِع عقداً واحداً الآن (استرددت رأس المال)، وأكمل بالثاني حتى إغلاق يوم رد الفعل",
+            "مال السوق": "أُغلق العقد الثاني بعد الإعلان", "وقف": "بلغ الوقف −40%: بِع العقدين", "إغلاق": "لم يتضاعف قبل الإعلان: بِع العقدين"}[status]
+    return f"{icon} **ما قبل الأرباح** {r['ticker']} {float(r['strike']):g} CALL: {head}{note} | الحصيلة ≈ ${usd:+,.0f} للعقدين"
 
 
 # ====================== الحالة والسجل ======================
@@ -165,7 +176,8 @@ def scan(n, st, log, no_send):
         if key in st["done"] or not TD_MIN <= trading_days_between(today, ets.date()) <= TD_MAX:
             continue
         last = exit_day(ets)
-        exp = pick_expiry(list(t.options or []), today, last)
+        d0 = reaction_day(last)
+        exp = pick_expiry(list(t.options or []), d0)
         if not exp:
             continue
         S, _ = lq.spot(tk)
@@ -183,9 +195,8 @@ def scan(n, st, log, no_send):
         if not k:
             print("لا عقد مناسب:", tk, exp)
             continue
-        out_day = min(last, date.fromisoformat(exp))   # الخروج في آخر جلسة قبل الإعلان أو يوم انتهاء العقد، أيهما أسبق
         r = {"id": f"{today}:{tk}", "date": today.isoformat(), "time": n.strftime("%H:%M"), "ticker": tk,
-             "earn_ts": ets.isoformat(), "exit_day": out_day.isoformat(), "exp": exp, "strike": f"{k['strike']:g}",
+             "earn_ts": ets.isoformat(), "exit_day": last.isoformat(), "d0": d0.isoformat(), "exp": exp, "strike": f"{k['strike']:g}",
              "occ": lq.occ(tk, exp, "CALL", k["strike"]), "entry": f"{k['ask']:.2f}", "spot": f"{S:.2f}",
              "delta": f"{k['delta']:.3f}", "status": "مفتوحة", "exit_time": "", "exit_ret": "", "pnl_usd": "", "last_ret": ""}
         log = pd.concat([log, pd.DataFrame([r])], ignore_index=True)
@@ -195,18 +206,32 @@ def scan(n, st, log, no_send):
 
 
 def track(n, log, no_send, quote=quote_mid):
-    for i, r in log[log["status"] == "مفتوحة"].iterrows():
+    """مال السوق: «مفتوحة» = العقدان؛ «نصف» = بيع الأول عند +100% وبقي الثاني حتى إغلاق D0."""
+    day, now_t = n.date().isoformat(), n.time()
+    for i, r in log[log["status"].isin(["مفتوحة", "نصف"])].iterrows():
         mid = quote(r["occ"])
         if mid is None:
             continue
-        ret = mid / float(r["entry"]) - 1
+        e = float(r["entry"])
+        ret = mid / e - 1
         log.at[i, "last_ret"] = f"{ret:.4f}"
-        due = n.date().isoformat() >= r["exit_day"] and n.time() >= EXIT_AT
-        status = "هدف" if ret >= TP else "وقف" if ret <= SL else "إغلاق" if due else None
-        if status:
-            log.loc[i, ["status", "exit_time", "exit_ret", "pnl_usd"]] = [status, n.strftime("%Y-%m-%d %H:%M"), f"{ret:.4f}",
-                                                                         f"{float(r['entry']) * ret * 100:.2f}"]
-            send(exit_message(r, status, ret), no_send)
+        stamp = n.strftime("%Y-%m-%d %H:%M")
+        if r["status"] == "مفتوحة":
+            if ret >= TP2:
+                log.at[i, "status"] = "نصف"
+                send(exit_message(r, "نصف", e * 100 * TP2), no_send)
+            elif ret <= SL:
+                usd = QTY * e * 100 * ret
+                log.loc[i, ["status", "exit_time", "exit_ret", "pnl_usd"]] = ["وقف", stamp, f"{ret:.4f}", f"{usd:.2f}"]
+                send(exit_message(r, "وقف", usd), no_send)
+            elif day >= r["exit_day"] and now_t >= EXIT_AT:
+                usd = QTY * e * 100 * ret
+                log.loc[i, ["status", "exit_time", "exit_ret", "pnl_usd"]] = ["إغلاق", stamp, f"{ret:.4f}", f"{usd:.2f}"]
+                send(exit_message(r, "إغلاق", usd), no_send)
+        elif day >= r["d0"] and now_t >= EXIT_AT:
+            usd = e * 100 * (TP2 + ret)                    # الأول بيع عند +100%، والثاني الآن
+            log.loc[i, ["status", "exit_time", "exit_ret", "pnl_usd"]] = ["مال السوق", stamp, f"{(TP2 + ret) / 2:.4f}", f"{usd:.2f}"]
+            send(exit_message(r, "مال السوق", usd, f" ({ret * 100:+.0f}% للثاني)"), no_send)
     return log
 
 
@@ -216,7 +241,7 @@ def main(argv):
     if "--force" not in argv and (n.weekday() >= 5 or not dtime(9, 45) <= n.time() <= END):
         print("خارج النافذة.")
         return
-    st, log = load_state(), read_log()
+    st, log = load_state(), read_log().reindex(columns=COLS, fill_value="")
     log = track(n, log, no_send)
     if not st.get("halted") and halted(log):
         st["halted"] = True

@@ -17,12 +17,15 @@ def test_trades_and_report(tmp_path, monkeypatch):
         {"project": "stocks", "day": "2026-11-05", "entry": "2.00", "exit_kind": "وقف", "exit_ret": "-0.4"},
         {"project": "stocks", "day": "2026-11-04", "entry": "2.00", "exit_kind": "وقف", "exit_ret": "-0.4"}])   # قبل البداية
     _write(tmp_path, "level_signals_log.csv", [{"date": "2026-11-06", "entry": "2.00", "status": "مفتوحة", "exit_ret": "", "last_ret": "0.1"}])
-    _write(tmp_path, "earnings_runup_log.csv", [{"date": "2026-11-06", "entry": "4.00", "status": "هدف", "pnl_usd": "200", "last_ret": "0.5"}])
+    _write(tmp_path, "earnings_runup_log.csv", [
+        {"date": "2026-11-06", "entry": "4.00", "status": "مال السوق", "pnl_usd": "200", "last_ret": "0.5"},
+        {"date": "2026-11-06", "entry": "4.00", "status": "نصف", "pnl_usd": "", "last_ret": "-0.5"},       # 400 + 400×−0.5
+        {"date": "2026-11-06", "entry": "4.00", "status": "مفتوحة", "pnl_usd": "", "last_ret": "0.1"}])   # عقدان ×0.1
     _write(tmp_path, "blocked_shadow_log.csv", [{"project": "stocks", "tag": "earn_in_life", "entry_time": "2026-11-05T10:12",
                                                  "entry": "3.00", "out": "stop", "out_pnl": "-0.45"}])
     t = pb.trades()
     s = t.groupby("strategy")["usd"].sum().round(2).to_dict()
-    assert s == {"spx": 150.0, "stocks": -80.0, "levels": 20.0, "runup": 200.0, "blocked_earn": -135.0}
+    assert s == {"spx": 150.0, "stocks": -80.0, "levels": 20.0, "runup": 480.0, "blocked_earn": -135.0}
     text, alerts = pb.report(t, datetime(2026, 11, 7, 10, 0, tzinfo=pb.NY))
     assert "+150$" in text and "القاعدة حمتنا" in text and alerts == []
 
