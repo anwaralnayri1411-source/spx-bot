@@ -52,6 +52,8 @@ level_signals|Mon..Fri *-*-* 13..21:03/5:00
 news_decay|Sat *-*-* 08:15:00
 confirm_shadow|Mon..Fri *-*-* 14,15:35:00
 confirm_eval|Mon..Fri *-*-* 21:35:00
+earnings_runup|Mon..Fri *-*-* 14..21:20/30:00
+paper_book|Sat *-*-* 10:00:00
 # متوقف (H-PAPER 4/11/2026، تقليل الضجيج): strategy_lab|Sat *-*-1..7 10:00:00
 # متوقف (H-PAPER 4/11/2026، تقليل الضجيج): levels_study|Sat *-*-1..7 10:30:00
 # متوقف (H-PAPER 4/11/2026، تقليل الضجيج): signals_batch|Sat *-*-1..7 11:00:00

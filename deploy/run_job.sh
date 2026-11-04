@@ -222,6 +222,16 @@ main() {
       cmds=("$py confirm_shadow.py --eval")
       files="confirm_log.csv research/confirm_results.md"
       msg="confirm eval" ;;
+    earnings_runup)
+      group=earnings-runup; envs="TG ALPACA LQS TASTY"   # ما قبل الأرباح (H-PAPER R3): توصيات تجريبية لـ TELEGRAM_CHAT_ID وحده
+      cmds=("$py earnings_runup.py")
+      files="earnings_runup_log.csv earnings_runup_state.json messages_earnings_runup.jsonl"
+      msg="earnings runup" ;;
+    paper_book)
+      group=analyst; envs="TG"   # الدفتر الورقي بالدولار (H-PAPER): أسبوعياً بعد المحلل
+      cmds=("$py paper_book.py")
+      files="research/paper_book.md paper_book_state.json messages_paper_book.jsonl"
+      msg="paper book" ;;
     spx_flow)
       group=spx-flow; envs="TASTY"   # مراقب سيولة SPX اللحظي (H-SPXFLOW): تسجيل فقط؛ الخام spx_flow_raw/ يبقى على الخادم
       cmds=("$py spx_flow_watch.py")
