@@ -537,7 +537,10 @@
    "intel stock implodes sheds 434 billion in 4 months",
    "intel drops 5 nvidia retreats 2 after amd earnings beat and strong 2027 outlook as intel falls 3 amd stock goes nowhere",
    "intel just delivered its strongest data center growth in 15 years its comeback is gaining momentum",
-   "intel intc us officer buys us 9 71 million in common stock"
+   "intel intc us officer buys us 9 71 million in common stock",
+   "intel intc stock still looks cheap relative to future cash flow",
+   "intel intc ceo lip bu tan buys shares bringing his family trust s holdings to 1 46 million",
+   "intel s intc ceo buys 10 million of company stock"
   ],
   "CVX:CALL": [
    "stocks see continued downward pressure from ai anxiety and oil prices",
@@ -2336,7 +2339,8 @@
    "ford s next growth engine could already be in your driveway",
    "will ford s gen 1 cost reductions drive further model e improvements",
    "tesla s five year stock price turns negative",
-   "ford motor f sees slight october sales decline amid electric v"
+   "ford motor f sees slight october sales decline amid electric v",
+   "ford s ev losses narrowed is the turnaround fool s gold"
   ],
   "XOM:PUT": [
    "oil prices slide as trump plays down prospect of iran strikes after u s election rout",
@@ -2380,13 +2384,24 @@
    "u s consumers confront the highest gas prices ever on an election day",
    "fire shuts equinor s visund platform in norwegian north sea",
    "oil uscrude price forecast for today tomorrow next week and next 30 days",
-   "sugar prices pressured by weakness in crude oil"
+   "sugar prices pressured by weakness in crude oil",
+   "riverside county gas prices drop again",
+   "what trump s midterm defeat means for iran and oil prices",
+   "exxon mobil drops 4 2 in a single session to 167 68",
+   "stocks surge as democrats win and oil price slips",
+   "us oil prices crash below 90 as jd vance blames iran war for gop election loss wti falls to 88 92 bren",
+   "oil prices plunge as trump s midterm defeat raises hopes of peace",
+   "ten oversold energy stocks as oil prices slide after u s midterm elections uso nysearca",
+   "ten oversold energy stocks as oil prices slide after u s midterm elections",
+   "china s rail line into central asia is set for 2031"
   ],
   "MSFT:CALL": [
    "forget the 12 month squeeze microsoft is primed for an explosive ai payoff",
    "fy27 q1 press releases investor relations",
    "microsoft shares jump to record high last up 6 1",
-   "msft stock surges above 557 to record high as midterms lift microsoft and big tech"
+   "msft stock surges above 557 to record high as midterms lift microsoft and big tech",
+   "what s going on with microsoft stock on wednesday",
+   "microsoft stock nasdaq msft surges as ai development may pay off"
   ],
   "CVX:PUT": [
    "us to loan about a third of heating oil reserve in bid to tame prices",
@@ -2420,14 +2435,32 @@
    "oil prices plunge 9 after us midterms vance remarks as israeli stocks tumble",
    "u s consumers confront the highest gas prices ever on an election day",
    "fire shuts equinor s visund platform in norwegian north sea",
-   "sugar prices pressured by weakness in crude oil"
+   "sugar prices pressured by weakness in crude oil",
+   "riverside county gas prices drop again",
+   "what trump s midterm defeat means for iran and oil prices",
+   "chevron drops 3 5 in a single session erasing 15 billion",
+   "stocks surge as democrats win and oil price slips",
+   "us oil prices crash below 90 as jd vance blames iran war for gop election loss wti falls to 88 92 bren",
+   "tracking u s state and county gas prices in maps and charts updated daily",
+   "stocks rise as democrats flip control of congress",
+   "oil prices plunge as trump s midterm defeat raises hopes of peace",
+   "ten oversold energy stocks as oil prices slide after u s midterm elections uso nysearca",
+   "ten oversold energy stocks as oil prices slide after u s midterm elections",
+   "china s rail line into central asia is set for 2031"
   ],
-  "JPM:CALL": [],
+  "JPM:CALL": [
+   "which profit leader pays the most with yields between 0 31 and 2 32 bank of america nyse bac exxon mobil nyse xom johnso"
+  ],
   "SOFI:CALL": [
    "sofi technologies advances over 4 as retail interest strengthens jkn"
   ],
   "MSTR:CALL": [
-   "dogecoin price just 96 satoshi against bitcoin"
+   "dogecoin price just 96 satoshi against bitcoin",
+   "bitcoin price rebounds as midterm uncertainty fades",
+   "gold and bitcoin just gave scott bessent s treasury a post midterm wake up call",
+   "october 26 report no uptober no bitcoin capitulation free preview",
+   "bitcoin s potential surge and the cryptocurrency landscape",
+   "microstrategy s 12 dividend stock rebounds 34 will it hold this time"
   ]
  },
  "fired": {
@@ -2510,7 +2543,10 @@
    "news:oil falls as traders parse iran war outlook after midterms",
    "news:oil prices tumble below 100 on post election peace hopes",
    "news:us stocks surge and the dow soars 1 500 points as brent oil s price drops below 95 per barrel",
-   "news:oil prices plunge 9 after us midterms vance remarks as israeli stocks tumble"
+   "news:oil prices plunge 9 after us midterms vance remarks as israeli stocks tumble",
+   "news:stocks surge as democrats win and oil price slips",
+   "news:us oil prices crash below 90 as jd vance blames iran war for gop election loss wti falls to 88 92 bren",
+   "news:oil prices plunge as trump s midterm defeat raises hopes of peace"
   ],
   "MSFT:CALL:2026-11-09:565": [
    "down-0.15",
@@ -2534,7 +2570,10 @@
    "up0.25",
    "news:us stocks surge and the dow soars 1 500 points as brent oil s price drops below 95 per barrel",
    "news:oil prices plunge 9 after us midterms vance remarks as israeli stocks tumble",
-   "news:fire shuts equinor s visund platform in norwegian north sea"
+   "news:fire shuts equinor s visund platform in norwegian north sea",
+   "news:stocks surge as democrats win and oil price slips",
+   "news:us oil prices crash below 90 as jd vance blames iran war for gop election loss wti falls to 88 92 bren",
+   "news:oil prices plunge as trump s midterm defeat raises hopes of peace"
   ],
   "JPM:CALL:2026-11-20:360": [],
   "SOFI:CALL:2026-11-20:17": [],
@@ -2542,17 +2581,15 @@
    "news:aapl stock reclaims record highs as democrat win helps apple s china and global business",
    "down-0.15"
   ],
-  "MSTR:CALL:2026-11-13:157.5": []
+  "MSTR:CALL:2026-11-13:157.5": [
+   "news:bitcoin price rebounds as midterm uncertainty fades"
+  ]
  },
  "stock_level": {
   "RIVN:CALL:2026-11-20:13.5": 3,
   "PFE:CALL:2026-11-20:30": 1
  },
  "seen_macro": [
-  "us stocks remain steady after the federal reserve says it won t raise interest rates",
-  "federal reserve holds rates at 3 75 4 two officials favor another hike",
-  "federal reserve holds interest rates steady despite inflation concerns",
-  "lula s election win in brazil is a relief for china",
   "fed leaves rates unchanged as it awaits accumulation of more information",
   "us stocks remain steady after the federal reserve says it won t raise interest rates national news 2news com",
   "federal reserve holds interest rates steady as midterm elections loom",
@@ -3148,7 +3185,11 @@
   "buckle up inflation pain could linger even after the iran war ends economists say abc news",
   "here s a list of the individuals including james comey targeted by the trump administration abc news",
   "canada china extend tariff deal aim to boost canadian exports",
-  "nasdaq forecast today tech stocks rally after wall street reassesses ai spending and regulation"
+  "nasdaq forecast today tech stocks rally after wall street reassesses ai spending and regulation",
+  "u s stocks jump after democrats sweep congress",
+  "devon energy q3 preview surging fuel prices expected to fuel earnings",
+  "stock market today s p 500 nasdaq dow jones jump after democratic election win",
+  "gbp usd price forecast gbp usd 1 3496 hits 7 week high as democratic sweep sinks dollar before boe hike to 4 1 3600 targ"
  ],
  "sharp": {
   "RIVN:CALL:2026-11-20:13.5": 13.035,
