@@ -208,6 +208,17 @@
    "time": "2026-11-04T12:39-05:00",
    "price": null,
    "qty": null
+  },
+  "META:CALL:2026-11-09:660|2026-11-04": {
+   "mode": "watch",
+   "ticker": "META",
+   "side": "CALL",
+   "exp": "2026-11-09",
+   "strike": 660.0,
+   "day": "2026-11-04",
+   "time": "2026-11-04T13:29-05:00",
+   "price": null,
+   "qty": null
   }
  }
 }
