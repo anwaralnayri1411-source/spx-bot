@@ -212,6 +212,16 @@ main() {
       cmds=("$py research/bars_history.py --from $(date -u -d '-14 days' +%Y-%m-%d) --only AAPL,MSFT,NVDA,AMZN,GOOGL,META,TSLA,AVGO,AMD,NFLX,PLTR,UBER,MA,V,JPM,BAC,DIS,WMT,INTC,SOFI,F,PFE,SNAP,MU,RIVN,T,BA,XOM,CVX,COIN,MSTR,HOOD,LMT,SPY" "$py research/news_decay_study.py")
       files="research/news_decay_results.md"
       msg="news decay weekly" ;;
+    confirm_shadow)
+      group=confirm-shadow; envs=""   # تأكيد حركة السوق (H-CONFIRM): قراءة 10:30 نيويورك، تسجيل فقط (ياهو)
+      cmds=("$py confirm_shadow.py")
+      files="confirm_log.csv"
+      msg="confirm shadow" ;;
+    confirm_eval)
+      group=confirm-shadow; envs=""
+      cmds=("$py confirm_shadow.py --eval")
+      files="confirm_log.csv research/confirm_results.md"
+      msg="confirm eval" ;;
     spx_flow)
       group=spx-flow; envs="TASTY"   # مراقب سيولة SPX اللحظي (H-SPXFLOW): تسجيل فقط؛ الخام spx_flow_raw/ يبقى على الخادم
       cmds=("$py spx_flow_watch.py")
