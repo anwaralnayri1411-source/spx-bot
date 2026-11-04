@@ -2140,7 +2140,8 @@
    "apple stock price today hits record high why aapl market cap surpasses 5 trillion after democrats win mi",
    "apple becomes world s most valuable company with 5 1 trillion market cap as aapl stock today hits record",
    "apple stock hit a new all time high on wednesday what s fuelling the rally",
-   "aapl stock claims record highs as democrat win helps apple s china and global business"
+   "aapl stock claims record highs as democrat win helps apple s china and global business",
+   "apple reduces internal ai tool usage budgets report"
   ],
   "BA:PUT": [
    "boeing nyse ba sets new 52 week low on disappointing earnings",
@@ -2320,7 +2321,9 @@
    "united therapeutics buys out pfizer royalties pfe nyse",
    "why did apple nasdaq aapl palantir nasdaq pltr pfizer nyse pfe and shopify nasdaq shop slip despite beating expectations",
    "pfizer 3 key takeaways for long term investors",
-   "pfizer pfe gets a hold from j p morgan"
+   "pfizer pfe gets a hold from j p morgan",
+   "pfizer q3 the street is pricing in too much deceleration for this 5 7 yield nyse pfe",
+   "pfizer inc pfe stock forecasts"
   ],
   "AAPL:PUT": [
    "apple a record guidance with no earnings growth nasdaq aapl",
@@ -2355,7 +2358,8 @@
    "most active s p 500 stocks for nov 4 2026",
    "ford s q3 sales slipped here s the silver lining customers are splurging on fancy trims",
    "one world lithium engages icp securities for market making",
-   "ford stock nyse f gains the fathom stays a bargain"
+   "ford stock nyse f gains the fathom stays a bargain",
+   "gta 6 could smash records as pre orders hit 751 million"
   ],
   "XOM:PUT": [
    "oil prices slide as trump plays down prospect of iran strikes after u s election rout",
@@ -2455,7 +2459,17 @@
    "la oc gas prices fall again",
    "us midterm elections crude cools but iran war risks keeps markets guessing",
    "oil prices drop below 100 as midterms fuel hope for an end to the iran war",
-   "oil dips 8 as investors bet on us iran negotiations"
+   "oil dips 8 as investors bet on us iran negotiations",
+   "from iran to trade how the us midterms impact the rest of the world",
+   "we re assuming 3 50 per gallon for gas wes moss prices 20 years of driving as pumps hit 4 27",
+   "crude oil prices plummet in hopes of a quick end to iran war",
+   "oil prices are in freefall now that the democratic sweep is rewriting the iran playbook",
+   "us stocks surge and the dow soars 1 500 points as oil prices tumble following the midterm elections",
+   "cbot soybeans set 11 week low under pressure from weak oil prices",
+   "delta vs united could falling oil prices set the stage for an airline stock comeback in 2027",
+   "brent crude oil price falls below 100 a barrel on hopes of iran peace deal following democrats midterm v",
+   "toyota conocophillips on deck thursday as auto demand oil prices face test",
+   "oil prices fall on vance s post midterms iran war repudiation"
   ],
   "MSFT:CALL": [
    "forget the 12 month squeeze microsoft is primed for an explosive ai payoff",
@@ -2469,7 +2483,8 @@
    "microsoft stock hits record high after blue wave microsoft nasdaq msft",
    "microsoft don t get too excited about its positive fcf rating downgrade nasdaq msft",
    "big tech stocks soar as investors bet democrats could bring ai spending back to reality",
-   "msft stock surges above 556 to record highs as midterms lift microsoft and big tech"
+   "msft stock surges above 556 to record highs as midterms lift microsoft and big tech",
+   "alphabet amazon and microsoft all surged today you can thank the big blue wave"
   ],
   "CVX:PUT": [
    "us to loan about a third of heating oil reserve in bid to tame prices",
@@ -2560,11 +2575,22 @@
    "la oc gas prices fall again",
    "us midterm elections crude cools but iran war risks keeps markets guessing",
    "oil prices drop below 100 as midterms fuel hope for an end to the iran war",
-   "oil dips 8 as investors bet on us iran negotiations"
+   "oil dips 8 as investors bet on us iran negotiations",
+   "from iran to trade how the us midterms impact the rest of the world",
+   "we re assuming 3 50 per gallon for gas wes moss prices 20 years of driving as pumps hit 4 27",
+   "crude oil prices plummet in hopes of a quick end to iran war",
+   "oil prices are in freefall now that the democratic sweep is rewriting the iran playbook",
+   "us stocks surge and the dow soars 1 500 points as oil prices tumble following the midterm elections",
+   "cbot soybeans set 11 week low under pressure from weak oil prices",
+   "delta vs united could falling oil prices set the stage for an airline stock comeback in 2027",
+   "brent crude oil price falls below 100 a barrel on hopes of iran peace deal following democrats midterm v",
+   "toyota conocophillips on deck thursday as auto demand oil prices face test",
+   "oil prices fall on vance s post midterms iran war repudiation"
   ],
   "JPM:CALL": [
    "which profit leader pays the most with yields between 0 31 and 2 32 bank of america nyse bac exxon mobil nyse xom johnso",
-   "do profit leaders outside tech offer more than a p e between 11 81 and 41 04 jpmorgan chase nyse jpm bank of america nys"
+   "do profit leaders outside tech offer more than a p e between 11 81 and 41 04 jpmorgan chase nyse jpm bank of america nys",
+   "what allowed jpmorgan chase nyse jpm to generate usd 15 3 billion in a single quarter"
   ],
   "SOFI:CALL": [
    "sofi technologies advances over 4 as retail interest strengthens jkn",
@@ -2604,10 +2630,18 @@
    "zbcn price prediction zebec outlook and risks",
    "ethereum price reclaims 200 day ema as leverage hits five month high",
    "bitwise cio says binance s 6 3b hack is unlikely to have lasting impact on bitcoin",
-   "btc price on nov 4 2026 at 4pm est crypto prediction market"
+   "btc price on nov 4 2026 at 4pm est crypto prediction market",
+   "bitcoin rebounds past 80 000 as markets shrug off midterms and binance hack",
+   "bitcoin price reclaims daily averages",
+   "santiment says bitcoin above 79 000 could diverge from bearish mood",
+   "bitcoin sentiment turns bearish amid u s election uncertainty despite price topping 79 000",
+   "bitcoin price eyes 80k recovery despite 116m btc etf outflows",
+   "bitcoin price holds near 80 000 as democratic sweep sparks short squeeze",
+   "bitcoin price jumps above 80 000 after the us midterms"
   ],
   "META:CALL": [
-   "m a news meta platforms meta to buy ai coding startup conductor"
+   "m a news meta platforms meta to buy ai coding startup conductor",
+   "the nasdaq 100 is outperforming nvidia microsoft amazon meta platforms alphabet and tesla this year here s my favorite l"
   ]
  },
  "fired": {
@@ -2718,7 +2752,12 @@
    "news:exxonmobil nyse xom price target raised to 193 00",
    "news:asx set to soar as wall street rallies trump media tesla spacex tumble oil prices slump",
    "news:oil prices drop below 100 as midterms fuel hope for an end to the iran war",
-   "news:oil dips 8 as investors bet on us iran negotiations"
+   "news:oil dips 8 as investors bet on us iran negotiations",
+   "news:crude oil prices plummet in hopes of a quick end to iran war",
+   "news:oil prices are in freefall now that the democratic sweep is rewriting the iran playbook",
+   "news:us stocks surge and the dow soars 1 500 points as oil prices tumble following the midterm elections",
+   "news:brent crude oil price falls below 100 a barrel on hopes of iran peace deal following democrats midterm v",
+   "news:oil prices fall on vance s post midterms iran war repudiation"
   ],
   "MSFT:CALL:2026-11-09:565": [
    "down-0.15",
@@ -2766,7 +2805,12 @@
    "news:dow jones forecast stocks surge on gridlock bets as oil prices retreat",
    "news:asx set to soar as wall street rallies trump media tesla spacex tumble oil prices slump",
    "news:oil prices drop below 100 as midterms fuel hope for an end to the iran war",
-   "news:oil dips 8 as investors bet on us iran negotiations"
+   "news:oil dips 8 as investors bet on us iran negotiations",
+   "news:crude oil prices plummet in hopes of a quick end to iran war",
+   "news:oil prices are in freefall now that the democratic sweep is rewriting the iran playbook",
+   "news:us stocks surge and the dow soars 1 500 points as oil prices tumble following the midterm elections",
+   "news:brent crude oil price falls below 100 a barrel on hopes of iran peace deal following democrats midterm v",
+   "news:oil prices fall on vance s post midterms iran war repudiation"
   ],
   "JPM:CALL:2026-11-20:360": [
    "down-0.15"
@@ -2777,7 +2821,8 @@
   "AAPL:CALL:2026-11-09:357.5": [
    "news:aapl stock reclaims record highs as democrat win helps apple s china and global business",
    "down-0.15",
-   "down-0.3"
+   "down-0.3",
+   "news:apple reduces internal ai tool usage budgets report"
   ],
   "MSTR:CALL:2026-11-13:157.5": [
    "news:bitcoin price rebounds as midterm uncertainty fades",
@@ -2786,7 +2831,14 @@
    "news:bitcoin rockets above 80 000 for first time since binance hack despite democrats sweep but a historical crash looms",
    "news:strategy gains 7 as bitcoin rallies after midterms ceo touts bitcoin capital cycle",
    "stock1",
-   "news:bernstein cuts price targets on seven bitcoin miners after democrats texas win threatens ai data center boom"
+   "news:bernstein cuts price targets on seven bitcoin miners after democrats texas win threatens ai data center boom",
+   "news:bitcoin rebounds past 80 000 as markets shrug off midterms and binance hack",
+   "news:bitcoin price eyes 80k recovery despite 116m btc etf outflows",
+   "news:bitcoin price holds near 80 000 as democratic sweep sparks short squeeze",
+   "news:bitcoin price jumps above 80 000 after the us midterms",
+   "sharp@2026-11-04T15:44-05:00",
+   "down-0.3",
+   "stock2"
   ],
   "META:CALL:2026-11-09:660": [
    "down-0.15",
@@ -2795,21 +2847,17 @@
    "stock1"
   ],
   "AVGO:PUT:2026-11-09:312.5": [],
-  "PLTR:PUT:2026-11-13:165": []
+  "PLTR:PUT:2026-11-13:165": [
+   "down-0.15"
+  ]
  },
  "stock_level": {
   "RIVN:CALL:2026-11-20:13.5": 3,
   "PFE:CALL:2026-11-20:30": 1,
   "META:CALL:2026-11-09:660": 1,
-  "MSTR:CALL:2026-11-13:157.5": 1
+  "MSTR:CALL:2026-11-13:157.5": 2
  },
  "seen_macro": [
-  "federal reserve keeps interest rates unchanged in final vote before midterms",
-  "fed holds us interest rates steady despite inflation fears",
-  "us federal reserve holds interest rates steady as inflation remains elevated",
-  "fed holds interest rates despite high inflation data as midterms loom",
-  "us federal reserve leaves interest rates unchanged",
-  "federal reserve leaves rates unchanged as workforce productivity rises",
   "u s stocks slightly higher after fed keeps interest rates unchanged",
   "fed leaves interest rates unchanged despite inflation in the us",
   "federal reserve will hold fewer interest rate meetings in coming years",
@@ -3403,14 +3451,20 @@
   "oil prices plunge after jd vance post suggests iran war de escalation",
   "china canada trade agreement extended to late 2028",
   "treasuries advance as traders eye us votes refinancing plans",
-  "upstart is still down 46 this year did today just mark the bottom for upst stock"
+  "upstart is still down 46 this year did today just mark the bottom for upst stock",
+  "october jobs report seen showing resilient labor market",
+  "from iran to trade how the us midterms impact the rest of the world",
+  "beijing ottawa agree to extend deal on canola chinese steel access to late 2028",
+  "wall street rises after democrats win congress data center stocks tumble",
+  "anne o krueger tariff fiasco may save free trade",
+  "friday s jobs report looms as fed weighs december move on interest rates"
  ],
  "sharp": {
   "RIVN:CALL:2026-11-20:13.5": 13.035,
   "PFE:CALL:2026-11-20:30": 30.06,
   "INTC:PUT:2026-11-20:57.5": 59.7,
   "XOM:PUT:2026-11-20:167.5": 169.1,
-  "MSTR:CALL:2026-11-13:157.5": 144.055,
+  "MSTR:CALL:2026-11-13:157.5": 142.27,
   "F:CALL:2026-11-20:11.5": 12.64
  }
 }
