@@ -15,7 +15,7 @@
    "occ": "RIVN261120C00013000",
    "peak_pnl": 0.451,
    "close_pnl": 0.314,
-   "quotes": 106,
+   "quotes": 107,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -34,8 +34,8 @@
    "strength": "6.5",
    "occ": "WMT261120C00132000",
    "peak_pnl": 0.299,
-   "close_pnl": 0.185,
-   "quotes": 34,
+   "close_pnl": 0.201,
+   "quotes": 35,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -54,8 +54,8 @@
    "strength": "8.3",
    "occ": "UBER261120C00072000",
    "peak_pnl": 0.351,
-   "close_pnl": 0.064,
-   "quotes": 34,
+   "close_pnl": 0.016,
+   "quotes": 35,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -74,8 +74,8 @@
    "strength": "7.8",
    "occ": "PFE261120C00029500",
    "peak_pnl": 0.112,
-   "close_pnl": 0.071,
-   "quotes": 34,
+   "close_pnl": 0.112,
+   "quotes": 35,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -94,8 +94,8 @@
    "strength": "7.1",
    "occ": "DIS261120C00124000",
    "peak_pnl": 0.129,
-   "close_pnl": 0.067,
-   "quotes": 31,
+   "close_pnl": 0.043,
+   "quotes": 32,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -114,8 +114,8 @@
    "strength": "7.2",
    "occ": "NVDA261109P00200000",
    "peak_pnl": 0.0,
-   "close_pnl": -0.33,
-   "quotes": 20,
+   "close_pnl": -0.299,
+   "quotes": 21,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -134,8 +134,8 @@
    "strength": "8.0",
    "occ": "RIVN261120C00014000",
    "peak_pnl": 0.025,
-   "close_pnl": -0.088,
-   "quotes": 14,
+   "close_pnl": -0.05,
+   "quotes": 15,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -154,8 +154,8 @@
    "strength": "10.0",
    "occ": "SPY261105C00770000",
    "peak_pnl": 0.0,
-   "close_pnl": -0.118,
-   "quotes": 3,
+   "close_pnl": -0.172,
+   "quotes": 4,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -946,7 +946,8 @@
   "20261104T1312|stocks|earn_in_life|WMT|CALL|135|2026-11-20",
   "20261104T1312|stocks|earn_in_life|UBER|CALL|72.5|2026-11-20",
   "20261104T1312|stocks|open_same_dir|PFE|CALL|30|2026-11-20",
-  "20261104T1312|stocks|open_same_dir|RIVN|CALL|14|2026-11-20"
+  "20261104T1312|stocks|open_same_dir|RIVN|CALL|14|2026-11-20",
+  "20261104T1320|spx|repeat_side|SPY|CALL|770|2026-11-05"
  ],
  "last": {
   "spx|CALL|SPY": "2026-11-04T13:05-05:00",
