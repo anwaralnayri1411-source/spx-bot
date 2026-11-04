@@ -535,7 +535,8 @@
    "intel the pc hangover is just beginning nasdaq intc",
    "amd slides 3 ahead of earnings as pc worries linger intel drops 5 nvidia edges higher",
    "intel stock implodes sheds 434 billion in 4 months",
-   "intel drops 5 nvidia retreats 2 after amd earnings beat and strong 2027 outlook as intel falls 3 amd stock goes nowhere"
+   "intel drops 5 nvidia retreats 2 after amd earnings beat and strong 2027 outlook as intel falls 3 amd stock goes nowhere",
+   "intel just delivered its strongest data center growth in 15 years its comeback is gaining momentum"
   ],
   "CVX:CALL": [
    "stocks see continued downward pressure from ai anxiety and oil prices",
@@ -2237,7 +2238,9 @@
    "why did rivian nasdaq rivn gain 8 47 while xpeng nyse xpev evgo nasdaq evgo and bloom energy nyse be made their own news",
    "will ubs upgrade change rivian s rivn narrative",
    "can one analyst call really move a stock bloom energy nyse be up 9 rivian nasdaq rivn up 8 47 crowdstrike nasdaq crwd do",
-   "rivian automotive stock is gaining wednesday what s going on"
+   "rivian automotive stock is gaining wednesday what s going on",
+   "tesla tsla vs rivian rivn which ev stock offers more upside according to analysts",
+   "a rivian r2 owner shares the good and bad after 2 months"
   ],
   "PFE:CALL": [
    "pfizer q3 preview analysts look to obesity pipeline amid diverging growth expectations pfe nyse",
@@ -2329,7 +2332,8 @@
   "F:CALL": [
    "ford october u s sales slip as electric vehicle deliveries plunge f nyse",
    "ford s next growth engine could already be in your driveway",
-   "will ford s gen 1 cost reductions drive further model e improvements"
+   "will ford s gen 1 cost reductions drive further model e improvements",
+   "tesla s five year stock price turns negative"
   ],
   "XOM:PUT": [
    "oil prices slide as trump plays down prospect of iran strikes after u s election rout",
@@ -2342,17 +2346,48 @@
    "us to loan about a third of heating oil reserve in bid to tame prices",
    "crude oil prices fall what the u s midterms mean for brent",
    "physical oil just went from a bidding war to a fire sale",
-   "oil prices fall as investors weigh u s midterm results iran risks commodities roundup"
+   "oil prices fall as investors weigh u s midterm results iran risks commodities roundup",
+   "stocks rise as democrats flip control of congress",
+   "breaking us oil inventories fall less than expected but prices drop due to elections and hopes for a us iran deal",
+   "bitcoin reclaims 80 000 as oil price drops sharply",
+   "brent crude falls below 100 a barrel for first time in month as european gas prices drop",
+   "dangote breaks ground on 2 5 billion namibia fuel hub for southern africa",
+   "oil prices slide as midterm results ease iran escalation fears",
+   "trump blames losses on gop candidates oil prices and his absence from ballot",
+   "crude oil prices slump as president trump downplays escalation of us iran war",
+   "from data centers to tariffs what the democrats huge midterms win means for the us economy and trump",
+   "tracking u s state and county gas prices in maps and charts updated daily",
+   "will gas prices keep falling experts weigh in abc news",
+   "la orange county gas prices fall again",
+   "oil futures slump as iran peace efforts ease supply fears",
+   "cenovus expects widening canadian crude discount to be temporary won t change output plans",
+   "brent crude oil falls below 100 as vance blames gop election defeat on iran war"
   ],
   "MSFT:CALL": [
    "forget the 12 month squeeze microsoft is primed for an explosive ai payoff",
-   "fy27 q1 press releases investor relations"
+   "fy27 q1 press releases investor relations",
+   "microsoft shares jump to record high last up 6 1"
   ],
   "CVX:PUT": [
    "us to loan about a third of heating oil reserve in bid to tame prices",
    "physical oil just went from a bidding war to a fire sale",
-   "oil prices fall as investors weigh u s midterm results iran risks commodities roundup"
-  ]
+   "oil prices fall as investors weigh u s midterm results iran risks commodities roundup",
+   "breaking us oil inventories fall less than expected but prices drop due to elections and hopes for a us iran deal",
+   "bitcoin reclaims 80 000 as oil price drops sharply",
+   "brent crude falls below 100 a barrel for first time in month as european gas prices drop",
+   "dangote breaks ground on 2 5 billion namibia fuel hub for southern africa",
+   "oil prices slide as midterm results ease iran escalation fears",
+   "trump blames losses on gop candidates oil prices and his absence from ballot",
+   "chevron sees etf outflows of 107 4 million cvx remains under seller pressure",
+   "crude oil prices slump as president trump downplays escalation of us iran war",
+   "will gas prices keep falling experts weigh in abc news",
+   "la orange county gas prices fall again",
+   "oil futures slump as iran peace efforts ease supply fears",
+   "cenovus expects widening canadian crude discount to be temporary won t change output plans",
+   "brent crude oil falls below 100 as vance blames gop election defeat on iran war"
+  ],
+  "JPM:CALL": [],
+  "SOFI:CALL": []
  },
  "fired": {
   "RIVN:CALL:2026-11-20:13.5": [
@@ -2402,16 +2437,10 @@
    "stock1",
    "sharp@2026-11-04T10:15-05:00"
   ],
-  "AMZN:CALL:2026-11-09:275": [
-   "down-0.15",
-   "stock1",
-   "down-0.3",
-   "news:amazon shares surge 8 post midterms amid tech sector optimism amzn",
-   "news:democratic sweep raises data center capx concerns amazon amzn shares jump 7"
-  ],
   "INTC:PUT:2026-11-20:57.5": [
    "up0.25",
-   "sharp@2026-11-04T11:12-05:00"
+   "sharp@2026-11-04T11:12-05:00",
+   "sharp@2026-11-04T11:55-05:00"
   ],
   "F:CALL:2026-11-20:11.5": [
    "down-0.15",
@@ -2421,28 +2450,38 @@
    "down-0.15",
    "news:oil prices slide as trump plays down prospect of iran strikes after u s election rout",
    "news:brent falls to 100 as traders bet on a u s iran deal",
-   "news:oil prices fall as investors weigh u s midterm results iran risks commodities roundup"
+   "news:oil prices fall as investors weigh u s midterm results iran risks commodities roundup",
+   "news:breaking us oil inventories fall less than expected but prices drop due to elections and hopes for a us iran deal",
+   "news:brent crude falls below 100 a barrel for first time in month as european gas prices drop",
+   "news:oil prices slide as midterm results ease iran escalation fears",
+   "news:crude oil prices slump as president trump downplays escalation of us iran war",
+   "up0.25",
+   "news:oil futures slump as iran peace efforts ease supply fears",
+   "news:brent crude oil falls below 100 as vance blames gop election defeat on iran war"
   ],
   "MSFT:CALL:2026-11-09:565": [
-   "down-0.15"
+   "down-0.15",
+   "up0.25"
   ],
   "CVX:PUT:2026-11-13:210": [
    "down-0.15",
-   "news:oil prices fall as investors weigh u s midterm results iran risks commodities roundup"
-  ]
+   "news:oil prices fall as investors weigh u s midterm results iran risks commodities roundup",
+   "news:breaking us oil inventories fall less than expected but prices drop due to elections and hopes for a us iran deal",
+   "news:brent crude falls below 100 a barrel for first time in month as european gas prices drop",
+   "news:oil prices slide as midterm results ease iran escalation fears",
+   "news:crude oil prices slump as president trump downplays escalation of us iran war",
+   "news:oil futures slump as iran peace efforts ease supply fears",
+   "news:brent crude oil falls below 100 as vance blames gop election defeat on iran war"
+  ],
+  "JPM:CALL:2026-11-20:360": [],
+  "SOFI:CALL:2026-11-20:17": [],
+  "AAPL:CALL:2026-11-09:357.5": []
  },
  "stock_level": {
   "RIVN:CALL:2026-11-20:13.5": 3,
-  "PFE:CALL:2026-11-20:30": 1,
-  "AMZN:CALL:2026-11-09:275": 1
+  "PFE:CALL:2026-11-20:30": 1
  },
  "seen_macro": [
-  "federal reserve skips rate hike despite elevated inflation",
-  "watch live warsh speaks after fed votes to keep interest rates steady",
-  "federal reserve holds interest rates steady ahead of elections",
-  "federal reserve keeps interest rates unchanged ahead of midterms despite elevated inflation",
-  "fed pauses after september increase as new vehicle interest rates payments rise",
-  "fed is modestly hawkish will hike interest rates in december rsm us s brusuelas",
   "microsoft earnings live microsoft to report q1 earnings with wall street looking for further azure growth",
   "us federal reserve leaves interest rates unchanged ahead of key midterm elections",
   "trump s midterm panic deepens as the federal reserve refuses to cut interest rates and americans still face soaring pric",
@@ -3036,11 +3075,17 @@
   "trump tariff taxes republicans what us midterm results mean for indian h 1b visa holders russian oil",
   "us brent crude futures fall over 4 amid geopolitical tensions",
   "bank of england set to hike interest rates to 4 to tackle rising inflation",
-  "iran says americans rejected trump s war after gop midterm losses"
+  "iran says americans rejected trump s war after gop midterm losses",
+  "stock markets react to us midterm elections",
+  "us energy outlook shaped by geopolitics data centre growth and policy uncertainty",
+  "stock market today s p 500 nasdaq dow jones jump as democratic election victory triggers wall street rally",
+  "why the stock market is unexpectedly rallying in the wake of the democratic blue wave",
+  "dow jumps by 1 200 points as democrats take control of congress",
+  "wall street turns optimistic after a huge democratic win consumer stocks rise sp500"
  ],
  "sharp": {
   "RIVN:CALL:2026-11-20:13.5": 13.035,
   "PFE:CALL:2026-11-20:30": 30.06,
-  "INTC:PUT:2026-11-20:57.5": 57.74
+  "INTC:PUT:2026-11-20:57.5": 58.23
  }
 }
