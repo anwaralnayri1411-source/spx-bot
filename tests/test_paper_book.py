@@ -33,3 +33,14 @@ def test_trades_and_report(tmp_path, monkeypatch):
 def test_stop_hit():
     mk = lambda xs: pd.DataFrame({"strategy": "x", "day": [f"2026-11-{5 + i:02d}" for i in range(len(xs))], "closed": True, "usd": xs})
     assert pb.stop_hit(mk([-120] * 5)) and pb.stop_hit(mk([-300, 50, -300])) and not pb.stop_hit(mk([-100, 50, -100]))
+
+
+def test_rule_c_observation(tmp_path, monkeypatch):
+    monkeypatch.setattr(pb, "ROOT", str(tmp_path))
+    _write(tmp_path, "rule_c_log.csv", [{"day": "2026-11-06", "c_usd": "120.5"}, {"day": "2026-11-06", "c_usd": "0.0"},
+                                        {"day": "2026-11-09", "c_usd": "-150"}, {"day": "2026-11-04", "c_usd": "99"}])
+    t = pb.trades()
+    g = t[t["strategy"] == "obs_rule_c"]
+    assert len(g) == 3 and round(g["usd"].sum(), 1) == -29.5
+    text, alerts = pb.report(t, datetime(2026, 11, 10, 10, 0, tzinfo=pb.NY))
+    assert "القاعدة C" in text and alerts == []

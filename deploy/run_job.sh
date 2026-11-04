@@ -227,6 +227,11 @@ main() {
       cmds=("$py earnings_runup.py")
       files="earnings_runup_log.csv earnings_runup_state.json messages_earnings_runup.jsonl"
       msg="earnings runup" ;;
+    rule_c)
+      group=rule-c; envs="ALPACA"   # مراقبة القاعدة C (H-NOCHASE للأمام): تسجيل فقط بعد الإغلاق، لا رسائل
+      cmds=("$py rule_c_shadow.py")
+      files="rule_c_log.csv"
+      msg="rule c shadow" ;;
     paper_book)
       group=analyst; envs="TG"   # الدفتر الورقي بالدولار (H-PAPER): أسبوعياً بعد المحلل
       cmds=("$py paper_book.py")

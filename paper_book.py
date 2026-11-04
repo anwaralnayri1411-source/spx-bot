@@ -23,7 +23,8 @@ PAPER_START = "2026-11-05"
 STOP_USD, STOP_STREAK = -500.0, 5
 NAMES = {"spx": "SPX/SPY (البوت)", "stocks": "الشركات (البوت)", "levels": "فرص المستويات (تجريبية)",
          "runup": "ما قبل الأرباح (تجريبية)", "blocked_earn": "محجوب R1: أرباح داخل العقد (لو أُرسل)",
-         "blocked_btc": "محجوب R2: ضد البتكوين (لو أُرسل)"}
+         "blocked_btc": "محجوب R2: ضد البتكوين (لو أُرسل)",
+         "obs_rule_c": "القاعدة C: انتظار كسر نطاق أول 30د بشمعة 5د (لو اتُّبعت، مقابل SPX/SPY)"}
 
 
 def _read(name):
@@ -70,6 +71,11 @@ def trades(start=PAPER_START):
             if pd.notna(x):
                 out.append({"strategy": "blocked_earn" if r.tag == "earn_in_life" else "blocked_btc", "day": r.entry_time[:10],
                             "closed": r.out in ("tp", "stop"), "usd": float(r.entry) * 100 * x})
+    rc = _read("rule_c_log.csv")
+    if len(rc):                                    # مراقبة القاعدة C (H-NOCHASE): بلا دخول = 0$
+        for r in rc[rc["day"] >= start].itertuples():
+            x = _num(pd.Series([r.c_usd])).iloc[0]
+            out.append({"strategy": "obs_rule_c", "day": r.day, "closed": True, "usd": float(x) if pd.notna(x) else 0.0})
     return pd.DataFrame(out, columns=["strategy", "day", "closed", "usd"])
 
 
@@ -96,7 +102,7 @@ def report(t, now):
         wins = int((cl["usd"] > 0).sum())
         L.append(f"• **{name}**: {len(g)} صفقة ({len(cl)} محسومة، {wins} رابحة) | الصافي المحسوم **{cl['usd'].sum():+,.0f}$**"
                  f" | المفتوح على الورق {g[~g['closed']]['usd'].sum():+,.0f}$")
-        if not k.startswith("blocked") and stop_hit(g):
+        if not k.startswith(("blocked", "obs_")) and stop_hit(g):
             alerts.append(name)
     be, bb = t[t["strategy"] == "blocked_earn"], t[t["strategy"] == "blocked_btc"]
     L += ["", "**أثر القواعد الجديدة:** المحجوب لو أُرسل — سالب = القاعدة حمتنا، موجب = فوّتت ربحاً."]
