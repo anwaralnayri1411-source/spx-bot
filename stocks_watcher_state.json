@@ -2376,7 +2376,11 @@
    "devon energy q3 preview surging fuel prices expected to fuel earnings dvn nyse",
    "oil prices tumble below 100 on post election peace hopes",
    "us stocks surge and the dow soars 1 500 points as brent oil s price drops below 95 per barrel",
-   "oil prices plunge 9 after us midterms vance remarks as israeli stocks tumble"
+   "oil prices plunge 9 after us midterms vance remarks as israeli stocks tumble",
+   "u s consumers confront the highest gas prices ever on an election day",
+   "fire shuts equinor s visund platform in norwegian north sea",
+   "oil uscrude price forecast for today tomorrow next week and next 30 days",
+   "sugar prices pressured by weakness in crude oil"
   ],
   "MSFT:CALL": [
    "forget the 12 month squeeze microsoft is primed for an explosive ai payoff",
@@ -2413,7 +2417,10 @@
    "oil prices tumble below 100 on post election peace hopes",
    "us stocks surge and the dow soars 1 500 points as brent oil s price drops below 95 per barrel",
    "chevron corp stock cvx moved down by 4 02 on nov 4 what signal does it send",
-   "oil prices plunge 9 after us midterms vance remarks as israeli stocks tumble"
+   "oil prices plunge 9 after us midterms vance remarks as israeli stocks tumble",
+   "u s consumers confront the highest gas prices ever on an election day",
+   "fire shuts equinor s visund platform in norwegian north sea",
+   "sugar prices pressured by weakness in crude oil"
   ],
   "JPM:CALL": [],
   "SOFI:CALL": [
@@ -2526,7 +2533,8 @@
    "news:oil prices tumble below 100 on post election peace hopes",
    "up0.25",
    "news:us stocks surge and the dow soars 1 500 points as brent oil s price drops below 95 per barrel",
-   "news:oil prices plunge 9 after us midterms vance remarks as israeli stocks tumble"
+   "news:oil prices plunge 9 after us midterms vance remarks as israeli stocks tumble",
+   "news:fire shuts equinor s visund platform in norwegian north sea"
   ],
   "JPM:CALL:2026-11-20:360": [],
   "SOFI:CALL:2026-11-20:17": [],
@@ -2541,10 +2549,6 @@
   "PFE:CALL:2026-11-20:30": 1
  },
  "seen_macro": [
-  "fed holds key interest rate at 3 9 as inflation remains elevated",
-  "bitcoin price returns to 81k as federal reserve holds rates steady",
-  "federal reserve holds interest rates steady despite elevated inflation",
-  "federal reserve keeps rates unchanged despite elevated inflation gives little signal of next move",
   "us stocks remain steady after the federal reserve says it won t raise interest rates",
   "federal reserve holds rates at 3 75 4 two officials favor another hike",
   "federal reserve holds interest rates steady despite inflation concerns",
@@ -3140,7 +3144,11 @@
   "stock market surges after midterms why wall street welcomes democratic congress",
   "dow jones forecast dow surges 1 200 points as wall street bets on political gridlock",
   "us stocks rally and the dow soars more than 1 000 points",
-  "oil prices plunge 9 after us midterms vance remarks as israeli stocks tumble"
+  "oil prices plunge 9 after us midterms vance remarks as israeli stocks tumble",
+  "buckle up inflation pain could linger even after the iran war ends economists say abc news",
+  "here s a list of the individuals including james comey targeted by the trump administration abc news",
+  "canada china extend tariff deal aim to boost canadian exports",
+  "nasdaq forecast today tech stocks rally after wall street reassesses ai spending and regulation"
  ],
  "sharp": {
   "RIVN:CALL:2026-11-20:13.5": 13.035,
