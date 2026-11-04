@@ -2110,3 +2110,10 @@ time,pos_id,ticker,side,event,detail,entry,val,pnl,spot,need,tdays,advice,reason
 2026-11-04T15:50-05:00,XOM:PUT:2026-11-20:167.5,XOM,PUT,news,against/medium: Oil prices fall on Vance's post-midterms Iran war repudiation - Politico,3.51,3.98,0.1339,169.63,0.0332,13,فكّر بالخروج,خبر ضد العقد
 2026-11-04T15:50-05:00,CVX:PUT:2026-11-13:210,CVX,PUT,news,against/medium: Brent crude oil price falls below $100 a barrel on hopes of Iran peace deal following Democrats' midterm v - The Economic Times,1.8,1.75,-0.0278,217.08,0.0409,8,فكّر بالخروج,خبر ضد العقد
 2026-11-04T15:50-05:00,CVX:PUT:2026-11-13:210,CVX,PUT,news,against/medium: Oil prices fall on Vance's post-midterms Iran war repudiation - Politico,1.8,1.75,-0.0278,217.08,0.0409,8,فكّر بالخروج,خبر ضد العقد
+2026-11-04T15:52-05:00,META:CALL:2026-11-09:660,META,CALL,sharp,-0.87% في 15د,3.09,,,627.98,0.0559,4,فكّر بالخروج,السهم يتحرك ضدك
+2026-11-04T15:54-05:00,AAPL:CALL:2026-11-09:357.5,AAPL,CALL,stock,-1.03% منذ الدخول,2.71,,,350.005,0.0292,4,أبقِ,لا جديد يغيّر فكرة الصفقة
+2026-11-04T15:55-05:00,AAPL:CALL:2026-11-09:357.5,AAPL,CALL,sharp,-0.75% في 15د,2.71,,,349.02,0.0321,4,فكّر بالخروج,السهم يتحرك ضدك
+2026-11-04T15:56-05:00,XOM:PUT:2026-11-20:167.5,XOM,PUT,news,with/medium: Oil Plunges as Election Shifts Iran Outlook - Rigzone,3.51,3.82,0.0883,169.75,0.0339,13,أبقِ,الخبر في صالح العقد
+2026-11-04T15:56-05:00,CVX:PUT:2026-11-13:210,CVX,PUT,news,against/medium: Oil Plunges as Election Shifts Iran Outlook - Rigzone,1.8,1.68,-0.0667,217.29,0.0418,8,فكّر بالخروج,خبر ضد العقد
+2026-11-04T15:56-05:00,XOM:PUT:2026-11-20:167.5,XOM,PUT,macro,with/strong/medium: Oil prices plummet as Democratic sweep signals US policy shift on Iran - Crypto Briefing,3.51,3.82,0.0883,169.75,0.0339,13,أبقِ,الخبر في صالح العقد
+2026-11-04T15:56-05:00,CVX:PUT:2026-11-13:210,CVX,PUT,macro,with/strong/medium: Oil prices plummet as Democratic sweep signals US policy shift on Iran - Crypto Briefing,1.8,1.68,-0.0667,217.29,0.0418,8,أبقِ,الخبر في صالح العقد

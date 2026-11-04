@@ -2469,7 +2469,9 @@
    "delta vs united could falling oil prices set the stage for an airline stock comeback in 2027",
    "brent crude oil price falls below 100 a barrel on hopes of iran peace deal following democrats midterm v",
    "toyota conocophillips on deck thursday as auto demand oil prices face test",
-   "oil prices fall on vance s post midterms iran war repudiation"
+   "oil prices fall on vance s post midterms iran war repudiation",
+   "brazil biodiesel outlook b16 mandate likely delayed until august 2027 as diesel subsidies and el ni o raise i",
+   "oil plunges as election shifts iran outlook"
   ],
   "MSFT:CALL": [
    "forget the 12 month squeeze microsoft is primed for an explosive ai payoff",
@@ -2585,7 +2587,9 @@
    "delta vs united could falling oil prices set the stage for an airline stock comeback in 2027",
    "brent crude oil price falls below 100 a barrel on hopes of iran peace deal following democrats midterm v",
    "toyota conocophillips on deck thursday as auto demand oil prices face test",
-   "oil prices fall on vance s post midterms iran war repudiation"
+   "oil prices fall on vance s post midterms iran war repudiation",
+   "brazil biodiesel outlook b16 mandate likely delayed until august 2027 as diesel subsidies and el ni o raise i",
+   "oil plunges as election shifts iran outlook"
   ],
   "JPM:CALL": [
    "which profit leader pays the most with yields between 0 31 and 2 32 bank of america nyse bac exxon mobil nyse xom johnso",
@@ -2637,11 +2641,14 @@
    "bitcoin sentiment turns bearish amid u s election uncertainty despite price topping 79 000",
    "bitcoin price eyes 80k recovery despite 116m btc etf outflows",
    "bitcoin price holds near 80 000 as democratic sweep sparks short squeeze",
-   "bitcoin price jumps above 80 000 after the us midterms"
+   "bitcoin price jumps above 80 000 after the us midterms",
+   "bitcoin news traders bet 230 million on a rebound as pepeto s presale passes 11 2 million",
+   "bitcoin price prediction btc needs 80k to extend the midterm bounce while alphapepe prepares ai dex v2 before listing"
   ],
   "META:CALL": [
    "m a news meta platforms meta to buy ai coding startup conductor",
-   "the nasdaq 100 is outperforming nvidia microsoft amazon meta platforms alphabet and tesla this year here s my favorite l"
+   "the nasdaq 100 is outperforming nvidia microsoft amazon meta platforms alphabet and tesla this year here s my favorite l",
+   "meta platforms inc meta stock forecasts"
   ]
  },
  "fired": {
@@ -2757,7 +2764,8 @@
    "news:oil prices are in freefall now that the democratic sweep is rewriting the iran playbook",
    "news:us stocks surge and the dow soars 1 500 points as oil prices tumble following the midterm elections",
    "news:brent crude oil price falls below 100 a barrel on hopes of iran peace deal following democrats midterm v",
-   "news:oil prices fall on vance s post midterms iran war repudiation"
+   "news:oil prices fall on vance s post midterms iran war repudiation",
+   "news:oil plunges as election shifts iran outlook"
   ],
   "MSFT:CALL:2026-11-09:565": [
    "down-0.15",
@@ -2810,7 +2818,8 @@
    "news:oil prices are in freefall now that the democratic sweep is rewriting the iran playbook",
    "news:us stocks surge and the dow soars 1 500 points as oil prices tumble following the midterm elections",
    "news:brent crude oil price falls below 100 a barrel on hopes of iran peace deal following democrats midterm v",
-   "news:oil prices fall on vance s post midterms iran war repudiation"
+   "news:oil prices fall on vance s post midterms iran war repudiation",
+   "news:oil plunges as election shifts iran outlook"
   ],
   "JPM:CALL:2026-11-20:360": [
    "down-0.15"
@@ -2822,7 +2831,9 @@
    "news:aapl stock reclaims record highs as democrat win helps apple s china and global business",
    "down-0.15",
    "down-0.3",
-   "news:apple reduces internal ai tool usage budgets report"
+   "news:apple reduces internal ai tool usage budgets report",
+   "stock1",
+   "sharp@2026-11-04T15:55-05:00"
   ],
   "MSTR:CALL:2026-11-13:157.5": [
    "news:bitcoin price rebounds as midterm uncertainty fades",
@@ -2844,7 +2855,8 @@
    "down-0.15",
    "news:m a news meta platforms meta to buy ai coding startup conductor",
    "down-0.3",
-   "stock1"
+   "stock1",
+   "sharp@2026-11-04T15:52-05:00"
   ],
   "AVGO:PUT:2026-11-09:312.5": [],
   "PLTR:PUT:2026-11-13:165": [
@@ -2855,10 +2867,10 @@
   "RIVN:CALL:2026-11-20:13.5": 3,
   "PFE:CALL:2026-11-20:30": 1,
   "META:CALL:2026-11-09:660": 1,
-  "MSTR:CALL:2026-11-13:157.5": 2
+  "MSTR:CALL:2026-11-13:157.5": 2,
+  "AAPL:CALL:2026-11-09:357.5": 1
  },
  "seen_macro": [
-  "u s stocks slightly higher after fed keeps interest rates unchanged",
   "fed leaves interest rates unchanged despite inflation in the us",
   "federal reserve will hold fewer interest rate meetings in coming years",
   "fed keeps interest rates unchanged but two officials dissented in favor of a rate hike",
@@ -3457,7 +3469,8 @@
   "beijing ottawa agree to extend deal on canola chinese steel access to late 2028",
   "wall street rises after democrats win congress data center stocks tumble",
   "anne o krueger tariff fiasco may save free trade",
-  "friday s jobs report looms as fed weighs december move on interest rates"
+  "friday s jobs report looms as fed weighs december move on interest rates",
+  "oil prices plummet as democratic sweep signals us policy shift on iran"
  ],
  "sharp": {
   "RIVN:CALL:2026-11-20:13.5": 13.035,
@@ -3465,6 +3478,8 @@
   "INTC:PUT:2026-11-20:57.5": 59.7,
   "XOM:PUT:2026-11-20:167.5": 169.1,
   "MSTR:CALL:2026-11-13:157.5": 142.27,
-  "F:CALL:2026-11-20:11.5": 12.64
+  "F:CALL:2026-11-20:11.5": 12.64,
+  "META:CALL:2026-11-09:660": 627.98,
+  "AAPL:CALL:2026-11-09:357.5": 349.02
  }
 }
