@@ -11,38 +11,38 @@ spx_monitor|Mon..Fri *-*-* 13..21:00/5:00
 stocks|Mon..Fri *-*-* 13..21:12/15:00
 commands|*-*-* *:03/15:00
 preopen|Mon..Fri *-*-* 12,13:41:00;Mon..Fri *-*-* 13,14:03,23:00
-contract_shadow|Mon..Fri *-*-* 13..21:02/5:00
-exit_shadow|Mon..Fri *-*-* 13..21:03/5:00
+# متوقف (H-PAPER 4/11/2026، تقليل الضجيج): contract_shadow|Mon..Fri *-*-* 13..21:02/5:00
+# متوقف (H-PAPER 4/11/2026، تقليل الضجيج): exit_shadow|Mon..Fri *-*-* 13..21:03/5:00
 blocked_shadow|Mon..Fri *-*-* 13..21:07/5:00
-pro_rules_shadow|Mon..Fri *-*-* 13..21:08/5:00
-structure_shadow|Mon..Fri *-*-* 13..21:09/5:00
-candidates_shadow|Mon..Fri *-*-* 13..21:01/5:00
+# متوقف (H-PAPER 4/11/2026، تقليل الضجيج): pro_rules_shadow|Mon..Fri *-*-* 13..21:08/5:00
+# متوقف (H-PAPER 4/11/2026، تقليل الضجيج): structure_shadow|Mon..Fri *-*-* 13..21:09/5:00
+# متوقف (H-PAPER 4/11/2026، تقليل الضجيج): candidates_shadow|Mon..Fri *-*-* 13..21:01/5:00
 flow_shadow|Mon..Fri *-*-* 19,20:45:00
-best_shadow|Mon..Fri *-*-* 13..21:00/5:20
-gex|Mon..Fri *-*-* 13:50:00;Mon..Fri *-*-* 21:45:00
-shadow|Mon..Fri *-*-* 21:40:00
+# متوقف (H-PAPER 4/11/2026، تقليل الضجيج): best_shadow|Mon..Fri *-*-* 13..21:00/5:20
+# متوقف (H-PAPER 4/11/2026، تقليل الضجيج): gex|Mon..Fri *-*-* 13:50:00;Mon..Fri *-*-* 21:45:00
+# متوقف (H-PAPER 4/11/2026، تقليل الضجيج): shadow|Mon..Fri *-*-* 21:40:00
 weekly|Fri *-*-* 21:30:00
-news_shadow|Mon..Fri *-*-* 21:25:00
-ladder_exit|Mon..Fri *-*-* 22:15:00
-stocks_sector|Mon..Fri *-*-* 22:40:00
+# متوقف (H-PAPER 4/11/2026، تقليل الضجيج): news_shadow|Mon..Fri *-*-* 21:25:00
+# متوقف (H-PAPER 4/11/2026، تقليل الضجيج): ladder_exit|Mon..Fri *-*-* 22:15:00
+# متوقف (H-PAPER 4/11/2026، تقليل الضجيج): stocks_sector|Mon..Fri *-*-* 22:40:00
 tasty_health|Mon..Fri *-*-* 13..20:07/15:00
 market_read|Mon..Fri *-*-* 14,15:05:00;Mon..Fri *-*-* 17,18:00:00
 market_live|Mon..Fri *-*-* 13..20:00/5:00
-preopen_shadow|Mon..Fri *-*-* 12,13:55:00;Mon..Fri *-*-* 13,14:46:00;Mon..Fri *-*-* 20,21:20:00
+# متوقف (H-PAPER 4/11/2026، تقليل الضجيج): preopen_shadow|Mon..Fri *-*-* 12,13:55:00;Mon..Fri *-*-* 13,14:46:00;Mon..Fri *-*-* 20,21:20:00
 stocks_watcher|Mon..Fri *-*-* 11..20:00/5:00
-momentum_shadow|Mon..Fri *-*-* 11..20:00/5:00
-live_watcher|Mon..Fri *-*-* 11..20:00/5:00
+# متوقف (H-PAPER 4/11/2026، تقليل الضجيج): momentum_shadow|Mon..Fri *-*-* 11..20:00/5:00
+# متوقف (H-PAPER 4/11/2026، تقليل الضجيج): live_watcher|Mon..Fri *-*-* 11..20:00/5:00
 news_memory|Mon..Fri *-*-* 11..22:09/30:00
 news_memory_eval|Mon..Fri *-*-* 22:50:00
-news_score|Mon..Fri *-*-* 22:55:00
+# متوقف (H-PAPER 4/11/2026، تقليل الضجيج): news_score|Mon..Fri *-*-* 22:55:00
 spx_cache|Mon..Fri *-*-* 22:20:00
-tail_log|Mon..Fri *-*-* 22:30:00
-camarilla_shadow|Mon..Fri *-*-* 22:35:00
-real_price_check|Sat *-*-* 08:00:00
-stocks_exit_study|Sat *-*-* 08:30:00
-stocks_contract_replay|Sat *-*-* 08:45:00
-shadow_manager|Mon..Fri *-*-* 20,21:25:00
-weekly_learning|Sat *-*-* 09:00:00
+# متوقف (H-PAPER 4/11/2026، تقليل الضجيج): tail_log|Mon..Fri *-*-* 22:30:00
+# متوقف (H-PAPER 4/11/2026، تقليل الضجيج): camarilla_shadow|Mon..Fri *-*-* 22:35:00
+# متوقف (H-PAPER 4/11/2026، تقليل الضجيج): real_price_check|Sat *-*-* 08:00:00
+# متوقف (H-PAPER 4/11/2026، تقليل الضجيج): stocks_exit_study|Sat *-*-* 08:30:00
+# متوقف (H-PAPER 4/11/2026، تقليل الضجيج): stocks_contract_replay|Sat *-*-* 08:45:00
+# متوقف (H-PAPER 4/11/2026، تقليل الضجيج): shadow_manager|Mon..Fri *-*-* 20,21:25:00
+# متوقف (H-PAPER 4/11/2026، تقليل الضجيج): weekly_learning|Sat *-*-* 09:00:00
 analyst|Mon..Fri *-*-* 20,21:50:00
 analyst_weekly|Sat *-*-* 09:40:00
 news_watch|*-*-* *:04/30:00
@@ -52,11 +52,11 @@ level_signals|Mon..Fri *-*-* 13..21:03/5:00
 news_decay|Sat *-*-* 08:15:00
 confirm_shadow|Mon..Fri *-*-* 14,15:35:00
 confirm_eval|Mon..Fri *-*-* 21:35:00
-strategy_lab|Sat *-*-1..7 10:00:00
-levels_study|Sat *-*-1..7 10:30:00
-signals_batch|Sat *-*-1..7 11:00:00
-long_price_calibration|Sat *-*-1..7 12:00:00
-replication|Sat *-*-1..7 13:00:00
+# متوقف (H-PAPER 4/11/2026، تقليل الضجيج): strategy_lab|Sat *-*-1..7 10:00:00
+# متوقف (H-PAPER 4/11/2026، تقليل الضجيج): levels_study|Sat *-*-1..7 10:30:00
+# متوقف (H-PAPER 4/11/2026، تقليل الضجيج): signals_batch|Sat *-*-1..7 11:00:00
+# متوقف (H-PAPER 4/11/2026، تقليل الضجيج): long_price_calibration|Sat *-*-1..7 12:00:00
+# متوقف (H-PAPER 4/11/2026، تقليل الضجيج): replication|Sat *-*-1..7 13:00:00
 '
 # المهام الطويلة (آخر ثلاث): المؤقت يعيد تشغيلها كل 5 دقائق إن توقفت (حد 345 دقيقة في الكود)، ولا يبدأ نسخة ثانية
 # إن كانت تعمل. run_job.sh يتجاهلها خارج 7:00–16:00 نيويورك.
@@ -88,6 +88,7 @@ EOF
 
 echo "$SCHEDULE" | while IFS='|' read -r job cal; do
   [ -n "$job" ] || continue
+  case "$job" in \#*) continue ;; esac   # سطر معلّق = مهمة متوقفة
   {
     printf '[Unit]\nDescription=spx-bot timer %s\n\n[Timer]\n' "$job"
     IFS=';' read -ra parts <<< "$cal"
@@ -137,6 +138,7 @@ done
 systemctl daemon-reload
 echo "$SCHEDULE" | while IFS='|' read -r job cal; do
   [ -n "$job" ] || continue
+  case "$job" in \#*) continue ;; esac   # سطر معلّق = مهمة متوقفة
   systemctl enable --now "spxbot-$job.timer" >/dev/null 2>&1
 done
 systemctl enable --now spxbot-pip.timer >/dev/null 2>&1
