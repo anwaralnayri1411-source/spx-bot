@@ -219,6 +219,28 @@
    "time": "2026-11-04T13:29-05:00",
    "price": null,
    "qty": null
+  },
+  "PLTR:PUT:2026-11-13:165|2026-11-04": {
+   "mode": "watch",
+   "ticker": "PLTR",
+   "side": "PUT",
+   "exp": "2026-11-13",
+   "strike": 165.0,
+   "day": "2026-11-04",
+   "time": "2026-11-04T15:15-05:00",
+   "price": null,
+   "qty": null
+  },
+  "AVGO:PUT:2026-11-09:312.5|2026-11-04": {
+   "mode": "watch",
+   "ticker": "AVGO",
+   "side": "PUT",
+   "exp": "2026-11-09",
+   "strike": 312.5,
+   "day": "2026-11-04",
+   "time": "2026-11-04T15:16-05:00",
+   "price": null,
+   "qty": null
   }
  }
 }
