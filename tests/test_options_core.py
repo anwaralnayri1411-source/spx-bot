@@ -223,3 +223,15 @@ def test_exp_label_and_ticket_date():
 def test_late_entry_includes_close_minute():
     n = datetime.fromisoformat("2026-11-02T16:00-05:00")
     assert ob.no_entry(n) <= (n.hour, n.minute) <= ob.session_end(n)
+
+
+def test_index_levels_spot_vol(monkeypatch):
+    """الكول يفقد تذبذباً حين يصعد المؤشر، فهدفه أبعد من نموذج التذبذب الثابت، ووقفه أبعد أيضاً (التذبذب يرتفع عند الهبوط)."""
+    import options_bot as ob
+    Y = 365 * 24 * 60
+    k = {"spot": 7702.3, "T": 374 / Y, "iv": 0.15, "strike": 7745.0, "price": 3.84}
+    tp, sl = ob.index_levels(k, "CALL")
+    monkeypatch.setattr(ob, "SPOT_VOL_BETA", {"CALL": 0.0, "PUT": 0.0})
+    tp0, sl0 = ob.index_levels(k, "CALL")
+    assert tp > tp0 + 3 and sl < sl0 - 3
+    assert 7715 < tp < 7725                                  # حالة 4/11: المؤشر بلغ 7,710 والعقد عند التعادل

@@ -51,6 +51,9 @@ MAX_QTY = 5                 # سقف عدد العقود المقترح
 TARGET_MAX_EM = 0.25         # أقصى مسافة لهدف الخطة من نقطة الدخول (جزء من الحركة اليومية المتوقعة)
 TARGET_MIN_EM = 0.08         # أقل مسافة معقولة للهدف
 HOLD_MIN = 30               # افتراض مدة الاحتفاظ بالعقد لحساب مستوى هدف المؤشر (دقيقة)
+# تغيّر لوغ التذبذب لكل +1% في المؤشر (سترايك ثابت، عقود اليوم، دلتا 0.12–0.45). معايرة من لقطات spx_flow_raw
+# 2–4/11/2026 (3 أيام، تقريبية): الكول يفقد تذبذباً حين يصعد المؤشر، والبوت يكسب تذبذباً حين يهبط. يُعاد قياسها مع تراكم البيانات.
+SPOT_VOL_BETA = {"CALL": -0.45, "PUT": -0.13}
 WINDOW_START = (9, 45)      # نافذة التشغيل بتوقيت نيويورك
 WINDOW_END = (16, 0)
 NO_NEW_ENTRY = (15, 0)      # لا دخول جديد بعد هذا الوقت
@@ -1161,9 +1164,12 @@ def index_levels(k, side, hold_min=None):
         iv = (lo_i + hi_i) / 2
     T2 = max(T0 - (hold_min or HOLD_MIN) / (365 * 24 * 60), 5 / (365 * 24 * 60))
     sign = 1 if side == "CALL" else -1
+    beta = SPOT_VOL_BETA.get(side, 0.0)
+    # التذبذب يتغير مع المؤشر، لا ثابت (الأثر محصور في ±1.5% حيث قيست المعايرة)
+    iv_at = lambda x: iv * math.exp(beta * 100 * max(-0.015, min(0.015, x / S0 - 1)))
 
     def solve(target, T, lo, hi):
-        g = lambda x: sign * (bs_price(x, K, T, iv, side) - target)
+        g = lambda x: sign * (bs_price(x, K, T, iv_at(x), side) - target)
         if not (g(lo) < 0 < g(hi)):
             return None
         for _ in range(60):
