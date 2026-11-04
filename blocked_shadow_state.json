@@ -14,8 +14,8 @@
    "strength": "8.0",
    "occ": "RIVN261120C00013000",
    "peak_pnl": 0.451,
-   "close_pnl": 0.304,
-   "quotes": 114,
+   "close_pnl": 0.284,
+   "quotes": 115,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -33,9 +33,9 @@
    "edge": "5.0",
    "strength": "6.5",
    "occ": "WMT261120C00132000",
-   "peak_pnl": 0.299,
-   "close_pnl": 0.232,
-   "quotes": 42,
+   "peak_pnl": 0.312,
+   "close_pnl": 0.312,
+   "quotes": 43,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -54,8 +54,8 @@
    "strength": "8.3",
    "occ": "UBER261120C00072000",
    "peak_pnl": 0.351,
-   "close_pnl": -0.032,
-   "quotes": 42,
+   "close_pnl": -0.048,
+   "quotes": 43,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -74,8 +74,8 @@
    "strength": "7.8",
    "occ": "PFE261120C00029500",
    "peak_pnl": 0.245,
-   "close_pnl": 0.204,
-   "quotes": 42,
+   "close_pnl": 0.224,
+   "quotes": 43,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -95,7 +95,7 @@
    "occ": "DIS261120C00124000",
    "peak_pnl": 0.129,
    "close_pnl": 0.014,
-   "quotes": 39,
+   "quotes": 40,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -114,8 +114,8 @@
    "strength": "7.2",
    "occ": "NVDA261109P00200000",
    "peak_pnl": 0.0,
-   "close_pnl": -0.244,
-   "quotes": 28,
+   "close_pnl": -0.33,
+   "quotes": 29,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -134,8 +134,8 @@
    "strength": "8.0",
    "occ": "RIVN261120C00014000",
    "peak_pnl": 0.025,
-   "close_pnl": -0.125,
-   "quotes": 22,
+   "close_pnl": -0.088,
+   "quotes": 23,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -154,8 +154,8 @@
    "strength": "10.0",
    "occ": "SPY261105C00770000",
    "peak_pnl": 0.0,
-   "close_pnl": -0.392,
-   "quotes": 11,
+   "close_pnl": -0.27,
+   "quotes": 12,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -965,7 +965,13 @@
   "20261104T1342|stocks|open_same_dir|RIVN|CALL|13.5|2026-11-20",
   "20261104T1342|stocks|open_same_dir|NVDA|PUT|200|2026-11-11",
   "20261104T1350|spx|repeat_side|SPY|CALL|770|2026-11-05",
-  "20261104T1355|spx|repeat_side|SPY|CALL|765|2026-11-05"
+  "20261104T1355|spx|repeat_side|SPY|CALL|765|2026-11-05",
+  "20261104T1405|spx|repeat_side|SPY|CALL|770|2026-11-05",
+  "20261104T1357|stocks|earn_in_life|DIS|CALL|122|2026-11-20",
+  "20261104T1357|stocks|earn_in_life|WMT|CALL|135|2026-11-20",
+  "20261104T1357|stocks|earn_in_life|UBER|CALL|72.5|2026-11-20",
+  "20261104T1357|stocks|open_same_dir|PFE|CALL|30|2026-11-20",
+  "20261104T1357|stocks|open_same_dir|NVDA|PUT|200|2026-11-09"
  ],
  "last": {
   "spx|CALL|SPY": "2026-11-04T13:05-05:00",
