@@ -536,7 +536,8 @@
    "amd slides 3 ahead of earnings as pc worries linger intel drops 5 nvidia edges higher",
    "intel stock implodes sheds 434 billion in 4 months",
    "intel drops 5 nvidia retreats 2 after amd earnings beat and strong 2027 outlook as intel falls 3 amd stock goes nowhere",
-   "intel just delivered its strongest data center growth in 15 years its comeback is gaining momentum"
+   "intel just delivered its strongest data center growth in 15 years its comeback is gaining momentum",
+   "intel intc us officer buys us 9 71 million in common stock"
   ],
   "CVX:CALL": [
    "stocks see continued downward pressure from ai anxiety and oil prices",
@@ -2125,7 +2126,8 @@
    "jpmorgan u s quality factor etf jqua adds apple and microsoft on oct 26",
    "apple stock consolidates near 346 38 support as buyer support persists",
    "apple s 2 000 iphone duo faces crackgate days after launch",
-   "apple aapl unveils m6 macs with siri ai and creator studio upgrades"
+   "apple aapl unveils m6 macs with siri ai and creator studio upgrades",
+   "aapl stock reclaims record highs as democrat win helps apple s china and global business"
   ],
   "BA:PUT": [
    "boeing nyse ba sets new 52 week low on disappointing earnings",
@@ -2333,7 +2335,8 @@
    "ford october u s sales slip as electric vehicle deliveries plunge f nyse",
    "ford s next growth engine could already be in your driveway",
    "will ford s gen 1 cost reductions drive further model e improvements",
-   "tesla s five year stock price turns negative"
+   "tesla s five year stock price turns negative",
+   "ford motor f sees slight october sales decline amid electric v"
   ],
   "XOM:PUT": [
    "oil prices slide as trump plays down prospect of iran strikes after u s election rout",
@@ -2361,12 +2364,25 @@
    "la orange county gas prices fall again",
    "oil futures slump as iran peace efforts ease supply fears",
    "cenovus expects widening canadian crude discount to be temporary won t change output plans",
-   "brent crude oil falls below 100 as vance blames gop election defeat on iran war"
+   "brent crude oil falls below 100 as vance blames gop election defeat on iran war",
+   "first impact of us elections oil prices begin to fall",
+   "crude oil prices fall below 90 a barrel as vance blames gop election defeat on iran war",
+   "new jersey moves to block trump s russian diesel imports",
+   "brent oil slides to 94 on iran uncertainty after us midterms",
+   "oil prices drop below 100 for the first time in nearly a month",
+   "us to loan about a third of heating oil reserve in bid to tame prices by reuters",
+   "analysts offer insights on energy companies chevron cvx and exxon mobil xom",
+   "oil falls as traders parse iran war outlook after midterms",
+   "devon energy q3 preview surging fuel prices expected to fuel earnings dvn nyse",
+   "oil prices tumble below 100 on post election peace hopes",
+   "us stocks surge and the dow soars 1 500 points as brent oil s price drops below 95 per barrel",
+   "oil prices plunge 9 after us midterms vance remarks as israeli stocks tumble"
   ],
   "MSFT:CALL": [
    "forget the 12 month squeeze microsoft is primed for an explosive ai payoff",
    "fy27 q1 press releases investor relations",
-   "microsoft shares jump to record high last up 6 1"
+   "microsoft shares jump to record high last up 6 1",
+   "msft stock surges above 557 to record high as midterms lift microsoft and big tech"
   ],
   "CVX:PUT": [
    "us to loan about a third of heating oil reserve in bid to tame prices",
@@ -2384,10 +2400,28 @@
    "la orange county gas prices fall again",
    "oil futures slump as iran peace efforts ease supply fears",
    "cenovus expects widening canadian crude discount to be temporary won t change output plans",
-   "brent crude oil falls below 100 as vance blames gop election defeat on iran war"
+   "brent crude oil falls below 100 as vance blames gop election defeat on iran war",
+   "first impact of us elections oil prices begin to fall",
+   "crude oil prices fall below 90 a barrel as vance blames gop election defeat on iran war",
+   "new jersey moves to block trump s russian diesel imports",
+   "brent oil slides to 94 on iran uncertainty after us midterms",
+   "oil prices drop below 100 for the first time in nearly a month",
+   "us to loan about a third of heating oil reserve in bid to tame prices by reuters",
+   "analysts offer insights on energy companies chevron cvx and exxon mobil xom",
+   "oil falls as traders parse iran war outlook after midterms",
+   "devon energy q3 preview surging fuel prices expected to fuel earnings dvn nyse",
+   "oil prices tumble below 100 on post election peace hopes",
+   "us stocks surge and the dow soars 1 500 points as brent oil s price drops below 95 per barrel",
+   "chevron corp stock cvx moved down by 4 02 on nov 4 what signal does it send",
+   "oil prices plunge 9 after us midterms vance remarks as israeli stocks tumble"
   ],
   "JPM:CALL": [],
-  "SOFI:CALL": []
+  "SOFI:CALL": [
+   "sofi technologies advances over 4 as retail interest strengthens jkn"
+  ],
+  "MSTR:CALL": [
+   "dogecoin price just 96 satoshi against bitcoin"
+  ]
  },
  "fired": {
   "RIVN:CALL:2026-11-20:13.5": [
@@ -2440,11 +2474,15 @@
   "INTC:PUT:2026-11-20:57.5": [
    "up0.25",
    "sharp@2026-11-04T11:12-05:00",
-   "sharp@2026-11-04T11:55-05:00"
+   "sharp@2026-11-04T11:55-05:00",
+   "sharp@2026-11-04T12:21-05:00",
+   "sharp@2026-11-04T12:27-05:00",
+   "news:intel intc us officer buys us 9 71 million in common stock"
   ],
   "F:CALL:2026-11-20:11.5": [
    "down-0.15",
-   "news:ford october u s sales slip as electric vehicle deliveries plunge f nyse"
+   "news:ford october u s sales slip as electric vehicle deliveries plunge f nyse",
+   "news:ford motor f sees slight october sales decline amid electric v"
   ],
   "XOM:PUT:2026-11-20:167.5": [
    "down-0.15",
@@ -2457,7 +2495,15 @@
    "news:crude oil prices slump as president trump downplays escalation of us iran war",
    "up0.25",
    "news:oil futures slump as iran peace efforts ease supply fears",
-   "news:brent crude oil falls below 100 as vance blames gop election defeat on iran war"
+   "news:brent crude oil falls below 100 as vance blames gop election defeat on iran war",
+   "news:first impact of us elections oil prices begin to fall",
+   "news:crude oil prices fall below 90 a barrel as vance blames gop election defeat on iran war",
+   "news:brent oil slides to 94 on iran uncertainty after us midterms",
+   "news:oil prices drop below 100 for the first time in nearly a month",
+   "news:oil falls as traders parse iran war outlook after midterms",
+   "news:oil prices tumble below 100 on post election peace hopes",
+   "news:us stocks surge and the dow soars 1 500 points as brent oil s price drops below 95 per barrel",
+   "news:oil prices plunge 9 after us midterms vance remarks as israeli stocks tumble"
   ],
   "MSFT:CALL:2026-11-09:565": [
    "down-0.15",
@@ -2471,24 +2517,30 @@
    "news:oil prices slide as midterm results ease iran escalation fears",
    "news:crude oil prices slump as president trump downplays escalation of us iran war",
    "news:oil futures slump as iran peace efforts ease supply fears",
-   "news:brent crude oil falls below 100 as vance blames gop election defeat on iran war"
+   "news:brent crude oil falls below 100 as vance blames gop election defeat on iran war",
+   "news:first impact of us elections oil prices begin to fall",
+   "news:crude oil prices fall below 90 a barrel as vance blames gop election defeat on iran war",
+   "news:brent oil slides to 94 on iran uncertainty after us midterms",
+   "news:oil prices drop below 100 for the first time in nearly a month",
+   "news:us to loan about a third of heating oil reserve in bid to tame prices by reuters",
+   "news:oil prices tumble below 100 on post election peace hopes",
+   "up0.25",
+   "news:us stocks surge and the dow soars 1 500 points as brent oil s price drops below 95 per barrel",
+   "news:oil prices plunge 9 after us midterms vance remarks as israeli stocks tumble"
   ],
   "JPM:CALL:2026-11-20:360": [],
   "SOFI:CALL:2026-11-20:17": [],
-  "AAPL:CALL:2026-11-09:357.5": []
+  "AAPL:CALL:2026-11-09:357.5": [
+   "news:aapl stock reclaims record highs as democrat win helps apple s china and global business",
+   "down-0.15"
+  ],
+  "MSTR:CALL:2026-11-13:157.5": []
  },
  "stock_level": {
   "RIVN:CALL:2026-11-20:13.5": 3,
   "PFE:CALL:2026-11-20:30": 1
  },
  "seen_macro": [
-  "microsoft earnings live microsoft to report q1 earnings with wall street looking for further azure growth",
-  "us federal reserve leaves interest rates unchanged ahead of key midterm elections",
-  "trump s midterm panic deepens as the federal reserve refuses to cut interest rates and americans still face soaring pric",
-  "fomc votes to leave interest rates unchanged",
-  "fed holds interest rates steady before election day though december hike possible",
-  "fed holds interest rates steady despite surging inflation",
-  "fed holds interest rates steady at final meeting before election",
   "fed holds key interest rate at 3 9 as inflation remains elevated",
   "bitcoin price returns to 81k as federal reserve holds rates steady",
   "federal reserve holds interest rates steady despite elevated inflation",
@@ -3081,11 +3133,18 @@
   "stock market today s p 500 nasdaq dow jones jump as democratic election victory triggers wall street rally",
   "why the stock market is unexpectedly rallying in the wake of the democratic blue wave",
   "dow jumps by 1 200 points as democrats take control of congress",
-  "wall street turns optimistic after a huge democratic win consumer stocks rise sp500"
+  "wall street turns optimistic after a huge democratic win consumer stocks rise sp500",
+  "buy 5 low beta high yielding stocks amid recent wall street volatility",
+  "wall street sees risks to ai boom after the democratic sweep",
+  "democrats retake senate blocking trump s plan to reshape federal reserve board",
+  "stock market surges after midterms why wall street welcomes democratic congress",
+  "dow jones forecast dow surges 1 200 points as wall street bets on political gridlock",
+  "us stocks rally and the dow soars more than 1 000 points",
+  "oil prices plunge 9 after us midterms vance remarks as israeli stocks tumble"
  ],
  "sharp": {
   "RIVN:CALL:2026-11-20:13.5": 13.035,
   "PFE:CALL:2026-11-20:30": 30.06,
-  "INTC:PUT:2026-11-20:57.5": 58.23
+  "INTC:PUT:2026-11-20:57.5": 59.7
  }
 }
