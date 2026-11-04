@@ -14,8 +14,8 @@
    "strength": "8.0",
    "occ": "RIVN261120C00013000",
    "peak_pnl": 0.451,
-   "close_pnl": 0.265,
-   "quotes": 121,
+   "close_pnl": 0.255,
+   "quotes": 122,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -34,8 +34,8 @@
    "strength": "6.5",
    "occ": "WMT261120C00132000",
    "peak_pnl": 0.325,
-   "close_pnl": 0.268,
-   "quotes": 49,
+   "close_pnl": 0.296,
+   "quotes": 50,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -54,8 +54,8 @@
    "strength": "8.3",
    "occ": "UBER261120C00072000",
    "peak_pnl": 0.351,
-   "close_pnl": -0.09,
-   "quotes": 49,
+   "close_pnl": -0.096,
+   "quotes": 50,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -75,7 +75,7 @@
    "occ": "PFE261120C00029500",
    "peak_pnl": 0.245,
    "close_pnl": 0.092,
-   "quotes": 49,
+   "quotes": 50,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -95,7 +95,7 @@
    "occ": "DIS261120C00124000",
    "peak_pnl": 0.129,
    "close_pnl": -0.067,
-   "quotes": 46,
+   "quotes": 47,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -114,8 +114,8 @@
    "strength": "7.2",
    "occ": "NVDA261109P00200000",
    "peak_pnl": 0.0,
-   "close_pnl": -0.333,
-   "quotes": 35,
+   "close_pnl": -0.342,
+   "quotes": 36,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -134,8 +134,8 @@
    "strength": "8.0",
    "occ": "RIVN261120C00014000",
    "peak_pnl": 0.025,
-   "close_pnl": -0.162,
-   "quotes": 29,
+   "close_pnl": -0.113,
+   "quotes": 30,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -154,8 +154,8 @@
    "strength": "10.0",
    "occ": "SPY261105C00770000",
    "peak_pnl": 0.0,
-   "close_pnl": -0.343,
-   "quotes": 18,
+   "close_pnl": -0.338,
+   "quotes": 19,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -173,9 +173,9 @@
    "edge": "5.5",
    "strength": "8.2",
    "occ": "SPY261105C00770000",
-   "peak_pnl": 0.055,
-   "close_pnl": 0.055,
-   "quotes": 1,
+   "peak_pnl": 0.063,
+   "close_pnl": 0.063,
+   "quotes": 2,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -1008,7 +1008,8 @@
   "20261104T1427|stocks|open_same_dir|PFE|CALL|30|2026-11-20",
   "20261104T1427|stocks|open_same_dir|NVDA|PUT|202.5|2026-11-09",
   "20261104T1427|stocks|open_same_dir|RIVN|CALL|13.5|2026-11-20",
-  "20261104T1435|spx|repeat_side|SPY|CALL|770|2026-11-05"
+  "20261104T1435|spx|repeat_side|SPY|CALL|770|2026-11-05",
+  "20261104T1440|spx|repeat_side|SPY|CALL|770|2026-11-05"
  ],
  "last": {
   "spx|CALL|SPY": "2026-11-04T14:35-05:00",
