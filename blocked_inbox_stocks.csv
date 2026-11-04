@@ -537,3 +537,6 @@ id,time,project,tag,sym,root,side,strike,exp,entry,spot,edge,strength
 20261103T1527|stocks|open_same_dir|RIVN|CALL|13|2026-11-20,2026-11-03T15:27-05:00,stocks,open_same_dir,RIVN,RIVN,CALL,13.0,2026-11-20,0.89,13.29,5.5,8.0
 20261103T1527|stocks|open_same_dir|PFE|CALL|29.5|2026-11-20,2026-11-03T15:27-05:00,stocks,open_same_dir,PFE,PFE,CALL,29.5,2026-11-20,0.89,29.98,5.5,6.0
 20261103T1527|stocks|open_same_dir|DIS|CALL|120|2026-11-20,2026-11-03T15:27-05:00,stocks,open_same_dir,DIS,DIS,CALL,120.0,2026-11-20,2.02,114.16,8.0,5.7
+20261104T1012|stocks|earn_in_life|WMT|CALL|132|2026-11-20,2026-11-04T10:12-05:00,stocks,earn_in_life,WMT,WMT,CALL,132.0,2026-11-20,3.14,128.1,5.0,6.5
+20261104T1012|stocks|earn_in_life|UBER|CALL|72|2026-11-20,2026-11-04T10:12-05:00,stocks,earn_in_life,UBER,UBER,CALL,72.0,2026-11-20,1.88,70.78,6.5,8.3
+20261104T1012|stocks|open_same_dir|PFE|CALL|29.5|2026-11-20,2026-11-04T10:12-05:00,stocks,open_same_dir,PFE,PFE,CALL,29.5,2026-11-20,0.98,30.14,6.5,7.8
