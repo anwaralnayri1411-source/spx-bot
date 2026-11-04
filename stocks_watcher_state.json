@@ -529,7 +529,8 @@
    "intel stock price prediction downward momentum persists as volatility stays elevated",
    "intel corp stock intc moved down by 4 33 on nov 2 key drivers unveiled",
    "intel the pc hangover is just beginning nasdaq intc",
-   "amd slides 3 ahead of earnings as pc worries linger intel drops 5 nvidia edges higher"
+   "amd slides 3 ahead of earnings as pc worries linger intel drops 5 nvidia edges higher",
+   "intel stock implodes sheds 434 billion in 4 months"
   ],
   "CVX:CALL": [
    "stocks see continued downward pressure from ai anxiety and oil prices",
@@ -2321,9 +2322,18 @@
   ],
   "F:CALL": [],
   "XOM:PUT": [
-   "oil prices slide as trump plays down prospect of iran strikes after u s election rout"
+   "oil prices slide as trump plays down prospect of iran strikes after u s election rout",
+   "exxon mobil stock slips while oversold signals point to possible exhaustion among sellers",
+   "brent falls to 100 as traders bet on a u s iran deal",
+   "crude oil inventories decline less than expected impacting prices",
+   "us oil inventories fall further as demand holds",
+   "glimpses into high fuel price environment as told through oil companies earnings calls",
+   "canada commodities oil prices fall as democrats take back control of us congress",
+   "us to loan about a third of heating oil reserve in bid to tame prices"
   ],
-  "MSFT:CALL": []
+  "MSFT:CALL": [
+   "forget the 12 month squeeze microsoft is primed for an explosive ai payoff"
+  ]
  },
  "fired": {
   "RIVN:CALL:2026-11-20:13.5": [
@@ -2381,26 +2391,30 @@
    "up0.25",
    "sharp@2026-11-04T09:46-05:00"
   ],
-  "AMZN:CALL:2026-11-09:275": [],
-  "INTC:PUT:2026-11-20:57.5": [],
+  "AMZN:CALL:2026-11-09:275": [
+   "down-0.15",
+   "stock1",
+   "down-0.3"
+  ],
+  "INTC:PUT:2026-11-20:57.5": [
+   "up0.25"
+  ],
   "F:CALL:2026-11-20:11.5": [
    "down-0.15"
   ],
   "XOM:PUT:2026-11-20:167.5": [
    "down-0.15",
-   "news:oil prices slide as trump plays down prospect of iran strikes after u s election rout"
+   "news:oil prices slide as trump plays down prospect of iran strikes after u s election rout",
+   "news:brent falls to 100 as traders bet on a u s iran deal"
   ],
   "MSFT:CALL:2026-11-09:565": []
  },
  "stock_level": {
   "RIVN:CALL:2026-11-20:13.5": 3,
-  "PFE:CALL:2026-11-20:30": 1
+  "PFE:CALL:2026-11-20:30": 1,
+  "AMZN:CALL:2026-11-09:275": 1
  },
  "seen_macro": [
-  "fed holds interest rates steady before elections with two dissents",
-  "fed holds interest rates steady in face of persistent inflation",
-  "fed holds interest rates steady despite rising inflation for now",
-  "fed holds rates but more hikes remain on the table",
   "us central bank keeps interest rates unchanged in final decision before midterm elections",
   "fed holds interest rates steady ahead of midterms",
   "federal reserve maintains interest rates ahead of the midterms",
@@ -2996,7 +3010,11 @@
   "us stock market today s p 500 futures edge higher on strong factory and freight data",
   "trump election rebuke hands us trading partners room to resist",
   "stocks surge as blue tsunami puts political uncertainty to rest",
-  "wall street rallies after democrats win congress data center stocks slide"
+  "wall street rallies after democrats win congress data center stocks slide",
+  "more carve outs how the midterms could affect us trade policy on china",
+  "one wall street analyst says this stock is the best way to invest in anthropic and openai he s right",
+  "stocks soar after democrats take control of congress",
+  "us crude oil inventories fall 865 000 barrels as latest stockpile data beats expectations"
  ],
  "sharp": {
   "RIVN:CALL:2026-11-20:13.5": 13.035,
