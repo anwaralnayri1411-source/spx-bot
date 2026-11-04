@@ -123,8 +123,8 @@ def option_bars(occs, d):
     sys.path.insert(0, os.path.join(ROOT, "research"))
     from stocks_contract_replay import fetch_bars
     a = datetime.combine(d, dtime(9, 30), NY).astimezone(UTC).isoformat()
-    b = datetime.combine(d, dtime(16, 0), NY).astimezone(UTC).isoformat()
-    return fetch_bars(occs, a, b)
+    b = min(datetime.combine(d, dtime(16, 0), NY).astimezone(UTC), datetime.now(UTC) - timedelta(minutes=16)).isoformat()
+    return fetch_bars(occs, a, b)      # Alpaca يرفض (403) نهايةً أحدث من 15 دقيقة
 
 
 def occ(root, d, side, K):
