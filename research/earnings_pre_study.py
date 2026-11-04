@@ -113,6 +113,12 @@ def parse_rss(xml_text, limit=MAX_HEADS):
     return out
 
 
+def pre_only(heads, ann_day):
+    """منع التسرب: يُبقي عناوين ما قبل الإعلان المؤرخة قبل اليوم السابق للإعلان (تواريخ جوجل تقريبية بيوم)."""
+    cut = (pd.Timestamp(ann_day) - pd.Timedelta(days=1)).strftime("%Y-%m-%d")
+    return [(t, h) for t, h in heads if t and t[:10] < cut]
+
+
 def gnews_url(query, after, before):
     q = f"{query} after:{after} before:{before}"
     return "https://news.google.com/rss/search?" + urllib.parse.urlencode({"q": q, "hl": "en-US", "gl": "US", "ceid": "US:en"})
@@ -249,12 +255,13 @@ def stage_news(names=None):
         d = pd.Timestamp(r.ann_day)
         name = nm.get(r.sym, r.sym)
         q = f'"{r.sym}" OR "{name}" stock'
-        pre = _fetch(gnews_url(q, (d - pd.Timedelta(days=PRE_DAYS)).date(), d.date()))
+        pre = _fetch(gnews_url(q, (d - pd.Timedelta(days=PRE_DAYS + 1)).date(), (d - pd.Timedelta(days=1)).date()))
         post = _fetch(gnews_url(q, d.date(), (d + pd.Timedelta(days=POST_DAYS + 1)).date()))
         if pre is None and post is None:
             fail += 1
             continue
-        json.dump({"pre": parse_rss(pre or ""), "post": parse_rss(post or "")}, open(path, "w", encoding="utf-8"), ensure_ascii=False)
+        json.dump({"pre": pre_only(parse_rss(pre or ""), r.ann_day), "post": parse_rss(post or "")},
+                  open(path, "w", encoding="utf-8"), ensure_ascii=False)
         done += 1
         if done % 50 == 0:
             print("أخبار:", done, "فشل:", fail, flush=True)
@@ -265,7 +272,7 @@ def stage_news(names=None):
 # ---------------- Claude ----------------
 SCHEMA = {"type": "object", "properties": {"items": {"type": "array", "items": {
     "type": "object",
-    "properties": {"i": {"type": "integer"}, "tone": {"type": "integer", "minimum": -2, "maximum": 2},
+    "properties": {"i": {"type": "integer"}, "tone": {"type": "integer"},
                    "expect": {"type": "string", "enum": ["up", "down", "unclear"]},
                    "reason": {"type": "string", "enum": REASONS}, "explain_ar": {"type": "string"}},
     "required": ["i", "tone", "expect", "reason", "explain_ar"], "additionalProperties": False}}},
@@ -336,7 +343,7 @@ def stage_classify(client=None, batch_size=6):
         try:
             items = call_claude(prompt(batch), client)
         except Exception as e:  # noqa: BLE001
-            print("فشل طلب:", type(e).__name__)
+            print("فشل طلب:", type(e).__name__, str(e)[:200])
             time.sleep(5)
             continue
         with open(CLS, "a", encoding="utf-8") as f:
@@ -344,6 +351,7 @@ def stage_classify(client=None, batch_size=6):
                 k = it.get("i", -1)
                 if 0 <= k < len(batch):
                     r = batch[k][0]
+                    it["tone"] = int(max(-2, min(2, int(it.get("tone", 0)))))
                     f.write(json.dumps({"key": f"{r.sym}_{r.ann_day}", **{x: it[x] for x in ("tone", "expect", "reason", "explain_ar")}},
                                        ensure_ascii=False) + "\n")
         if (s // batch_size) % 25 == 0:

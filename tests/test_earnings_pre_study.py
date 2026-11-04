@@ -107,3 +107,9 @@ def test_report_runs_on_synthetic(tmp_path, monkeypatch):
                      "expect": "up", "reason": "guidance", "explain_ar": "سبب", "analyst_net": rng.choice([-1, 0, 1])})
     md = ep.report(pd.DataFrame(rows))
     assert "P1 الصعود المسبق" in md and "P5 المركّب" in md and "مكتبة الأسباب" in md
+
+
+def test_pre_only_drops_leaky_headlines():
+    heads = [("2026-07-27T07:00:00+00:00", "ok"), ("2026-07-28T07:00:00+00:00", "too close"), ("2026-07-29T07:00:00+00:00", "after"),
+             ("", "no date")]
+    assert ep.pre_only(heads, "2026-07-29") == [("2026-07-27T07:00:00+00:00", "ok")]
