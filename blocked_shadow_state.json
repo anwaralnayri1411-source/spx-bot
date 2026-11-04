@@ -14,8 +14,8 @@
    "strength": "8.0",
    "occ": "RIVN261120C00013000",
    "peak_pnl": 0.451,
-   "close_pnl": 0.324,
-   "quotes": 95,
+   "close_pnl": 0.284,
+   "quotes": 96,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -34,8 +34,8 @@
    "strength": "6.5",
    "occ": "WMT261120C00132000",
    "peak_pnl": 0.299,
-   "close_pnl": 0.268,
-   "quotes": 23,
+   "close_pnl": 0.283,
+   "quotes": 24,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -54,8 +54,8 @@
    "strength": "8.3",
    "occ": "UBER261120C00072000",
    "peak_pnl": 0.351,
-   "close_pnl": 0.059,
-   "quotes": 23,
+   "close_pnl": 0.074,
+   "quotes": 24,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -75,7 +75,7 @@
    "occ": "PFE261120C00029500",
    "peak_pnl": 0.112,
    "close_pnl": 0.102,
-   "quotes": 23,
+   "quotes": 24,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -94,8 +94,8 @@
    "strength": "7.1",
    "occ": "DIS261120C00124000",
    "peak_pnl": 0.129,
-   "close_pnl": 0.077,
-   "quotes": 20,
+   "close_pnl": 0.048,
+   "quotes": 21,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -114,8 +114,8 @@
    "strength": "7.2",
    "occ": "NVDA261109P00200000",
    "peak_pnl": 0.0,
-   "close_pnl": -0.161,
-   "quotes": 9,
+   "close_pnl": -0.207,
+   "quotes": 10,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -134,8 +134,8 @@
    "strength": "8.0",
    "occ": "RIVN261120C00014000",
    "peak_pnl": 0.0,
-   "close_pnl": -0.037,
-   "quotes": 3,
+   "close_pnl": -0.05,
+   "quotes": 4,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -893,7 +893,8 @@
   "20261104T1212|stocks|earn_in_life|WMT|CALL|135|2026-11-20",
   "20261104T1212|stocks|earn_in_life|UBER|CALL|72.5|2026-11-20",
   "20261104T1212|stocks|open_same_dir|PFE|CALL|30|2026-11-20",
-  "20261104T1212|stocks|open_same_dir|RIVN|CALL|14|2026-11-20"
+  "20261104T1212|stocks|open_same_dir|RIVN|CALL|14|2026-11-20",
+  "20261104T1220|spx|repeat_side|SPY|CALL|770|2026-11-05"
  ],
  "last": {
   "spx|CALL|SPY": "2026-11-04T11:35-05:00",
