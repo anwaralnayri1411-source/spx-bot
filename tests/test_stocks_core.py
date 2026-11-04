@@ -239,3 +239,17 @@ def test_ai_news_points(tmp_path, monkeypatch):
     b, e, why = sb.ai_news_points("NVDA", n)
     assert b == 0.5 and e == 0.0 and why[0] == "bull" and "Claude" in why[1]
     assert sb.ai_news_points("AAPL", n) is None
+
+
+def test_paper_block_rules():
+    import stocks_bot as sb
+    from datetime import date
+    k = {"exp": "2026-11-20"}
+    assert sb.paper_block("AMD", "CALL", {"earn": date(2026, 11, 18)}, k, {})[0] == "earn_in_life"
+    assert sb.paper_block("AMD", "CALL", {"earn": date(2026, 11, 20)}, k, {})[0] == "earn_in_life"   # يوم الانتهاء نفسه
+    assert sb.paper_block("AMD", "CALL", {"earn": date(2026, 11, 25)}, k, {}) is None
+    assert sb.paper_block("COIN", "CALL", {}, k, {"IBIT": -0.012})[0] == "btc_against"
+    assert sb.paper_block("COIN", "PUT", {}, k, {"IBIT": -0.012}) is None
+    assert sb.paper_block("COIN", "PUT", {}, k, {"IBIT": 0.006})[0] == "btc_against"
+    assert sb.paper_block("COIN", "CALL", {}, k, {"IBIT": -0.003}) is None                            # حركة صغيرة
+    assert sb.paper_block("AAPL", "CALL", {}, k, {"IBIT": -0.05}) is None                              # غير مرتبطة

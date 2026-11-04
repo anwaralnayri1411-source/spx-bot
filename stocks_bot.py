@@ -1540,7 +1540,13 @@ def analyze(force):
 
     ideas, watch, flow_rows, news_cmp = [], [], [], []
     blocked = []   # blocked_shadow: ideas blocked by rules, log only
-    geo_heads = ob.fetch_rss("geopolitical tensions markets") if any(s["dkey"] == "geo" for s in finalists) else []
+    try:                                       # سياق السوق مرة واحدة لكل فحص (R2 وسطر السياق)
+        import market_context as mc
+        mv = mc.fetch()
+    except Exception as e:
+        print("تعذر حساب سياق السوق:", e)
+        mv = {}
+    geo_heads =ob.fetch_rss("geopolitical tensions markets") if any(s["dkey"] == "geo" for s in finalists) else []
     for s in finalists:
         tk = s["ticker"]
         t = yf.Ticker(tk)
@@ -1591,11 +1597,15 @@ def analyze(force):
         _rule_compare(tk, side, new, old)
         if contracts:   # القوة = نصف قوة الاتجاه + نصف درجة أفضل عقد (حتى لا تتشابه كل الفرص)
             s["strength"] = round(0.5 * min(10.0, abs(edge) * 1.1) + 0.5 * contracts[0]["score"], 1)
-        if contracts and dates["earn"] is not None and any(
-                dates["earn"] <= date.fromisoformat(k["exp"]) for k in contracts):
-            s["strength"] = max(0.0, s["strength"] - 2)   # إعلان أرباح قبل الانتهاء يرفع عدم اليقين
         if not contracts:
             watch.append((tk, f"اتجاه {side} لكن لا عقد مناسب بسعر ${CONTRACT_MIN_USD}-${CONTRACT_MAX_USD}"))
+            continue
+        why_block = paper_block(tk, side, dates, contracts[0], mv)   # H-PAPER R1/R2
+        if why_block:
+            tag, txt = why_block
+            watch.append((tk, txt))
+            blocked.append({"tag": tag, "ticker": tk, "side": side, "edge": edge, "strength": s["strength"], "S": S,
+                            "contracts": contracts})       # يُتابَع بصمت للمقارنة بالمرسل
             continue
         s.update(S=S, contracts=contracts)
         ideas.append(s)
@@ -1627,7 +1637,6 @@ def analyze(force):
     if ideas:                                   # H-CTXSIG: سياق السوق لكل فكرة (إعلامي، لا يغيّر القرار)
         try:
             import market_context as mc
-            mv = mc.fetch()
             for i in ideas:
                 i["mctx"] = mc.read(mv, i["ticker"], i["side"])
         except Exception as e:
@@ -1856,6 +1865,26 @@ def details_message(a, ideas, log_line):
 
 
 # ====================== التشغيل ======================
+BTC_LINKED = ("COIN", "MSTR", "HOOD", "SOFI", "TSLA")
+BTC_TH = 0.005
+
+
+def paper_block(tk, side, dates, k, moves):
+    """H-PAPER (4/11/2026): (الوسم، السبب) إن مُنعت الفكرة، أو None.
+    R1: إعلان الأرباح يقع قبل انتهاء العقد أو يومه. R2: شركات البتكوين ضد حركة IBIT اليوم (±0.5%)."""
+    earn = (dates or {}).get("earn")
+    try:
+        if earn is not None and earn <= date.fromisoformat(k["exp"]):
+            return "earn_in_life", f"أرباح {earn.isoformat()} داخل مدة العقد: لا شراء قبل الإعلان"
+    except Exception:  # noqa: BLE001
+        pass
+    if tk in BTC_LINKED and moves and moves.get("IBIT") is not None:
+        b = moves["IBIT"]
+        if (side == "CALL" and b <= -BTC_TH) or (side == "PUT" and b >= BTC_TH):
+            return "btc_against", f"البتكوين {b * 100:+.1f}% عكس {side}"
+    return None
+
+
 def daily_caps(ideas, sent):
     """H-SFIX: (المسموح، المحجوب) بعد حدود اليوم: MAX_IDEAS_DAY إجمالاً وMAX_SAME_SIDE_DAY للاتجاه، محسوبة مع توصيات اليوم
     السابقة (مفاتيح sent بصيغة TICKER:SIDE). الأفكار مرتبة بالقوة مسبقاً."""
