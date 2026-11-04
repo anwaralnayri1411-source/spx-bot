@@ -540,7 +540,9 @@
    "intel intc us officer buys us 9 71 million in common stock",
    "intel intc stock still looks cheap relative to future cash flow",
    "intel intc ceo lip bu tan buys shares bringing his family trust s holdings to 1 46 million",
-   "intel s intc ceo buys 10 million of company stock"
+   "intel s intc ceo buys 10 million of company stock",
+   "insider buying intel nasdaq intc ceo purchases 9 709 500 00 in stock",
+   "intel ceo lip bu tan acquires 9 7m in intel stock"
   ],
   "CVX:CALL": [
    "stocks see continued downward pressure from ai anxiety and oil prices",
@@ -2130,7 +2132,9 @@
    "apple stock consolidates near 346 38 support as buyer support persists",
    "apple s 2 000 iphone duo faces crackgate days after launch",
    "apple aapl unveils m6 macs with siri ai and creator studio upgrades",
-   "aapl stock reclaims record highs as democrat win helps apple s china and global business"
+   "aapl stock reclaims record highs as democrat win helps apple s china and global business",
+   "apple stock price today hits record high why aapl market cap surpasses 5 trillion after democrats win mi",
+   "apple becomes world s most valuable company with 5 1 trillion market cap as aapl stock today hits record"
   ],
   "BA:PUT": [
    "boeing nyse ba sets new 52 week low on disappointing earnings",
@@ -2393,7 +2397,19 @@
    "oil prices plunge as trump s midterm defeat raises hopes of peace",
    "ten oversold energy stocks as oil prices slide after u s midterm elections uso nysearca",
    "ten oversold energy stocks as oil prices slide after u s midterm elections",
-   "china s rail line into central asia is set for 2031"
+   "china s rail line into central asia is set for 2031",
+   "big oil scores 56 billion windfall on spiking fuel prices",
+   "north sea oil plunge deepens as traders weigh iran de escalation",
+   "analysts offer insights on energy companies diamondback fang and exxon mobil xom",
+   "us midterms how markets are reacting to democrats congressional gains",
+   "jpmorgan sees global oil market return to surplus",
+   "oil stocks chevron cvx marathon mpc and exxon mobil xom take a beating on midterm results",
+   "asx set to jump as wall street soars trump media tesla spacex tumble oil prices slump",
+   "canada s trade surplus widens as oil gold drive record exports",
+   "vance admits gop lost election because of war global oil prices plunge more than 10 in a single day wti falls below 90",
+   "u s oil plunges below 90 as vance blames iran war for gop losses",
+   "oil crashes 9 as trump and vance blame iran war for midterm rout",
+   "oil prices sink as u s midterms raise market hopes for middle east solution"
   ],
   "MSFT:CALL": [
    "forget the 12 month squeeze microsoft is primed for an explosive ai payoff",
@@ -2401,7 +2417,8 @@
    "microsoft shares jump to record high last up 6 1",
    "msft stock surges above 557 to record high as midterms lift microsoft and big tech",
    "what s going on with microsoft stock on wednesday",
-   "microsoft stock nasdaq msft surges as ai development may pay off"
+   "microsoft stock nasdaq msft surges as ai development may pay off",
+   "this magnificent 7 stock is quietly building an ai empire"
   ],
   "CVX:PUT": [
    "us to loan about a third of heating oil reserve in bid to tame prices",
@@ -2446,7 +2463,18 @@
    "oil prices plunge as trump s midterm defeat raises hopes of peace",
    "ten oversold energy stocks as oil prices slide after u s midterm elections uso nysearca",
    "ten oversold energy stocks as oil prices slide after u s midterm elections",
-   "china s rail line into central asia is set for 2031"
+   "china s rail line into central asia is set for 2031",
+   "big oil scores 56 billion windfall on spiking fuel prices",
+   "north sea oil plunge deepens as traders weigh iran de escalation",
+   "us midterms how markets are reacting to democrats congressional gains",
+   "jpmorgan sees global oil market return to surplus",
+   "oil stocks chevron cvx marathon mpc and exxon mobil xom take a beating on midterm results",
+   "asx set to jump as wall street soars trump media tesla spacex tumble oil prices slump",
+   "canada s trade surplus widens as oil gold drive record exports",
+   "vance admits gop lost election because of war global oil prices plunge more than 10 in a single day wti falls below 90",
+   "u s oil plunges below 90 as vance blames iran war for gop losses",
+   "oil crashes 9 as trump and vance blame iran war for midterm rout",
+   "oil prices sink as u s midterms raise market hopes for middle east solution"
   ],
   "JPM:CALL": [
    "which profit leader pays the most with yields between 0 31 and 2 32 bank of america nyse bac exxon mobil nyse xom johnso"
@@ -2460,8 +2488,12 @@
    "gold and bitcoin just gave scott bessent s treasury a post midterm wake up call",
    "october 26 report no uptober no bitcoin capitulation free preview",
    "bitcoin s potential surge and the cryptocurrency landscape",
-   "microstrategy s 12 dividend stock rebounds 34 will it hold this time"
-  ]
+   "microstrategy s 12 dividend stock rebounds 34 will it hold this time",
+   "bitcoin price recovery rebounds toward 80 000 after election sell off",
+   "bitcoin falls in q4 of us midterm years but gai",
+   "bitcoin jumps past 81k after us midterms but analysts warn of a potential price trap"
+  ],
+  "META:CALL": []
  },
  "fired": {
   "RIVN:CALL:2026-11-20:13.5": [
@@ -2546,7 +2578,14 @@
    "news:oil prices plunge 9 after us midterms vance remarks as israeli stocks tumble",
    "news:stocks surge as democrats win and oil price slips",
    "news:us oil prices crash below 90 as jd vance blames iran war for gop election loss wti falls to 88 92 bren",
-   "news:oil prices plunge as trump s midterm defeat raises hopes of peace"
+   "news:oil prices plunge as trump s midterm defeat raises hopes of peace",
+   "news:north sea oil plunge deepens as traders weigh iran de escalation",
+   "news:jpmorgan sees global oil market return to surplus",
+   "sharp@2026-11-04T13:34-05:00",
+   "news:vance admits gop lost election because of war global oil prices plunge more than 10 in a single day wti falls below 90",
+   "news:u s oil plunges below 90 as vance blames iran war for gop losses",
+   "news:oil crashes 9 as trump and vance blame iran war for midterm rout",
+   "news:oil prices sink as u s midterms raise market hopes for middle east solution"
   ],
   "MSFT:CALL:2026-11-09:565": [
    "down-0.15",
@@ -2573,7 +2612,13 @@
    "news:fire shuts equinor s visund platform in norwegian north sea",
    "news:stocks surge as democrats win and oil price slips",
    "news:us oil prices crash below 90 as jd vance blames iran war for gop election loss wti falls to 88 92 bren",
-   "news:oil prices plunge as trump s midterm defeat raises hopes of peace"
+   "news:oil prices plunge as trump s midterm defeat raises hopes of peace",
+   "news:north sea oil plunge deepens as traders weigh iran de escalation",
+   "news:jpmorgan sees global oil market return to surplus",
+   "news:vance admits gop lost election because of war global oil prices plunge more than 10 in a single day wti falls below 90",
+   "news:u s oil plunges below 90 as vance blames iran war for gop losses",
+   "news:oil crashes 9 as trump and vance blame iran war for midterm rout",
+   "news:oil prices sink as u s midterms raise market hopes for middle east solution"
   ],
   "JPM:CALL:2026-11-20:360": [],
   "SOFI:CALL:2026-11-20:17": [],
@@ -2583,6 +2628,9 @@
   ],
   "MSTR:CALL:2026-11-13:157.5": [
    "news:bitcoin price rebounds as midterm uncertainty fades"
+  ],
+  "META:CALL:2026-11-09:660": [
+   "down-0.15"
   ]
  },
  "stock_level": {
@@ -2590,9 +2638,6 @@
   "PFE:CALL:2026-11-20:30": 1
  },
  "seen_macro": [
-  "fed leaves rates unchanged as it awaits accumulation of more information",
-  "us stocks remain steady after the federal reserve says it won t raise interest rates national news 2news com",
-  "federal reserve holds interest rates steady as midterm elections loom",
   "us fed holds interest rates steady despite surging inflation",
   "federal reserve leaves interest rates unchanged",
   "trump s federal reserve holds interest rates steady despite soaring inflation concerns",
@@ -3189,11 +3234,15 @@
   "u s stocks jump after democrats sweep congress",
   "devon energy q3 preview surging fuel prices expected to fuel earnings",
   "stock market today s p 500 nasdaq dow jones jump after democratic election win",
-  "gbp usd price forecast gbp usd 1 3496 hits 7 week high as democratic sweep sinks dollar before boe hike to 4 1 3600 targ"
+  "gbp usd price forecast gbp usd 1 3496 hits 7 week high as democratic sweep sinks dollar before boe hike to 4 1 3600 targ",
+  "trump s midterm losses could give china india and us allies room to push back on tariffs and trade deals hindustan times",
+  "trump s midterm defeat gives china canada india and africa s largest economy fresh leverage in us trade talks",
+  "how did republicans lose this badly voters turned against trump s tariffs"
  ],
  "sharp": {
   "RIVN:CALL:2026-11-20:13.5": 13.035,
   "PFE:CALL:2026-11-20:30": 30.06,
-  "INTC:PUT:2026-11-20:57.5": 59.7
+  "INTC:PUT:2026-11-20:57.5": 59.7,
+  "XOM:PUT:2026-11-20:167.5": 169.1
  }
 }
