@@ -1995,3 +1995,18 @@ time,pos_id,ticker,side,event,detail,entry,val,pnl,spot,need,tdays,advice,reason
 2026-11-04T13:43-05:00,XOM:PUT:2026-11-20:167.5,XOM,PUT,news,against/medium: Oil Prices Sink as U.S. Midterms Raise Market Hopes for Middle East Solution - WSJ,3.51,4.38,0.2479,169.015,0.0297,13,فكّر بالخروج,خبر ضد العقد
 2026-11-04T13:43-05:00,CVX:PUT:2026-11-13:210,CVX,PUT,news,with/medium: Oil Prices Sink as U.S. Midterms Raise Market Hopes for Middle East Solution - WSJ,1.8,2.14,0.1889,216.31,0.0375,8,أبقِ,الخبر في صالح العقد
 2026-11-04T13:43-05:00,META:CALL:2026-11-09:660,META,CALL,contract,-20%,3.09,2.47,-0.2006,630.385,0.0519,4,أبقِ,الفكرة قائمة لكن العقد -20%؛ التزم بالوقف عند −40%
+2026-11-04T13:49-05:00,XOM:PUT:2026-11-20:167.5,XOM,PUT,news,with/medium: Oil tumbles below $100 on post-election peace hopes - Financial Times,3.51,4.38,0.2479,168.91,0.0291,13,أبقِ,الخبر في صالح العقد
+2026-11-04T13:49-05:00,XOM:PUT:2026-11-20:167.5,XOM,PUT,news,with/medium: Trump Declares Iran Wants a 'Settlement ASAP' Amid 'Dropping' Oil Prices - AOL.com,3.51,4.38,0.2479,168.91,0.0291,13,أبقِ,الخبر في صالح العقد
+2026-11-04T13:49-05:00,CVX:PUT:2026-11-13:210,CVX,PUT,news,against/medium: Oil tumbles below $100 on post-election peace hopes - Financial Times,1.8,2.09,0.1611,216.23,0.0371,8,فكّر بالخروج,خبر ضد العقد
+2026-11-04T13:49-05:00,CVX:PUT:2026-11-13:210,CVX,PUT,news,against/medium: Trump Declares Iran Wants a 'Settlement ASAP' Amid 'Dropping' Oil Prices - AOL.com,1.8,2.09,0.1611,216.23,0.0371,8,فكّر بالخروج,خبر ضد العقد
+2026-11-04T13:49-05:00,META:CALL:2026-11-09:660,META,CALL,news,with/medium: M&A News: Meta Platforms (META) to Buy AI Coding Startup Conductor - TipRanks,3.09,2.31,-0.2524,630.53,0.0516,4,أبقِ,الخبر في صالح العقد | الفكرة قائمة لكن العقد -25%؛ التزم بالوقف عند −40%
+2026-11-04T14:00-05:00,META:CALL:2026-11-09:660,META,CALL,contract,-31%,3.09,2.13,-0.3107,628.97,0.0542,4,فكّر بالخروج,العقد خسر 31% (الوقف عند −40%)
+2026-11-04T14:00-05:00,XOM:PUT:2026-11-20:167.5,XOM,PUT,macro,against/strong/medium: FTSE 100 surges 1.8% as oil falls below $100 amid Iran peace hopes - Share Talk,3.51,4.42,0.2593,168.73,0.0281,13,فكّر بالخروج,احمِ ربحك الحالي | خبر ضد العقد
+2026-11-04T14:00-05:00,CVX:PUT:2026-11-13:210,CVX,PUT,macro,with/strong/medium: FTSE 100 surges 1.8% as oil falls below $100 amid Iran peace hopes - Share Talk,1.8,2.0,0.1111,216.21,0.037,8,أبقِ,الخبر في صالح العقد
+2026-11-04T14:01-05:00,META:CALL:2026-11-09:660,META,CALL,stock,-1.03% منذ الدخول,3.09,,,628.49,0.0551,4,أبقِ,لا جديد يغيّر فكرة الصفقة
+2026-11-04T14:06-05:00,INTC:PUT:2026-11-20:57.5,INTC,PUT,news,"against/medium: Intel CEO buys 150,000 shares of company stock - TradingView",2.45,2.82,0.151,58.34,0.0564,13,فكّر بالخروج,خبر ضد العقد
+2026-11-04T14:06-05:00,XOM:PUT:2026-11-20:167.5,XOM,PUT,news,with/high: Oil plunges below $90 as Vance blames Iran war for GOP losses - Quartz,3.51,4.42,0.2593,168.83,0.0287,13,أبقِ,الخبر في صالح العقد
+2026-11-04T14:06-05:00,CVX:PUT:2026-11-13:210,CVX,PUT,news,with/medium: Oil plunges below $90 as Vance blames Iran war for GOP losses - Quartz,1.8,1.99,0.1056,216.29,0.0374,8,أبقِ,الخبر في صالح العقد
+2026-11-04T14:06-05:00,AAPL:CALL:2026-11-09:357.5,AAPL,CALL,contract,-34%,2.71,1.79,-0.3395,352.32,0.0224,4,فكّر بالخروج,العقد خسر 34% (الوقف عند −40%)
+2026-11-04T14:11-05:00,XOM:PUT:2026-11-20:167.5,XOM,PUT,news,with/high: Oil prices plunge 10% as US midterm results raise hopes of Iran war's end - Business Standard,3.51,4.38,0.2479,168.86,0.0288,13,أبقِ,الخبر في صالح العقد
+2026-11-04T14:11-05:00,CVX:PUT:2026-11-13:210,CVX,PUT,news,with/high: Oil prices plunge 10% as US midterm results raise hopes of Iran war's end - Business Standard,1.8,1.93,0.0722,216.375,0.0378,8,أبقِ,الخبر في صالح العقد
