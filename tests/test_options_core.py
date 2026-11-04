@@ -235,3 +235,14 @@ def test_index_levels_spot_vol(monkeypatch):
     tp0, sl0 = ob.index_levels(k, "CALL")
     assert tp > tp0 + 3 and sl < sl0 - 3
     assert 7715 < tp < 7725                                  # حالة 4/11: المؤشر بلغ 7,710 والعقد عند التعادل
+
+
+def test_open_duplicate_blocks_same_open_contract():
+    a = {"side": "CALL", "exp": "2026-11-05",
+         "contracts": [{"sym": "SPY", "strike": 770.0, "exp": "2026-11-05"}, {"sym": "SPY", "strike": 771.0}]}
+    P = {"positions": [{"id": "SPY:CALL:770:2026-11-05", "status": "open"}]}
+    assert ob.contract_ids(a) == ["SPY:CALL:770:2026-11-05"]
+    assert ob.open_duplicate(a, P) == "SPY:CALL:770:2026-11-05"
+    assert ob.open_duplicate(a, {"positions": [{"id": "SPY:CALL:770:2026-11-05", "status": "stopped"}]}) is None
+    assert ob.open_duplicate(dict(a, side="PUT"), P) is None
+    assert ob.open_duplicate(a, {"positions": [{"id": "SPY:CALL:765:2026-11-05", "status": "open"}]}) is None

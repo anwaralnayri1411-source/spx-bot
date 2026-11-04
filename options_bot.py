@@ -1670,6 +1670,26 @@ def addon_after_target(side, n, P=None):
     return same[-1]
 
 
+def contract_ids(a):
+    """معرّفات العقد الأول من كل أداة في الإشارة، بالصيغة نفسها في spx_positions.json."""
+    out, seen = [], set()
+    for k in a.get("contracts") or []:
+        sym = k.get("sym", SYMBOL).lstrip("^")
+        if sym in seen:
+            continue
+        seen.add(sym)
+        out.append(f"{sym}:{a['side']}:{k['strike']:g}:{k.get('exp', a.get('exp'))}")
+    return out
+
+
+def open_duplicate(a, P=None):
+    """العقد نفسه (الأداة والاتجاه والسترايك والانتهاء) ما زال مفتوحاً من توصية سابقة؟ يرجع معرّفه أو None.
+    بطلب المستخدم 4/11/2026: أوصى البوت بـ SPY 770 CALL مرتين (12:50 بـ1.84 ثم 14:25 بـ1.43 وهو خاسر) = تعزيز عقد خاسر."""
+    P = P if P is not None else load_positions()
+    live = {p["id"] for p in P["positions"] if p.get("status") == "open"}
+    return next((i for i in contract_ids(a) if i in live), None)
+
+
 def add_positions(n, a):
     """يسجل العقد الأول من كل أداة (SPX وSPY) في الإشارة للمتابعة."""
     P = load_positions()
@@ -2185,6 +2205,15 @@ def run_once(force=False):
         try:   # ظل الحجب: إشارة مكررة قبل REPEAT_MINUTES لم تُرسل (تسجيل فقط)
             import blocked_shadow
             blocked_shadow.log_spx(n, a, ["repeat_side"], a["contracts"])
+        except Exception as e:
+            print("تعذر تسجيل ظل الحجب:", e)
+    dup = open_duplicate(a) if (has_signal and not recent and not force) else None
+    if dup:              # لا نكرر توصية عقد ما زال مفتوحاً (لا تعزيز لعقد قائم، رابحاً كان أو خاسراً)
+        recent = True
+        print("حُجبت: العقد نفسه مفتوح من توصية سابقة:", dup)
+        try:
+            import blocked_shadow
+            blocked_shadow.log_spx(n, a, ["same_contract_open"], a["contracts"])
         except Exception as e:
             print("تعذر تسجيل ظل الحجب:", e)
 
