@@ -773,6 +773,8 @@ def _entry_ctx(idea, k, n):
              "z": round(float(k["z"]), 2) if k.get("z") is not None else None, "score": k.get("score"),
              "earn_in_life": bool(earn and today <= earn <= exp), "exdiv": exd.isoformat() if exd else None,
              "exdiv_in_life": bool(exd and today <= exd <= exp)}
+        m = idea.get("mctx") or {}                 # H-CTXSIG: سياق السوق لحظة التوصية (لبطاقات المحلل)
+        c.update({f"m_{key}": v for key, v in m.items() if key in ("lead", "lead_val", "driver", "driver_move", "driver_al", "breadth")})
         return {key: v for key, v in c.items() if v is not None}
     except Exception:  # noqa: BLE001
         return {}
@@ -1622,6 +1624,14 @@ def analyze(force):
             shadow_log(n, scored, flow_rows, spy5, spy_up)
         except Exception as e:
             print("تعذر تسجيل الدراسة الصامتة:", e)
+    if ideas:                                   # H-CTXSIG: سياق السوق لكل فكرة (إعلامي، لا يغيّر القرار)
+        try:
+            import market_context as mc
+            mv = mc.fetch()
+            for i in ideas:
+                i["mctx"] = mc.read(mv, i["ticker"], i["side"])
+        except Exception as e:
+            print("تعذر حساب سياق السوق:", e)
     spy_px = intraday_price(yf.Ticker("SPY"), float(spyc.iloc[-1]))
     return {"n": n, "today": today, "ideas": ideas[:MAX_IDEAS], "watch": watch, "vix": vix, "vix_pct": vix_pct,
             "spy5": spy5, "spy_up": spy_up, "shock": shock, "is_test": not in_window(n), "scanned": len(scored),
@@ -1685,6 +1695,14 @@ def quote_line(k, now=None):
     return f"⏱️ سعر ياهو متأخر ~15د ({when} الرياض) ولا عرض/طلب لحظي؛ تحقق من السعر الحي"
 
 
+def _ctx_line(i):
+    try:
+        import market_context as mc
+        return mc.line(i.get("mctx") or {})
+    except Exception:  # noqa: BLE001
+        return ""
+
+
 def idea_caption(i):
     call = i["side"] == "CALL"
     k = i["contracts"][0]
@@ -1699,6 +1717,7 @@ def idea_caption(i):
         f"✅ <b>الدخول:</b> {ob.esc(i['ticker'])} {k['strike']:,.1f} {side} | 📅 {date_ar(k['exp'])}",
         f"💵 بسعر حتى <b>{k['price']:.2f}</b> | تكلفة <b>${k['cost']:,.0f}</b> للعقد | يحتاج {'+' if call else '-'}{k['need'] * 100:.1f}%",
         quote_line(k),
+        *([cl] if (cl := _ctx_line(i)) else []),
         lv[0], lv[1],
         f"💰 أقصى خسارة ≈ ${k['cost'] * STOP_LOSS:,.0f}",
         "⚠️ <i>تعليمي وليست توصية. لا تلاحق السعر فوق +10%.</i>"])

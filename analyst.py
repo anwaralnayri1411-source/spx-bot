@@ -48,12 +48,13 @@ FEATURES = (("tod", "وقت اليوم"), ("ctx_vix", "VIX"), ("ctx_range", "م�
             ("live_side", "الشموع اللحظية"), ("news", "الأخبار"),
             ("fl_gex", "الغاما (المراقب)"), ("fl_wall", "الجدران"), ("fl_lean", "ميل التدفق 30د"), ("fl_div", "تباعد الشد"), ("addon", "إضافة على رابح"),
             ("s_news", "أخبار الشركة"), ("s_flow", "تدفق الخيارات"), ("s_delta", "دلتا العقد"), ("s_dte", "أيام العقد"),
-            ("s_earn", "أرباح داخل العقد"), ("s_exdiv", "توزيعات داخل العقد"))
+            ("s_earn", "أرباح داخل العقد"), ("s_exdiv", "توزيعات داخل العقد"),
+            ("m_lead", "قيادة السوق (هجومي/دفاعي)"), ("m_driver", "محرك الشركة (بتكوين/نفط)"))
 CARD_COLS = ["project", "id", "day", "time", "sym", "side", "strike", "exp", "entry", "tod",
              "ctx_vix", "ctx_range", "ctx_trend", "ctx_gap", "ctx_event", "gap", "r30", "r60", "rday", "pos",
              "r30_b", "r60_b", "rday_b", "pos_b", "cand_mom", "cand_f30", "edge7", "mom_live", "live_side", "news_level", "news_kind", "news",
              "fl_gex", "fl_wall", "fl_lean", "fl_div", "addon",
-             "s_news", "s_flow", "s_delta", "s_dte", "s_earn", "s_exdiv",
+             "s_news", "s_flow", "s_delta", "s_dte", "s_earn", "s_exdiv", "m_lead", "m_driver",
              "exit_kind", "exit_ret", "exit_time", "mins", "peak_before", "after_peak", "last", "hold_ret"]
 
 
@@ -331,7 +332,9 @@ def stocks_cards(ctx):
              "s_delta": "" if dl is None else "بعيد (<0.30)" if dl < 0.30 else "قريب (≥0.45)" if dl >= 0.45 else "متوسط",
              "s_dte": "" if dte is None else "≤7 أيام" if dte <= 7 else "8–21 يوماً" if dte <= 21 else ">21 يوماً",
              "s_earn": "" if "earn_in_life" not in x else ("نعم" if x["earn_in_life"] else "لا"),
-             "s_exdiv": "" if "exdiv_in_life" not in x else ("نعم" if x["exdiv_in_life"] else "لا")}
+             "s_exdiv": "" if "exdiv_in_life" not in x else ("نعم" if x["exdiv_in_life"] else "لا"),
+             "m_lead": {1: "مع", -1: "ضد", 0: "محايد"}.get(x.get("m_lead"), ""),
+             "m_driver": {1: "مع", -1: "ضد", 0: "محايد"}.get(x.get("m_driver_al"), "")}
         c.update({f"ctx_{k}": v for k, v in (ctx.get(day) or {}).items()})
         c.update(path_outcome(track_rows(track, p["id"]), t))
         out.append(c)
@@ -533,7 +536,7 @@ def facts_for_model(F):
     def slim(c):
         keep = ("time", "sym", "side", "strike", "tod", "ctx_vix", "ctx_range", "ctx_trend", "ctx_gap", "ctx_event", "r30_b", "r60_b", "rday_b",
                 "pos_b", "cand_mom", "cand_f30", "edge7", "mom_live", "live_side", "news", "fl_gex", "fl_wall", "fl_lean", "fl_div", "s_news", "s_flow", "s_delta", "s_dte", "s_earn",
-                "s_exdiv", "exit_kind", "mins")
+                "s_exdiv", "m_lead", "m_driver", "exit_kind", "mins")
         d = {k: c[k] for k in keep if c.get(k) not in (None, "")}
         for k in ("exit_ret", "peak_before", "after_peak", "last", "hold_ret"):
             if c.get(k) is not None:
@@ -552,7 +555,7 @@ DAILY_SYSTEM = """أنت «المحلل» في مشروع «عين السوق»:
 تصلك حقائق اليوم بصيغة JSON حسبها الكود من السجلات. معاني الحقول:
 - tod وقت اليوم. ctx_vix/ctx_range/ctx_trend/ctx_gap/ctx_event: ظروف اليوم (VIX أمس، مدى أمس، اتجاه شمعة أمس، فجوة الافتتاح، يوم حدث مجدول).
 - r30_b/r60_b/rday_b: حركة SPX خلال 30 و60 دقيقة قبل التوصية ومنذ الافتتاح، نسبةً إلى اتجاه الصفقة («مع الاتجاه» = المؤشر كان يتحرك في اتجاه الصفقة قبل الدخول). pos_b: موقع السعر في مدى اليوم لحظة التوصية.
-- cand_mom: ظل «زخم آخر ساعة» في آخر موعد قبل التوصية. cand_f30: ظل «اتجاه أول 30 دقيقة من الجلسة». edge7: هل سجّل ظل الإشارة القوية (فرق نقاط ≥7) الاتجاه نفسه خلال 10 دقائق. mom_live: آخر إشارة من ظل الزخم الحي قبلها. live_side: اتجاه البوت بالشموع اللحظية في الفحص نفسه. news: الأخبار وقت التوصية. fl_gex/fl_wall/fl_lean/fl_div: مراقب السيولة (منذ 2/11) آخر لقطة قبل التوصية: نوع الغاما، جدار OI ضمن 0.25% (ضد الصفقة أو معها)، ميل صافي علاوة الكول−البوت في آخر 30د بالنسبة للصفقة، وتباعد «شد الحبل» عن قمة/قاع الجلسة؛ كلها فرضيات قيد القياس (H-SPXFLOW) لا قواعد.
+- cand_mom: ظل «زخم آخر ساعة» في آخر موعد قبل التوصية. cand_f30: ظل «اتجاه أول 30 دقيقة من الجلسة». edge7: هل سجّل ظل الإشارة القوية (فرق نقاط ≥7) الاتجاه نفسه خلال 10 دقائق. mom_live: آخر إشارة من ظل الزخم الحي قبلها. live_side: اتجاه البوت بالشموع اللحظية في الفحص نفسه. news: الأخبار وقت التوصية. fl_gex/fl_wall/fl_lean/fl_div: مراقب السيولة (منذ 2/11) آخر لقطة قبل التوصية: نوع الغاما، جدار OI ضمن 0.25% (ضد الصفقة أو معها)، ميل صافي علاوة الكول−البوت في آخر 30د بالنسبة للصفقة، وتباعد «شد الحبل» عن قمة/قاع الجلسة؛ كلها فرضيات قيد القياس (H-SPXFLOW) لا قواعد. m_lead/m_driver (الشركات، منذ 4/11): قيادة السوق (هجومي/دفاعي) ومحرك الشركة (البتكوين/النفط) مع الصفقة أو ضدها لحظة التوصية؛ قيد التحقق (CTX-OOS) لا قواعد.
 - exit_kind/exit_ret_pct: أول خروج بقاعدة البوت (هدف +50% أو وقف −40%) وعائده. mins: دقائق حتى الخروج. peak_before_pct: أعلى ربح قبل الخروج. after_peak_pct: أعلى ربح بعد الخروج (المتابعة تستمر بعده). hold_ret_pct: الاحتفاظ حتى الانتهاء.
 - الشركات: s_news أخبار الشركة، s_flow تدفق الخيارات (مع/ضد الاتجاه)، s_delta بُعد العقد، s_dte أيام العقد، s_earn/s_exdiv أرباح أو توزيعات داخل عمر العقد.
 - blocked: توصيات منعتها قواعد البوت اليوم ونتيجتها في الظل. tot_spx/tot_stocks: الحصيلة منذ بداية السجلات، وليست لليوم. health: مشاكل التشغيل.
