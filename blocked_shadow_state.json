@@ -14,8 +14,8 @@
    "strength": "8.0",
    "occ": "RIVN261120C00013000",
    "peak_pnl": 0.451,
-   "close_pnl": 0.275,
-   "quotes": 118,
+   "close_pnl": 0.245,
+   "quotes": 119,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -34,8 +34,8 @@
    "strength": "6.5",
    "occ": "WMT261120C00132000",
    "peak_pnl": 0.325,
-   "close_pnl": 0.252,
-   "quotes": 46,
+   "close_pnl": 0.303,
+   "quotes": 47,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -54,8 +54,8 @@
    "strength": "8.3",
    "occ": "UBER261120C00072000",
    "peak_pnl": 0.351,
-   "close_pnl": -0.027,
-   "quotes": 46,
+   "close_pnl": -0.069,
+   "quotes": 47,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -74,8 +74,8 @@
    "strength": "7.8",
    "occ": "PFE261120C00029500",
    "peak_pnl": 0.245,
-   "close_pnl": 0.163,
-   "quotes": 46,
+   "close_pnl": 0.173,
+   "quotes": 47,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -95,7 +95,7 @@
    "occ": "DIS261120C00124000",
    "peak_pnl": 0.129,
    "close_pnl": -0.067,
-   "quotes": 43,
+   "quotes": 44,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -114,8 +114,8 @@
    "strength": "7.2",
    "occ": "NVDA261109P00200000",
    "peak_pnl": 0.0,
-   "close_pnl": -0.353,
-   "quotes": 32,
+   "close_pnl": -0.362,
+   "quotes": 33,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -135,7 +135,7 @@
    "occ": "RIVN261120C00014000",
    "peak_pnl": 0.025,
    "close_pnl": -0.15,
-   "quotes": 26,
+   "quotes": 27,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -154,8 +154,8 @@
    "strength": "10.0",
    "occ": "SPY261105C00770000",
    "peak_pnl": 0.0,
-   "close_pnl": -0.27,
-   "quotes": 15,
+   "close_pnl": -0.319,
+   "quotes": 16,
    "out": "",
    "out_time": "",
    "out_pnl": ""
