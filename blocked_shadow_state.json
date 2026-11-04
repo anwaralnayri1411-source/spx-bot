@@ -14,8 +14,8 @@
    "strength": "8.0",
    "occ": "RIVN261120C00013000",
    "peak_pnl": 0.451,
-   "close_pnl": 0.284,
-   "quotes": 115,
+   "close_pnl": 0.245,
+   "quotes": 116,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -33,9 +33,9 @@
    "edge": "5.0",
    "strength": "6.5",
    "occ": "WMT261120C00132000",
-   "peak_pnl": 0.312,
-   "close_pnl": 0.312,
-   "quotes": 43,
+   "peak_pnl": 0.325,
+   "close_pnl": 0.325,
+   "quotes": 44,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -54,8 +54,8 @@
    "strength": "8.3",
    "occ": "UBER261120C00072000",
    "peak_pnl": 0.351,
-   "close_pnl": -0.048,
-   "quotes": 43,
+   "close_pnl": -0.021,
+   "quotes": 44,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -75,7 +75,7 @@
    "occ": "PFE261120C00029500",
    "peak_pnl": 0.245,
    "close_pnl": 0.224,
-   "quotes": 43,
+   "quotes": 44,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -95,7 +95,7 @@
    "occ": "DIS261120C00124000",
    "peak_pnl": 0.129,
    "close_pnl": 0.014,
-   "quotes": 40,
+   "quotes": 41,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -114,8 +114,8 @@
    "strength": "7.2",
    "occ": "NVDA261109P00200000",
    "peak_pnl": 0.0,
-   "close_pnl": -0.33,
-   "quotes": 29,
+   "close_pnl": -0.376,
+   "quotes": 30,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -134,8 +134,8 @@
    "strength": "8.0",
    "occ": "RIVN261120C00014000",
    "peak_pnl": 0.025,
-   "close_pnl": -0.088,
-   "quotes": 23,
+   "close_pnl": -0.15,
+   "quotes": 24,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -154,8 +154,8 @@
    "strength": "10.0",
    "occ": "SPY261105C00770000",
    "peak_pnl": 0.0,
-   "close_pnl": -0.27,
-   "quotes": 12,
+   "close_pnl": -0.186,
+   "quotes": 13,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -971,7 +971,8 @@
   "20261104T1357|stocks|earn_in_life|WMT|CALL|135|2026-11-20",
   "20261104T1357|stocks|earn_in_life|UBER|CALL|72.5|2026-11-20",
   "20261104T1357|stocks|open_same_dir|PFE|CALL|30|2026-11-20",
-  "20261104T1357|stocks|open_same_dir|NVDA|PUT|200|2026-11-09"
+  "20261104T1357|stocks|open_same_dir|NVDA|PUT|200|2026-11-09",
+  "20261104T1410|spx|repeat_side|SPY|CALL|770|2026-11-05"
  ],
  "last": {
   "spx|CALL|SPY": "2026-11-04T13:05-05:00",
