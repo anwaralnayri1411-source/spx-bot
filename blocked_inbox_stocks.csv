@@ -552,3 +552,7 @@ id,time,project,tag,sym,root,side,strike,exp,entry,spot,edge,strength
 20261104T1057|stocks|earn_in_life|UBER|CALL|73|2026-11-20,2026-11-04T10:57-05:00,stocks,earn_in_life,UBER,UBER,CALL,73.0,2026-11-20,2.03,72.31,8.0,8.9
 20261104T1057|stocks|earn_in_life|WMT|CALL|135|2026-11-20,2026-11-04T10:57-05:00,stocks,earn_in_life,WMT,WMT,CALL,135.0,2026-11-20,2.77,130.11,4.0,6.2
 20261104T1057|stocks|open_same_dir|PFE|CALL|30|2026-11-20,2026-11-04T10:57-05:00,stocks,open_same_dir,PFE,PFE,CALL,30.0,2026-11-20,0.82,30.39,7.5,9.1
+20261104T1112|stocks|earn_in_life|DIS|CALL|122|2026-11-20,2026-11-04T11:12-05:00,stocks,earn_in_life,DIS,DIS,CALL,122.0,2026-11-20,3.36,119.84,7.0,7.9
+20261104T1112|stocks|earn_in_life|UBER|CALL|73|2026-11-20,2026-11-04T11:12-05:00,stocks,earn_in_life,UBER,UBER,CALL,73.0,2026-11-20,2.09,72.24,8.0,8.9
+20261104T1112|stocks|earn_in_life|WMT|CALL|135|2026-11-20,2026-11-04T11:12-05:00,stocks,earn_in_life,WMT,WMT,CALL,135.0,2026-11-20,2.78,129.8,4.0,6.2
+20261104T1112|stocks|open_same_dir|PFE|CALL|29.5|2026-11-20,2026-11-04T11:12-05:00,stocks,open_same_dir,PFE,PFE,CALL,29.5,2026-11-20,1.14,30.38,7.5,8.9
