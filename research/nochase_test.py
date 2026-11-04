@@ -37,6 +37,7 @@ FINAL_M = 15 * 60 + 30
 EXT_MAX, VWAP_BAND = 0.5, 0.15
 HS, COMM = 0.015, 0.0065
 N_BOOT = 3000
+REAL_PICK = "--model-pick" not in sys.argv   # افتراضياً: السترايك بالسعر الحقيقي ضمن ميزانية البوت (كما يفعل البوت الحي)
 
 
 # ====================== دوال صافية ======================
@@ -129,7 +130,7 @@ def load():
     data = bt.load()
     try:
         f = pd.read_csv(SPY_FILE)
-        f.index = pd.to_datetime(f["t"], utc=True).tz_convert(NY)
+        f.index = pd.DatetimeIndex(pd.to_datetime(f["t"], utc=True)).tz_convert(NY)
         f = f.rename(columns={"o": "Open", "h": "High", "l": "Low", "c": "Close", "v": "Volume"})[["Open", "High", "Low", "Close", "Volume"]]
         f = f[f.index >= data["spx"].index.min() - pd.Timedelta(days=3)]
         spy = pd.concat([f, data["spy"][["Open", "High", "Low", "Close", "Volume"]]]) if len(data["spy"]) else f
@@ -152,19 +153,57 @@ def spy_state(data, d, cutoff):
     return float(spy["Close"].iloc[-1]), float((tp * spy["Volume"]).sum() / spy["Volume"].sum())
 
 
-def real_bars(cache, d, side, K):
+def real_bars_many(cache, d, side, ks):
+    """{سترايك: شموع حقيقية أو None} مع جلب غير المخزن دفعة واحدة."""
     from stocks_contract_replay import fetch_bars, occ
-    sym = occ("SPXW", d, side, K)
-    if sym not in cache:
-        a = datetime.combine(d, datetime.min.time(), NY).replace(hour=9, minute=30).astimezone(bt.ob.NY).isoformat()
-        b = datetime.combine(d, datetime.min.time(), NY).replace(hour=16)
+    syms = {K: occ("SPXW", d, side, K) for K in ks}
+    need = [s for s in syms.values() if s not in cache]
+    if need:
+        a = pd.Timestamp(datetime.combine(d, datetime.min.time(), NY).replace(hour=9, minute=30)).tz_convert("UTC").isoformat()
+        b = pd.Timestamp(datetime.combine(d, datetime.min.time(), NY).replace(hour=16)).tz_convert("UTC").isoformat()
         try:
-            got = fetch_bars([sym], pd.Timestamp(a).tz_convert("UTC").isoformat(), pd.Timestamp(b).tz_convert("UTC").isoformat())
+            got = fetch_bars(need, a, b)
         except Exception as e:  # noqa: BLE001
-            print("فشل", sym, getattr(e, "code", type(e).__name__))
+            print("فشل", d, getattr(e, "code", type(e).__name__))
             got = {}
-        cache[sym] = got.get(sym)
-    return cache[sym]
+        for s in need:
+            cache[s] = got.get(s)
+    return {K: cache[s] for K, s in syms.items()}
+
+
+def real_bars(cache, d, side, K):
+    return real_bars_many(cache, d, side, [K])[K]
+
+
+def pick_real(bars_by_k, S, side, t0):
+    """أقرب سترايك خارج المال (≤ 2.5%) سعره الحقيقي عند t0 ضمن ميزانية البوت (CONTRACT_MIN_USD–CONTRACT_MAX_USD)."""
+    best = None
+    for K, b in bars_by_k.items():
+        if b is None or len(b) < 3:
+            continue
+        x = b[b.index >= t0]
+        if x.empty or (x.index[0] - t0).total_seconds() > 600:
+            continue
+        ask = float(x["o"].iloc[0]) * (1 + HS)
+        if not (ob.CONTRACT_MIN_USD <= ask * 100 <= ob.CONTRACT_MAX_USD):
+            continue
+        dist = abs(K - S)
+        if best is None or dist < best[0]:
+            best = (dist, K)
+    return None if best is None else best[1]
+
+
+def otm_strikes(S, side):
+    k0 = math.floor(S / 5) * 5 + (5 if side == "CALL" else 0)
+    sg = 1 if side == "CALL" else -1
+    out = []
+    for i in range(60):
+        K = float(k0 + sg * 5 * i)
+        if (side == "CALL" and K > S * 1.025) or (side == "PUT" and K < S * 0.975):
+            break
+        if (side == "CALL" and K > S) or (side == "PUT" and K < S):
+            out.append(K)
+    return out
 
 
 def run():
@@ -208,14 +247,19 @@ def run():
             out = {"day": d.isoformat(), "time": f"{run_m // 60:02d}:{run_m % 60:02d}", "side": side, "ext": round(ext, 3)}
 
             def trade(t_m, S):
-                pk = bt.pick_contract(side, S, t_m - DELAY, iv0, open_px, "base")
-                if pk is None:
+                t0 = datetime.combine(d, datetime.min.time(), NY).replace(hour=t_m // 60, minute=t_m % 60)
+                if REAL_PICK:
+                    K = pick_real(real_bars_many(cache, d, side, otm_strikes(S, side)), S, side, t0)
+                else:
+                    pk = bt.pick_contract(side, S, t_m - DELAY, iv0, open_px, "base")
+                    K = pk[0] if pk else None
+                if K is None:
                     return None
-                b = real_bars(cache, d, side, pk[0])
+                b = real_bars(cache, d, side, K)
                 if b is None or len(b) < 3:
                     return None
-                r = follow_real(b, datetime.combine(d, datetime.min.time(), NY).replace(hour=t_m // 60, minute=t_m % 60))
-                return None if r is None else (r[0], r[1], r[2], pk[0])
+                r = follow_real(b, t0)
+                return None if r is None else (r[0], r[1], r[2], K)
 
             a = trade(run_m, s["S"])
             if a is None:
@@ -302,6 +346,9 @@ def report(df):
 
 
 def main(argv):
+    global ROWS, OUT
+    if not REAL_PICK:
+        ROWS, OUT = ROWS.replace(".csv", "_modelpick.csv"), OUT.replace(".md", "_modelpick.md")
     df = pd.read_csv(ROWS) if "--report" in argv else run()
     md = report(df)
     open(OUT, "w", encoding="utf-8", newline="\n").write(md)

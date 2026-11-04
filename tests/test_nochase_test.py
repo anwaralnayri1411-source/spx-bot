@@ -51,3 +51,13 @@ def test_bh_and_verdict():
     assert nc.verdict(df)[0] == "مدعوم"
     assert nc.verdict(df.assign(b_usd=df["a_usd"] - 5))[0] == "غير مدعوم"
     assert "الحكم الرئيسي" in nc.report(df)
+
+
+def test_pick_real_budget_and_strikes():
+    t0 = datetime(2026, 11, 4, 10, 0, tzinfo=nc.NY)
+    mk = lambda p: _bars([p] * 5, t0)
+    bars = {7710.0: mk(5.0), 7715.0: mk(3.0), 7720.0: mk(0.5)}      # 7710 فوق الميزانية، 7720 تحتها
+    assert nc.pick_real(bars, 7702.0, "CALL", t0) == 7715.0
+    ks = nc.otm_strikes(7702.0, "CALL")
+    assert ks[0] == 7705.0 and max(ks) <= 7702 * 1.025
+    assert nc.otm_strikes(7702.0, "PUT")[0] == 7700.0
