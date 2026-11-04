@@ -1,26 +1,6 @@
 {
  "open": [
   {
-   "id": "20261102T1012|stocks|same_side_cap|WMT|CALL|128|2026-11-20",
-   "project": "stocks",
-   "tag": "same_side_cap",
-   "sym": "WMT",
-   "side": "CALL",
-   "strike": 128.0,
-   "exp": "2026-11-20",
-   "entry": 3.25,
-   "entry_time": "2026-11-02T10:12-05:00",
-   "edge": "7.0",
-   "strength": "5.6",
-   "occ": "WMT261120C00128000",
-   "peak_pnl": 0.465,
-   "close_pnl": 0.465,
-   "quotes": 147,
-   "out": "",
-   "out_time": "",
-   "out_pnl": ""
-  },
-  {
    "id": "20261102T1012|stocks|max_ideas_cap|V|CALL|430|2026-11-13",
    "project": "stocks",
    "tag": "max_ideas_cap",
@@ -33,9 +13,9 @@
    "edge": "4.0",
    "strength": "5.7",
    "occ": "V261113C00430000",
-   "peak_pnl": 0.466,
-   "close_pnl": 0.3,
-   "quotes": 147,
+   "peak_pnl": 0.478,
+   "close_pnl": 0.478,
+   "quotes": 148,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -54,8 +34,8 @@
    "strength": "8.0",
    "occ": "RIVN261120C00013000",
    "peak_pnl": 0.451,
-   "close_pnl": 0.382,
-   "quotes": 75,
+   "close_pnl": 0.333,
+   "quotes": 76,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -74,8 +54,8 @@
    "strength": "9.0",
    "occ": "SPY261105C00770000",
    "peak_pnl": 0.0,
-   "close_pnl": -0.388,
-   "quotes": 5,
+   "close_pnl": -0.373,
+   "quotes": 6,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -94,8 +74,8 @@
    "strength": "6.5",
    "occ": "WMT261120C00132000",
    "peak_pnl": 0.0,
-   "close_pnl": -0.022,
-   "quotes": 3,
+   "close_pnl": -0.019,
+   "quotes": 4,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -113,9 +93,9 @@
    "edge": "6.5",
    "strength": "8.3",
    "occ": "UBER261120C00072000",
-   "peak_pnl": 0.011,
-   "close_pnl": -0.032,
-   "quotes": 3,
+   "peak_pnl": 0.059,
+   "close_pnl": 0.059,
+   "quotes": 4,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -134,8 +114,8 @@
    "strength": "7.8",
    "occ": "PFE261120C00029500",
    "peak_pnl": 0.0,
-   "close_pnl": -0.163,
-   "quotes": 3,
+   "close_pnl": -0.112,
+   "quotes": 4,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -154,8 +134,28 @@
    "strength": "9.0",
    "occ": "SPXW261104C07740000",
    "peak_pnl": 0.0,
-   "close_pnl": -0.523,
-   "quotes": 2,
+   "close_pnl": -0.5,
+   "quotes": 3,
+   "out": "",
+   "out_time": "",
+   "out_pnl": ""
+  },
+  {
+   "id": "20261104T1027|stocks|earn_in_life|DIS|CALL|124|2026-11-20",
+   "project": "stocks",
+   "tag": "earn_in_life",
+   "sym": "DIS",
+   "side": "CALL",
+   "strike": 124.0,
+   "exp": "2026-11-20",
+   "entry": 2.09,
+   "entry_time": "2026-11-04T10:27-05:00",
+   "edge": "7.0",
+   "strength": "7.1",
+   "occ": "DIS261120C00124000",
+   "peak_pnl": 0.0,
+   "close_pnl": -0.062,
+   "quotes": 1,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -867,7 +867,12 @@
   "20261104T1012|stocks|open_same_dir|PFE|CALL|29.5|2026-11-20",
   "20261104T1020|spx|repeat_side|SPX|CALL|7740|2026-11-04",
   "20261104T1020|spx|repeat_side|SPY|CALL|770|2026-11-05",
-  "20261104T1025|spx|repeat_side|SPY|CALL|765|2026-11-05"
+  "20261104T1025|spx|repeat_side|SPY|CALL|765|2026-11-05",
+  "20261104T1030|spx|news_weak|SPY|CALL|765|2026-11-05",
+  "20261104T1027|stocks|earn_in_life|DIS|CALL|124|2026-11-20",
+  "20261104T1027|stocks|earn_in_life|WMT|CALL|132|2026-11-20",
+  "20261104T1027|stocks|earn_in_life|UBER|CALL|72|2026-11-20",
+  "20261104T1027|stocks|open_same_dir|PFE|CALL|29.5|2026-11-20"
  ],
  "last": {
   "spx|CALL|SPY": "2026-11-04T10:00-05:00",
@@ -931,6 +936,7 @@
   "stocks|DIS|CALL|2026-11-03": "2026-11-03T10:12-05:00",
   "stocks|WMT|CALL|2026-11-04": "2026-11-04T10:12-05:00",
   "stocks|UBER|CALL|2026-11-04": "2026-11-04T10:12-05:00",
-  "stocks|PFE|CALL|2026-11-04": "2026-11-04T10:12-05:00"
+  "stocks|PFE|CALL|2026-11-04": "2026-11-04T10:12-05:00",
+  "stocks|DIS|CALL|2026-11-04": "2026-11-04T10:27-05:00"
  }
 }
