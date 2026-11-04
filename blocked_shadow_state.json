@@ -13,9 +13,9 @@
    "edge": "7.0",
    "strength": "5.6",
    "occ": "WMT261120C00128000",
-   "peak_pnl": 0.455,
-   "close_pnl": 0.443,
-   "quotes": 146,
+   "peak_pnl": 0.465,
+   "close_pnl": 0.465,
+   "quotes": 147,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -34,8 +34,8 @@
    "strength": "5.7",
    "occ": "V261113C00430000",
    "peak_pnl": 0.466,
-   "close_pnl": 0.282,
-   "quotes": 146,
+   "close_pnl": 0.3,
+   "quotes": 147,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -54,8 +54,8 @@
    "strength": "8.0",
    "occ": "RIVN261120C00013000",
    "peak_pnl": 0.451,
-   "close_pnl": 0.431,
-   "quotes": 74,
+   "close_pnl": 0.382,
+   "quotes": 75,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -74,8 +74,8 @@
    "strength": "9.0",
    "occ": "SPY261105C00770000",
    "peak_pnl": 0.0,
-   "close_pnl": -0.259,
-   "quotes": 4,
+   "close_pnl": -0.388,
+   "quotes": 5,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -94,8 +94,8 @@
    "strength": "6.5",
    "occ": "WMT261120C00132000",
    "peak_pnl": 0.0,
-   "close_pnl": -0.061,
-   "quotes": 2,
+   "close_pnl": -0.022,
+   "quotes": 3,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -114,8 +114,8 @@
    "strength": "8.3",
    "occ": "UBER261120C00072000",
    "peak_pnl": 0.011,
-   "close_pnl": 0.005,
-   "quotes": 2,
+   "close_pnl": -0.032,
+   "quotes": 3,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -134,8 +134,8 @@
    "strength": "7.8",
    "occ": "PFE261120C00029500",
    "peak_pnl": 0.0,
-   "close_pnl": -0.184,
-   "quotes": 2,
+   "close_pnl": -0.163,
+   "quotes": 3,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -154,8 +154,8 @@
    "strength": "9.0",
    "occ": "SPXW261104C07740000",
    "peak_pnl": 0.0,
-   "close_pnl": -0.289,
-   "quotes": 1,
+   "close_pnl": -0.523,
+   "quotes": 2,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -866,7 +866,8 @@
   "20261104T1012|stocks|earn_in_life|UBER|CALL|72|2026-11-20",
   "20261104T1012|stocks|open_same_dir|PFE|CALL|29.5|2026-11-20",
   "20261104T1020|spx|repeat_side|SPX|CALL|7740|2026-11-04",
-  "20261104T1020|spx|repeat_side|SPY|CALL|770|2026-11-05"
+  "20261104T1020|spx|repeat_side|SPY|CALL|770|2026-11-05",
+  "20261104T1025|spx|repeat_side|SPY|CALL|765|2026-11-05"
  ],
  "last": {
   "spx|CALL|SPY": "2026-11-04T10:00-05:00",
