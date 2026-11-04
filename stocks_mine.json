@@ -120,6 +120,39 @@
    "time": "2026-11-03T15:03-05:00",
    "price": null,
    "qty": null
+  },
+  "XOM:PUT:2026-11-20:167.5|2026-11-04": {
+   "mode": "watch",
+   "ticker": "XOM",
+   "side": "PUT",
+   "exp": "2026-11-20",
+   "strike": 167.5,
+   "day": "2026-11-04",
+   "time": "2026-11-04T10:14-05:00",
+   "price": null,
+   "qty": null
+  },
+  "F:CALL:2026-11-20:11.5|2026-11-04": {
+   "mode": "watch",
+   "ticker": "F",
+   "side": "CALL",
+   "exp": "2026-11-20",
+   "strike": 11.5,
+   "day": "2026-11-04",
+   "time": "2026-11-04T10:14-05:00",
+   "price": null,
+   "qty": null
+  },
+  "INTC:PUT:2026-11-20:57.5|2026-11-04": {
+   "mode": "watch",
+   "ticker": "INTC",
+   "side": "PUT",
+   "exp": "2026-11-20",
+   "strike": 57.5,
+   "day": "2026-11-04",
+   "time": "2026-11-04T10:14-05:00",
+   "price": null,
+   "qty": null
   }
  }
 }
