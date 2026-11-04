@@ -46,7 +46,8 @@
    "starting jan 1 2027 amazon seasonal workers get day one health coverage if they work at least 30 hours a week",
    "analysts are bullish on these consumer cyclical stocks sea se amazon amzn",
    "amazon q3 preview the cloud giant strikes back nasdaq amzn",
-   "amazon twilio ebay and a health care stock cnbc s final trades"
+   "amazon twilio ebay and a health care stock cnbc s final trades",
+   "amazon leads cloud hyperscaler stocks higher what blue tsunami means for big tech"
   ],
   "WMT:CALL": [
    "walmart slashes membership fees with this new bundle",
@@ -2170,7 +2171,9 @@
    "nvidia stock news nvda rises as 70 billion china chip order stuck in queue",
    "nvidia nvda faces 70b china ai chip backlog as supply falls short",
    "nvidia stock climbs after new plans to reduce china business risk",
-   "why did usd 5 trillion leave ai stocks and is nvidia nasdaq nvda still leading the losses"
+   "why did usd 5 trillion leave ai stocks and is nvidia nasdaq nvda still leading the losses",
+   "why nvidia stock can ride a data center crackdown",
+   "why nvidia stock can ride a democrat ai data center crackdown"
   ],
   "AMZN:PUT": [
    "amazon com price target lowered to 300 from 325 at scotiabank",
@@ -2290,7 +2293,8 @@
    "amazon pfizer eaton and a financial stock cnbc final trades amazon com nasdaq amzn",
    "united therapeutics buys out pfizer royalties pfe nyse",
    "why did apple nasdaq aapl palantir nasdaq pltr pfizer nyse pfe and shopify nasdaq shop slip despite beating expectations",
-   "pfizer 3 key takeaways for long term investors"
+   "pfizer 3 key takeaways for long term investors",
+   "pfizer pfe gets a hold from j p morgan"
   ],
   "AAPL:PUT": [
    "apple a record guidance with no earnings growth nasdaq aapl",
@@ -2314,24 +2318,14 @@
   ],
   "PLTR:PUT": [
    "palantir technologies inc stock pltr moved down by 4 49 on nov 3 key drivers unveiled"
-  ]
+  ],
+  "F:CALL": [],
+  "XOM:PUT": [
+   "oil prices slide as trump plays down prospect of iran strikes after u s election rout"
+  ],
+  "MSFT:CALL": []
  },
  "fired": {
-  "DIS:CALL:2026-11-20:115": [
-   "sharp@2026-11-02T10:36-05:00",
-   "down-0.15",
-   "news:disney targets thousands of jobs in fresh cost cutting blitz report",
-   "news:walt disney dis starts major layoffs across multiple departments",
-   "news:disney mickey mouse to lay off thousands",
-   "stock1",
-   "news:disney s new ceo is eyeing thousands of job cuts two weeks before earnings",
-   "news:disney eyes thousands of layoffs in fresh cost push",
-   "news:disney weighs thousands of job cuts under new ceo d amaro",
-   "news:disney layoffs loom across workforce as company targets 20 savings",
-   "news:disney plans major job cuts amid cost cutting measures",
-   "news:dis stock layoffs what to know as disney plans more layoffs",
-   "up0.25"
-  ],
   "RIVN:CALL:2026-11-20:13.5": [
    "sharp@2026-11-02T11:22-05:00",
    "news:rivian extends post earnings rally after ubs flips bullish rivn nasdaq",
@@ -2376,30 +2370,8 @@
    "news:pfizer raises 2026 outlook and names new cfo after earnings beat",
    "news:nasdaq surges 1 pfizer posts upbeat q3 earnings",
    "down-0.3",
-   "stock1"
-  ],
-  "AAPL:PUT:2026-11-09:325": [
-   "up0.25",
-   "sharp@2026-11-03T11:09-05:00",
-   "news:aapl stock tumbles overnight on margin pressure from surging memory prices mu sndk inch higher",
-   "down-0.15",
-   "news:apple nasdaq aapl stock price target cut by jpmorgan chase co",
-   "news:midday fly by apple warns of lower margins pfizer reports beat and raise",
-   "news:apple price target raised to 310 from 240 at freedom broker",
-   "stock3",
-   "down-0.3",
-   "stock4",
-   "stock5",
-   "sharp@2026-11-04T09:46-05:00",
-   "stock6"
-  ],
-  "BAC:PUT:2026-11-20:49": [
-   "down-0.15",
-   "stock2",
-   "down-0.3",
-   "news:stock futures rise after democrats sweep the midterm elections",
-   "stock3",
-   "sharp@2026-11-04T09:46-05:00"
+   "stock1",
+   "sharp@2026-11-04T10:15-05:00"
   ],
   "NVDA:PUT:2026-11-06:205": [
    "news:why nvidia stock is rising as crackdown on data centers looms",
@@ -2409,36 +2381,22 @@
    "up0.25",
    "sharp@2026-11-04T09:46-05:00"
   ],
-  "GOOGL:PUT:2026-11-06:275@2026-11-03": [
-   "stock2",
+  "AMZN:CALL:2026-11-09:275": [],
+  "INTC:PUT:2026-11-20:57.5": [],
+  "F:CALL:2026-11-20:11.5": [
+   "down-0.15"
+  ],
+  "XOM:PUT:2026-11-20:167.5": [
    "down-0.15",
-   "down-0.3",
-   "stock3",
-   "sharp@2026-11-04T09:46-05:00",
-   "stock4",
-   "sharp@2026-11-04T10:00-05:00"
-  ]
+   "news:oil prices slide as trump plays down prospect of iran strikes after u s election rout"
+  ],
+  "MSFT:CALL:2026-11-09:565": []
  },
  "stock_level": {
   "RIVN:CALL:2026-11-20:13.5": 3,
-  "DIS:CALL:2026-11-20:115": 1,
-  "PFE:CALL:2026-11-20:30": 1,
-  "AAPL:PUT:2026-11-09:325": 6,
-  "BAC:PUT:2026-11-20:49": 3,
-  "GOOGL:PUT:2026-11-06:275@2026-11-03": 4
+  "PFE:CALL:2026-11-20:30": 1
  },
  "seen_macro": [
-  "federal reserve hits pause on rate hikes despite resurgent inflation",
-  "federal reserve holds interest rates steady",
-  "fed interest rate decision today rates remain unchanged at 3 75 4",
-  "us fed holds interest rates steady despite lingering inflation concerns",
-  "fed holds interest rates steady but investors bet on december rate hike",
-  "fed leaves rates steady as governor lisa cook dissents",
-  "freedom house count of electoral democracies down from 125 in 2016 to 106",
-  "a canadian leader s advice on surviving trump and rebuilding an alliance of democracies",
-  "federal reserve holds rate at 3 75 4 00 with two dissents",
-  "fed pauses interest rate hikes for now as key midterm elections loom",
-  "fed holds interest rates steady ahead of us midterm elections daily sabah",
   "fed holds interest rates steady before elections with two dissents",
   "fed holds interest rates steady in face of persistent inflation",
   "fed holds interest rates steady despite rising inflation for now",
@@ -3027,15 +2985,22 @@
   "fed wins protection with democrats taking control of the senate",
   "mortgage rates continue to fall but purchase applications retreat",
   "stocks rally as wall street tries to sort winners from losers following republican wipeout",
-  "wall st opens higher as democrats win congress data center stocks slide"
+  "wall st opens higher as democrats win congress data center stocks slide",
+  "top cd rates today nov 4 2026 lock in up to up to 5 05",
+  "countries weigh and worry about what trump will do after midterm defeat",
+  "strong october jobs report could alter fed s pl",
+  "wall st set for higher open as democrats win congress data center stocks slide",
+  "stock futures rally treasurys strengthen after democratic sweep",
+  "9 30am markets update",
+  "blue wave sweeps the nation",
+  "us stock market today s p 500 futures edge higher on strong factory and freight data",
+  "trump election rebuke hands us trading partners room to resist",
+  "stocks surge as blue tsunami puts political uncertainty to rest",
+  "wall street rallies after democrats win congress data center stocks slide"
  ],
  "sharp": {
-  "DIS:CALL:2026-11-20:115": 112.63,
   "RIVN:CALL:2026-11-20:13.5": 13.035,
-  "PFE:CALL:2026-11-20:30": 30.32,
-  "AAPL:PUT:2026-11-09:325": 350.35,
-  "BAC:PUT:2026-11-20:49": 51.25,
-  "NVDA:PUT:2026-11-06:205": 205.95,
-  "GOOGL:PUT:2026-11-06:275@2026-11-03": 292.3
+  "PFE:CALL:2026-11-20:30": 30.06,
+  "NVDA:PUT:2026-11-06:205": 205.95
  }
 }
