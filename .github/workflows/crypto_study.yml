@@ -1,0 +1,16 @@
+name: crypto_study
+# دراسة H-CRYPTO-TREND (قراءة فقط). تعمل عند الدفع لفرع الدراسة أو يدوياً؛ لا مواعيد.
+on:
+  push:
+    branches: [claude/crypto-study]
+    paths: ["crypto/**", ".github/workflows/crypto_study.yml"]
+  workflow_dispatch:
+jobs:
+  study:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.11"}
+      - run: pip install pandas numpy
+      - run: python crypto/trend_study.py
