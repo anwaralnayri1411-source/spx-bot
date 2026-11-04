@@ -113,3 +113,9 @@ def test_pre_only_drops_leaky_headlines():
     heads = [("2026-07-27T07:00:00+00:00", "ok"), ("2026-07-28T07:00:00+00:00", "too close"), ("2026-07-29T07:00:00+00:00", "after"),
              ("", "no date")]
     assert ep.pre_only(heads, "2026-07-29") == [("2026-07-27T07:00:00+00:00", "ok")]
+
+
+def test_blind_prompt_hides_outcome():
+    r = SimpleNamespace(sym="AMD", ann_day="2026-11-03", r0=0.05, beat=1)
+    t = ep.blind_prompt([(r, {"pre": [["", "AMD wins deal"]], "post": [["", "AMD soars after results"]]})])
+    assert "AMD wins deal" in t and "soars" not in t and "+5" not in t and "فوق التوقع" not in t

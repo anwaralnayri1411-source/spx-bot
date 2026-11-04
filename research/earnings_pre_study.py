@@ -359,12 +359,82 @@ def stage_classify(client=None, batch_size=6):
 
 
 # ---------------- التقرير ----------------
+TONE_BLIND = os.path.join(WORK, "tone_blind.jsonl")
+BLIND_SCHEMA = {"type": "object", "properties": {"items": {"type": "array", "items": {
+    "type": "object", "properties": {"i": {"type": "integer"}, "tone": {"type": "integer"},
+                                     "expect": {"type": "string", "enum": ["up", "down", "unclear"]}},
+    "required": ["i", "tone", "expect"], "additionalProperties": False}}},
+    "required": ["items"], "additionalProperties": False}
+
+
+def blind_prompt(batch):
+    """نبرة ما قبل الإعلان **عمياء**: عناوين الأسبوع السابق فقط، بلا نتيجة الأرباح ولا رد الفعل ولا عناوين ما بعده (منع التسرب)."""
+    parts = []
+    for k, (r, n) in enumerate(batch):
+        pre = "\n".join(f"  - {t}" for _, t in n["pre"][:MAX_HEADS]) or "  (لا عناوين)"
+        parts.append(f"### {k}. {r.sym} — إعلان أرباح قادم بتاريخ {r.ann_day}\nعناوين الأسبوع السابق:\n{pre}")
+    return ("أنت محلل أسهم قبل إعلان الأرباح؛ لا تعرف النتيجة. لكل شركة مرقّمة: tone = نبرة العناوين تجاه الشركة "
+            "(−2 سلبية جداً … +2 إيجابية جداً؛ 0 محايدة أو لا عناوين ذات صلة)؛ expect = الاتجاه الأرجح لرد فعل السهم بعد الإعلان "
+            "بناءً على هذه العناوين وحدها (unclear إن لم تكفِ). لا تستعمل أي معرفة عن نتائج هذه الإعلانات.\n\n" + "\n\n".join(parts))
+
+
+def stage_tone_blind(client=None, batch_size=8):
+    ev = pd.read_csv(EVENTS)
+    done = set()
+    if os.path.exists(TONE_BLIND):
+        done = {json.loads(l)["key"] for l in open(TONE_BLIND, encoding="utf-8") if l.strip()}
+    if client is None:
+        import anthropic
+        client = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"], timeout=120.0)
+    todo = []
+    for r in ev.itertuples():
+        key = f"{r.sym}_{r.ann_day}"
+        p = os.path.join(NEWS_DIR, f"{key}.json")
+        if key in done or not os.path.exists(p):
+            continue
+        n = json.load(open(p, encoding="utf-8"))
+        if n["pre"]:
+            todo.append((r, n))
+    print("نبرة عمياء للقراءة:", len(todo), flush=True)
+    for s in range(0, len(todo), batch_size):
+        if spent() >= BUDGET_USD:
+            print("بُلغ سقف Claude؛ توقف القراءة.")
+            break
+        batch = todo[s:s + batch_size]
+        try:
+            r_ = client.messages.create(model=MODEL, max_tokens=2000, messages=[{"role": "user", "content": blind_prompt(batch)}],
+                                        output_config={"effort": "low", "format": {"type": "json_schema", "schema": BLIND_SCHEMA}})
+        except Exception as e:  # noqa: BLE001
+            print("فشل طلب:", type(e).__name__, str(e)[:200])
+            time.sleep(5)
+            continue
+        u_in, u_out = getattr(r_.usage, "input_tokens", 0) or 0, getattr(r_.usage, "output_tokens", 0) or 0
+        with open(USAGE, "a", newline="", encoding="utf-8") as f:
+            csv.writer(f).writerow([datetime.now(timezone.utc).isoformat(timespec="seconds"), u_in, u_out,
+                                    round((u_in * PRICES[0] + u_out * PRICES[1]) / 1e6, 6), r_.stop_reason])
+        if r_.stop_reason != "end_turn":
+            continue
+        items = json.loads(next(b.text for b in r_.content if getattr(b, "type", "") == "text"))["items"]
+        with open(TONE_BLIND, "a", encoding="utf-8") as f:
+            for it in items:
+                k = it.get("i", -1)
+                if 0 <= k < len(batch):
+                    r = batch[k][0]
+                    f.write(json.dumps({"key": f"{r.sym}_{r.ann_day}", "tone_b": int(max(-2, min(2, int(it.get("tone", 0))))),
+                                        "expect_b": it.get("expect", "unclear")}, ensure_ascii=False) + "\n")
+
+
 def load_all():
     ev = pd.read_csv(EVENTS)
     ev["key"] = ev["sym"] + "_" + ev["ann_day"]
     if os.path.exists(CLS):
         c = pd.DataFrame([json.loads(l) for l in open(CLS, encoding="utf-8") if l.strip()]).drop_duplicates("key", keep="last")
         ev = ev.merge(c, on="key", how="left")
+    if os.path.exists(TONE_BLIND):                 # النبرة العمياء تحل محل نبرة القراءة المشتركة (فيها تسرب: رأى النموذج رد الفعل)
+        b = pd.DataFrame([json.loads(l) for l in open(TONE_BLIND, encoding="utf-8") if l.strip()]).drop_duplicates("key", keep="last")
+        ev = ev.merge(b, on="key", how="left")
+        ev["tone_seen"] = ev.get("tone")
+        ev["tone"], ev["expect"] = ev["tone_b"], ev["expect_b"]
     for col in ("tone", "expect", "reason", "explain_ar", "analyst_net"):
         if col not in ev:
             ev[col] = np.nan
@@ -388,7 +458,7 @@ def report(ev):
     pick = lambda df, cond: df[cond].assign(y=df.loc[cond, "r0"])
     L = ["# H-EARNPRE: توقع رد فعل السهم على الأرباح مما كان معروفاً قبل الإعلان (نتائج آلية)", "",
          f"- {ev['sym'].nunique()} شركة، {len(ev)} إعلاناً ({ev['day'].min()} → {ev['day'].max()}). قُرئت أخبار {ev['tone'].notna().sum()} إعلاناً بـClaude "
-         f"(المنفق {spent():.2f}$).", "- r0 = رد فعل السهم يوم D0 منذ آخر إغلاق قبل الإعلان؛ النتائج حركة السهم لا العقد.", "",
+         f"(المنفق {spent():.2f}$). نبرة ما قبل الإعلان **عمياء** (لا يرى النموذج النتيجة ولا رد الفعل).", "- r0 = رد فعل السهم يوم D0 منذ آخر إغلاق قبل الإعلان؛ النتائج حركة السهم لا العقد.", "",
          "## صورة عامة", "", "| المجموعة | إعلانات | رد الفعل r0 | صعد | +5 أيام | قبل الإعلان (النسخة أ) |", "|---|---|---|---|---|---|"]
     row = lambda name, g: L.append(f"| {name} | {len(g)} | {g['r0'].mean() * 100:+.2f}% | {(g['r0'] > 0).mean() * 100:.0f}% | "
                                    f"{g['r5'].mean() * 100:+.2f}% | {g['preA'].mean() * 100:+.2f}% |")
@@ -469,6 +539,8 @@ def main(argv):
         stage_news()
     if stage in ("all", "classify"):
         stage_classify()
+    if stage in ("all", "tone_blind"):
+        stage_tone_blind()
     if stage in ("all", "report"):
         stage_report()
 
