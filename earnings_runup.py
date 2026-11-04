@@ -98,7 +98,7 @@ def halted(log):
 
 def entry_message(r):
     return (f"📅 **فرصة ما قبل الأرباح (تجريبية)** | {r['ticker']} 🟢 CALL\n"
-            f"الإعلان: {r['earn_ts'][:16].replace('T', ' ')} نيويورك | الخروج قبل الإعلان: {r['exit_day']} قبل الإغلاق\n"
+            f"الإعلان: {r['earn_ts'][:16].replace('T', ' ')} نيويورك | الخروج: {r['exit_day']} قبل الإغلاق (قبل الإعلان)\n"
             f"العقد: **{r['ticker']} {float(r['strike']):g} CALL** ينتهي {r['exp']} (قبل الإعلان) | دلتا {float(r['delta']):.2f}\n"
             f"دخول ≈ ${float(r['entry']):.2f} (${float(r['entry']) * 100:,.0f}) | 🎯 +50% · 🛑 −40%\n"
             "الفكرة: الأسهم تميل للصعود في الأسبوع الذي يسبق الإعلان (+0.88% في المتوسط، H-EARNPRE)، ونخرج قبل النتيجة فلا نقامر عليها.\n"
@@ -183,8 +183,9 @@ def scan(n, st, log, no_send):
         if not k:
             print("لا عقد مناسب:", tk, exp)
             continue
+        out_day = min(last, date.fromisoformat(exp))   # الخروج في آخر جلسة قبل الإعلان أو يوم انتهاء العقد، أيهما أسبق
         r = {"id": f"{today}:{tk}", "date": today.isoformat(), "time": n.strftime("%H:%M"), "ticker": tk,
-             "earn_ts": ets.isoformat(), "exit_day": last.isoformat(), "exp": exp, "strike": f"{k['strike']:g}",
+             "earn_ts": ets.isoformat(), "exit_day": out_day.isoformat(), "exp": exp, "strike": f"{k['strike']:g}",
              "occ": lq.occ(tk, exp, "CALL", k["strike"]), "entry": f"{k['ask']:.2f}", "spot": f"{S:.2f}",
              "delta": f"{k['delta']:.3f}", "status": "مفتوحة", "exit_time": "", "exit_ret": "", "pnl_usd": "", "last_ret": ""}
         log = pd.concat([log, pd.DataFrame([r])], ignore_index=True)
