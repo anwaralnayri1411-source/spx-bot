@@ -1,26 +1,6 @@
 {
  "open": [
   {
-   "id": "20261030T1012|stocks|same_side_cap|HOOD|PUT|80|2026-11-20",
-   "project": "stocks",
-   "tag": "same_side_cap",
-   "sym": "HOOD",
-   "side": "PUT",
-   "strike": 80.0,
-   "exp": "2026-11-20",
-   "entry": 3.38,
-   "entry_time": "2026-10-30T10:12-04:00",
-   "edge": "4.5",
-   "strength": "6.5",
-   "occ": "HOOD261120P00080000",
-   "peak_pnl": 0.216,
-   "close_pnl": -0.243,
-   "quotes": 213,
-   "out": "",
-   "out_time": "",
-   "out_pnl": ""
-  },
-  {
    "id": "20261102T1012|stocks|same_side_cap|WMT|CALL|128|2026-11-20",
    "project": "stocks",
    "tag": "same_side_cap",
@@ -34,8 +14,8 @@
    "strength": "5.6",
    "occ": "WMT261120C00128000",
    "peak_pnl": 0.455,
-   "close_pnl": 0.455,
-   "quotes": 142,
+   "close_pnl": 0.388,
+   "quotes": 143,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -54,8 +34,8 @@
    "strength": "5.7",
    "occ": "V261113C00430000",
    "peak_pnl": 0.466,
-   "close_pnl": 0.267,
-   "quotes": 142,
+   "close_pnl": 0.172,
+   "quotes": 143,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -74,8 +54,28 @@
    "strength": "8.0",
    "occ": "RIVN261120C00013000",
    "peak_pnl": 0.422,
-   "close_pnl": 0.324,
-   "quotes": 70,
+   "close_pnl": 0.392,
+   "quotes": 71,
+   "out": "",
+   "out_time": "",
+   "out_pnl": ""
+  },
+  {
+   "id": "20261104T1000|spx|repeat_side|SPY|CALL|770|2026-11-05",
+   "project": "spx",
+   "tag": "repeat_side",
+   "sym": "SPY",
+   "side": "CALL",
+   "strike": 770.0,
+   "exp": "2026-11-05",
+   "entry": 2.01,
+   "entry_time": "2026-11-04T10:00-05:00",
+   "edge": "7.0",
+   "strength": "9.0",
+   "occ": "SPY261105C00770000",
+   "peak_pnl": 0.0,
+   "close_pnl": -0.149,
+   "quotes": 1,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -777,10 +777,11 @@
   "20261103T1527|stocks|open_same_dir|V|CALL|425|2026-11-06",
   "20261103T1527|stocks|open_same_dir|RIVN|CALL|13|2026-11-20",
   "20261103T1527|stocks|open_same_dir|PFE|CALL|29.5|2026-11-20",
-  "20261103T1527|stocks|open_same_dir|DIS|CALL|120|2026-11-20"
+  "20261103T1527|stocks|open_same_dir|DIS|CALL|120|2026-11-20",
+  "20261104T1000|spx|repeat_side|SPY|CALL|770|2026-11-05"
  ],
  "last": {
-  "spx|CALL|SPY": "2026-11-03T15:20-05:00",
+  "spx|CALL|SPY": "2026-11-04T10:00-05:00",
   "stocks|XOM|CALL|2026-10-23": "2026-10-23T12:12-04:00",
   "stocks|NFLX|PUT|2026-10-23": "2026-10-23T12:12-04:00",
   "stocks|UBER|PUT|2026-10-23": "2026-10-23T12:12-04:00",
