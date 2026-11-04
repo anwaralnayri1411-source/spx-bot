@@ -1347,6 +1347,15 @@ def instrument_block(sym, ks, side, S_idx):
 FLOW_LOG = "spx_flow_log.csv"   # مراقب سيولة SPX (H-SPXFLOW)
 
 
+def night_news_lines(side, sym=None):
+    """أخبار الليل المهمة (مراقب الأخبار) واتجاهها مقابل التوصية؛ إعلامي فقط (بطلب المستخدم 4/11/2026). [] عند أي فشل."""
+    try:
+        import news_watch as nw
+        return nw.night_context(now_ny().date().isoformat(), sym, side)
+    except Exception:  # noqa: BLE001
+        return []
+
+
 def liquidity_lines(side, S, n, path=FLOW_LOG):
     """سطر إعلامي من آخر لقطة لمراقب السيولة (≤15 دقيقة): نوع الغاما والجدران وميل التدفق آخر 30د، وتنبيه إن كان
     التدفق عكس التوصية أو كانت قرب جدار ضدها في يوم ارتداد. لا يغيّر التوصية (بطلب المستخدم 2/11/2026)؛ فارغ إن لا قراءة."""
@@ -1475,6 +1484,7 @@ def send_signal(a):
         pv = a["addon"]
         cap.append(f"➕ <b>إضافة على رابح:</b> عقد {side} السابق ({pv['strike']:,.0f}، {pv['time'][11:16]}) بلغ الهدف.")
     cap += [x for x in liquidity_lines(side, S, now_ny()) if x]
+    cap += night_news_lines(side)
     cap.append(f"⏰ لا دخول بعد {ry_time(*no_entry(now_ny()))} | 📍 SPX {S:,.1f}")
     nd = groups.get("NDX")
     if c["age"] >= 5:

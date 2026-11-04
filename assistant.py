@@ -206,7 +206,7 @@ def t_news(ticker="", hours=24):
         L.append("لا أخبار مهمة مسجّلة في هذه الفترة (المراقب يعمل خارج الجلسة فقط، كل 30 دقيقة، منذ 2/11/2026).")
     try:
         ref = nw.last_close(n)
-        L.append("\n" + nw.fut_line({k: nw.fut_move(nw.fut_bars(s), n, ref) for k, s in (("ES", "ES=F"), ("NQ", "NQ=F"))})
+        L.append("\n" + nw.fut_line(nw.fut_moves(n, ref))
                  + f" | الإغلاق المرجعي {ref:%m-%d %H:%M}")
     except Exception as e:
         L.append(f"\nالعقود الآجلة: تعذر ({type(e).__name__})")

@@ -161,3 +161,49 @@ def test_record_night(tmp_path, monkeypatch):
     r = pd.read_csv(nw.NIGHTS).iloc[0]
     assert r["news_alerts"] == 2 and r["es_move"] == -0.012
     assert abs(r["spx_gap"] - (98.0 / 100.9 - 1)) < 1e-5
+
+
+def test_fut_line_source_note():
+    assert "لحظي من Tastytrade" in nw.fut_line({"ES": (-0.012, 0.1, "live"), "NQ": (-0.022, 0.1, "live")})
+    assert "ياهو، متأخرة ~10د" in nw.fut_line({"ES": (-0.012, 3, "yahoo"), "NQ": (None, None, "yahoo")})
+    assert "بعضها من ياهو" in nw.fut_line({"ES": (-0.012, 0.1, "live"), "NQ": (-0.02, 3, "yahoo")})
+
+
+class ExplainClient:
+    """أول طلب تصنيف، والثاني ترجمة وتحليل."""
+    def __init__(self, items):
+        self.items, self.calls = items, 0
+        self.messages = self
+
+    def create(self, **kw):
+        self.calls += 1
+        body = {"items": self.items} if self.calls == 1 else {"items": [{"i": 0, "title_ar": "هبوط العقود الآجلة مع تقدم الديمقراطيين",
+                                                                            "analysis": "ضغط على التقنية وناسداك؛ تقدير غير مختبر."}]}
+        return SimpleNamespace(stop_reason="end_turn", usage=SimpleNamespace(input_tokens=500, output_tokens=100),
+                               content=[SimpleNamespace(type="text", text=json.dumps(body))])
+
+
+def test_alert_has_arabic_translation_and_analysis(tmp_path, monkeypatch):
+    sent = _paths(tmp_path, monkeypatch)
+    cl = ExplainClient([_item(0, cluster="election")])
+    nw.run(T("2026-11-03T23:30-05:00"), client=cl, fetcher=_fetcher(["Stock futures hammered as Democrats gain"]),
+           futures={"ES": _fut(98.8, last_t="2026-11-03T23:25"), "NQ": _fut(97.8, last_t="2026-11-03T23:25")})
+    msg = sent[0][1]
+    assert "**هبوط العقود الآجلة مع تقدم الديمقراطيين**" in msg and "📝 ضغط على التقنية" in msg
+    assert "<i>Stock futures hammered as Democrats gain</i>" in msg and cl.calls == 2
+
+
+def test_night_context_lines(tmp_path, monkeypatch):
+    _paths(tmp_path, monkeypatch)
+    rows = [{"time_utc": "2026-11-04T04:20:00+00:00", "night": "2026-11-04", "key": "a", "query": "q", "title": "Futures hammered",
+             "source": "s", "new": "1", "scope": "market", "ticker": "", "importance": "high", "direction": "down",
+             "topic": "هبوط العقود مع تقدم الديمقراطيين", "cluster": "election", "alerted": "1"},
+            {"time_utc": "2026-11-04T05:00:00+00:00", "night": "2026-11-04", "key": "b", "query": "q", "title": "NVDA deal",
+             "source": "s", "new": "1", "scope": "company", "ticker": "NVDA", "importance": "medium", "direction": "up",
+             "topic": "صفقة جديدة لإنفيديا", "cluster": "nvda-deal", "alerted": "0"}]
+    nw.append_log(rows)
+    L = nw.night_context("2026-11-04", "NVDA", "CALL")
+    assert L[0] == "📰 أخبار الليل: NVDA: صفقة جديدة لإنفيديا — متوقع صعود ✅ مع التوصية"
+    assert "⚠️ عكس التوصية" in L[1] and "الديمقراطيين" in L[1]
+    assert nw.night_context("2026-11-04", None, "PUT") == ["📰 أخبار الليل: هبوط العقود مع تقدم الديمقراطيين — متوقع هبوط ✅ مع التوصية"]
+    assert nw.night_context("2026-11-05") == []

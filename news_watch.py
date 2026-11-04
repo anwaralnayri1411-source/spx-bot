@@ -52,6 +52,12 @@ SCHEMA = {"type": "object", "properties": {"items": {"type": "array", "items": {
                    "topic": {"type": "string"}, "cluster": {"type": "string"}},
     "required": ["i", "new", "scope", "ticker", "importance", "direction", "topic", "cluster"], "additionalProperties": False}}},
     "required": ["items"], "additionalProperties": False}
+EXPLAIN_SCHEMA = {"type": "object", "properties": {"items": {"type": "array", "items": {
+    "type": "object",
+    "properties": {"i": {"type": "integer"}, "title_ar": {"type": "string"}, "analysis": {"type": "string"}},
+    "required": ["i", "title_ar", "analysis"], "additionalProperties": False}}},
+    "required": ["items"], "additionalProperties": False}
+FUT_PRODUCTS = {"ES": "ES", "NQ": "NQ"}      # رموز منتجات Tastytrade للعقود الآجلة
 
 
 # ============================ الوقت ============================
@@ -107,16 +113,52 @@ def fut_move(close, now, ref_t):
     return float(close.iloc[-1]) / float(ref.iloc[-1]) - 1, age
 
 
+def fut_live(product):
+    """(حركة منذ تسوية الجلسة السابقة، العمر بالدقائق) من Tastytrade لعقد الشهر النشط، أو None (بلا مفاتيح أو فشل)."""
+    if not (os.getenv("TASTY_CLIENT_SECRET") and os.getenv("TASTY_REFRESH_TOKEN")):
+        return None
+    try:
+        import urllib.parse
+        import live_quotes as lq
+        tok = lq._tasty_token()
+        items = (lq._tasty_req(f"/instruments/futures?product-code[]={product}", token=tok).get("data") or {}).get("items") or []
+        sym = next((i["symbol"] for i in items if i.get("active-month")), None)
+        if not sym:
+            return None
+        q = urllib.parse.urlencode({"future": sym})
+        it = ((lq._tasty_req(f"/market-data/by-type?{q}", token=tok).get("data") or {}).get("items") or [{}])[0]
+        last, prev = float(it.get("last") or it.get("mark") or 0), float(it.get("prev-close") or 0)
+        age = lq._age(it.get("updated-at") or "")
+        if last <= 0 or prev <= 0 or age is None:
+            return None
+        return last / prev - 1, age / 60
+    except Exception as e:  # noqa: BLE001
+        print("العقود الآجلة اللحظية:", product, type(e).__name__)
+        return None
+
+
+def fut_moves(now, ref_t):
+    """{ES/NQ: (حركة، عمر بالدقائق، المصدر)}: Tastytrade اللحظي أولاً، وياهو (متأخر ~10د) احتياط."""
+    out = {}
+    for k, prod in FUT_PRODUCTS.items():
+        live = fut_live(prod)
+        out[k] = (live[0], live[1], "live") if live else (*fut_move(fut_bars(f"{prod}=F"), now, ref_t), "yahoo")
+    return out
+
+
 def fut_line(moves):
+    srcs = {v[2] for v in moves.values() if len(v) > 2}
+    note = "لحظي من Tastytrade" if srcs == {"live"} else ("ياهو، متأخرة ~10د" if srcs <= {"yahoo"} else "لحظي، وبعضها من ياهو المتأخر")
     parts = []
-    for sym, (m, age) in moves.items():
+    for sym, v in moves.items():
+        m, age = v[0], v[1]
         if m is None:
             parts.append(f"{sym}: غير متاح")
         elif age is not None and age > FUT_STALE_MIN:
             parts.append(f"{sym} {an.pct(m, 1)} (مغلقة الآن)")
         else:
             parts.append(f"{sym} {an.pct(m, 1)}")
-    return "العقود الآجلة منذ الإغلاق: " + " | ".join(parts) + " (ياهو، متأخرة ~10د)"
+    return "العقود الآجلة منذ الإغلاق: " + " | ".join(parts) + f" ({note})"
 
 
 # ============================ الأخبار ============================
@@ -166,7 +208,26 @@ def classify(items, tickers, now, client=None):
     return out
 
 
-def ask(text, now, client=None):
+def explain(items, moves, tickers, now, client=None):
+    """ترجمة عربية وتحليل قصير لكل خبر (طلب واحد). items: [{"title"، "c"}]. يرجع قائمة بنفس الطول (قاموس أو None)."""
+    if not items:
+        return []
+    held = ", ".join(f"{k} {v}" for k, v in sorted(tickers.items())) or "لا يوجد"
+    lines = "\n".join(f"{i}. {x['title']} (تصنيف: {x['c']['scope']}، {x['c']['ticker'] or '-'}، {x['c']['direction']})"
+                      for i, x in enumerate(items))
+    text = ("أنت محلل أسواق يكتب لمتداول عربي (عقود SPX لليوم نفسه وعقود الشركات الأمريكية). لكل خبر برقمه أعد: "
+            "title_ar = ترجمة عربية دقيقة وواضحة للعنوان؛ analysis = تحليل من جملتين أو ثلاث بالعربية: معنى الخبر، وأثره المتوقع "
+            "على المؤشر (S&P 500 وناسداك)، وأكثر القطاعات أو الشركات تأثراً. لا تخترع أرقاماً غير موجودة في الخبر أو في سطر العقود "
+            "الآجلة، واذكر أن الاتجاه تقدير غير مختبر حين يلزم.\n" + fut_line(moves) + f"\nعقود المستخدم المفتوحة: {held}\n\nالأخبار:\n{lines}")
+    res = ask(text, now, client, schema=EXPLAIN_SCHEMA, kind="explain", max_tokens=4000)
+    out = [None] * len(items)
+    for it in res or []:
+        if isinstance(it, dict) and 0 <= it.get("i", -1) < len(items) and it.get("title_ar"):
+            out[it["i"]] = it
+    return out
+
+
+def ask(text, now, client=None, schema=None, kind="classify", max_tokens=12000):
     day = now.date().isoformat()
     try:
         df = pd.read_csv(USAGE, dtype=str)
@@ -188,8 +249,8 @@ def ask(text, now, client=None):
             print("anthropic:", type(e).__name__)
             return None
     try:
-        r = client.messages.create(model=MODEL, max_tokens=12000, messages=[{"role": "user", "content": text}],
-                                   output_config={"effort": "low", "format": {"type": "json_schema", "schema": SCHEMA}})
+        r = client.messages.create(model=MODEL, max_tokens=max_tokens, messages=[{"role": "user", "content": text}],
+                                   output_config={"effort": "low", "format": {"type": "json_schema", "schema": schema or SCHEMA}})
     except Exception as e:  # noqa: BLE001
         print("فشل التصنيف:", type(e).__name__)
         return None
@@ -199,7 +260,7 @@ def ask(text, now, client=None):
         w = csv.DictWriter(f, fieldnames=an.USAGE_COLS)
         if new:
             w.writeheader()
-        w.writerow({"time": now.isoformat(timespec="seconds"), "kind": "classify", "model": MODEL, **u,
+        w.writerow({"time": now.isoformat(timespec="seconds"), "kind": kind, "model": MODEL, **u,
                     "usd": round(an.cost(u, MODEL), 5), "status": r.stop_reason})
     if r.stop_reason != "end_turn":
         return None
@@ -218,9 +279,12 @@ def alertable(c, tickers):
 def item_line(x, tickers):
     c = x["c"]
     t = x["t"].astimezone(NY)
-    held = f"\n   يخص عقدك المفتوح: {c['ticker'].upper()} {tickers[c['ticker'].upper()]}" if c["ticker"].upper() in tickers else ""
-    return (f"• {x['title']}\n   {t:%H:%M} نيويورك | {c['topic']} | الأثر المتوقع: {DIR_AR.get(c['direction'], '-')} "
-            f"(توقّع غير مختبر){held}")
+    held = f"\n   📌 يخص عقدك المفتوح: {c['ticker'].upper()} {tickers[c['ticker'].upper()]}" if c["ticker"].upper() in tickers else ""
+    ex = x.get("ex") or {}
+    head = f"• **{ex['title_ar']}**" if ex.get("title_ar") else f"• **{c['topic']}**"
+    body = f"\n   📝 {ex['analysis']}" if ex.get("analysis") else ""
+    return (f"{head}\n   {t:%H:%M} نيويورك | الأهمية: {IMP_AR.get(c['importance'], '-')} | الأثر المتوقع: "
+            f"{DIR_AR.get(c['direction'], '-')} (توقّع غير مختبر){body}{held}\n   <i>{x['title']}</i>")
 
 
 # ============================ السجلات والحالة ============================
@@ -259,6 +323,29 @@ def night_items(night, min_imp=("high", "medium")):
     d = d[(d["night"] == night) & (d["new"] == "1") & d["importance"].isin(min_imp) & d["scope"].isin(["market", "company"])]
     d = d.assign(rank=d["importance"].map({"high": 0, "medium": 1})).sort_values(["rank", "time_utc"])
     return d.drop_duplicates("cluster")
+
+
+def night_context(day, sym=None, side=None, limit=2):
+    """أسطر «أخبار الليل» لتوصيات الجلسة day (يقرؤها بوت SPX وبوت الشركات من news_watch_log.csv الذي يصلهما من git):
+    أخبار السوق عالية الأهمية، وأخبار الشركة sym (متوسطة/عالية)، مع اتجاهها المتوقع مقابل جهة التوصية. إعلامي فقط."""
+    try:
+        d = night_items(day)
+    except Exception:  # noqa: BLE001
+        return []
+    if d is None or not len(d):
+        return []
+    mk = d[(d["scope"] == "market") & (d["importance"] == "high")]
+    co = d[(d["scope"] == "company") & (d["ticker"] == (sym or "").upper())] if sym else d.iloc[0:0]
+    s = {"CALL": 1, "PUT": -1}.get(side or "", 0)
+    out = []
+    for r in list(co.itertuples())[:1] + list(mk.itertuples())[:limit]:
+        dv = {"up": 1, "down": -1}.get(r.direction, 0)
+        tag = "" if not (s and dv) else (" ✅ مع التوصية" if s * dv > 0 else " ⚠️ عكس التوصية")
+        who = f"{r.ticker}: " if r.scope == "company" else ""
+        out.append(f"📰 أخبار الليل: {who}{r.topic} — متوقع {DIR_AR.get(r.direction, '-')}{tag}")
+        if len(out) >= limit:
+            break
+    return out
 
 
 # ============================ القياس بعد الجلسة ============================
@@ -327,12 +414,16 @@ def run(now, no_send=False, force_summary=False, client=None, fetcher=None, futu
     if rows:
         append_log(rows)
     ref_t = last_close(now)
-    fut = futures if futures is not None else {"ES": fut_bars("ES=F"), "NQ": fut_bars("NQ=F")}
-    moves = {k: fut_move(v, now, ref_t) for k, v in fut.items()}
+    if futures is not None:
+        moves = {k: (*fut_move(v, now, ref_t), "yahoo") for k, v in futures.items()}
+    else:
+        moves = fut_moves(now, ref_t)
     msgs = []
     if alerts:
+        for x, ex in zip(alerts, explain(alerts, moves, tickers, now, client)):
+            x["ex"] = ex
         msgs.append("📰 **خبر مهم خارج الجلسة**\n\n" + "\n\n".join(item_line(x, tickers) for x in alerts) + "\n\n" + fut_line(moves))
-    es, age = moves.get("ES", (None, None))
+    es, age = moves.get("ES", (None, None, ""))[:2]
     lv_done = set(st.get("es_levels", {}).get(night, []))
     if es is not None and age is not None and age <= FUT_STALE_MIN:
         for lv in ES_LEVELS:
@@ -349,8 +440,14 @@ def run(now, no_send=False, force_summary=False, client=None, fetcher=None, futu
         d = night_items(day if not force_summary else night)
         lines = [f"🌅 **ملخص أخبار الليل قبل الافتتاح · {day}**", "", fut_line(moves), ""]
         if len(d):
-            for r in d.head(8).itertuples():
-                lines.append(f"• [{IMP_AR.get(r.importance, '')}] {r.topic} — الأثر المتوقع: {DIR_AR.get(r.direction, '-')}\n   {r.title}")
+            top = d.head(8)
+            exs = explain([{"title": r.title, "c": {"scope": r.scope, "ticker": r.ticker, "direction": r.direction}}
+                           for r in top.itertuples()], moves, tickers, now, client)
+            for r, ex in zip(top.itertuples(), exs):
+                head = ex["title_ar"] if ex else r.topic
+                body = f"\n   📝 {ex['analysis']}" if ex and ex.get("analysis") else ""
+                lines.append(f"• [{IMP_AR.get(r.importance, '')}] **{head}** — الأثر المتوقع: {DIR_AR.get(r.direction, '-')}"
+                             f"{body}\n   <i>{r.title}</i>")
         else:
             lines.append("لا أخبار مهمة جديدة منذ الإغلاق.")
         lines += ["", "الاتجاهات المتوقعة غير مختبرة؛ الحكم على فائدة التنبيهات بعد 30 ليلة (H-NEWSWATCH)."]

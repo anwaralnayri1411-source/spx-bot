@@ -198,7 +198,7 @@ main() {
       files="analyst_cards.csv analyst_state.json analyst_usage.csv messages_analyst.jsonl research/analyst_journal.md"
       msg="analyst daily" ;;
     news_watch)
-      group=news-watch; envs="TG ANTHROPIC"   # مراقب الأخبار خارج الجلسة (H-NEWSWATCH): تنبيه فقط، لـ TELEGRAM_CHAT_ID وحده
+      group=news-watch; envs="TG ANTHROPIC TASTY"   # مراقب الأخبار خارج الجلسة (H-NEWSWATCH): تنبيه فقط، لـ TELEGRAM_CHAT_ID وحده
       cmds=("$py news_watch.py")
       files="news_watch_log.csv news_watch_state.json news_watch_nights.csv news_watch_usage.csv messages_news_watch.jsonl"
       msg="news watch" ;;

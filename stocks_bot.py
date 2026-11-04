@@ -1718,6 +1718,7 @@ def idea_caption(i):
         f"💵 بسعر حتى <b>{k['price']:.2f}</b> | تكلفة <b>${k['cost']:,.0f}</b> للعقد | يحتاج {'+' if call else '-'}{k['need'] * 100:.1f}%",
         quote_line(k),
         *([cl] if (cl := _ctx_line(i)) else []),
+        *ob.night_news_lines(side, i["ticker"]),
         lv[0], lv[1],
         f"💰 أقصى خسارة ≈ ${k['cost'] * STOP_LOSS:,.0f}",
         "⚠️ <i>تعليمي وليست توصية. لا تلاحق السعر فوق +10%.</i>"])
