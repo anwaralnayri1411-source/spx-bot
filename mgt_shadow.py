@@ -333,8 +333,9 @@ def main(argv):
         st["open"] = keep
     # 2) تقرير نهاية الجلسة
     today = now.date().isoformat()
-    if now.weekday() < 5 and now.time() >= REPORT_AT and st.get("report_day") != today:
+    if now.weekday() < 5 and now.time() >= REPORT_AT and st.get("report_day") != today and             any(e["tdate"] == today for e in st["open"] + st["closed"]):
         txt = report(st, today)
+        os.makedirs(DIR, exist_ok=True)
         with open(REPORT_MD, "a", encoding="utf-8") as f:
             f.write(txt.replace("**", "") + "\n\n")
         print(txt)
