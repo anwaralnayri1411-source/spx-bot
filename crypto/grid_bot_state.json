@@ -236,7 +236,7 @@
   "px": 80366.0
  },
  "out_above": null,
- "below_alerted": false,
+ "below_alerted": true,
  "last_err": null,
  "last_daily": null,
  "stopped": false,
