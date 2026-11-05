@@ -1,6 +1,20 @@
 {
- "cash": 2357.0,
- "positions": [],
+ "cash": 1923.0,
+ "positions": [
+  {
+   "id": "1105-1016-PUT-750",
+   "symbol": "SPY   261105P00750000",
+   "side": "PUT",
+   "strike": 750.0,
+   "expiry": "2026-11-05",
+   "qty": 2,
+   "entry": 2.17,
+   "time": "2026-11-05T10:16-05:00",
+   "stop": 1.55,
+   "target": 3.1,
+   "invalidation": "إلغاء الفكرة إذا استعاد المؤشر VWAP ونطاق الافتتاح 7551 واستقر فوقه، أو ارتفع السعر فوق 7576 (المتوسط السريع 9) مع تحسن ES وتراجع VIX."
+  }
+ ],
  "closed": [
   {
    "id": "1105-0946-PUT-757",
@@ -37,8 +51,8 @@
    "pnl": 198.0
   }
  ],
- "decisions": 2,
+ "decisions": 3,
  "report_day": "",
  "day": "2026-11-05",
- "decisions_today": 2
+ "decisions_today": 3
 }
