@@ -368,11 +368,15 @@ prepare_tree() {
       chmod +x "$dir/.git/hooks/pre-push"
     fi
   fi
-  # GitHub يرفض اتصال SSH أحياناً لحظياً (publickey)؛ ثلاث محاولات قبل الاستسلام
+  # GitHub يرفض اتصال SSH أحياناً لحظياً (publickey)؛ ثلاث محاولات، ثم جلب للقراءة عبر HTTPS (4/11/2026: فشل commands مرتين بذلك)
   local try
   for try in 1 2 3; do
     git -C "$dir" fetch -q origin main && break
-    [ "$try" = 3 ] && return 1
+    if [ "$try" = 3 ]; then
+      echo "=== ssh fetch failed; trying https"
+      git -C "$dir" fetch -q https://github.com/anwaralnayri1411-source/spx-bot.git main:refs/remotes/origin/main || return 1
+      break
+    fi
     sleep $((try * 5))
   done
   git -C "$dir" rebase --abort 2>/dev/null
