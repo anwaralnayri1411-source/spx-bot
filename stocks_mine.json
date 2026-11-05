@@ -241,6 +241,39 @@
    "time": "2026-11-04T15:16-05:00",
    "price": null,
    "qty": null
+  },
+  "HOOD:PUT:2026-11-20:75|2026-11-05": {
+   "mode": "watch",
+   "ticker": "HOOD",
+   "side": "PUT",
+   "exp": "2026-11-20",
+   "strike": 75.0,
+   "day": "2026-11-05",
+   "time": "2026-11-05T10:40-05:00",
+   "price": null,
+   "qty": null
+  },
+  "COIN:PUT:2026-11-13:130|2026-11-05": {
+   "mode": "watch",
+   "ticker": "COIN",
+   "side": "PUT",
+   "exp": "2026-11-13",
+   "strike": 130.0,
+   "day": "2026-11-05",
+   "time": "2026-11-05T10:40-05:00",
+   "price": null,
+   "qty": null
+  },
+  "MSTR:PUT:2026-11-13:120|2026-11-05": {
+   "mode": "watch",
+   "ticker": "MSTR",
+   "side": "PUT",
+   "exp": "2026-11-13",
+   "strike": 120.0,
+   "day": "2026-11-05",
+   "time": "2026-11-05T10:40-05:00",
+   "price": null,
+   "qty": null
   }
  }
 }
