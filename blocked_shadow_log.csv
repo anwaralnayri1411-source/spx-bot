@@ -97,3 +97,4 @@ id,project,tag,sym,side,strike,exp,entry_time,entry,edge,strength,out,out_time,o
 20261104T1540|spx|late_entry|SPX|CALL|7700|2026-11-04,spx,late_entry,SPX,CALL,7700.0,2026-11-04,2026-11-04T15:40-05:00,3.76,4.0,6.0,final,2026-11-04T15:42-05:00,0.027,0.027,1
 20261104T1127|stocks|open_same_dir|NVDA|PUT|200|2026-11-09,stocks,open_same_dir,NVDA,PUT,200.0,2026-11-09,2026-11-04T11:27-05:00,3.48,4.0,7.2,tp,2026-11-05T09:32-05:00,0.96,0.96,51
 20261104T1435|spx|repeat_side|SPY|CALL|770|2026-11-05,spx,repeat_side,SPY,CALL,770.0,2026-11-05,2026-11-04T14:35-05:00,1.27,5.5,8.2,stop,2026-11-05T09:32-05:00,-0.882,0.118,17
+20261104T1157|stocks|open_same_dir|RIVN|CALL|14|2026-11-20,stocks,open_same_dir,RIVN,CALL,14.0,2026-11-20,2026-11-04T11:57-05:00,0.8,5.5,8.0,stop,2026-11-05T09:37-05:00,-0.5,0.025,46
