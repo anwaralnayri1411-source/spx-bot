@@ -392,4 +392,7 @@ def finish(st, msgs, tag, now, cfg, okx, status="ok"):
 if __name__ == "__main__":
     _cfg = config()
     setup(_cfg["inst"])
-    sys.exit(0 if run(_cfg) in ("ok", "pending", "no_keys", "disabled") else 1)
+    # الخطأ يُرجع 0 عمداً: فيُحفظ وقت آخر خطأ في الحالة فلا تتكرر رسالته كل 5 دقائق (مرة في الساعة)؛
+    # الخطأ نفسه في السجل ورسالة تيليجرام.
+    run(_cfg)
+    sys.exit(0)
