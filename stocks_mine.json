@@ -274,6 +274,28 @@
    "time": "2026-11-05T10:40-05:00",
    "price": null,
    "qty": null
+  },
+  "BAC:PUT:2026-11-20:50|2026-11-05": {
+   "mode": "watch",
+   "ticker": "BAC",
+   "side": "PUT",
+   "exp": "2026-11-20",
+   "strike": 50.0,
+   "day": "2026-11-05",
+   "time": "2026-11-05T14:44-05:00",
+   "price": null,
+   "qty": null
+  },
+  "SOFI:PUT:2026-11-20:16|2026-11-05": {
+   "mode": "watch",
+   "ticker": "SOFI",
+   "side": "PUT",
+   "exp": "2026-11-20",
+   "strike": 16.0,
+   "day": "2026-11-05",
+   "time": "2026-11-05T14:45-05:00",
+   "price": null,
+   "qty": null
   }
  }
 }
