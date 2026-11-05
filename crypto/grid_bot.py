@@ -27,15 +27,43 @@ sys.path.insert(0, HERE)
 import okx_trend_bot as tb  # noqa: E402  (عميل OKX، IPv4، الإرسال)
 
 INST = tb.INST
+COIN = "BTC"
+TAG = ""          # يُضاف لمعرّفات الأوامر لغير BTC (مثل sol) فلا تتداخل الشبكات
 STATE = os.path.join(HERE, "grid_bot_state.json")
 LOG = os.path.join(HERE, "grid_bot_log.csv")
 MSGS = os.path.join(HERE, "messages_grid_bot.jsonl")
+
+
+def setup(inst):
+    """يضبط الزوج وملفاته: BTC-USDT بأسماء الملفات الأصلية، وغيره بلاحقة العملة (مثل grid_bot_state_SOL.json)."""
+    global INST, COIN, TAG, STATE, LOG, MSGS
+    INST = inst
+    COIN = inst.split("-")[0]
+    if COIN != "BTC":
+        TAG = COIN.lower()
+        STATE = os.path.join(HERE, f"grid_bot_state_{COIN}.json")
+        LOG = os.path.join(HERE, f"grid_bot_log_{COIN}.csv")
+        MSGS = os.path.join(HERE, f"messages_grid_bot_{COIN}.jsonl")
+
+
+def fp(x):
+    return f"{x:,.0f}" if x >= 1000 else f"{x:,.2f}"
 LOG_COLS = ["t", "gen", "cell", "side", "px", "sz", "fee", "usd", "profit", "realized", "note"]
 OUT_ABOVE_H = 24
 
 
 def config(env=os.environ):
+    """BTC يقرأ GRID_*؛ غيره يقرأ GRID_<COIN>_* أولاً (مثل GRID_SOL_RANGE) ثم القيم الافتراضية."""
+    inst = env.get("GRID_INST", "BTC-USDT")
+    coin = inst.split("-")[0]
+    if coin != "BTC":
+        env = dict(env)
+        for k in ("MAX_USD", "RANGE", "CELLS", "ENABLED"):
+            env.pop(f"GRID_{k}", None)
+            if f"GRID_{coin}_{k}" in env:
+                env[f"GRID_{k}"] = env[f"GRID_{coin}_{k}"]
     c = tb.config(env)
+    c["inst"] = inst
     if c["mode"] == "live" and env.get("GRID_LIVE", "") != "yes":
         c["mode"] = "demo"
     c.update(max_usd=float(env.get("GRID_MAX_USD", "1000") or 1000),
@@ -148,7 +176,7 @@ def new_grid(cfg, okx, st_prev=None, now=None):
               last_daily=(st_prev or {}).get("last_daily"), stopped=False, rng=cfg["rng"], ncells=cfg["cells"])
     k = sum(1 for c in cells if c["side"] == "sell")
     if k:
-        st["init_buy"] = {"cl": f"g{gen}init", "usd": round(u * k, 2), "done": False}
+        st["init_buy"] = {"cl": f"g{TAG}{gen}init", "usd": round(u * k, 2), "done": False}
     save_state(st)
     return st
 
@@ -168,7 +196,7 @@ def finish_init_buy(st, okx):
     if not o or o.get("state") != "filled":
         return False
     px, sz = float(o["avgPx"]), float(o["accFillSz"])
-    fee = float(o.get("fee") or 0) if o.get("feeCcy") == "BTC" else 0.0
+    fee = float(o.get("fee") or 0) if o.get("feeCcy") == COIN else 0.0
     net = sz + fee
     sells = [c for c in st["cells"] if c["side"] == "sell"]
     for c in sells:
@@ -195,7 +223,7 @@ def ensure_order(st, okx, c, spec):
         return
     if not c.get("cl"):
         c["n"] += 1
-        c["cl"] = f"g{st['gen']}c{c['i']}n{c['n']}"
+        c["cl"] = f"g{TAG}{st['gen']}c{c['i']}n{c['n']}"
         save_state(st)
     if okx.get_cl(c["cl"]) is None:
         okx.place(c["cl"], c["side"], "limit", fmt(sz, lot), px=fmt(px, tick))
@@ -210,7 +238,7 @@ def apply_fill(st, c, o, now):
     if c["side"] == "buy":
         spent = px * sz
         c["usdt"] -= spent
-        c["btc"] += sz + (fee if fccy == "BTC" else 0)
+        c["btc"] += sz + (fee if fccy == COIN else 0)
         c["cost"] = spent
         c["side"] = "sell"
         row["usd"] = round(-spent, 2)
@@ -239,7 +267,7 @@ def stop_grid(st, okx, spec, note):
             c["cl"] = None
     btc = fdown(sum(c["btc"] for c in st["cells"]), spec[1])
     if btc >= spec[0]:
-        cl = f"g{st['gen']}stop"
+        cl = f"g{TAG}{st['gen']}stop"
         if okx.get_cl(cl) is None:
             okx.place(cl, "sell", "market", fmt(btc, spec[1]))
         for _ in range(15):
@@ -283,8 +311,8 @@ def run(cfg=None, okx=None, now=None):
             return "disabled"
         if st is None or st.get("stopped"):
             st = new_grid(cfg, okx, st if st and st.get("stopped") else None, now)
-            msgs.append(f"🧱 شبكة جديدة حول {st['center']:,.0f}$: {cfg['cells']} خلية من "
-                        f"{st['cells'][0]['lo']:,.0f} إلى {st['cells'][-1]['hi']:,.0f}$ "
+            msgs.append(f"🧱 شبكة {COIN} جديدة حول {fp(st['center'])}$: {cfg['cells']} خلية من "
+                        f"{fp(st['cells'][0]['lo'])} إلى {fp(st['cells'][-1]['hi'])}$ "
                         f"(كل خلية ≈{(st['cells'][0]['hi'] / st['cells'][0]['lo'] - 1) * 100:.1f}%).")
         if not finish_init_buy(st, okx):
             return finish(st, msgs, tag, now, cfg, okx, status="pending")
@@ -306,9 +334,9 @@ def run(cfg=None, okx=None, now=None):
         for r in rows:
             log_row(r)
             if r["side"] == "buy":
-                msgs.append(f"🟢 شراء {r['sz']:.5f} BTC عند {r['px']:,.0f}$ (خلية {r['cell'] + 1})")
+                msgs.append(f"🟢 شراء {r['sz']:.5g} {COIN} عند {fp(r['px'])}$ (خلية {r['cell'] + 1})")
             else:
-                msgs.append(f"🔴 بيع {r['sz']:.5f} BTC عند {r['px']:,.0f}$ (خلية {r['cell'] + 1}) "
+                msgs.append(f"🔴 بيع {r['sz']:.5g} {COIN} عند {fp(r['px'])}$ (خلية {r['cell'] + 1}) "
                             f"· ربح الدورة {r['profit']:+.2f}$")
 
         px = okx.ticker()
@@ -318,13 +346,13 @@ def run(cfg=None, okx=None, now=None):
             hours = (now - datetime.fromisoformat(st["out_above"])).total_seconds() / 3600
             if hours >= OUT_ABOVE_H:
                 stop_grid(st, okx, spec, "recenter")
-                msgs.append(f"↗️ السعر فوق النطاق {OUT_ABOVE_H} ساعة ({px:,.0f}$): أعيد بناء الشبكة حول السعر الجديد.")
+                msgs.append(f"↗️ السعر فوق النطاق {OUT_ABOVE_H} ساعة ({fp(px)}$): أعيد بناء الشبكة حول السعر الجديد.")
         else:
             st["out_above"] = None
         if px < lo and not st.get("below_alerted"):
             st["below_alerted"] = True
-            msgs.append(f"↘️ السعر تحت النطاق ({px:,.0f}$ < {lo:,.0f}$): الشبكة كلها BTC الآن وتنتظر الصعود. "
-                        f"لإيقافها وبيع BTC: GRID_ENABLED=0.")
+            msgs.append(f"↘️ السعر تحت النطاق ({fp(px)}$ < {fp(lo)}$): الشبكة كلها {COIN} الآن وتنتظر الصعود. "
+                        f"لإيقافها وبيع {COIN}: " + ("GRID_ENABLED=0." if COIN == "BTC" else f"GRID_{COIN}_ENABLED=0."))
         elif px >= lo:
             st["below_alerted"] = False
         save_state(st)
@@ -339,7 +367,7 @@ def run(cfg=None, okx=None, now=None):
             msgs.append(f"⚠️ خطأ: {str(e)[:200]}")
         print("error:", str(e)[:200])
         if msgs:
-            send("\n".join([f"🕸 بوت الشبكة · {tag}"] + msgs))
+            send("\n".join([f"🕸 شبكة {COIN} · {tag}"] + msgs))
         return "error"
     return finish(st, msgs, tag, now, cfg, okx)
 
@@ -352,14 +380,16 @@ def finish(st, msgs, tag, now, cfg, okx, status="ok"):
         eq = equity(st, px)
         hold = st["start_usd"] * px / st["start_px"]
         msgs.append(f"📊 ملخص يومي: الحصة {eq:,.0f}$ (بدأت {st['start_usd']:,.0f}$) · ربح الدورات المحقق "
-                    f"{st['realized']:+.2f}$ · {st['fills']} تنفيذ · لو احتفظت بـ BTC: {hold:,.0f}$")
+                    f"{st['realized']:+.2f}$ · {st['fills']} تنفيذ · لو احتفظت بـ {COIN}: {hold:,.0f}$")
         save_state(st)
     if msgs:
         msgs.append("للتدريب: الاختبار التاريخي لم يجد ميزة للشبكة.")
-        send("\n".join([f"🕸 بوت الشبكة · {tag}"] + msgs))
+        send("\n".join([f"🕸 شبكة {COIN} · {tag}"] + msgs))
     print(status, f"fills={st['fills']}", f"realized={st['realized']:.2f}")
     return status
 
 
 if __name__ == "__main__":
-    sys.exit(0 if run() in ("ok", "pending", "no_keys", "disabled") else 1)
+    _cfg = config()
+    setup(_cfg["inst"])
+    sys.exit(0 if run(_cfg) in ("ok", "pending", "no_keys", "disabled") else 1)

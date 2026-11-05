@@ -56,6 +56,7 @@ earnings_runup|Mon..Fri *-*-* 14..21:20/30:00
 paper_book|Sat *-*-* 10:00:00
 crypto_bot|*-*-* 00:07:00;*-*-* 00:37:00;*-*-* 06:07:00
 grid_bot|*-*-* *:02/5:00
+grid_sol|*-*-* *:03/5:00
 rule_c|Mon..Fri *-*-* 21:40:00
 ai_trader|Mon..Fri *-*-* 14..21:01/5:00
 mgt_shadow|*-*-* *:*:30

@@ -152,3 +152,20 @@ def test_above_range_24h_recenters():
     gb.run(cfg(), ex, now=t0 + timedelta(hours=26, minutes=5))
     s = st()
     assert s["gen"] == 2 and abs(s["center"] - 115) < 1e-6
+
+
+def test_sol_config_and_files_are_separate(monkeypatch):
+    env = {"GRID_INST": "SOL-USDT", "GRID_RANGE": "0.05", "GRID_SOL_CELLS": "30"}
+    c = gb.config(env)
+    assert c["inst"] == "SOL-USDT" and c["rng"] == 0.10 and c["cells"] == 30   # GRID_RANGE لـBTC لا يمس SOL
+    assert gb.config({"GRID_RANGE": "0.05"})["rng"] == 0.05
+    keep = (gb.INST, gb.COIN, gb.TAG, gb.STATE, gb.LOG, gb.MSGS)
+    try:
+        gb.setup("SOL-USDT")
+        assert gb.COIN == "SOL" and gb.STATE.endswith("grid_bot_state_SOL.json")
+        ex = FakeEx(90.0)
+        gb.STATE = keep[3]   # مسار مؤقت للاختبار
+        gb.run(cfg(), ex)
+        assert all(cl.startswith("gsol") for cl in ex.orders)
+    finally:
+        gb.INST, gb.COIN, gb.TAG, gb.STATE, gb.LOG, gb.MSGS = keep

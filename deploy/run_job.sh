@@ -227,6 +227,11 @@ main() {
       cmds=("$py crypto/grid_bot.py")
       files="crypto/grid_bot_state.json crypto/grid_bot_log.csv crypto/messages_grid_bot.jsonl"
       msg="grid bot" ;;
+    grid_sol)
+      group=crypto-grid-sol; envs="TG OKX"; extra_env="GRID_INST=SOL-USDT"   # شبكة SOL للتدريب (إعداداتها GRID_SOL_*)، حصة منفصلة
+      cmds=("$py crypto/grid_bot.py")
+      files="crypto/grid_bot_state_SOL.json crypto/grid_bot_log_SOL.csv crypto/messages_grid_bot_SOL.jsonl"
+      msg="grid sol" ;;
     crypto_bot)
       group=crypto-bot; envs="TG OKX"   # بوت BTC على OKX (قاعدة متوسط 50، سبوت): حساب تجريبي افتراضياً، لـTELEGRAM_CHAT_ID وحده
       cmds=("$py crypto/okx_trend_bot.py")
@@ -407,7 +412,7 @@ run_env() {
       TASTY) e+=(TASTY_CLIENT_SECRET="${TASTY_CLIENT_SECRET:-}" TASTY_REFRESH_TOKEN="${TASTY_REFRESH_TOKEN:-}") ;;
       LQ) e+=(LIVE_QUOTES_SPX="${LIVE_QUOTES_SPX:-shadow}" LIVE_BARS_SPX="${LIVE_BARS_SPX:-shadow}") ;;
       LQS) e+=(LIVE_QUOTES_STOCKS="${LIVE_QUOTES_STOCKS:-shadow}") ;;
-      OKX) [ "$mode" = live ] && e+=(OKX_API_KEY="${OKX_API_KEY:-}" OKX_API_SECRET="${OKX_API_SECRET:-}" OKX_API_PASSPHRASE="${OKX_API_PASSPHRASE:-}" OKX_MODE="${OKX_MODE:-demo}" OKX_LIVE_CONFIRM="${OKX_LIVE_CONFIRM:-}" OKX_MAX_USD="${OKX_MAX_USD:-1000}" OKX_MAX_LOSS_USD="${OKX_MAX_LOSS_USD:-300}" GRID_MAX_USD="${GRID_MAX_USD:-1000}" GRID_RANGE="${GRID_RANGE:-0.10}" GRID_CELLS="${GRID_CELLS:-20}" GRID_ENABLED="${GRID_ENABLED:-1}" GRID_LIVE="${GRID_LIVE:-}") ;;   # وضع الظل بلا مفاتيح: إشارة فقط
+      OKX) [ "$mode" = live ] && e+=(OKX_API_KEY="${OKX_API_KEY:-}" OKX_API_SECRET="${OKX_API_SECRET:-}" OKX_API_PASSPHRASE="${OKX_API_PASSPHRASE:-}" OKX_MODE="${OKX_MODE:-demo}" OKX_LIVE_CONFIRM="${OKX_LIVE_CONFIRM:-}" OKX_MAX_USD="${OKX_MAX_USD:-1000}" OKX_MAX_LOSS_USD="${OKX_MAX_LOSS_USD:-300}" GRID_MAX_USD="${GRID_MAX_USD:-1000}" GRID_RANGE="${GRID_RANGE:-0.10}" GRID_CELLS="${GRID_CELLS:-20}" GRID_ENABLED="${GRID_ENABLED:-1}" GRID_LIVE="${GRID_LIVE:-}" GRID_SOL_MAX_USD="${GRID_SOL_MAX_USD:-}" GRID_SOL_RANGE="${GRID_SOL_RANGE:-}" GRID_SOL_CELLS="${GRID_SOL_CELLS:-}" GRID_SOL_ENABLED="${GRID_SOL_ENABLED:-}") ;;   # وضع الظل بلا مفاتيح: إشارة فقط
     esac
   done
   [ -n "$extra" ] && e+=($extra)
