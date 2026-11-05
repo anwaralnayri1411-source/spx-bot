@@ -99,3 +99,4 @@ id,project,tag,sym,side,strike,exp,entry_time,entry,edge,strength,out,out_time,o
 20261104T1435|spx|repeat_side|SPY|CALL|770|2026-11-05,spx,repeat_side,SPY,CALL,770.0,2026-11-05,2026-11-04T14:35-05:00,1.27,5.5,8.2,stop,2026-11-05T09:32-05:00,-0.882,0.118,17
 20261104T1157|stocks|open_same_dir|RIVN|CALL|14|2026-11-20,stocks,open_same_dir,RIVN,CALL,14.0,2026-11-20,2026-11-04T11:57-05:00,0.8,5.5,8.0,stop,2026-11-05T09:37-05:00,-0.5,0.025,46
 20261104T1012|stocks|earn_in_life|UBER|CALL|72|2026-11-20,stocks,earn_in_life,UBER,CALL,72.0,2026-11-20,2026-11-04T10:12-05:00,1.88,6.5,8.3,stop,2026-11-05T09:42-05:00,-0.441,0.351,67
+20261104T1012|stocks|open_same_dir|PFE|CALL|29.5|2026-11-20,stocks,open_same_dir,PFE,CALL,29.5,2026-11-20,2026-11-04T10:12-05:00,0.98,6.5,7.8,tp,2026-11-05T09:47-05:00,0.51,0.51,68
