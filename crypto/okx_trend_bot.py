@@ -19,12 +19,20 @@ import hashlib
 import hmac
 import json
 import os
+import re
 import sys
 import time
 from datetime import datetime, timezone
 from decimal import Decimal, ROUND_DOWN
 
+import socket
+
 import requests
+import urllib3.util.connection as _u3conn
+
+# القائمة البيضاء في OKX بعنوان IPv4 للخادم (46.224.206.8)، والخادم يفضّل IPv6 افتراضياً:
+# نجبر هذا البرنامج وحده على IPv4 (5/11/2026: خطأ 50110 «Your IP 2a01:… is not included»).
+_u3conn.allowed_gai_family = lambda: socket.AF_INET
 
 BASE = "https://www.okx.com"
 INST = "BTC-USDT"
@@ -111,7 +119,8 @@ class Okx:
         d = r.json()
         if d.get("code") != "0":
             detail = (d.get("data") or [{}])[0].get("sMsg", "") if isinstance(d.get("data"), list) else ""
-            raise RuntimeError(f"OKX {path.split('?')[0]}: {d.get('code')} {d.get('msg')} {detail}".strip())
+            msg = re.sub(r"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}", "<key>", str(d.get("msg")))
+            raise RuntimeError(f"OKX {path.split('?')[0]}: {d.get('code')} {msg} {detail}".strip())
         return d["data"]
 
     def balances(self):
