@@ -2157,3 +2157,67 @@ time,pos_id,ticker,side,event,detail,entry,val,pnl,spot,need,tdays,advice,reason
 2026-11-05T09:31-05:00,F:CALL:2026-11-20:11.5,F,CALL,macro_quiet,with/weak/medium: Wall Street’s “everything but AI” rally just got a second wind from Washington - Yahoo Finance,1.34,1.28,-0.0448,12.815,0.002,12,أبقِ,الخبر في صالح العقد
 2026-11-05T09:31-05:00,PFE:CALL:2026-11-20:30,PFE,CALL,macro_quiet,with/weak/medium: Wall Street’s “everything but AI” rally just got a second wind from Washington - Yahoo Finance,0.88,1.08,0.2273,31.13,-0.008,12,أبقِ,الخبر في صالح العقد
 2026-11-05T09:31-05:00,RIVN:CALL:2026-11-20:13.5,RIVN,CALL,macro_quiet,with/weak/medium: Wall Street’s “everything but AI” rally just got a second wind from Washington - Yahoo Finance,0.81,0.83,0.0247,13.825,0.0351,12,أبقِ,الخبر في صالح العقد
+2026-11-05T09:34-05:00,CVX:PUT:2026-11-13:210,CVX,PUT,stock,-1.13% منذ الدخول,1.8,,,219.98,0.0536,7,أبقِ,لا جديد يغيّر فكرة الصفقة
+2026-11-05T09:34-05:00,SOFI:CALL:2026-11-20:17,SOFI,CALL,stock,-1.49% منذ الدخول,1.02,,,17.18,0.0489,12,أبقِ,لا جديد يغيّر فكرة الصفقة
+2026-11-05T09:34-05:00,MSTR:CALL:2026-11-13:157.5,MSTR,CALL,stock,-4.19% منذ الدخول,2.77,,,138.63,0.1561,7,فكّر بالخروج,السهم يتحرك ضدك
+2026-11-05T09:36-05:00,XOM:PUT:2026-11-20:167.5,XOM,PUT,news,"against/medium: Stocks surge as tariff concerns ease, oil prices fall - WISH-TV",3.51,2.96,-0.1567,172.12,0.0472,12,فكّر بالخروج,خبر ضد العقد
+2026-11-05T09:36-05:00,CVX:PUT:2026-11-13:210,CVX,PUT,news,"against/medium: ConocoPhillips beats estimates on higher oil prices, raises dividend - Reuters",1.8,0.85,-0.5278,220.68,0.0566,7,الأفضل الخروج,العقد تجاوز الوقف (-53%) | احتمال وصول السهم للتعادل ≈ 0% فقط | خبر ضد العقد
+2026-11-05T09:36-05:00,CVX:PUT:2026-11-13:210,CVX,PUT,news,"with/medium: Video Stocks soar as oil prices plummet following midterm results - ABC News - Breaking News, Latest News and Videos",1.8,0.85,-0.5278,220.68,0.0566,7,الأفضل الخروج,العقد تجاوز الوقف (-53%) | احتمال وصول السهم للتعادل ≈ 0% فقط | خبر ضد العقد
+2026-11-05T09:36-05:00,CVX:PUT:2026-11-13:210,CVX,PUT,news,"with/medium: Stocks surge as tariff concerns ease, oil prices fall - WISH-TV",1.8,0.85,-0.5278,220.68,0.0566,7,الأفضل الخروج,العقد تجاوز الوقف (-53%) | احتمال وصول السهم للتعادل ≈ 0% فقط | خبر ضد العقد
+2026-11-05T09:36-05:00,CVX:PUT:2026-11-13:210,CVX,PUT,news,against/medium: ConocoPhillips Profit Rises as Oil Prices Climb - WSJ,1.8,0.85,-0.5278,220.68,0.0566,7,الأفضل الخروج,العقد تجاوز الوقف (-53%) | احتمال وصول السهم للتعادل ≈ 0% فقط | خبر ضد العقد
+2026-11-05T09:36-05:00,CVX:PUT:2026-11-13:210,CVX,PUT,news,against/medium: Freedom Broker upgrades Chevron stock rating on strong earnings By Investing.com - Investing.com Canada,1.8,0.85,-0.5278,220.68,0.0566,7,الأفضل الخروج,العقد تجاوز الوقف (-53%) | احتمال وصول السهم للتعادل ≈ 0% فقط | خبر ضد العقد
+2026-11-05T09:36-05:00,CVX:PUT:2026-11-13:210,CVX,PUT,news,with/medium: Stocks soar as oil prices plummet following midterm results - Modern Ghana,1.8,0.85,-0.5278,220.68,0.0566,7,الأفضل الخروج,العقد تجاوز الوقف (-53%) | احتمال وصول السهم للتعادل ≈ 0% فقط | خبر ضد العقد
+2026-11-05T09:36-05:00,CVX:PUT:2026-11-13:210,CVX,PUT,news,against/medium: ConocoPhillips Q3 2026 earnings more than double on higher prices - Quartz,1.8,0.85,-0.5278,220.68,0.0566,7,الأفضل الخروج,العقد تجاوز الوقف (-53%) | احتمال وصول السهم للتعادل ≈ 0% فقط | خبر ضد العقد
+2026-11-05T09:36-05:00,SOFI:CALL:2026-11-20:17,SOFI,CALL,stock,-2.38% منذ الدخول,1.02,0.62,-0.3922,17.025,0.0584,12,الأفضل الخروج,السهم يتحرك ضدك
+2026-11-05T09:36-05:00,SOFI:CALL:2026-11-20:17,SOFI,CALL,contract,-39%,1.02,0.62,-0.3922,17.025,0.0584,12,الأفضل الخروج,السهم يتحرك ضدك
+2026-11-05T09:36-05:00,MSTR:CALL:2026-11-13:157.5,MSTR,CALL,news,against/medium: Bitcoin ETF Inflows Return as Goldman Sachs Delays Fed Cuts - Cryptonews,2.77,1.02,-0.6318,138.76,0.155,7,الأفضل الخروج,العقد تجاوز الوقف (-63%) | احتمال وصول السهم للتعادل ≈ 0% فقط | السهم يتحرك ضدك
+2026-11-05T09:36-05:00,MSTR:CALL:2026-11-13:157.5,MSTR,CALL,news,against/medium: Bitcoin ETF inflows US Rise Amid Fed Rate Cut Delays - The Cryptonomist,2.77,1.02,-0.6318,138.76,0.155,7,الأفضل الخروج,العقد تجاوز الوقف (-63%) | احتمال وصول السهم للتعادل ≈ 0% فقط | السهم يتحرك ضدك
+2026-11-05T09:36-05:00,MSTR:CALL:2026-11-13:157.5,MSTR,CALL,news,with/medium: Bitcoin rebounds above $80K after midterm dip b... - Pluang,2.77,1.02,-0.6318,138.76,0.155,7,الأفضل الخروج,العقد تجاوز الوقف (-63%) | احتمال وصول السهم للتعادل ≈ 0% فقط | السهم يتحرك ضدك
+2026-11-05T09:36-05:00,MSTR:CALL:2026-11-13:157.5,MSTR,CALL,news,"with/medium: Bitcoin, Ether ETFs draw $128M as crypto rebounds after midterms - Cryptonews.net",2.77,1.02,-0.6318,138.76,0.155,7,الأفضل الخروج,العقد تجاوز الوقف (-63%) | احتمال وصول السهم للتعادل ≈ 0% فقط | السهم يتحرك ضدك
+2026-11-05T09:37-05:00,SOFI:CALL:2026-11-20:17,SOFI,CALL,stock,-3.27% منذ الدخول,1.02,,,16.87,0.0682,12,فكّر بالخروج,السهم يتحرك ضدك
+2026-11-05T09:39-05:00,MSTR:CALL:2026-11-13:157.5,MSTR,CALL,stock,-5.18% منذ الدخول,2.77,,,137.21,0.1681,7,فكّر بالخروج,السهم يتحرك ضدك
+2026-11-05T09:40-05:00,SOFI:CALL:2026-11-20:17,SOFI,CALL,stock,-4.36% منذ الدخول,1.02,,,16.68,0.0803,12,فكّر بالخروج,السهم يتحرك ضدك
+2026-11-05T09:41-05:00,SOFI:CALL:2026-11-20:17,SOFI,CALL,stock,-5.10% منذ الدخول,1.02,,,16.55,0.0888,12,فكّر بالخروج,السهم يتحرك ضدك
+2026-11-05T09:41-05:00,MSTR:CALL:2026-11-13:157.5,MSTR,CALL,stock,-6.41% منذ الدخول,2.77,,,135.425,0.1835,7,فكّر بالخروج,السهم يتحرك ضدك
+2026-11-05T09:41-05:00,META:CALL:2026-11-09:660,META,CALL,stock,-2.12% منذ الدخول,3.09,,,621.54,0.0669,3,فكّر بالخروج,السهم يتحرك ضدك
+2026-11-05T09:42-05:00,XOM:PUT:2026-11-20:167.5,XOM,PUT,news,with/medium: Oil prices fall as US election results raise hopes of Iran deal - سانا,3.51,3.06,-0.1282,172.1,0.0471,12,أبقِ,الخبر في صالح العقد
+2026-11-05T09:42-05:00,CVX:PUT:2026-11-13:210,CVX,PUT,news,with/medium: Oil prices fall as US election results raise hopes of Iran deal - سانا,1.8,0.89,-0.5056,220.51,0.0558,7,الأفضل الخروج,العقد تجاوز الوقف (-51%) | احتمال وصول السهم للتعادل ≈ 0% فقط
+2026-11-05T09:42-05:00,MSTR:CALL:2026-11-13:157.5,MSTR,CALL,news,"against/medium: Bitcoin price falls below $80,000 as US jobless claims hit 57-year low - Crypto News",2.77,0.78,-0.7184,135.41,0.1836,7,الأفضل الخروج,العقد تجاوز الوقف (-72%) | احتمال وصول السهم للتعادل ≈ 0% فقط | السهم يتحرك ضدك
+2026-11-05T09:45-05:00,XOM:PUT:2026-11-20:167.5,XOM,PUT,sharp,-0.78% في 15د,3.51,,,172.47,0.0492,12,فكّر بالخروج,السهم يتحرك ضدك
+2026-11-05T09:45-05:00,MSFT:CALL:2026-11-09:565,MSFT,CALL,sharp,-1.23% في 15د,3.28,,,548.06,0.0369,3,فكّر بالخروج,السهم يتحرك ضدك
+2026-11-05T09:45-05:00,CVX:PUT:2026-11-13:210,CVX,PUT,sharp,-1.08% في 15د,1.8,,,221.035,0.0581,7,فكّر بالخروج,السهم يتحرك ضدك
+2026-11-05T09:45-05:00,JPM:CALL:2026-11-20:360,JPM,CALL,sharp,-1.64% في 15د,3.33,,,353.135,0.0289,12,فكّر بالخروج,السهم يتحرك ضدك
+2026-11-05T09:45-05:00,SOFI:CALL:2026-11-20:17,SOFI,CALL,sharp,-4.74% في 15د,1.02,,,16.49,0.0928,12,فكّر بالخروج,السهم يتحرك ضدك
+2026-11-05T09:45-05:00,MSTR:CALL:2026-11-13:157.5,MSTR,CALL,sharp,-3.80% في 15د,2.77,,,135.03,0.1869,7,فكّر بالخروج,السهم يتحرك ضدك
+2026-11-05T09:45-05:00,META:CALL:2026-11-09:660,META,CALL,sharp,-1.93% في 15د,3.09,,,617.34,0.0741,3,فكّر بالخروج,السهم يتحرك ضدك
+2026-11-05T09:46-05:00,MSFT:CALL:2026-11-09:565,MSFT,CALL,stock,-1.01% منذ الدخول,3.28,,,546.8,0.0393,3,أبقِ,لا جديد يغيّر فكرة الصفقة
+2026-11-05T09:47-05:00,RIVN:CALL:2026-11-20:13.5,RIVN,CALL,contract,-31%,0.81,0.56,-0.3086,13.225,0.082,12,الأفضل الخروج,السهم يتحرك ضدك
+2026-11-05T09:47-05:00,XOM:PUT:2026-11-20:167.5,XOM,PUT,news,against/medium: European Gas Drops as US Vote Spurs Hopes for Iran Resolution - Bloomberg.com,3.51,3.01,-0.1425,172.1,0.0471,12,فكّر بالخروج,خبر ضد العقد
+2026-11-05T09:47-05:00,CVX:PUT:2026-11-13:210,CVX,PUT,news,against/medium: European Gas Drops as US Vote Spurs Hopes for Iran Resolution - Bloomberg.com,1.8,0.87,-0.5167,220.76,0.0569,7,الأفضل الخروج,العقد تجاوز الوقف (-52%) | خبر ضد العقد
+2026-11-05T09:47-05:00,MSTR:CALL:2026-11-13:157.5,MSTR,CALL,driver,البتكوين -2.1%,2.77,0.88,-0.6823,135.96,0.1788,7,الأفضل الخروج,العقد تجاوز الوقف (-68%) | احتمال وصول السهم للتعادل ≈ 9% فقط | البتكوين انقلب ضدك
+2026-11-05T09:48-05:00,META:CALL:2026-11-09:660,META,CALL,stock,-3.10% منذ الدخول,3.09,,,615.31,0.0777,3,فكّر بالخروج,السهم يتحرك ضدك
+2026-11-05T09:51-05:00,XOM:PUT:2026-11-20:167.5,XOM,PUT,macro_quiet,"against/weak/medium: Crude Oil, DXY Outlook: Geopolitical Risks Halt Sell-Offs in the Dollar and Oil - FOREX.com",3.51,3.01,-0.1425,172.1,0.0471,12,أبقِ,خبر ضد العقد لكن تأثيره محدود، راقب
+2026-11-05T09:51-05:00,CVX:PUT:2026-11-13:210,CVX,PUT,macro_quiet,"against/weak/medium: Crude Oil, DXY Outlook: Geopolitical Risks Halt Sell-Offs in the Dollar and Oil - FOREX.com",1.8,0.87,-0.5167,220.76,0.0569,7,الأفضل الخروج,العقد تجاوز الوقف (-52%)
+2026-11-05T09:51-05:00,JPM:CALL:2026-11-20:360,JPM,CALL,macro_quiet,against/weak/medium: Bank of Canada’s Rate Hike Puts Inflation First as Growth Faces a Choppy End to 2026 - kalkine.ca,3.33,4.16,0.2492,352.645,0.0303,12,أبقِ,خبر ضد العقد لكن تأثيره محدود، راقب
+2026-11-05T09:51-05:00,SOFI:CALL:2026-11-20:17,SOFI,CALL,macro_quiet,against/weak/medium: Bank of Canada’s Rate Hike Puts Inflation First as Growth Faces a Choppy End to 2026 - kalkine.ca,1.02,0.55,-0.4608,16.61,0.0849,12,الأفضل الخروج,العقد تجاوز الوقف (-46%) | السهم يتحرك ضدك
+2026-11-05T09:51-05:00,MSTR:CALL:2026-11-13:157.5,MSTR,CALL,macro_quiet,against/weak/medium: Bank of Canada’s Rate Hike Puts Inflation First as Growth Faces a Choppy End to 2026 - kalkine.ca,2.77,0.88,-0.6823,135.96,0.1788,7,الأفضل الخروج,العقد تجاوز الوقف (-68%) | احتمال وصول السهم للتعادل ≈ 9% فقط | السهم يتحرك ضدك
+2026-11-05T09:51-05:00,SOFI:CALL:2026-11-20:17,SOFI,CALL,macro_quiet,"against/weak/medium: Barkin sees interest rate hikes ahead, but at a gradual pace - CNBC",1.02,0.55,-0.4608,16.61,0.0849,12,الأفضل الخروج,العقد تجاوز الوقف (-46%) | السهم يتحرك ضدك
+2026-11-05T09:51-05:00,MSTR:CALL:2026-11-13:157.5,MSTR,CALL,macro_quiet,"against/weak/medium: Barkin sees interest rate hikes ahead, but at a gradual pace - CNBC",2.77,0.88,-0.6823,135.96,0.1788,7,الأفضل الخروج,العقد تجاوز الوقف (-68%) | احتمال وصول السهم للتعادل ≈ 9% فقط | السهم يتحرك ضدك
+2026-11-05T09:51-05:00,PLTR:PUT:2026-11-13:165,PLTR,PUT,macro_quiet,"with/weak/medium: Barkin sees interest rate hikes ahead, but at a gradual pace - CNBC",3.39,9.23,1.7227,158.97,-0.0166,7,أبقِ,الخبر في صالح العقد
+2026-11-05T09:52-05:00,META:CALL:2026-11-09:660,META,CALL,sharp,-2.28% في 15د,3.09,,,612.65,0.0823,3,فكّر بالخروج,السهم يتحرك ضدك
+2026-11-05T09:53-05:00,SOFI:CALL:2026-11-20:17,SOFI,CALL,sharp,-2.39% في 15د,1.02,0.48,-0.5294,16.355,0.1018,12,الأفضل الخروج,العقد تجاوز الوقف (-53%) | السهم يتحرك ضدك
+2026-11-05T09:53-05:00,SOFI:CALL:2026-11-20:17,SOFI,CALL,stock,-6.22% منذ الدخول,1.02,0.48,-0.5294,16.355,0.1018,12,الأفضل الخروج,العقد تجاوز الوقف (-53%) | السهم يتحرك ضدك
+2026-11-05T09:55-05:00,MSTR:CALL:2026-11-13:157.5,MSTR,CALL,sharp,-1.10% في 15د,2.77,,,133.935,0.1966,7,فكّر بالخروج,السهم يتحرك ضدك
+2026-11-05T09:55-05:00,MSTR:CALL:2026-11-13:157.5,MSTR,CALL,stock,-7.44% منذ الدخول,2.77,,,133.935,0.1966,7,فكّر بالخروج,السهم يتحرك ضدك
+2026-11-05T09:56-05:00,RIVN:CALL:2026-11-20:13.5,RIVN,CALL,sharp,-3.77% في 15د,0.81,,,12.89,0.1102,12,فكّر بالخروج,السهم يتحرك ضدك
+2026-11-05T09:56-05:00,RIVN:CALL:2026-11-20:13.5,RIVN,CALL,stock,-4.38% منذ الدخول,0.81,,,12.89,0.1102,12,فكّر بالخروج,السهم يتحرك ضدك
+2026-11-05T09:56-05:00,JPM:CALL:2026-11-20:360,JPM,CALL,sharp,-1.53% في 15د,3.33,,,350.445,0.0368,12,فكّر بالخروج,السهم يتحرك ضدك
+2026-11-05T09:57-05:00,MSTR:CALL:2026-11-13:157.5,MSTR,CALL,sharp,-2.13% في 15د,2.77,,,132.52,0.2094,7,فكّر بالخروج,السهم يتحرك ضدك
+2026-11-05T09:57-05:00,MSTR:CALL:2026-11-13:157.5,MSTR,CALL,stock,-8.42% منذ الدخول,2.77,,,132.52,0.2094,7,فكّر بالخروج,السهم يتحرك ضدك
+2026-11-05T09:57-05:00,META:CALL:2026-11-09:660,META,CALL,stock,-4.11% منذ الدخول,3.09,,,608.91,0.089,3,فكّر بالخروج,السهم يتحرك ضدك
+2026-11-05T09:58-05:00,XOM:PUT:2026-11-20:167.5,XOM,PUT,news,with/medium: Oil Prices Plunge As Vance Blames Iran War For Republican Election Defeat - Yahoo,3.51,2.91,-0.1709,172.705,0.0505,12,أبقِ,الخبر في صالح العقد | الفكرة قائمة لكن العقد -17%؛ التزم بالوقف عند −40%
+2026-11-05T09:58-05:00,MSFT:CALL:2026-11-09:565,MSFT,CALL,sharp,-1.00% في 15د,3.28,0.86,-0.7378,543.215,0.0461,3,الأفضل الخروج,العقد تجاوز الوقف (-74%) | السهم يتحرك ضدك
+2026-11-05T09:58-05:00,CVX:PUT:2026-11-13:210,CVX,PUT,news,with/medium: Oil Prices Plunge As Vance Blames Iran War For Republican Election Defeat - Yahoo,1.8,0.87,-0.5167,221.675,0.0608,7,الأفضل الخروج,العقد تجاوز الوقف (-52%) | السهم يتحرك ضدك
+2026-11-05T09:58-05:00,SOFI:CALL:2026-11-20:17,SOFI,CALL,sharp,-1.88% في 15د,1.02,0.39,-0.6176,16.185,0.1134,12,الأفضل الخروج,العقد تجاوز الوقف (-62%) | السهم يتحرك ضدك
+2026-11-05T09:58-05:00,SOFI:CALL:2026-11-20:17,SOFI,CALL,stock,-7.20% منذ الدخول,1.02,0.39,-0.6176,16.185,0.1134,12,الأفضل الخروج,العقد تجاوز الوقف (-62%) | السهم يتحرك ضدك
+2026-11-05T10:01-05:00,META:CALL:2026-11-09:660,META,CALL,sharp,-1.87% في 15د,3.09,,,606.36,0.0936,3,فكّر بالخروج,السهم يتحرك ضدك
