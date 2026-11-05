@@ -257,6 +257,40 @@ def changes_text(st):
     return "\n".join(L) + "\nالجدد يبدأون من الصفر. الترتيب الكامل في generations.md على الخادم."
 
 
+def spx_m1():
+    """(شموع SPX المكافئ بالدقيقة من ES اللحظي، السعر الآن)."""
+    sh = json.load(open(ms.STATE, encoding="utf-8"))
+    basis = float(sh.get("basis") or 0)
+    es, _ = ms.es_mark()
+    m1 = ms.live_m1(ms.es_bars(), ms.load_ticks()).copy()
+    m1[["o", "h", "l", "c"]] -= basis
+    S = es - basis
+    m1.loc[m1.index[-1], "c"] = S
+    return m1, S
+
+
+def read_engine(now, sess, last_bar):
+    """قراءة المحرك الآن: السعر والتصويت والشمعة الجديدة وخطوط Murrey المعبورة، أو None إن لم تكتمل الشموع."""
+    m1, S = spx_m1()
+    start = datetime.combine(now.date() if now.time() >= ms.GTH_START or sess == "rth" else now.date() - timedelta(days=1),
+                             ms.RTH_START if sess == "rth" else ms.GTH_START, NY)
+    sb = m1[m1.index >= start]
+    so = float(sb["o"].iloc[0]) if len(sb) else None
+    vw = float((sb["c"] * sb["v"]).sum() / sb["v"].sum()) if len(sb) and sb["v"].sum() > 0 else None
+    _side, total, det = ms.decide(m1, so, vw, ms.spy_pressure(now) if sess == "rth" else 0,
+                                  (ms.flow_now(now).get("flow_lean_30m") or 0) if sess == "rth" else 0)
+    m5 = ms.resample(m1, "5min")
+    done5 = m5[m5.index + pd.Timedelta(minutes=5) <= now]
+    if len(done5) < 3:
+        return None
+    bar = done5.index[-1].isoformat()
+    new_bar = last_bar != bar
+    lines = ms.mml_lines(S, ms.octave(float(m1["h"].max() - m1["l"].min())))
+    hit = {sd: ms.crossed_line(float(done5["c"].iloc[-2]), float(done5["c"].iloc[-1]), lines, sd) if new_bar else None
+           for sd in ("CALL", "PUT")}
+    return {"S": S, "total": total, "det": det, "new_bar": new_bar, "bar": bar, "hit": hit}
+
+
 def main(argv):
     now = datetime.now(NY)
     force, no_send = "--force" in argv, "--no-send" in argv
@@ -307,35 +341,16 @@ def main(argv):
         save(st)
         return
     try:
-        sh = json.load(open(ms.STATE, encoding="utf-8"))
-        basis = float(sh.get("basis") or 0)
-        es, _ = ms.es_mark()
-        m1 = ms.live_m1(ms.es_bars(), ms.load_ticks())
+        eng = read_engine(now, sess, st.get("last_bar"))
     except Exception as e:  # noqa: BLE001
         print("بيانات:", e)
         save(st)
         return
-    m1 = m1.copy()
-    m1[["o", "h", "l", "c"]] -= basis
-    S = es - basis
-    m1.loc[m1.index[-1], "c"] = S
-    start = datetime.combine(now.date() if now.time() >= ms.GTH_START or sess == "rth" else now.date() - timedelta(days=1),
-                             ms.RTH_START if sess == "rth" else ms.GTH_START, NY)
-    sb = m1[m1.index >= start]
-    so = float(sb["o"].iloc[0]) if len(sb) else None
-    vw = float((sb["c"] * sb["v"]).sum() / sb["v"].sum()) if len(sb) and sb["v"].sum() > 0 else None
-    _side, total, det = ms.decide(m1, so, vw, ms.spy_pressure(now) if sess == "rth" else 0,
-                                  (ms.flow_now(now).get("flow_lean_30m") or 0) if sess == "rth" else 0)
-    m5 = ms.resample(m1, "5min")
-    done5 = m5[m5.index + pd.Timedelta(minutes=5) <= now]
-    if len(done5) < 3:
+    if eng is None:
         save(st)
         return
-    new_bar = st.get("last_bar") != done5.index[-1].isoformat()
-    st["last_bar"] = done5.index[-1].isoformat()
-    lines = ms.mml_lines(S, ms.octave(float(m1["h"].max() - m1["l"].min())))
-    hit = {sd: ms.crossed_line(float(done5["c"].iloc[-2]), float(done5["c"].iloc[-1]), lines, sd) if new_bar else None
-           for sd in ("CALL", "PUT")}
+    S, total, det, new_bar, hit = eng["S"], eng["total"], eng["det"], eng["new_bar"], eng["hit"]
+    st["last_bar"] = eng["bar"]
     tdate = ms.trade_date(now).isoformat()
     chain = None
     for v in st["variants"]:

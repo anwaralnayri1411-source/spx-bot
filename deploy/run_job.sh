@@ -242,6 +242,11 @@ main() {
       cmds=("$py earnings_runup.py")
       files="earnings_runup_log.csv earnings_runup_state.json messages_earnings_runup.jsonl"
       msg="earnings runup" ;;
+    falcon)
+      group=falcon; envs="TG ANTHROPIC ALPACA LQ TASTY"; extra_env="LIVE_BARS_SPX=1"   # الصقر الورقي (H-FALCON): كل دقيقة في الجلسة، تقرير لـTELEGRAM_CHAT_ID وحده، ملفاته خارج git
+      cmds=("$py falcon.py")
+      files=""
+      msg="falcon" ;;
     mgt_lab)
       group=mgt-lab; envs="TG ALPACA LQ TASTY"   # مختبر التطوّر (H-MGTLAB): 12 نسخة ورقية تتطور يومياً، بعد ظل MGT كل دقيقة، لا git، تقرير لـTELEGRAM_CHAT_ID وحده
       cmds=("$py mgt_lab.py")
