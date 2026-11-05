@@ -56,3 +56,17 @@ def test_evolve_replaces_losers_keeps_control():
     assert 1 <= len(fresh) <= 6 and all(v["vid"].endswith("g2") for v in fresh)
     st2 = {"gen": 1, "variants": ml.initial_variants("2026-11-05")}
     assert "لا استبدال" in ml.evolve(st2, "2026-11-05", random.Random(1))
+
+
+def test_daily_message_is_plain():
+    st = {"gen": 1, "variants": ml.initial_variants("2026-11-05")}
+    for i, v in enumerate(st["variants"]):
+        v["closed"] = [{"tdate": "2026-11-05", "usd": (i - 6) * 50.0} for _ in range(4)]
+    board = ml.leaderboard(st, "2026-11-05")
+    assert "أفضل 3 نسخ" in board and "الضابطة" in board and "🥇" in board and "🥉" in board
+    assert "tp" not in board and "mml" not in board and "ADX" not in board
+    ml.evolve(st, "2026-11-05", random.Random(1))
+    txt = ml.changes_text(st)
+    assert "خرجت" in txt and "عشوائية" in txt and "generations.md" in txt
+    assert "لا استبدال" in ml.changes_text({"last_changes": []})
+    assert "نصف العقد" in ml.plain(dict(ml.CONTROL, exit="half"))

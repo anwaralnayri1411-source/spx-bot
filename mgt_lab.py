@@ -64,6 +64,7 @@ def evolve(st, day, rng):
     losers = repl[::-1][:n_out]
     parents = [v for v in ranked if v not in losers and not v.get("control")][:3] or [ranked[0]]
     st["gen"] = st.get("gen", 1) + 1
+    changes = []
     lines = [f"## الجيل {st['gen']} ({day})", "الترتيب (آخر 5 أيام عقود):"]
     for v in ranked:
         s, n = score(v, tds)
@@ -72,7 +73,9 @@ def evolve(st, day, rng):
         par = parents[i % len(parents)]
         newp = random_params(rng) if i == len(losers) - 1 else mutate(par["params"], rng)
         lines.append(f"- استُبدلت {lo['vid']} ({score(lo, tds)[0]:+,.0f}$) ← {'عشوائية' if i == len(losers) - 1 else 'طفرة من ' + par['vid']}: {fmt(newp)}")
+        changes.append({"old": lo["vid"], "parent": None if i == len(losers) - 1 else par["vid"]})
         lo.update(params=newp, born=day, open=[], closed=[], vid=f"{lo['vid'].split('g')[0]}g{st['gen']}")
+    st["last_changes"] = changes
     if not losers:
         lines.append("- لا استبدال بعد (النسخ لم تبلغ 3 صفقات).")
     return "\n".join(lines)
@@ -81,6 +84,14 @@ def evolve(st, day, rng):
 def fmt(p):
     return (f"عتبة {p['score']} · ADX≥{p['adx']} · عقد {p['price']}$ · وقف {int(p['stop'] * 100)}% · خروج {p['exit']} · "
             f"سلّم {p['ladder']}ن×{p['cap']} · {'ليلي+رسمي' if p['sess'] == 'both' else 'رسمي'} · زناد {p['trig']}")
+
+
+def plain(p):
+    """إعدادات النسخة بكلمات مفهومة لرسالة تيليجرام."""
+    out = "بيع نصف العقد عند +100% والباقي بوقف متحرك" if p["exit"] == "half" else f"هدف +{p['exit'][2:]}%"
+    return (f"عقد بسعر {p['price']:g}$ · {out} · وقف {int(p['stop'] * 100)}%\n"
+            f"   {'الجلسة الرسمية فقط' if p['sess'] != 'both' else 'ليلاً ونهاراً'} · تدخل بـ{p['score']} أصوات · "
+            f"{'عند خطوط Murrey' if p['trig'] == 'mml' else 'دون انتظار خط'} · تضيف عقداً كل {p['ladder']} نقاط حتى {p['cap']}")
 
 
 def side_for(p, total, adx_v):
@@ -155,13 +166,33 @@ def log_trade(v, e, why):
 
 def leaderboard(st, day):
     tds = sorted({c["tdate"] for v in st["variants"] for c in v["closed"]})[-WINDOW:]
-    L = [f"🧬 **مختبر التطوّر (ورقي، H-MGTLAB)** — الجيل {st.get('gen', 1)} | {day}", ""]
-    for v in sorted(st["variants"], key=lambda v: score(v, tds)[0], reverse=True):
+    ranked = sorted(st["variants"], key=lambda v: score(v, tds)[0], reverse=True)
+    today = [score(v, [day]) for v in st["variants"]]
+    L = [f"🧬 **مختبر التطور (ورقي)** · {day}", "",
+         f"{len(ranked)} نسخة تتنافس: اليوم {sum(s > 0 for s, n in today)} رابحة · {sum(s < 0 for s, n in today)} خاسرة · "
+         f"{sum(n == 0 for s, n in today)} بلا صفقات", "", "**أفضل 3 نسخ (آخر 5 أيام):**"]
+    top = [v for v in ranked if not v.get("control")][:3]
+    for medal, v in zip("🥇🥈🥉", top):
         s, n = score(v, tds)
-        td = [c for c in v["closed"] if c["tdate"] == day]
-        L.append(f"{'🧪' if v.get('control') else '•'} **{v['vid']}** {s:+,.0f}$ ({n} صفقة) | اليوم {sum(c['usd'] for c in td):+,.0f}$ ({len(td)})"
-                 f"\n   {fmt(v['params'])}")
+        L.append(f"{medal} **{v['vid']}: {s:+,.0f}$** في {n} صفقة\n   {plain(v['params'])}")
+    ctl = next((v for v in ranked if v.get("control")), None)
+    if ctl:
+        s, n = score(ctl, tds)
+        L += ["", f"🧪 **الضابطة (إعدادات MGT الأصلية): {s:+,.0f}$** في {n} صفقة"]
     return "\n".join(L)
+
+
+def changes_text(st):
+    ch = st.get("last_changes") or []
+    if not ch:
+        return "**التغيير:** لا استبدال اليوم."
+    muts = [c["parent"] for c in ch if c["parent"]]
+    L = [f"**التغيير:** خرجت {len(ch)} نسخ من الأضعف ({'، '.join(c['old'] for c in ch)})"]
+    if muts:
+        L.append(f"دخلت {len(muts)} نسخ معدّلة من {'، '.join(dict.fromkeys(muts))}")
+    if len(muts) < len(ch):
+        L.append("ونسخة عشوائية للاستكشاف")
+    return "\n".join(L) + "\nالجدد يبدأون من الصفر. الترتيب الكامل في generations.md على الخادم."
 
 
 def main(argv):
@@ -196,7 +227,7 @@ def main(argv):
         os.makedirs(DIR, exist_ok=True)
         with open(GENS, "a", encoding="utf-8") as f:
             f.write(gen_txt + "\n\n")
-        msg = board + "\n\n" + gen_txt.replace("## ", "**").replace(")\n", ")**\n", 1)
+        msg = board + "\n\n" + changes_text(st)
         print(msg)
         if not no_send:
             import analyst as an
