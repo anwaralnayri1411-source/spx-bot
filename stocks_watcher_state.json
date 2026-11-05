@@ -1342,8 +1342,6 @@
    "jpmorgan chase nyse jpm lifts interest income outlook as lending offsets trading slowdown"
   ],
   "COIN:PUT": [
-   "coinbase denies internal breach as amplitude security incident hits user contact info",
-   "bitcoin price forecast btc regains 81 000 ahead of fed policy decision and big tech earnings",
    "crypto markets recover as fed decision looms",
    "bitcoin price today btc outperforms s p 500 above 80k as fed interest rate decision looms",
    "coinbase coin stock looks above fair value on current sales",
@@ -1741,11 +1739,11 @@
    "crypto market falls 5 to 2 64t as btc and eth erase post election gains",
    "bitcoin price today at 3 10 pm et prediction odds bitcoin",
    "bitcoin erases post election gains as wall street selloff hits 1b in liquidations",
-   "bitcoin price prediction can btc clear the 81 319 line reuters named as pepeto buyers earn while they wait"
+   "bitcoin price prediction can btc clear the 81 319 line reuters named as pepeto buyers earn while they wait",
+   "bitcoin price prediction can btc smash through 82k after a 5 jump alphapepe readies its v2 ai dex",
+   "is bitcoin a buy under 80 000 we asked chatgpt claude and grok"
   ],
   "HOOD:PUT": [
-   "two analysts present million dollar scenarios for bitcoin btc here are the expected prices and possible dates",
-   "robinhood markets secures dubai approval to offer bitcoin crypto and stock trading in the middle east",
    "bitcoin moves over 5 billion in value but miners collect just 185 000 in transaction fees",
    "ark invest sells 15 million of its own bitcoin etf as price falls",
    "crypto news today bitcoin inflow strategy inc halts btc purchase ethereum fixed validator deposit flaw",
@@ -2143,7 +2141,9 @@
    "crypto market falls 5 to 2 64t as btc and eth erase post election gains",
    "bitcoin price today at 3 10 pm et prediction odds bitcoin",
    "bitcoin erases post election gains as wall street selloff hits 1b in liquidations",
-   "bitcoin price prediction can btc clear the 81 319 line reuters named as pepeto buyers earn while they wait"
+   "bitcoin price prediction can btc clear the 81 319 line reuters named as pepeto buyers earn while they wait",
+   "bitcoin price prediction can btc smash through 82k after a 5 jump alphapepe readies its v2 ai dex",
+   "is bitcoin a buy under 80 000 we asked chatgpt claude and grok"
   ],
   "AAPL:CALL": [
    "loop capital lowers apple stock price target on iphone shipment concerns",
@@ -3019,7 +3019,9 @@
    "crypto market falls 5 to 2 64t as btc and eth erase post election gains",
    "bitcoin price today at 3 10 pm et prediction odds bitcoin",
    "bitcoin erases post election gains as wall street selloff hits 1b in liquidations",
-   "bitcoin price prediction can btc clear the 81 319 line reuters named as pepeto buyers earn while they wait"
+   "bitcoin price prediction can btc clear the 81 319 line reuters named as pepeto buyers earn while they wait",
+   "bitcoin price prediction can btc smash through 82k after a 5 jump alphapepe readies its v2 ai dex",
+   "is bitcoin a buy under 80 000 we asked chatgpt claude and grok"
   ],
   "SOFI:PUT": [],
   "SNAP:PUT": [
@@ -3181,7 +3183,8 @@
   "BAC:PUT:2026-11-20:50": [],
   "SOFI:PUT:2026-11-20:16": [
    "sharp@2026-11-05T15:23-05:00",
-   "down-0.15"
+   "down-0.15",
+   "sharp@2026-11-05T15:52-05:00"
   ],
   "SNAP:PUT:2026-11-20:6": [
    "down-0.15",
@@ -3192,8 +3195,6 @@
   "F:CALL:2026-11-20:11.5": 2
  },
  "seen_macro": [
-  "nasdaq slides over 1 as alphabet results revive ai spending fears",
-  "why is gas so expensive right now what drives pump prices",
   "central banks take a breather though more hikes are to come",
   "iran conflict raises eu oil import costs by 11 billion monthly",
   "why a midterm sweep for the democrats won t end canada s trade nightmare",
@@ -3791,7 +3792,9 @@
   "nasdaq set for biggest daily drop in 19 months on fears of ai regulations",
   "incoming michigan senator ready to work with trump on stupid tariffs",
   "a wipeout for ai stocks sends wall street reeling and the s p 500 tumbles more than 3 5",
-  "oil prices drop to 94 as us congress shifts could ease iran tensions"
+  "oil prices drop to 94 as us congress shifts could ease iran tensions",
+  "mortgage rate history 1970s to 2026",
+  "cleveland fed s hammack backs restrictive rates amid inflation concerns"
  ],
  "sharp": {
   "F:CALL:2026-11-20:11.5": 12.405,
@@ -3799,7 +3802,7 @@
   "HOOD:PUT:2026-11-20:75": 79.42,
   "COIN:PUT:2026-11-13:130": 139.14,
   "UBER:PUT:2026-11-20:68": 68.84,
-  "SOFI:PUT:2026-11-20:16": 15.995,
+  "SOFI:PUT:2026-11-20:16": 16.155,
   "SNAP:PUT:2026-11-20:6": 5.185
  }
 }
