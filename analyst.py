@@ -912,7 +912,7 @@ def run_daily(now, force=False, no_send=False, day=None, client=None):
     det = daily_text(F)
     reading, status = daily_reading(F, det, now, client)
     text = det + "\n\n🧠 **قراءة المحلل:**\n" + (reading or ("(حُذفت: ذكرت رقماً غير موجود في البيانات)" if status == "guard" else "(غير متاحة اليوم)"))
-    text += "\n\n<i>الدولار بقاعدة البوت (+50% / −40%) لعقد واحد. أي تعديل على البوت بعد مراجعة 9–14/11 وبموافقتك.</i>"
+    text += "\n\nالدولار بقاعدة البوت (+50% / −40%) لعقد واحد. أي تعديل على البوت بعد مراجعة 9–14/11 وبموافقتك."
     print(text)
     if no_send:
         return 0
