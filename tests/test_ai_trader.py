@@ -1,4 +1,5 @@
 """اختبارات المتداول الذكي الورقي (H-AITRADER). لا شبكة ولا Claude."""
+import json
 from datetime import datetime
 
 import ai_trader as at
@@ -78,7 +79,7 @@ def test_main_flow_with_fakes(tmp_path, monkeypatch):
     for k, f in (("STATE", "s.json"), ("LOG", "log.csv"), ("JOURNAL", "j.md"), ("USAGE", "u.csv")):
         monkeypatch.setattr(at, k, str(tmp_path / f))
     monkeypatch.setattr(at, "gather", lambda n: ("مدخلات", MENU, 767.2, []))
-    monkeypatch.setattr(at, "ask_claude", lambda p, n: _dec())
+    monkeypatch.setattr(at, "ask_claude", lambda p, n, *a, **k: _dec())
     monkeypatch.setattr(at, "quotes", lambda syms, meta=None: [{"symbol": s, "bid": 2.95, "ask": 3.0} for s in syms])
 
     class FakeDT(datetime):
@@ -108,3 +109,91 @@ def test_spx_menu_row_and_cross_underlying_sharia():
     assert "SPX 7600 PUT" in m and "عقد الغد" in m
     assert "SPX 7600" in at.sell_message(at.close_position(st, p, 3.0, N, "هدف"), "هدف")
     assert at.spot_num({"SPY": 767.2, "SPX": 7690.5}) == 767.2 and at.spot_text(767.2) == "SPY 767.20"
+
+
+
+def _rv(new=(), confirmed=(), contradicted=()):
+    return {"summary": "جلسة", "new": list(new), "confirmed": list(confirmed), "contradicted": list(contradicted)}
+
+
+L1 = {"condition": "السعر قرب جدار البيع بعد هبوط كبير", "action": "لا تدخل PUT جديداً", "evidence": "خسارتان"}
+
+
+def test_memory_lifecycle():
+    m = at.new_memory()
+    assert [x["id"] for x in at.apply_review(m, _rv([L1]), "2026-11-05")] == ["L1"]
+    assert at.apply_review(m, _rv([L1]), "2026-11-05") == [] and len(m["lessons"]) == 1     # مرة واحدة لليوم
+    assert at.lesson_status(m["lessons"][0]) == "فرضية" and "[L1] (فرضية) إذا السعر" in at.memory_text(m)
+    for d in ("2026-11-06", "2026-11-09", "2026-11-10"):
+        at.apply_review(m, _rv(confirmed=["L1", "L9"]), d)
+    assert at.lesson_status(m["lessons"][0]) == "قاعدة"
+    at.mark_used(m, ["L1"])
+    assert m["lessons"][0]["used"] == 1
+    bad = {"condition": "هبوط", "action": "اشتر PUT", "evidence": ""}
+    assert at.apply_review(m, _rv([bad]), "2026-11-11") == []                                # شرط غير قابل للفحص
+    m = at.new_memory()
+    at.apply_review(m, _rv([L1]), "2026-11-05")
+    at.apply_review(m, _rv(contradicted=["L1"]), "2026-11-06")
+    assert m["lessons"]
+    at.apply_review(m, _rv(contradicted=["L1"]), "2026-11-09")
+    assert not m["lessons"]                                                                  # تناقض يومين دون تأكيد
+
+
+def test_memory_cap_keeps_rules():
+    m = at.new_memory()
+    at.apply_review(m, _rv([L1]), "2026-10-01")
+    for i, d in enumerate(("2026-10-02", "2026-10-03", "2026-10-04")):
+        at.apply_review(m, _rv(confirmed=["L1"]), d)
+    for i in range(10):
+        at.apply_review(m, _rv([dict(L1, condition=f"شرط سوقي رقم {i}")] * 3), f"2026-10-{10 + i}")
+    assert len(m["lessons"]) == at.MAX_LESSONS and m["lessons"][0]["id"] == "L1"
+
+
+def test_learner_runs_beside_a_with_shared_inputs(tmp_path, monkeypatch):
+    for k, f in (("STATE", "ai_trader_state.json"), ("LOG", "ai_trader_log.csv"), ("JOURNAL", "ai_trader_journal.md"),
+                 ("USAGE", "ai_trader_usage.csv"), ("MEMORY", "ai_trader_b_memory.json")):
+        monkeypatch.setattr(at, k, str(tmp_path / f))
+    calls, prompts, sent = [], [], []
+    monkeypatch.setattr(at, "gather", lambda n: calls.append(1) or ("مدخلات", MENU, 767.2, []))
+    monkeypatch.setattr(at, "quotes", lambda syms, meta=None: [{"symbol": s, "bid": 2.95, "ask": 3.0} for s in syms])
+    monkeypatch.setattr(at, "send", lambda text, no_send: sent.append((text, no_send)))
+
+    def fake(prompt, now, schema=None, system=None, model=None, kind="decide"):
+        prompts.append((prompt, schema))
+        return dict(_dec(), lessons_used=["L1"]) if schema is at.SCHEMA_B else _dec()
+    monkeypatch.setattr(at, "ask_claude", fake)
+    m = at.new_memory()
+    at.apply_review(m, _rv([L1]), "2026-11-04")
+    at.save_memory(m)
+    json.dump(dict(at.new_state(), cash=3195.0), open(at.STATE, "w", encoding="utf-8"))
+
+    class FakeDT(datetime):
+        @classmethod
+        def now(cls, tz=None):
+            return N
+    monkeypatch.setattr(at, "datetime", FakeDT)
+    at.main([])
+    assert len(calls) == 1 and len(prompts) == 2                     # جمع واحد وقراران
+    assert "دروسك" not in prompts[0][0] and "[L1]" in prompts[1][0]
+    b = json.load(open(tmp_path / "ai_trader_b_state.json", encoding="utf-8"))
+    assert b["start_cash"] == 3195.0 and len(b["positions"]) == 1
+    assert at.load_memory()["lessons"][0]["used"] == 1
+    assert [q for _, q in sent] == [False, True]                     # A يرسل الشراء، والمتعلّم صامت
+    assert "دروس: L1" in (tmp_path / "ai_trader_b_log.csv").read_text(encoding="utf-8")
+    assert at.STATE.endswith("ai_trader_state.json")
+
+
+def test_learner_report_and_review_once(tmp_path, monkeypatch):
+    monkeypatch.setattr(at, "MEMORY", str(tmp_path / "m.json"))
+    monkeypatch.setattr(at, "after_exit", lambda cl: {})
+    n = []
+    monkeypatch.setattr(at, "ask_claude", lambda *a, **k: n.append(a) or _rv([L1]))
+    st = at.new_state()
+    at.close_position(st, at.open_position(st, MENU[1], 1, _dec()["buy"], N), 4.0, N, "هدف")
+    t = N.replace(hour=16, minute=6)
+    mem = at.load_memory()
+    summary, added = at.run_review(st, t, str(tmp_path / "none.csv"), mem)
+    assert summary == "جلسة" and added and n[0][2] is at.REVIEW_SCHEMA and "الصفقات المغلقة" in n[0][0]
+    assert at.run_review(st, t, str(tmp_path / "none.csv"), at.load_memory()) == ("", []) and len(n) == 1
+    txt = at.learner_report(st, t, [], summary, added, mem)
+    assert "🧠 **المتعلّم" in txt and "دروس جديدة" in txt and "الذاكرة: 1 درساً" in txt

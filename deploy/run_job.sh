@@ -255,7 +255,7 @@ main() {
     ai_trader)
       group=ai-trader; envs="TG ANTHROPIC ALPACA LQ TASTY"; extra_env="LIVE_BARS_SPX=1"   # المتداول الذكي الورقي (H-AITRADER): لـTELEGRAM_CHAT_ID وحده، لا أوامر حقيقية
       cmds=("$py ai_trader.py")
-      files="ai_trader_state.json ai_trader_log.csv ai_trader_usage.csv research/ai_trader_journal.md messages_ai_trader.jsonl"
+      files="ai_trader_state.json ai_trader_log.csv ai_trader_usage.csv research/ai_trader_journal.md messages_ai_trader.jsonl ai_trader_b_state.json ai_trader_b_log.csv ai_trader_b_usage.csv ai_trader_b_memory.json research/ai_trader_b_journal.md"
       msg="ai trader" ;;
     rule_c)
       group=rule-c; envs="ALPACA"   # مراقبة القاعدة C (H-NOCHASE للأمام): تسجيل فقط بعد الإغلاق، لا رسائل

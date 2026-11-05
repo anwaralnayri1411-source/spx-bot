@@ -7,8 +7,10 @@
 والشراء والبيع يُرسلان لـTELEGRAM_CHAT_ID وحده، وتقرير نهاية الجلسة بعد 16:00.
 قيود الكود: 2,000$، شراء بالطلب وبيع بالعرض، العقد ≤ 30% من المحفظة، ≤ 3 مراكز، لا مركزين متعاكسين على SPY/SPX
 (أداة واحدة، الشرط الشرعي)، لا شراء بعد 15:15. القائمة: عقود SPY وSPXW لأقرب انتهاءين ضمن ±3% (تعديل 5/11 بطلب المستخدم).
-تشغيل: python ai_trader.py [--force] [--no-send] [--no-ai]
+المتعلّم (H-AIMEMORY): محفظة ثانية بالمدخلات نفسها + ذاكرة دروس تُحدَّث بعد كل جلسة، ولا ترسل إلا تقرير نهاية الجلسة.
+تشغيل: python ai_trader.py [--force] [--no-send] [--no-ai] [--seed-review]
 """
+import copy
 import csv
 import json
 import os
@@ -26,6 +28,9 @@ LOG = os.path.join(ROOT, "ai_trader_log.csv")
 JOURNAL = os.path.join(ROOT, "research", "ai_trader_journal.md")
 USAGE = os.path.join(ROOT, "ai_trader_usage.csv")
 MODEL = os.getenv("AI_TRADER_MODEL", "claude-haiku-5-5")
+REVIEW_MODEL = os.getenv("AI_REVIEW_MODEL", "claude-sonnet-5-5")
+MEMORY = os.path.join(ROOT, "ai_trader_b_memory.json")
+MAX_LESSONS, MAX_NEW, RULE_DAYS = 15, 3, 3
 DAILY_USD = 1.0
 START_CASH = 2000.0
 MAX_POS_PCT, MAX_OPEN = 0.30, 3
@@ -75,6 +80,93 @@ RULES = """أنت متداول خيارات محترف تدير محفظة **و�
 (السترايك والانتهاء والدلتا والسعر والفرق والسيولة)، وكيف اخترته، وما البدائل التي رفضتها ولماذا، والوقف والهدف وشرط إلغاء الفكرة.
 وفي short_reason اكتب سبب الشراء في جملة واحدة قصيرة واضحة (أقل من 20 كلمة) دون مصطلحات إنجليزية.
 اكتب كل النصوص بالعربية. عند عدم الشراء اجعل buy.symbol فارغاً وqty = 0. الثقة رقم من 0 إلى 1."""
+
+SCHEMA_B = copy.deepcopy(SCHEMA)
+SCHEMA_B["required"].append("lessons_used")
+SCHEMA_B["properties"]["lessons_used"] = {"type": "array", "items": {"type": "string"}}
+RULES_B = RULES + """
+لديك دروس من جلساتك السابقة في قسم «دروسك». «قاعدة» تأكدت في أيام مختلفة، و«فرضية» لم تتأكد بعد. طبّق ما ينطبق شرطه الآن،
+واذكر في lessons_used أرقام الدروس التي أثرت في قرارك (مثل L1)، واتركها فارغة إن لم يؤثر درس. الدروس لا تتجاوز القواعد الثابتة."""
+
+LESSON = {"type": "object", "additionalProperties": False, "required": ["condition", "action", "evidence"],
+          "properties": {"condition": {"type": "string"}, "action": {"type": "string"}, "evidence": {"type": "string"}}}
+REVIEW_SCHEMA = {"type": "object", "additionalProperties": False, "required": ["summary", "new", "confirmed", "contradicted"],
+                 "properties": {"summary": {"type": "string"}, "new": {"type": "array", "items": LESSON},
+                                "confirmed": {"type": "array", "items": {"type": "string"}},
+                                "contradicted": {"type": "array", "items": {"type": "string"}}}}
+REVIEW_RULES = """أنت مدرب تداول يراجع جلسة متداول خيارات ورقي ليتعلم منها. لا تقيّم الربح وحده: قرار جيد قد يخسر وقرار سيئ قد يربح.
+ابحث عن الأنماط القابلة للتكرار: توقيت الدخول، المطاردة، الخروج المبكر أو المتأخر، الدخول قرب الجدران، اختيار العقد، حجم المركز، قرارات الانتظار.
+اكتب في new حتى 3 دروس جديدة فقط إن كانت مفيدة فعلاً، ولا تكرر درساً موجوداً. كل درس:
+- condition: شرط سوقي يمكن فحصه وقت القرار (مثل: السعر قرب جدار البيع بعد هبوط يتجاوز 2%).
+- action: ماذا يفعل عند تحقق الشرط.
+- evidence: الدليل من صفقات اليوم بالأرقام الموجودة فقط.
+ممنوع الدرس الاتجاهي العام مثل «اشترِ PUT» أو «السوق هابط»: يجب أن يصلح في يوم صاعد وهابط وعرضي.
+ممنوع اقتراح تجاوز حدود المحفظة أو الشرط الشرعي.
+في confirmed وcontradicted ضع أرقام الدروس القديمة التي انطبق شرطها اليوم فقط: confirmed إن صدقت، وcontradicted إن خالفتها النتيجة.
+summary: جملتان بالعربية عن أهم ما حدث في الجلسة. اكتب كل شيء بالعربية الواضحة دون أسماء حقول."""
+
+
+# ====================== الذاكرة (دوال صافية) ======================
+def new_memory():
+    return {"next": 1, "lessons": [], "reviews": []}
+
+
+def lesson_status(x):
+    seen, against = len(x["seen"]), len(x["against"])
+    return "قاعدة" if seen >= RULE_DAYS and seen >= 2 * against else "فرضية"
+
+
+def apply_review(mem, rv, day):
+    """يطبّق مراجعة يوم مرة واحدة. يرجع الدروس الجديدة المقبولة."""
+    if day in [r["day"] for r in mem["reviews"]]:
+        return []
+    by_id = {x["id"]: x for x in mem["lessons"]}
+    for key, ids in (("seen", rv.get("confirmed")), ("against", rv.get("contradicted"))):
+        for i in ids or []:
+            if i in by_id and day not in by_id[i][key]:
+                by_id[i][key].append(day)
+    mem["lessons"] = [x for x in mem["lessons"] if not (len(x["against"]) >= 2 and len(x["against"]) >= len(x["seen"]))]
+    added = []
+    for n in (rv.get("new") or [])[:MAX_NEW]:
+        cond, act = str(n.get("condition") or "").strip(), str(n.get("action") or "").strip()
+        if len(cond.split()) < 3 or not act:
+            continue
+        x = {"id": f"L{mem['next']}", "condition": cond, "action": act, "evidence": str(n.get("evidence") or "").strip(),
+             "born": day, "seen": [], "against": [], "used": 0}
+        mem["next"] += 1
+        mem["lessons"].append(x)
+        added.append(x)
+    mem["lessons"].sort(key=lambda x: (lesson_status(x) == "قاعدة", len(x["seen"]) - len(x["against"]), x["born"]), reverse=True)
+    mem["lessons"] = mem["lessons"][:MAX_LESSONS]
+    mem["reviews"].append({"day": day, "summary": rv.get("summary", "")})
+    kept = {x["id"] for x in mem["lessons"]}
+    return [x for x in added if x["id"] in kept]
+
+
+def memory_text(mem):
+    L = ["## دروسك من الجلسات السابقة"]
+    for x in mem["lessons"]:
+        L.append(f"- [{x['id']}] ({lesson_status(x)}) إذا {x['condition']} ← {x['action']}")
+    if len(L) == 1:
+        L.append("- لا دروس بعد.")
+    return "\n".join(L)
+
+
+def mark_used(mem, ids):
+    for x in mem["lessons"]:
+        if x["id"] in (ids or []):
+            x["used"] = x.get("used", 0) + 1
+
+
+def load_memory():
+    try:
+        return json.load(open(MEMORY, encoding="utf-8"))
+    except Exception:  # noqa: BLE001
+        return new_memory()
+
+
+def save_memory(mem):
+    json.dump(mem, open(MEMORY, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
 
 
 # ====================== المحفظة (دوال صافية) ======================
@@ -378,7 +470,8 @@ def portfolio_text(st, marks, now):
     return "\n".join(L)
 
 
-def ask_claude(prompt, now):
+def ask_claude(prompt, now, schema=None, system=None, model=None, kind="decide"):
+    schema, system, model = schema or SCHEMA, system or RULES, model or MODEL
     sys.path.insert(0, ROOT)
     import analyst as an
     try:
@@ -396,8 +489,8 @@ def ask_claude(prompt, now):
     import anthropic
     client = anthropic.Anthropic(api_key=key, timeout=180.0)
     try:
-        r = client.messages.create(model=MODEL, max_tokens=8000, system=RULES, messages=[{"role": "user", "content": prompt}],
-                                   output_config={"effort": "medium", "format": {"type": "json_schema", "schema": SCHEMA}})
+        r = client.messages.create(model=model, max_tokens=8000, system=system, messages=[{"role": "user", "content": prompt}],
+                                   output_config={"effort": "medium", "format": {"type": "json_schema", "schema": schema}})
     except Exception as e:  # noqa: BLE001
         print("فشل الطلب:", type(e).__name__, e)
         return None
@@ -407,8 +500,8 @@ def ask_claude(prompt, now):
         w = csv.DictWriter(f, fieldnames=an.USAGE_COLS)
         if new:
             w.writeheader()
-        w.writerow({"time": now.isoformat(timespec="seconds"), "kind": "decide", "model": MODEL, **u,
-                    "usd": round(an.cost(u, MODEL), 5), "status": r.stop_reason})
+        w.writerow({"time": now.isoformat(timespec="seconds"), "kind": kind, "model": model, **u,
+                    "usd": round(an.cost(u, model), 5), "status": r.stop_reason})
     if r.stop_reason != "end_turn":
         print("توقف غير مكتمل:", r.stop_reason)
         return None
@@ -458,41 +551,152 @@ def execute(st, d, menu, marks, now, spot, no_send):
     return None, 0, False, note
 
 
-def main(argv):
-    now = datetime.now(NY)
-    force, no_send, no_ai = "--force" in argv, "--no-send" in argv, "--no-ai" in argv
-    if not force and (now.weekday() >= 5 or not DECIDE_FROM <= now.time() <= END_T):
-        print("خارج الجلسة.")
-        return
+def after_exit(cl):
+    """ماذا فعل كل عقد بعد خروجنا: {id: نص}. يفشل بصمت إن تعذرت الشموع."""
+    out = {}
+    try:
+        import rule_c_shadow as rc
+        for c in cl:
+            occ = c["symbol"].replace(" ", "")
+            t = datetime.fromisoformat(c["exit_time"])
+            b = rc.option_bars([occ], t.date()).get(occ)
+            b = b[b.index > t] if b is not None else None
+            if b is not None and len(b):
+                out[c["id"]] = f"بعد الخروج: أعلى {float(b['h'].max()):.2f} وأدنى {float(b['l'].min()):.2f} وآخر سعر {float(b['c'].iloc[-1]):.2f}"
+    except Exception as e:  # noqa: BLE001
+        print("شموع ما بعد الخروج:", type(e).__name__, e)
+    return out
+
+
+def review_prompt(st, day, mem, log_path, post):
+    L = [f"## جلسة {day}", "## الصفقات المغلقة"]
+    for c in sorted((c for c in st["closed"] if c["exit_time"][:10] == day), key=lambda c: c["time"]):
+        L.append(f"- [{c['id']}] {c.get('under', 'SPY')} {c['strike']:g} {c['side']} ينتهي {c['expiry']} ×{c['qty']} | دخول {c['time'][11:16]} بـ{c['entry']:.2f} "
+                 f"| خروج {c['exit_time'][11:16]} بـ{c['exit']:.2f} | وقف {c['stop']} هدف {c['target']} | {c['pnl']:+.0f}$ | {c['why'][:160]} | {post.get(c['id'], '')}")
+    L.append("## القرارات بالترتيب (الوقت، سعر SPY، القرار، الثقة، القراءة، سبب الانتظار)")
+    try:
+        d = pd.read_csv(log_path, dtype=str, keep_default_na=False)
+        for r in d[d["time"].str[:10] == day].itertuples():
+            L.append(f"- {r.time[11:16]} | {r.spot} | {r.action} | {r.confidence} | {r.market_read[:260]} | {r.wait_reason[:220]}")
+    except Exception as e:  # noqa: BLE001
+        L.append(f"- لا سجل قرارات ({type(e).__name__})")
+    return "\n".join(L) + "\n\n" + memory_text(mem)
+
+
+def run_review(st, now, log_path, mem=None):
+    """يراجع الجلسة ويحدّث الذاكرة. يرجع (الملخص، الدروس الجديدة) أو (""، [])."""
+    day = now.date().isoformat()
+    mem = mem or load_memory()
+    if day in [r["day"] for r in mem["reviews"]]:
+        return "", []
+    cl = [c for c in st["closed"] if c["exit_time"][:10] == day]
+    rv = ask_claude(review_prompt(st, day, mem, log_path, after_exit(cl)), now, REVIEW_SCHEMA, REVIEW_RULES, REVIEW_MODEL, "review")
+    if not rv:
+        return "", []
+    added = apply_review(mem, rv, day)
+    save_memory(mem)
+    return rv.get("summary", ""), added
+
+
+def learner_report(st, now, recs, summary, added, mem):
+    txt = day_report(st, now, recs).replace("🤖 **المتداول الذكي · نهاية الجلسة**", "🧠 **المتعلّم · نهاية الجلسة**", 1)
+    L = [txt, ""]
+    if summary:
+        L.append(f"📝 {summary}")
+    if added:
+        L += ["", "**دروس جديدة:**"] + [f"• إذا {x['condition']} ← {x['action']}" for x in added]
+    rules = sum(lesson_status(x) == "قاعدة" for x in mem["lessons"])
+    L += ["", f"الذاكرة: {len(mem['lessons'])} درساً، منها {rules} قاعدة."]
+    return "\n".join(L)
+
+
+def b_path(path):
+    d, f = os.path.split(path)
+    return os.path.join(d, f.replace("ai_trader_", "ai_trader_b_") if "ai_trader_" in f else "b_" + f)
+
+
+def today_recs(day):
+    try:
+        z = pd.read_csv(os.path.join(ROOT, "zero_dte_log.csv"), dtype=str)
+        return [f"{r.time} {r.symbol} {r.side} {r.strike}" for r in z[z["date"] == day].itertuples()]
+    except Exception:  # noqa: BLE001
+        return []
+
+
+def run_book(now, force, no_send, no_ai, cache, learner=False):
+    """دورة محفظة واحدة. cache: مدخلات مشتركة بين المحفظتين في التشغيل نفسه."""
     st = load_state()
     day = now.date().isoformat()
+    quiet = no_send or learner
     if st.get("day") != day:
         st.update(day=day, decisions_today=0)
     marks = {q["symbol"]: q for q in quotes([p["symbol"] for p in st["positions"]])} if st["positions"] else {}
     for rec in auto_exits(st, marks, now):
-        send(sell_message(rec, rec["why"]), no_send)
+        send(sell_message(rec, rec["why"]), quiet)
     decide_slot = now.minute % 15 < 5 and DECIDE_FROM <= now.time() <= LAST_DECIDE
     if (decide_slot or force) and not no_ai:
-        text, menu, spot, recs = gather(now)
+        if "g" not in cache:
+            cache["g"] = gather(now)
+        text, menu, spot, recs = cache["g"]
         marks.update({m["symbol"]: m for m in menu})
-        prompt = text + "\n\n" + portfolio_text(st, marks, now) + f"\n\nالوقت الآن {now:%H:%M} نيويورك. قرّر."
-        d = ask_claude(prompt, now)
+        mem = load_memory() if learner else None
+        head = text + ("\n\n" + memory_text(mem) if learner else "")
+        prompt = head + "\n\n" + portfolio_text(st, marks, now) + f"\n\nالوقت الآن {now:%H:%M} نيويورك. قرّر."
+        d = ask_claude(prompt, now, SCHEMA_B, RULES_B) if learner else ask_claude(prompt, now)
         if d:
             st["decisions"] = st.get("decisions", 0) + 1
             st["decisions_today"] = st.get("decisions_today", 0) + 1
-            row, qty, ok, note = execute(st, d, menu, marks, now, spot, no_send)
+            row, qty, ok, note = execute(st, d, menu, marks, now, spot, quiet)
+            if learner and d.get("lessons_used"):
+                mark_used(mem, d["lessons_used"])
+                save_memory(mem)
+                note = f"{note} | دروس: {', '.join(d['lessons_used'])}".strip(" |")
             log_row(now, spot, d, row, qty, ok, note)
             journal(now, spot, d, "نُفّذ" if ok else "لم يُنفَّذ", note)
     if now.time() >= REPORT_AT and st.get("report_day") != day:
-        recs = []
-        try:
-            z = pd.read_csv(os.path.join(ROOT, "zero_dte_log.csv"), dtype=str)
-            recs = [f"{r.time} {r.symbol} {r.side} {r.strike}" for r in z[z["date"] == day].itertuples()]
-        except Exception:  # noqa: BLE001
-            pass
-        send(day_report(st, now, recs), no_send)
+        recs = today_recs(day)
+        if learner:
+            mem = load_memory()
+            summary, added = run_review(st, now, LOG, mem)
+            send(learner_report(st, now, recs, summary, added, mem), no_send)
+        else:
+            send(day_report(st, now, recs), no_send)
         st["report_day"] = day
     json.dump(st, open(STATE, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+
+
+def start_learner(a_state):
+    """أول تشغيل للمتعلّم: يبدأ بنقد A حتى تكون المقارنة من نقطة واحدة."""
+    if not os.path.exists(b_path(a_state)):
+        try:
+            cash = json.load(open(a_state, encoding="utf-8"))["cash"]
+        except Exception:  # noqa: BLE001
+            cash = START_CASH
+        st = dict(new_state(), cash=cash, start_cash=cash)
+        json.dump(st, open(b_path(a_state), "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+
+
+def main(argv):
+    global STATE, LOG, JOURNAL, USAGE
+    now = datetime.now(NY)
+    force, no_send, no_ai = "--force" in argv, "--no-send" in argv, "--no-ai" in argv
+    if "--seed-review" in argv:      # بذرة الذاكرة من آخر جلسة A (مرة واحدة يدوياً)
+        day = max(c["exit_time"][:10] for c in load_state()["closed"])
+        t = datetime.fromisoformat(day + "T16:20:00").replace(tzinfo=NY)
+        print(run_review(load_state(), t, LOG))
+        return
+    if not force and (now.weekday() >= 5 or not DECIDE_FROM <= now.time() <= END_T):
+        print("خارج الجلسة.")
+        return
+    cache = {}
+    start_learner(STATE)
+    run_book(now, force, no_send, no_ai, cache)
+    base = STATE, LOG, JOURNAL, USAGE
+    STATE, LOG, JOURNAL, USAGE = (b_path(x) for x in base)
+    try:
+        run_book(now, force, no_send, no_ai, cache, learner=True)
+    finally:
+        STATE, LOG, JOURNAL, USAGE = base
 
 
 if __name__ == "__main__":
