@@ -51,8 +51,8 @@ SCHEMA = {
         "sell_ids": {"type": "array", "items": {"type": "string"}},
         "sell_reason": {"type": "string"},
         "buy": {"type": "object", "additionalProperties": False,
-                "required": ["symbol", "qty", "why_contract", "how_chosen", "rejected", "stop_price", "target_price", "invalidation"],
-                "properties": {"symbol": {"type": "string"}, "qty": {"type": "integer"},
+                "required": ["symbol", "qty", "short_reason", "why_contract", "how_chosen", "rejected", "stop_price", "target_price", "invalidation"],
+                "properties": {"symbol": {"type": "string"}, "qty": {"type": "integer"}, "short_reason": {"type": "string"},
                                "why_contract": {"type": "string"}, "how_chosen": {"type": "string"},
                                "rejected": {"type": "array", "items": {
                                    "type": "object", "additionalProperties": False, "required": ["contract", "why_not"],
@@ -73,6 +73,7 @@ RULES = """أنت متداول خيارات محترف تدير محفظة **و�
 - اختر العقد من القائمة المعطاة فقط (حقل symbol كما هو). الانتظار قرار مشروع إن لم تتضح الصورة.
 المطلوب: اقرأ كل المدخلات، وقيّم كل عامل (اتجاهه ووزنه وهل اعتمدت عليه)، ثم قرر. عند الشراء اشرح بالتفصيل لماذا هذا العقد
 (السترايك والانتهاء والدلتا والسعر والفرق والسيولة)، وكيف اخترته، وما البدائل التي رفضتها ولماذا، والوقف والهدف وشرط إلغاء الفكرة.
+وفي short_reason اكتب سبب الشراء في جملة واحدة قصيرة واضحة (أقل من 20 كلمة) دون مصطلحات إنجليزية.
 اكتب كل النصوص بالعربية. عند عدم الشراء اجعل buy.symbol فارغاً وqty = 0. الثقة رقم من 0 إلى 1."""
 
 
@@ -168,25 +169,36 @@ def spot_num(spot):
     return float(spot.get("SPY") or 0) if isinstance(spot, dict) else float(spot)
 
 
+def short(text, n=150):
+    """النص كما هو إن كان قصيراً، وإلا أول جملة بحد أقصى n حرفاً."""
+    t = str(text or "").strip()
+    if len(t) <= n:
+        return t
+    for sep in (". ", "، و", "\n"):
+        if sep in t[:n]:
+            t = t[:t.index(sep)]
+            break
+    return t if len(t) <= n else t[:n].rsplit(" ", 1)[0] + "…"
+
+
+def expiry_word(exp, t):
+    return "عقد اليوم" if str(exp) <= str(t)[:10] else "عقد الغد"
+
+
 def buy_message(d, p, row, spot):
     b = d["buy"]
-    L = [f"🤖 **المتداول الذكي (ورقي، تجريبي)** | شراء {p['side']} 🟢" if p["side"] == "CALL" else
-         f"🤖 **المتداول الذكي (ورقي، تجريبي)** | شراء {p['side']} 🔴",
-         f"**{p.get('under', 'SPY')} {p['strike']:g} {p['side']}** ينتهي {p['expiry']} ×{p['qty']} بسعر {p['entry']:.2f} "
-         f"(${p['entry'] * 100 * p['qty']:,.0f}) | {spot_text(spot)} | دلتا {float(row.get('delta') or 0):.2f} | الثقة {d['confidence']:.0%}",
-         "", f"🧠 **قراءة السوق:** {d['market_read']}", "", "📋 **العوامل التي اعتمد عليها:**", *fmt_factors(d["factors"]),
-         "", f"🎯 **لماذا هذا العقد:** {b['why_contract']}", f"🔍 **كيف اختاره:** {b['how_chosen']}"]
-    if b.get("rejected"):
-        L += ["", "❌ **بدائل رفضها:**"] + [f"• {r['contract']}: {r['why_not']}" for r in b["rejected"]]
-    L += ["", f"🛑 وقف {p['stop']:.2f} · 🎯 هدف {p['target']:.2f} · ⛔ تُلغى الفكرة إن: {p['invalidation']}",
-          "⚠️ محفظة ورقية للدراسة (H-AITRADER)، لا مال حقيقي."]
-    return "\n".join(L)
+    return "\n".join([
+        f"🤖 **المتداول الذكي (ورقي)** · شراء {'🟢' if p['side'] == 'CALL' else '🔴'}",
+        f"**{p.get('under', 'SPY')} {p['strike']:g} {p['side']}** ({expiry_word(p['expiry'], p['time'])}) ×{p['qty']} "
+        f"بسعر {p['entry']:.2f} = {p['entry'] * 100 * p['qty']:,.0f}$",
+        f"💡 {short(b.get('short_reason') or d['market_read'])}",
+        f"🛑 وقف {p['stop']:.2f} · 🎯 هدف {p['target']:.2f}"])
 
 
 def sell_message(rec, reason):
     icon = "✅" if rec["pnl"] > 0 else "🛑"
-    return (f"🤖 {icon} **المتداول الذكي باع** {rec.get('under', 'SPY')} {rec['strike']:g} {rec['side']} ×{rec['qty']}: "
-            f"{rec['entry']:.2f} ← {rec['exit']:.2f} = **{rec['pnl']:+,.0f}$**\nالسبب: {reason}")
+    return (f"🤖 {icon} **باع {rec.get('under', 'SPY')} {rec['strike']:g} {rec['side']}** ×{rec['qty']}: "
+            f"{rec['entry']:.2f} ← {rec['exit']:.2f} = **{rec['pnl']:+,.0f}$**\n{short(reason)}")
 
 
 def journal(now, spot, d, executed, note):
@@ -230,18 +242,22 @@ def log_row(now, spot, d, row, qty, executed, note):
 
 def day_report(st, now, bot_recs):
     day = now.date().isoformat()
-    cl = [c for c in st["closed"] if c["exit_time"][:10] == day]
-    pnl = sum(c["pnl"] for c in cl)
-    L = [f"🤖 **المتداول الذكي — نهاية الجلسة** {day} (ورقي)", "",
-         f"قرارات اليوم: {st.get('decisions_today', 0)} | صفقات مغلقة: {len(cl)} | الصافي المحقق **{pnl:+,.0f}$**",
-         f"النقد {st['cash']:,.0f}$ | مراكز مفتوحة: {len(st['positions'])}"]
+    cl = sorted((c for c in st["closed"] if c["exit_time"][:10] == day), key=lambda c: c["time"])
+    wins = sum(c["pnl"] > 0 for c in cl)
+    L = [f"🤖 **المتداول الذكي · نهاية الجلسة** {day} (ورقي)", "",
+         f"**صافي اليوم: {sum(c['pnl'] for c in cl):+,.0f}$** | {len(cl)} صفقات: {wins} رابحة · {len(cl) - wins} خاسرة",
+         f"المحفظة {st['cash']:,.0f}$ نقداً | {st.get('decisions_today', 0)} قراراً | مفتوح: {len(st['positions'])}"]
+    if cl:
+        L += ["", "**الصفقات (نيويورك):**"]
     for c in cl:
-        L.append(f"• {c.get('under', 'SPY')} {c['side']} {c['strike']:g} ({c['expiry']}) ×{c['qty']}: {c['entry']:.2f} ← {c['exit']:.2f} = {c['pnl']:+,.0f}$ | {c['why']}")
+        mins = int((datetime.fromisoformat(c["exit_time"]) - datetime.fromisoformat(c["time"])).total_seconds() // 60)
+        L.append(f"{'✅' if c['pnl'] > 0 else '🛑'} {c['time'][11:16]} {c.get('under', 'SPY')} {c['strike']:g} {c['side']} ×{c['qty']}: "
+                 f"{c['entry']:.2f} ← {c['exit']:.2f} = **{c['pnl']:+,.0f}$** ({mins}د)")
     for p in st["positions"]:
-        L.append(f"↪️ مفتوح: {p.get('under', 'SPY')} {p['side']} {p['strike']:g} ({p['expiry']}) ×{p['qty']} بسعر {p['entry']:.2f}")
+        L.append(f"↪️ مفتوح: {p.get('under', 'SPY')} {p['strike']:g} {p['side']} ({p['expiry']}) ×{p['qty']} بسعر {p['entry']:.2f}")
     if bot_recs:
-        L += ["", "🆚 **توصيات البوت اليوم:** " + "، ".join(bot_recs)]
-    L += ["", "السجل الكامل لكل قرار وسببه: research/ai_trader_journal.md", "⚠️ للدراسة فقط (H-AITRADER)."]
+        L += ["", f"🆚 توصيات البوت اليوم: {len(bot_recs)}"]
+    L += ["", "⚠️ محفظة ورقية للدراسة. تفكيره الكامل في السجل research/ai_trader_journal.md"]
     return "\n".join(L)
 
 

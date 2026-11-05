@@ -58,18 +58,20 @@ def test_auto_exits_stop_target_and_close_today():
     assert out and out[0]["symbol"] == b["symbol"] and "15:50" in out[0]["why"]
 
 
-def test_messages_contain_reasoning():
+def test_messages_are_short_and_journal_keeps_reasoning():
     st = at.new_state()
     d = _dec()
+    d["buy"]["short_reason"] = "السوق يهبط تحت متوسط الجلسة."
     p = at.open_position(st, MENU[1], 2, d["buy"], N)
     m = at.buy_message(d, p, MENU[1], 767.2)
-    for s in ("قراءة السوق", "VWAP", "لماذا هذا العقد", "كيف اختاره", "بدائل رفضها", "تآكل سريع", "ورقية"):
-        assert s in m
-    assert "الأخبار" not in m                              # العامل غير المعتمد لا يظهر في الرسالة
+    assert "SPY 770 CALL" in m and "عقد الغد" in m and "600$" in m and "السوق يهبط" in m and "وقف 1.80" in m
+    assert "بدائل" not in m and m.count("\n") == 3
     rec = at.close_position(st, p, 2.5, N, "بلغ الوقف")
     assert "-100$" in at.sell_message(rec, "بلغ الوقف")
     rep = at.day_report(dict(st, decisions_today=4), N.replace(hour=16, minute=5), ["09:45 SPY CALL 765"])
-    assert "نهاية الجلسة" in rep and "توصيات البوت" in rep
+    assert "نهاية الجلسة" in rep and "توصيات البوت اليوم: 1" in rep and "صافي اليوم: -100$" in rep and "(0د)" in rep
+    assert at.short("قصيرة، وواضحة") == "قصيرة، وواضحة" and at.short("أولى. " + "ثانية " * 50) == "أولى"
+    assert len(at.short("كلمة " * 100)) <= 151
 
 
 def test_main_flow_with_fakes(tmp_path, monkeypatch):
@@ -103,6 +105,6 @@ def test_spx_menu_row_and_cross_underlying_sharia():
     assert p["under"] == "SPX" and "SPX" in p["id"]
     assert at.validate_buy(st, menu, _dec()["buy"], N, {})[0] == "مركز معاكس مفتوح (الشرط الشرعي)"   # CALL على SPY ممنوع
     m = at.buy_message(_dec(sym=spx["symbol"]), p, spx, {"SPY": 767.2, "SPX": 7690.5})
-    assert "SPX 7600 PUT" in m and "SPX 7,690.50" in m and "SPY 767.20" in m
+    assert "SPX 7600 PUT" in m and "عقد الغد" in m
     assert "SPX 7600" in at.sell_message(at.close_position(st, p, 3.0, N, "هدف"), "هدف")
     assert at.spot_num({"SPY": 767.2, "SPX": 7690.5}) == 767.2 and at.spot_text(767.2) == "SPY 767.20"
