@@ -456,31 +456,101 @@ def opposite_overlaps(day, cards, now=None):
 
 
 # ============================ اليومي ============================
+BLOCK_AR = {"repeat_side": "تكرار الاتجاه", "same_side_cap": "سقف الجهة", "open_same_dir": "عقد مفتوح بالاتجاه نفسه",
+            "max_ideas_cap": "سقف الأفكار", "late_entry": "دخول متأخر", "earn_in_life": "أرباح داخل العقد",
+            "btc_against": "ضد البتكوين", "same_contract_open": "العقد نفسه مفتوح"}
+RES_ICON = {"هدف": "✅", "وقف": "🛑", "بلا حسم": "⏳"}
+
+
+def card_usd(c):
+    e, r = num(c.get("entry")), c.get("exit_ret")
+    if r is None:
+        r = c.get("last")
+    return e * 100 * r if e is not None and r is not None else None
+
+
+def contract_kind(c):
+    """عقد اليوم أم الغد (بوت SPX)؛ فارغ للشركات."""
+    exp, day = str(c.get("exp") or ""), str(c.get("day") or "")
+    if c.get("project") == "spx":
+        return "عقد الغد" if exp > day else "عقد اليوم"
+    return ""
+
+
 def card_line(c):
-    ctx = [c["tod"]]
-    if c["project"] == "spx":
-        for k, label in (("r30_b", "30د"), ("cand_mom", "mom"), ("cand_f30", "f30"), ("edge7", "edge7"), ("mom_live", "زخم حي"), ("live_side", "لحظي"),
-                         ("fl_gex", "غاما"), ("fl_wall", "جدران"), ("fl_lean", "تدفق"), ("fl_div", "تباعد")):
-            if c.get(k):
-                ctx.append(f"{label} {c[k]}")
-        if c.get("news"):
-            ctx.append(f"أخبار {c['news']}")
-    else:
-        for k, label in (("s_news", "أخبار"), ("s_flow", "تدفق"), ("s_delta", "دلتا"), ("s_earn", "أرباح")):
-            if c.get(k):
-                ctx.append(f"{label} {c[k]}")
-    res = c["exit_kind"] or "بلا بيانات"
-    if c["exit_ret"] is not None:
-        res += f" {pct(c['exit_ret'])}"
-    if c.get("mins") is not None:
-        m = c["mins"]
-        res += f" بعد {m}د" if m < 120 else f" بعد {m / 60:.0f} ساعة" if m < 1440 else f" بعد {m / 1440:.0f} يوم"
-    if c.get("peak_before") is not None and c["exit_kind"] == "وقف":
-        res += f" (أعلى قبلها {pct(c['peak_before'])})"
-    if c.get("after_peak") is not None:
-        res += f"، وبعدها بلغ {pct(c['after_peak'])}"
+    """سطر مقروء: الوقت، العقد، النتيجة بالنسبة والدولار، ثم أهم السياق بكلمات عربية."""
     k = num(c["strike"])
-    return f"• {c['time']} {c['sym']} {c['side']} {f'{k:g}' if k is not None else c['strike']} — {res}\n   {' | '.join(ctx)}"
+    strike = f"{k:g}" if k is not None else c["strike"]
+    kind = contract_kind(c)
+    res = c["exit_kind"] or "بلا بيانات"
+    icon = RES_ICON.get(res, "•")
+    r = c["exit_ret"] if c["exit_ret"] is not None else c.get("last")
+    usd = card_usd(c)
+    tail = (f" {pct(r)}" if r is not None else "") + (f" ≈ {usd:+,.0f}$" if usd is not None else "")
+    if c.get("mins") is not None and res in ("هدف", "وقف"):
+        m = c["mins"]
+        tail += f" بعد {m}د" if m < 120 else f" بعد {m / 60:.0f} ساعة"
+    if res == "وقف" and c.get("peak_before") is not None:
+        tail += f" (أعلى ربح قبلها {pct(c['peak_before'])})"
+    if c.get("after_peak") is not None and res in ("هدف", "وقف"):
+        tail += f"، ثم بلغ {pct(c['after_peak'])}"
+    e = num(c.get("entry"))
+    head = (f"{icon} {c['time']} · **{c['sym']} {strike} {c['side']}**" + (f" ({kind})" if kind else "")
+            + (f" بدخول {e:.2f}" if e is not None else "") + f" → {res}{tail}")
+    ctx = []
+    pairs = ((("rday_b", "السوق منذ الافتتاح"), ("r30_b", "آخر 30 دقيقة"), ("fl_lean", "تدفق الخيارات"), ("news", "الأخبار"))
+             if c.get("project") == "spx" else
+             (("s_news", "الأخبار"), ("s_flow", "تدفق الخيارات"), ("s_delta", "بُعد العقد"), ("m_lead", "قيادة السوق")))
+    for f_, label in pairs:
+        v = c.get(f_)
+        if v:
+            ctx.append(f"{label}: {v}")
+    return head + ("\n   ↳ " + " · ".join(ctx[:4]) if ctx else "")
+
+
+def day_summary(cards):
+    """(عدد، هدف، وقف، مفتوح، صافي الدولار بالقاعدة)."""
+    n = len(cards)
+    tp = sum(c["exit_kind"] == "هدف" for c in cards)
+    st = sum(c["exit_kind"] == "وقف" for c in cards)
+    usd = sum(u for u in (card_usd(c) for c in cards) if u is not None)
+    return n, tp, st, n - tp - st, usd
+
+
+def lab_lines(day):
+    """مقارنة اليوم مع التجارب الورقية (المتداول الذكي، ظل MGT، مختبر التطور). [] إن لا بيانات."""
+    out = []
+    try:
+        s = json.load(open(os.path.join(ROOT, "ai_trader_state.json"), encoding="utf-8"))
+        cl = [c for c in s.get("closed", []) if str(c.get("exit_time", ""))[:10] == day]
+        if cl or s.get("positions"):
+            out.append(f"🤖 المتداول الذكي: {len(cl)} صفقة مغلقة، صافي {sum(c['pnl'] for c in cl):+,.0f}$")
+    except Exception:  # noqa: BLE001
+        pass
+    data = os.getenv("SPXBOT_DATA", "/opt/spxbot/data")
+    try:
+        import mgt_shadow as msh
+        s = json.load(open(os.path.join(data, "mgt_shadow", "state.json"), encoding="utf-8"))
+        es = [e for e in s.get("open", []) + s.get("closed", []) if e.get("tdate") == day]
+        if es:
+            rs = [msh.results(e) for e in es]
+            out.append(f"🧪 ظل MGT: {len(es)} دخولاً | بحسابهم من القمة {sum(r['usd_mgt'] for r in rs):+,.0f}$ · "
+                       f"واقعياً {sum(r['usd_real'] for r in rs):+,.0f}$")
+    except Exception:  # noqa: BLE001
+        pass
+    try:
+        s = json.load(open(os.path.join(data, "mgt_lab", "state.json"), encoding="utf-8"))
+        best = []
+        for v in s.get("variants", []):
+            td = [c for c in v.get("closed", []) if c.get("tdate") == day]
+            if td:
+                best.append((sum(c["usd"] for c in td), v["vid"], len(td)))
+        if best:
+            b = max(best)
+            out.append(f"🧬 مختبر التطور: أفضل نسخة اليوم {b[1]} {b[0]:+,.0f}$ ({b[2]} صفقة)")
+    except Exception:  # noqa: BLE001
+        pass
+    return out
 
 
 def blocked_today(day):
@@ -513,22 +583,39 @@ def daily_facts(day, cards, now=None):
 
 def daily_text(F):
     L = [f"🧠 **المحلل اليومي · {F['day']}**", ""]
-    n = len(F["spx"])
-    L.append("**SPX اليوم:** " + ("لا توصيات" if not n else "توصية واحدة" if n == 1 else "توصيتان" if n == 2 else f"{n} توصيات"))
-    L += [card_line(c) for c in F["spx"]]
+    n, tp, st, op, usd = day_summary(F["spx"])
+    m, tp2, st2, op2, usd2 = day_summary(F["stocks_new"])
+    L += ["**الخلاصة:**",
+          (f"• SPX/SPY: {n} توصيات | ✅ {tp} · 🛑 {st} · ⏳ {op} | الصافي ≈ **{usd:+,.0f}$**" if n else "• SPX/SPY: لا توصيات اليوم"),
+          (f"• الشركات (جديدة): {m} | ✅ {tp2} · 🛑 {st2} · ⏳ {op2} | الصافي ≈ **{usd2:+,.0f}$**" if m else "• الشركات: لا توصيات جديدة")]
+    if F["spx"]:
+        kinds = {}
+        for c in F["spx"]:
+            kinds.setdefault(contract_kind(c), []).append(card_usd(c) or 0)
+        if len(kinds) > 1:
+            L.append("• " + " | ".join(f"{k}: {len(v)} بصافي {sum(v):+,.0f}$" for k, v in kinds.items()))
+    labs = lab_lines(F["day"])
+    if labs:
+        L += ["", "**التجارب الورقية اليوم:**"] + labs
+    if F["spx"]:
+        L += ["", "**توصيات SPX/SPY:**"] + [card_line(c) for c in F["spx"]]
     if F["stocks_new"]:
-        L += ["", f"**الشركات — جديدة اليوم:** {len(F['stocks_new'])}"] + [card_line(c) for c in F["stocks_new"]]
+        L += ["", "**توصيات الشركات الجديدة:**"] + [card_line(c) for c in F["stocks_new"]]
     if F["stocks_open"]:
-        L += ["", "**الشركات — مفتوحة من قبل:** " + "، ".join(f"{c['sym']} {c['side']} {pct(c['last'])}" for c in F["stocks_open"])]
+        L += ["", "**عقود شركات مفتوحة من قبل:** " + "، ".join(f"{c['sym']} {c['side']} {pct(c['last'])}" for c in F["stocks_open"])]
     b = F["blocked"]
     if b and b.get("n"):
-        L += ["", f"**المحجوبة اليوم:** {b['n']} (هدف {b['tp']}، وقف {b['stop']}) — " + "، ".join(f"{k} ×{v}" for k, v in b["tags"].items())]
-    for k, name in (("tot_spx", "SPX"), ("tot_stocks", "الشركات")):
+        L += ["", f"**منعتها القواعد اليوم:** {b['n']} (كانت ستبلغ الهدف {b['tp']}، والوقف {b['stop']}) — "
+              + "، ".join(f"{BLOCK_AR.get(k, k)} ×{v}" for k, v in b["tags"].items())]
+    tots = []
+    for k, name in (("tot_spx", "SPX/SPY"), ("tot_stocks", "الشركات")):
         t = F[k]
         if t:
-            L.append(f"📊 حصيلة {name} منذ البداية: {t['n']} صفقة، هدف {t['tp']}، وقف {t['stop']}، متوسط أول خروج {pct(t['mean'])}"
-                     + (" (عينة صغيرة)" if t["n"] < SMALL else ""))
-    L += ["", "**صحة التشغيل:** " + ("✅ سليمة" if not F["health"] else "")] + [f"⚠️ {h}" for h in F["health"]]
+            tots.append(f"{name} {t['n']} صفقة (✅ {t['tp']} · 🛑 {t['stop']}) متوسط {pct(t['mean'])}")
+    if tots:
+        L += ["", "📊 **منذ البداية:** " + " | ".join(tots)]
+    if F["health"]:
+        L += ["", "**تنبيه تشغيل:**"] + [f"⚠️ {h}" for h in F["health"]]
     return "\n".join(L)
 
 
@@ -541,6 +628,11 @@ def facts_for_model(F):
         for k in ("exit_ret", "peak_before", "after_peak", "last", "hold_ret"):
             if c.get(k) is not None:
                 d[k + "_pct"] = round(c[k] * 100, 1)
+        u = card_usd(c)
+        if u is not None:
+            d["usd"] = round(u)
+        if c.get("project") == "spx":
+            d["contract"] = contract_kind(c)
         return d
     G = dict(F, spx=[slim(c) for c in F["spx"]], stocks_new=[slim(c) for c in F["stocks_new"]],
              stocks_open=[slim(c) for c in F["stocks_open"]])
@@ -559,14 +651,15 @@ DAILY_SYSTEM = """أنت «المحلل» في مشروع «عين السوق»:
 - exit_kind/exit_ret_pct: أول خروج بقاعدة البوت (هدف +50% أو وقف −40%) وعائده. mins: دقائق حتى الخروج. peak_before_pct: أعلى ربح قبل الخروج. after_peak_pct: أعلى ربح بعد الخروج (المتابعة تستمر بعده). hold_ret_pct: الاحتفاظ حتى الانتهاء.
 - الشركات: s_news أخبار الشركة، s_flow تدفق الخيارات (مع/ضد الاتجاه)، s_delta بُعد العقد، s_dte أيام العقد، s_earn/s_exdiv أرباح أو توزيعات داخل عمر العقد.
 - blocked: توصيات منعتها قواعد البوت اليوم ونتيجتها في الظل. tot_spx/tot_stocks: الحصيلة منذ بداية السجلات، وليست لليوم. health: مشاكل التشغيل.
-اكتب «قراءة المحلل» بالعربية في 4–6 أسطر قصيرة (أقل من 130 كلمة)، بلا عنوان:
-- ماذا حدث اليوم ولماذا على الأرجح: اربط نتيجة كل صفقة بسياقها (وقت اليوم، الحركة قبلها، اتفاق الظلال أو خلافها، الأخبار).
-- ما الذي يستحق المراقبة في الأيام القادمة (ملاحظة لا قاعدة).
-- إن كانت في صحة التشغيل مشكلة فاذكر أثرها على موثوقية نتائج اليوم.
+- usd: ربح/خسارة العقد الواحد بالدولار بقاعدة البوت. contract: «عقد اليوم» أو «عقد الغد».
+اكتب «قراءة المحلل» بالعربية كمحلل تداول محترف يشرح لصاحب البوت، في ثلاث فقرات قصيرة (أقل من 170 كلمة)، كل فقرة تبدأ بعنوانها غامقاً:
+**لماذا ربحنا أو خسرنا اليوم:** اربط نتائج الصفقات الأهم بسياق السوق: هل دخلت بعد حركة كبيرة أم قبلها، مع الاتجاه أم ضده، عقد اليوم أم الغد، التدفق والأخبار.
+**درس اليوم:** فكرة أو فكرتان للمراقبة في الأيام القادمة، بصيغة «فرضية للمراقبة»، لا قاعدة ولا تعديل.
+**الموثوقية:** سطر واحد عن جودة بيانات اليوم (مشاكل التشغيل أو التسجيل إن وُجدت)، أو «البيانات سليمة».
 قواعد صارمة:
 - استعمل الأرقام الموجودة في الحقائق فقط، وانسخها كما هي. لا تحسب أرقاماً جديدة ولا تقدّر ولا تذكر أسعاراً غير موجودة.
-- كل استنتاج «ملاحظة وصفية، عينة صغيرة». لا تقترح تعديل البوت الآن: التعديلات تُدرس في مراجعة 9–14 نوفمبر فقط.
-- لا توصيات ولا وعود بأرباح. «مع/ضد» تعني اتفاق الظل أو الحركة مع اتجاه الصفقة.
+- لا تكرر «عينة صغيرة» في كل جملة؛ التحفظ موجود في آخر الرسالة. لا تقترح تعديل البوت الآن.
+- لا توصيات ولا وعود بأرباح. لا مصطلحات إنجليزية ولا أسماء حقول (اكتب «التدفق» لا fl_lean، و«الزخم» لا mom).
 - نص عادي، للتمييز **غامق** فقط، بلا جداول ولا عناوين."""
 
 WEEKLY_SYSTEM = """أنت «المحلل» في مشروع «عين السوق» (بوت SPX لعقود اليوم نفسه وبوت عقود الشركات). مهمتك الأسبوعية: اقتراح فرضيات للاختبار، لا تعديلات.
@@ -819,7 +912,7 @@ def run_daily(now, force=False, no_send=False, day=None, client=None):
     det = daily_text(F)
     reading, status = daily_reading(F, det, now, client)
     text = det + "\n\n🧠 **قراءة المحلل:**\n" + (reading or ("(حُذفت: ذكرت رقماً غير موجود في البيانات)" if status == "guard" else "(غير متاحة اليوم)"))
-    text += "\n\nوصفي فقط؛ لا تعديل قبل مراجعة 9–14/11 وبموافقتك."
+    text += "\n\n<i>الدولار بقاعدة البوت (+50% / −40%) لعقد واحد. أي تعديل على البوت بعد مراجعة 9–14/11 وبموافقتك.</i>"
     print(text)
     if no_send:
         return 0
