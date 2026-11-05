@@ -10,12 +10,12 @@
    "i": 0,
    "lo": 76347.7,
    "hi": 76730.71462988519,
-   "side": "sell",
-   "usdt": 0.0005871989861958582,
-   "btc": 0.0006536166879999999,
-   "cost": 49.942084478,
-   "n": 2,
-   "cl": "g2c0n2"
+   "side": "buy",
+   "usdt": 50.112483772435795,
+   "btc": 6.687999999947444e-09,
+   "cost": 0.0,
+   "n": 3,
+   "cl": "g2c0n3"
   },
   {
    "i": 1,
@@ -227,8 +227,8 @@
    "cl": "g2c19n1"
   }
  ],
- "realized": -1.1460768602760254,
- "fills": 11,
+ "realized": -0.9762647648264249,
+ "fills": 12,
  "init_buy": {
   "cl": "g2init",
   "usd": 449.48,
@@ -236,7 +236,7 @@
   "px": 80366.0
  },
  "out_above": null,
- "below_alerted": true,
+ "below_alerted": false,
  "last_err": null,
  "last_daily": null,
  "stopped": false,
