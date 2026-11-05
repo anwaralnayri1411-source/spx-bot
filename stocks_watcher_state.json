@@ -1339,13 +1339,6 @@
    "jpmorgan chase nyse jpm lifts interest income outlook as lending offsets trading slowdown"
   ],
   "COIN:PUT": [
-   "bitcoin faces further downside as oil surge ai fears weigh on risk appetite",
-   "tony edward comments on xrp 10 000 price predictions",
-   "royal caribbean stock jumps after earnings beat and outlook upgrade",
-   "experts debunk mcrib bitcoin price link fed ra",
-   "bitcoin price tightest in months at 80 300 ahe",
-   "jason calacanis predicts bitcoin will never reclaim its price peak here s why",
-   "investor jason calacanis predicts bitcoin will drop 28 to 57k and never hit its all time high again",
    "squid price today quid to usd live price marketcap and chart",
    "elon musk s grok ai predicts an unbelievable xrp price",
    "coin price prediction futures contract clings to lower bollinger band as underlying equity attracts 205 250 analyst pric",
@@ -1738,15 +1731,16 @@
    "nasdaq listed bitfarms sold all its btc is it still a bitcoin stock",
    "fed interest rates can move crypto before a decision and cuts may not lift bitcoin",
    "bitcoin and altcoins see sharp declines here s why plus liquidation data",
-   "bitcoin sinks to seven week low as risk off mood deepens"
+   "bitcoin sinks to seven week low as risk off mood deepens",
+   "coinbase stock and 2 crypto growth shares worth a closer look",
+   "why are bitcoin ethereum and xrp prices stalled today rally hits resistance",
+   "btc usd today november 6 2026 bitcoin plummets to us 76 000 what is the cause",
+   "bitcoin erases election rally as ai stocks plunge 428 million in crypto longs get wiped out",
+   "keel keel sells entire bitcoin treasury for 192m will sell new coins daily",
+   "bitcoin falls with risk off sentiment the price is testing a key swing area target",
+   "why is bitcoin price crashing today btc usd falls toward 76 000 amid stock market sell off and 370 mill"
   ],
   "HOOD:PUT": [
-   "polymarket odds will hood sofi v beat earnings tomorrow",
-   "bitcoin etfs gain 305m while ethereum etfs lose 221m in latest weekly flows",
-   "btc price above 80 500 on october 26 2026 at 11 59pm utc",
-   "btc price range on oct 27 2026 at 7am edt crypto prediction market",
-   "jpmorgan chase says that bitcoin will outperform stocks bonds and gold over the next 10 years here s why it might be rig",
-   "hood stock braces for 9 5 move as q3 earnings arrive today",
    "webull might be the most undervalued fintech stock",
    "robinhood just dropped 11 in a week is it time to sell or load up",
    "robinhood markets inc hood shares acquired by park avenue securities llc",
@@ -2140,7 +2134,13 @@
    "nasdaq listed bitfarms sold all its btc is it still a bitcoin stock",
    "fed interest rates can move crypto before a decision and cuts may not lift bitcoin",
    "bitcoin and altcoins see sharp declines here s why plus liquidation data",
-   "bitcoin sinks to seven week low as risk off mood deepens"
+   "bitcoin sinks to seven week low as risk off mood deepens",
+   "why are bitcoin ethereum and xrp prices stalled today rally hits resistance",
+   "btc usd today november 6 2026 bitcoin plummets to us 76 000 what is the cause",
+   "bitcoin erases election rally as ai stocks plunge 428 million in crypto longs get wiped out",
+   "keel keel sells entire bitcoin treasury for 192m will sell new coins daily",
+   "bitcoin falls with risk off sentiment the price is testing a key swing area target",
+   "why is bitcoin price crashing today btc usd falls toward 76 000 amid stock market sell off and 370 mill"
   ],
   "AAPL:CALL": [
    "loop capital lowers apple stock price target on iphone shipment concerns",
@@ -2400,7 +2400,9 @@
    "3 ev stocks with revenue growth up to 33",
    "will ford pro regain its profitability momentum after q3 s decline",
    "ford vs general motors which stock looks stronger after q3",
-   "toyota raises profit forecast as hybrid sales drive stock surge"
+   "toyota raises profit forecast as hybrid sales drive stock surge",
+   "tesla inc stock tsla opened down by 8 31 on nov 5 what investors need to know",
+   "f 150 lightning sales drop to zero"
   ],
   "XOM:PUT": [
    "oil prices slide as trump plays down prospect of iran strikes after u s election rout",
@@ -2588,7 +2590,12 @@
    "a wipeout for ai stocks sends wall street reeling and the s p 500 tumbles more than 3",
    "is suncor still a buy after a blowout quarter or is it too reliant on high oil prices",
    "oil price predictions why goldman sachs is betting on brent to climb to 140",
-   "danon pushes back on accusations israel to blame for oil prices"
+   "danon pushes back on accusations israel to blame for oil prices",
+   "turkey unveils 500 billion energy plan built on gas solar nuclear",
+   "conocophillips reports higher q3 earnings as oil prices support profit growth",
+   "dollar edges up as oil prices bounce payrolls eyed",
+   "crgy q3 earnings beat on higher oil prices and production",
+   "crude oil prices rebound as ukraine attacks russian refineries"
   ],
   "MSFT:CALL": [
    "forget the 12 month squeeze microsoft is primed for an explosive ai payoff",
@@ -2895,7 +2902,13 @@
    "nasdaq listed bitfarms sold all its btc is it still a bitcoin stock",
    "fed interest rates can move crypto before a decision and cuts may not lift bitcoin",
    "bitcoin and altcoins see sharp declines here s why plus liquidation data",
-   "bitcoin sinks to seven week low as risk off mood deepens"
+   "bitcoin sinks to seven week low as risk off mood deepens",
+   "why are bitcoin ethereum and xrp prices stalled today rally hits resistance",
+   "btc usd today november 6 2026 bitcoin plummets to us 76 000 what is the cause",
+   "bitcoin erases election rally as ai stocks plunge 428 million in crypto longs get wiped out",
+   "keel keel sells entire bitcoin treasury for 192m will sell new coins daily",
+   "bitcoin falls with risk off sentiment the price is testing a key swing area target",
+   "why is bitcoin price crashing today btc usd falls toward 76 000 amid stock market sell off and 370 mill"
   ]
  },
  "fired": {
@@ -2904,7 +2917,8 @@
    "news:ford october u s sales slip as electric vehicle deliveries plunge f nyse",
    "news:ford motor f sees slight october sales decline amid electric v",
    "sharp@2026-11-04T15:17-05:00",
-   "sharp@2026-11-05T10:53-05:00"
+   "sharp@2026-11-05T10:53-05:00",
+   "news:f 150 lightning sales drop to zero"
   ],
   "XOM:PUT:2026-11-20:167.5": [
    "down-0.15",
@@ -2975,7 +2989,8 @@
    "news:dow surges and oil prices drop after dem midterm sweep",
    "news:conocophillips beats estimates on higher oil prices raises dividend by reuters",
    "news:a wipeout for ai stocks sends wall street reeling and the s p 500 tumbles more than 3",
-   "news:oil price predictions why goldman sachs is betting on brent to climb to 140"
+   "news:oil price predictions why goldman sachs is betting on brent to climb to 140",
+   "news:crude oil prices rebound as ukraine attacks russian refineries"
   ],
   "HOOD:PUT:2026-11-20:75": [
    "news:bitcoin price suddenly plunges to 76k as hourly liquidations near 600m",
@@ -2993,7 +3008,11 @@
    "news:bitcoin price crashes over 5 to 75 000 as tech rout wipes out leveraged longs",
    "news:bitcoin and altcoins see sharp declines here s why plus liquidation data",
    "sharp@2026-11-05T11:31-05:00",
-   "news:bitcoin sinks to seven week low as risk off mood deepens"
+   "news:bitcoin sinks to seven week low as risk off mood deepens",
+   "news:btc usd today november 6 2026 bitcoin plummets to us 76 000 what is the cause",
+   "news:bitcoin erases election rally as ai stocks plunge 428 million in crypto longs get wiped out",
+   "news:bitcoin falls with risk off sentiment the price is testing a key swing area target",
+   "news:why is bitcoin price crashing today btc usd falls toward 76 000 amid stock market sell off and 370 mill"
   ],
   "COIN:PUT:2026-11-13:130": [
    "news:bitcoin price suddenly plunges to 76k as hourly liquidations near 600m",
@@ -3008,7 +3027,11 @@
    "sharp@2026-11-05T11:19-05:00",
    "sharp@2026-11-05T11:23-05:00",
    "news:bitcoin and altcoins see sharp declines here s why plus liquidation data",
-   "news:bitcoin sinks to seven week low as risk off mood deepens"
+   "news:bitcoin sinks to seven week low as risk off mood deepens",
+   "news:btc usd today november 6 2026 bitcoin plummets to us 76 000 what is the cause",
+   "news:bitcoin erases election rally as ai stocks plunge 428 million in crypto longs get wiped out",
+   "news:bitcoin falls with risk off sentiment the price is testing a key swing area target",
+   "news:why is bitcoin price crashing today btc usd falls toward 76 000 amid stock market sell off and 370 mill"
   ],
   "MSTR:PUT:2026-11-13:120": [
    "up0.25",
@@ -3027,13 +3050,15 @@
    "news:bitcoin price crashes over 5 to 75 000 as tech rout wipes out leveraged longs",
    "sharp@2026-11-05T11:23-05:00",
    "news:bitcoin and altcoins see sharp declines here s why plus liquidation data",
-   "news:bitcoin sinks to seven week low as risk off mood deepens"
+   "news:bitcoin sinks to seven week low as risk off mood deepens",
+   "news:btc usd today november 6 2026 bitcoin plummets to us 76 000 what is the cause",
+   "news:bitcoin erases election rally as ai stocks plunge 428 million in crypto longs get wiped out",
+   "news:bitcoin falls with risk off sentiment the price is testing a key swing area target",
+   "news:why is bitcoin price crashing today btc usd falls toward 76 000 amid stock market sell off and 370 mill"
   ]
  },
  "stock_level": {},
  "seen_macro": [
-  "first f5 now fortinet wall street has stopped paying security stocks for beating earnings",
-  "intel stock forecast wall street s last minute verdict on intc ahead of today s earnings",
   "global markets navigate ai valuation jitters and geopolitical crosscurrents ahead of crucial earnings week",
   "federal reserve will not increase interest rates but it may go up next time",
   "warsh puts a spotlight on ai financing s vulnerability to fed policy",
@@ -3631,7 +3656,9 @@
   "the week ahead inflation data on deck as earnings slow",
   "a wipeout for ai stocks sends wall street tumbling and the s p 500 drops more than 3",
   "euro falls as oil prices climb amid political and market uncertainty",
-  "fed interest rates can move crypto before a decision and cuts may not lift bitcoin"
+  "fed interest rates can move crypto before a decision and cuts may not lift bitcoin",
+  "fed s hammack favors gradual rate hike path to lower inflation",
+  "chip stocks get slaughtered as wall street heads for its worst post midterm day since 1896"
  ],
  "sharp": {
   "XOM:PUT:2026-11-20:167.5": 172.47,
