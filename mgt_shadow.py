@@ -329,24 +329,52 @@ def append(path, row):
     pd.DataFrame([row]).to_csv(path, mode="a", header=not os.path.exists(path), index=False)
 
 
+def outcome(e):
+    """نتيجة الخطة الواقعية للعقد: هدف أو وقف أو للإغلاق."""
+    return "هدف" if e.get("t_tp50") is not None else "وقف" if e.get("t_stop") is not None else "إغلاق"
+
+
+def entry_blocks(rs):
+    """يجمّع الدخولات المتتالية من الجلسة والجهة نفسيهما في كتلة واحدة."""
+    out = []
+    for e in sorted(rs, key=lambda x: x["t"]):
+        if out and (out[-1][0]["sess"], out[-1][0]["side"]) == (e["sess"], e["side"]):
+            out[-1].append(e)
+        else:
+            out.append([e])
+    return out
+
+
+def block_line(b):
+    a, z = b[0], b[-1]
+    t0, t1 = a["t"][11:16], z["t"][11:16]
+    strikes = list(dict.fromkeys(f"{e['strike']:g}" for e in b))
+    prices = [e["entry"] for e in b]
+    n = {k: sum(outcome(e) == k for e in b) for k in ("هدف", "وقف", "إغلاق")}
+    res = " · ".join(x for x in (f"✅ {n['هدف']} هدف" if n["هدف"] else "", f"🛑 {n['وقف']} وقف" if n["وقف"] else "",
+                                 f"⏳ {n['إغلاق']} للإغلاق" if n["إغلاق"] else "") if x)
+    return (f"{'🌙 ليلاً' if a['sess'] == 'gth' else '☀️ الجلسة'} {t0}" + (f"–{t1}" if t1 != t0 else "")
+            + f": **{len(b)} {a['side']}** بسترايك {('، '.join(strikes))}\n"
+            + f"   السعر {min(prices):.2f}–{max(prices):.2f}$ | SPX {a['S']:,.0f}" + (f" ← {z['S']:,.0f}" if len(b) > 1 else "")
+            + f"\n   النتيجة: {res} = **{sum(e['usd_real'] for e in b):+,.0f}$**")
+
+
 def report(st, day):
     es = [e for e in st["closed"] + st["open"] if e["tdate"] == day]
     if not es:
         return f"🧪 **ظل MGT** {day}: لا دخولات."
     rs = [dict(e, **results(e)) for e in es]
     df = pd.DataFrame(rs)
-    L = [f"🧪 **ظل MGT (ورقي، دراسة H-MGTCLONE)** — عقود {day}", "",
-         f"دخولات: {len(df)} (CALL {int((df.side == 'CALL').sum())} · PUT {int((df.side == 'PUT').sum())}) | "
-         f"ليلية {int((df.sess == 'gth').sum())} · رسمية {int((df.sess == 'rth').sum())}",
-         f"• بحسابهم (من القمة): **{df.usd_mgt.sum():+,.0f}$** | رابحة {int((df.usd_mgt > 0).sum())}/{len(df)}",
-         f"• واقعياً (+50% أو وقف 50%): **{df.usd_real.sum():+,.0f}$**",
-         f"• نصف عند +100% والباقي بوقف متحرك: **{df.usd_house.sum():+,.0f}$**",
-         f"• احتفاظ للإغلاق: {df.usd_hold.sum():+,.0f}$", "", "**الدخولات:**"]
-    for e in rs[:30]:
-        L.append(f"{e['t'][11:16]} {e['sess']} {e['side']} {e['strike']:g} @{e['entry']:.2f} → قمة {e['peak']:.2f} ({e.get('t_peak', '')})"
-                 f"{' 🛑' + e['t_stop'] if e.get('t_stop') else ''} | خط {e.get('mml', '')} | قرار {e.get('score')} ADX {e.get('adx', 0):.0f}"
-                 f" | حسابهم {e['usd_mgt']:+.0f}$ واقعي {e['usd_real']:+.0f}$")
-    L += ["", "⚠️ ورقي للدراسة فقط؛ يتداول الاتجاهين كما يفعل MGT، فهو ليس توصية."]
+    L = [f"🧪 **ظل MGT (ورقي)** · عقود {day}", "",
+         f"**النتيجة الواقعية: {df.usd_real.sum():+,.0f}$** (بيع عند +50% أو وقف عند −50%، لعقد واحد من كل دخول)",
+         f"{len(df)} عقداً: {int((df.usd_real > 0).sum())} رابحة · {int((df.usd_real < 0).sum())} خاسرة | "
+         f"التكلفة {df.entry.sum() * 100:,.0f}$", "", "**أين فتح العقود (نيويورك):**"]
+    L += [block_line(b) for b in entry_blocks(rs)]
+    L += ["", "**لو أدار العقود نفسها بطريقة أخرى:**",
+          f"• نصف عند +100% والباقي بوقف متحرك: {df.usd_house.sum():+,.0f}$",
+          f"• احتفاظ حتى الإغلاق دون وقف: {df.usd_hold.sum():+,.0f}$",
+          f"• سقف نظري بطريقة MGT (البيع عند القمة، حتى بعد ضرب الوقف): {df.usd_mgt.sum():+,.0f}$",
+          "", "⚠️ ورقي للدراسة، وليس توصية. يتداول الاتجاهين كما يفعل MGT."]
     return "\n".join(L)
 
 

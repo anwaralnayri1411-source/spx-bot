@@ -80,3 +80,17 @@ def test_live_m1_prefers_live_ticks():
     r = m.loc[t0]
     assert r["o"] == 7700 and r["h"] == 7703 and r["l"] == 7699 and r["c"] == 7699
     assert ms.live_m1(hist, None) is hist
+
+
+def test_report_groups_entries_and_leads_with_real_result():
+    base = {"tdate": "2026-11-05", "strike": 7600.0, "entry": 3.0, "peak": 9.0, "last_bid": 8.0}
+    st = {"open": [], "closed": [
+        dict(base, t="2026-11-05T02:00:00-05:00", sess="gth", side="CALL", S=7680.0, t_stop="04:00", peak=3.2, last_bid=0.0),
+        dict(base, t="2026-11-05T03:00:00-05:00", sess="gth", side="CALL", S=7690.0, t_stop="05:00", peak=3.2, last_bid=0.0),
+        dict(base, t="2026-11-05T09:40:00-05:00", sess="rth", side="PUT", S=7640.0, t_tp50="09:50"),
+    ]}
+    txt = ms.report(st, "2026-11-05")
+    assert "النتيجة الواقعية: -150$" in txt and "3 عقداً: 1 رابحة · 2 خاسرة" in txt
+    assert "🌙 ليلاً 02:00–03:00: **2 CALL**" in txt and "🛑 2 وقف = **-300$**" in txt
+    assert "☀️ الجلسة 09:40: **1 PUT**" in txt and "✅ 1 هدف = **+150$**" in txt
+    assert txt.index("النتيجة الواقعية") < txt.index("سقف نظري")
