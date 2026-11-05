@@ -14,8 +14,8 @@
    "strength": "6.5",
    "occ": "WMT261120C00132000",
    "peak_pnl": 0.411,
-   "close_pnl": 0.411,
-   "quotes": 72,
+   "close_pnl": 0.357,
+   "quotes": 73,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -34,8 +34,8 @@
    "strength": "7.1",
    "occ": "DIS261120C00124000",
    "peak_pnl": 0.129,
-   "close_pnl": 0.038,
-   "quotes": 69,
+   "close_pnl": -0.019,
+   "quotes": 70,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -906,7 +906,8 @@
   "20261105T0955|spx|repeat_side|SPY|PUT|753|2026-11-06",
   "20261105T1000|spx|repeat_side|SPY|PUT|752|2026-11-06",
   "20261105T1005|spx|repeat_side|SPY|PUT|750|2026-11-06",
-  "20261105T1010|spx|repeat_side|SPY|PUT|749|2026-11-06"
+  "20261105T1010|spx|repeat_side|SPY|PUT|749|2026-11-06",
+  "20261105T1015|spx|repeat_side|SPY|PUT|748|2026-11-06"
  ],
  "last": {
   "spx|CALL|SPY": "2026-11-04T14:35-05:00",
