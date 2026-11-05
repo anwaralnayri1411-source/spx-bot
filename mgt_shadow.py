@@ -20,7 +20,7 @@ import pandas as pd
 ROOT = os.path.dirname(os.path.abspath(__file__))
 NY = ZoneInfo("America/New_York")
 DIR = os.path.join(os.getenv("SPXBOT_DATA", "/opt/spxbot/data"), "mgt_shadow")
-STATE, ENTRIES, PATHS = (os.path.join(DIR, f) for f in ("state.json", "entries.csv", "paths.csv"))
+STATE, ENTRIES, PATHS, TICKS = (os.path.join(DIR, f) for f in ("state.json", "entries.csv", "paths.csv", "es_ticks.csv"))
 REPORT_MD = os.path.join(DIR, "reports.md")
 PRICE_LO, PRICE_HI, PRICE_T = 2.90, 4.00, 3.50
 STOP_FRAC = 0.50
@@ -200,6 +200,48 @@ def es_mark():
     return float(it.get("mark") or it.get("last") or 0), float(it.get("prev-close") or 0)
 
 
+def live_m1(hist, ticks):
+    """شموع دقيقة لحظية: تاريخ ياهو قبل أول عيّنة لحظية، ثم عيّنات ES من Tastytrade (كل دقيقة، 3 عيّنات للقمة والقاع).
+    ticks: DataFrame بفهرس الوقت وعمود mark. فيبقى ياهو للماضي فقط، والذيل الحديث كله لحظي."""
+    if ticks is None or ticks.empty:
+        return hist
+    t = ticks["mark"].resample("1min").agg(["first", "max", "min", "last"]).dropna()
+    t.columns = ["o", "h", "l", "c"]
+    t["v"] = 0.0
+    start = t.index[0]
+    h = hist[hist.index < start] if hist is not None and len(hist) else hist
+    return pd.concat([h, t]) if h is not None and len(h) else t
+
+
+def sample_es(n=3, gap=15):
+    """عيّنات سعر ES اللحظية (Tastytrade) داخل الدقيقة لقمتها وقاعها؛ تُحفظ في es_ticks.csv."""
+    import time
+    out = []
+    for i in range(n):
+        try:
+            m, prev = es_mark()
+            if m > 0:
+                out.append({"time": datetime.now(NY).isoformat(timespec="seconds"), "mark": m})
+        except Exception as e:  # noqa: BLE001
+            print("عيّنة ES:", e)
+        if i < n - 1:
+            time.sleep(gap)
+    if out:
+        os.makedirs(DIR, exist_ok=True)
+        pd.DataFrame(out).to_csv(TICKS, mode="a", header=not os.path.exists(TICKS), index=False)
+    return out
+
+
+def load_ticks(days=3):
+    try:
+        t = pd.read_csv(TICKS)
+        t.index = pd.to_datetime(t["time"], utc=True).dt.tz_convert(NY)
+        t = t[t.index >= datetime.now(NY) - timedelta(days=days)]
+        return t[["mark"]].sort_index()
+    except Exception:  # noqa: BLE001
+        return None
+
+
 def es_bars():
     import yfinance as yf
     h = yf.Ticker("ES=F").history(period="5d", interval="1m", auto_adjust=False)
@@ -351,7 +393,9 @@ def main(argv):
         return
     try:
         es, _prev = es_mark()
-        bars = es_bars()
+        sample_es()                                 # عيّنات لحظية تبني الشموع الحديثة بدل ياهو المتأخر
+        es, _prev = es_mark()
+        bars = live_m1(es_bars(), load_ticks())
     except Exception as e:  # noqa: BLE001
         print("بيانات ES:", e)
         save(st)

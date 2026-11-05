@@ -68,3 +68,15 @@ def test_path_and_results():
         ms.update_path(e2, b, b + 0.2, n)
     r2 = ms.results(e2)
     assert e2["t_stop"] and r2["usd_real"] == -175.0 and r2["usd_mgt"] == round((6.1 - 3.5) * 100, 2)   # حسابهم من القمة رغم الوقف
+
+
+def test_live_m1_prefers_live_ticks():
+    hist = _m1(0.1, 120)
+    t0 = hist.index[100]
+    idx = pd.DatetimeIndex([t0 + pd.Timedelta(seconds=s) for s in (0, 15, 30, 60, 75, 90)])
+    ticks = pd.DataFrame({"mark": [7700, 7703, 7699, 7701, 7705, 7704]}, index=idx)
+    m = ms.live_m1(hist, ticks)
+    assert m.index[-1] == t0 + pd.Timedelta(minutes=1) and len(m) == 102     # 100 شمعة ياهو + دقيقتان لحظيتان
+    r = m.loc[t0]
+    assert r["o"] == 7700 and r["h"] == 7703 and r["l"] == 7699 and r["c"] == 7699
+    assert ms.live_m1(hist, None) is hist
