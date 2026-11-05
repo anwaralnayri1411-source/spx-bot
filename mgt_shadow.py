@@ -355,7 +355,8 @@ def block_line(b):
                                  f"⏳ {n['إغلاق']} للإغلاق" if n["إغلاق"] else "") if x)
     return (f"{'🌙 ليلاً' if a['sess'] == 'gth' else '☀️ الجلسة'} {t0}" + (f"–{t1}" if t1 != t0 else "")
             + f": **{len(b)} {a['side']}** بسترايك {('، '.join(strikes))}\n"
-            + f"   السعر {min(prices):.2f}–{max(prices):.2f}$ | SPX {a['S']:,.0f}" + (f" ← {z['S']:,.0f}" if len(b) > 1 else "")
+            + "   السعر " + (f"{min(prices):.2f}–{max(prices):.2f}$" if len(b) > 1 else f"{prices[0]:.2f}$")
+            + f" | SPX {a['S']:,.0f}" + (f" ← {z['S']:,.0f}" if len(b) > 1 else "")
             + f"\n   النتيجة: {res} = **{sum(e['usd_real'] for e in b):+,.0f}$**")
 
 
