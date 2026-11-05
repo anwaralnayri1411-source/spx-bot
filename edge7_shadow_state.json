@@ -1,7 +1,68 @@
 {
- "open": [],
+ "open": [
+  {
+   "entry_time": "2026-11-05T14:35-05:00",
+   "side": "PUT",
+   "role": "bot",
+   "contract": "SPXW261106P07385000",
+   "strike": 7385,
+   "exp": "2026-11-06",
+   "edge": 7.75,
+   "bot_sent": 0,
+   "reasons": "لا توجد عقود Put بسعر $100-$400 مع سيولة كافية الآ",
+   "spot": 7385.0,
+   "entry": 53.52,
+   "entry_src": "alpaca",
+   "val30": ""
+  },
+  {
+   "entry_time": "2026-11-05T14:35-05:00",
+   "side": "CALL",
+   "role": "opp",
+   "contract": "SPXW261106C07385000",
+   "strike": 7385,
+   "exp": "2026-11-06",
+   "edge": 7.75,
+   "bot_sent": 0,
+   "reasons": "لا توجد عقود Put بسعر $100-$400 مع سيولة كافية الآ",
+   "spot": 7385.0,
+   "entry": 56.19,
+   "entry_src": "alpaca",
+   "val30": ""
+  },
+  {
+   "entry_time": "2026-11-05T14:35-05:00",
+   "side": "PUT",
+   "role": "spy_bot",
+   "contract": "SPY261106P00736000",
+   "strike": 736,
+   "exp": "2026-11-06",
+   "edge": 7.75,
+   "bot_sent": 0,
+   "reasons": "لا توجد عقود Put بسعر $100-$400 مع سيولة كافية الآ",
+   "spot": 736.29,
+   "entry": 5.24,
+   "entry_src": "alpaca",
+   "val30": ""
+  },
+  {
+   "entry_time": "2026-11-05T14:35-05:00",
+   "side": "CALL",
+   "role": "spy_opp",
+   "contract": "SPY261106C00736000",
+   "strike": 736,
+   "exp": "2026-11-06",
+   "edge": 7.75,
+   "bot_sent": 0,
+   "reasons": "لا توجد عقود Put بسعر $100-$400 مع سيولة كافية الآ",
+   "spot": 736.29,
+   "entry": 5.78,
+   "entry_src": "alpaca",
+   "val30": ""
+  }
+ ],
  "last": {
   "CALL": "2026-11-04T13:35-05:00",
-  "PUT": "2026-11-05T13:05-05:00"
+  "PUT": "2026-11-05T14:35-05:00"
  }
 }
