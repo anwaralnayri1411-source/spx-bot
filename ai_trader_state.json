@@ -1,6 +1,21 @@
 {
- "cash": 3211.0,
- "positions": [],
+ "cash": 2927.0,
+ "positions": [
+  {
+   "id": "1105-1131-SPY-PUT-744",
+   "symbol": "SPY   261105P00744000",
+   "under": "SPY",
+   "side": "PUT",
+   "strike": 744.0,
+   "expiry": "2026-11-05",
+   "qty": 1,
+   "entry": 2.84,
+   "time": "2026-11-05T11:31-05:00",
+   "stop": 2.0,
+   "target": 4.0,
+   "invalidation": "إبطال الفكرة إذا استعاد SPY مستوى 750 (ما يوازي SPX 7500) واستقر فوق VWAP مع تحول الغاما إلى موجبة وعودة صافي الدلتا إلى الإيجاب، أو إذا أغلق SPY فوق 7551 SPX وهو أدنى الافتتاح المكسور."
+  }
+ ],
  "closed": [
   {
    "id": "1105-0946-PUT-757",
@@ -88,8 +103,8 @@
    "pnl": 284.0
   }
  ],
- "decisions": 6,
+ "decisions": 7,
  "report_day": "",
  "day": "2026-11-05",
- "decisions_today": 6
+ "decisions_today": 7
 }
