@@ -222,6 +222,11 @@ main() {
       cmds=("$py confirm_shadow.py --eval")
       files="confirm_log.csv research/confirm_results.md"
       msg="confirm eval" ;;
+    crypto_bot)
+      group=crypto-bot; envs="TG OKX"   # بوت BTC على OKX (قاعدة متوسط 50، سبوت): حساب تجريبي افتراضياً، لـTELEGRAM_CHAT_ID وحده
+      cmds=("$py crypto/okx_trend_bot.py")
+      files="crypto/okx_trend_state.json crypto/okx_trend_log.csv crypto/messages_crypto_bot.jsonl"
+      msg="crypto bot" ;;
     earnings_runup)
       group=earnings-runup; envs="TG ALPACA LQS TASTY"   # ما قبل الأرباح (H-PAPER R3): توصيات تجريبية لـ TELEGRAM_CHAT_ID وحده
       cmds=("$py earnings_runup.py")
@@ -397,6 +402,7 @@ run_env() {
       TASTY) e+=(TASTY_CLIENT_SECRET="${TASTY_CLIENT_SECRET:-}" TASTY_REFRESH_TOKEN="${TASTY_REFRESH_TOKEN:-}") ;;
       LQ) e+=(LIVE_QUOTES_SPX="${LIVE_QUOTES_SPX:-shadow}" LIVE_BARS_SPX="${LIVE_BARS_SPX:-shadow}") ;;
       LQS) e+=(LIVE_QUOTES_STOCKS="${LIVE_QUOTES_STOCKS:-shadow}") ;;
+      OKX) [ "$mode" = live ] && e+=(OKX_API_KEY="${OKX_API_KEY:-}" OKX_API_SECRET="${OKX_API_SECRET:-}" OKX_API_PASSPHRASE="${OKX_API_PASSPHRASE:-}" OKX_MODE="${OKX_MODE:-demo}" OKX_LIVE_CONFIRM="${OKX_LIVE_CONFIRM:-}" OKX_MAX_USD="${OKX_MAX_USD:-1000}" OKX_MAX_LOSS_USD="${OKX_MAX_LOSS_USD:-300}") ;;   # وضع الظل بلا مفاتيح: إشارة فقط
     esac
   done
   [ -n "$extra" ] && e+=($extra)
