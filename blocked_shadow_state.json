@@ -1,26 +1,6 @@
 {
  "open": [
   {
-   "id": "20261103T1012|stocks|open_same_dir|RIVN|CALL|13|2026-11-20",
-   "project": "stocks",
-   "tag": "open_same_dir",
-   "sym": "RIVN",
-   "side": "CALL",
-   "strike": 13.0,
-   "exp": "2026-11-20",
-   "entry": 1.02,
-   "entry_time": "2026-11-03T10:12-05:00",
-   "edge": "5.5",
-   "strength": "8.0",
-   "occ": "RIVN261120C00013000",
-   "peak_pnl": 0.451,
-   "close_pnl": -0.382,
-   "quotes": 143,
-   "out": "",
-   "out_time": "",
-   "out_pnl": ""
-  },
-  {
    "id": "20261104T1012|stocks|earn_in_life|WMT|CALL|132|2026-11-20",
    "project": "stocks",
    "tag": "earn_in_life",
@@ -33,9 +13,9 @@
    "edge": "5.0",
    "strength": "6.5",
    "occ": "WMT261120C00132000",
-   "peak_pnl": 0.408,
-   "close_pnl": 0.296,
-   "quotes": 71,
+   "peak_pnl": 0.411,
+   "close_pnl": 0.411,
+   "quotes": 72,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -54,28 +34,8 @@
    "strength": "7.1",
    "occ": "DIS261120C00124000",
    "peak_pnl": 0.129,
-   "close_pnl": 0.024,
-   "quotes": 68,
-   "out": "",
-   "out_time": "",
-   "out_pnl": ""
-  },
-  {
-   "id": "20261105T0950|spx|repeat_side|SPY|PUT|755|2026-11-06",
-   "project": "spx",
-   "tag": "repeat_side",
-   "sym": "SPY",
-   "side": "PUT",
-   "strike": 755.0,
-   "exp": "2026-11-06",
-   "entry": 3.96,
-   "entry_time": "2026-11-05T09:50-05:00",
-   "edge": "7.0",
-   "strength": "10.0",
-   "occ": "SPY261106P00755000",
-   "peak_pnl": 0.399,
-   "close_pnl": 0.399,
-   "quotes": 3,
+   "close_pnl": 0.038,
+   "quotes": 69,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -945,7 +905,8 @@
   "20261105T0950|spx|repeat_side|SPY|PUT|755|2026-11-06",
   "20261105T0955|spx|repeat_side|SPY|PUT|753|2026-11-06",
   "20261105T1000|spx|repeat_side|SPY|PUT|752|2026-11-06",
-  "20261105T1005|spx|repeat_side|SPY|PUT|750|2026-11-06"
+  "20261105T1005|spx|repeat_side|SPY|PUT|750|2026-11-06",
+  "20261105T1010|spx|repeat_side|SPY|PUT|749|2026-11-06"
  ],
  "last": {
   "spx|CALL|SPY": "2026-11-04T14:35-05:00",
