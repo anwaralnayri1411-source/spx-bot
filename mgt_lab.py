@@ -19,9 +19,9 @@ import mgt_shadow as ms
 
 NY = ms.NY
 DIR = os.path.join(os.getenv("SPXBOT_DATA", "/opt/spxbot/data"), "mgt_lab")
-STATE, TRADES, GENS = (os.path.join(DIR, f) for f in ("state.json", "trades.csv", "generations.md"))
+STATE, TRADES, GENS, AFTER = (os.path.join(DIR, f) for f in ("state.json", "trades.csv", "generations.md", "after_exit.csv"))
 GRID = {"score": [2, 3, 4], "adx": [10, 15, 20, 25], "price": [1.5, 2.5, 3.5, 5.0, 7.0], "stop": [0.3, 0.4, 0.5, 0.6],
-        "exit": ["tp30", "tp50", "tp100", "tp200", "half"], "ladder": [5, 10, 15], "cap": [3, 6, 12],
+        "exit": ["tp30", "tp50", "tp100", "tp200", "half", "late", "late_half"], "ladder": [5, 10, 15], "cap": [3, 6, 12],
         "sess": ["both", "rth"], "trig": ["mml", "any"]}
 CONTROL = {"score": 3, "adx": 15, "price": 3.5, "stop": 0.5, "exit": "tp50", "ladder": 5, "cap": 12, "sess": "both", "trig": "mml"}
 N_VAR, KEEP, WINDOW, MIN_TRADES = 12, 6, 5, 3
@@ -39,6 +39,17 @@ def mutate(p, rng, n=None):
         opts = [v for v in GRID[k] if v != q[k]]
         q[k] = rng.choice(opts)
     return q
+
+
+def ensure_exits(st, exits=("late", "late_half")):
+    """تبقى نسخة لكل خيار خروج مراقَب: يُخصَّص من أحدث نسخة بلا صفقات، والضابطة لا تتغير."""
+    for x in exits:
+        if any(v["params"]["exit"] == x for v in st["variants"]):
+            continue
+        free = [v for v in st["variants"] if not v.get("control") and not v["open"] and not v["closed"]
+                and v["params"]["exit"] not in exits]
+        if free:
+            free[-1]["params"]["exit"] = x
 
 
 def initial_variants(day, seed=7):
@@ -88,7 +99,8 @@ def fmt(p):
 
 def plain(p):
     """إعدادات النسخة بكلمات مفهومة لرسالة تيليجرام."""
-    out = "بيع نصف العقد عند +100% والباقي بوقف متحرك" if p["exit"] == "half" else f"هدف +{p['exit'][2:]}%"
+    out = {"half": "بيع نصف العقد عند +100% والباقي بوقف متحرك", "late": "رفع الوقف بمراحل متأخرة",
+           "late_half": "بيع النصف عند +100% ورفع الوقف بمراحل متأخرة"}.get(p["exit"]) or f"هدف +{p['exit'][2:]}%"
     return (f"عقد بسعر {p['price']:g}$ · {out} · وقف {int(p['stop'] * 100)}%\n"
             f"   {'الجلسة الرسمية فقط' if p['sess'] != 'both' else 'ليلاً ونهاراً'} · تدخل بـ{p['score']} أصوات · "
             f"{'عند خطوط Murrey' if p['trig'] == 'mml' else 'دون انتظار خط'} · تضيف عقداً كل {p['ladder']} نقاط حتى {p['cap']}")
@@ -128,6 +140,8 @@ def manage(e, p, bid, now):
             e["usd"] = round(e["half_usd"] + 0.5 * (bid - E) * 100, 2)
             return True, "متحرك" if not expiry else "انتهاء"
         return False, ""
+    if p["exit"] in ("late", "late_half"):
+        return manage_late(e, p, bid, expiry)
     if bid <= E * (1 - p["stop"]):
         e["usd"] = round((bid - E) * 100, 2)
         return True, "وقف"
@@ -143,12 +157,60 @@ def manage(e, p, bid, now):
     return False, ""
 
 
+def manage_late(e, p, bid, expiry):
+    """المراحل المتأخرة (H-STOPSTAGES): +100% ← الدخول، +200% ← +50%، +300% ← 60% من القمة؛ ويرتفع الوقف بعد فحصه."""
+    E = e["entry"]
+    held = 0.5 if e.get("half") else 1.0
+    sl = e.get("sl", E * (1 - p["stop"]))
+    if bid <= sl or expiry:
+        e["usd"] = round(e.get("half_usd", 0) + held * (bid - E) * 100, 2)
+        return True, "انتهاء" if bid > sl else "وقف مرحلي"
+    if p["exit"] == "late_half" and not e.get("half") and bid >= 2 * E:
+        e["half"], e["half_usd"] = True, 0.5 * (bid - E) * 100
+    g = e["peak"] / E - 1
+    if g >= 1:
+        sl = max(sl, E)
+    if g >= 2:
+        sl = max(sl, 1.5 * E)
+    if g >= 3:
+        sl = max(sl, 0.6 * e["peak"])
+    e["sl"] = sl
+    return False, ""
+
+
+def track_after(st, qs, now):
+    """أعلى عرض بلغه عقد كل صفقة مغلقة بعد خروجها. قياس فقط."""
+    for v in st["variants"]:
+        for c in v["closed"]:
+            q = qs.get(c.get("symbol"))
+            if q and "exit_px" in c and q["bid"] > c.get("after_hi", 0):
+                c["after_hi"], c["after_hi_t"] = q["bid"], now.strftime("%H:%M")
+
+
+def tracked_symbols(st, day):
+    return {c["symbol"] for v in st["variants"] for c in v["closed"] if "exit_px" in c and c["tdate"] >= day}
+
+
+def after_rows(st, day):
+    return [{"vid": v["vid"], "tdate": c["tdate"], "t": c["t"], "side": c["side"], "strike": c["strike"], "entry": c["entry"],
+             "exit": c["exit_px"], "exit_t": c.get("exit_t"), "after_hi": c.get("after_hi"), "after_hi_t": c.get("after_hi_t"), "usd": c["usd"]}
+            for v in st["variants"] for c in v["closed"] if c["tdate"] == day and "exit_px" in c]
+
+
+def left_text(v, day):
+    """متوسط ما بلغه العقد فوق سعر البيع بعد الخروج، لعقد واحد."""
+    x = [(c["after_hi"] - c["exit_px"]) * 100 for c in v["closed"] if c["tdate"] == day and "exit_px" in c and c.get("after_hi")]
+    return f"\n   بعد الخروج بلغت عقودها أعلى من سعر بيعها بمتوسط {sum(x) / len(x):+,.0f}$ للعقد" if x else ""
+
+
 # ====================== التشغيل ======================
 def load_state(day):
     try:
-        return json.load(open(STATE, encoding="utf-8"))
+        st = json.load(open(STATE, encoding="utf-8"))
     except Exception:  # noqa: BLE001
-        return {"gen": 1, "variants": initial_variants(day), "last_bar": None, "evolve_day": ""}
+        st = {"gen": 1, "variants": initial_variants(day), "last_bar": None, "evolve_day": ""}
+    ensure_exits(st)
+    return st
 
 
 def save(st):
@@ -174,7 +236,7 @@ def leaderboard(st, day):
     top = [v for v in ranked if not v.get("control")][:3]
     for medal, v in zip("🥇🥈🥉", top):
         s, n = score(v, tds)
-        L.append(f"{medal} **{v['vid']}: {s:+,.0f}$** في {n} صفقة\n   {plain(v['params'])}")
+        L.append(f"{medal} **{v['vid']}: {s:+,.0f}$** في {n} صفقة\n   {plain(v['params'])}{left_text(v, day)}")
     ctl = next((v for v in ranked if v.get("control")), None)
     if ctl:
         s, n = score(ctl, tds)
@@ -201,7 +263,7 @@ def main(argv):
     day = now.date().isoformat()
     st = load_state(day)
     # 1) إدارة المفتوح لكل النسخ
-    syms = sorted({e["symbol"] for v in st["variants"] for e in v["open"]})
+    syms = sorted({e["symbol"] for v in st["variants"] for e in v["open"]} | (tracked_symbols(st, day) if now.time() <= ms.RTH_END else set()))
     if syms:
         try:
             qs = {q["symbol"]: q for q in ms.quotes(syms)}
@@ -214,17 +276,23 @@ def main(argv):
                 q = qs.get(e["symbol"])
                 closed, why = manage(e, v["params"], q["bid"], now) if q else (False, "")
                 if closed:
+                    e["exit_px"], e["exit_t"] = q["bid"], now.strftime("%H:%M")
                     v["closed"].append(e)
                     log_trade(v, e, why)
                 else:
                     keep.append(e)
             v["open"] = keep
+        track_after(st, qs, now)
     # 2) التطور والتقرير بعد الجلسة
     if now.weekday() < 5 and now.time() >= ms.REPORT_AT and st.get("evolve_day") != day and \
             any(c["tdate"] == day for v in st["variants"] for c in v["closed"]):
         board = leaderboard(st, day)
-        gen_txt = evolve(st, day, random.Random(day))
         os.makedirs(DIR, exist_ok=True)
+        rows = after_rows(st, day)
+        if rows:
+            pd.DataFrame(rows).to_csv(AFTER, mode="a", header=not os.path.exists(AFTER), index=False)
+        gen_txt = evolve(st, day, random.Random(day))
+        ensure_exits(st)
         with open(GENS, "a", encoding="utf-8") as f:
             f.write(gen_txt + "\n\n")
         msg = board + "\n\n" + changes_text(st)

@@ -70,3 +70,50 @@ def test_daily_message_is_plain():
     assert "خرجت" in txt and "عشوائية" in txt and "generations.md" in txt
     assert "لا استبدال" in ml.changes_text({"last_changes": []})
     assert "نصف العقد" in ml.plain(dict(ml.CONTROL, exit="half"))
+
+
+
+def test_late_stages_exit():
+    p = dict(ml.CONTROL, exit="late", stop=0.5)
+    e = {"entry": 2.0, "tdate": "2026-11-05"}
+    assert ml.manage(e, p, 2.9, N) == (False, "") and ml.manage(e, p, 4.2, N) == (False, "") and e["sl"] == 2.0
+    assert ml.manage(e, p, 6.5, N) == (False, "") and e["sl"] == 3.0
+    assert ml.manage(e, p, 8.5, N) == (False, "") and abs(e["sl"] - 5.1) < 1e-9
+    assert ml.manage(e, p, 5.0, N) == (True, "وقف مرحلي") and e["usd"] == 300.0
+    h = dict(p, exit="late_half")
+    e = {"entry": 2.0, "tdate": "2026-11-05"}
+    ml.manage(e, h, 4.0, N)
+    assert e["half"] and e["half_usd"] == 100.0
+    assert ml.manage(e, h, 2.0, N) == (True, "وقف مرحلي") and e["usd"] == 100.0
+    e = {"entry": 2.0, "tdate": "2026-11-05"}
+    assert ml.manage(e, p, 3.0, N.replace(hour=15, minute=56))[1] == "انتهاء"
+    assert ml.manage({"entry": 2.0, "tdate": "2026-11-05"}, p, 0.9, N)[1] == "وقف مرحلي"
+    assert "مراحل متأخرة" in ml.plain(p)
+
+
+def test_ensure_exits_keeps_control_and_trades():
+    st = {"gen": 2, "variants": ml.initial_variants("2026-11-05")}
+    for v in st["variants"]:
+        if v["params"]["exit"] in ("late", "late_half"):
+            v["params"]["exit"] = "tp50"
+    for v in st["variants"][:8]:
+        v["closed"] = [{"usd": 1}]
+    before = [dict(v["params"]) for v in st["variants"][:8]]
+    ml.ensure_exits(st)
+    exits = [v["params"]["exit"] for v in st["variants"]]
+    assert exits.count("late") == 1 and exits.count("late_half") == 1
+    assert [v["params"] for v in st["variants"][:8]] == before
+    ml.ensure_exits(st)
+    assert [v["params"]["exit"] for v in st["variants"]] == exits
+
+
+def test_after_exit_tracking():
+    c = {"symbol": "S", "tdate": "2026-11-05", "t": "x", "side": "PUT", "strike": 7000.0, "entry": 2.0, "exit_px": 3.0, "exit_t": "10:00", "usd": 100.0}
+    old = {"symbol": "O", "tdate": "2026-11-05", "usd": 1.0}
+    st = {"variants": [{"vid": "v1", "open": [], "closed": [c, old]}]}
+    assert ml.tracked_symbols(st, "2026-11-05") == {"S"} and ml.tracked_symbols(st, "2026-11-06") == set()
+    ml.track_after(st, {"S": {"bid": 5.0}, "O": {"bid": 9.0}}, N)
+    ml.track_after(st, {"S": {"bid": 4.0}}, N.replace(hour=11))
+    assert c["after_hi"] == 5.0 and c["after_hi_t"] == "10:00" and "after_hi" not in old
+    assert ml.after_rows(st, "2026-11-05")[0]["after_hi"] == 5.0
+    assert "+200$" in ml.left_text(st["variants"][0], "2026-11-05")

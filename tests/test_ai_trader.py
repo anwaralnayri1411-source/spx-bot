@@ -197,3 +197,17 @@ def test_learner_report_and_review_once(tmp_path, monkeypatch):
     assert at.run_review(st, t, str(tmp_path / "none.csv"), at.load_memory()) == ("", []) and len(n) == 1
     txt = at.learner_report(st, t, [], summary, added, mem)
     assert "🧠 **المتعلّم" in txt and "دروس جديدة" in txt and "الذاكرة: 1 درساً" in txt
+
+
+
+def test_after_exit_recorded_and_shown(monkeypatch):
+    calls = []
+    monkeypatch.setattr(at, "after_stats", lambda cl: calls.append(1) or {c["id"]: {"hi": 9.5, "lo": 1.0, "last": 4.0} for c in cl})
+    st = at.new_state()
+    at.close_position(st, at.open_position(st, MENU[1], 1, _dec()["buy"], N), 4.0, N, "هدف")
+    at.record_after(st, "2026-11-05")
+    at.record_after(st, "2026-11-05")
+    c = st["closed"][0]
+    assert c["after_hi"] == 9.5 and c["after_last"] == 4.0 and len(calls) == 1
+    assert "ثم بلغ 9.50" in at.day_report(st, N.replace(hour=16, minute=5), [])
+    assert "أعلى 9.50" in at.after_exit([c])[c["id"]]

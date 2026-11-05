@@ -344,7 +344,8 @@ def day_report(st, now, bot_recs):
     for c in cl:
         mins = int((datetime.fromisoformat(c["exit_time"]) - datetime.fromisoformat(c["time"])).total_seconds() // 60)
         L.append(f"{'✅' if c['pnl'] > 0 else '🛑'} {c['time'][11:16]} {c.get('under', 'SPY')} {c['strike']:g} {c['side']} ×{c['qty']}: "
-                 f"{c['entry']:.2f} ← {c['exit']:.2f} = **{c['pnl']:+,.0f}$** ({mins}د)")
+                 f"{c['entry']:.2f} ← {c['exit']:.2f} = **{c['pnl']:+,.0f}$** ({mins}د)"
+                 + (f" ثم بلغ {c['after_hi']:.2f}" if c.get("after_hi") else ""))
     for p in st["positions"]:
         L.append(f"↪️ مفتوح: {p.get('under', 'SPY')} {p['strike']:g} {p['side']} ({p['expiry']}) ×{p['qty']} بسعر {p['entry']:.2f}")
     if bot_recs:
@@ -551,8 +552,8 @@ def execute(st, d, menu, marks, now, spot, no_send):
     return None, 0, False, note
 
 
-def after_exit(cl):
-    """ماذا فعل كل عقد بعد خروجنا: {id: نص}. يفشل بصمت إن تعذرت الشموع."""
+def after_stats(cl):
+    """ماذا فعل كل عقد بعد خروجنا: {id: {hi, lo, last}}. يفشل بصمت إن تعذرت الشموع."""
     out = {}
     try:
         import rule_c_shadow as rc
@@ -562,10 +563,24 @@ def after_exit(cl):
             b = rc.option_bars([occ], t.date()).get(occ)
             b = b[b.index > t] if b is not None else None
             if b is not None and len(b):
-                out[c["id"]] = f"بعد الخروج: أعلى {float(b['h'].max()):.2f} وأدنى {float(b['l'].min()):.2f} وآخر سعر {float(b['c'].iloc[-1]):.2f}"
+                out[c["id"]] = {"hi": float(b["h"].max()), "lo": float(b["l"].min()), "last": float(b["c"].iloc[-1])}
     except Exception as e:  # noqa: BLE001
         print("شموع ما بعد الخروج:", type(e).__name__, e)
     return out
+
+
+def record_after(st, day):
+    """يحفظ في كل صفقة مغلقة اليوم أعلى وأدنى وآخر سعر بعد الخروج. قياس فقط."""
+    cl = [c for c in st["closed"] if c["exit_time"][:10] == day and "after_hi" not in c]
+    stats = after_stats(cl) if cl else {}
+    for c in cl:
+        x = stats.get(c["id"])
+        if x:
+            c.update(after_hi=x["hi"], after_lo=x["lo"], after_last=x["last"])
+
+
+def after_exit(cl):
+    return {c["id"]: f"بعد الخروج: أعلى {c['after_hi']:.2f} وأدنى {c['after_lo']:.2f} وآخر سعر {c['after_last']:.2f}" for c in cl if "after_hi" in c}
 
 
 def review_prompt(st, day, mem, log_path, post):
@@ -657,6 +672,7 @@ def run_book(now, force, no_send, no_ai, cache, learner=False):
             journal(now, spot, d, "نُفّذ" if ok else "لم يُنفَّذ", note)
     if now.time() >= REPORT_AT and st.get("report_day") != day:
         recs = today_recs(day)
+        record_after(st, day)
         if learner:
             mem = load_memory()
             summary, added = run_review(st, now, LOG, mem)
