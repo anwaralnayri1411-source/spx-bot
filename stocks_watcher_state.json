@@ -1339,15 +1339,6 @@
    "jpmorgan chase nyse jpm lifts interest income outlook as lending offsets trading slowdown"
   ],
   "COIN:PUT": [
-   "btc price above 80 500 on october 27 2026 at 11 59pm utc",
-   "coinbase now offers fixed rate bitcoin backed loans here s what crypto investors need to know",
-   "ripple s rlusd stablecoin is coming to robinhood s app potentially reaching millions",
-   "worldcoin wld price tumbles while bitcoin recovers can it hold 0 40 support",
-   "renowned analyst you re not bullish enough on bitcoin",
-   "cryptoquant analyst says bitcoin may be preparing for next rally",
-   "repeated claims on bitcoin price increases would have profited joe consorti states",
-   "bitcoin outperforms grayscale s ai compute etf as ai cloud stocks slide",
-   "gemini sees surge in bitcoin price expectations",
    "bitcoin whales on hyperliquid turn net short fo",
    "clockers room price clockers price live charts and marketcap coinbase netherlands",
    "bitcoin price prediction big buyers barely break even as alphapepe raises over 3 22m before trading begins",
@@ -1738,18 +1729,18 @@
    "meta title quote",
    "coinbase stock outlook downside risk remains elevated as seller pressure persists",
    "circle sinks 12 coinbase and strategy tumble 10 as bitcoin slide hits crypto stocks",
-   "btc price range on nov 5 2026 at 2pm est crypto prediction market"
+   "btc price range on nov 5 2026 at 2pm est crypto prediction market",
+   "keel infrastructure sells entire 192m bitcoin treasury plans daily btc sales",
+   "ethereum price prediction eth outruns bitcoin but 2 506 still blocks it as smart money buys pepeto",
+   "crypto market falls 5 as 1 07b in liquidations hit",
+   "true north strc at par may have funded 284 btc for strategy",
+   "trump backed american bitcoin turns a profit as bitcoin rise lifts books",
+   "can this popular cryptocurrency hit a price of 1 in 2027 the answer will surprise you",
+   "litecoin price falls the 200 day line decides now",
+   "bitcoin price predictions for november range fr",
+   "american bitcoin corp reports 126m q3 profit d"
   ],
   "HOOD:PUT": [
-   "nillion crypto listing today nil price surges after upbit launch",
-   "could bitcoin crash below 50 000 before 2027",
-   "investor jason calacanis predicts bitcoin will drop to 57 000 and urges shift to ai investments",
-   "bitcoin price drops as strategy pauses btc purchases ahead of fed decision",
-   "bitcoin hovers near 80 000 as ai stock jitters spill into crypto",
-   "calacanis who told crypto to pivot to ai in 2023 says sell bitcoin now and calls 57 000",
-   "bitcoin price slips below 80 000 what s next for btc",
-   "robinhood will report q3 earnings today ahead of it who owns hood stock",
-   "bitcoin shows signs of weakness while ripple s bank win fails to bolster xrp",
    "nip group buys third batch of bitcoin miners targets about 195 btc a month",
    "bitcoin core changes policy after 4 962 bug findings what it means for bitcoin price",
    "bitcoin price stays quiet below 80k as losses pile up",
@@ -2140,7 +2131,16 @@
    "keel keel sells entire bitcoin treasury for 192 million will sell btc daily",
    "meta title quote",
    "circle sinks 12 coinbase and strategy tumble 10 as bitcoin slide hits crypto stocks",
-   "btc price range on nov 5 2026 at 2pm est crypto prediction market"
+   "btc price range on nov 5 2026 at 2pm est crypto prediction market",
+   "keel infrastructure sells entire 192m bitcoin treasury plans daily btc sales",
+   "ethereum price prediction eth outruns bitcoin but 2 506 still blocks it as smart money buys pepeto",
+   "crypto market falls 5 as 1 07b in liquidations hit",
+   "true north strc at par may have funded 284 btc for strategy",
+   "trump backed american bitcoin turns a profit as bitcoin rise lifts books",
+   "can this popular cryptocurrency hit a price of 1 in 2027 the answer will surprise you",
+   "litecoin price falls the 200 day line decides now",
+   "bitcoin price predictions for november range fr",
+   "american bitcoin corp reports 126m q3 profit d"
   ],
   "AAPL:CALL": [
    "loop capital lowers apple stock price target on iphone shipment concerns",
@@ -2613,7 +2613,10 @@
    "murphy oil clears consensus but misses the whisper as oil prices drive earnings and bubale funding questions grow",
    "gas prices headed lower absent escalation in the middle east",
    "oil prices tumble tesla struggles as u s stocks soar",
-   "u s refineries make dramatic shift away from gasoline"
+   "u s refineries make dramatic shift away from gasoline",
+   "will the u s midterm results do anything for oil and gas prices",
+   "top oil stocks to consider november 5th",
+   "promising energy stocks to consider november 5th"
   ],
   "MSFT:CALL": [
    "forget the 12 month squeeze microsoft is primed for an explosive ai payoff",
@@ -2947,7 +2950,16 @@
    "keel keel sells entire bitcoin treasury for 192 million will sell btc daily",
    "meta title quote",
    "circle sinks 12 coinbase and strategy tumble 10 as bitcoin slide hits crypto stocks",
-   "btc price range on nov 5 2026 at 2pm est crypto prediction market"
+   "btc price range on nov 5 2026 at 2pm est crypto prediction market",
+   "keel infrastructure sells entire 192m bitcoin treasury plans daily btc sales",
+   "ethereum price prediction eth outruns bitcoin but 2 506 still blocks it as smart money buys pepeto",
+   "crypto market falls 5 as 1 07b in liquidations hit",
+   "true north strc at par may have funded 284 btc for strategy",
+   "trump backed american bitcoin turns a profit as bitcoin rise lifts books",
+   "can this popular cryptocurrency hit a price of 1 in 2027 the answer will surprise you",
+   "litecoin price falls the 200 day line decides now",
+   "bitcoin price predictions for november range fr",
+   "american bitcoin corp reports 126m q3 profit d"
   ]
  },
  "fired": {
@@ -3068,7 +3080,8 @@
    "news:bitcoin crashes 6 to 7 week low as us stocks erase election gains",
    "news:bitcoin tumbles below 76 000 as post election stock rally fades",
    "news:nasdaq crash why chip stocks fell and bitcoin followed",
-   "news:circle sinks 12 coinbase and strategy tumble 10 as bitcoin slide hits crypto stocks"
+   "news:circle sinks 12 coinbase and strategy tumble 10 as bitcoin slide hits crypto stocks",
+   "news:crypto market falls 5 as 1 07b in liquidations hit"
   ],
   "COIN:PUT:2026-11-13:130": [
    "news:bitcoin price suddenly plunges to 76k as hourly liquidations near 600m",
@@ -3095,7 +3108,9 @@
    "news:bitcoin tumbles below 76 000 as post election stock rally fades",
    "news:nasdaq crash why chip stocks fell and bitcoin followed",
    "news:keel keel sells entire bitcoin treasury for 192 million will sell btc daily",
-   "news:circle sinks 12 coinbase and strategy tumble 10 as bitcoin slide hits crypto stocks"
+   "news:circle sinks 12 coinbase and strategy tumble 10 as bitcoin slide hits crypto stocks",
+   "news:keel infrastructure sells entire 192m bitcoin treasury plans daily btc sales",
+   "news:crypto market falls 5 as 1 07b in liquidations hit"
   ],
   "MSTR:PUT:2026-11-13:120": [
    "up0.25",
@@ -3127,19 +3142,15 @@
    "news:bitcoin tumbles below 76 000 as post election stock rally fades",
    "news:nasdaq crash why chip stocks fell and bitcoin followed",
    "news:keel keel sells entire bitcoin treasury for 192 million will sell btc daily",
-   "news:circle sinks 12 coinbase and strategy tumble 10 as bitcoin slide hits crypto stocks"
+   "news:circle sinks 12 coinbase and strategy tumble 10 as bitcoin slide hits crypto stocks",
+   "news:keel infrastructure sells entire 192m bitcoin treasury plans daily btc sales",
+   "news:crypto market falls 5 as 1 07b in liquidations hit"
   ]
  },
  "stock_level": {
   "F:CALL:2026-11-20:11.5": 2
  },
  "seen_macro": [
-  "toward a renewed and improved usmca",
-  "minister hartarto confident rupiah will stay below rp19 000 per usd",
-  "over 170m in unusual hyperliquid oil perp orders raise spoofing suspicions",
-  "share market today nifty 50 bank nifty oct 29 2026",
-  "batteries and the ballot trump s mixed ev record in 2026",
-  "india s inflation risks rise as crude oil shipping costs threaten to push up prices",
   "federal reserve pauses federal funds rate after first increase in more than three years",
   "bloom energy and fuelcell energy stocks are falling in pre market today oct 29 here s why",
   "servicenow s 19 crash says wall street thinks ai will eat software its openai deal says the opposite",
@@ -3733,7 +3744,13 @@
   "nasdaq heading for worst day in 18 months as wall street sustains widespread losses",
   "cantor unfulfilled expectations will congress succeed in lowering cost of living",
   "september unemployment edges down as inflation data looms",
-  "the bank now projects uk cpi inflation peaking at 4 9 in q2 2027 up from a 3 2 forecast for early 2027"
+  "the bank now projects uk cpi inflation peaking at 4 9 in q2 2027 up from a 3 2 forecast for early 2027",
+  "wall street plunges as ai stocks tumble asx set to slide lower",
+  "vix spikes 39 as ai tech rout wipes out 2 2 trillion stock market today",
+  "why the midterm blue wave just triggered a red wall street",
+  "chip stocks are sinking but this bearish etf is up more than 25",
+  "fed s hammack barkin favor gradual rate hike path to lower inflation",
+  "s p 500 plunges wall street fears circuit breaker just one day after trump celebrated record highs"
  ],
  "sharp": {
   "XOM:PUT:2026-11-20:167.5": 172.47,
