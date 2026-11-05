@@ -227,6 +227,11 @@ main() {
       cmds=("$py earnings_runup.py")
       files="earnings_runup_log.csv earnings_runup_state.json messages_earnings_runup.jsonl"
       msg="earnings runup" ;;
+    mgt_shadow)
+      group=mgt-shadow; envs="TG ALPACA LQ TASTY"   # ظل MGT (H-MGTCLONE): كل دقيقة في الجلستين، البيانات في SPXBOT_DATA/mgt_shadow (لا git)، تقرير الجلسة لـTELEGRAM_CHAT_ID وحده
+      cmds=("$py mgt_shadow.py")
+      files=""
+      msg="mgt shadow" ;;
     ai_trader)
       group=ai-trader; envs="TG ANTHROPIC ALPACA LQ TASTY"; extra_env="LIVE_BARS_SPX=1"   # المتداول الذكي الورقي (H-AITRADER): لـTELEGRAM_CHAT_ID وحده، لا أوامر حقيقية
       cmds=("$py ai_trader.py")
