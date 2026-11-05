@@ -40,7 +40,8 @@
    "rakuten investment management inc makes new investment in bank of america corporation bac",
    "bac stock gains 0 18 rsi oversold in focus explained",
    "stock futures rise after democrats sweep the midterm elections",
-   "rbc launches auto callable enhanced return barrier notes linked to five major u s bank stocks maturing 2029"
+   "rbc launches auto callable enhanced return barrier notes linked to five major u s bank stocks maturing 2029",
+   "bank of america faces 1 2b compliance penalties can bac avoid further losses"
   ],
   "AMZN:CALL": [
    "starting jan 1 2027 amazon seasonal workers get day one health coverage if they work at least 30 hours a week",
@@ -1339,9 +1340,6 @@
    "jpmorgan chase nyse jpm lifts interest income outlook as lending offsets trading slowdown"
   ],
   "COIN:PUT": [
-   "cardinal launches yield perp for btc farming arbitrum",
-   "big titty coin to japanese yen price today live btc to jpy converter exchange rate",
-   "hype price on oct 27 2026 at 4pm edt crypto prediction market",
    "btc price on oct 27 2026 at 4pm edt crypto prediction market",
    "bitcoin price rests near 80 500 as midterms fed decision loom",
    "coinbase customer data hit in analytics vendor breach funds not impacted",
@@ -1738,12 +1736,12 @@
    "mstr bmnr crcl coin stocks tumble double digits as bitcoin breaks below 76k wiping out over 1b crypto bets",
    "stellar price below the 200 day line what counts now",
    "bitcoin breaks below 76k wiping out over 1b crypto bets mstr bmnr crcl coin stocks tumble double digits",
-   "bitcoin s 378 million short squeeze faded under 80 000 is it already over"
+   "bitcoin s 378 million short squeeze faded under 80 000 is it already over",
+   "uniswap price prediction november 2026 can uni reach 9 or fall to 6 50 in november",
+   "trump price slides 13 as trump media moves 343m btc",
+   "btc price range on nov 5 2026 at 4pm est prediction market"
   ],
   "HOOD:PUT": [
-   "ripple partners with robinhood to expand use of rlusd stablecoin for trading and treasury operations",
-   "bitcoin price ai pivot investor says sell sees 57 000",
-   "hbar price prediction hedera faces a key test after losing 41",
    "bitcoin and ethereum etfs shed 226m in recent outflows",
    "cftc crypto exchange registration path is coming btc reacts",
    "jason calacanis urges bitcoin sell off predicts 57k price retest",
@@ -2140,7 +2138,10 @@
    "stellar price below the 200 day line what counts now",
    "bitcoin breaks below 76k wiping out over 1b crypto bets mstr bmnr crcl coin stocks tumble double digits",
    "fintech stocks like robinhood and dave are falling faster than the market",
-   "bitcoin s 378 million short squeeze faded under 80 000 is it already over"
+   "bitcoin s 378 million short squeeze faded under 80 000 is it already over",
+   "uniswap price prediction november 2026 can uni reach 9 or fall to 6 50 in november",
+   "trump price slides 13 as trump media moves 343m btc",
+   "btc price range on nov 5 2026 at 4pm est prediction market"
   ],
   "AAPL:CALL": [
    "loop capital lowers apple stock price target on iphone shipment concerns",
@@ -2405,7 +2406,8 @@
    "f 150 lightning sales drop to zero",
    "ford halts f 150 lightning ev sales shifts foc",
    "power ford s f 150 giving campaign raises 42 000 in first month",
-   "most active s p 500 stocks marvell oracle ford lead nov 5 trading"
+   "most active s p 500 stocks marvell oracle ford lead nov 5 trading",
+   "ford stock nyse f slips as transit city goes live in brazil"
   ],
   "XOM:PUT": [
    "oil prices slide as trump plays down prospect of iran strikes after u s election rout",
@@ -2627,7 +2629,10 @@
    "todd gordon names 3 stocks that could get a boost as oil prices come down",
    "oil jumps over 3 as investors assess iran war future tanker attacks",
    "oil prices rebound sharply after brutal midweek rout",
-   "report shows arkansas pump prices keep dropping"
+   "report shows arkansas pump prices keep dropping",
+   "conocophillips boosts dividend after beating estimates on higher oil prices",
+   "oil falls below 100 as california drivers wait for gas price relief",
+   "aaa texas reports gas prices drop alongside crude oil costs"
   ],
   "MSFT:CALL": [
    "forget the 12 month squeeze microsoft is primed for an explosive ai payoff",
@@ -2991,9 +2996,13 @@
    "strategy mstr cfo exit looms does the stock look fully valued",
    "stellar price below the 200 day line what counts now",
    "bitcoin breaks below 76k wiping out over 1b crypto bets mstr bmnr crcl coin stocks tumble double digits",
-   "bitcoin s 378 million short squeeze faded under 80 000 is it already over"
+   "bitcoin s 378 million short squeeze faded under 80 000 is it already over",
+   "uniswap price prediction november 2026 can uni reach 9 or fall to 6 50 in november",
+   "trump price slides 13 as trump media moves 343m btc",
+   "btc price range on nov 5 2026 at 4pm est prediction market"
   ],
-  "SOFI:PUT": []
+  "SOFI:PUT": [],
+  "SNAP:PUT": []
  },
  "fired": {
   "F:CALL:2026-11-20:11.5": [
@@ -3084,7 +3093,9 @@
    "news:oil futures fall as market holds out hope for middle east diplomacy",
    "news:oil rises as investors weigh uncertainties around iran war",
    "news:global oil prices fall below 95 amid shifting political landscape",
-   "news:oil jumps over 3 as investors assess iran war future tanker attacks"
+   "news:oil jumps over 3 as investors assess iran war future tanker attacks",
+   "news:conocophillips boosts dividend after beating estimates on higher oil prices",
+   "news:oil falls below 100 as california drivers wait for gas price relief"
   ],
   "HOOD:PUT:2026-11-20:75": [
    "news:bitcoin price suddenly plunges to 76k as hourly liquidations near 600m",
@@ -3125,7 +3136,8 @@
    "news:bitcoin price tumbles below 77 000 in tech stock selloff",
    "news:trending industry today robinhood leads losses in prediction market stocks",
    "news:mstr bmnr crcl coin stocks tumble double digits as bitcoin breaks below 76k wiping out over 1b crypto bets",
-   "news:bitcoin breaks below 76k wiping out over 1b crypto bets mstr bmnr crcl coin stocks tumble double digits"
+   "news:bitcoin breaks below 76k wiping out over 1b crypto bets mstr bmnr crcl coin stocks tumble double digits",
+   "news:trump price slides 13 as trump media moves 343m btc"
   ],
   "COIN:PUT:2026-11-13:130": [
    "news:bitcoin price suddenly plunges to 76k as hourly liquidations near 600m",
@@ -3214,19 +3226,15 @@
    "sharp@2026-11-05T14:44-05:00"
   ],
   "BAC:PUT:2026-11-20:50": [],
-  "SOFI:PUT:2026-11-20:16": []
+  "SOFI:PUT:2026-11-20:16": [],
+  "SNAP:PUT:2026-11-20:6": [
+   "down-0.15"
+  ]
  },
  "stock_level": {
   "F:CALL:2026-11-20:11.5": 2
  },
  "seen_macro": [
-  "tor records profit despite financial challenges md tells imf delegation",
-  "software stocks tumble as fortinet servicenow plunge on disappointing outlooks",
-  "the fed is cutting back on rate votes for the first time since 1981",
-  "opinion xi trump summits must leave businesses with greater clarity not less",
-  "federal reserve s preferred measure of inflation rose slightly in september",
-  "wall st set for lower open as alphabet results reignite ai spending fears",
-  "us economy posts strong growth inflation stubbornly high in challenge to trump",
   "full steam ahead us gdp growth accelerates in q3",
   "the new rules for big tech s ai spending",
   "nasdaq slides over 1 as alphabet results revive ai spending fears",
@@ -3819,7 +3827,14 @@
   "the energy inflation spillover is imminent",
   "why is zillow stock falling thursday zillow group nasdaq z",
   "wall street selloff sends nasdaq down 4 as dow plunges more than 1 000 points",
-  "federal reserve holds interest rates steady as inflation and consumer debt remain concerns"
+  "federal reserve holds interest rates steady as inflation and consumer debt remain concerns",
+  "wall street lunch fear grips the market undefined qcom",
+  "why tech stocks are down today including nvidia spacex amd more",
+  "wall street plunges nasdaq sinks 5 27 and s p 500 falls 4 13 in chip rout",
+  "the fed finds disturbing trend as credit card demand hits 4 year high",
+  "brent crude price rises over 5 as risk appetite returns despite easing geopolitical tensions",
+  "nasdaq set for biggest daily drop in 19 months on fears of ai regulations",
+  "incoming michigan senator ready to work with trump on stupid tariffs"
  ],
  "sharp": {
   "XOM:PUT:2026-11-20:167.5": 172.47,
