@@ -227,6 +227,11 @@ main() {
       cmds=("$py earnings_runup.py")
       files="earnings_runup_log.csv earnings_runup_state.json messages_earnings_runup.jsonl"
       msg="earnings runup" ;;
+    mgt_lab)
+      group=mgt-lab; envs="TG ALPACA LQ TASTY"   # مختبر التطوّر (H-MGTLAB): 12 نسخة ورقية تتطور يومياً، بعد ظل MGT كل دقيقة، لا git، تقرير لـTELEGRAM_CHAT_ID وحده
+      cmds=("$py mgt_lab.py")
+      files=""
+      msg="mgt lab" ;;
     mgt_shadow)
       group=mgt-shadow; envs="TG ALPACA LQ TASTY"   # ظل MGT (H-MGTCLONE): كل دقيقة في الجلستين، البيانات في SPXBOT_DATA/mgt_shadow (لا git)، تقرير الجلسة لـTELEGRAM_CHAT_ID وحده
       cmds=("$py mgt_shadow.py")
