@@ -164,7 +164,7 @@ def test_sol_config_and_files_are_separate(monkeypatch):
         gb.setup("SOL-USDT")
         assert gb.COIN == "SOL" and gb.STATE.endswith("grid_bot_state_SOL.json")
         ex = FakeEx(90.0)
-        gb.STATE = keep[3]   # مسار مؤقت للاختبار
+        gb.STATE, gb.LOG, gb.MSGS = keep[3], keep[4], keep[5]   # مسارات الاختبار المؤقتة
         gb.run(cfg(), ex)
         assert all(cl.startswith("gsol") for cl in ex.orders)
     finally:
