@@ -5,8 +5,8 @@
 كل 15 دقيقة (09:45–15:45): يجمع كل مدخلات البوت ويعطيها لـClaude ليقرر (شراء/بيع/انتظار) ويشرح كل شيء:
 قراءة السوق، العوامل ووزنها، لماذا هذا العقد وكيف اختاره، والبدائل المرفوضة. كل قرار يُسجَّل (حتى الانتظار)،
 والشراء والبيع يُرسلان لـTELEGRAM_CHAT_ID وحده، وتقرير نهاية الجلسة بعد 16:00.
-قيود الكود: 2,000$، شراء بالطلب وبيع بالعرض، العقد ≤ 30% من المحفظة، ≤ 3 مراكز، لا مركزين متعاكسين على SPY
-(الشرط الشرعي)، لا شراء بعد 15:15.
+قيود الكود: 2,000$، شراء بالطلب وبيع بالعرض، العقد ≤ 30% من المحفظة، ≤ 3 مراكز، لا مركزين متعاكسين على SPY/SPX
+(أداة واحدة، الشرط الشرعي)، لا شراء بعد 15:15. القائمة: عقود SPY وSPXW لأقرب انتهاءين ضمن ±3% (تعديل 5/11 بطلب المستخدم).
 تشغيل: python ai_trader.py [--force] [--no-send] [--no-ai]
 """
 import csv
@@ -31,8 +31,8 @@ START_CASH = 2000.0
 MAX_POS_PCT, MAX_OPEN = 0.30, 3
 OPEN_T, DECIDE_FROM, LAST_DECIDE, LAST_BUY = dtime(9, 30), dtime(9, 45), dtime(15, 45), dtime(15, 15)
 CLOSE_TODAY_AT, REPORT_AT, END_T = dtime(15, 50), dtime(16, 0), dtime(16, 10)
-BAND = 0.012
-UNDER = "SPY"
+BAND = 0.03
+UNDERS = (("SPY", "SPY", "SPY"), ("SPX", "SPX", "SPXW"))   # (الأداة، سلسلة Tastytrade، الجذر المطلوب)
 LOG_COLS = ["time", "spot", "action", "side", "expiry", "strike", "qty", "price", "confidence", "market_read", "factors",
             "why_contract", "how_chosen", "rejected", "stop", "target", "invalidation", "wait_reason", "executed", "note"]
 
@@ -64,10 +64,11 @@ SCHEMA = {
     },
 }
 
-RULES = """أنت متداول خيارات محترف تدير محفظة **ورقية** (لا مال حقيقي) على عقود SPY، والمستخدم يدرس طريقة تفكيرك.
+RULES = """أنت متداول خيارات محترف تدير محفظة **ورقية** (لا مال حقيقي) على عقود SPY وSPX (SPXW)، والمستخدم يدرس طريقة تفكيرك.
 القواعد الثابتة (الكود يرفض ما يخالفها):
 - المحفظة 2,000$؛ تشتري بسعر الطلب (ask) وتبيع بسعر العرض (bid)؛ العقد الواحد ≤ 30% من قيمة المحفظة؛ ≤ 3 مراكز مفتوحة.
-- لا تجمع CALL وPUT مفتوحين على SPY في وقت واحد (شرط شرعي): لتغيير الاتجاه بِع المركز أولاً.
+- SPY وSPX أداة واحدة (المؤشر نفسه): لا تجمع CALL وPUT مفتوحين عليهما في وقت واحد (شرط شرعي): لتغيير الاتجاه بِع المركز أولاً.
+- لك حرية اختيار الأداة (SPY أو SPX) والسترايك، قريباً من السعر أو بعيداً خارج المال، ضمن الميزانية.
 - لا شراء بعد 15:15 نيويورك؛ عقد اليوم يُغلق آلياً 15:50؛ الوقف والهدف اللذان تحددهما بسعر العقد يُنفَّذان آلياً.
 - اختر العقد من القائمة المعطاة فقط (حقل symbol كما هو). الانتظار قرار مشروع إن لم تتضح الصورة.
 المطلوب: اقرأ كل المدخلات، وقيّم كل عامل (اتجاهه ووزنه وهل اعتمدت عليه)، ثم قرر. عند الشراء اشرح بالتفصيل لماذا هذا العقد
@@ -109,7 +110,8 @@ def validate_buy(st, menu, buy, now, marks):
 def open_position(st, row, qty, buy, now):
     cost = float(row["ask"]) * 100 * qty
     st["cash"] -= cost
-    p = {"id": f"{now:%m%d-%H%M}-{row['side']}-{row['strike']:g}", "symbol": row["symbol"], "side": row["side"],
+    p = {"id": f"{now:%m%d-%H%M}-{row.get('under', 'SPY')}-{row['side']}-{row['strike']:g}", "symbol": row["symbol"],
+         "under": row.get("under", "SPY"), "side": row["side"],
          "strike": float(row["strike"]), "expiry": row["expiry"], "qty": qty, "entry": float(row["ask"]),
          "time": now.isoformat(timespec="minutes"), "stop": float(buy.get("stop_price") or 0),
          "target": float(buy.get("target_price") or 0), "invalidation": buy.get("invalidation", "")}
@@ -155,12 +157,23 @@ def fmt_factors(fs, used_only=True):
     return L
 
 
+def spot_text(spot):
+    """spot: رقم (SPY) أو {أداة: سعر}."""
+    if isinstance(spot, dict):
+        return " · ".join(f"{k} {v:,.2f}" for k, v in spot.items() if v)
+    return f"SPY {spot:,.2f}"
+
+
+def spot_num(spot):
+    return float(spot.get("SPY") or 0) if isinstance(spot, dict) else float(spot)
+
+
 def buy_message(d, p, row, spot):
     b = d["buy"]
     L = [f"🤖 **المتداول الذكي (ورقي، تجريبي)** | شراء {p['side']} 🟢" if p["side"] == "CALL" else
          f"🤖 **المتداول الذكي (ورقي، تجريبي)** | شراء {p['side']} 🔴",
-         f"**{UNDER} {p['strike']:g} {p['side']}** ينتهي {p['expiry']} ×{p['qty']} بسعر {p['entry']:.2f} "
-         f"(${p['entry'] * 100 * p['qty']:,.0f}) | SPY {spot:,.2f} | دلتا {float(row.get('delta') or 0):.2f} | الثقة {d['confidence']:.0%}",
+         f"**{p.get('under', 'SPY')} {p['strike']:g} {p['side']}** ينتهي {p['expiry']} ×{p['qty']} بسعر {p['entry']:.2f} "
+         f"(${p['entry'] * 100 * p['qty']:,.0f}) | {spot_text(spot)} | دلتا {float(row.get('delta') or 0):.2f} | الثقة {d['confidence']:.0%}",
          "", f"🧠 **قراءة السوق:** {d['market_read']}", "", "📋 **العوامل التي اعتمد عليها:**", *fmt_factors(d["factors"]),
          "", f"🎯 **لماذا هذا العقد:** {b['why_contract']}", f"🔍 **كيف اختاره:** {b['how_chosen']}"]
     if b.get("rejected"):
@@ -172,13 +185,13 @@ def buy_message(d, p, row, spot):
 
 def sell_message(rec, reason):
     icon = "✅" if rec["pnl"] > 0 else "🛑"
-    return (f"🤖 {icon} **المتداول الذكي باع** {UNDER} {rec['strike']:g} {rec['side']} ×{rec['qty']}: "
+    return (f"🤖 {icon} **المتداول الذكي باع** {rec.get('under', 'SPY')} {rec['strike']:g} {rec['side']} ×{rec['qty']}: "
             f"{rec['entry']:.2f} ← {rec['exit']:.2f} = **{rec['pnl']:+,.0f}$**\nالسبب: {reason}")
 
 
 def journal(now, spot, d, executed, note):
     os.makedirs(os.path.dirname(JOURNAL), exist_ok=True)
-    L = [f"## {now:%Y-%m-%d %H:%M} نيويورك | SPY {spot:,.2f} | القرار: {d['action']} | الثقة {d['confidence']:.0%}",
+    L = [f"## {now:%Y-%m-%d %H:%M} نيويورك | {spot_text(spot)} | القرار: {d['action']} | الثقة {d['confidence']:.0%}",
          f"- قراءة السوق: {d['market_read']}", "- العوامل:"]
     L += [f"  - {'✔' if f.get('used') else '·'} {f.get('name')} ({f.get('direction')}، {f.get('weight')}): {f.get('reading')}"
           for f in d["factors"]]
@@ -199,7 +212,7 @@ def journal(now, spot, d, executed, note):
 
 def log_row(now, spot, d, row, qty, executed, note):
     b = d.get("buy") or {}
-    r = {"time": now.isoformat(timespec="minutes"), "spot": round(spot, 2), "action": d["action"],
+    r = {"time": now.isoformat(timespec="minutes"), "spot": round(spot_num(spot), 2), "action": d["action"],
          "side": row.get("side", "") if row else "", "expiry": row.get("expiry", "") if row else "",
          "strike": row.get("strike", "") if row else "", "qty": qty, "price": row.get("ask", "") if row else "",
          "confidence": d.get("confidence"), "market_read": d.get("market_read"), "factors": json.dumps(d.get("factors"), ensure_ascii=False),
@@ -223,9 +236,9 @@ def day_report(st, now, bot_recs):
          f"قرارات اليوم: {st.get('decisions_today', 0)} | صفقات مغلقة: {len(cl)} | الصافي المحقق **{pnl:+,.0f}$**",
          f"النقد {st['cash']:,.0f}$ | مراكز مفتوحة: {len(st['positions'])}"]
     for c in cl:
-        L.append(f"• {c['side']} {c['strike']:g} ({c['expiry']}) ×{c['qty']}: {c['entry']:.2f} ← {c['exit']:.2f} = {c['pnl']:+,.0f}$ | {c['why']}")
+        L.append(f"• {c.get('under', 'SPY')} {c['side']} {c['strike']:g} ({c['expiry']}) ×{c['qty']}: {c['entry']:.2f} ← {c['exit']:.2f} = {c['pnl']:+,.0f}$ | {c['why']}")
     for p in st["positions"]:
-        L.append(f"↪️ مفتوح: {p['side']} {p['strike']:g} ({p['expiry']}) ×{p['qty']} بسعر {p['entry']:.2f}")
+        L.append(f"↪️ مفتوح: {p.get('under', 'SPY')} {p['side']} {p['strike']:g} ({p['expiry']}) ×{p['qty']} بسعر {p['entry']:.2f}")
     if bot_recs:
         L += ["", "🆚 **توصيات البوت اليوم:** " + "، ".join(bot_recs)]
     L += ["", "السجل الكامل لكل قرار وسببه: research/ai_trader_journal.md", "⚠️ للدراسة فقط (H-AITRADER)."]
@@ -234,22 +247,34 @@ def day_report(st, now, bot_recs):
 
 # ====================== المدخلات (شبكة) ======================
 def tasty_menu(now):
-    """عقود SPY لأقرب انتهاءين (اليوم/الغد) ضمن ±BAND من السعر: [{symbol, side, strike, expiry, bid, ask, delta, iv, volume, oi}]."""
+    """عقود SPY وSPXW لأقرب انتهاءين ضمن ±BAND من سعر كل أداة:
+    ({أداة: سعر}، [{symbol, under, side, strike, expiry, bid, ask, delta, iv, volume, oi}])."""
     import live_quotes as lq
-    S, _ = lq.spot(UNDER)
     tok = lq._tasty_token()
-    ch = (lq._tasty_req(f"/option-chains/{UNDER}/nested", token=tok).get("data") or {}).get("items") or []
-    exps = sorted({e["expiration-date"] for r in ch for e in r.get("expirations") or [] if e["expiration-date"] >= now.date().isoformat()})[:2]
-    meta = {}
-    for r in ch:
-        for e in r.get("expirations") or []:
-            if e["expiration-date"] in exps:
-                for k in e.get("strikes") or []:
-                    K = float(k["strike-price"])
-                    if abs(K / S - 1) <= BAND:
-                        meta[k["call"]] = ("CALL", K, e["expiration-date"])
-                        meta[k["put"]] = ("PUT", K, e["expiration-date"])
-    return S, quotes(list(meta), meta)
+    spots, menu = {}, []
+    for under, chain, root in UNDERS:
+        try:
+            S, _ = lq.spot(under)
+            if not S:
+                continue
+            ch = (lq._tasty_req(f"/option-chains/{chain}/nested", token=tok).get("data") or {}).get("items") or []
+            ch = [r for r in ch if r.get("root-symbol", root) == root]
+            exps = sorted({e["expiration-date"] for r in ch for e in r.get("expirations") or []
+                           if e["expiration-date"] >= now.date().isoformat()})[:2]
+            meta = {}
+            for r in ch:
+                for e in r.get("expirations") or []:
+                    if e["expiration-date"] in exps:
+                        for k in e.get("strikes") or []:
+                            K = float(k["strike-price"])
+                            if abs(K / S - 1) <= BAND:
+                                meta[k["call"]] = ("CALL", K, e["expiration-date"], under)
+                                meta[k["put"]] = ("PUT", K, e["expiration-date"], under)
+            spots[under] = S
+            menu += quotes(list(meta), meta)
+        except Exception as e:  # noqa: BLE001
+            print(f"قائمة {under}: تعذرت ({type(e).__name__})")
+    return spots, menu
 
 
 def quotes(syms, meta=None):
@@ -264,7 +289,7 @@ def quotes(syms, meta=None):
             row = {"symbol": s, "bid": f("bid"), "ask": f("ask"), "delta": f("delta"), "iv": f("volatility"),
                    "volume": f("volume"), "oi": f("open-interest")}
             if meta and s in meta:
-                row.update(side=meta[s][0], strike=meta[s][1], expiry=meta[s][2])
+                row.update(side=meta[s][0], strike=meta[s][1], expiry=meta[s][2], under=meta[s][3] if len(meta[s]) > 3 else "SPY")
             out.append(row)
     return out
 
@@ -313,9 +338,12 @@ def gather(now):
     except Exception:  # noqa: BLE001
         pass
     S, menu = tasty_menu(now)
-    parts.append(f"## سعر SPY الآن {S:.2f}\n## قائمة العقود (symbol, side, strike, expiry, bid, ask, delta, iv, volume, oi)\n"
-                 + "\n".join(f"{m['symbol']}|{m['side']}|{m['strike']:g}|{m['expiry']}|{m['bid']}|{m['ask']}|{m['delta']}|{m['iv']}|"
-                             f"{m['volume']:.0f}|{m['oi']:.0f}" for m in sorted(menu, key=lambda m: (m["expiry"], m["side"], m["strike"]))))
+    menu = [m for m in menu if float(m.get("ask") or 0) > 0]
+    parts.append(f"## الأسعار الآن: {spot_text(S)} (عقد SPX ≈ 10 أضعاف SPY)\n"
+                 "## قائمة العقود (symbol, under, side, strike, expiry, bid, ask, delta, iv, volume, oi)\n"
+                 + "\n".join(f"{m['symbol']}|{m.get('under', 'SPY')}|{m['side']}|{m['strike']:g}|{m['expiry']}|{m['bid']}|{m['ask']}|"
+                             f"{m['delta']}|{m['iv']}|{m['volume']:.0f}|{m['oi']:.0f}"
+                             for m in sorted(menu, key=lambda m: (m.get("under", ""), m["expiry"], m["side"], m["strike"]))))
     return "\n\n".join(parts), menu, S, recs
 
 
@@ -323,7 +351,7 @@ def portfolio_text(st, marks, now):
     L = [f"## المحفظة الورقية الآن {now:%H:%M} نيويورك: النقد {st['cash']:,.2f}$ | القيمة {equity(st, marks):,.2f}$"]
     for p in st["positions"]:
         b = marks.get(p["symbol"], {}).get("bid", p["entry"])
-        L.append(f"- [{p['id']}] {p['side']} {p['strike']:g} ({p['expiry']}) ×{p['qty']} دخول {p['entry']:.2f} الآن {b:.2f} "
+        L.append(f"- [{p['id']}] {p.get('under', 'SPY')} {p['side']} {p['strike']:g} ({p['expiry']}) ×{p['qty']} دخول {p['entry']:.2f} الآن {b:.2f} "
                  f"({(b / p['entry'] - 1) * 100:+.0f}%) | وقفك {p['stop']} هدفك {p['target']} | تُلغى إن: {p['invalidation']}")
     day = now.date().isoformat()
     for c in st["closed"]:
