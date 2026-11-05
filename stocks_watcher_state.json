@@ -1339,15 +1339,6 @@
    "jpmorgan chase nyse jpm lifts interest income outlook as lending offsets trading slowdown"
   ],
   "COIN:PUT": [
-   "claude ai s bitcoin and solana price predictions for 2027 could apeing be the best crypto to invest before stage 10",
-   "investor who called the ai boom predicts a bitcoin crash",
-   "cf benchmarks brings wall street pricing infrastructure onchain including data used by blackrock",
-   "amazon com inc tokenized stock coinbase price today amznc to usd live price marketcap and chart",
-   "the complete bitcoin timeline major events milestones",
-   "bitcoin whale sentiment shifts as hyperliquid traders go",
-   "michael saylor compares bitcoin s value to learning a language",
-   "coinbase global nasdaq coin why crypto stocks split instead of moving together",
-   "can bitcoin hedge an ai bubble analysts split on near term risks and longer term price scenarios",
    "bitcoin price holds steady at 80k says gemini",
    "bitcoin rises 26 since spacex ipo as anthropic s 1 9t ipo looms testing crypto s resilience amid market shifts",
    "stonex lifts strive price target 34 to 43 on bitcoin strategy",
@@ -1738,7 +1729,16 @@
    "tokenized stocks from robinhood binance and coinbase attract 130 5m in defi deposits",
    "why is coinbase stock rallying today",
    "xrp price outlook as analyst eyes 71 rally after bullish bollinger band breakout",
-   "bitcoin price outlook for november"
+   "bitcoin price outlook for november",
+   "crypto rally may change the case for cleanspark stock",
+   "sky price eyes 0 085 as quarterly net revenue rises 11 8",
+   "agentic coin price agc price live charts and marketcap coinbase netherlands",
+   "plante moran advisors boosts bitcoin etf holdings by 70 to 42m",
+   "bitcoin price suddenly plunges to 76k as hourly liquidations near 600m",
+   "bitcoin price crashes 5 below 76 000 amid tech rout",
+   "ethereum price prediction 2040 eth outlook",
+   "bitcoin price crashes 5 below 75 000 amid tech rout",
+   "bitcoin price today btc holds 80 500 as options fear fades and buyers back pepeto"
   ],
   "HOOD:PUT": [
    "prediction could bitcoin reach a new all time high before the 2028 halving",
@@ -2122,7 +2122,17 @@
    "bitcoin settles its 10 9 billion options expiry right on max pain after the binance hack",
    "coinbase microstrategy robinhood tumble after largest crypto hack ever",
    "how much of binance s emergency fund is available",
-   "bitcoin price outlook for november"
+   "bitcoin price outlook for november",
+   "crypto rally may change the case for cleanspark stock",
+   "sky price eyes 0 085 as quarterly net revenue rises 11 8",
+   "plante moran advisors boosts bitcoin etf holdings by 70 to 42m",
+   "ripple price analysis xrp rejected at key resistance again is 1 00 next",
+   "robinhood markets stock weighs record revenue against profit pressure",
+   "bitcoin price suddenly plunges to 76k as hourly liquidations near 600m",
+   "bitcoin price crashes 5 below 76 000 amid tech rout",
+   "ethereum price prediction 2040 eth outlook",
+   "bitcoin price crashes 5 below 75 000 amid tech rout",
+   "bitcoin price today btc holds 80 500 as options fear fades and buyers back pepeto"
   ],
   "AAPL:CALL": [
    "loop capital lowers apple stock price target on iphone shipment concerns",
@@ -2555,7 +2565,15 @@
    "state news sand transition falling gas prices rising measles cases and more",
    "more drops for nvidia and other ai chip stocks erase wall street s rally from the day before",
    "oil prices hit two month low following decisive midterm election results",
-   "what to know to start your day"
+   "what to know to start your day",
+   "oil prices rise amid uncertainty over the war with iran",
+   "gold climbs above 4 100 as falling yields softer labor costs support bullion kitco am report",
+   "midterm results a watergate level repudiation cruz says",
+   "eu not planning to resume russian gas purchases",
+   "in the wake of democratic wins rosie o donnell considers a return to the u s",
+   "oil climbs from two month low as traders parse iran war outlook",
+   "podcast oil heads for pandemic era fall",
+   "oil futures turn lower as market holds out hope for middle east diplomacy"
   ],
   "MSFT:CALL": [
    "forget the 12 month squeeze microsoft is primed for an explosive ai payoff",
@@ -2842,7 +2860,15 @@
    "snap tumbles 11 as user growth miss and sluggish ad sales overshadow return to profit pinterest dips meta holds steady"
   ],
   "MSTR:PUT": [
-   "bitcoin price outlook for november"
+   "bitcoin price outlook for november",
+   "crypto rally may change the case for cleanspark stock",
+   "sky price eyes 0 085 as quarterly net revenue rises 11 8",
+   "plante moran advisors boosts bitcoin etf holdings by 70 to 42m",
+   "bitcoin price suddenly plunges to 76k as hourly liquidations near 600m",
+   "bitcoin price crashes 5 below 76 000 amid tech rout",
+   "ethereum price prediction 2040 eth outlook",
+   "bitcoin price crashes 5 below 75 000 amid tech rout",
+   "bitcoin price today btc holds 80 500 as options fear fades and buyers back pepeto"
   ]
  },
  "fired": {
@@ -2850,7 +2876,8 @@
    "down-0.15",
    "news:ford october u s sales slip as electric vehicle deliveries plunge f nyse",
    "news:ford motor f sees slight october sales decline amid electric v",
-   "sharp@2026-11-04T15:17-05:00"
+   "sharp@2026-11-04T15:17-05:00",
+   "sharp@2026-11-05T10:53-05:00"
   ],
   "XOM:PUT:2026-11-20:167.5": [
    "down-0.15",
@@ -2914,33 +2941,32 @@
    "sharp@2026-11-05T09:45-05:00",
    "news:european gas drops as us vote spurs hopes for iran resolution",
    "news:oil prices plunge as vance blames iran war for republican election defeat",
-   "news:oil prices hit two month low following decisive midterm election results"
+   "news:oil prices hit two month low following decisive midterm election results",
+   "news:oil prices rise amid uncertainty over the war with iran",
+   "news:oil climbs from two month low as traders parse iran war outlook",
+   "news:oil futures turn lower as market holds out hope for middle east diplomacy"
   ],
-  "JPM:CALL:2026-11-20:360": [
-   "down-0.15",
+  "HOOD:PUT:2026-11-20:75": [
+   "news:bitcoin price suddenly plunges to 76k as hourly liquidations near 600m",
    "up0.25",
-   "sharp@2026-11-05T09:45-05:00",
-   "sharp@2026-11-05T09:56-05:00",
-   "sharp@2026-11-05T10:12-05:00",
-   "stock1",
-   "sharp@2026-11-05T10:26-05:00",
-   "down-0.3"
+   "news:bitcoin price crashes 5 below 76 000 amid tech rout",
+   "news:bitcoin price crashes 5 below 75 000 amid tech rout"
   ],
-  "HOOD:PUT:2026-11-20:75": [],
-  "COIN:PUT:2026-11-13:130": [],
-  "MSTR:PUT:2026-11-13:120": []
+  "COIN:PUT:2026-11-13:130": [
+   "news:bitcoin price suddenly plunges to 76k as hourly liquidations near 600m",
+   "up0.25",
+   "news:bitcoin price crashes 5 below 76 000 amid tech rout",
+   "news:bitcoin price crashes 5 below 75 000 amid tech rout"
+  ],
+  "MSTR:PUT:2026-11-13:120": [
+   "up0.25",
+   "news:bitcoin price suddenly plunges to 76k as hourly liquidations near 600m",
+   "news:bitcoin price crashes 5 below 76 000 amid tech rout",
+   "news:bitcoin price crashes 5 below 75 000 amid tech rout"
+  ]
  },
- "stock_level": {
-  "JPM:CALL:2026-11-20:360": 1
- },
+ "stock_level": {},
  "seen_macro": [
-  "us economy grew at 3 4 annualized rate in 3rd quarter government data shows abc news",
-  "strong not overheated why the fed s october pause is softer than it sounds",
-  "in moving gradually fed risks having to play catch up to quell inflation",
-  "federal reserve holds interest rates steady despite high inflation",
-  "commentary warsh s muddled messaging revives fed credibility doubts",
-  "with days to go before the midterms data shows the u s economy is doing well",
-  "amazon earnings can aws growth satisfy wall street as capex rises",
   "canadian stock futures tick up as oil slides",
   "why are micron sandisk and sk hynix stocks falling in pre market after yesterday s rally",
   "commentary morning bid firefighting cash burn",
@@ -3533,11 +3559,17 @@
   "barkin sees interest rate hikes ahead but at a gradual pace",
   "stock market mixed day after wall street s post midterm rally dji",
   "fiis pour rs 15 000 crore into indian stocks in biggest single day buying over a year",
-  "barkin expects gradual further federal reserve rate increases"
+  "barkin expects gradual further federal reserve rate increases",
+  "broadcom stock could be approaching a major turning point here s the price target",
+  "stock market today nasdaq falls 1 99 dow gains 0 11",
+  "the fed s new inflation warning will add thousands to families already soaring bills",
+  "more drops for nvidia and other ai chip stocks erase wall street s rally from the day before",
+  "wall st slumps as sharp tech losses put nasdaq on course for correction",
+  "soundhound ai q3 earnings today wall street and options market s last minute verdict on soun stock",
+  "monetary policy report november 2026"
  ],
  "sharp": {
   "XOM:PUT:2026-11-20:167.5": 172.47,
-  "F:CALL:2026-11-20:11.5": 12.64,
-  "JPM:CALL:2026-11-20:360": 345.065
+  "F:CALL:2026-11-20:11.5": 12.52
  }
 }
