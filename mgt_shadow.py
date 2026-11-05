@@ -364,8 +364,14 @@ def main(argv):
                 st["basis"] = es - spx
         except Exception:  # noqa: BLE001
             pass
-    if st.get("basis") is None:
-        st["basis"] = 0.0
+    if st.get("basis") is None:              # أول تشغيل ليلاً: الفرق من إغلاق SPX الرسمي وES عند 16:00
+        try:
+            import yfinance as yf
+            spx_close = float(yf.Ticker("^GSPC").history(period="5d")["Close"].iloc[-1])
+            b16 = bars[bars.index.strftime("%H:%M") == "16:00"]
+            st["basis"] = float(b16["c"].iloc[-1]) - spx_close if len(b16) else 0.0
+        except Exception:  # noqa: BLE001
+            st["basis"] = 0.0
     if st.get("vix_day") != today:
         try:
             import yfinance as yf
