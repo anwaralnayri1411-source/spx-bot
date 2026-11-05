@@ -14,8 +14,8 @@
    "strength": "6.5",
    "occ": "WMT261120C00132000",
    "peak_pnl": 0.455,
-   "close_pnl": -0.006,
-   "quotes": 130,
+   "close_pnl": -0.029,
+   "quotes": 131,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -34,8 +34,8 @@
    "strength": "7.1",
    "occ": "DIS261120C00124000",
    "peak_pnl": 0.129,
-   "close_pnl": -0.263,
-   "quotes": 127,
+   "close_pnl": -0.282,
+   "quotes": 128,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -54,8 +54,8 @@
    "strength": "6.1",
    "occ": "WMT261120C00135000",
    "peak_pnl": 0.028,
-   "close_pnl": -0.334,
-   "quotes": 57,
+   "close_pnl": -0.374,
+   "quotes": 58,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -74,8 +74,8 @@
    "strength": "5.0",
    "occ": "AMZN261120C00272500",
    "peak_pnl": 0.233,
-   "close_pnl": 0.012,
-   "quotes": 57,
+   "close_pnl": -0.03,
+   "quotes": 58,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -94,8 +94,8 @@
    "strength": "6.0",
    "occ": "PLTR261113P00147000",
    "peak_pnl": 0.199,
-   "close_pnl": 0.02,
-   "quotes": 57,
+   "close_pnl": 0.061,
+   "quotes": 58,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -114,8 +114,8 @@
    "strength": "6.9",
    "occ": "INTC261120P00055000",
    "peak_pnl": 0.281,
-   "close_pnl": 0.266,
-   "quotes": 41,
+   "close_pnl": 0.281,
+   "quotes": 42,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -134,8 +134,8 @@
    "strength": "10.0",
    "occ": "SPY261106P00734000",
    "peak_pnl": 0.342,
-   "close_pnl": 0.082,
-   "quotes": 28,
+   "close_pnl": 0.304,
+   "quotes": 29,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -1171,7 +1171,14 @@
   "20261105T1512|stocks|open_same_dir|INTC|PUT|52.5|2026-11-20",
   "20261105T1512|stocks|open_same_dir|PLTR|PUT|145|2026-11-13",
   "20261105T1512|stocks|open_same_dir|XOM|PUT|165|2026-11-13",
-  "20261105T1512|stocks|open_same_dir|CVX|PUT|210|2026-11-13"
+  "20261105T1512|stocks|open_same_dir|CVX|PUT|210|2026-11-13",
+  "20261105T1527|stocks|market_warning|AAPL|CALL|350|2026-11-11",
+  "20261105T1527|stocks|market_warning|WMT|CALL|132|2026-11-20",
+  "20261105T1527|stocks|market_warning|PFE|CALL|29.5|2026-11-20",
+  "20261105T1527|stocks|open_same_dir|INTC|PUT|52.5|2026-11-20",
+  "20261105T1527|stocks|open_same_dir|PLTR|PUT|145|2026-11-13",
+  "20261105T1527|stocks|open_same_dir|XOM|PUT|165|2026-11-13",
+  "20261105T1527|stocks|open_same_dir|CVX|PUT|210|2026-11-13"
  ],
  "last": {
   "spx|CALL|SPY": "2026-11-04T14:35-05:00",
