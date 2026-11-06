@@ -789,3 +789,5 @@ id,time,project,tag,sym,root,side,strike,exp,entry,spot,edge,strength
 20261105T1527|stocks|open_same_dir|PLTR|PUT|145|2026-11-13,2026-11-05T15:27-05:00,stocks,open_same_dir,PLTR,PLTR,PUT,145.0,2026-11-13,3.07,155.37,7.0,7.9
 20261105T1527|stocks|open_same_dir|XOM|PUT|165|2026-11-13,2026-11-05T15:27-05:00,stocks,open_same_dir,XOM,XOM,PUT,165.0,2026-11-13,2.48,167.61,5.5,7.8
 20261105T1527|stocks|open_same_dir|CVX|PUT|210|2026-11-13,2026-11-05T15:27-05:00,stocks,open_same_dir,CVX,CVX,PUT,210.0,2026-11-13,2.55,215.53,3.5,5.7
+20261106T1012|stocks|open_same_dir|HOOD|PUT|75|2026-11-27,2026-11-06T10:12-05:00,stocks,open_same_dir,HOOD,HOOD,PUT,75.0,2026-11-27,3.17,79.95,5.5,7.0
+20261106T1012|stocks|open_same_dir|COIN|PUT|129|2026-11-13,2026-11-06T10:12-05:00,stocks,open_same_dir,COIN,COIN,PUT,129.0,2026-11-13,3.3,136.5,5.5,6.8
