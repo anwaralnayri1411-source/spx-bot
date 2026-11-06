@@ -58,7 +58,8 @@
    "amazon shares surge 8 post midterms amid tech sector optimism amzn",
    "democratic sweep raises data center capx concerns amazon amzn shares jump 7",
    "dow jones surges 2 amid democratic wins amazon amzn leads bl",
-   "amazon s alexa for shopping now answers to texts amzn nasdaq"
+   "amazon s alexa for shopping now answers to texts amzn nasdaq",
+   "amazon amzn introduces ai shopping by text here s how it works"
   ],
   "WMT:CALL": [
    "walmart slashes membership fees with this new bundle",
@@ -1351,14 +1352,6 @@
    "jpmorgan chase nyse jpm lifts interest income outlook as lending offsets trading slowdown"
   ],
   "COIN:PUT": [
-   "bitcoin could hit 1 6 million by 2036 bitwise forecasts",
-   "nearly 90 of large businesses are embracing tokenized cash to speed up payments dbs",
-   "samara asset group ceo bitcoin treasury companies a disservice to shareholders",
-   "about trump media technology group xstock",
-   "bitwise raises bitcoin price forecast to 1 6m by 2036 citing strong institutional demand and limited supply",
-   "bitcoin price target 2036 raised to 1 6 million by bitwise",
-   "coindesk live at stellar meridian 2026 video playlist",
-   "bitcoin s next move is now tied to oil prices says wintermute",
    "coinbase earnings wall street divided on trading rebound after robinhood crypto revenue sinks 55",
    "bitcoin is becoming collateral for traditional corporate borrowing",
    "bitcoin price bounce rejected at 50 day trend line ahead of fomc earnings",
@@ -1750,16 +1743,17 @@
    "elon musk shares cz meme as crypto market selloff hits bitcoin",
    "viabtc s jeff ko on how ai infrastructure demand is reshaping bitcoin mining q a",
    "strive s bitcoin gains drive 509 million q3 profit as btc buying ramps up",
-   "did binance s 6 3 billion crypto hack just expose an even bigger risk for bitcoin investors"
+   "did binance s 6 3 billion crypto hack just expose an even bigger risk for bitcoin investors",
+   "bitcoin open interest jumps amid selling pressure signaling long re entry",
+   "btc price on nov 6 2026 at 1pm est crypto prediction market",
+   "current price of ethereum for november 6 2026",
+   "bitcoin is falling but it seems the big btc whales have very different plans",
+   "can bitcoin price defend 75k support as futures activity raises volatility concerns",
+   "pepe price prediction pepe jumps 7 as bitcoin crashes toward 75k",
+   "where does coinbase global coin value sit after its sales reset",
+   "zcash price outlook for november can zec break toward 2 000"
   ],
   "HOOD:PUT": [
-   "btc price on oct 28 2026 at 3pm edt crypto prediction market",
-   "fed holds interest rates steady at 3 75 to 4 as bitcoin approaches 81k",
-   "bitcoin long term holder losses deepen sparking selling pressure risk on rebound to 85 000",
-   "institutional sell off in bitcoin etfs as sovereign funds step in",
-   "hood stock hits near 3 month lows as analysts trim targets but bulls call it a buying opportunity",
-   "bitcoin holds 80k in october despite 2b in stablecoin outflows from binance",
-   "capital b targets 42 000 btc by 2029 a nearly 12x jump from current holdings",
    "bitcoin price returns to 81k as federal reserve holds rates steady",
    "bitcoin trades near 80k amid subdued investor sentiment echoing 2015 s early disbelief rally phase",
    "bitcoin briefly hits 81k as fed holds rates st",
@@ -2152,7 +2146,14 @@
    "elon musk shares cz meme as crypto market selloff hits bitcoin",
    "viabtc s jeff ko on how ai infrastructure demand is reshaping bitcoin mining q a",
    "strive s bitcoin gains drive 509 million q3 profit as btc buying ramps up",
-   "did binance s 6 3 billion crypto hack just expose an even bigger risk for bitcoin investors"
+   "did binance s 6 3 billion crypto hack just expose an even bigger risk for bitcoin investors",
+   "bitcoin open interest jumps amid selling pressure signaling long re entry",
+   "btc price on nov 6 2026 at 1pm est crypto prediction market",
+   "current price of ethereum for november 6 2026",
+   "bitcoin is falling but it seems the big btc whales have very different plans",
+   "can bitcoin price defend 75k support as futures activity raises volatility concerns",
+   "pepe price prediction pepe jumps 7 as bitcoin crashes toward 75k",
+   "zcash price outlook for november can zec break toward 2 000"
   ],
   "AAPL:CALL": [
    "loop capital lowers apple stock price target on iphone shipment concerns",
@@ -2242,7 +2243,8 @@
    "semiconductor stocks tsmc tsm nvidia nvda and amd rebound after a midterm drop",
    "nvidia stock rises on dip buying 3 reasons to be optimistic",
    "nvidia amd and other chip stocks rebound is the violent ai selloff over",
-   "micron formfactor amkor teradyne and nvidia shares skyrocket what you need to know"
+   "micron formfactor amkor teradyne and nvidia shares skyrocket what you need to know",
+   "nvidia stocks rebound 6 78 as lawmakers call jensen huang to closed door briefing"
   ],
   "AMZN:PUT": [
    "amazon com price target lowered to 300 from 325 at scotiabank",
@@ -2434,7 +2436,8 @@
    "ford s dividend is down 50 from 2025 s first payout will the bonus return",
    "ford cuts february bonus dividend by 50 regul",
    "november buy 6 ideal s p 500 safer dividend dogs",
-   "if you invested 1 000 in tesla stock when the cybertruck was unveiled here s how much you d have today"
+   "if you invested 1 000 in tesla stock when the cybertruck was unveiled here s how much you d have today",
+   "blackrock s larry fink says america s workers are falling behind investors and 25 years of data explains why"
   ],
   "XOM:PUT": [
    "oil prices slide as trump plays down prospect of iran strikes after u s election rout",
@@ -2682,7 +2685,11 @@
    "spain orders olive oil mills to hold back output to lift prices",
    "brazil to extend 12 crude export tax until year end",
    "gas prices drop for the fourth straight week in the valley",
-   "behind the safe haven treasury rally are falling oil prices too"
+   "behind the safe haven treasury rally are falling oil prices too",
+   "oil prices surge post conflict yet demand remains steady",
+   "norway s oil and gas industry faces a major decline without new discoveries",
+   "brent slumps 17 in sharp weekly pullback in oil market",
+   "is the crude rally over brent on track for worst week since 2020"
   ],
   "MSFT:CALL": [
    "forget the 12 month squeeze microsoft is primed for an explosive ai payoff",
@@ -2880,7 +2887,11 @@
    "spain orders olive oil mills to hold back output to lift prices",
    "brazil to extend 12 crude export tax until year end",
    "gas prices drop for the fourth straight week in the valley",
-   "behind the safe haven treasury rally are falling oil prices too"
+   "behind the safe haven treasury rally are falling oil prices too",
+   "oil prices surge post conflict yet demand remains steady",
+   "norway s oil and gas industry faces a major decline without new discoveries",
+   "brent slumps 17 in sharp weekly pullback in oil market",
+   "is the crude rally over brent on track for worst week since 2020"
   ],
   "JPM:CALL": [
    "which profit leader pays the most with yields between 0 31 and 2 32 bank of america nyse bac exxon mobil nyse xom johnso",
@@ -3169,7 +3180,14 @@
    "elon musk shares cz meme as crypto market selloff hits bitcoin",
    "viabtc s jeff ko on how ai infrastructure demand is reshaping bitcoin mining q a",
    "strive s bitcoin gains drive 509 million q3 profit as btc buying ramps up",
-   "did binance s 6 3 billion crypto hack just expose an even bigger risk for bitcoin investors"
+   "did binance s 6 3 billion crypto hack just expose an even bigger risk for bitcoin investors",
+   "bitcoin open interest jumps amid selling pressure signaling long re entry",
+   "btc price on nov 6 2026 at 1pm est crypto prediction market",
+   "current price of ethereum for november 6 2026",
+   "bitcoin is falling but it seems the big btc whales have very different plans",
+   "can bitcoin price defend 75k support as futures activity raises volatility concerns",
+   "pepe price prediction pepe jumps 7 as bitcoin crashes toward 75k",
+   "zcash price outlook for november can zec break toward 2 000"
   ],
   "SOFI:PUT": [
    "nasdaq ceo adena friedman says 23 hour trading starts dec 6 what it means for your retirement money",
@@ -3180,7 +3198,8 @@
    "wall street analysts think sofi technologies sofi could surge 29 3 read this before placing a bet",
    "quantisnow real time stock news sec filings alerts",
    "sofi dec 2026 11 500 call sofi261204c00011500 stock price news quote and history",
-   "sofi stock is down 50 from its high here s why i d buy it right now"
+   "sofi stock is down 50 from its high here s why i d buy it right now",
+   "brady and 2 more high growth stocks to watch"
   ],
   "SNAP:PUT": [
    "snap earnings analysis questions answered and next catalysts",
@@ -3189,7 +3208,8 @@
    "why does a 10 6 drop hit snap nyse snap even after a swing to profit",
    "snap snap stock may trade at a discount despite user growth miss",
    "snap on has raised its shareholder payment every year for 17 years",
-   "analysts offer insights on communication services companies madison square garden entertainment corp msge zillow group c"
+   "analysts offer insights on communication services companies madison square garden entertainment corp msge zillow group c",
+   "snapchat disables friend finder feature for uk children amid safety concerns snap nyse"
   ],
   "UBER:CALL": [
    "bank of america revamps uber stock target amid rider price paradox",
@@ -3444,15 +3464,22 @@
   ],
   "INTC:PUT:2026-11-20:55": [
    "sharp@2026-11-06T10:46-05:00",
-   "sharp@2026-11-06T10:51-05:00"
+   "sharp@2026-11-06T10:51-05:00",
+   "stock1"
   ],
-  "AMZN:CALL:2026-11-13:270": [],
+  "AMZN:CALL:2026-11-13:270": [
+   "down-0.15",
+   "news:amazon amzn introduces ai shopping by text here s how it works"
+  ],
   "XOM:PUT:2026-11-13:165": [
    "down-0.15",
    "news:the iran war isn t over but oil traders are already pricing in peace",
    "news:global oil prices drop sharply amid reports of potential iran u s peace talks",
    "news:oil prices fall nearly 15 ahead of epra fuel price review",
-   "news:behind the safe haven treasury rally are falling oil prices too"
+   "news:behind the safe haven treasury rally are falling oil prices too",
+   "news:oil prices surge post conflict yet demand remains steady",
+   "news:brent slumps 17 in sharp weekly pullback in oil market",
+   "news:is the crude rally over brent on track for worst week since 2020"
   ],
   "CVX:PUT:2026-11-13:210@2026-11-06": [
    "news:the iran war isn t over but oil traders are already pricing in peace",
@@ -3460,7 +3487,10 @@
    "news:global oil prices drop sharply amid reports of potential iran u s peace talks",
    "down-0.3",
    "news:oil prices fall nearly 15 ahead of epra fuel price review",
-   "news:behind the safe haven treasury rally are falling oil prices too"
+   "news:behind the safe haven treasury rally are falling oil prices too",
+   "news:oil prices surge post conflict yet demand remains steady",
+   "news:brent slumps 17 in sharp weekly pullback in oil market",
+   "news:is the crude rally over brent on track for worst week since 2020"
   ],
   "UBER:CALL:2026-11-20:71": [
    "sharp@2026-11-06T10:32-05:00",
@@ -3475,21 +3505,17 @@
   ],
   "GOOGL:CALL:2026-11-11:292.5": [
    "down-0.15",
-   "news:google adds spacex shares as 900m bet reaches 69 billion alphabet nasdaq googl"
+   "news:google adds spacex shares as 900m bet reaches 69 billion alphabet nasdaq googl",
+   "down-0.3"
   ]
  },
  "stock_level": {
   "F:CALL:2026-11-20:11.5": 2,
   "SOFI:PUT:2026-11-20:16": 3,
-  "HOOD:PUT:2026-11-20:75": 3
+  "HOOD:PUT:2026-11-20:75": 3,
+  "INTC:PUT:2026-11-20:55": 1
  },
  "seen_macro": [
-  "the most european of non european countries canada looks to become an eu associate member",
-  "friedrich merz s asia trip germany pushes free trade security ties and eu asean deal",
-  "trump says canada has been treating the us better as trade tensions show signs of easing",
-  "us economy grows at surprising 3 4 rate powered by consumer spending ai investment",
-  "servicenow fortinet q3 earnings reports lead software stocks lower as outlooks disappoint",
-  "gold falls below 4 000 as silver extends losses amid fed rate hike concerns",
   "us fed holds interest rates steady despite too high inflation",
   "dollar s rate fueled rally set to ride out us midterm gridlock",
   "big business this week why the fed paused on another rate rise",
@@ -4083,7 +4109,13 @@
   "ai stocks halt their brutal worldwide sell off as wall street trims its loss for the week",
   "gasoline seen plunging p13 50 as oil markets ease",
   "massive job gains of 165 000 in october bolster case for more fed rate hikes",
-  "dht holdings dht stock trades down here is why"
+  "dht holdings dht stock trades down here is why",
+  "us treasuries stumble as strong jobs data backs fed hike bets",
+  "canada s economy loses jobs for 3rd consecutive month",
+  "abdul el sayed wants to drop stupid tariffs on canada",
+  "goldman sachs lowered its gold price forecast as fed turns hawkish",
+  "america s economy delivers stunning surprise as 165 000 new jobs offer wall street a lifeline after historic market cras",
+  "wall street rebounds as chip stocks regain their footing"
  ],
  "sharp": {
   "F:CALL:2026-11-20:11.5": 12.405,
