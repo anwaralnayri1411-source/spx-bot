@@ -867,3 +867,8 @@ id,time,project,tag,sym,root,side,strike,exp,entry,spot,edge,strength
 20261106T1512|stocks|open_same_dir|BAC|PUT|50|2026-11-27,2026-11-06T15:12-05:00,stocks,open_same_dir,BAC,BAC,PUT,50.0,2026-11-27,1.27,49.84,3.5,6.9
 20261106T1512|stocks|open_same_dir|COIN|PUT|127|2026-11-13,2026-11-06T15:12-05:00,stocks,open_same_dir,COIN,COIN,PUT,127.0,2026-11-13,2.68,135.12,4.5,6.5
 20261106T1512|stocks|open_same_dir|HOOD|PUT|75|2026-11-27,2026-11-06T15:12-05:00,stocks,open_same_dir,HOOD,HOOD,PUT,75.0,2026-11-27,2.98,80.56,4.5,6.5
+20261106T1527|stocks|earn_in_life|DIS|CALL|119|2026-11-20,2026-11-06T15:27-05:00,stocks,earn_in_life,DIS,DIS,CALL,119.0,2026-11-20,3.28,117.17,5.5,7.0
+20261106T1527|stocks|earn_in_life|WMT|CALL|128|2026-11-20,2026-11-06T15:27-05:00,stocks,earn_in_life,WMT,WMT,CALL,128.0,2026-11-20,3.47,125.43,3.5,5.7
+20261106T1527|stocks|open_same_dir|HOOD|PUT|78|2026-11-13,2026-11-06T15:27-05:00,stocks,open_same_dir,HOOD,HOOD,PUT,78.0,2026-11-13,2.1,80.52,4.5,7.5
+20261106T1527|stocks|open_same_dir|COIN|PUT|127|2026-11-13,2026-11-06T15:27-05:00,stocks,open_same_dir,COIN,COIN,PUT,127.0,2026-11-13,2.62,134.99,4.5,6.7
+20261106T1527|stocks|open_same_dir|BAC|PUT|50|2026-11-27,2026-11-06T15:27-05:00,stocks,open_same_dir,BAC,BAC,PUT,50.0,2026-11-27,1.42,49.7,3.5,6.7
