@@ -307,6 +307,83 @@
    "time": "2026-11-05T15:03-05:00",
    "price": null,
    "qty": null
+  },
+  "AMZN:CALL:2026-11-13:270|2026-11-06": {
+   "mode": "watch",
+   "ticker": "AMZN",
+   "side": "CALL",
+   "exp": "2026-11-13",
+   "strike": 270.0,
+   "day": "2026-11-06",
+   "time": "2026-11-06T10:15-05:00",
+   "price": null,
+   "qty": null
+  },
+  "XOM:PUT:2026-11-13:165|2026-11-06": {
+   "mode": "watch",
+   "ticker": "XOM",
+   "side": "PUT",
+   "exp": "2026-11-13",
+   "strike": 165.0,
+   "day": "2026-11-06",
+   "time": "2026-11-06T10:16-05:00",
+   "price": null,
+   "qty": null
+  },
+  "CVX:PUT:2026-11-13:210|2026-11-06": {
+   "mode": "watch",
+   "ticker": "CVX",
+   "side": "PUT",
+   "exp": "2026-11-13",
+   "strike": 210.0,
+   "day": "2026-11-06",
+   "time": "2026-11-06T10:16-05:00",
+   "price": null,
+   "qty": null
+  },
+  "UBER:CALL:2026-11-20:71|2026-11-06": {
+   "mode": "watch",
+   "ticker": "UBER",
+   "side": "CALL",
+   "exp": "2026-11-20",
+   "strike": 71.0,
+   "day": "2026-11-06",
+   "time": "2026-11-06T10:16-05:00",
+   "price": null,
+   "qty": null
+  },
+  "NVDA:PUT:2026-11-11:185|2026-11-06": {
+   "mode": "watch",
+   "ticker": "NVDA",
+   "side": "PUT",
+   "exp": "2026-11-11",
+   "strike": 185.0,
+   "day": "2026-11-06",
+   "time": "2026-11-06T10:16-05:00",
+   "price": null,
+   "qty": null
+  },
+  "PLTR:PUT:2026-11-13:155|2026-11-06": {
+   "mode": "watch",
+   "ticker": "PLTR",
+   "side": "PUT",
+   "exp": "2026-11-13",
+   "strike": 155.0,
+   "day": "2026-11-06",
+   "time": "2026-11-06T10:16-05:00",
+   "price": null,
+   "qty": null
+  },
+  "INTC:PUT:2026-11-20:55|2026-11-06": {
+   "mode": "watch",
+   "ticker": "INTC",
+   "side": "PUT",
+   "exp": "2026-11-20",
+   "strike": 55.0,
+   "day": "2026-11-06",
+   "time": "2026-11-06T10:16-05:00",
+   "price": null,
+   "qty": null
   }
  }
 }
