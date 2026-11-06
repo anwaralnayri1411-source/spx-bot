@@ -236,7 +236,7 @@
   "px": 80366.0
  },
  "out_above": null,
- "below_alerted": true,
+ "below_alerted": false,
  "last_err": null,
  "last_daily": "2026-11-06",
  "stopped": false,
