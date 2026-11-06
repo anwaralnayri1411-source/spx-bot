@@ -223,17 +223,17 @@ main() {
       files="confirm_log.csv research/confirm_results.md"
       msg="confirm eval" ;;
     grid_bot)
-      group=crypto-grid; envs="TG OKX"   # بوت شبكة BTC على OKX للتدريب (حساب تجريبي فقط ما لم يُضبط GRID_LIVE=yes)، لـTELEGRAM_CHAT_ID وحده
+      group=crypto-grid; envs="OKX"   # بلا TG: صامت على تيليجرام بطلب المستخدم 6/11 (السجلات باقية). بوت شبكة BTC على OKX للتدريب (حساب تجريبي فقط ما لم يُضبط GRID_LIVE=yes)، لـTELEGRAM_CHAT_ID وحده
       cmds=("$py crypto/grid_bot.py")
       files="crypto/grid_bot_state.json crypto/grid_bot_log.csv crypto/messages_grid_bot.jsonl"
       msg="grid bot" ;;
     grid_sol)
-      group=crypto-grid-sol; envs="TG OKX"; extra_env="GRID_INST=SOL-USDT"   # شبكة SOL للتدريب (إعداداتها GRID_SOL_*)، حصة منفصلة
+      group=crypto-grid-sol; envs="OKX"; extra_env="GRID_INST=SOL-USDT"   # شبكة SOL للتدريب (إعداداتها GRID_SOL_*)، حصة منفصلة
       cmds=("$py crypto/grid_bot.py")
       files="crypto/grid_bot_state_SOL.json crypto/grid_bot_log_SOL.csv crypto/messages_grid_bot_SOL.jsonl"
       msg="grid sol" ;;
     crypto_bot)
-      group=crypto-bot; envs="TG OKX"   # بوت BTC على OKX (قاعدة متوسط 50، سبوت): حساب تجريبي افتراضياً، لـTELEGRAM_CHAT_ID وحده
+      group=crypto-bot; envs="OKX"   # بلا TG: صامت على تيليجرام بطلب المستخدم 6/11. بوت BTC على OKX (قاعدة متوسط 50، سبوت): حساب تجريبي افتراضياً، لـTELEGRAM_CHAT_ID وحده
       cmds=("$py crypto/okx_trend_bot.py")
       files="crypto/okx_trend_state.json crypto/okx_trend_log.csv crypto/messages_crypto_bot.jsonl"
       msg="crypto bot" ;;
