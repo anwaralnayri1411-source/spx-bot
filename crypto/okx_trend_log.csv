@@ -1,2 +1,3 @@
 run_utc,day,mode,close,sma50,signal,action,status,fill_px,fill_sz,fee,bot_btc,bot_usdt,equity,bh_equity,note
 2026-11-05T07:45:45+00:00,2026-11-04,demo,80508.0,82061.51,0,hold,ok,,,,0.0,1000.0,1000.0,1000.0,
+2026-11-06T00:07:05+00:00,2026-11-05,demo,76087.4,82059.23,0,hold,ok,,,,0.0,1000.0,1000.0,945.09,
