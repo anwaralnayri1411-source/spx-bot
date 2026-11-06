@@ -169,3 +169,19 @@ def test_sol_config_and_files_are_separate(monkeypatch):
         assert all(cl.startswith("gsol") for cl in ex.orders)
     finally:
         gb.INST, gb.COIN, gb.TAG, gb.STATE, gb.LOG, gb.MSGS = keep
+
+
+def test_permission_error_stops_quietly_until_reenabled():
+    ex = FakeEx(100.0)
+    calls = []
+
+    def deny(*a, **k):
+        calls.append(1)
+        raise RuntimeError("OKX /api/v5/trade/order: 50123 This API Key does not have trading permission")
+    ex.place = deny
+    gb.run(cfg(), ex)
+    assert st()["stopped"] == "no_permission"
+    n = len(calls)
+    assert gb.run(cfg(), ex) == "blocked" and len(calls) == n          # لا محاولات ولا رسائل
+    assert gb.run(cfg(enabled=False), ex) == "disabled"
+    assert st()["stopped"] == "disabled"

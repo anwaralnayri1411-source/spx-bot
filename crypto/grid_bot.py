@@ -302,6 +302,13 @@ def run(cfg=None, okx=None, now=None):
     msgs = []
     try:
         spec = okx.spec()
+        if st and st.get("stopped") == "no_permission":   # المفتاح لا يملك صلاحية هذا الزوج: صمت حتى يُعاد التفعيل
+            if not cfg["enabled"]:
+                st["stopped"] = "disabled"                  # إيقاف ثم تفعيل = محاولة جديدة
+                save_state(st)
+                return "disabled"
+            print("blocked: no trading permission for", INST)
+            return "blocked"
         if st and not st.get("stopped") and not cfg["enabled"]:
             stop_grid(st, okx, spec, "disabled")
             msgs.append(f"⏹ أوقفت الشبكة (GRID_ENABLED=0). الحصة الآن {equity(st, okx.ticker()):,.0f}$ نقداً.")
@@ -357,6 +364,15 @@ def run(cfg=None, okx=None, now=None):
             st["below_alerted"] = False
         save_state(st)
     except Exception as e:  # noqa: BLE001
+        if st is not None and "50123" in str(e):   # لا صلاحية تداول لهذا الزوج عبر المفتاح: رسالة واحدة ثم توقف
+            st["stopped"] = "no_permission"
+            save_state(st)
+            flag = "GRID_ENABLED" if COIN == "BTC" else f"GRID_{COIN}_ENABLED"
+            send("\n".join([f"🕸 شبكة {COIN} · {tag}",
+                             f"⛔ أوقفت الشبكة: مفتاح OKX لا يملك صلاحية تداول {INST} (خطأ 50123). لم يُنفَّذ أي أمر.",
+                             f"لن تصلك رسائل أخرى عنها. لإعادة المحاولة بعد إصلاح المفتاح: {flag}=0 ثم احذفه."]))
+            print("error: no permission, grid stopped")
+            return "error"
         if st is not None:
             last = st.get("last_err")
             if not last or (now - datetime.fromisoformat(last)).total_seconds() > 3600:
