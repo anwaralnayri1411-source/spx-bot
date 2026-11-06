@@ -1762,8 +1762,6 @@
    "el salvador keeps buying bitcoin despite 6 btc drop holdings reach 7 827"
   ],
   "HOOD:PUT": [
-   "bitcoin traders expect swings on us 11 billion options expiry",
-   "why is ethereum price falling today october 29",
    "bitcoin price prediction as ecb and boj rate decisions loom after warsh s neutral tone",
    "bitcoin has failed to break through resistance whereas bnb is gaining ground",
    "how to get offered 3 million in bitcoin bets call it a dead network on x",
@@ -2161,7 +2159,9 @@
    "bitcoin price today can btc break 82k before friday s expiry as big buyers back pepeto",
    "btc price on nov 6 2026 at 3pm est prediction market",
    "b riley cuts strive enterprises stock price target on btc assumptions",
-   "we asked chatgpt what 430m of bitcoin etf outflows means by month end"
+   "we asked chatgpt what 430m of bitcoin etf outflows means by month end",
+   "bitcoin drops below 75k top analyst spots a bullish 2023 pattern",
+   "the price of solana just dropped below 100 time to buy the dip"
   ],
   "AAPL:CALL": [
    "loop capital lowers apple stock price target on iphone shipment concerns",
@@ -3288,7 +3288,9 @@
    "bitcoin price today can btc break 82k before friday s expiry as big buyers back pepeto",
    "btc price on nov 6 2026 at 3pm est prediction market",
    "b riley cuts strive enterprises stock price target on btc assumptions",
-   "we asked chatgpt what 430m of bitcoin etf outflows means by month end"
+   "we asked chatgpt what 430m of bitcoin etf outflows means by month end",
+   "bitcoin drops below 75k top analyst spots a bullish 2023 pattern",
+   "the price of solana just dropped below 100 time to buy the dip"
   ],
   "SOFI:PUT": [
    "nasdaq ceo adena friedman says 23 hour trading starts dec 6 what it means for your retirement money",
@@ -3490,7 +3492,8 @@
    "news:bitcoin faces heavy liquidations and volatility after surging past 81k then dropping below key support",
    "news:bitcoin price dips under 75k as crypto markets miss tech stock rebound",
    "news:bitcoin etfs bleed 430 million as tech rout tests wall street buyers",
-   "down-0.15"
+   "down-0.15",
+   "news:bitcoin drops below 75k top analyst spots a bullish 2023 pattern"
   ],
   "BAC:PUT:2026-11-20:50": [
    "sharp@2026-11-06T09:48-05:00",
@@ -3578,8 +3581,6 @@
   "INTC:PUT:2026-11-20:55": 3
  },
  "seen_macro": [
-  "oil price prediction brent jumps above 116 after tanker attack in strait of hormuz",
-  "u s treasury yields fall eurozone bond yields mixed after gdp data",
   "us cpi forecast inflation data and fed rate decision",
   "rupee rises 33 paise to 94 93 against us dollar",
   "sticky inflation 2026 why post pandemic prices persist",
@@ -4177,7 +4178,9 @@
   "october cpi forecasts show inflation softening but december rate hike still looks likely",
   "us gas prices surge 40 to 4 15 amid iran conflict",
   "us urges china to meet rare earths commitments ahead of trump xi meetings",
-  "how democrats could impact trump s tariffs in congress and possibly undo them"
+  "how democrats could impact trump s tariffs in congress and possibly undo them",
+  "what the ai stock crash cost your 401 k for every 1 000 invested",
+  "ny fed s john williams flags need to gather more information on inflation risks before rate decisions"
  ],
  "sharp": {
   "F:CALL:2026-11-20:11.5": 12.405,
