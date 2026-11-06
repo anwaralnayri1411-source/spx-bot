@@ -227,11 +227,11 @@ main() {
       cmds=("$py crypto/grid_bot.py")
       files="crypto/grid_bot_state.json crypto/grid_bot_log.csv crypto/messages_grid_bot.jsonl"
       msg="grid bot" ;;
-    grid_sol)
-      group=crypto-grid-sol; envs="OKX"; extra_env="GRID_INST=SOL-USDT"   # شبكة SOL للتدريب (إعداداتها GRID_SOL_*)، حصة منفصلة
+    grid_eth)
+      group=crypto-grid-eth; envs="OKX"; extra_env="GRID_INST=ETH-USDT"   # شبكة ETH للتدريب بدل SOL (6/11؛ مفتاح OKX رفض SOL بخطأ 50123)، إعداداتها GRID_ETH_*، صامتة
       cmds=("$py crypto/grid_bot.py")
-      files="crypto/grid_bot_state_SOL.json crypto/grid_bot_log_SOL.csv crypto/messages_grid_bot_SOL.jsonl"
-      msg="grid sol" ;;
+      files="crypto/grid_bot_state_ETH.json crypto/grid_bot_log_ETH.csv crypto/messages_grid_bot_ETH.jsonl"
+      msg="grid eth" ;;
     crypto_bot)
       group=crypto-bot; envs="OKX"   # بلا TG: صامت على تيليجرام بطلب المستخدم 6/11. بوت BTC على OKX (قاعدة متوسط 50، سبوت): حساب تجريبي افتراضياً، لـTELEGRAM_CHAT_ID وحده
       cmds=("$py crypto/okx_trend_bot.py")
@@ -417,7 +417,7 @@ run_env() {
       TASTY) e+=(TASTY_CLIENT_SECRET="${TASTY_CLIENT_SECRET:-}" TASTY_REFRESH_TOKEN="${TASTY_REFRESH_TOKEN:-}") ;;
       LQ) e+=(LIVE_QUOTES_SPX="${LIVE_QUOTES_SPX:-shadow}" LIVE_BARS_SPX="${LIVE_BARS_SPX:-shadow}") ;;
       LQS) e+=(LIVE_QUOTES_STOCKS="${LIVE_QUOTES_STOCKS:-shadow}") ;;
-      OKX) [ "$mode" = live ] && e+=(OKX_API_KEY="${OKX_API_KEY:-}" OKX_API_SECRET="${OKX_API_SECRET:-}" OKX_API_PASSPHRASE="${OKX_API_PASSPHRASE:-}" OKX_MODE="${OKX_MODE:-demo}" OKX_LIVE_CONFIRM="${OKX_LIVE_CONFIRM:-}" OKX_MAX_USD="${OKX_MAX_USD:-1000}" OKX_MAX_LOSS_USD="${OKX_MAX_LOSS_USD:-300}" GRID_MAX_USD="${GRID_MAX_USD:-1000}" GRID_RANGE="${GRID_RANGE:-0.10}" GRID_CELLS="${GRID_CELLS:-20}" GRID_ENABLED="${GRID_ENABLED:-1}" GRID_LIVE="${GRID_LIVE:-}" GRID_SOL_MAX_USD="${GRID_SOL_MAX_USD:-}" GRID_SOL_RANGE="${GRID_SOL_RANGE:-}" GRID_SOL_CELLS="${GRID_SOL_CELLS:-}" GRID_SOL_ENABLED="${GRID_SOL_ENABLED:-}") ;;   # وضع الظل بلا مفاتيح: إشارة فقط
+      OKX) [ "$mode" = live ] && e+=(OKX_API_KEY="${OKX_API_KEY:-}" OKX_API_SECRET="${OKX_API_SECRET:-}" OKX_API_PASSPHRASE="${OKX_API_PASSPHRASE:-}" OKX_MODE="${OKX_MODE:-demo}" OKX_LIVE_CONFIRM="${OKX_LIVE_CONFIRM:-}" OKX_MAX_USD="${OKX_MAX_USD:-1000}" OKX_MAX_LOSS_USD="${OKX_MAX_LOSS_USD:-300}" GRID_MAX_USD="${GRID_MAX_USD:-1000}" GRID_RANGE="${GRID_RANGE:-0.10}" GRID_CELLS="${GRID_CELLS:-20}" GRID_ENABLED="${GRID_ENABLED:-1}" GRID_LIVE="${GRID_LIVE:-}" GRID_SOL_MAX_USD="${GRID_SOL_MAX_USD:-}" GRID_SOL_RANGE="${GRID_SOL_RANGE:-}" GRID_SOL_CELLS="${GRID_SOL_CELLS:-}" GRID_SOL_ENABLED="${GRID_SOL_ENABLED:-}" GRID_ETH_MAX_USD="${GRID_ETH_MAX_USD:-}" GRID_ETH_RANGE="${GRID_ETH_RANGE:-}" GRID_ETH_CELLS="${GRID_ETH_CELLS:-}" GRID_ETH_ENABLED="${GRID_ETH_ENABLED:-}") ;;   # وضع الظل بلا مفاتيح: إشارة فقط
     esac
   done
   [ -n "$extra" ] && e+=($extra)
