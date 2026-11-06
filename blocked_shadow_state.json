@@ -14,8 +14,8 @@
    "strength": "5.0",
    "occ": "AMZN261120C00272500",
    "peak_pnl": 0.233,
-   "close_pnl": 0.006,
-   "quotes": 94,
+   "close_pnl": -0.003,
+   "quotes": 95,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -34,8 +34,8 @@
    "strength": "6.8",
    "occ": "SPY261109C00745000",
    "peak_pnl": 0.067,
-   "close_pnl": -0.345,
-   "quotes": 27,
+   "close_pnl": -0.356,
+   "quotes": 28,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -54,8 +54,8 @@
    "strength": "7.0",
    "occ": "HOOD261127P00075000",
    "peak_pnl": 0.145,
-   "close_pnl": 0.003,
-   "quotes": 23,
+   "close_pnl": 0.016,
+   "quotes": 24,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -74,8 +74,8 @@
    "strength": "6.8",
    "occ": "COIN261113P00129000",
    "peak_pnl": 0.3,
-   "close_pnl": 0.055,
-   "quotes": 23,
+   "close_pnl": 0.064,
+   "quotes": 24,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -94,8 +94,8 @@
    "strength": "5.7",
    "occ": "MSTR261113P00114000",
    "peak_pnl": 0.0,
-   "close_pnl": -0.222,
-   "quotes": 17,
+   "close_pnl": -0.197,
+   "quotes": 18,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -114,8 +114,8 @@
    "strength": "5.2",
    "occ": "SPY261109C00745000",
    "peak_pnl": 0.059,
-   "close_pnl": -0.185,
-   "quotes": 10,
+   "close_pnl": -0.199,
+   "quotes": 11,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -134,8 +134,8 @@
    "strength": "5.7",
    "occ": "DIS261127C00120000",
    "peak_pnl": 0.035,
-   "close_pnl": 0.006,
-   "quotes": 9,
+   "close_pnl": 0.003,
+   "quotes": 10,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -154,8 +154,8 @@
    "strength": "7.5",
    "occ": "BAC261127P00050000",
    "peak_pnl": 0.0,
-   "close_pnl": -0.083,
-   "quotes": 9,
+   "close_pnl": -0.098,
+   "quotes": 10,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -1242,7 +1242,8 @@
   "20261106T1157|stocks|open_same_dir|HOOD|PUT|75|2026-11-27",
   "20261106T1157|stocks|open_same_dir|COIN|PUT|125|2026-11-13",
   "20261106T1212|stocks|open_same_dir|COIN|PUT|126|2026-11-13",
-  "20261106T1212|stocks|open_same_dir|HOOD|PUT|75|2026-11-27"
+  "20261106T1212|stocks|open_same_dir|HOOD|PUT|75|2026-11-27",
+  "20261106T1220|spx|same_contract_open|SPY|CALL|745|2026-11-09"
  ],
  "last": {
   "spx|CALL|SPY": "2026-11-06T11:25-05:00",
