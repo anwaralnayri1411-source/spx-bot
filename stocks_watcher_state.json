@@ -1352,8 +1352,6 @@
    "jpmorgan chase nyse jpm lifts interest income outlook as lending offsets trading slowdown"
   ],
   "COIN:PUT": [
-   "coinbase earnings wall street divided on trading rebound after robinhood crypto revenue sinks 55",
-   "bitcoin is becoming collateral for traditional corporate borrowing",
    "bitcoin price bounce rejected at 50 day trend line ahead of fomc earnings",
    "bitwise boosts 10 year bitcoin price target to 1 6m",
    "crypto news today 14 942 bitcoin pulled off exchanges before the fed call and pepeto s 1000x case grows louder",
@@ -1751,11 +1749,11 @@
    "can bitcoin price defend 75k support as futures activity raises volatility concerns",
    "pepe price prediction pepe jumps 7 as bitcoin crashes toward 75k",
    "where does coinbase global coin value sit after its sales reset",
-   "zcash price outlook for november can zec break toward 2 000"
+   "zcash price outlook for november can zec break toward 2 000",
+   "shiba inu price after the us jobs report shib holds above 0 0000045",
+   "bitcoin bulls face last stand at 74 900 will support hold"
   ],
   "HOOD:PUT": [
-   "bitcoin price returns to 81k as federal reserve holds rates steady",
-   "bitcoin trades near 80k amid subdued investor sentiment echoing 2015 s early disbelief rally phase",
    "bitcoin briefly hits 81k as fed holds rates st",
    "bitwise raises its bitcoin target to 1 6 million here s when it might happen",
    "nasdaq listed datavault ai stock crashes 50 over 150m bitcoin accounting dispute",
@@ -2153,7 +2151,9 @@
    "bitcoin is falling but it seems the big btc whales have very different plans",
    "can bitcoin price defend 75k support as futures activity raises volatility concerns",
    "pepe price prediction pepe jumps 7 as bitcoin crashes toward 75k",
-   "zcash price outlook for november can zec break toward 2 000"
+   "zcash price outlook for november can zec break toward 2 000",
+   "shiba inu price after the us jobs report shib holds above 0 0000045",
+   "bitcoin bulls face last stand at 74 900 will support hold"
   ],
   "AAPL:CALL": [
    "loop capital lowers apple stock price target on iphone shipment concerns",
@@ -2244,7 +2244,8 @@
    "nvidia stock rises on dip buying 3 reasons to be optimistic",
    "nvidia amd and other chip stocks rebound is the violent ai selloff over",
    "micron formfactor amkor teradyne and nvidia shares skyrocket what you need to know",
-   "nvidia stocks rebound 6 78 as lawmakers call jensen huang to closed door briefing"
+   "nvidia stocks rebound 6 78 as lawmakers call jensen huang to closed door briefing",
+   "forget nvidia here s the company behind the chips"
   ],
   "AMZN:PUT": [
    "amazon com price target lowered to 300 from 325 at scotiabank",
@@ -2689,7 +2690,9 @@
    "oil prices surge post conflict yet demand remains steady",
    "norway s oil and gas industry faces a major decline without new discoveries",
    "brent slumps 17 in sharp weekly pullback in oil market",
-   "is the crude rally over brent on track for worst week since 2020"
+   "is the crude rally over brent on track for worst week since 2020",
+   "ongc moves to take over venezuelan oilfields recover 500 million",
+   "brent oil price benchmark set for biggest weekly drop since 2020"
   ],
   "MSFT:CALL": [
    "forget the 12 month squeeze microsoft is primed for an explosive ai payoff",
@@ -2891,7 +2894,9 @@
    "oil prices surge post conflict yet demand remains steady",
    "norway s oil and gas industry faces a major decline without new discoveries",
    "brent slumps 17 in sharp weekly pullback in oil market",
-   "is the crude rally over brent on track for worst week since 2020"
+   "is the crude rally over brent on track for worst week since 2020",
+   "ongc moves to take over venezuelan oilfields recover 500 million",
+   "brent oil price benchmark set for biggest weekly drop since 2020"
   ],
   "JPM:CALL": [
    "which profit leader pays the most with yields between 0 31 and 2 32 bank of america nyse bac exxon mobil nyse xom johnso",
@@ -3187,7 +3192,9 @@
    "bitcoin is falling but it seems the big btc whales have very different plans",
    "can bitcoin price defend 75k support as futures activity raises volatility concerns",
    "pepe price prediction pepe jumps 7 as bitcoin crashes toward 75k",
-   "zcash price outlook for november can zec break toward 2 000"
+   "zcash price outlook for november can zec break toward 2 000",
+   "shiba inu price after the us jobs report shib holds above 0 0000045",
+   "bitcoin bulls face last stand at 74 900 will support hold"
   ],
   "SOFI:PUT": [
    "nasdaq ceo adena friedman says 23 hour trading starts dec 6 what it means for your retirement money",
@@ -3199,7 +3206,8 @@
    "quantisnow real time stock news sec filings alerts",
    "sofi dec 2026 11 500 call sofi261204c00011500 stock price news quote and history",
    "sofi stock is down 50 from its high here s why i d buy it right now",
-   "brady and 2 more high growth stocks to watch"
+   "brady and 2 more high growth stocks to watch",
+   "block by block cash app builds a stronger foundation"
   ],
   "SNAP:PUT": [
    "snap earnings analysis questions answered and next catalysts",
@@ -3213,7 +3221,8 @@
   ],
   "UBER:CALL": [
    "bank of america revamps uber stock target amid rider price paradox",
-   "uber technologies stock weighs strong bookings against gaap drop"
+   "uber technologies stock weighs strong bookings against gaap drop",
+   "uber stock could double on robotaxi integration analyst says"
   ],
   "GOOGL:CALL": [
    "alphabet tpu sales and gemini enterprise are reshaping the bull case nasdaq goog",
@@ -3479,7 +3488,8 @@
    "news:behind the safe haven treasury rally are falling oil prices too",
    "news:oil prices surge post conflict yet demand remains steady",
    "news:brent slumps 17 in sharp weekly pullback in oil market",
-   "news:is the crude rally over brent on track for worst week since 2020"
+   "news:is the crude rally over brent on track for worst week since 2020",
+   "news:brent oil price benchmark set for biggest weekly drop since 2020"
   ],
   "CVX:PUT:2026-11-13:210@2026-11-06": [
    "news:the iran war isn t over but oil traders are already pricing in peace",
@@ -3490,7 +3500,8 @@
    "news:behind the safe haven treasury rally are falling oil prices too",
    "news:oil prices surge post conflict yet demand remains steady",
    "news:brent slumps 17 in sharp weekly pullback in oil market",
-   "news:is the crude rally over brent on track for worst week since 2020"
+   "news:is the crude rally over brent on track for worst week since 2020",
+   "news:brent oil price benchmark set for biggest weekly drop since 2020"
   ],
   "UBER:CALL:2026-11-20:71": [
    "sharp@2026-11-06T10:32-05:00",
@@ -3516,7 +3527,6 @@
   "INTC:PUT:2026-11-20:55": 1
  },
  "seen_macro": [
-  "us fed holds interest rates steady despite too high inflation",
   "dollar s rate fueled rally set to ride out us midterm gridlock",
   "big business this week why the fed paused on another rate rise",
   "sensex rises over 300 points nifty closes above 23 050 it pharma stocks lead market gains",
@@ -4115,7 +4125,8 @@
   "abdul el sayed wants to drop stupid tariffs on canada",
   "goldman sachs lowered its gold price forecast as fed turns hawkish",
   "america s economy delivers stunning surprise as 165 000 new jobs offer wall street a lifeline after historic market cras",
-  "wall street rebounds as chip stocks regain their footing"
+  "wall street rebounds as chip stocks regain their footing",
+  "furniture stocks reverse course as 25 decline in broad wall street sell off"
  ],
  "sharp": {
   "F:CALL:2026-11-20:11.5": 12.405,
