@@ -14,8 +14,8 @@
    "strength": "5.0",
    "occ": "AMZN261120C00272500",
    "peak_pnl": 0.233,
-   "close_pnl": 0.143,
-   "quotes": 80,
+   "close_pnl": 0.122,
+   "quotes": 81,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -34,8 +34,8 @@
    "strength": "6.8",
    "occ": "SPY261109C00745000",
    "peak_pnl": 0.067,
-   "close_pnl": -0.101,
-   "quotes": 13,
+   "close_pnl": -0.235,
+   "quotes": 14,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -54,8 +54,8 @@
    "strength": "7.0",
    "occ": "HOOD261127P00075000",
    "peak_pnl": 0.145,
-   "close_pnl": -0.025,
-   "quotes": 9,
+   "close_pnl": 0.038,
+   "quotes": 10,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -73,9 +73,9 @@
    "edge": "5.5",
    "strength": "6.8",
    "occ": "COIN261113P00129000",
-   "peak_pnl": 0.082,
-   "close_pnl": 0.021,
-   "quotes": 9,
+   "peak_pnl": 0.109,
+   "close_pnl": 0.109,
+   "quotes": 10,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -94,8 +94,8 @@
    "strength": "5.7",
    "occ": "MSTR261113P00114000",
    "peak_pnl": 0.0,
-   "close_pnl": -0.163,
-   "quotes": 3,
+   "close_pnl": -0.094,
+   "quotes": 4,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -1155,7 +1155,10 @@
   "20261106T1042|stocks|open_same_dir|COIN|PUT|125|2026-11-13",
   "20261106T1042|stocks|open_same_dir|MSTR|PUT|114|2026-11-13",
   "20261106T1050|spx|repeat_side|SPY|CALL|745|2026-11-09",
-  "20261106T1055|spx|repeat_side|SPY|CALL|745|2026-11-09"
+  "20261106T1055|spx|repeat_side|SPY|CALL|745|2026-11-09",
+  "20261106T1100|spx|repeat_side|SPY|CALL|745|2026-11-09",
+  "20261106T1057|stocks|open_same_dir|HOOD|PUT|75|2026-11-27",
+  "20261106T1057|stocks|open_same_dir|COIN|PUT|125|2026-11-13"
  ],
  "last": {
   "spx|CALL|SPY": "2026-11-06T09:50-05:00",
