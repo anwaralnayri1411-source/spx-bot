@@ -35,8 +35,8 @@
     "exdiv_in_life": false
    },
    "entry_live": 1.39,
-   "last_pnl": -0.518,
-   "last_at": "2026-11-06T11:42-05:00",
+   "last_pnl": -0.511,
+   "last_at": "2026-11-06T11:57-05:00",
    "closed": {
     "kind": "tp",
     "time": "2026-10-26T12:12-04:00",
@@ -127,8 +127,8 @@
     "exdiv_in_life": false
    },
    "entry_live": 3.29,
-   "last_pnl": -0.997,
-   "last_at": "2026-11-06T11:42-05:00",
+   "last_pnl": -0.991,
+   "last_at": "2026-11-06T11:57-05:00",
    "closed": {
     "kind": "stop",
     "time": "2026-10-29T10:12-04:00",
@@ -171,8 +171,8 @@
     "exdiv_in_life": false
    },
    "entry_live": 3.19,
-   "last_pnl": 2.006,
-   "last_at": "2026-11-06T11:42-05:00",
+   "last_pnl": 1.827,
+   "last_at": "2026-11-06T11:57-05:00",
    "closed": {
     "kind": "tp",
     "time": "2026-10-30T10:12-04:00",
@@ -263,8 +263,8 @@
     "exdiv_in_life": false
    },
    "entry_live": 2.49,
-   "last_pnl": -0.988,
-   "last_at": "2026-11-06T11:42-05:00",
+   "last_pnl": -0.996,
+   "last_at": "2026-11-06T11:57-05:00",
    "closed": {
     "kind": "stop",
     "time": "2026-10-29T11:42-04:00",
@@ -309,8 +309,8 @@
     "exdiv_in_life": false
    },
    "entry_live": 3.32,
-   "last_pnl": 1.852,
-   "last_at": "2026-11-06T11:42-05:00",
+   "last_pnl": 1.754,
+   "last_at": "2026-11-06T11:57-05:00",
    "closed": {
     "kind": "tp",
     "time": "2026-11-02T13:42-05:00",
@@ -355,8 +355,8 @@
     "exdiv_in_life": false
    },
    "entry_live": 3.22,
-   "last_pnl": -0.994,
-   "last_at": "2026-11-06T11:42-05:00",
+   "last_pnl": -0.997,
+   "last_at": "2026-11-06T11:57-05:00",
    "closed": {
     "kind": "stop",
     "time": "2026-11-02T09:57-05:00",
@@ -399,8 +399,8 @@
     "exdiv_in_life": false
    },
    "entry_live": 2.31,
-   "last_pnl": 0.431,
-   "last_at": "2026-11-06T11:42-05:00",
+   "last_pnl": 0.373,
+   "last_at": "2026-11-06T11:57-05:00",
    "closed": {
     "kind": "tp",
     "time": "2026-11-02T11:27-05:00",
@@ -447,8 +447,8 @@
     "exdiv_in_life": false
    },
    "entry_live": 3.25,
-   "last_pnl": -0.89,
-   "last_at": "2026-11-06T11:42-05:00",
+   "last_pnl": -0.915,
+   "last_at": "2026-11-06T11:57-05:00",
    "closed": {
     "kind": "stop",
     "time": "2026-11-02T09:57-05:00",
@@ -491,8 +491,8 @@
     "exdiv_in_life": false
    },
    "entry_live": 3.58,
-   "last_pnl": 0.335,
-   "last_at": "2026-11-06T11:42-05:00",
+   "last_pnl": 0.475,
+   "last_at": "2026-11-06T11:57-05:00",
    "closed": {
     "kind": "tp",
     "time": "2026-11-04T09:57-05:00",
@@ -539,8 +539,8 @@
     "exdiv_in_life": false
    },
    "entry_live": 0.85,
-   "last_pnl": -0.185,
-   "last_at": "2026-11-06T11:27-05:00",
+   "last_pnl": -0.148,
+   "last_at": "2026-11-06T11:57-05:00",
    "closed": {
     "kind": "stop",
     "time": "2026-11-05T09:57-05:00",
@@ -585,8 +585,8 @@
     "exdiv_in_life": true
    },
    "entry_live": 0.85,
-   "last_pnl": -0.591,
-   "last_at": "2026-11-06T11:27-05:00",
+   "last_pnl": -0.557,
+   "last_at": "2026-11-06T11:57-05:00",
    "closed": {
     "kind": "tp",
     "time": "2026-11-05T09:57-05:00",
@@ -676,8 +676,8 @@
     "exdiv_in_life": false
    },
    "entry_live": 3.25,
-   "last_pnl": -0.99,
-   "last_at": "2026-11-06T11:42-05:00",
+   "last_pnl": -0.994,
+   "last_at": "2026-11-06T11:57-05:00",
    "closed": {
     "kind": "stop",
     "time": "2026-11-03T09:57-05:00",
@@ -724,8 +724,8 @@
     "exdiv_in_life": false
    },
    "entry_live": 2.48,
-   "last_pnl": -0.918,
-   "last_at": "2026-11-06T11:42-05:00",
+   "last_pnl": -0.931,
+   "last_at": "2026-11-06T11:57-05:00",
    "closed": {
     "kind": "stop",
     "time": "2026-11-04T09:57-05:00",
@@ -768,8 +768,8 @@
     "exdiv_in_life": false
    },
    "entry_live": 2.84,
-   "last_pnl": 0.187,
-   "last_at": "2026-11-06T11:42-05:00",
+   "last_pnl": 0.26,
+   "last_at": "2026-11-06T11:57-05:00",
    "closed": {
     "kind": "stop",
     "time": "2026-11-03T10:57-05:00",
@@ -816,8 +816,8 @@
     "exdiv_in_life": false
    },
    "entry_live": 0.87,
-   "last_pnl": -0.295,
-   "last_at": "2026-11-06T11:42-05:00",
+   "last_pnl": -0.33,
+   "last_at": "2026-11-06T11:57-05:00",
    "closed": {
     "kind": "stop",
     "time": "2026-11-04T09:57-05:00",
@@ -861,8 +861,8 @@
     "exdiv_in_life": false
    },
    "entry_live": 3.18,
-   "last_pnl": 0.899,
-   "last_at": "2026-11-06T11:42-05:00",
+   "last_pnl": 0.78,
+   "last_at": "2026-11-06T11:57-05:00",
    "closed": {
     "kind": "stop",
     "time": "2026-11-03T10:57-05:00",
@@ -907,8 +907,8 @@
     "exdiv_in_life": false
    },
    "entry_live": 2.84,
-   "last_pnl": 4.663,
-   "last_at": "2026-11-06T11:42-05:00",
+   "last_pnl": 4.509,
+   "last_at": "2026-11-06T11:57-05:00",
    "closed": {
     "kind": "tp",
     "time": "2026-11-04T10:57-05:00",
@@ -955,8 +955,8 @@
     "exdiv_in_life": false
    },
    "entry_live": 2.23,
-   "last_pnl": -0.986,
-   "last_at": "2026-11-06T11:42-05:00",
+   "last_pnl": -0.995,
+   "last_at": "2026-11-06T11:57-05:00",
    "closed": {
     "kind": "stop",
     "time": "2026-11-04T09:57-05:00",
@@ -1003,8 +1003,8 @@
     "m_breadth": 8
    },
    "entry_live": 2.46,
-   "last_pnl": -0.918,
-   "last_at": "2026-11-06T11:42-05:00",
+   "last_pnl": -0.944,
+   "last_at": "2026-11-06T11:57-05:00",
    "closed": {
     "kind": "stop",
     "time": "2026-11-04T11:27-05:00",
@@ -1049,8 +1049,8 @@
     "m_breadth": 3
    },
    "entry_live": 2.32,
-   "last_pnl": 0.763,
-   "last_at": "2026-11-06T11:42-05:00",
+   "last_pnl": 0.743,
+   "last_at": "2026-11-06T11:57-05:00",
    "closed": {
     "kind": "tp",
     "time": "2026-11-05T09:57-05:00",
@@ -1145,8 +1145,8 @@
     "m_driver_al": 1
    },
    "entry_live": 3.5,
-   "last_pnl": 0.396,
-   "last_at": "2026-11-06T11:42-05:00",
+   "last_pnl": 0.447,
+   "last_at": "2026-11-06T11:57-05:00",
    "closed": {
     "kind": "tp",
     "time": "2026-11-05T15:42-05:00",
@@ -1248,8 +1248,8 @@
     "m_driver_al": 1
    },
    "entry_live": 1.76,
-   "last_pnl": 0.033,
-   "last_at": "2026-11-06T11:42-05:00",
+   "last_pnl": 0.106,
+   "last_at": "2026-11-06T11:57-05:00",
    "closed": {
     "kind": "stop",
     "time": "2026-11-05T09:57-05:00",
@@ -1350,8 +1350,8 @@
     "m_driver_al": 1
    },
    "entry_live": 1.02,
-   "last_pnl": -0.647,
-   "last_at": "2026-11-06T11:42-05:00",
+   "last_pnl": -0.578,
+   "last_at": "2026-11-06T11:57-05:00",
    "closed": {
     "kind": "stop",
     "time": "2026-11-05T09:57-05:00",
@@ -1450,8 +1450,8 @@
     "m_driver_al": 1
    },
    "entry_live": 2.84,
-   "last_pnl": -0.921,
-   "last_at": "2026-11-06T11:12-05:00",
+   "last_pnl": -0.931,
+   "last_at": "2026-11-06T11:57-05:00",
    "closed": {
     "kind": "stop",
     "time": "2026-11-05T09:57-05:00",
@@ -1500,8 +1500,8 @@
     "m_breadth": 9
    },
    "entry_live": 3.11,
-   "last_pnl": -0.874,
-   "last_at": "2026-11-06T11:42-05:00",
+   "last_pnl": -0.877,
+   "last_at": "2026-11-06T11:57-05:00",
    "closed": {
     "kind": "stop",
     "time": "2026-11-05T09:57-05:00",
@@ -1546,8 +1546,8 @@
     "m_breadth": 2
    },
    "entry_live": 2.36,
-   "last_pnl": 5.818,
-   "last_at": "2026-11-06T11:42-05:00",
+   "last_pnl": 5.775,
+   "last_at": "2026-11-06T11:57-05:00",
    "closed": {
     "kind": "tp",
     "time": "2026-11-05T09:57-05:00",
@@ -1594,8 +1594,8 @@
     "m_breadth": 2
    },
    "entry_live": 3.29,
-   "last_pnl": 1.088,
-   "last_at": "2026-11-06T11:42-05:00",
+   "last_pnl": 1.047,
+   "last_at": "2026-11-06T11:57-05:00",
    "closed": {
     "kind": "tp",
     "time": "2026-11-05T09:57-05:00",
@@ -1618,7 +1618,9 @@
    "earn": null,
    "status": "open",
    "peak": 0.288,
-   "alerts": {},
+   "alerts": {
+    "broken": "2026-11-06T11:57-05:00"
+   },
    "entry_src": "alpaca",
    "entry_yahoo": 3.15,
    "entry_spr": 0.042,
@@ -1643,8 +1645,8 @@
     "m_driver_al": 1
    },
    "entry_live": 3.08,
-   "last_pnl": -0.176,
-   "last_at": "2026-11-06T11:42-05:00"
+   "last_pnl": -0.211,
+   "last_at": "2026-11-06T11:57-05:00"
   },
   {
    "id": "COIN:PUT:2026-11-13:130",
@@ -1685,8 +1687,8 @@
     "m_driver_al": 1
    },
    "entry_live": 3.35,
-   "last_pnl": 0.331,
-   "last_at": "2026-11-06T11:42-05:00"
+   "last_pnl": 0.268,
+   "last_at": "2026-11-06T11:57-05:00"
   },
   {
    "id": "MSTR:PUT:2026-11-13:120",
@@ -1727,8 +1729,8 @@
     "m_driver_al": 1
    },
    "entry_live": 2.97,
-   "last_pnl": 0.031,
-   "last_at": "2026-11-06T11:42-05:00"
+   "last_pnl": -0.024,
+   "last_at": "2026-11-06T11:57-05:00"
   },
   {
    "id": "UBER:PUT:2026-11-20:68",
@@ -1770,8 +1772,8 @@
     "m_breadth": 11
    },
    "entry_live": 2.08,
-   "last_pnl": -0.435,
-   "last_at": "2026-11-06T11:27-05:00",
+   "last_pnl": -0.453,
+   "last_at": "2026-11-06T11:57-05:00",
    "closed": {
     "kind": "stop",
     "time": "2026-11-06T10:12-05:00",
@@ -1817,8 +1819,8 @@
     "m_breadth": 11
    },
    "entry_live": 1.28,
-   "last_pnl": -0.219,
-   "last_at": "2026-11-06T11:42-05:00"
+   "last_pnl": -0.25,
+   "last_at": "2026-11-06T11:57-05:00"
   },
   {
    "id": "SOFI:PUT:2026-11-20:16",
@@ -1862,8 +1864,8 @@
     "m_driver_al": 1
    },
    "entry_live": 0.83,
-   "last_pnl": -0.31,
-   "last_at": "2026-11-06T11:42-05:00"
+   "last_pnl": -0.333,
+   "last_at": "2026-11-06T11:57-05:00"
   },
   {
    "id": "SNAP:PUT:2026-11-20:6",
@@ -1940,8 +1942,8 @@
     "m_breadth": 6
    },
    "entry_live": 3.33,
-   "last_pnl": -0.105,
-   "last_at": "2026-11-06T11:42-05:00"
+   "last_pnl": -0.087,
+   "last_at": "2026-11-06T11:57-05:00"
   },
   {
    "id": "AMZN:CALL:2026-11-13:270",
@@ -1979,8 +1981,8 @@
     "m_breadth": 5
    },
    "entry_live": 2.84,
-   "last_pnl": -0.083,
-   "last_at": "2026-11-06T11:42-05:00"
+   "last_pnl": -0.069,
+   "last_at": "2026-11-06T11:57-05:00"
   },
   {
    "id": "XOM:PUT:2026-11-13:165",
@@ -2024,8 +2026,8 @@
     "m_driver_al": 0
    },
    "entry_live": 3.12,
-   "last_pnl": -0.295,
-   "last_at": "2026-11-06T11:42-05:00"
+   "last_pnl": -0.24,
+   "last_at": "2026-11-06T11:57-05:00"
   },
   {
    "id": "CVX:PUT:2026-11-13:210@2026-11-06",
@@ -2069,8 +2071,8 @@
     "m_driver_al": 0
    },
    "entry_live": 2.87,
-   "last_pnl": -0.358,
-   "last_at": "2026-11-06T11:42-05:00"
+   "last_pnl": -0.28,
+   "last_at": "2026-11-06T11:57-05:00"
   },
   {
    "id": "UBER:CALL:2026-11-20:71",
@@ -2108,8 +2110,8 @@
     "m_breadth": 5
    },
    "entry_live": 1.66,
-   "last_pnl": -0.121,
-   "last_at": "2026-11-06T11:42-05:00"
+   "last_pnl": -0.085,
+   "last_at": "2026-11-06T11:57-05:00"
   },
   {
    "id": "NVDA:PUT:2026-11-11:185",
@@ -2147,8 +2149,8 @@
     "m_breadth": 6
    },
    "entry_live": 3.11,
-   "last_pnl": 0.318,
-   "last_at": "2026-11-06T11:42-05:00"
+   "last_pnl": 0.3,
+   "last_at": "2026-11-06T11:57-05:00"
   },
   {
    "id": "PLTR:PUT:2026-11-13:155",
@@ -2186,8 +2188,8 @@
     "m_breadth": 6
    },
    "entry_live": 2.85,
-   "last_pnl": -0.051,
-   "last_at": "2026-11-06T11:42-05:00"
+   "last_pnl": -0.014,
+   "last_at": "2026-11-06T11:57-05:00"
   },
   {
    "id": "GOOGL:CALL:2026-11-11:292.5",
@@ -2225,8 +2227,8 @@
     "m_breadth": 8
    },
    "entry_live": 3.15,
-   "last_pnl": -0.147,
-   "last_at": "2026-11-06T11:42-05:00"
+   "last_pnl": -0.192,
+   "last_at": "2026-11-06T11:57-05:00"
   }
  ],
  "summary_date": "2026-11-05"
