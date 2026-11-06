@@ -395,6 +395,17 @@
    "time": "2026-11-06T10:29-05:00",
    "price": null,
    "qty": null
+  },
+  "PFE:PUT:2026-11-20:30|2026-11-06": {
+   "mode": "watch",
+   "ticker": "PFE",
+   "side": "PUT",
+   "exp": "2026-11-20",
+   "strike": 30.0,
+   "day": "2026-11-06",
+   "time": "2026-11-06T14:01-05:00",
+   "price": null,
+   "qty": null
   }
  }
 }
