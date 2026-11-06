@@ -238,7 +238,7 @@
  "out_above": null,
  "below_alerted": true,
  "last_err": null,
- "last_daily": null,
+ "last_daily": "2026-11-06",
  "stopped": false,
  "rng": 0.05,
  "ncells": 20
