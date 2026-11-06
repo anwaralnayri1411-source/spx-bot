@@ -805,3 +805,6 @@ id,time,project,tag,sym,root,side,strike,exp,entry,spot,edge,strength
 20261106T1127|stocks|open_same_dir|COIN|PUT|125|2026-11-13,2026-11-06T11:27-05:00,stocks,open_same_dir,COIN,COIN,PUT,125.0,2026-11-13,3.0,132.86,7.0,7.6
 20261106T1127|stocks|open_same_dir|BAC|PUT|50|2026-11-27,2026-11-06T11:27-05:00,stocks,open_same_dir,BAC,BAC,PUT,50.0,2026-11-27,1.33,49.92,4.5,7.5
 20261106T1127|stocks|open_same_dir|HOOD|PUT|75|2026-11-27,2026-11-06T11:27-05:00,stocks,open_same_dir,HOOD,HOOD,PUT,75.0,2026-11-27,3.45,79.52,5.5,7.0
+20261106T1142|stocks|earn_in_life|DIS|CALL|120|2026-11-27,2026-11-06T11:42-05:00,stocks,earn_in_life,DIS,DIS,CALL,120.0,2026-11-27,3.16,117.19,3.5,5.4
+20261106T1142|stocks|open_same_dir|COIN|PUT|125|2026-11-13,2026-11-06T11:42-05:00,stocks,open_same_dir,COIN,COIN,PUT,125.0,2026-11-13,2.88,133.26,7.0,7.6
+20261106T1142|stocks|open_same_dir|HOOD|PUT|75|2026-11-27,2026-11-06T11:42-05:00,stocks,open_same_dir,HOOD,HOOD,PUT,75.0,2026-11-27,3.32,79.85,5.5,7.0
