@@ -14,8 +14,8 @@
    "strength": "5.0",
    "occ": "AMZN261120C00272500",
    "peak_pnl": 0.233,
-   "close_pnl": 0.045,
-   "quotes": 71,
+   "close_pnl": 0.137,
+   "quotes": 72,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -34,8 +34,48 @@
    "strength": "6.8",
    "occ": "SPY261109C00745000",
    "peak_pnl": 0.067,
-   "close_pnl": -0.174,
-   "quotes": 4,
+   "close_pnl": -0.048,
+   "quotes": 5,
+   "out": "",
+   "out_time": "",
+   "out_pnl": ""
+  },
+  {
+   "id": "20261106T1012|stocks|open_same_dir|HOOD|PUT|75|2026-11-27",
+   "project": "stocks",
+   "tag": "open_same_dir",
+   "sym": "HOOD",
+   "side": "PUT",
+   "strike": 75.0,
+   "exp": "2026-11-27",
+   "entry": 3.17,
+   "entry_time": "2026-11-06T10:12-05:00",
+   "edge": "5.5",
+   "strength": "7.0",
+   "occ": "HOOD261127P00075000",
+   "peak_pnl": 0.0,
+   "close_pnl": -0.032,
+   "quotes": 1,
+   "out": "",
+   "out_time": "",
+   "out_pnl": ""
+  },
+  {
+   "id": "20261106T1012|stocks|open_same_dir|COIN|PUT|129|2026-11-13",
+   "project": "stocks",
+   "tag": "open_same_dir",
+   "sym": "COIN",
+   "side": "PUT",
+   "strike": 129.0,
+   "exp": "2026-11-13",
+   "entry": 3.3,
+   "entry_time": "2026-11-06T10:12-05:00",
+   "edge": "5.5",
+   "strength": "6.8",
+   "occ": "COIN261113P00129000",
+   "peak_pnl": 0.0,
+   "close_pnl": -0.036,
+   "quotes": 1,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -1082,7 +1122,10 @@
   "20261106T0950|spx|report_day|SPY|CALL|745|2026-11-09",
   "20261106T0955|spx|report_day|SPY|CALL|745|2026-11-09",
   "20261106T1005|spx|repeat_side|SPY|CALL|745|2026-11-09",
-  "20261106T1010|spx|repeat_side|SPY|CALL|745|2026-11-09"
+  "20261106T1010|spx|repeat_side|SPY|CALL|745|2026-11-09",
+  "20261106T1015|spx|repeat_side|SPY|CALL|745|2026-11-09",
+  "20261106T1012|stocks|open_same_dir|HOOD|PUT|75|2026-11-27",
+  "20261106T1012|stocks|open_same_dir|COIN|PUT|129|2026-11-13"
  ],
  "last": {
   "spx|CALL|SPY": "2026-11-06T09:50-05:00",
@@ -1159,6 +1202,8 @@
   "stocks|CVX|PUT|2026-11-05": "2026-11-05T10:12-05:00",
   "stocks|PLTR|PUT|2026-11-05": "2026-11-05T10:12-05:00",
   "stocks|MSFT|CALL|2026-11-05": "2026-11-05T10:42-05:00",
-  "stocks|INTC|PUT|2026-11-05": "2026-11-05T11:42-05:00"
+  "stocks|INTC|PUT|2026-11-05": "2026-11-05T11:42-05:00",
+  "stocks|HOOD|PUT|2026-11-06": "2026-11-06T10:12-05:00",
+  "stocks|COIN|PUT|2026-11-06": "2026-11-06T10:12-05:00"
  }
 }
