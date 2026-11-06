@@ -46,7 +46,8 @@
    "bank of america stock reaffirms medium term targets at boston event",
    "jpm flags higher rate risks can its balance sheet stay resilient",
    "bank of america stock nii growth seen at 8 through 2027",
-   "bac sees untapped merrill banking potential can cross selling pay off"
+   "bac sees untapped merrill banking potential can cross selling pay off",
+   "bank of america revamps uber stock target amid rider price paradox"
   ],
   "AMZN:CALL": [
    "starting jan 1 2027 amazon seasonal workers get day one health coverage if they work at least 30 hours a week",
@@ -1755,14 +1756,6 @@
    "el salvador keeps buying bitcoin despite 6 btc drop holdings reach 7 827"
   ],
   "HOOD:PUT": [
-   "robinhood reveals its dark horse as stock token haunts earnings call",
-   "btc cost basis quantile bands indicator by thescalpingant",
-   "bitcoin near 80 8k as fed holds rates two officials seek hike",
-   "glassnode sees bitcoin testing 78k as etf buying support fades",
-   "jason calacanis bleak bitcoin prediction draws 3m in rival bets but he won t bite",
-   "btc price on oct 28 2026 at 4pm edt crypto prediction market",
-   "jason calacanis bets bitcoin will never hit a n",
-   "bitcoin could hit 1 6m by 2036 with 34 3 annu",
    "bitcoin price climbs above 81 000 on binance hitting 81 280 in spot trading",
    "robinhood s crypto revenue fell 55 in a year is retail money leaving crypto",
    "fed holds rates but dissent keeps bitcoin gold and tech stocks under pressure",
@@ -2154,7 +2147,15 @@
    "oolong price oolong price live charts and marketcap coinbase spain",
    "about best buy stove tokenized stock",
    "brainchain price brain price live charts and marketcap coinbase spain",
-   "moon doge price doge price live charts and marketcap coinbase spain"
+   "moon doge price doge price live charts and marketcap coinbase spain",
+   "bitcoin faces heavy liquidations and volatility after surging past 81k then dropping below key support",
+   "bitcoin price dips under 75k as crypto markets miss tech stock rebound",
+   "is xrp a good investment right now at 1 18",
+   "bitcoin etfs bleed 430 million as tech rout tests wall street buyers",
+   "is coinbase building a more resilient and profitable business",
+   "top financial stocks to keep an eye on november 6th",
+   "solana price outlook as btc slips below 76k how much lower could sol go",
+   "riot platforms jumps 12 as ai data center bets lift bitcoin miners despite flat bitcoin hut 8 surges 12 mara climbs 4"
   ],
   "AAPL:CALL": [
    "loop capital lowers apple stock price target on iphone shipment concerns",
@@ -2702,7 +2703,9 @@
    "energy briefs falling oil prices and iran s latest move",
    "oil heads for steepest weekly decline since 2020 as iran diplomacy hopes grow",
    "produce exports corn imports food prices",
-   "u s oil gas drillers see minor uptick as oil prices crash"
+   "u s oil gas drillers see minor uptick as oil prices crash",
+   "energy stocks rose even as oil prices slipped",
+   "energy reliability is becoming more important than energy politics"
   ],
   "MSFT:CALL": [
    "forget the 12 month squeeze microsoft is primed for an explosive ai payoff",
@@ -2914,7 +2917,9 @@
    "energy briefs falling oil prices and iran s latest move",
    "oil heads for steepest weekly decline since 2020 as iran diplomacy hopes grow",
    "produce exports corn imports food prices",
-   "u s oil gas drillers see minor uptick as oil prices crash"
+   "u s oil gas drillers see minor uptick as oil prices crash",
+   "energy stocks rose even as oil prices slipped",
+   "energy reliability is becoming more important than energy politics"
   ],
   "JPM:CALL": [
    "which profit leader pays the most with yields between 0 31 and 2 32 bank of america nyse bac exxon mobil nyse xom johnso",
@@ -3220,7 +3225,13 @@
    "oolong price oolong price live charts and marketcap coinbase spain",
    "about best buy stove tokenized stock",
    "brainchain price brain price live charts and marketcap coinbase spain",
-   "moon doge price doge price live charts and marketcap coinbase spain"
+   "moon doge price doge price live charts and marketcap coinbase spain",
+   "bitcoin faces heavy liquidations and volatility after surging past 81k then dropping below key support",
+   "bitcoin price dips under 75k as crypto markets miss tech stock rebound",
+   "is xrp a good investment right now at 1 18",
+   "bitcoin etfs bleed 430 million as tech rout tests wall street buyers",
+   "solana price outlook as btc slips below 76k how much lower could sol go",
+   "riot platforms jumps 12 as ai data center bets lift bitcoin miners despite flat bitcoin hut 8 surges 12 mara climbs 4"
   ],
   "SOFI:PUT": [
    "nasdaq ceo adena friedman says 23 hour trading starts dec 6 what it means for your retirement money",
@@ -3256,7 +3267,8 @@
    "alphabet tpu sales and gemini enterprise are reshaping the bull case nasdaq goog",
    "google adds spacex shares as 900m bet reaches 69 billion alphabet nasdaq googl",
    "alphabet why the company remains a strong buy nasdaq goog"
-  ]
+  ],
+  "PFE:PUT": []
  },
  "fired": {
   "F:CALL:2026-11-20:11.5": [
@@ -3341,7 +3353,10 @@
    "news:bitcoin price prediction btc crashes toward 75k as etfs lose 430m",
    "news:bitcoin tumbles on etf flows liquidations iren leads miner rebound attempt",
    "news:crypto liquidations top 1 billion as bitcoin tests 11 week low",
-   "news:bitcoin under 76 000 after 430m etf outflows has it bottomed"
+   "news:bitcoin under 76 000 after 430m etf outflows has it bottomed",
+   "news:bitcoin faces heavy liquidations and volatility after surging past 81k then dropping below key support",
+   "news:bitcoin price dips under 75k as crypto markets miss tech stock rebound",
+   "news:bitcoin etfs bleed 430 million as tech rout tests wall street buyers"
   ],
   "MSTR:PUT:2026-11-13:120": [
    "up0.25",
@@ -3409,7 +3424,10 @@
    "news:bitcoin tumbles on etf flows liquidations iren leads miner rebound attempt",
    "news:crypto liquidations top 1 billion as bitcoin tests 11 week low",
    "news:strive s bitcoin gains drive 509 million q3 profit as btc buying ramps up",
-   "news:bitcoin under 76 000 after 430m etf outflows has it bottomed"
+   "news:bitcoin under 76 000 after 430m etf outflows has it bottomed",
+   "news:bitcoin faces heavy liquidations and volatility after surging past 81k then dropping below key support",
+   "news:bitcoin price dips under 75k as crypto markets miss tech stock rebound",
+   "news:bitcoin etfs bleed 430 million as tech rout tests wall street buyers"
   ],
   "BAC:PUT:2026-11-20:50": [
    "sharp@2026-11-06T09:48-05:00",
@@ -3436,7 +3454,11 @@
    "sharp@2026-11-06T10:46-05:00",
    "sharp@2026-11-06T10:51-05:00",
    "stock1",
-   "sharp@2026-11-06T13:33-05:00"
+   "sharp@2026-11-06T13:33-05:00",
+   "down-0.15",
+   "stock2",
+   "sharp@2026-11-06T13:53-05:00",
+   "stock3"
   ],
   "AMZN:CALL:2026-11-13:270": [
    "down-0.15",
@@ -3476,7 +3498,8 @@
   "UBER:CALL:2026-11-20:71": [
    "sharp@2026-11-06T10:32-05:00",
    "down-0.15",
-   "stock1"
+   "stock1",
+   "down-0.3"
   ],
   "PLTR:PUT:2026-11-13:155": [
    "sharp@2026-11-06T10:50-05:00"
@@ -3485,20 +3508,17 @@
    "down-0.15",
    "news:google adds spacex shares as 900m bet reaches 69 billion alphabet nasdaq googl",
    "down-0.3"
-  ]
+  ],
+  "PFE:PUT:2026-11-20:30": []
  },
  "stock_level": {
   "F:CALL:2026-11-20:11.5": 2,
   "SOFI:PUT:2026-11-20:16": 3,
   "HOOD:PUT:2026-11-20:75": 3,
-  "INTC:PUT:2026-11-20:55": 1,
+  "INTC:PUT:2026-11-20:55": 3,
   "UBER:CALL:2026-11-20:71": 1
  },
  "seen_macro": [
-  "gold slips below 4 000 as oil prices us inflation fuel fed rate hike bets",
-  "gas prices remain volatile heading into winter",
-  "stock market today oct 30 2026 nasdaq futures fall as amazon intel losses shake wall street",
-  "share market today nifty 50 bank nifty oct 30 2026",
   "what does shake up of future federal reserve meetings mean for interest rates",
   "amd stock drops 8 ahead of earnings despite wall street s 17 upside forecast",
   "peter schiff slams trump s tariffs as complete failure after september trade deficit hits 134 9 billion worst economy in",
@@ -4094,7 +4114,11 @@
   "furniture stocks reverse course as 25 decline in broad wall street sell off",
   "trump blames democrats for stock market plunge after wall street s worst drop since second quarter of 2025",
   "samvat 2082 commodities witness sharp volatility as crude surges",
-  "federal reserve rate hike bets strengthen as us jobs growth beats estimates"
+  "federal reserve rate hike bets strengthen as us jobs growth beats estimates",
+  "breaking us china trade chiefs hold call ahead of trump xi summit in shenzhen",
+  "what the seismic midterm result means for the fed and interest rates",
+  "san francisco fed president daly says higher rates are likely to be needed in inflation fight",
+  "the return of rising rates"
  ],
  "sharp": {
   "F:CALL:2026-11-20:11.5": 12.405,
@@ -4104,7 +4128,7 @@
   "SNAP:PUT:2026-11-20:6": 5.185,
   "BAC:PUT:2026-11-20:50": 50.31,
   "UBER:CALL:2026-11-20:71": 69.415,
-  "INTC:PUT:2026-11-20:55": 56.29,
+  "INTC:PUT:2026-11-20:55": 57.0,
   "PLTR:PUT:2026-11-13:155": 161.18
  }
 }
