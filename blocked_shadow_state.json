@@ -14,8 +14,8 @@
    "strength": "5.0",
    "occ": "AMZN261120C00272500",
    "peak_pnl": 0.233,
-   "close_pnl": 0.042,
-   "quotes": 70,
+   "close_pnl": 0.045,
+   "quotes": 71,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -34,8 +34,8 @@
    "strength": "6.8",
    "occ": "SPY261109C00745000",
    "peak_pnl": 0.067,
-   "close_pnl": -0.171,
-   "quotes": 3,
+   "close_pnl": -0.174,
+   "quotes": 4,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -1081,7 +1081,8 @@
   "20261105T1527|stocks|open_same_dir|CVX|PUT|210|2026-11-13",
   "20261106T0950|spx|report_day|SPY|CALL|745|2026-11-09",
   "20261106T0955|spx|report_day|SPY|CALL|745|2026-11-09",
-  "20261106T1005|spx|repeat_side|SPY|CALL|745|2026-11-09"
+  "20261106T1005|spx|repeat_side|SPY|CALL|745|2026-11-09",
+  "20261106T1010|spx|repeat_side|SPY|CALL|745|2026-11-09"
  ],
  "last": {
   "spx|CALL|SPY": "2026-11-06T09:50-05:00",
