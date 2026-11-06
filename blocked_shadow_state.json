@@ -14,8 +14,8 @@
    "strength": "5.0",
    "occ": "AMZN261120C00272500",
    "peak_pnl": 0.233,
-   "close_pnl": -0.051,
-   "quotes": 126,
+   "close_pnl": -0.084,
+   "quotes": 127,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -34,8 +34,8 @@
    "strength": "7.0",
    "occ": "HOOD261127P00075000",
    "peak_pnl": 0.174,
-   "close_pnl": -0.057,
-   "quotes": 55,
+   "close_pnl": -0.05,
+   "quotes": 56,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -54,8 +54,8 @@
    "strength": "6.8",
    "occ": "COIN261113P00129000",
    "peak_pnl": 0.3,
-   "close_pnl": -0.085,
-   "quotes": 55,
+   "close_pnl": -0.07,
+   "quotes": 56,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -75,7 +75,7 @@
    "occ": "MSTR261113P00114000",
    "peak_pnl": 0.054,
    "close_pnl": -0.286,
-   "quotes": 49,
+   "quotes": 50,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -95,7 +95,7 @@
    "occ": "DIS261127C00120000",
    "peak_pnl": 0.035,
    "close_pnl": -0.035,
-   "quotes": 41,
+   "quotes": 42,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -114,8 +114,8 @@
    "strength": "7.5",
    "occ": "BAC261127P00050000",
    "peak_pnl": 0.0,
-   "close_pnl": -0.068,
-   "quotes": 41,
+   "close_pnl": -0.038,
+   "quotes": 42,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -135,7 +135,7 @@
    "occ": "WMT261120C00129000",
    "peak_pnl": 0.0,
    "close_pnl": -0.141,
-   "quotes": 27,
+   "quotes": 28,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -154,8 +154,8 @@
    "strength": "6.4",
    "occ": "SPY261109C00740000",
    "peak_pnl": 0.055,
-   "close_pnl": -0.034,
-   "quotes": 14,
+   "close_pnl": -0.094,
+   "quotes": 15,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -1297,7 +1297,13 @@
   "20261106T1457|stocks|open_same_dir|COIN|PUT|127|2026-11-13",
   "20261106T1457|stocks|open_same_dir|BAC|PUT|50|2026-11-27",
   "20261106T1457|stocks|open_same_dir|HOOD|PUT|75|2026-11-27",
-  "20261106T1510|spx|late_entry|SPY|CALL|740|2026-11-09"
+  "20261106T1510|spx|late_entry|SPY|CALL|740|2026-11-09",
+  "20261106T1515|spx|late_entry|SPY|CALL|740|2026-11-09",
+  "20261106T1512|stocks|earn_in_life|DIS|CALL|120|2026-11-27",
+  "20261106T1512|stocks|earn_in_life|WMT|CALL|128|2026-11-20",
+  "20261106T1512|stocks|open_same_dir|BAC|PUT|50|2026-11-27",
+  "20261106T1512|stocks|open_same_dir|COIN|PUT|127|2026-11-13",
+  "20261106T1512|stocks|open_same_dir|HOOD|PUT|75|2026-11-27"
  ],
  "last": {
   "spx|CALL|SPY": "2026-11-06T13:55-05:00",
