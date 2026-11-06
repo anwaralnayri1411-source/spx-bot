@@ -1344,12 +1344,6 @@
    "jpmorgan chase nyse jpm lifts interest income outlook as lending offsets trading slowdown"
   ],
   "COIN:PUT": [
-   "how bitcoin pushed its way over the 65 000 marker",
-   "bitwise raises bitcoin price target to 1 6m by 2036 publishes 2027 bitcoin long term capital market assumptions",
-   "bitcoin s fight to break 85k continues says glassnode",
-   "why is crypto market up today surge or crash after fed decision",
-   "bittensor price prediction can tao recover above usd 270 after recent decline",
-   "bitcoin etf inflows hit 176m as btc price clim",
    "btc usd forecast today 28 10 5 signals point to 100k",
    "is the uptober tradition breaking in bitcoin analyst points to us midterm elections shares critical data",
    "fomc meeting today bitcoin gold and silver price outlook ahead of fed rate decision",
@@ -1743,16 +1737,15 @@
    "bitcoin price prediction scaramucci sees second chance as btc revisits 76 000",
    "bitcoin price sits at 75 500 after hot october jobs report",
    "bank of england raises rates to 4 as it forecasts inflation near 5 next year",
-   "analyst warns bitcoin should be down 40 after two weeks of chaos"
+   "analyst warns bitcoin should be down 40 after two weeks of chaos",
+   "bitcoin etfs see 430 million of outflows as u s market plunges",
+   "bitcoin trades at a u s discount amid rising i",
+   "btc price on nov 5 2026 at 10pm est prediction markets",
+   "crypto bull run bank of england hikes to 4 while bitcoin holds 80 000 and early buyers pick pepeto",
+   "ethereum price strong jobs data lifts fed hike odds",
+   "btc price on nov 6 2026 at 11am est prediction market"
   ],
   "HOOD:PUT": [
-   "robinhood tumbles after q3 earnings miss analysts cut price targets",
-   "does ai agent risk reach four stocks robinhood nasdaq hood sofi nasdaq sofi microsoft nasdaq msft and broadcom nasdaq av",
-   "bitwise raises bitcoin price forecast to 1 6m by 2036 citing strong institutional demand and limited supply",
-   "how vulnerable is robinhood nasdaq hood to order mistakes with shares down about 8",
-   "bitcoin price target 2036 raised to 1 6 million by bitwise",
-   "bitcoin analysis what s next for btc after the fed meeting",
-   "bitcoin s next move is now tied to oil prices says wintermute",
    "robinhood earnings miss crypto weakness fail to shake wall street s bullish outlook",
    "bitcoin is becoming collateral for traditional corporate borrowing",
    "bitcoin price bounce rejected at 50 day trend line ahead of fomc earnings",
@@ -2145,7 +2138,14 @@
    "bitcoin price sits at 75 500 after hot october jobs report",
    "bank of england raises rates to 4 as it forecasts inflation near 5 next year",
    "analyst warns bitcoin should be down 40 after two weeks of chaos",
-   "btc to inr bitcoin price in indian rupee"
+   "btc to inr bitcoin price in indian rupee",
+   "bitcoin etfs see 430 million of outflows as u s market plunges",
+   "what just happened to robinhood stock",
+   "bitcoin trades at a u s discount amid rising i",
+   "btc price on nov 5 2026 at 10pm est prediction markets",
+   "crypto bull run bank of england hikes to 4 while bitcoin holds 80 000 and early buyers pick pepeto",
+   "ethereum price strong jobs data lifts fed hike odds",
+   "btc price on nov 6 2026 at 11am est prediction market"
   ],
   "AAPL:CALL": [
    "loop capital lowers apple stock price target on iphone shipment concerns",
@@ -2231,7 +2231,8 @@
    "nvidia stock climbs after new plans to reduce china business risk",
    "why did usd 5 trillion leave ai stocks and is nvidia nasdaq nvda still leading the losses",
    "why nvidia stock can ride a data center crackdown",
-   "why nvidia stock can ride a democrat ai data center crackdown"
+   "why nvidia stock can ride a democrat ai data center crackdown",
+   "semiconductor stocks tsmc tsm nvidia nvda and amd rebound after a midterm drop"
   ],
   "AMZN:PUT": [
    "amazon com price target lowered to 300 from 325 at scotiabank",
@@ -2387,7 +2388,8 @@
    "is palantir stock ready for slower growth",
    "palantir s ceo just said what wall street doesn t want to hear about ai",
    "why palantir stock pltr is still a buy after its q3 pullback",
-   "is palantir stock a buy on the dip as revenue continues to surge"
+   "is palantir stock a buy on the dip as revenue continues to surge",
+   "palantir technologies inc stock pltr moved up by 4 57 on nov 6 facts behind the movement"
   ],
   "F:CALL": [
    "ford october u s sales slip as electric vehicle deliveries plunge f nyse",
@@ -2646,7 +2648,8 @@
    "aaa texas reports gas prices drop alongside crude oil costs",
    "crude oil prices settle higher as distillate supplies remain tight",
    "energy stocks and industry news oil gas solar coal and nuclear energy",
-   "conocophillips doubles profit to 4 billion raises dividend"
+   "conocophillips doubles profit to 4 billion raises dividend",
+   "gas prices for 11 06 26 national average down again what will you pay heading into the weekend"
   ],
   "MSFT:CALL": [
    "forget the 12 month squeeze microsoft is primed for an explosive ai payoff",
@@ -2825,7 +2828,8 @@
    "us upstream m a value climbs to 12 6 billion in third quarter enverus says",
    "conocophillips just raised its dividend 11 is the stock a buy",
    "oil prices plunge as vance blames iran war for republican election defeat",
-   "bailey speech latest oil price decline brings positive news"
+   "bailey speech latest oil price decline brings positive news",
+   "gas prices for 11 06 26 national average down again what will you pay heading into the weekend"
   ],
   "JPM:CALL": [
    "which profit leader pays the most with yields between 0 31 and 2 32 bank of america nyse bac exxon mobil nyse xom johnso",
@@ -3077,7 +3081,13 @@
    "bitcoin price sits at 75 500 after hot october jobs report",
    "bank of england raises rates to 4 as it forecasts inflation near 5 next year",
    "analyst warns bitcoin should be down 40 after two weeks of chaos",
-   "btc to inr bitcoin price in indian rupee"
+   "btc to inr bitcoin price in indian rupee",
+   "bitcoin etfs see 430 million of outflows as u s market plunges",
+   "bitcoin trades at a u s discount amid rising i",
+   "btc price on nov 5 2026 at 10pm est prediction markets",
+   "crypto bull run bank of england hikes to 4 while bitcoin holds 80 000 and early buyers pick pepeto",
+   "ethereum price strong jobs data lifts fed hike odds",
+   "btc price on nov 6 2026 at 11am est prediction market"
   ],
   "SOFI:PUT": [
    "nasdaq ceo adena friedman says 23 hour trading starts dec 6 what it means for your retirement money",
@@ -3092,7 +3102,8 @@
    "rbc capital sticks to their hold rating for snap snap",
    "why does a 10 6 drop hit snap nyse snap even after a swing to profit",
    "snap snap stock may trade at a discount despite user growth miss"
-  ]
+  ],
+  "UBER:CALL": []
  },
  "fired": {
   "F:CALL:2026-11-20:11.5": [
@@ -3168,7 +3179,9 @@
    "sharp@2026-11-06T09:46-05:00",
    "stock2",
    "sharp@2026-11-06T09:50-05:00",
-   "stock3"
+   "stock3",
+   "news:bitcoin etfs see 430 million of outflows as u s market plunges",
+   "news:ethereum price strong jobs data lifts fed hike odds"
   ],
   "COIN:PUT:2026-11-13:130": [
    "news:bitcoin price suddenly plunges to 76k as hourly liquidations near 600m",
@@ -3223,7 +3236,9 @@
    "news:bitcoin price goes wild again as us jobs report smashes expectations",
    "news:bitcoin drops to 75k amid rising volume and fe",
    "news:bitcoin drops to seven week low amid ai stock s",
-   "news:bank of england raises rates to 4 as it forecasts inflation near 5 next year"
+   "news:bank of england raises rates to 4 as it forecasts inflation near 5 next year",
+   "news:bitcoin etfs see 430 million of outflows as u s market plunges",
+   "news:ethereum price strong jobs data lifts fed hike odds"
   ],
   "MSTR:PUT:2026-11-13:120": [
    "up0.25",
@@ -3284,17 +3299,13 @@
    "news:bitcoin price goes wild again as us jobs report smashes expectations",
    "news:bitcoin drops to 75k amid rising volume and fe",
    "news:bitcoin drops to seven week low amid ai stock s",
-   "news:bitcoin price sits at 75 500 after hot october jobs report"
-  ],
-  "UBER:PUT:2026-11-20:68": [
-   "down-0.15",
-   "sharp@2026-11-05T14:44-05:00",
-   "down-0.3",
-   "stock1"
+   "news:bitcoin price sits at 75 500 after hot october jobs report",
+   "news:bitcoin etfs see 430 million of outflows as u s market plunges"
   ],
   "BAC:PUT:2026-11-20:50": [
    "sharp@2026-11-06T09:48-05:00",
-   "down-0.15"
+   "down-0.15",
+   "sharp@2026-11-06T10:19-05:00"
   ],
   "SOFI:PUT:2026-11-20:16": [
    "sharp@2026-11-05T15:23-05:00",
@@ -3310,25 +3321,23 @@
   "SNAP:PUT:2026-11-20:6": [
    "down-0.15",
    "sharp@2026-11-05T15:23-05:00"
-  ]
+  ],
+  "INTC:PUT:2026-11-20:55": [],
+  "AMZN:CALL:2026-11-13:270": [],
+  "XOM:PUT:2026-11-13:165": [],
+  "CVX:PUT:2026-11-13:210@2026-11-06": [],
+  "UBER:CALL:2026-11-20:71": [
+   "sharp@2026-11-06T10:32-05:00"
+  ],
+  "NVDA:PUT:2026-11-11:185": [],
+  "PLTR:PUT:2026-11-13:155": []
  },
  "stock_level": {
   "F:CALL:2026-11-20:11.5": 2,
-  "UBER:PUT:2026-11-20:68": 1,
   "SOFI:PUT:2026-11-20:16": 3,
   "HOOD:PUT:2026-11-20:75": 3
  },
  "seen_macro": [
-  "stock market today nasdaq plunges as google crashes 13 ai spending fears return",
-  "kevin warsh says interest rates get in the cracks of the economy",
-  "higher pce hints at possibility of higher mortgage rates u s news",
-  "this credit card is the best weapon to fight debt while interest rates keep climbing",
-  "oil uscrude price forecast for today tomorrow next week and next 30 days",
-  "robinhood misses profit estimates despite record trading volumes",
-  "alphabet heads for a 500 billion drop in market value the biggest in its history",
-  "gold remains stuck as the fed takes a hawkish pause tds melek",
-  "federal reserve holds interest rates steady for now",
-  "us interest rates held steady and economy grows what it means for you",
   "federal reserve decides to hold interest rates steady",
   "nasdaq falls as alphabet set for record loss amid ai spending woes",
   "u s economy grows 3 4 annualized in third quarter fed leaves rates unchanged how 11 outlets framed it",
@@ -3918,16 +3927,26 @@
   "october jobs report a strong one and not just a one off",
   "huge october jobs numbers small market reaction eyes still on ai",
   "fed rate hike bets rise after blowout jobs report",
-  "robust us jobs market boosts december rate hike chances"
+  "robust us jobs market boosts december rate hike chances",
+  "kazakhstan s growth to pick up to 4 9 in 2027 imf says",
+  "us economy adds 165 000 jobs as december fed rate hike odds rise",
+  "october jobs shock seals case for december fed rate hike",
+  "jobs report hiring surges past forecasts but paychecks still lose ground to inflation",
+  "not one analyst rates amazon a sell is wall street right",
+  "kazakhstan s growth to pick up in 2027 despite geopolitical tensions imf says",
+  "imf forecasts kazakhstan s economy to grow by 4 9 in 2027 euronews",
+  "us employment report labor market firing on all cylinders",
+  "us stock market today why is the nasdaq up 1 while",
+  "week ahead us cpi uk gdp and market outlook"
  ],
  "sharp": {
   "F:CALL:2026-11-20:11.5": 12.405,
   "MSTR:PUT:2026-11-13:120": 131.93,
   "HOOD:PUT:2026-11-20:75": 81.385,
   "COIN:PUT:2026-11-13:130": 139.14,
-  "UBER:PUT:2026-11-20:68": 68.84,
   "SOFI:PUT:2026-11-20:16": 16.56,
   "SNAP:PUT:2026-11-20:6": 5.185,
-  "BAC:PUT:2026-11-20:50": 49.91
+  "BAC:PUT:2026-11-20:50": 50.31,
+  "UBER:CALL:2026-11-20:71": 69.415
  }
 }
