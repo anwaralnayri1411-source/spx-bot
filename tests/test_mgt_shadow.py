@@ -94,3 +94,43 @@ def test_report_groups_entries_and_leads_with_real_result():
     assert "🌙 ليلاً 02:00–03:00: **2 CALL**" in txt and "🛑 2 وقف = **-300$**" in txt
     assert "☀️ الجلسة 09:40: **1 PUT**" in txt and "✅ 1 هدف = **+150$**" in txt
     assert txt.index("النتيجة الواقعية") < txt.index("سقف نظري")
+
+
+
+def test_price_band_follows_vix():
+    assert ms.price_band(None) == (2.90, 4.00, 3.50) and ms.price_band(17) == (2.90, 4.00, 3.50)
+    lo, hi, t = ms.price_band(21.25)
+    assert abs(t - 4.375) < 0.01 and abs(lo - 3.625) < 0.01 and abs(hi - 5.0) < 0.01
+    assert ms.price_band(50)[2] == 5.6 and ms.price_band(10)[2] == 2.8
+    ch = [{"side": "PUT", "strike": 7400.0, "ask": 4.4, "bid": 4.3}, {"side": "PUT", "strike": 7410.0, "ask": 3.5, "bid": 3.4}]
+    assert ms.pick_contract(ch, "PUT", 7450, 21.25)["strike"] == 7400.0 and ms.pick_contract(ch, "PUT", 7450)["strike"] == 7410.0
+
+
+def test_fade_side_and_spacing():
+    i = pd.date_range("2026-11-06 09:30", periods=3, freq="1min", tz=ms.NY)
+    b = pd.DataFrame({"h": [7444.0, 7420, 7410], "l": [7400.0, 7380, 7390], "c": [7420.0, 7400, 7400]}, index=i)
+    assert ms.fade_side(b, 7430, 0.002) == "PUT" and ms.fade_side(b, 7430, 0.001) is None
+    assert ms.fade_side(b, 7390, -0.002) == "CALL" and ms.fade_side(b, 7410, -0.002) is None
+    assert ms.fade_side(b.assign(h=7390.0), 7385, -0.002) is None                      # نطاق ضيق
+    n = datetime(2026, 11, 6, 11, 0, tzinfo=ms.NY)
+    st = {"last_fade": {"PUT": "2026-11-06T10:50-05:00"}}
+    assert not ms.fade_ok(st, "PUT", n) and ms.fade_ok(st, "PUT", n.replace(minute=5)) and ms.fade_ok(st, "CALL", n)
+
+
+def test_fade_quick_exit_results():
+    n = datetime(2026, 11, 6, 11, 0, tzinfo=ms.NY)
+    base = {"entry": 4.0, "peak": 4.0, "t": n.isoformat(timespec="minutes"), "trigger": "fade"}
+    e = dict(base)
+    for m, b in ((5, 4.5), (10, 5.3), (20, 9.0)):
+        ms.update_path(e, b, b + 0.1, n.replace(minute=m))
+    assert e["t_tp30"] == "11:10" and ms.results(e)["usd_real"] == 120.0 and ms.outcome(e) == "هدف"
+    e = dict(base)
+    for m, b in ((10, 3.5), (46, 3.2), (50, 1.0)):
+        ms.update_path(e, b, b + 0.1, n.replace(minute=m))
+    assert e["tx_bid"] == 3.2 and e["t_tx"] == "11:46" and round(ms.results(e)["usd_real"]) == -80 and ms.outcome(e) == "إغلاق"
+    e = dict(base)
+    ms.update_path(e, 1.9, 2.0, n.replace(minute=5))
+    assert ms.results(e)["usd_real"] == -200.0 and ms.outcome(e) == "وقف"
+    trend = {"entry": 4.0, "peak": 4.0, "t": n.isoformat(timespec="minutes"), "trigger": "mml"}
+    ms.update_path(trend, 5.3, 5.4, n.replace(minute=5))
+    assert "t_tp30" not in trend and abs(ms.results(trend)["usd_real"] - 130.0) < 1e-6           # الاتجاه: هدف +50% لم يبلغ بعد

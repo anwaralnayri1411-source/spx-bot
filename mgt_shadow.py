@@ -2,7 +2,8 @@
 """ظل MGT (H-MGTCLONE، مسجّل في CLAUDE.md 5/11/2026 بطلب المستخدم). ورق فقط: لا رسائل توصية ولا تغيير في أي بوت.
 
 ينسخ طريقة MGT كما استنتجناها (research/mgt_reverse_results.md): تصويت فريمات + ADX، زناد إغلاق 5د عبر خط Murrey Math،
-عقد SPXW بسعر ≈ 3.50$ ووقف 50%، وسلّم كل 5 نقاط، وفي الجلستين الليلية والرسمية، والاتجاهان معاً كما يفعلون.
+عقد SPXW بسعر ≈ 3.50$ يتحرك مع VIX ووقف 50%، وسلّم كل 5 نقاط، وفي الجلستين الليلية والرسمية، والاتجاهان معاً كما يفعلون.
+الإصدار 2 (8/11/2026): سقف السلّم 50، وأطراف النطاق في يوم التذبذب مع خروج سريع (CLAUDE.md).
 يسجّل كل دخول بكل ما كان حوله (القاما والدلتا والزخم…) ثم مسار العقد كل دقيقة، وتقرير نهاية الجلسة.
 الملفات في SPXBOT_DATA/mgt_shadow/ (خارج git). تشغيل كل دقيقة: python mgt_shadow.py [--force] [--no-send]
 """
@@ -24,7 +25,11 @@ STATE, ENTRIES, PATHS, TICKS = (os.path.join(DIR, f) for f in ("state.json", "en
 REPORT_MD = os.path.join(DIR, "reports.md")
 PRICE_LO, PRICE_HI, PRICE_T = 2.90, 4.00, 3.50
 STOP_FRAC = 0.50
-LADDER_PTS, MAX_PER_SIDE = 5.0, 12
+LADDER_PTS, MAX_PER_SIDE = 5.0, 50
+VIX_REF, VIX_MULT = 17.0, (0.8, 1.6)
+FADE_FROM, FADE_TO = dtime(10, 0), dtime(15, 0)
+FADE_ZONE, FADE_MOVE, FADE_MIN_RANGE, FADE_GAP_MIN = 0.30, 0.0015, 15.0, 15
+FADE_TP, FADE_MINUTES = 0.30, 45
 SCORE_MIN, ADX_MIN = 3, 15.0
 GTH_START, GTH_END = dtime(20, 15), dtime(9, 15)
 RTH_START, RTH_LAST_ENTRY, RTH_END = dtime(9, 30), dtime(15, 30), dtime(16, 0)
@@ -131,11 +136,41 @@ def decide(m1, sess_open, sess_vwap, pressure=0, flow=0):
     return side, total, det
 
 
-def pick_contract(chain, side, S):
-    """السترايك خارج المال بسعر طلب أقرب إلى 3.50$ ضمن 2.90–4.00$، أو None."""
-    ok = [r for r in chain if r["side"] == side and PRICE_LO <= r["ask"] <= PRICE_HI and
+def price_band(vix=None):
+    """(الأدنى، الأعلى، الهدف) لسعر العقد: 3.50$ × VIX/17 محصوراً، والنطاق بنسب 2.90–4.00 من 3.50."""
+    if not vix:
+        return PRICE_LO, PRICE_HI, PRICE_T
+    t = PRICE_T * min(max(vix / VIX_REF, VIX_MULT[0]), VIX_MULT[1])
+    return round(t * PRICE_LO / PRICE_T, 2), round(t * PRICE_HI / PRICE_T, 2), round(t, 2)
+
+
+def pick_contract(chain, side, S, vix=None):
+    """السترايك خارج المال بسعر طلب أقرب إلى الهدف ضمن النطاق (3.50$ و2.90–4.00$ عند VIX 17)، أو None."""
+    lo, hi, tgt = price_band(vix)
+    ok = [r for r in chain if r["side"] == side and lo <= r["ask"] <= hi and
           ((side == "CALL" and r["strike"] > S) or (side == "PUT" and r["strike"] < S))]
-    return min(ok, key=lambda r: abs(r["ask"] - PRICE_T)) if ok else None
+    return min(ok, key=lambda r: abs(r["ask"] - tgt)) if ok else None
+
+
+def fade_side(sess_bars, S, r30):
+    """أطراف النطاق: PUT في أعلى 30% بعد صعود 30د، وCALL في أدنى 30% بعد نزول، أو None."""
+    if sess_bars is None or not len(sess_bars) or r30 is None:
+        return None
+    hi, lo = float(sess_bars["h"].max()), float(sess_bars["l"].min())
+    rng = hi - lo
+    if rng < FADE_MIN_RANGE:
+        return None
+    pos = (S - lo) / rng
+    if pos >= 1 - FADE_ZONE and r30 >= FADE_MOVE:
+        return "PUT"
+    if pos <= FADE_ZONE and r30 <= -FADE_MOVE:
+        return "CALL"
+    return None
+
+
+def fade_ok(st, side, now):
+    last = (st.get("last_fade") or {}).get(side)
+    return not last or (now - datetime.fromisoformat(last)).total_seconds() >= FADE_GAP_MIN * 60
 
 
 def may_ladder(st, side, S, day):
@@ -164,6 +199,11 @@ def update_path(e, bid, ask, now):
         e["trail_peak"] = max(e["trail_peak"], bid)
         if bid <= e["trail_peak"] * 0.5:
             e["trail_exit"] = bid
+    if e.get("trigger") == "fade" and e.get("t_stop") is None and e.get("t_tp30") is None and e.get("tx_bid") is None:
+        if bid >= e["entry"] * (1 + FADE_TP):
+            e["t_tp30"] = now.strftime("%H:%M")
+        elif (now - datetime.fromisoformat(e["t"])).total_seconds() >= FADE_MINUTES * 60:
+            e["tx_bid"], e["t_tx"] = bid, now.strftime("%H:%M")
     e["last_bid"], e["last_mid"] = bid, mid
 
 
@@ -173,7 +213,18 @@ def results(e):
     peak_gain = (e["peak"] - E) * 100
     win_mgt = peak_gain >= (50 if E * 100 >= 200 else 0.15 * E * 100)
     mgt = peak_gain if win_mgt else -STOP_FRAC * E * 100
-    if e.get("t_tp50") is not None:
+    if e.get("trigger") == "fade":          # خروج سريع: +30%، أو الوقف، أو بعد 45 دقيقة
+        tp = e.get("t_tp30")
+        st = e.get("t_stop")
+        if tp is not None and (st is None or tp <= st):
+            real = FADE_TP * E * 100
+        elif st is not None and (e.get("t_tx") is None or st <= e["t_tx"]):
+            real = -STOP_FRAC * E * 100
+        elif e.get("tx_bid") is not None:
+            real = (e["tx_bid"] - E) * 100
+        else:
+            real = (e.get("last_bid", 0) - E) * 100
+    elif e.get("t_tp50") is not None:
         real = 0.5 * E * 100
     elif e.get("t_stop") is not None:
         real = -STOP_FRAC * E * 100
@@ -330,7 +381,10 @@ def append(path, row):
 
 
 def outcome(e):
-    """نتيجة الخطة الواقعية للعقد: هدف أو وقف أو للإغلاق."""
+    """نتيجة الخطة الواقعية للعقد: هدف أو وقف أو للإغلاق (وصفقات أطراف النطاق: هدف أو وقف أو وقت)."""
+    if e.get("trigger") == "fade":
+        r = results(e)["usd_real"]
+        return "هدف" if e.get("t_tp30") and r > 0 else "وقف" if r <= -STOP_FRAC * e["entry"] * 100 + 1e-6 else "إغلاق"
     return "هدف" if e.get("t_tp50") is not None else "وقف" if e.get("t_stop") is not None else "إغلاق"
 
 
@@ -338,7 +392,7 @@ def entry_blocks(rs):
     """يجمّع الدخولات المتتالية من الجلسة والجهة نفسيهما في كتلة واحدة."""
     out = []
     for e in sorted(rs, key=lambda x: x["t"]):
-        if out and (out[-1][0]["sess"], out[-1][0]["side"]) == (e["sess"], e["side"]):
+        if out and (out[-1][0]["sess"], out[-1][0]["side"], out[-1][0].get("trigger") == "fade") == (e["sess"], e["side"], e.get("trigger") == "fade"):
             out[-1].append(e)
         else:
             out.append([e])
@@ -353,7 +407,7 @@ def block_line(b):
     n = {k: sum(outcome(e) == k for e in b) for k in ("هدف", "وقف", "إغلاق")}
     res = " · ".join(x for x in (f"✅ {n['هدف']} هدف" if n["هدف"] else "", f"🛑 {n['وقف']} وقف" if n["وقف"] else "",
                                  f"⏳ {n['إغلاق']} للإغلاق" if n["إغلاق"] else "") if x)
-    return (f"{'🌙 ليلاً' if a['sess'] == 'gth' else '☀️ الجلسة'} {t0}" + (f"–{t1}" if t1 != t0 else "")
+    return (f"{'🌙 ليلاً' if a['sess'] == 'gth' else ('↔️ أطراف النطاق' if a.get('trigger') == 'fade' else '☀️ الجلسة')} {t0}" + (f"–{t1}" if t1 != t0 else "")
             + f": **{len(b)} {a['side']}** بسترايك {('، '.join(strikes))}\n"
             + "   السعر " + (f"{min(prices):.2f}–{max(prices):.2f}$" if len(b) > 1 else f"{prices[0]:.2f}$")
             + f" | SPX {a['S']:,.0f}" + (f" ← {z['S']:,.0f}" if len(b) > 1 else "")
@@ -367,7 +421,7 @@ def report(st, day):
     rs = [dict(e, **results(e)) for e in es]
     df = pd.DataFrame(rs)
     L = [f"🧪 **ظل MGT (ورقي)** · عقود {day}", "",
-         f"**النتيجة الواقعية: {df.usd_real.sum():+,.0f}$** (بيع عند +50% أو وقف عند −50%، لعقد واحد من كل دخول)",
+         f"**النتيجة الواقعية: {df.usd_real.sum():+,.0f}$** (بيع عند +50% أو وقف عند −50%، وأطراف النطاق +30% أو 45 دقيقة؛ لعقد واحد من كل دخول)",
          f"{len(df)} عقداً: {int((df.usd_real > 0).sum())} رابحة · {int((df.usd_real < 0).sum())} خاسرة | "
          f"التكلفة {df.entry.sum() * 100:,.0f}$", "", "**أين فتح العقود (نيويورك):**"]
     L += [block_line(b) for b in entry_blocks(rs)]
@@ -467,37 +521,48 @@ def main(argv):
     side, score, det = decide(m1, sess_open, vw, pressure, fl.get("flow_lean_30m", 0) or 0)
     m5 = resample(m1, "5min")
     done5 = m5[m5.index + pd.Timedelta(minutes=5) <= now]
-    if len(done5) < 3 or side is None:
+    if len(done5) < 3:
         save(st)
-        print("لا قرار:", side, score, {k: det[k] for k in ("M1", "M5", "M15", "M30", "session", "adx")})
         return
     last_bar = done5.index[-1].isoformat()
+    new_bar = st.get("last_bar") != last_bar
+    st["last_bar"] = last_bar
     rng5 = float(m1["h"].max() - m1["l"].min())
     octv = octave(rng5)
-    hit = crossed_line(float(done5["c"].iloc[-2]), float(done5["c"].iloc[-1]), mml_lines(S, octv), side) \
-        if st.get("last_bar") != last_bar else None
-    st["last_bar"] = last_bar
-    ladder = may_ladder(st, side, S, tdate) and any(e["side"] == side and e["tdate"] == tdate for e in st["open"] + st["closed"])
-    if not (hit or ladder) or not may_ladder(st, side, S, tdate):
-        save(st)
-        print("لا زناد:", side, score)
-        return
+    c = m1["c"]
+    r30 = S / float(c.iloc[-31]) - 1 if len(c) > 31 else None
+    hit, trigger = None, None
+    if side is None:
+        fs = fade_side(sb, S, r30) if sess == "rth" and FADE_FROM <= now.time() <= FADE_TO and new_bar else None
+        if not fs or not fade_ok(st, fs, now):
+            save(st)
+            print("لا قرار:", side, score, {k: det[k] for k in ("M1", "M5", "M15", "M30", "session", "adx")})
+            return
+        side, trigger = fs, "fade"
+        st.setdefault("last_fade", {})[side] = now.isoformat(timespec="minutes")
+    else:
+        hit = crossed_line(float(done5["c"].iloc[-2]), float(done5["c"].iloc[-1]), mml_lines(S, octv), side) if new_bar else None
+        ladder = may_ladder(st, side, S, tdate) and any(e["side"] == side and e["tdate"] == tdate for e in st["open"] + st["closed"])
+        if not (hit or ladder) or not may_ladder(st, side, S, tdate):
+            save(st)
+            print("لا زناد:", side, score)
+            return
+        trigger = "mml" if hit else "ladder"
     try:
         ch = chain(date.fromisoformat(tdate), S)
     except Exception as e:  # noqa: BLE001
         print("السلسلة:", e)
         save(st)
         return
-    k = pick_contract(ch, side, S)
+    k = pick_contract(ch, side, S, st.get("vix"))
     if not k:
         save(st)
-        print("لا عقد بسعر 2.90–4.00$")
+        print("لا عقد ضمن نطاق السعر", price_band(st.get("vix")))
         return
     em = (st.get("vix") or 17) / 100 / math.sqrt(252) * S
-    c = m1["c"]
     e = {"id": f"{now:%m%d-%H%M}-{side}-{k['strike']:g}", "t": now.isoformat(timespec="minutes"), "sess": sess, "tdate": tdate,
          "side": side, "strike": k["strike"], "symbol": k["symbol"], "entry": k["ask"], "bid0": k["bid"], "S": round(S, 2),
-         "es": es, "basis": round(basis, 2), "trigger": "mml" if hit else "ladder", "mml": f"{hit[0]:.2f} ({hit[1]}/16)" if hit else "",
+         "es": es, "basis": round(basis, 2), "trigger": trigger, "version": 2, "mml": f"{hit[0]:.2f} ({hit[1]}/16)" if hit else "",
          "octave": octv, "otm_pts": round(abs(k["strike"] - S), 1), "delta": k["delta"], "iv": k["iv"], "oi": k["oi"],
          "volume": k["volume"], "spread": round(k["ask"] - k["bid"], 2), **{kk: det[kk] for kk in det},
          "from_sess_open_em": round((S - sess_open) / em, 3) if sess_open else None,
