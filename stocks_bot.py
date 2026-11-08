@@ -19,6 +19,7 @@ import yfinance as yf
 
 import data_gaps   # تسجيل فجوات البيانات فقط (لا يغيّر أي قرار)
 import options_bot as ob
+import macro_events as mev
 
 # ====================== الإعدادات ======================
 # الرمز: (اسم للبحث في الأخبار، محرك خاص: btc / oil / geo / None)
@@ -1673,7 +1674,15 @@ def idea_line(i):
         f"💵 <b>${k['cost']:,.0f}</b> ({k['price']:.2f}) | يحتاج {'+' if call else '-'}{k['need'] * 100:.1f}% | {mark}",
         f"├ 🟢 <b>دخول</b> بسعر حتى <b>{k['price']:.2f}</b> (لا تلاحقه فوق +10%)"
         + (f" · 📡 {ob.SRC_NOTE[k['price_src']]}" if k.get("price_src") in ob.SRC_NOTE else ""),
-    ] + stock_levels(i, k))
+    ] + ([w] if (w := event_warning(k)) else []) + stock_levels(i, k))
+
+
+def event_warning(k):
+    """تحذير عرض فقط (لا يغيّر التوصية): خبر اقتصادي كبير بين اليوم وانتهاء العقد."""
+    try:
+        return mev.warning_line(ob.now_ny().date(), date.fromisoformat(k["exp"]))
+    except Exception:  # noqa: BLE001
+        return ""
 
 
 def stock_levels(i, k):
@@ -1726,6 +1735,7 @@ def idea_caption(i):
         f"✅ <b>الدخول:</b> {ob.esc(i['ticker'])} {k['strike']:,.1f} {side} | 📅 {date_ar(k['exp'])}",
         f"💵 بسعر حتى <b>{k['price']:.2f}</b> | تكلفة <b>${k['cost']:,.0f}</b> للعقد | يحتاج {'+' if call else '-'}{k['need'] * 100:.1f}%",
         quote_line(k),
+        *([w] if (w := event_warning(k)) else []),
         *([cl] if (cl := _ctx_line(i)) else []),
         *ob.night_news_lines(side, i["ticker"]),
         lv[0], lv[1],

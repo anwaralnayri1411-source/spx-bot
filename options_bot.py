@@ -75,15 +75,8 @@ LOG_FILE = "zero_dte_log.csv"
 NY = ZoneInfo("America/New_York")
 RY = ZoneInfo("Asia/Riyadh")
 
-# تواريخ قرار الفيدرالي 2026 (تحقق منها). أضف أحداثاً أخرى مثل CPI هنا:
-EVENTS = {
-    "2026-10-28": "قرار الفيدرالي (FOMC)",
-    "2026-12-09": "قرار الفيدرالي (FOMC)",
-    "2026-10-14": "تقرير التضخم CPI",   # BLS: 8:30 ص نيويورك
-    "2026-10-15": "تقرير أسعار المنتجين PPI",   # صدر 8:30 ص نيويورك (شهري 1.3% مقابل 0.5%)
-    "2026-11-10": "تقرير التضخم CPI",
-    "2026-12-10": "تقرير التضخم CPI",
-}
+# الأحداث الكبرى في قائمة مشتركة مع بوت الشركات (8/11/2026): أضفها في macro_events.py فقط
+from macro_events import EVENTS  # noqa: E402
 RISK_WORDS = ["crash", "plunge", "selloff", "sell-off", "tumble", "recession", "default",
               "shutdown", "downgrade", "panic", "rate hike", "bank failure", "slump", "rout"]
 GEO_RE = re.compile(r"\b(war|missile|missiles|attack|attacks|iran|israel|gaza|ukraine|russia|china|taiwan|"
