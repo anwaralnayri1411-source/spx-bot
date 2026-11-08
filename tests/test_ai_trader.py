@@ -104,7 +104,9 @@ def test_spx_menu_row_and_cross_underlying_sharia():
     assert why is None and q == 2                         # 600$ ÷ 250$ = عقدان
     p = at.open_position(st, spx, q, _dec(sym=spx["symbol"])["buy"], N)
     assert p["under"] == "SPX" and "SPX" in p["id"]
-    assert at.validate_buy(st, menu, _dec()["buy"], N, {})[0] == "مركز معاكس مفتوح (الشرط الشرعي)"   # CALL على SPY ممنوع
+    assert at.validate_buy(st, menu, _dec()["buy"], N, {})[0] is None                                 # CALL على SPY مع PUT على SPX: جائز
+    spx_call = dict(spx, symbol="SPXW  261106C07700000", side="CALL", strike=7700.0)
+    assert at.validate_buy(st, menu + [spx_call], _dec(sym=spx_call["symbol"])["buy"], N, {})[0] == "مركز معاكس مفتوح (الشرط الشرعي)"
     m = at.buy_message(_dec(sym=spx["symbol"]), p, spx, {"SPY": 767.2, "SPX": 7690.5})
     assert "SPX 7600 PUT" in m and "عقد الغد" in m
     assert "SPX 7600" in at.sell_message(at.close_position(st, p, 3.0, N, "هدف"), "هدف")
