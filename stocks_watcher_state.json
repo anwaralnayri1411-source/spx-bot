@@ -2257,7 +2257,8 @@
    "bagfa consolidated financial statements january september 2026",
    "sony stock up despite ps6 price criticism from former playstation head shawn layden",
    "mercan kimya corrects share buy back figures",
-   "alt nay savunma reports consolidated activity review for january september 2026"
+   "alt nay savunma reports consolidated activity review for january september 2026",
+   "ba stock edges lower as boeing reportedly trims 5 of commercial airplanes workforce"
   ],
   "NVDA:PUT": [
    "nvidia stock is set for its worst month in a year time to buy the dip",
@@ -2520,13 +2521,6 @@
    "affordable electric suvs help subaru and toyota win over ev buyers as rivals pull back"
   ],
   "XOM:PUT": [
-   "analysts offer insights on energy companies chevron cvx and exxon mobil xom",
-   "oil falls as traders parse iran war outlook after midterms",
-   "devon energy q3 preview surging fuel prices expected to fuel earnings dvn nyse",
-   "oil prices tumble below 100 on post election peace hopes",
-   "us stocks surge and the dow soars 1 500 points as brent oil s price drops below 95 per barrel",
-   "oil prices plunge 9 after us midterms vance remarks as israeli stocks tumble",
-   "u s consumers confront the highest gas prices ever on an election day",
    "fire shuts equinor s visund platform in norwegian north sea",
    "oil uscrude price forecast for today tomorrow next week and next 30 days",
    "sugar prices pressured by weakness in crude oil",
@@ -2919,7 +2913,14 @@
    "florida gas prices drop to lowest levels in four months",
    "oil s next move could be abrupt as peace talks stall and supply remains constrained",
    "aaa idaho gas prices drop 20 cents lewiston average falls to 4 14",
-   "us stocks recover more of last week s losses as oil prices swing lower"
+   "us stocks recover more of last week s losses as oil prices swing lower",
+   "exxon mobil stocks move lower 0 31 as crude slides toward 87",
+   "gas prices continue falling nationwide",
+   "long run outlook for world crude oil prices american enterprise institute",
+   "new york city long island gas prices drop 10 cents in one week",
+   "gas prices are falling will it last",
+   "aaa average rhode island gas price drops 11 cents",
+   "u s eurozone bond yields rise ahead of inflation rates outlook"
   ],
   "MSFT:CALL": [
    "forget the 12 month squeeze microsoft is primed for an explosive ai payoff",
@@ -2953,7 +2954,9 @@
    "iren stock why wall street remains bullish after q1 even as microsoft takes a tougher line",
    "microsoft corporation msft stock jumps as northern trust unveils ai powered onboarding agent",
    "wall street names 3 ai winners but there s a catch",
-   "dow rallies over 1 000 points and nasdaq gains 2 5 as stocks climb out of postelection slump"
+   "dow rallies over 1 000 points and nasdaq gains 2 5 as stocks climb out of postelection slump",
+   "300 000 in cisco ibm and microsoft could pay you 5 150 a year",
+   "dow rallies over 1 000 points and nasdaq gains 2 5 as stocks rebound"
   ],
   "CVX:PUT": [
    "us to loan about a third of heating oil reserve in bid to tame prices",
@@ -3316,7 +3319,13 @@
    "florida gas prices drop to lowest levels in four months",
    "oil s next move could be abrupt as peace talks stall and supply remains constrained",
    "aaa idaho gas prices drop 20 cents lewiston average falls to 4 14",
-   "us stocks recover more of last week s losses as oil prices swing lower"
+   "us stocks recover more of last week s losses as oil prices swing lower",
+   "gas prices continue falling nationwide",
+   "long run outlook for world crude oil prices american enterprise institute",
+   "new york city long island gas prices drop 10 cents in one week",
+   "gas prices are falling will it last",
+   "aaa average rhode island gas price drops 11 cents",
+   "u s eurozone bond yields rise ahead of inflation rates outlook"
   ],
   "JPM:CALL": [
    "which profit leader pays the most with yields between 0 31 and 2 32 bank of america nyse bac exxon mobil nyse xom johnso",
@@ -3767,7 +3776,10 @@
    "bitcoin s rebound faces a 74 853 81 daily pivot test",
    "bitcoin price prediction bull market at risk as btc etfs shed 1 3 billion in a week",
    "why are bitcoin ethereum and solana price crashing today",
-   "dogecoin falls 17 9 in 30 days dragged down b"
+   "dogecoin falls 17 9 in 30 days dragged down b",
+   "ripple insider sold 2 5m xrp but still thinks its price could flip bitcoin",
+   "bitcoin may drop to 65 000 if key support brea",
+   "zcash zec price prediction for december 31 2026"
   ],
   "SOFI:PUT": [
    "nasdaq ceo adena friedman says 23 hour trading starts dec 6 what it means for your retirement money",
@@ -4146,11 +4158,8 @@
    "down-0.15",
    "up0.25",
    "news:boeing is said to cut 5 of commercial aircraft workforce ba nyse",
-   "news:boeing to cut 5 of commercial airplane staff d"
-  ],
-  "MSFT:CALL:2026-11-13:550": [
-   "down-0.15",
-   "up0.25"
+   "news:boeing to cut 5 of commercial airplane staff d",
+   "sharp@2026-11-09T14:41-05:00"
   ],
   "SOFI:CALL:2026-11-27:16.5": [
    "stock1",
@@ -4169,10 +4178,6 @@
   "SOFI:CALL:2026-11-27:16.5": 1
  },
  "seen_macro": [
-  "the sell off for tech stocks deepens and drags wall street toward its worst day since june",
-  "why bright horizons bfam shares are plunging today",
-  "the fed s ai puzzle will high rates slow the boom",
-  "colombia holds interest rates steady for november",
   "gold rate silver price today why is gold price down today when will gold recover from its worst trading",
   "analyst drops sharp take on fed rate hikes",
   "stock market today nasdaq dives over 3 s p 500 and dow tank as ai reckoning grips wall street",
@@ -4768,7 +4773,11 @@
   "iren stock why wall street remains bullish after q1 even as microsoft takes a tougher line",
   "wall street rallies as ai stocks attempt a comeback",
   "even this blue wave probably won t wash tariffs away",
-  "oil s next move could be abrupt as peace talks stall and supply remains constrained"
+  "oil s next move could be abrupt as peace talks stall and supply remains constrained",
+  "amd stock rises on google cloud deal wall street upgrade",
+  "fed s barkin says policy direction clear needs careful pace",
+  "gold holds decline as us jobs data fan december rate hike bets",
+  "5 best all time high stocks to buy according to wall street ready"
  ],
  "sharp": {
   "F:CALL:2026-11-20:11.5": 12.405,
@@ -4776,6 +4785,7 @@
   "SNAP:PUT:2026-11-20:6": 5.185,
   "XOM:PUT:2026-11-13:165": 165.35,
   "CVX:PUT:2026-11-13:210@2026-11-06": 211.865,
-  "PFE:PUT:2026-11-20:30": 29.355
+  "PFE:PUT:2026-11-20:30": 29.355,
+  "BA:PUT:2026-11-20:172.5": 173.55
  }
 }
