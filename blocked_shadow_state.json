@@ -14,8 +14,8 @@
    "strength": "6.8",
    "occ": "COIN261113P00129000",
    "peak_pnl": 0.3,
-   "close_pnl": -0.318,
-   "quotes": 72,
+   "close_pnl": -0.364,
+   "quotes": 73,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -34,8 +34,8 @@
    "strength": "5.7",
    "occ": "DIS261127C00120000",
    "peak_pnl": 0.035,
-   "close_pnl": -0.042,
-   "quotes": 58,
+   "close_pnl": -0.09,
+   "quotes": 59,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -54,8 +54,8 @@
    "strength": "7.5",
    "occ": "BAC261127P00050000",
    "peak_pnl": 0.075,
-   "close_pnl": -0.278,
-   "quotes": 58,
+   "close_pnl": -0.293,
+   "quotes": 59,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -74,8 +74,8 @@
    "strength": "6.7",
    "occ": "WMT261120C00129000",
    "peak_pnl": 0.0,
-   "close_pnl": -0.328,
-   "quotes": 44,
+   "close_pnl": -0.296,
+   "quotes": 45,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -94,8 +94,8 @@
    "strength": "6.0",
    "occ": "SPXW261109C07555000",
    "peak_pnl": 0.205,
-   "close_pnl": 0.083,
-   "quotes": 4,
+   "close_pnl": -0.006,
+   "quotes": 5,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -114,8 +114,48 @@
    "strength": "6.0",
    "occ": "SPY261110C00748000",
    "peak_pnl": 0.193,
-   "close_pnl": 0.193,
-   "quotes": 4,
+   "close_pnl": 0.172,
+   "quotes": 5,
+   "out": "",
+   "out_time": "",
+   "out_pnl": ""
+  },
+  {
+   "id": "20261109T1012|stocks|earn_in_life|DIS|CALL|120|2026-11-27",
+   "project": "stocks",
+   "tag": "earn_in_life",
+   "sym": "DIS",
+   "side": "CALL",
+   "strike": 120.0,
+   "exp": "2026-11-27",
+   "entry": 3.39,
+   "entry_time": "2026-11-09T10:12-05:00",
+   "edge": "3.5",
+   "strength": "5.7",
+   "occ": "DIS261127C00120000",
+   "peak_pnl": 0.0,
+   "close_pnl": -0.165,
+   "quotes": 1,
+   "out": "",
+   "out_time": "",
+   "out_pnl": ""
+  },
+  {
+   "id": "20261109T1012|stocks|open_same_dir|XOM|PUT|160|2026-11-20",
+   "project": "stocks",
+   "tag": "open_same_dir",
+   "sym": "XOM",
+   "side": "PUT",
+   "strike": 160.0,
+   "exp": "2026-11-20",
+   "entry": 2.4,
+   "entry_time": "2026-11-09T10:12-05:00",
+   "edge": "4.5",
+   "strength": "6.5",
+   "occ": "XOM261120P00160000",
+   "peak_pnl": 0.0,
+   "close_pnl": -0.054,
+   "quotes": 1,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -1277,7 +1317,11 @@
   "20261109T1000|spx|repeat_side|SPY|CALL|749|2026-11-10",
   "20261109T1005|spx|repeat_side|SPY|CALL|750|2026-11-10",
   "20261109T1010|spx|repeat_side|SPX|CALL|7555|2026-11-09",
-  "20261109T1010|spx|repeat_side|SPY|CALL|750|2026-11-10"
+  "20261109T1010|spx|repeat_side|SPY|CALL|750|2026-11-10",
+  "20261109T1015|spx|repeat_side|SPX|CALL|7555|2026-11-09",
+  "20261109T1015|spx|repeat_side|SPY|CALL|750|2026-11-10",
+  "20261109T1012|stocks|earn_in_life|DIS|CALL|120|2026-11-27",
+  "20261109T1012|stocks|open_same_dir|XOM|PUT|160|2026-11-20"
  ],
  "last": {
   "spx|CALL|SPY": "2026-11-09T09:50-05:00",
@@ -1360,6 +1404,8 @@
   "stocks|MSTR|PUT|2026-11-06": "2026-11-06T10:42-05:00",
   "stocks|DIS|CALL|2026-11-06": "2026-11-06T11:27-05:00",
   "stocks|BAC|PUT|2026-11-06": "2026-11-06T11:27-05:00",
-  "stocks|WMT|CALL|2026-11-06": "2026-11-06T12:42-05:00"
+  "stocks|WMT|CALL|2026-11-06": "2026-11-06T12:42-05:00",
+  "stocks|DIS|CALL|2026-11-09": "2026-11-09T10:12-05:00",
+  "stocks|XOM|PUT|2026-11-09": "2026-11-09T10:12-05:00"
  }
 }
