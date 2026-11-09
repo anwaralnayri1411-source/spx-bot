@@ -2212,7 +2212,9 @@
    "apple becomes world s most valuable company with 5 1 trillion market cap as aapl stock today hits record",
    "apple stock hit a new all time high on wednesday what s fuelling the rally",
    "aapl stock claims record highs as democrat win helps apple s china and global business",
-   "apple reduces internal ai tool usage budgets report"
+   "apple reduces internal ai tool usage budgets report",
+   "nvidia stock nvda is under pressure as ceo jensen huang faces november 11 spy briefing deadline",
+   "where will apple stock be in 5 years"
   ],
   "BA:PUT": [
    "boeing nyse ba sets new 52 week low on disappointing earnings",
@@ -2880,7 +2882,16 @@
    "gold and silver prices extend post election rebound central banks on pace to beat 2025 purchases heraeus",
    "europe s power prices jump to 2022 high as wind and solar falter",
    "oil prices keep sinking but mortgage rates aren t getting much help",
-   "gas prices fall in peoria but remain well above last year s levels"
+   "gas prices fall in peoria but remain well above last year s levels",
+   "french bond yields fell as oil prices cooled",
+   "crude extends losses as iran diplomacy outweighs shipping risks",
+   "oil prices hit 10 week low after donald trump says strikes on iran highly unlikely",
+   "oil prices fall to two month low as trump says new iran strikes unlikely",
+   "crude oil prices slump as diplomatic efforts to end the iran war gain momentum",
+   "fed researchers say oil price spike has bigger longer lasting impact on core inflation than before pandemic",
+   "french 10 year yield touches six week low as euro zone yields mirror oil prices",
+   "new developments in us iran talks send oil prices plunging",
+   "nymex overview crude product futures prices slide as worries over mideast fighting ease opis"
   ],
   "MSFT:CALL": [
    "forget the 12 month squeeze microsoft is primed for an explosive ai payoff",
@@ -2906,7 +2917,8 @@
    "a 1 billion fund dumps these 2 stocks",
    "microsoft borrows at 10 percentage points below coreweave now it s backing away from neoclouds",
    "microsoft and northern trust use ai to cut client data prep from about 2 weeks to 3 days",
-   "microsoft oracle sap considered ai winners among software companies oppenheimer msft nasdaq"
+   "microsoft oracle sap considered ai winners among software companies oppenheimer msft nasdaq",
+   "nvidia gets the spotlight but this ai stock could steal the show in 2027"
   ],
   "CVX:PUT": [
    "us to loan about a third of heating oil reserve in bid to tame prices",
@@ -3218,7 +3230,16 @@
    "gold and silver prices extend post election rebound central banks on pace to beat 2025 purchases heraeus",
    "europe s power prices jump to 2022 high as wind and solar falter",
    "oil prices keep sinking but mortgage rates aren t getting much help",
-   "gas prices fall in peoria but remain well above last year s levels"
+   "gas prices fall in peoria but remain well above last year s levels",
+   "french bond yields fell as oil prices cooled",
+   "crude extends losses as iran diplomacy outweighs shipping risks",
+   "oil prices hit 10 week low after donald trump says strikes on iran highly unlikely",
+   "oil prices fall to two month low as trump says new iran strikes unlikely",
+   "crude oil prices slump as diplomatic efforts to end the iran war gain momentum",
+   "fed researchers say oil price spike has bigger longer lasting impact on core inflation than before pandemic",
+   "french 10 year yield touches six week low as euro zone yields mirror oil prices",
+   "new developments in us iran talks send oil prices plunging",
+   "nymex overview crude product futures prices slide as worries over mideast fighting ease opis"
   ],
   "JPM:CALL": [
    "which profit leader pays the most with yields between 0 31 and 2 32 bank of america nyse bac exxon mobil nyse xom johnso",
@@ -3628,7 +3649,13 @@
    "strategy makes biggest bitcoin purchase since september while bitmine strive slow down",
    "bitcoin ethereum xrp whipsaw on nvidia scandal iran tensions crypto sell off sparks 1b liquidation wave",
    "btc eth and hype show mixed performance in october",
-   "bitcoin faces 65k risk from ai selling hilbert cio warns"
+   "bitcoin faces 65k risk from ai selling hilbert cio warns",
+   "scaramucci questions why bitcoin is below 200 000 sees momentum ahead of 2028 halving",
+   "bitcoin faces 65k risk as ai losses threaten forced selling hilbert cio says",
+   "bitcoin price forecast btc usd 12 5 plunge nears critical support",
+   "strategy raises 284m in share sale directs most to strc buybacks over bitcoin",
+   "bitcoin block nears 2015 transaction record while fees total just 180",
+   "strategy stock mstr falls as bitcoin slump persists despite 82m purchase"
   ],
   "SOFI:PUT": [
    "nasdaq ceo adena friedman says 23 hour trading starts dec 6 what it means for your retirement money",
@@ -3670,7 +3697,9 @@
    "dan loeb and 2 other big funds bought transdigm is it a buy before earnings",
    "micron will buy back a hundred billion dollars of stock at four times earnings",
    "google pixel 10 is almost as cheap as the pixel 10a as amazon makes a final push to clear remaining stock",
-   "a 4 7 billion fund bought these 3 stocks"
+   "a 4 7 billion fund bought these 3 stocks",
+   "investing in snap snap don t miss assessing its international revenue trends",
+   "snap nov 2026 2 500 put snap261113p00002500 seasonal returns chart"
   ],
   "UBER:CALL": [
    "bank of america revamps uber stock target amid rider price paradox",
@@ -3708,7 +3737,8 @@
    "meta title sectors",
    "pfizer stock gains as new products lift 2026 outlook",
    "why pfizer believes it can be a leader in the glp 1 market even though its drug may not debut until 2028",
-   "fda approval for hympavzi issued to pfizer inc"
+   "fda approval for hympavzi issued to pfizer inc",
+   "will bristol myers growth brands offset eliquis headwinds"
   ]
  },
  "fired": {
@@ -3831,7 +3861,9 @@
    "news:bitcoin btc price slide below 75 451 puts strategy s 849 327 btc 500m underwater",
    "news:bitcoin etfs lose 1 28b in worst week since june as btc price falls below 75k",
    "news:strategy makes biggest bitcoin purchase since september while bitmine strive slow down",
-   "news:bitcoin ethereum xrp whipsaw on nvidia scandal iran tensions crypto sell off sparks 1b liquidation wave"
+   "news:bitcoin ethereum xrp whipsaw on nvidia scandal iran tensions crypto sell off sparks 1b liquidation wave",
+   "news:bitcoin price forecast btc usd 12 5 plunge nears critical support",
+   "news:strategy stock mstr falls as bitcoin slump persists despite 82m purchase"
   ],
   "SNAP:PUT:2026-11-20:6": [
    "down-0.15",
@@ -3883,7 +3915,13 @@
    "news:us open falling oil prices and dip buying fuel rebound as nvidia falls",
    "news:dollar retreats as stocks rally and crude oil tumbles",
    "news:brent oil slides below 96 as hopes of us iran deal grow",
-   "news:oil prices plunge 5 as hopes of us iran agreement weaken supply fears"
+   "news:oil prices plunge 5 as hopes of us iran agreement weaken supply fears",
+   "news:crude extends losses as iran diplomacy outweighs shipping risks",
+   "news:oil prices hit 10 week low after donald trump says strikes on iran highly unlikely",
+   "news:oil prices fall to two month low as trump says new iran strikes unlikely",
+   "news:crude oil prices slump as diplomatic efforts to end the iran war gain momentum",
+   "news:new developments in us iran talks send oil prices plunging",
+   "news:nymex overview crude product futures prices slide as worries over mideast fighting ease opis"
   ],
   "CVX:PUT:2026-11-13:210@2026-11-06": [
    "news:the iran war isn t over but oil traders are already pricing in peace",
@@ -3931,18 +3969,19 @@
    "news:wall street futures rise as oil prices fall ahead of us inflation data dow jones s p nasdaq",
    "news:dollar retreats as stocks rally and crude oil tumbles",
    "news:brent oil slides below 96 as hopes of us iran deal grow",
-   "news:oil prices plunge 5 as hopes of us iran agreement weaken supply fears"
+   "news:oil prices plunge 5 as hopes of us iran agreement weaken supply fears",
+   "news:crude extends losses as iran diplomacy outweighs shipping risks",
+   "news:oil prices hit 10 week low after donald trump says strikes on iran highly unlikely",
+   "news:oil prices fall to two month low as trump says new iran strikes unlikely",
+   "news:crude oil prices slump as diplomatic efforts to end the iran war gain momentum",
+   "news:new developments in us iran talks send oil prices plunging",
+   "news:nymex overview crude product futures prices slide as worries over mideast fighting ease opis"
   ],
   "PFE:PUT:2026-11-20:30": [
    "down-0.15",
    "news:pfizer stock gains as new products lift 2026 outlook",
-   "news:fda approval for hympavzi issued to pfizer inc"
-  ],
-  "AMZN:CALL:2026-11-13:275": [
-   "down-0.15",
-   "down-0.3",
-   "news:meta amzn stocks jump as jpmorgan picks pair over alphabet sees stronger ai returns cloud growth",
-   "stock1"
+   "news:fda approval for hympavzi issued to pfizer inc",
+   "sharp@2026-11-09T11:37-05:00"
   ],
   "AAPL:CALL:2026-11-16:352.5": [],
   "BA:PUT:2026-11-20:172.5": [
@@ -3951,17 +3990,17 @@
   "MSFT:CALL:2026-11-13:550": [
    "down-0.15"
   ],
-  "SOFI:CALL:2026-11-27:16.5": []
+  "SOFI:CALL:2026-11-27:16.5": [
+   "stock1",
+   "down-0.15"
+  ],
+  "UBER:CALL:2026-11-27:70": []
  },
  "stock_level": {
   "F:CALL:2026-11-20:11.5": 2,
-  "AMZN:CALL:2026-11-13:275": 1
+  "SOFI:CALL:2026-11-27:16.5": 1
  },
  "seen_macro": [
-  "fed s musalem says a rate hike is needed soon",
-  "u s federal reserve holds rates as markets look to december",
-  "fed s musalem says more rate hikes needed soon to tame inflation",
-  "st louis fed s musalem another rate hike needed soon",
   "steady labor market not a concern for the fed",
   "fed s musalem calls for rate hike soon as policy remains too loose",
   "silver drops below 50",
@@ -4557,13 +4596,18 @@
   "tradingview enables its users to access economic data directly from primary source",
   "china to suspend additional 24 tariffs on us goods extend trade truce by two months",
   "gold bulls to bounce back why jpmorgan sees metal touching a record 6 000 by 2026 end",
-  "federal reserve bids 5 5 billion for six month treasury bills as us bond market watches fed activity"
+  "federal reserve bids 5 5 billion for six month treasury bills as us bond market watches fed activity",
+  "as nvidia s stock falls here s what wall street has to say about the jensen huang scandal",
+  "wall street strategists say s p 500 correction is likely nearing an end",
+  "wall street forecasters say the worst of the stock sell off is over and a new rally is about to kick off",
+  "more rate hikes are coming as job growth accelerated unemployment fell"
  ],
  "sharp": {
   "F:CALL:2026-11-20:11.5": 12.405,
   "MSTR:PUT:2026-11-13:120": 131.93,
   "SNAP:PUT:2026-11-20:6": 5.185,
   "XOM:PUT:2026-11-13:165": 165.35,
-  "CVX:PUT:2026-11-13:210@2026-11-06": 211.865
+  "CVX:PUT:2026-11-13:210@2026-11-06": 211.865,
+  "PFE:PUT:2026-11-20:30": 29.355
  }
 }
