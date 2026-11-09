@@ -63,6 +63,7 @@ mgt_shadow|*-*-* *:*:30
 mgt_lab|*-*-* *:*:05
 falcon|Mon..Fri *-*-* 14..21:*:20
 screens|Mon..Fri *-*-* 14..21:04/5:40
+screens_night|*-*-* *:07/15:50
 # متوقف (H-PAPER 4/11/2026، تقليل الضجيج): strategy_lab|Sat *-*-1..7 10:00:00
 # متوقف (H-PAPER 4/11/2026، تقليل الضجيج): levels_study|Sat *-*-1..7 10:30:00
 # متوقف (H-PAPER 4/11/2026، تقليل الضجيج): signals_batch|Sat *-*-1..7 11:00:00

@@ -19,6 +19,12 @@ ROOT = os.path.dirname(os.path.abspath(__file__))
 DATA = os.getenv("SPXBOT_DATA", "/opt/spxbot/data")
 DIR = os.path.join(DATA, "screens")
 LOG, SCORES, STATE = (os.path.join(DIR, f) for f in ("log.csv", "scorecard.csv", "state.json"))
+NLOG, NSCORES, NSTATE, PREOPEN = (os.path.join(DIR, f) for f in ("night_log.csv", "night_scorecard.csv", "night_state.json", "preopen.csv"))
+NIGHT_FROM, NIGHT_TO, CARD_FROM, CARD_TO = dtime(18, 0), dtime(9, 30), dtime(9, 0), dtime(9, 15)
+EUROPE_FROM, EUROPE_TO = dtime(3, 0), dtime(11, 30)
+NIGHT_MARKETS = {"أوروبا": (["^GDAXI", "^FTSE", "^STOXX50E"], 1), "آسيا": (["^N225", "^HSI"], 1), "الدولار": (["DX-Y.NYB"], -1),
+                 "الين": (["USDJPY=X"], 1), "السندات العشرية": (["ZN=F"], 1), "VIX": (["^VIX"], -1), "الذهب": (["GC=F"], -1),
+                 "البتكوين": (["BTC-USD"], 1)}
 FROM_T, TO_T, REPORT_AT = dtime(9, 35), dtime(15, 55), dtime(16, 10)
 HORIZONS = (30, 60)
 FLAT = 0.0002          # حركة أقل من 0.02% لا تُعدّ إصابة ولا خطأ
@@ -59,6 +65,46 @@ def readings(a=None, flow=None, eng=None, fade=None, ai=None, falcon=None):
     if falcon is not None:
         out["الصقر"] = falcon
     return out
+
+
+def in_night(now):
+    t, wd = now.time(), now.weekday()
+    return (t >= NIGHT_FROM and wd in (6, 0, 1, 2, 3)) or (t < NIGHT_TO and wd in (0, 1, 2, 3, 4))
+
+
+def night_readings(es=None, settle=None, es60=None, eng=None, changes=None, now=None):
+    """{شاشة: +1/0/−1} ليلاً. changes: {اسم السوق: متوسط التغير اليومي}."""
+    out = {}
+    if es and settle:
+        out["ES منذ التسوية"] = sgn(es / settle - 1, 0.001)
+    if es and es60:
+        out["زخم ES 60د"] = sgn(es / es60 - 1, 0.0005)
+    if eng is not None:
+        tot, adx = eng.get("total", 0), eng.get("adx", float("nan"))
+        out["محرك MGT ليلي"] = sgn(tot) if abs(tot) >= 3 and adx == adx and adx >= 15 else 0
+    for name, ch in (changes or {}).items():
+        if name == "أوروبا" and now is not None and not EUROPE_FROM <= now.time() <= EUROPE_TO:
+            continue
+        if ch is None or ch != ch:
+            continue
+        out[name] = NIGHT_MARKETS[name][1] * sgn(ch, 0.02 if name == "VIX" else 0.001)
+    return out
+
+
+def consensus(rd):
+    """(الاتجاه +1/−1/0، صعود، هبوط) من مجموع الآراء."""
+    up, dn = sum(v == 1 for v in rd.values()), sum(v == -1 for v in rd.values())
+    return sgn(up - dn), up, dn
+
+
+def card_text(rd, es_ch, day):
+    d, up, dn = consensus(rd)
+    word = {1: "صعود", -1: "هبوط", 0: "غير واضحة"}[d]
+    key = [k for k in ("أوروبا", "آسيا", "الدولار", "VIX") if k in rd]
+    ctx = " · ".join(f"{k} {'↑' if rd[k] * NIGHT_MARKETS[k][1] > 0 else '↓' if rd[k] else '–'}" for k in key)
+    return (f"🌙 **قبل الافتتاح** · {day}\n"
+            f"القراءة: **{word}** ({up} صعود · {dn} هبوط من {len(rd)} شاشة) | ES {es_ch * 100:+.2f}% منذ التسوية\n"
+            + (f"{ctx}\n" if ctx else "") + "⚠️ قراءة الليل للدراسة، وليست توصية.")
 
 
 def recent_side(df, now, minutes, time_col="time", side_col="side", ok=None):
@@ -127,6 +173,14 @@ def day_text(day, dtype, ret, sc, cum):
     return "\n".join(L)
 
 
+def night_line(pre, day):
+    """سطر قراءة الليل للوحة الصقر من قراءة 09:00 المحفوظة."""
+    if not pre or pre.get("day") != day:
+        return ""
+    w = {1: "صعود", -1: "هبوط", 0: "غير واضحة"}[pre["dir"]]
+    return f"## قراءة الليل (09:00): {w} ({pre['up']} صعود · {pre['dn']} هبوط) | ES {pre['es_ch'] * 100:+.2f}% منذ التسوية"
+
+
 def panel_text(log, cum, now, max_age=10):
     """لوحة الشاشات لقرار الصقر: آخر قراءة لكل شاشة (خلال max_age دقيقة) مع إصابتها التراكمية 30د وعدد قراءاتها."""
     if log is None or not len(log):
@@ -156,20 +210,108 @@ def panel_text(log, cum, now, max_age=10):
 def panel(now):
     """لوحة الشاشات من ملفات الخادم، أو "" إن لا قراءة حديثة."""
     try:
+        nl = night_line(load_state(NSTATE).get("preopen"), now.date().isoformat())
         log = pd.read_csv(LOG)
         cum = pd.read_csv(SCORES) if os.path.exists(SCORES) else None
-        return panel_text(log, cum, now)
+        return "\n".join(x for x in (nl, panel_text(log, cum, now)) if x)
     except Exception as e:  # noqa: BLE001
         print("لوحة الشاشات:", type(e).__name__)
         return ""
 
 
 # ====================== التشغيل ======================
-def load_state():
+def load_state(path=None):
     try:
-        return json.load(open(STATE, encoding="utf-8"))
+        return json.load(open(path or STATE, encoding="utf-8"))
     except Exception:  # noqa: BLE001
         return {"report_day": ""}
+
+
+def market_changes():
+    """{اسم السوق: متوسط تغيره منذ الإغلاق السابق} من ياهو (متأخر ~15 دقيقة)."""
+    import yfinance as yf
+    out = {}
+    for name, (syms, _sign) in NIGHT_MARKETS.items():
+        ch = []
+        for s in syms:
+            try:
+                f = yf.Ticker(s).fast_info
+                ch.append(float(f["last_price"]) / float(f["previous_close"]) - 1)
+            except Exception:  # noqa: BLE001
+                pass
+        out[name] = sum(ch) / len(ch) if ch else None
+    return out
+
+
+def night_snapshot(now, no_send):
+    import mgt_lab as ml
+    import mgt_shadow as ms
+    es, settle = ms.es_mark()
+    ticks = ms.load_ticks(days=2)
+    es60 = None
+    if ticks is not None and len(ticks):
+        old = ticks[ticks.index <= now - timedelta(minutes=60)]
+        es60 = float(old["mark"].iloc[-1]) if len(old) else None
+    eng = None
+    try:
+        m1 = ms.live_m1(ms.es_bars(), ticks)
+        _s, total, det = ms.decide(m1, None, None)
+        eng = {"total": total, "adx": det["adx"]}
+    except Exception as e:  # noqa: BLE001
+        print("المحرك الليلي:", type(e).__name__)
+    rd = night_readings(es, settle, es60, eng, market_changes(), now)
+    t = now.isoformat(timespec="minutes")
+    os.makedirs(DIR, exist_ok=True)
+    pd.DataFrame([{"time": t, "S": round(es, 2), "screen": k, "dir": v} for k, v in rd.items()], columns=LOG_COLS) \
+        .to_csv(NLOG, mode="a", header=not os.path.exists(NLOG), index=False)
+    print(t, "ليلي", rd)
+    st = load_state(NSTATE)
+    day = now.date().isoformat()
+    if CARD_FROM <= now.time() <= CARD_TO and st.get("card_day") != day and now.weekday() < 5:
+        d, up, dn = consensus(rd)
+        st["preopen"] = {"day": day, "dir": d, "up": up, "dn": dn, "es_ch": round(es / settle - 1, 5) if settle else 0.0}
+        txt = card_text(rd, st["preopen"]["es_ch"], day)
+        print(txt)
+        if not no_send:
+            import analyst as an
+            an.send(txt, "screens")
+        st["card_day"] = day
+        json.dump(st, open(NSTATE, "w", encoding="utf-8"))
+
+
+def night_report(now, bars):
+    """(سطر الليل لرسالة اليوم) من سجل الليل السابق: دقة الشاشات على ES، وقراءة 09:00 مقابل أول ساعة."""
+    import mgt_shadow as ms
+    day = now.date().isoformat()
+    try:
+        log = pd.read_csv(NLOG)
+    except Exception:  # noqa: BLE001
+        return ""
+    t = pd.to_datetime(log["time"], errors="coerce", utc=True).dt.tz_convert("America/New_York")
+    start = datetime.combine(now.date() - timedelta(days=3 if now.weekday() == 0 else 1), NIGHT_FROM, t.dt.tz)
+    log = log[(t >= start) & (t.dt.strftime("%Y-%m-%d %H:%M") < f"{day} 09:30")]
+    L = []
+    ticks = ms.load_ticks(days=4)
+    if len(log) and ticks is not None and len(ticks):
+        es = ticks["mark"].resample("1min").last().dropna().to_frame("Close")
+        sc = score(log, es).assign(day=day)
+        cum = pd.read_csv(NSCORES) if os.path.exists(NSCORES) else None
+        cum = pd.concat([cum[cum["day"] != day], sc]) if cum is not None else sc
+        cum.to_csv(NSCORES, index=False)
+        s = sc[sc["n"] >= 4].sort_values("hit30", ascending=False)
+        if len(s):
+            L.append("🌙 الليل (إصابة ES بعد 30د): " + " · ".join(f"{r.screen} {r.hit30:.0%}" for r in s.head(3).itertuples()))
+    pre = load_state(NSTATE).get("preopen")
+    if pre and pre.get("day") == day and bars is not None and len(bars):
+        o = float(bars["Open"].iloc[0])
+        h = bars[bars.index.strftime("%H:%M") <= "10:25"]
+        fh = float(h["Close"].iloc[-1]) / o - 1 if len(h) else float("nan")
+        ok = "✅" if sgn(fh, FLAT) == pre["dir"] and pre["dir"] else ("❌" if pre["dir"] and sgn(fh, FLAT) else "–")
+        w = {1: "صعود", -1: "هبوط", 0: "غير واضحة"}[pre["dir"]]
+        L.append(f"🌙 قراءة 09:00: {w} ← أول ساعة {fh * 100:+.2f}% {ok}")
+        pd.DataFrame([{"day": day, "dir": pre["dir"], "first_hour": round(fh, 5)}]).to_csv(
+            PREOPEN, mode="a", header=not os.path.exists(PREOPEN), index=False)
+    return "\n".join(L)
 
 
 def snapshot(now):
@@ -232,6 +374,13 @@ def report(now, no_send):
     cum = pd.concat([cum[cum["day"] != day], sc]) if cum is not None else sc
     cum.to_csv(SCORES, index=False)
     txt = day_text(day, dtype, ret, sc, cum)
+    try:
+        nl = night_report(now, bars)
+    except Exception as e:  # noqa: BLE001
+        print("تقرير الليل:", type(e).__name__, e)
+        nl = ""
+    if nl:
+        txt = txt.replace("⚠️ قياس فقط", nl + "\n⚠️ قياس فقط", 1)
     print(txt)
     if not no_send:
         import analyst as an
@@ -243,6 +392,10 @@ def main(argv):
     from zoneinfo import ZoneInfo
     now = datetime.now(ZoneInfo("America/New_York"))
     force, no_send = "--force" in argv, "--no-send" in argv
+    if "--night" in argv:
+        if in_night(now) or force:
+            night_snapshot(now, no_send)
+        return
     if now.weekday() >= 5 and not force:
         return
     st = load_state()

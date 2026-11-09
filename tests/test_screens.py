@@ -60,3 +60,25 @@ def test_panel_text_latest_reading_with_accuracy():
     assert "صعود 1 · هبوط 1 · محايد 1" in t and "(10:55)" in t
     assert "- أ: هبوط | دقة 70% من 40 قراءة في 2 يوم" in t and "- ج: محايد | لا سجل بعد" in t
     assert sc.panel_text(log, cum, now.replace(hour=12)) == "" and sc.panel_text(None, None, now) == ""
+
+
+
+def test_night_window_and_readings():
+    assert sc.in_night(datetime(2026, 11, 8, 18, 0, tzinfo=NY)) and sc.in_night(datetime(2026, 11, 9, 9, 29, tzinfo=NY))
+    assert not sc.in_night(datetime(2026, 11, 9, 9, 30, tzinfo=NY)) and not sc.in_night(datetime(2026, 11, 13, 19, 0, tzinfo=NY))
+    assert not sc.in_night(datetime(2026, 11, 7, 3, 0, tzinfo=NY))                     # السبت
+    ch = {"أوروبا": -0.008, "آسيا": 0.02, "الدولار": 0.003, "VIX": 0.01, "الذهب": 0.0005, "البتكوين": None}
+    r = sc.night_readings(7400, 7450, 7410, {"total": -4, "adx": 22.0}, ch, datetime(2026, 11, 9, 4, 0, tzinfo=NY))
+    assert r["ES منذ التسوية"] == -1 and r["زخم ES 60د"] == -1 and r["محرك MGT ليلي"] == -1
+    assert r["أوروبا"] == -1 and r["آسيا"] == 1 and r["الدولار"] == -1 and r["VIX"] == 0 and r["الذهب"] == 0 and "البتكوين" not in r
+    late = sc.night_readings(changes=ch, now=datetime(2026, 11, 8, 22, 0, tzinfo=NY))
+    assert "أوروبا" not in late and late["آسيا"] == 1
+
+
+def test_card_and_night_line():
+    rd = {"ES منذ التسوية": -1, "أوروبا": -1, "آسيا": 1, "الدولار": -1, "VIX": 0}
+    assert sc.consensus(rd) == (-1, 1, 3)
+    t = sc.card_text(rd, -0.006, "2026-11-09")
+    assert "**هبوط**" in t and "1 صعود · 3 هبوط من 5" in t and "-0.60%" in t and "أوروبا ↓" in t and "الدولار ↑" in t and t.count("\n") <= 3
+    pre = {"day": "2026-11-09", "dir": -1, "up": 1, "dn": 3, "es_ch": -0.006}
+    assert sc.night_line(pre, "2026-11-09").startswith("## قراءة الليل (09:00): هبوط") and sc.night_line(pre, "2026-11-10") == ""

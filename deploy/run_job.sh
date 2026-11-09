@@ -242,6 +242,11 @@ main() {
       cmds=("$py earnings_runup.py")
       files="earnings_runup_log.csv earnings_runup_state.json messages_earnings_runup.jsonl"
       msg="earnings runup" ;;
+    screens_night)
+      group=screens-night; envs="TG ALPACA LQ TASTY"   # الشاشات الليلية (H-NIGHT): كل 15 دقيقة ليلاً، وبطاقة 09:00، ملفاته خارج git
+      cmds=("$py screens.py --night")
+      files=""
+      msg="screens night" ;;
     screens)
       group=screens; envs="TG ALPACA LQ TASTY"; extra_env="LIVE_BARS_SPX=1"   # سجل دقة الشاشات (H-SCREENS): قياس فقط كل 5 دقائق، ملفاته خارج git
       cmds=("$py screens.py")
