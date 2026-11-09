@@ -14,8 +14,8 @@
    "strength": "5.7",
    "occ": "DIS261127C00120000",
    "peak_pnl": 0.035,
-   "close_pnl": -0.061,
-   "quotes": 65,
+   "close_pnl": -0.084,
+   "quotes": 66,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -34,8 +34,8 @@
    "strength": "7.5",
    "occ": "BAC261127P00050000",
    "peak_pnl": 0.075,
-   "close_pnl": -0.256,
-   "quotes": 65,
+   "close_pnl": -0.308,
+   "quotes": 66,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -54,8 +54,8 @@
    "strength": "6.7",
    "occ": "WMT261120C00129000",
    "peak_pnl": 0.0,
-   "close_pnl": -0.361,
-   "quotes": 51,
+   "close_pnl": -0.343,
+   "quotes": 52,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -73,9 +73,9 @@
    "edge": "5.0",
    "strength": "6.0",
    "occ": "SPXW261109C07555000",
-   "peak_pnl": 0.205,
-   "close_pnl": -0.033,
-   "quotes": 11,
+   "peak_pnl": 0.423,
+   "close_pnl": 0.423,
+   "quotes": 12,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -93,9 +93,9 @@
    "edge": "5.0",
    "strength": "6.0",
    "occ": "SPY261110C00748000",
-   "peak_pnl": 0.341,
-   "close_pnl": 0.341,
-   "quotes": 11,
+   "peak_pnl": 0.466,
+   "close_pnl": 0.466,
+   "quotes": 12,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -114,8 +114,8 @@
    "strength": "5.7",
    "occ": "DIS261127C00120000",
    "peak_pnl": 0.0,
-   "close_pnl": -0.139,
-   "quotes": 7,
+   "close_pnl": -0.159,
+   "quotes": 8,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -134,8 +134,8 @@
    "strength": "6.5",
    "occ": "XOM261120P00160000",
    "peak_pnl": 0.0,
-   "close_pnl": -0.012,
-   "quotes": 7,
+   "close_pnl": -0.033,
+   "quotes": 8,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -1317,7 +1317,9 @@
   "20261109T1045|spx|repeat_side|SPX|CALL|7550|2026-11-09",
   "20261109T1045|spx|repeat_side|SPY|CALL|751|2026-11-10",
   "20261109T1042|stocks|earn_in_life|DIS|CALL|120|2026-11-27",
-  "20261109T1042|stocks|open_same_dir|XOM|PUT|162.5|2026-11-13"
+  "20261109T1042|stocks|open_same_dir|XOM|PUT|162.5|2026-11-13",
+  "20261109T1050|spx|repeat_side|SPX|CALL|7560|2026-11-09",
+  "20261109T1050|spx|repeat_side|SPY|CALL|751|2026-11-10"
  ],
  "last": {
   "spx|CALL|SPY": "2026-11-09T09:50-05:00",
