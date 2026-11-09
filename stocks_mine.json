@@ -417,6 +417,17 @@
    "time": "2026-11-09T11:18-05:00",
    "price": null,
    "qty": null
+  },
+  "UBER:CALL:2026-11-27:70|2026-11-09": {
+   "mode": "watch",
+   "ticker": "UBER",
+   "side": "CALL",
+   "exp": "2026-11-27",
+   "strike": 70.0,
+   "day": "2026-11-09",
+   "time": "2026-11-09T11:47-05:00",
+   "price": null,
+   "qty": null
   }
  }
 }
