@@ -1,6 +1,21 @@
 {
- "cash": 4279.0,
- "positions": [],
+ "cash": 3311.0,
+ "positions": [
+  {
+   "id": "1109-1446-SPY-CALL-753",
+   "symbol": "SPY   261109C00753000",
+   "under": "SPY",
+   "side": "CALL",
+   "strike": 753.0,
+   "expiry": "2026-11-09",
+   "qty": 8,
+   "entry": 1.21,
+   "time": "2026-11-09T14:46-05:00",
+   "stop": 0.75,
+   "target": 1.8,
+   "invalidation": "إغلاق SPY دون 752.5 أو عودة نفيديا للهبوط القوي وارتفاع VIX بشكل مفاجئ يلغي الفكرة."
+  }
+ ],
  "closed": [
   {
    "id": "1105-0946-PUT-757",
@@ -253,8 +268,8 @@
    "pnl": 372.0
   }
  ],
- "decisions": 67,
+ "decisions": 68,
  "report_day": "2026-11-06",
  "day": "2026-11-09",
- "decisions_today": 20
+ "decisions_today": 21
 }
