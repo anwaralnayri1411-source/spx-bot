@@ -72,7 +72,10 @@
    "amazon amzn introduces ai shopping by text here s how it works",
    "anthropic s ipo could trigger another selloff hsbc strategist warns",
    "not alphabet not meta this is the digital advertising stock i d buy right now",
-   "amazon s ceo andy jassy just announced huge news for amazon investors"
+   "amazon s ceo andy jassy just announced huge news for amazon investors",
+   "amazon generated 202 billion in quarterly sales most of its operating profit came from just 1 business",
+   "did trump threaten to jail anthropic ceo dario amodei clues mount after new interview",
+   "why amazon amzn stock is up today"
   ],
   "WMT:CALL": [
    "walmart slashes membership fees with this new bundle",
@@ -2268,7 +2271,9 @@
    "nvidia amd and other chip stocks rebound is the violent ai selloff over",
    "micron formfactor amkor teradyne and nvidia shares skyrocket what you need to know",
    "nvidia stocks rebound 6 78 as lawmakers call jensen huang to closed door briefing",
-   "forget nvidia here s the company behind the chips"
+   "forget nvidia here s the company behind the chips",
+   "cramer s advice for nvidia makes even more sense now as stock drops as board investigates ceo",
+   "nvidia stock falls below 180 is it a bargain buy"
   ],
   "AMZN:PUT": [
    "amazon com price target lowered to 300 from 325 at scotiabank",
@@ -2847,7 +2852,12 @@
    "middle east conflict set to push china needle coke prices to three year high",
    "gas prices down 25 cents from a month ago still above 4",
    "tech stocks rally as nvidia stock and oil prices fall alphacheck",
-   "us open falling oil prices and dip buying fuel rebound as nvidia falls"
+   "us open falling oil prices and dip buying fuel rebound as nvidia falls",
+   "heads up motorists the department of energy doe has announced an oil price rollback on petroleum products effective tues",
+   "baltimore area gas prices dip over past week",
+   "dollar retreats as stocks rally and crude oil tumbles",
+   "brent oil slides below 96 as hopes of us iran deal grow",
+   "natrona county gas prices drop 21 cents as national average tiptoes 4"
   ],
   "MSFT:CALL": [
    "forget the 12 month squeeze microsoft is primed for an explosive ai payoff",
@@ -2868,7 +2878,8 @@
    "msft price prediction shares extend above near term resistance as analysts lift targets",
    "microsoft msft could be 32 overvalued after the election driven ai repricing",
    "voters just made microsoft s data centers more valuable a wall street veteran says",
-   "nebius stock ahead of q3 earnings should you buy hold or sell"
+   "nebius stock ahead of q3 earnings should you buy hold or sell",
+   "i m betting that the post midterm flight to quality will kick microsoft into gear"
   ],
   "CVX:PUT": [
    "us to loan about a third of heating oil reserve in bid to tame prices",
@@ -3160,7 +3171,13 @@
    "middle east conflict set to push china needle coke prices to three year high",
    "gas prices down 25 cents from a month ago still above 4",
    "tech stocks rally as nvidia stock and oil prices fall alphacheck",
-   "us open falling oil prices and dip buying fuel rebound as nvidia falls"
+   "us open falling oil prices and dip buying fuel rebound as nvidia falls",
+   "heads up motorists the department of energy doe has announced an oil price rollback on petroleum products effective tues",
+   "baltimore area gas prices dip over past week",
+   "dollar retreats as stocks rally and crude oil tumbles",
+   "brent oil slides below 96 as hopes of us iran deal grow",
+   "qatarenergy acquires 25 stake in namibia oil block from chevron cvx",
+   "natrona county gas prices drop 21 cents as national average tiptoes 4"
   ],
   "JPM:CALL": [
    "which profit leader pays the most with yields between 0 31 and 2 32 bank of america nyse bac exxon mobil nyse xom johnso",
@@ -3548,7 +3565,12 @@
    "solana price prediction more okx leverage despite the slide",
    "bitcoin traders face an eight hour blind spot as deribit prepares to delay key market data",
    "btc to pkr bitcoin price in pakistani rupee",
-   "strategy buys 82m in bitcoin as strc tokenized stock adds new twist to saylor s btc"
+   "strategy buys 82m in bitcoin as strc tokenized stock adds new twist to saylor s btc",
+   "strategy inc strk stock price news quote history",
+   "xrp news xrp nears 1 as hacker moves 139m xrp",
+   "strategy s bitcoin holdings top 850 000 tokens",
+   "bitcoin price surpasses 75 000 on binance mar",
+   "btc price on november 10 4 59pm utc"
   ],
   "SOFI:PUT": [
    "nasdaq ceo adena friedman says 23 hour trading starts dec 6 what it means for your retirement money",
@@ -3623,7 +3645,8 @@
    "pfizer inc pfe is attracting investor attention here is what you should know",
    "meta title sectors",
    "pfizer stock gains as new products lift 2026 outlook",
-   "why pfizer believes it can be a leader in the glp 1 market even though its drug may not debut until 2028"
+   "why pfizer believes it can be a leader in the glp 1 market even though its drug may not debut until 2028",
+   "fda approval for hympavzi issued to pfizer inc"
   ]
  },
  "fired": {
@@ -3739,7 +3762,8 @@
    "news:mstr stock btc falls under strategy s 75 451 cost basis",
    "news:bitcoin nears 73 000 a close below could trig",
    "news:strategy buys 82m in bitcoin as strc tokenized stock adds new twist to saylor s btc",
-   "down-0.3"
+   "down-0.3",
+   "news:strategy s bitcoin holdings top 850 000 tokens"
   ],
   "SNAP:PUT:2026-11-20:6": [
    "down-0.15",
@@ -3788,7 +3812,9 @@
    "news:canada commodities oil prices drop as trump downplays further air strikes against iran",
    "news:oil falls on unconfirmed report that iran eased hormuz demands",
    "news:wall street futures rise as oil prices fall ahead of us inflation data dow jones s p nasdaq",
-   "news:us open falling oil prices and dip buying fuel rebound as nvidia falls"
+   "news:us open falling oil prices and dip buying fuel rebound as nvidia falls",
+   "news:dollar retreats as stocks rally and crude oil tumbles",
+   "news:brent oil slides below 96 as hopes of us iran deal grow"
   ],
   "CVX:PUT:2026-11-13:210@2026-11-06": [
    "news:the iran war isn t over but oil traders are already pricing in peace",
@@ -3833,25 +3859,33 @@
    "news:us stock futures advance as oil prices slide and investors await inflation report dow jones s p nasdaq wall street",
    "news:canada commodities oil prices drop as trump downplays further air strikes against iran",
    "news:oil falls on unconfirmed report that iran eased hormuz demands",
-   "news:wall street futures rise as oil prices fall ahead of us inflation data dow jones s p nasdaq"
+   "news:wall street futures rise as oil prices fall ahead of us inflation data dow jones s p nasdaq",
+   "news:dollar retreats as stocks rally and crude oil tumbles",
+   "news:brent oil slides below 96 as hopes of us iran deal grow"
   ],
   "PFE:PUT:2026-11-20:30": [
    "down-0.15",
-   "news:pfizer stock gains as new products lift 2026 outlook"
+   "news:pfizer stock gains as new products lift 2026 outlook",
+   "news:fda approval for hympavzi issued to pfizer inc"
   ],
   "AMZN:CALL:2026-11-13:275": [
+   "down-0.15",
+   "down-0.3"
+  ],
+  "NVDA:PUT:2026-11-13:172.5": [
+   "sharp@2026-11-09T10:57-05:00"
+  ],
+  "AAPL:CALL:2026-11-16:352.5": [],
+  "BA:PUT:2026-11-20:172.5": [
    "down-0.15"
   ],
-  "NVDA:PUT:2026-11-13:172.5": [],
-  "AAPL:CALL:2026-11-16:352.5": [],
-  "BA:PUT:2026-11-20:172.5": [],
-  "MSFT:CALL:2026-11-13:550": []
+  "MSFT:CALL:2026-11-13:550": [],
+  "SOFI:CALL:2026-11-27:16.5": []
  },
  "stock_level": {
   "F:CALL:2026-11-20:11.5": 2
  },
  "seen_macro": [
-  "tech sell off grips wall street as investors worry about ai spending",
   "halloween carnage on wall street as 2trillion share price slump sparks fears of stock market crash",
   "sensex gains 308 points nifty reclaims 23 000 as it and pharma stocks lead recovery",
   "geopolitical tensions fuel refining boom as five major oil giants rake in 56 3 billion in a single quarter",
@@ -4450,13 +4484,15 @@
   "us lng producers eye bonanza if trump and xi can ease tariffs",
   "inside nvidia s washington reckoning",
   "eli lilly gains after jefferies raises price target to wall street high 1 700",
-  "us stocks rally and recover more of last week s losses as oil prices swing lower"
+  "us stocks rally and recover more of last week s losses as oil prices swing lower",
+  "a good time to consider hedging bets with spyh"
  ],
  "sharp": {
   "F:CALL:2026-11-20:11.5": 12.405,
   "MSTR:PUT:2026-11-13:120": 131.93,
   "SNAP:PUT:2026-11-20:6": 5.185,
   "XOM:PUT:2026-11-13:165": 165.35,
-  "CVX:PUT:2026-11-13:210@2026-11-06": 211.865
+  "CVX:PUT:2026-11-13:210@2026-11-06": 211.865,
+  "NVDA:PUT:2026-11-13:172.5": 179.68
  }
 }

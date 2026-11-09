@@ -3186,3 +3186,12 @@ time,pos_id,ticker,side,event,detail,entry,val,pnl,spot,need,tdays,advice,reason
 2026-11-09T10:33-05:00,NVDA:PUT:2026-11-13:172.5,NVDA,PUT,macro,against/weak/medium: US stocks rally and recover more of last week's losses as oil prices swing lower - LancasterOnline,2.85,2.84,-0.0035,179.65,0.0557,5,أبقِ,خبر ضد العقد لكن تأثيره محدود، راقب
 2026-11-09T10:33-05:00,AAPL:CALL:2026-11-16:352.5,AAPL,CALL,macro,with/weak/medium: US stocks rally and recover more of last week's losses as oil prices swing lower - LancasterOnline,3.55,3.67,0.0338,350.35,0.0163,6,أبقِ,الخبر في صالح العقد
 2026-11-09T10:33-05:00,MSFT:CALL:2026-11-13:550,MSFT,CALL,macro,with/weak/medium: US stocks rally and recover more of last week's losses as oil prices swing lower - LancasterOnline,3.52,3.63,0.0312,541.795,0.0216,5,أبقِ,الخبر في صالح العقد
+2026-11-09T10:43-05:00,XOM:PUT:2026-11-13:165,XOM,PUT,news,with/medium: Dollar Retreats as Stocks Rally and Crude Oil Tumbles - Barchart.com,3.12,2.76,-0.1154,164.42,0.0154,5,أبقِ,الخبر في صالح العقد
+2026-11-09T10:43-05:00,CVX:PUT:2026-11-13:210@2026-11-06,CVX,PUT,news,against/medium: Dollar Retreats as Stocks Rally and Crude Oil Tumbles - Barchart.com,2.82,2.48,-0.1206,211.22,0.0191,5,فكّر بالخروج,خبر ضد العقد
+2026-11-09T10:43-05:00,PFE:PUT:2026-11-20:30,PFE,PUT,news,against/medium: FDA Approval for HYMPAVZI issued to PFIZER INC - Quantisnow,0.98,1.05,0.0714,29.08,0.0021,10,فكّر بالخروج,خبر ضد العقد
+2026-11-09T10:54-05:00,MSTR:PUT:2026-11-13:120,MSTR,PUT,news,"with/medium: Strategy’s Bitcoin Holdings Top 850,000 Tokens - Yahoo Finance",2.93,1.96,-0.3311,128.51,0.089,5,فكّر بالخروج,العقد خسر 33% (الوقف عند −40%)
+2026-11-09T10:54-05:00,XOM:PUT:2026-11-13:165,XOM,PUT,news,against/medium: Brent oil slides below $96 as hopes of US-Iran deal grow - Latest news from Azerbaijan,3.12,2.67,-0.1442,164.46,0.0157,5,فكّر بالخروج,خبر ضد العقد
+2026-11-09T10:54-05:00,CVX:PUT:2026-11-13:210@2026-11-06,CVX,PUT,news,with/medium: Brent oil slides below $96 as hopes of US-Iran deal grow - Latest news from Azerbaijan,2.82,2.44,-0.1348,210.84,0.0174,5,أبقِ,الخبر في صالح العقد
+2026-11-09T10:54-05:00,AMZN:CALL:2026-11-13:275,AMZN,CALL,contract,-30%,3.19,2.23,-0.3009,269.12,0.0337,5,فكّر بالخروج,العقد خسر 30% (الوقف عند −40%)
+2026-11-09T10:57-05:00,NVDA:PUT:2026-11-13:172.5,NVDA,PUT,sharp,-0.82% في 15د,2.85,,,179.68,0.0558,5,فكّر بالخروج,السهم يتحرك ضدك
+2026-11-09T11:00-05:00,BA:PUT:2026-11-20:172.5,BA,PUT,contract,-16%,3.47,2.91,-0.1614,174.785,0.0329,10,أبقِ,الفكرة قائمة لكن العقد -16%؛ التزم بالوقف عند −40%
