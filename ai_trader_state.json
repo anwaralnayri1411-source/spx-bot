@@ -1,6 +1,21 @@
 {
- "cash": 3317.0,
- "positions": [],
+ "cash": 2547.0,
+ "positions": [
+  {
+   "id": "1109-1116-SPY-CALL-750",
+   "symbol": "SPY   261109C00750000",
+   "under": "SPY",
+   "side": "CALL",
+   "strike": 750.0,
+   "expiry": "2026-11-09",
+   "qty": 5,
+   "entry": 1.54,
+   "time": "2026-11-09T11:16-05:00",
+   "stop": 1.0,
+   "target": 2.3,
+   "invalidation": "إلغاء الفكرة إذا أغلق SPX دون 7,500 بوضوح أو أغلق SPY دون VWAP، أو إذا تراجعت الدلتا والغاما الصافية بشكل حاد مع ارتفاع عوائد الفائدة."
+  }
+ ],
  "closed": [
   {
    "id": "1105-0946-PUT-757",
@@ -217,8 +232,8 @@
    "pnl": 298.0
   }
  ],
- "decisions": 53,
+ "decisions": 54,
  "report_day": "2026-11-06",
  "day": "2026-11-09",
- "decisions_today": 6
+ "decisions_today": 7
 }
