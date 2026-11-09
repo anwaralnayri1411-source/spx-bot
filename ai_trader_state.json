@@ -1,6 +1,21 @@
 {
- "cash": 3907.0,
- "positions": [],
+ "cash": 2809.0,
+ "positions": [
+  {
+   "id": "1109-1401-SPY-CALL-752",
+   "symbol": "SPY   261110C00752000",
+   "under": "SPY",
+   "side": "CALL",
+   "strike": 752.0,
+   "expiry": "2026-11-10",
+   "qty": 3,
+   "entry": 3.66,
+   "time": "2026-11-09T14:01-05:00",
+   "stop": 2.8,
+   "target": 4.7,
+   "invalidation": "إذا أغلق SPY تحت 751 أو انخفض سعر العقد إلى 2.80 أو تحول VWAP إلى هبوط، أو ظهرت أخبار فائدة تدفع السوق للأسفل، أُلغي الفكرة وأخرج."
+  }
+ ],
  "closed": [
   {
    "id": "1105-0946-PUT-757",
@@ -235,8 +250,8 @@
    "pnl": 590.0
   }
  ],
- "decisions": 64,
+ "decisions": 65,
  "report_day": "2026-11-06",
  "day": "2026-11-09",
- "decisions_today": 17
+ "decisions_today": 18
 }
