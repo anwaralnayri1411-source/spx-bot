@@ -130,3 +130,4 @@ id,project,tag,sym,side,strike,exp,entry_time,entry,edge,strength,out,out_time,o
 20261109T1300|spx|same_contract_open|SPX|CALL|7560|2026-11-09,spx,same_contract_open,SPX,CALL,7560.0,2026-11-09,2026-11-09T13:00-05:00,3.86,4.0,6.0,stop,2026-11-09T13:27-05:00,-0.487,0.0,5
 20261109T1120|spx|same_contract_open|SPY|CALL|751|2026-11-10,spx,same_contract_open,SPY,CALL,751.0,2026-11-10,2026-11-09T11:20-05:00,3.05,6.5,9.8,tp,2026-11-09T14:42-05:00,0.97,0.97,38
 20261109T1420|spx|same_contract_open|SPY|CALL|753|2026-11-10,spx,same_contract_open,SPY,CALL,753.0,2026-11-10,2026-11-09T14:20-05:00,2.78,3.75,5.6,tp,2026-11-09T14:42-05:00,0.637,0.637,5
+20261109T1250|spx|same_contract_open|SPY|CALL|754|2026-11-10,spx,same_contract_open,SPY,CALL,754.0,2026-11-10,2026-11-09T12:50-05:00,2.55,5.0,7.5,tp,2026-11-09T15:27-05:00,0.506,0.506,29
