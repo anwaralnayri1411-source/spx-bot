@@ -15,7 +15,7 @@
    "occ": "DIS261127C00120000",
    "peak_pnl": 0.035,
    "close_pnl": -0.064,
-   "quotes": 71,
+   "quotes": 72,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -34,8 +34,8 @@
    "strength": "7.5",
    "occ": "BAC261127P00050000",
    "peak_pnl": 0.075,
-   "close_pnl": -0.338,
-   "quotes": 71,
+   "close_pnl": -0.346,
+   "quotes": 72,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -54,8 +54,8 @@
    "strength": "6.7",
    "occ": "WMT261120C00129000",
    "peak_pnl": 0.0,
-   "close_pnl": -0.352,
-   "quotes": 57,
+   "close_pnl": -0.349,
+   "quotes": 58,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -75,7 +75,7 @@
    "occ": "DIS261127C00120000",
    "peak_pnl": 0.0,
    "close_pnl": -0.142,
-   "quotes": 13,
+   "quotes": 14,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -94,8 +94,8 @@
    "strength": "6.5",
    "occ": "XOM261120P00160000",
    "peak_pnl": 0.0,
-   "close_pnl": -0.15,
-   "quotes": 13,
+   "close_pnl": -0.188,
+   "quotes": 14,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -114,8 +114,8 @@
    "strength": "9.8",
    "occ": "SPY261110C00751000",
    "peak_pnl": 0.013,
-   "close_pnl": 0.013,
-   "quotes": 1,
+   "close_pnl": -0.033,
+   "quotes": 2,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -1308,7 +1308,8 @@
   "20261109T1115|spx|same_contract_open|SPY|CALL|751|2026-11-10",
   "20261109T1112|stocks|earn_in_life|DIS|CALL|120|2026-11-27",
   "20261109T1112|stocks|open_same_dir|XOM|PUT|160|2026-11-20",
-  "20261109T1120|spx|same_contract_open|SPY|CALL|751|2026-11-10"
+  "20261109T1120|spx|same_contract_open|SPY|CALL|751|2026-11-10",
+  "20261109T1125|spx|same_contract_open|SPY|CALL|751|2026-11-10"
  ],
  "last": {
   "spx|CALL|SPY": "2026-11-09T11:20-05:00",
