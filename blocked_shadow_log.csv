@@ -122,3 +122,4 @@ id,project,tag,sym,side,strike,exp,entry_time,entry,edge,strength,out,out_time,o
 20261106T1355|spx|repeat_side|SPY|CALL|740|2026-11-09,spx,repeat_side,SPY,CALL,740.0,2026-11-09,2026-11-06T13:55-05:00,3.83,4.25,6.4,tp,2026-11-09T09:42-05:00,0.634,0.634,26
 20261106T1012|stocks|open_same_dir|HOOD|PUT|75|2026-11-27,stocks,open_same_dir,HOOD,PUT,75.0,2026-11-27,2026-11-06T10:12-05:00,3.17,5.5,7.0,stop,2026-11-09T09:52-05:00,-0.407,0.174,69
 20261106T1042|stocks|open_same_dir|MSTR|PUT|114|2026-11-13,stocks,open_same_dir,MSTR,PUT,114.0,2026-11-13,2026-11-06T10:42-05:00,2.03,4.5,5.7,stop,2026-11-09T10:12-05:00,-0.414,0.094,66
+20261106T1012|stocks|open_same_dir|COIN|PUT|129|2026-11-13,stocks,open_same_dir,COIN,PUT,129.0,2026-11-13,2026-11-06T10:12-05:00,3.3,5.5,6.8,stop,2026-11-09T10:22-05:00,-0.424,0.3,74
