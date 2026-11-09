@@ -8,6 +8,7 @@ import falcon as fa
 
 N = datetime(2026, 11, 5, 10, 0, tzinfo=fa.NY)
 DAY = "2026-11-05"
+seen_cap = []
 MENU = [{"symbol": "SPY P", "under": "SPY", "side": "PUT", "strike": 740.0, "expiry": DAY, "bid": 2.9, "ask": 3.0, "delta": -0.4},
         {"symbol": "SPY C", "under": "SPY", "side": "CALL", "strike": 750.0, "expiry": DAY, "bid": 2.9, "ask": 3.0, "delta": 0.4}]
 
@@ -75,7 +76,7 @@ def setup(tmp_path, monkeypatch, decision):
     monkeypatch.setattr(fa, "A_STATE", str(tmp_path / "none.json"))
     for k in ("STATE", "LOG", "JOURNAL", "USAGE"):
         monkeypatch.setattr(at, k, getattr(at, k))
-    monkeypatch.setattr(at, "gather", lambda n: ("مدخلات", MENU, {"SPY": 745.0}, []))
+    monkeypatch.setattr(at, "gather", lambda n, max_ask=None: seen_cap.append(max_ask) or ("مدخلات", MENU, {"SPY": 745.0}, []))
     monkeypatch.setattr(at, "load_memory", at.new_memory)
     monkeypatch.setattr(fa.scr, "panel", lambda now: "## لوحة الشاشات (10:00): صعود 3 · هبوط 9 · محايد 2")
     seen = []
@@ -101,6 +102,7 @@ def test_main_buys_on_signal_silently(tmp_path, monkeypatch):
     assert p["stop"] == 1.5 and p["target"] == 4.5 and st["calls_today"] == 1 and st["last_bar"] == "b1"
     assert "إشارة المحرك الآن: PUT" in seen[0][0] and "الصقر" in seen[0][1] and not sent
     assert "لوحة الشاشات" in seen[0][0] and "لوحة الشاشات" in seen[0][1]
+    assert seen_cap[-1] == 5.0 and "ميزانيتك الآن" in seen[0][0] and "حتى 500$" in seen[0][0]
     s = pd.read_csv(fa.SIGNALS, dtype=str, keep_default_na=False)
     assert s.iloc[0]["decision"] == "قبول" and s.iloc[0]["contract"] == "SPY P" and s.iloc[0]["reason"] == "هبوط واضح"
     fa.main([])                                                                             # الفاصل الزمني: لا طلب ثانٍ
@@ -129,3 +131,9 @@ def test_report_once_with_signals(tmp_path, monkeypatch):
     fa.main([])
     assert len(sent) == 1 and "🦅 **الصقر · نهاية الجلسة**" in sent[0] and "إشارات المحرك: 1" in sent[0]
     assert pd.read_csv(fa.SIGNALS).iloc[0]["end_pts"] == 15.0
+
+
+def test_contract_above_cap_is_refused():
+    menu = MENU + [{"symbol": "SPXW P", "under": "SPX", "side": "PUT", "strike": 7400.0, "expiry": DAY, "bid": 24.0, "ask": 24.7}]
+    d = fa.apply_engine_rules(dec(sym="SPXW P"), {"side": "PUT"}, menu)
+    assert d["action"] == "انتظار" and "500$" in d["wait_reason"]

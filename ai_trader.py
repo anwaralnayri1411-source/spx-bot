@@ -403,7 +403,7 @@ def quotes(syms, meta=None):
     return out
 
 
-def gather(now):
+def gather(now, max_ask=None):
     """نص المدخلات كاملاً لـClaude + قائمة العقود + السعر."""
     import options_bot as ob
     parts = []
@@ -451,7 +451,7 @@ def gather(now):
     except Exception:  # noqa: BLE001
         pass
     S, menu = tasty_menu(now)
-    menu = [m for m in menu if float(m.get("ask") or 0) > 0]
+    menu = [m for m in menu if float(m.get("ask") or 0) > 0 and (max_ask is None or float(m["ask"]) <= max_ask)]
     parts.append(f"## الأسعار الآن: {spot_text(S)} (عقد SPX ≈ 10 أضعاف SPY)\n"
                  "## قائمة العقود (symbol, under, side, strike, expiry, bid, ask, delta, iv, volume, oi)\n"
                  + "\n".join(f"{m['symbol']}|{m.get('under', 'SPY')}|{m['side']}|{m['strike']:g}|{m['expiry']}|{m['bid']}|{m['ask']}|"

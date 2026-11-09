@@ -78,7 +78,7 @@ def test_messages_are_short_and_journal_keeps_reasoning():
 def test_main_flow_with_fakes(tmp_path, monkeypatch):
     for k, f in (("STATE", "s.json"), ("LOG", "log.csv"), ("JOURNAL", "j.md"), ("USAGE", "u.csv")):
         monkeypatch.setattr(at, k, str(tmp_path / f))
-    monkeypatch.setattr(at, "gather", lambda n: ("مدخلات", MENU, 767.2, []))
+    monkeypatch.setattr(at, "gather", lambda n, max_ask=None: ("مدخلات", MENU, 767.2, []))
     monkeypatch.setattr(at, "ask_claude", lambda p, n, *a, **k: _dec())
     monkeypatch.setattr(at, "quotes", lambda syms, meta=None: [{"symbol": s, "bid": 2.95, "ask": 3.0} for s in syms])
 
@@ -156,7 +156,7 @@ def test_learner_runs_beside_a_with_shared_inputs(tmp_path, monkeypatch):
                  ("USAGE", "ai_trader_usage.csv"), ("MEMORY", "ai_trader_b_memory.json")):
         monkeypatch.setattr(at, k, str(tmp_path / f))
     calls, prompts, sent = [], [], []
-    monkeypatch.setattr(at, "gather", lambda n: calls.append(1) or ("مدخلات", MENU, 767.2, []))
+    monkeypatch.setattr(at, "gather", lambda n, max_ask=None: calls.append(1) or ("مدخلات", MENU, 767.2, []))
     monkeypatch.setattr(at, "quotes", lambda syms, meta=None: [{"symbol": s, "bid": 2.95, "ask": 3.0} for s in syms])
     monkeypatch.setattr(at, "send", lambda text, no_send: sent.append((text, no_send)))
 

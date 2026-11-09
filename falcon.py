@@ -26,6 +26,7 @@ A_STATE = os.path.join(at.ROOT, "ai_trader_state.json")
 END_T = dtime(16, 10)
 MAX_CALLS, GAP_MIN = 20, 5
 STOP_MULT, TARGET_MULT = 0.5, 1.5
+MAX_ASK = 5.00          # سقف سعر العقد الواحد 500$ (بطلب المستخدم 9/11/2026)
 SIG_COLS = ["time", "side", "kind", "line", "S", "score", "adx", "decision", "executed", "contract", "qty", "entry", "reason",
             "fav_pts", "adv_pts", "end_pts"]
 RULES = at.RULES_B + """
@@ -70,6 +71,8 @@ def apply_engine_rules(d, sig, menu):
     row = next((r for r in menu if r["symbol"] == (d["buy"].get("symbol") or "").strip()), None)
     if row is not None and row["side"] != sig["side"]:
         return dict(d, action="انتظار", wait_reason=f"خالف جهة الإشارة ({row['side']} مقابل {sig['side']})")
+    if row is not None and float(row["ask"] or 0) > MAX_ASK:
+        return dict(d, action="انتظار", wait_reason=f"العقد فوق سقف {MAX_ASK * 100:.0f}$ للعقد")
     if row is not None:
         ask = float(row["ask"] or 0)
         d["buy"].update(stop_price=round(ask * STOP_MULT, 2), target_price=round(ask * TARGET_MULT, 2))
@@ -162,9 +165,12 @@ def handle_signal(st, sig, eng, marks, now):
         return
     st["calls_today"] = st.get("calls_today", 0) + 1
     st["last_call"] = now.isoformat(timespec="seconds")
-    text, menu, spot, _ = at.gather(now)
+    text, menu, spot, _ = at.gather(now, MAX_ASK)
     marks.update({m["symbol"]: m for m in menu})
-    note = f"## إشارة المحرك الآن: {sig['side']} ({'عبور خط ' + str(sig['line']) if sig['kind'] == 'خط' else 'تقدم 5 نقاط'}) | الأصوات {eng['total']} | ADX {eng['det']['adx']:.0f}"
+    budget = min(st["cash"], at.MAX_POS_PCT * at.equity(st, marks))
+    note = (f"## ميزانيتك الآن {budget:,.0f}$ للصفقة، والعقد الواحد حتى {MAX_ASK * 100:.0f}$ (القائمة فيها هذه العقود فقط)."
+            f" اختر الكمية بحيث لا تتجاوز الميزانية.\n")
+    note += f"## إشارة المحرك الآن: {sig['side']} ({'عبور خط ' + str(sig['line']) if sig['kind'] == 'خط' else 'تقدم 5 نقاط'}) | الأصوات {eng['total']} | ADX {eng['det']['adx']:.0f}"
     prompt = "\n\n".join(x for x in [text, scr.panel(now), at.memory_text(at.load_memory()), at.portfolio_text(st, marks, now), note,
                                        f"الوقت الآن {now:%H:%M} نيويورك. قرّر."] if x)
     d = at.ask_claude(prompt, now, at.SCHEMA_B, RULES)
