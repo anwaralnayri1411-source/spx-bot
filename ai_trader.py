@@ -436,6 +436,10 @@ def gather(now):
     try:
         import news_watch as nw
         parts.append("## أخبار الليل والصباح\n" + "\n".join(nw.night_context(now.date().isoformat(), None, "CALL", limit=4)))
+        import heavyweights as hv
+        hb = hv.block_text(hv.current(now))
+        if hb:
+            parts.append(hb)
     except Exception as e:  # noqa: BLE001
         parts.append(f"## الأخبار: لا ({type(e).__name__})")
     recs = []

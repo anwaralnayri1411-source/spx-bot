@@ -1738,6 +1738,7 @@ def idea_caption(i):
         *([w] if (w := event_warning(k)) else []),
         *([cl] if (cl := _ctx_line(i)) else []),
         *ob.night_news_lines(side, i["ticker"]),
+        *ob.heavy_lines(side, i["ticker"]),
         lv[0], lv[1],
         f"💰 أقصى خسارة ≈ ${k['cost'] * STOP_LOSS:,.0f}",
         "⚠️ <i>تعليمي وليست توصية. لا تلاحق السعر فوق +10%.</i>"])

@@ -1352,6 +1352,16 @@ def instrument_block(sym, ks, side, S_idx):
 FLOW_LOG = "spx_flow_log.csv"   # مراقب سيولة SPX (H-SPXFLOW)
 
 
+def heavy_lines(side, sym=None):
+    """سطر أكبر خبر لشركة ثقيلة في SPX وأثره على المؤشر (H-HEAVY)؛ عرض فقط. [] عند أي فشل."""
+    try:
+        import heavyweights as hv
+        x = hv.caption_line(hv.current(now_ny()), side, sym)
+        return [x] if x else []
+    except Exception:  # noqa: BLE001
+        return []
+
+
 def night_news_lines(side, sym=None):
     """أخبار الليل المهمة (مراقب الأخبار) واتجاهها مقابل التوصية؛ إعلامي فقط (بطلب المستخدم 4/11/2026). [] عند أي فشل."""
     try:
@@ -1490,6 +1500,7 @@ def send_signal(a):
         cap.append(f"➕ <b>إضافة على رابح:</b> عقد {side} السابق ({pv['strike']:,.0f}، {pv['time'][11:16]}) بلغ الهدف.")
     cap += [x for x in liquidity_lines(side, S, now_ny()) if x]
     cap += night_news_lines(side)
+    cap += heavy_lines(side)
     cap.append(f"⏰ لا دخول بعد {ry_time(*no_entry(now_ny()))} | 📍 SPX {S:,.1f}")
     nd = groups.get("NDX")
     if c["age"] >= 5:

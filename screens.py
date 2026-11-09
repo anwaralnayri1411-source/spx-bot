@@ -37,7 +37,7 @@ def sgn(x, eps=0.0):
     return 0 if x is None or x != x or abs(x) <= eps else (1 if x > 0 else -1)
 
 
-def readings(a=None, flow=None, eng=None, fade=None, ai=None, falcon=None):
+def readings(a=None, flow=None, eng=None, fade=None, ai=None, falcon=None, heavy=None):
     """{اسم الشاشة: +1/0/−1} من مدخلات كل شاشة. أي مدخل غائب يُترك."""
     out = {}
     if a:
@@ -64,6 +64,8 @@ def readings(a=None, flow=None, eng=None, fade=None, ai=None, falcon=None):
         out["المتداول الذكي"] = ai
     if falcon is not None:
         out["الصقر"] = falcon
+    if heavy is not None:
+        out["الشركات الثقيلة"] = heavy
     return out
 
 
@@ -72,7 +74,7 @@ def in_night(now):
     return (t >= NIGHT_FROM and wd in (6, 0, 1, 2, 3)) or (t < NIGHT_TO and wd in (0, 1, 2, 3, 4))
 
 
-def night_readings(es=None, settle=None, es60=None, eng=None, changes=None, now=None):
+def night_readings(es=None, settle=None, es60=None, eng=None, changes=None, now=None, heavy=None):
     """{شاشة: +1/0/−1} ليلاً. changes: {اسم السوق: متوسط التغير اليومي}."""
     out = {}
     if es and settle:
@@ -88,6 +90,8 @@ def night_readings(es=None, settle=None, es60=None, eng=None, changes=None, now=
         if ch is None or ch != ch:
             continue
         out[name] = NIGHT_MARKETS[name][1] * sgn(ch, 0.02 if name == "VIX" else 0.001)
+    if heavy is not None:
+        out["الشركات الثقيلة"] = heavy
     return out
 
 
@@ -227,6 +231,21 @@ def load_state(path=None):
         return {"report_day": ""}
 
 
+def heavy_dir(now, no_send=False):
+    """اتجاه أثر الشركات الثقيلة (H-HEAVY) مع التنبيه عند الحاجة، أو None إن لا أخبار."""
+    try:
+        import heavyweights as hv
+        imp = hv.current(now)
+        if not imp:
+            return None
+        if "--no-send" not in sys.argv:
+            hv.maybe_alert(imp, now, no_send)
+        return hv.net_dir(imp)
+    except Exception as e:  # noqa: BLE001
+        print("الشركات الثقيلة:", type(e).__name__)
+        return None
+
+
 def market_changes():
     """{اسم السوق: متوسط تغيره منذ الإغلاق السابق} من ياهو (متأخر ~15 دقيقة)."""
     import yfinance as yf
@@ -259,7 +278,7 @@ def night_snapshot(now, no_send):
         eng = {"total": total, "adx": det["adx"]}
     except Exception as e:  # noqa: BLE001
         print("المحرك الليلي:", type(e).__name__)
-    rd = night_readings(es, settle, es60, eng, market_changes(), now)
+    rd = night_readings(es, settle, es60, eng, market_changes(), now, heavy_dir(now, no_send))
     t = now.isoformat(timespec="minutes")
     os.makedirs(DIR, exist_ok=True)
     pd.DataFrame([{"time": t, "S": round(es, 2), "screen": k, "dir": v} for k, v in rd.items()], columns=LOG_COLS) \
@@ -350,7 +369,7 @@ def snapshot(now):
                              ok=lambda r: r.get("decision") == "قبول")
     except Exception:  # noqa: BLE001
         pass
-    rd = readings(a, flow, eng, fade, ai, falcon)
+    rd = readings(a, flow, eng, fade, ai, falcon, heavy_dir(now))
     t = now.isoformat(timespec="minutes")
     rows = [{"time": t, "S": round(S, 2), "screen": k, "dir": v} for k, v in rd.items()]
     os.makedirs(DIR, exist_ok=True)
