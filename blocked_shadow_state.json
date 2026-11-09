@@ -14,8 +14,8 @@
    "strength": "5.7",
    "occ": "DIS261127C00120000",
    "peak_pnl": 0.254,
-   "close_pnl": 0.228,
-   "quotes": 117,
+   "close_pnl": 0.212,
+   "quotes": 118,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -34,8 +34,8 @@
    "strength": "6.7",
    "occ": "WMT261120C00129000",
    "peak_pnl": 0.0,
-   "close_pnl": -0.229,
-   "quotes": 103,
+   "close_pnl": -0.208,
+   "quotes": 104,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -54,8 +54,8 @@
    "strength": "5.7",
    "occ": "DIS261127C00120000",
    "peak_pnl": 0.15,
-   "close_pnl": 0.127,
-   "quotes": 59,
+   "close_pnl": 0.112,
+   "quotes": 60,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -74,8 +74,8 @@
    "strength": "6.5",
    "occ": "XOM261120P00160000",
    "peak_pnl": 0.129,
-   "close_pnl": -0.046,
-   "quotes": 59,
+   "close_pnl": -0.062,
+   "quotes": 60,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -94,8 +94,8 @@
    "strength": "6.7",
    "occ": "MSTR261113P00122000",
    "peak_pnl": 0.196,
-   "close_pnl": -0.082,
-   "quotes": 45,
+   "close_pnl": -0.091,
+   "quotes": 46,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -114,8 +114,8 @@
    "strength": "6.2",
    "occ": "INTC261127P00055000",
    "peak_pnl": 0.0,
-   "close_pnl": -0.289,
-   "quotes": 23,
+   "close_pnl": -0.28,
+   "quotes": 24,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -134,8 +134,8 @@
    "strength": "6.2",
    "occ": "CVX261120P00202500",
    "peak_pnl": 0.0,
-   "close_pnl": -0.221,
-   "quotes": 9,
+   "close_pnl": -0.272,
+   "quotes": 10,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -1426,7 +1426,8 @@
   "20261109T1525|spx|late_entry|SPY|CALL|756|2026-11-10",
   "20261109T1530|spx|late_entry|SPY|CALL|756|2026-11-10",
   "20261109T1527|stocks|earn_in_life|DIS|CALL|124|2026-11-27",
-  "20261109T1527|stocks|open_same_dir|XOM|PUT|162.5|2026-11-20"
+  "20261109T1527|stocks|open_same_dir|XOM|PUT|162.5|2026-11-20",
+  "20261109T1535|spx|late_entry|SPY|CALL|755|2026-11-10"
  ],
  "last": {
   "spx|CALL|SPY": "2026-11-09T14:20-05:00",
