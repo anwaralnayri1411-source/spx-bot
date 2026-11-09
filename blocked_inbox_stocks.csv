@@ -905,3 +905,4 @@ id,time,project,tag,sym,root,side,strike,exp,entry,spot,edge,strength
 20261109T1327|stocks|open_same_dir|INTC|PUT|55|2026-11-27,2026-11-09T13:27-05:00,stocks,open_same_dir,INTC,INTC,PUT,55.0,2026-11-27,2.25,58.09,3.5,6.2
 20261109T1327|stocks|open_same_dir|XOM|PUT|160|2026-11-20,2026-11-09T13:27-05:00,stocks,open_same_dir,XOM,XOM,PUT,160.0,2026-11-20,2.23,164.49,3.5,5.9
 20261109T1342|stocks|earn_in_life|DIS|CALL|121|2026-11-27,2026-11-09T13:42-05:00,stocks,earn_in_life,DIS,DIS,CALL,121.0,2026-11-27,3.31,118.7,7.5,7.9
+20261109T1357|stocks|earn_in_life|DIS|CALL|121|2026-11-27,2026-11-09T13:57-05:00,stocks,earn_in_life,DIS,DIS,CALL,121.0,2026-11-27,3.32,118.72,7.5,7.6
