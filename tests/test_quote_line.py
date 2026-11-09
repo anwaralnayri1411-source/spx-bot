@@ -16,7 +16,7 @@ def contract(**kw):
 
 def test_live_quote_shows_ask_bid_spread_and_riyadh_time():
     line = sb.quote_line(contract(), NOW)
-    assert "📡 لحظي 20:12 الرياض" in line and "طلب <b>1.93</b>" in line and "بيع <b>1.72</b>" in line and "فرق 12%" in line
+    assert "📡 لحظي 13:12 نيويورك · 20:12 الرياض" in line and "طلب <b>1.93</b>" in line and "بيع <b>1.72</b>" in line and "فرق 12%" in line
 
 
 def test_wide_spread_adds_the_limit_order_advice_with_the_mid_price():
@@ -36,3 +36,7 @@ def test_the_caption_contains_the_quote_line():
     i = {"side": "PUT", "ticker": "JPM", "strength": 6.5, "dates": {"earn": None}, "S": 331.09, "contracts": [contract()]}
     cap = sb.idea_caption(i)
     assert "📡 لحظي" in cap and "بسعر حتى <b>1.93</b>" in cap and "تعليمي وليست توصية" in cap
+
+
+def test_stamp_shows_new_york_24h_then_riyadh():
+    assert ob.stamp(datetime(2026, 11, 9, 15, 5, tzinfo=ob.NY)) == "15:05 نيويورك · 23:05 الرياض"

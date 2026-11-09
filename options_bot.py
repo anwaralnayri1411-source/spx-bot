@@ -97,6 +97,12 @@ def esc(x):
     return html.escape(str(x))
 
 
+def stamp(t=None):
+    """وقت الرسائل: نيويورك (24 ساعة) ثم الرياض، بطلب المستخدم 9/11/2026."""
+    t = t or now_ny()
+    return f"{t.astimezone(NY):%H:%M} نيويورك · {t.astimezone(RY):%H:%M} الرياض"
+
+
 def now_ny():
     return datetime.now(NY)
 
@@ -1284,7 +1290,7 @@ def plan_message(a, plan, update=False, status=None):
     L += ["", "📡 عند توفر إشارة أرسل لك العقد (السترايك والسعر والكمية) مع مستويات المؤشر.",
           "⚠️ <i>المستويات وشروطها قواعد ثابتة لم تُختبر تاريخياً. عمر آخر شمعة"
           f" ~{c['age']:.0f} دقيقة، والبوت يفحص كل 5 دقائق بالشموع اللحظية (منذ 2/11).</i>",
-          f"🕒 {now_ny().astimezone(RY).strftime('%H:%M')} الرياض | SPX إصدار 17"]
+          f"🕒 {stamp()} | SPX إصدار 17"]
     return "\n".join(L)
 
 
@@ -1420,7 +1426,7 @@ def signal_message(a):
     if c["age"] >= 5:
         L.append(age_note(c["age"]))
     L.append("⚠️ <i>تعليمي وليست توصية. أقصى خسارة هي سعر العقد.</i>")
-    L.append(f"🕒 {now_ny().astimezone(RY).strftime('%H:%M')} الرياض | SPX إصدار 17")
+    L.append(f"🕒 {stamp()} | SPX إصدار 17")
     return "\n".join(L)
 
 
@@ -1495,7 +1501,7 @@ def send_signal(a):
         sub = (f"انتهاء {kexp} (تجريبي)" if a["is_test"] else ("انتهاء اليوم" if kexp == a["exp"] else f"انتهاء {kexp}")) + f" · {sym} {k0.get('spot', S):,.0f}"
         png = cards.contract_card("entry", f"{root_sym(k0)} {k0['strike']:,.0f} {side}", sub, k0["price"], None,
                                   k0["price"], k0["price"] * (1 - STOP_LOSS), k0["price"] * (1 + TAKE_PROFIT),
-                                  badge=f"{side} {dot}", foot=f"{now_ny().astimezone(RY).strftime('%H:%M')} الرياض | SPX إصدار 17")
+                                  badge=f"{side} {dot}", foot=f"{stamp()} | SPX إصدار 17")
         mid = send_photo(png, "\n".join(cap))
         if mid:
             if alt_sep:
@@ -1519,7 +1525,7 @@ def send_alt_card(a, ka, side, dot, reply_to=None):
         png = cards.contract_card("entry", f"{root_sym(ka)} {ka['strike']:,.0f} {side}",
                                   f"انتهاء {ka.get('exp', a['exp'])} · {ka.get('sym', ALT_SYMBOL)} {ka.get('spot', 0):,.0f}", ka["price"], None,
                                   ka["price"], ka["price"] * (1 - STOP_LOSS), ka["price"] * (1 + TAKE_PROFIT),
-                                  badge=f"{root_sym(ka)} {dot}", foot=f"{now_ny().astimezone(RY).strftime('%H:%M')} الرياض | SPX إصدار 17")
+                                  badge=f"{root_sym(ka)} {dot}", foot=f"{stamp()} | SPX إصدار 17")
         send_photo(png, "\n".join(x for x in cap if x), reply_to=reply_to)
     except Exception as e:
         print("تعذر إنشاء بطاقة SPY:", e)
@@ -1535,7 +1541,7 @@ def send_ndx_card(a, kn, side, dot, reply_to=None):
         png = cards.contract_card("entry", f"{root_sym(kn)} {kn['strike']:,.0f} {side}",
                                   f"انتهاء {a['exp']} · NDX {kn.get('spot', 0):,.0f}", kn["price"], None,
                                   kn["price"], kn["price"] * (1 - STOP_LOSS), kn["price"] * (1 + TAKE_PROFIT),
-                                  badge=f"NDXP {dot}", foot=f"{now_ny().astimezone(RY).strftime('%H:%M')} الرياض | SPX إصدار 17")
+                                  badge=f"NDXP {dot}", foot=f"{stamp()} | SPX إصدار 17")
         send_photo(png, "\n".join(cap), reply_to=reply_to)
     except Exception as e:
         print("تعذر إنشاء بطاقة NDXP:", e)
@@ -1558,7 +1564,7 @@ def summary_message(state):
         for r, cnt in sorted(rc.items(), key=lambda x: -x[1])[:3]:
             L.append(f"• {esc(r)} ({cnt} مرة)")
     L += ["", "💡 لا إشارة = لا صفقة، والانتظار قرار سليم.",
-          f"🕒 {now_ny().astimezone(RY).strftime('%H:%M')} الرياض | SPX إصدار 17"]
+          f"🕒 {stamp()} | SPX إصدار 17"]
     return "\n".join(L)
 
 
@@ -1919,7 +1925,7 @@ def position_message(p, val, pnl, spot, text, kind, src=""):
     L.append(text)
     L.append(f"🛑 الوقف {p['entry'] * (1 - STOP_LOSS):.2f} | ✅ الجني {p['entry'] * (1 + TAKE_PROFIT):.2f}")
     note = f" · {SRC_NOTE[src]}" if src in SRC_NOTE else ""
-    L.append(f"⚠️ القرار قرارك | 🕒 {now_ny().astimezone(RY).strftime('%H:%M')} الرياض{note} | SPX إصدار 17")
+    L.append(f"⚠️ القرار قرارك | 🕒 {stamp()}{note} | SPX إصدار 17")
     return "\n".join(L)
 
 
@@ -1945,11 +1951,11 @@ def follow_payload(p, val, pnl, spot, text, kind, src=""):
     cap = ["📌 <b>متابعة</b> #متابعة", f"{head}: <b>{name}</b>",
            f"💵 دخول <b>{p['entry']:.2f}</b> ← الآن <b>{val:.2f}</b> | <b>{pnl * 100:+.0f}%</b> ({pl:+,.0f}$ على ×{p.get('qty', 1)})",
            f"🛑 الوقف {stop_p:.2f} | 🎯 الهدف {tp_p:.2f}", text,
-           f"⚠️ القرار قرارك | 🕒 {now_ny().astimezone(RY).strftime('%H:%M')} الرياض{note}"]
+           f"⚠️ القرار قرارك | 🕒 {stamp()}{note}"]
     when = f"ينتهي {exp_label(p.get('exp') or now_ny().date().isoformat())}"
     args = (("follow", name, (when + (f" · {p['sym']} {spot:,.0f}" if spot else "")), val, pnl,
              p["entry"], stop_p, tp_p), {"now": val, "badge": head,
-                                         "foot": f"وقت الرصد {now_ny().astimezone(RY).strftime('%H:%M')} الرياض{note} | SPX إصدار 17"})
+                                         "foot": f"وقت الرصد {stamp()}{note} | SPX إصدار 17"})
     return (args, "\n".join(cap), full)
 
 

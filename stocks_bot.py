@@ -1121,7 +1121,7 @@ def send_alerts(blocks):
             import cards
             png = cards.contract_card("follow", name, f"انتهاء {date_ar(p['exp'])}", info["val"], info["pnl"],
                                       p["entry"], stop_p, tp_p, now=info["val"], badge=ALERT_ICON[top],
-                                      foot=f"وقت الرصد {ob.now_ny().astimezone(ob.RY).strftime('%H:%M')} الرياض | الشركات إصدار 16")
+                                      foot=f"وقت الرصد {ob.stamp()} | الشركات إصدار 16")
             mid = ob.send_photo(png, "📌 <b>متابعة</b> #متابعة\n" + body + "\n" + short_footer())
         except Exception as e:
             print("تعذر إنشاء بطاقة المتابعة:", e)
@@ -1132,12 +1132,12 @@ def send_alerts(blocks):
 
 
 def short_footer():
-    return f"⚠️ القرار قرارك | 🕒 {ob.now_ny().astimezone(ob.RY).strftime('%H:%M')} الرياض | إصدار 16"
+    return f"⚠️ القرار قرارك | 🕒 {ob.stamp()} | إصدار 16"
 
 
 def footer_line():
     return ("⚠️ <i>تعليمي وليست توصية. البيانات متأخرة ~15 دقيقة، وقد يختلف سعرك الحي.</i>\n"
-            f"🕒 {ob.now_ny().astimezone(ob.RY).strftime('%H:%M')} الرياض | إصدار 16")
+            f"🕒 {ob.stamp()} | إصدار 16")
 
 
 def live_rows(rows):
@@ -1702,15 +1702,15 @@ def stock_levels(i, k):
 
 def quote_line(k, now=None):
     """سطر مصدر السعر ووقته وفرق الشراء/البيع في التوصية: ما يظهر في وسيطك قد يختلف بعد دقائق، فنُظهر ما عُرض لحظة الإرسال."""
-    when = (now or ob.now_ny()).astimezone(ob.RY).strftime("%H:%M")
+    when = ob.stamp(now)
     if k.get("price_src") in ("alpaca", "tasty") and k.get("bid"):
         ask, bid = k["price"], k["bid"]
         spr = (ask - bid) / ((ask + bid) / 2)
-        line = f"📡 لحظي {when} الرياض: طلب <b>{ask:.2f}</b> | بيع <b>{bid:.2f}</b> | فرق {spr * 100:.0f}%"
+        line = f"📡 لحظي {when}: طلب <b>{ask:.2f}</b> | بيع <b>{bid:.2f}</b> | فرق {spr * 100:.0f}%"
         if spr >= 0.08:
             line += f"\n📝 الفرق كبير: ضع أمراً محدداً (Limit) قرب المنتصف {(ask + bid) / 2:.2f}، ولا تشترِ بسعر السوق"
         return line.rstrip("\n")
-    return f"⏱️ سعر ياهو متأخر ~15د ({when} الرياض) ولا عرض/طلب لحظي؛ تحقق من السعر الحي"
+    return f"⏱️ سعر ياهو متأخر ~15د ({when}) ولا عرض/طلب لحظي؛ تحقق من السعر الحي"
 
 
 def _ctx_line(i):
@@ -1786,7 +1786,7 @@ def send_ideas(a, ideas):
             png = cards.contract_card("entry", f"{i['ticker']} {k['strike']:,.1f} {side}",
                                       f"انتهاء {date_ar(k['exp'])} · السهم {i['S']:,.2f}", k["price"], None,
                                       k["price"], stop_p, tp_p, badge=f"{side} {'🟢' if side == 'CALL' else '🔴'}",
-                                      foot=f"{ob.now_ny().astimezone(ob.RY).strftime('%H:%M')} الرياض | الشركات إصدار 16")
+                                      foot=f"{ob.stamp()} | الشركات إصدار 16")
             mid = send_photo_kb(png, idea_caption(i), idea_keyboard(i))
         except Exception as e:
             print("تعذر إنشاء بطاقة الفكرة:", e)
@@ -1806,7 +1806,7 @@ def signal_message(a, ideas):
     L += ["🟩 قوي  🟨 متوسط  🟧 مقبول  🔥 طلب عالٍ  🚨 أرباح",
           "📡 سأتابع هذه العقود وأنبّهك عند الوقف أو الهدف أو ضعف الفكرة.",
           "⚠️ <i>تعليمي وليست توصية. تحقق من السعر الحي، وأقصى خسارة هي سعر العقد.</i>",
-          f"🕒 {ob.now_ny().astimezone(ob.RY).strftime('%H:%M')} الرياض | إصدار 16"]
+          f"🕒 {ob.stamp()} | إصدار 16"]
     return "\n".join(L)
 
 
