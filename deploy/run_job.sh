@@ -242,6 +242,11 @@ main() {
       cmds=("$py earnings_runup.py")
       files="earnings_runup_log.csv earnings_runup_state.json messages_earnings_runup.jsonl"
       msg="earnings runup" ;;
+    screens)
+      group=screens; envs="TG ALPACA LQ TASTY"; extra_env="LIVE_BARS_SPX=1"   # سجل دقة الشاشات (H-SCREENS): قياس فقط كل 5 دقائق، ملفاته خارج git
+      cmds=("$py screens.py")
+      files=""
+      msg="screens" ;;
     falcon)
       group=falcon; envs="TG ANTHROPIC ALPACA LQ TASTY"; extra_env="LIVE_BARS_SPX=1"   # الصقر الورقي (H-FALCON): كل دقيقة في الجلسة، تقرير لـTELEGRAM_CHAT_ID وحده، ملفاته خارج git
       cmds=("$py falcon.py")
