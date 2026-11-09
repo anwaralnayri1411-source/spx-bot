@@ -14,8 +14,8 @@
    "strength": "5.7",
    "occ": "DIS261127C00120000",
    "peak_pnl": 0.141,
-   "close_pnl": 0.141,
-   "quotes": 97,
+   "close_pnl": 0.116,
+   "quotes": 98,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -35,7 +35,7 @@
    "occ": "WMT261120C00129000",
    "peak_pnl": 0.0,
    "close_pnl": -0.252,
-   "quotes": 83,
+   "quotes": 84,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -54,8 +54,8 @@
    "strength": "5.7",
    "occ": "DIS261127C00120000",
    "peak_pnl": 0.047,
-   "close_pnl": 0.047,
-   "quotes": 39,
+   "close_pnl": 0.024,
+   "quotes": 40,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -75,7 +75,7 @@
    "occ": "XOM261120P00160000",
    "peak_pnl": 0.0,
    "close_pnl": -0.058,
-   "quotes": 39,
+   "quotes": 40,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -93,9 +93,9 @@
    "edge": "6.5",
    "strength": "9.8",
    "occ": "SPY261110C00751000",
-   "peak_pnl": 0.41,
-   "close_pnl": 0.311,
-   "quotes": 27,
+   "peak_pnl": 0.489,
+   "close_pnl": 0.489,
+   "quotes": 28,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -114,8 +114,8 @@
    "strength": "6.7",
    "occ": "MSTR261113P00122000",
    "peak_pnl": 0.196,
-   "close_pnl": 0.057,
-   "quotes": 25,
+   "close_pnl": 0.032,
+   "quotes": 26,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -133,9 +133,9 @@
    "edge": "5.0",
    "strength": "7.5",
    "occ": "SPY261110C00754000",
-   "peak_pnl": 0.0,
-   "close_pnl": -0.09,
-   "quotes": 10,
+   "peak_pnl": 0.071,
+   "close_pnl": 0.071,
+   "quotes": 11,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -154,8 +154,8 @@
    "strength": "6.2",
    "occ": "INTC261127P00055000",
    "peak_pnl": 0.0,
-   "close_pnl": -0.102,
-   "quotes": 3,
+   "close_pnl": -0.147,
+   "quotes": 4,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -1407,7 +1407,9 @@
   "20261109T1335|spx|same_contract_open|SPX|CALL|7555|2026-11-09",
   "20261109T1335|spx|same_contract_open|SPY|CALL|753|2026-11-10",
   "20261109T1340|spx|same_contract_open|SPX|CALL|7555|2026-11-09",
-  "20261109T1340|spx|same_contract_open|SPY|CALL|753|2026-11-10"
+  "20261109T1340|spx|same_contract_open|SPY|CALL|753|2026-11-10",
+  "20261109T1345|spx|same_contract_open|SPY|CALL|753|2026-11-10",
+  "20261109T1342|stocks|earn_in_life|DIS|CALL|121|2026-11-27"
  ],
  "last": {
   "spx|CALL|SPY": "2026-11-09T12:50-05:00",
