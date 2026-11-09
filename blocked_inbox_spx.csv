@@ -344,3 +344,4 @@ id,time,project,tag,sym,root,side,strike,exp,entry,spot,edge,strength
 20261109T1350|spx|same_contract_open|SPY|CALL|754|2026-11-10,2026-11-09T13:50-05:00,spx,same_contract_open,SPY,SPY,CALL,754.0,2026-11-10,2.75,753.21,6.25,9.4
 20261109T1355|spx|same_contract_open|SPY|CALL|754|2026-11-10,2026-11-09T13:55-05:00,spx,same_contract_open,SPY,SPY,CALL,754.0,2026-11-10,2.54,752.95,6.25,9.4
 20261109T1400|spx|same_contract_open|SPY|CALL|754|2026-11-10,2026-11-09T14:00-05:00,spx,same_contract_open,SPY,SPY,CALL,754.0,2026-11-10,2.54,752.8,5.5,8.2
+20261109T1405|spx|same_contract_open|SPY|CALL|754|2026-11-10,2026-11-09T14:05-05:00,spx,same_contract_open,SPY,SPY,CALL,754.0,2026-11-10,2.47,752.9,5.5,8.2
