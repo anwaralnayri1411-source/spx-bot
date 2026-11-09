@@ -913,3 +913,6 @@ id,time,project,tag,sym,root,side,strike,exp,entry,spot,edge,strength
 20261109T1442|stocks|earn_in_life|DIS|CALL|124|2026-11-27,2026-11-09T14:42-05:00,stocks,earn_in_life,DIS,DIS,CALL,124.0,2026-11-27,2.36,119.11,7.5,7.4
 20261109T1442|stocks|open_same_dir|XOM|PUT|162.5|2026-11-13,2026-11-09T14:42-05:00,stocks,open_same_dir,XOM,XOM,PUT,162.5,2026-11-13,2.08,163.18,7.0,8.9
 20261109T1442|stocks|open_same_dir|CVX|PUT|202.5|2026-11-20,2026-11-09T14:42-05:00,stocks,open_same_dir,CVX,CVX,PUT,202.5,2026-11-20,2.72,208.91,4.0,6.2
+20261109T1457|stocks|earn_in_life|DIS|CALL|124|2026-11-27,2026-11-09T14:57-05:00,stocks,earn_in_life,DIS,DIS,CALL,124.0,2026-11-27,2.43,119.28,7.5,7.9
+20261109T1457|stocks|open_same_dir|XOM|PUT|162.5|2026-11-13,2026-11-09T14:57-05:00,stocks,open_same_dir,XOM,XOM,PUT,162.5,2026-11-13,2.12,163.19,7.0,8.9
+20261109T1457|stocks|open_same_dir|CVX|PUT|202.5|2026-11-20,2026-11-09T14:57-05:00,stocks,open_same_dir,CVX,CVX,PUT,202.5,2026-11-20,2.78,209.2,4.0,6.2
