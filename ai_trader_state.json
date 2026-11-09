@@ -1,6 +1,21 @@
 {
- "cash": 2931.0,
- "positions": [],
+ "cash": 2634.0,
+ "positions": [
+  {
+   "id": "1109-0946-SPY-CALL-745",
+   "symbol": "SPY   261109C00745000",
+   "under": "SPY",
+   "side": "CALL",
+   "strike": 745.0,
+   "expiry": "2026-11-09",
+   "qty": 1,
+   "entry": 2.97,
+   "time": "2026-11-09T09:46-05:00",
+   "stop": 2.2,
+   "target": 3.9,
+   "invalidation": "إلغاء الفكرة إذا أغلق SPX دون 7444 أعلى أمس أو تحت VWAP، أو إذا عكس ES صعوده، أو إذا تصاعد خبر رفع الفائدة وتراجع القياديات."
+  }
+ ],
  "closed": [
   {
    "id": "1105-0946-PUT-757",
@@ -181,8 +196,8 @@
    "after_last": 1.35
   }
  ],
- "decisions": 47,
+ "decisions": 48,
  "report_day": "2026-11-06",
- "day": "2026-11-06",
- "decisions_today": 24
+ "day": "2026-11-09",
+ "decisions_today": 1
 }
