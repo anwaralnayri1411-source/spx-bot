@@ -895,3 +895,5 @@ id,time,project,tag,sym,root,side,strike,exp,entry,spot,edge,strength
 20261109T1227|stocks|earn_in_life|DIS|CALL|120|2026-11-27,2026-11-09T12:27-05:00,stocks,earn_in_life,DIS,DIS,CALL,120.0,2026-11-27,3.42,118.0,6.5,7.3
 20261109T1227|stocks|open_same_dir|XOM|PUT|165|2026-11-13,2026-11-09T12:27-05:00,stocks,open_same_dir,XOM,XOM,PUT,165.0,2026-11-13,2.2,165.34,3.5,6.9
 20261109T1227|stocks|open_same_dir|MSTR|PUT|120|2026-11-13,2026-11-09T12:27-05:00,stocks,open_same_dir,MSTR,MSTR,PUT,120.0,2026-11-13,2.54,125.94,3.5,6.7
+20261109T1242|stocks|earn_in_life|DIS|CALL|120|2026-11-27,2026-11-09T12:42-05:00,stocks,earn_in_life,DIS,DIS,CALL,120.0,2026-11-27,3.38,118.02,6.5,7.6
+20261109T1242|stocks|open_same_dir|XOM|PUT|165|2026-11-13,2026-11-09T12:42-05:00,stocks,open_same_dir,XOM,XOM,PUT,165.0,2026-11-13,2.33,165.13,3.5,6.9
