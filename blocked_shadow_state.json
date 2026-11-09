@@ -14,8 +14,8 @@
    "strength": "5.7",
    "occ": "DIS261127C00120000",
    "peak_pnl": 0.141,
-   "close_pnl": 0.116,
-   "quotes": 96,
+   "close_pnl": 0.141,
+   "quotes": 97,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -34,8 +34,8 @@
    "strength": "6.7",
    "occ": "WMT261120C00129000",
    "peak_pnl": 0.0,
-   "close_pnl": -0.249,
-   "quotes": 82,
+   "close_pnl": -0.252,
+   "quotes": 83,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -54,8 +54,8 @@
    "strength": "5.7",
    "occ": "DIS261127C00120000",
    "peak_pnl": 0.047,
-   "close_pnl": 0.024,
-   "quotes": 38,
+   "close_pnl": 0.047,
+   "quotes": 39,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -74,8 +74,8 @@
    "strength": "6.5",
    "occ": "XOM261120P00160000",
    "peak_pnl": 0.0,
-   "close_pnl": -0.088,
-   "quotes": 38,
+   "close_pnl": -0.058,
+   "quotes": 39,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -94,8 +94,8 @@
    "strength": "9.8",
    "occ": "SPY261110C00751000",
    "peak_pnl": 0.41,
-   "close_pnl": 0.338,
-   "quotes": 26,
+   "close_pnl": 0.311,
+   "quotes": 27,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -114,8 +114,8 @@
    "strength": "6.7",
    "occ": "MSTR261113P00122000",
    "peak_pnl": 0.196,
-   "close_pnl": 0.069,
-   "quotes": 24,
+   "close_pnl": 0.057,
+   "quotes": 25,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -134,8 +134,8 @@
    "strength": "7.5",
    "occ": "SPY261110C00754000",
    "peak_pnl": 0.0,
-   "close_pnl": -0.11,
-   "quotes": 9,
+   "close_pnl": -0.09,
+   "quotes": 10,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -154,8 +154,8 @@
    "strength": "6.2",
    "occ": "INTC261127P00055000",
    "peak_pnl": 0.0,
-   "close_pnl": -0.076,
-   "quotes": 2,
+   "close_pnl": -0.102,
+   "quotes": 3,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -1405,7 +1405,9 @@
   "20261109T1327|stocks|open_same_dir|INTC|PUT|55|2026-11-27",
   "20261109T1327|stocks|open_same_dir|XOM|PUT|160|2026-11-20",
   "20261109T1335|spx|same_contract_open|SPX|CALL|7555|2026-11-09",
-  "20261109T1335|spx|same_contract_open|SPY|CALL|753|2026-11-10"
+  "20261109T1335|spx|same_contract_open|SPY|CALL|753|2026-11-10",
+  "20261109T1340|spx|same_contract_open|SPX|CALL|7555|2026-11-09",
+  "20261109T1340|spx|same_contract_open|SPY|CALL|753|2026-11-10"
  ],
  "last": {
   "spx|CALL|SPY": "2026-11-09T12:50-05:00",
