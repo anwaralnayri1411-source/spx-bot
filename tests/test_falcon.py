@@ -77,6 +77,7 @@ def setup(tmp_path, monkeypatch, decision):
         monkeypatch.setattr(at, k, getattr(at, k))
     monkeypatch.setattr(at, "gather", lambda n: ("مدخلات", MENU, {"SPY": 745.0}, []))
     monkeypatch.setattr(at, "load_memory", at.new_memory)
+    monkeypatch.setattr(fa.scr, "panel", lambda now: "## لوحة الشاشات (10:00): صعود 3 · هبوط 9 · محايد 2")
     seen = []
     monkeypatch.setattr(at, "ask_claude", lambda p, n, s=None, r=None: seen.append((p, r)) or decision)
     monkeypatch.setattr(at, "quotes", lambda syms, meta=None: [{"symbol": s, "bid": 2.9, "ask": 3.0} for s in syms])
@@ -99,6 +100,7 @@ def test_main_buys_on_signal_silently(tmp_path, monkeypatch):
     p = st["positions"][0]
     assert p["stop"] == 1.5 and p["target"] == 4.5 and st["calls_today"] == 1 and st["last_bar"] == "b1"
     assert "إشارة المحرك الآن: PUT" in seen[0][0] and "الصقر" in seen[0][1] and not sent
+    assert "لوحة الشاشات" in seen[0][0] and "لوحة الشاشات" in seen[0][1]
     s = pd.read_csv(fa.SIGNALS, dtype=str, keep_default_na=False)
     assert s.iloc[0]["decision"] == "قبول" and s.iloc[0]["contract"] == "SPY P" and s.iloc[0]["reason"] == "هبوط واضح"
     fa.main([])                                                                             # الفاصل الزمني: لا طلب ثانٍ

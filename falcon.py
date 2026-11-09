@@ -16,6 +16,7 @@ import pandas as pd
 import ai_trader as at
 import mgt_lab as ml
 import mgt_shadow as ms
+import screens as scr
 
 NY = ms.NY
 DIR = os.path.join(os.getenv("SPXBOT_DATA", "/opt/spxbot/data"), "falcon")
@@ -30,7 +31,8 @@ SIG_COLS = ["time", "side", "kind", "line", "S", "score", "adx", "decision", "ex
 RULES = at.RULES_B + """
 أنت الآن «الصقر»: يصلك هذا الطلب لأن محرك الإشارة رصد فرصة في جهة محددة. مهمتك فحصها بكل المدخلات:
 وافق بالشراء في جهة الإشارة فقط واختر العقد والكمية، أو ارفض بالانتظار مع السبب، أو بِع مركزك المفتوح إن كانت الإشارة تعاكسه.
-الوقف 50% والهدف +50% يحددهما الكود، فلا تعتمد على وقف أو هدف آخر."""
+الوقف 50% والهدف +50% يحددهما الكود، فلا تعتمد على وقف أو هدف آخر.
+في «لوحة الشاشات» رأي كل شاشة الآن ودقتها السابقة: أعطِ وزناً أكبر للشاشات الأدق عندما يكون سجلها كافياً، واذكر في قراءتك أي الشاشات اعتمدت عليها."""
 
 
 # ====================== دوال صافية ======================
@@ -163,7 +165,8 @@ def handle_signal(st, sig, eng, marks, now):
     text, menu, spot, _ = at.gather(now)
     marks.update({m["symbol"]: m for m in menu})
     note = f"## إشارة المحرك الآن: {sig['side']} ({'عبور خط ' + str(sig['line']) if sig['kind'] == 'خط' else 'تقدم 5 نقاط'}) | الأصوات {eng['total']} | ADX {eng['det']['adx']:.0f}"
-    prompt = "\n\n".join([text, at.memory_text(at.load_memory()), at.portfolio_text(st, marks, now), note, f"الوقت الآن {now:%H:%M} نيويورك. قرّر."])
+    prompt = "\n\n".join(x for x in [text, scr.panel(now), at.memory_text(at.load_memory()), at.portfolio_text(st, marks, now), note,
+                                       f"الوقت الآن {now:%H:%M} نيويورك. قرّر."] if x)
     d = at.ask_claude(prompt, now, at.SCHEMA_B, RULES)
     if d is None:
         add_signal(dict(row, decision=decision_word(None, False)))

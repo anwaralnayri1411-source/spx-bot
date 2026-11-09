@@ -127,6 +127,43 @@ def day_text(day, dtype, ret, sc, cum):
     return "\n".join(L)
 
 
+def panel_text(log, cum, now, max_age=10):
+    """لوحة الشاشات لقرار الصقر: آخر قراءة لكل شاشة (خلال max_age دقيقة) مع إصابتها التراكمية 30د وعدد قراءاتها."""
+    if log is None or not len(log):
+        return ""
+    t = pd.to_datetime(log["time"], errors="coerce", utc=True)
+    x = log[t >= pd.Timestamp(now - timedelta(minutes=max_age)).tz_convert("UTC")]
+    if not len(x):
+        return ""
+    x = x[x["time"] == x["time"].max()]
+    rate = {}
+    if cum is not None and len(cum):
+        for name, g in cum.groupby("screen"):
+            n = int(g["n"].sum())
+            h = g["hit30"].fillna(0.5)
+            rate[name] = (float(np.average(h, weights=g["n"])) if n else None, n, g["day"].nunique())
+    word = {1: "صعود", -1: "هبوط", 0: "محايد"}
+    up, dn = int((x["dir"] == 1).sum()), int((x["dir"] == -1).sum())
+    L = [f"## لوحة الشاشات ({x['time'].iloc[0][11:16]}): صعود {up} · هبوط {dn} · محايد {len(x) - up - dn}",
+         "(الدقة = نسبة إصابة الشاشة بعد 30 دقيقة منذ بدء القياس؛ أرقام الأيام الأولى قليلة فلا تعتمد عليها وحدها)"]
+    for r in x.itertuples():
+        hr = rate.get(r.screen)
+        acc = f"دقة {hr[0]:.0%} من {hr[1]} قراءة في {hr[2]} يوم" if hr and hr[1] else "لا سجل بعد"
+        L.append(f"- {r.screen}: {word.get(int(r.dir), r.dir)} | {acc}")
+    return "\n".join(L)
+
+
+def panel(now):
+    """لوحة الشاشات من ملفات الخادم، أو "" إن لا قراءة حديثة."""
+    try:
+        log = pd.read_csv(LOG)
+        cum = pd.read_csv(SCORES) if os.path.exists(SCORES) else None
+        return panel_text(log, cum, now)
+    except Exception as e:  # noqa: BLE001
+        print("لوحة الشاشات:", type(e).__name__)
+        return ""
+
+
 # ====================== التشغيل ======================
 def load_state():
     try:

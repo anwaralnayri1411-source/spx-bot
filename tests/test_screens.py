@@ -48,3 +48,15 @@ def test_day_text_short():
                       "m30": 0.0, "hit60": 0.5, "mclose": 0.0})
     t = sc.day_text("2026-11-09", "اتجاه", 0.01, s, s.assign(day="2026-11-09"))
     assert "a 90% (10)" in t and "d 20% (10)" in t and "e 100%" not in t.split("📊")[0] and t.count("\n") <= 7
+
+
+
+def test_panel_text_latest_reading_with_accuracy():
+    now = datetime(2026, 11, 9, 11, 0, tzinfo=NY)
+    log = pd.DataFrame({"time": ["2026-11-09T10:50-05:00"] * 2 + ["2026-11-09T10:55-05:00"] * 3, "S": 7400,
+                        "screen": ["أ", "ب", "أ", "ب", "ج"], "dir": [1, 1, -1, 1, 0]})
+    cum = pd.DataFrame({"screen": ["أ", "أ"], "n": [10, 30], "hit30": [0.4, 0.8], "day": ["2026-11-06", "2026-11-07"]})
+    t = sc.panel_text(log, cum, now)
+    assert "صعود 1 · هبوط 1 · محايد 1" in t and "(10:55)" in t
+    assert "- أ: هبوط | دقة 70% من 40 قراءة في 2 يوم" in t and "- ج: محايد | لا سجل بعد" in t
+    assert sc.panel_text(log, cum, now.replace(hour=12)) == "" and sc.panel_text(None, None, now) == ""
