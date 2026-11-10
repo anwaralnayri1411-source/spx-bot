@@ -4192,11 +4192,9 @@
    "news:uber to power mcdonald s app deliveries as partnership widens",
    "up0.25",
    "news:mcdonald s and uber expand their delivery parternship mcd nyse",
-   "sharp@2026-11-10T09:45-05:00"
-  ],
-  "AMZN:CALL:2026-11-16:275": [
-   "down-0.15",
-   "down-0.3"
+   "sharp@2026-11-10T09:45-05:00",
+   "sharp@2026-11-10T11:16-05:00",
+   "down-0.15"
   ],
   "MSFT:CALL:2026-11-13:550@2026-11-10": [
    "down-0.15"
@@ -4812,6 +4810,6 @@
   "CVX:PUT:2026-11-13:210@2026-11-06": 211.865,
   "PFE:PUT:2026-11-20:30": 29.355,
   "BA:PUT:2026-11-20:172.5": 173.55,
-  "UBER:CALL:2026-11-27:70": 70.045
+  "UBER:CALL:2026-11-27:70": 69.47
  }
 }
