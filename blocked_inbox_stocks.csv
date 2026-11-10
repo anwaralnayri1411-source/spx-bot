@@ -1009,3 +1009,7 @@ id,time,project,tag,sym,root,side,strike,exp,entry,spot,edge,strength
 20261110T1412|stocks|open_same_dir|MSTR|PUT|118|2026-11-13,2026-11-10T14:12-05:00,stocks,open_same_dir,MSTR,MSTR,PUT,118.0,2026-11-13,3.17,120.62,6.5,8.6
 20261110T1412|stocks|open_same_dir|BA|PUT|172.5|2026-11-20,2026-11-10T14:12-05:00,stocks,open_same_dir,BA,BA,PUT,172.5,2026-11-20,3.47,173.73,4.5,7.5
 20261110T1412|stocks|open_same_dir|XOM|PUT|160|2026-11-20,2026-11-10T14:12-05:00,stocks,open_same_dir,XOM,XOM,PUT,160.0,2026-11-20,1.96,164.51,3.5,5.9
+20261110T1427|stocks|earn_in_life|DIS|CALL|121|2026-11-27,2026-11-10T14:27-05:00,stocks,earn_in_life,DIS,DIS,CALL,121.0,2026-11-27,3.28,119.02,5.5,6.8
+20261110T1427|stocks|open_same_dir|MSTR|PUT|118|2026-11-13,2026-11-10T14:27-05:00,stocks,open_same_dir,MSTR,MSTR,PUT,118.0,2026-11-13,3.29,120.25,6.5,8.6
+20261110T1427|stocks|open_same_dir|BA|PUT|172.5|2026-11-20,2026-11-10T14:27-05:00,stocks,open_same_dir,BA,BA,PUT,172.5,2026-11-20,3.25,174.04,3.5,6.9
+20261110T1427|stocks|open_same_dir|XOM|PUT|160|2026-11-20,2026-11-10T14:27-05:00,stocks,open_same_dir,XOM,XOM,PUT,160.0,2026-11-20,1.98,164.55,3.5,5.9
