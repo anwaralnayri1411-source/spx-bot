@@ -4084,14 +4084,22 @@
   "V:CALL:2026-11-13:427.5": [
    "down-0.15"
   ],
-  "INTC:PUT:2026-11-27:55": [],
+  "INTC:PUT:2026-11-27:55": [
+   "down-0.15"
+  ],
   "COIN:PUT:2026-11-13:128": [
    "down-0.15",
-   "sharp@2026-11-10T15:20-05:00"
+   "sharp@2026-11-10T15:20-05:00",
+   "stock1"
   ],
-  "HOOD:PUT:2026-11-27:76": []
+  "HOOD:PUT:2026-11-27:76": [
+   "stock1"
+  ]
  },
- "stock_level": {},
+ "stock_level": {
+  "COIN:PUT:2026-11-13:128": 1,
+  "HOOD:PUT:2026-11-27:76": 1
+ },
  "seen_macro": [
   "yen gains after boj holds rates dollar slips",
   "wall street slides as ai cash burn worries spark tech selloff",
