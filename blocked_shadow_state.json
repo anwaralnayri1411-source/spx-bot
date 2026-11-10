@@ -14,8 +14,8 @@
    "strength": "5.7",
    "occ": "DIS261127C00120000",
    "peak_pnl": 0.254,
-   "close_pnl": -0.048,
-   "quotes": 127,
+   "close_pnl": -0.084,
+   "quotes": 128,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -34,8 +34,8 @@
    "strength": "6.7",
    "occ": "WMT261120C00129000",
    "peak_pnl": 0.0,
-   "close_pnl": -0.287,
-   "quotes": 113,
+   "close_pnl": -0.308,
+   "quotes": 114,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -54,8 +54,8 @@
    "strength": "5.7",
    "occ": "DIS261127C00120000",
    "peak_pnl": 0.15,
-   "close_pnl": -0.127,
-   "quotes": 69,
+   "close_pnl": -0.159,
+   "quotes": 70,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -74,8 +74,8 @@
    "strength": "6.2",
    "occ": "INTC261127P00055000",
    "peak_pnl": 0.0,
-   "close_pnl": -0.2,
-   "quotes": 33,
+   "close_pnl": -0.32,
+   "quotes": 34,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -94,8 +94,8 @@
    "strength": "6.2",
    "occ": "CVX261120P00202500",
    "peak_pnl": 0.25,
-   "close_pnl": -0.121,
-   "quotes": 19,
+   "close_pnl": -0.176,
+   "quotes": 20,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -114,8 +114,8 @@
    "strength": "6.8",
    "occ": "SPY261111P00747000",
    "peak_pnl": 0.031,
-   "close_pnl": 0.031,
-   "quotes": 2,
+   "close_pnl": -0.222,
+   "quotes": 3,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -1414,7 +1414,8 @@
   "20261109T1555|spx|late_entry|SPY|CALL|754|2026-11-10",
   "20261109T1600|spx|late_entry|SPY|CALL|754|2026-11-10",
   "20261110T0945|spx|report_day|SPY|PUT|747|2026-11-11",
-  "20261110T0950|spx|report_day|SPY|PUT|747|2026-11-11"
+  "20261110T0950|spx|report_day|SPY|PUT|747|2026-11-11",
+  "20261110T0955|spx|report_day|SPY|PUT|748|2026-11-11"
  ],
  "last": {
   "spx|CALL|SPY": "2026-11-09T15:50-05:00",
