@@ -3913,26 +3913,6 @@
   ]
  },
  "fired": {
-  "F:CALL:2026-11-20:11.5": [
-   "down-0.15",
-   "news:ford october u s sales slip as electric vehicle deliveries plunge f nyse",
-   "news:ford motor f sees slight october sales decline amid electric v",
-   "sharp@2026-11-04T15:17-05:00",
-   "sharp@2026-11-05T10:53-05:00",
-   "news:f 150 lightning sales drop to zero",
-   "stock1",
-   "news:ford halts f 150 lightning ev sales shifts foc",
-   "sharp@2026-11-05T12:17-05:00",
-   "down-0.3",
-   "stock2",
-   "news:ford cuts february bonus dividend by 50 regul",
-   "news:ford stock nyse f slips after news of another affordable truck coming",
-   "news:the nhtsa probes ford explorers over airbag deployment risk f nyse",
-   "news:nhtsa investigates ford explorers f over airbag burn injuries affecting 1 2m vehicles",
-   "news:nhtsa opens probe into 1 2 million ford vehicles over burn risk from airbag",
-   "news:nhtsa opens probe into 1 2 million ford vehicles over airbag deployment by reuters",
-   "news:ford stock nyse f gains as nhtsa launches probe into airbag deployment"
-  ],
   "MSTR:PUT:2026-11-13:120": [
    "up0.25",
    "news:bitcoin price suddenly plunges to 76k as hourly liquidations near 600m",
@@ -4214,15 +4194,15 @@
    "news:mcdonald s and uber expand their delivery parternship mcd nyse",
    "sharp@2026-11-10T09:45-05:00"
   ],
-  "AMZN:CALL:2026-11-16:275": [],
+  "AMZN:CALL:2026-11-16:275": [
+   "down-0.15",
+   "down-0.3"
+  ],
   "MSFT:CALL:2026-11-13:550@2026-11-10": [
    "down-0.15"
-  ],
-  "NVDA:PUT:2026-11-13:170": []
+  ]
  },
- "stock_level": {
-  "F:CALL:2026-11-20:11.5": 2
- },
+ "stock_level": {},
  "seen_macro": [
   "yen gains after boj holds rates dollar slips",
   "wall street slides as ai cash burn worries spark tech selloff",
@@ -4826,7 +4806,6 @@
   "inflation expected to remain stubborn in cpi s october reading dxy"
  ],
  "sharp": {
-  "F:CALL:2026-11-20:11.5": 12.405,
   "MSTR:PUT:2026-11-13:120": 131.93,
   "SNAP:PUT:2026-11-20:6": 5.185,
   "XOM:PUT:2026-11-13:165": 165.35,
