@@ -137,3 +137,4 @@ id,project,tag,sym,side,strike,exp,entry_time,entry,edge,strength,out,out_time,o
 20261110T0945|spx|report_day|SPY|PUT|747|2026-11-11,spx,report_day,SPY,PUT,747.0,2026-11-11,2026-11-10T09:45-05:00,3.25,4.5,6.8,stop,2026-11-10T10:07-05:00,-0.4,0.031,4
 20261110T1012|stocks|open_same_dir|MSTR|PUT|120|2026-11-13,stocks,open_same_dir,MSTR,PUT,120.0,2026-11-13,2026-11-10T10:12-05:00,2.73,3.5,6.7,tp,2026-11-10T10:52-05:00,0.513,0.513,8
 20261110T1245|spx|repeat_side|SPY|PUT|745|2026-11-11,spx,repeat_side,SPY,PUT,745.0,2026-11-11,2026-11-10T12:45-05:00,3.18,9.25,10.0,stop,2026-11-10T13:57-05:00,-0.462,0.009,14
+20261109T1442|stocks|open_same_dir|CVX|PUT|202.5|2026-11-20,stocks,open_same_dir,CVX,PUT,202.5,2026-11-20,2026-11-09T14:42-05:00,2.72,4.0,6.2,stop,2026-11-10T14:27-05:00,-0.404,0.25,69
