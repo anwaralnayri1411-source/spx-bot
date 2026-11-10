@@ -253,6 +253,7 @@ def ask(text, now, client=None, schema=None, kind="classify", max_tokens=12000):
                                    output_config={"effort": "low", "format": {"type": "json_schema", "schema": schema or SCHEMA}})
     except Exception as e:  # noqa: BLE001
         print("فشل التصنيف:", type(e).__name__)
+        an.api_failed(e, "news_watch")
         return None
     u = {"input": getattr(r.usage, "input_tokens", 0) or 0, "output": getattr(r.usage, "output_tokens", 0) or 0}
     new = not os.path.exists(USAGE)

@@ -253,6 +253,11 @@ def ask_claude(prompt, schema):
         return None
     except anthropic.APIStatusError as e:
         print(f"Claude: خطأ {e.status_code}: {e.message}")
+        try:
+            import analyst as an
+            an.api_failed(e, "stocks_watcher")
+        except Exception:  # noqa: BLE001
+            pass
         return None
     except anthropic.APIConnectionError as e:
         cause = e.__cause__ or e

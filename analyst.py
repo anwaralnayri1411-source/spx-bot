@@ -716,6 +716,7 @@ def ask(system, user, model, kind, now, client=None, max_tokens=8000):
         r = client.messages.create(model=model, max_tokens=max_tokens, system=system, messages=[{"role": "user", "content": user}])
     except Exception as e:  # noqa: BLE001
         print("فشل طلب المحلل:", type(e).__name__)
+        api_failed(e, kind)
         log_usage({"time": now.isoformat(timespec="seconds"), "kind": kind, "model": model, "status": "error"})
         return None
     u = {"input": getattr(r.usage, "input_tokens", 0) or 0, "output": getattr(r.usage, "output_tokens", 0) or 0}
@@ -865,6 +866,58 @@ def send(text, src="analyst"):
             print("فشل الإرسال:", type(e).__name__)
             ok = False
     return ok
+
+
+# ====================== تنبيه فشل طلبات Claude (11/11/2026 بطلب المستخدم بعد نفاد الرصيد يوم CPI) ======================
+API_ALERT = os.path.join(os.getenv("SPXBOT_DATA", "/opt/spxbot/data"), "api_alert.json")
+API_ALERT_MIN = 3          # الأخطاء العابرة (ضغط، اتصال): تنبيه بعد 3 إخفاقات في اليوم
+API_ALERT_TEXT = {
+    "billing": "رصيد Anthropic API نفد. المتداول الذكي والمتعلّم والصقر والمحلل ومراقب الأخبار لا يتخذون قرارات حتى يُشحن.\n"
+               "اشحن الرصيد من console.anthropic.com ← Plans & Billing.",
+    "auth": "مفتاح ANTHROPIC_API_KEY مرفوض (401/403). الأنظمة التي تستعمل Claude متوقفة حتى يُصلح المفتاح.",
+    "other": "طلبات Claude تفشل بشكل متكرر اليوم (ضغط على الخدمة أو اتصال). قد تفوت بعض القرارات.",
+}
+
+
+def api_kind(e):
+    """نوع فشل طلب Claude: billing (الرصيد) أو auth (المفتاح) أو other."""
+    msg = str(getattr(e, "message", "") or e).lower()
+    if "credit balance" in msg or "billing" in msg:
+        return "billing"
+    if getattr(e, "status_code", None) in (401, 403):
+        return "auth"
+    return "other"
+
+
+def api_failed(e, src, now=None, path=None, sender=None):
+    """يسجّل فشل طلب Claude وينبّه المستخدم مرة يومياً لكل نوع: فوراً للرصيد والمفتاح، وبعد 3 إخفاقات لغيرهما.
+    لا يرسل نص الخطأ (قد يحوي ترويسات). بلا مفاتيح تيليجرام (الاختبارات والجهاز المحلي) لا يكتب ولا يرسل. لا يرمي أبداً."""
+    try:
+        if sender is None and not os.getenv("TELEGRAM_TOKEN", "").strip():
+            return False
+        from zoneinfo import ZoneInfo
+        now = (now or datetime.now(timezone.utc)).astimezone(ZoneInfo("America/New_York"))
+        path, sender = path or API_ALERT, sender or (lambda t: send(t, "api_alert"))
+        kind, day = api_kind(e), now.date().isoformat()
+        try:
+            st = json.load(open(path, encoding="utf-8"))
+        except Exception:  # noqa: BLE001
+            st = {}
+        if st.get("day") != day:
+            st = {"day": day, "counts": {}, "sent": [], "first": {}}
+        st["counts"][kind] = st["counts"].get(kind, 0) + 1
+        st["first"].setdefault(kind, f"{src} {now:%H:%M}")
+        due = kind not in st["sent"] and (kind != "other" or st["counts"][kind] >= API_ALERT_MIN)
+        if due:
+            sender(f"⚠️ **تنبيه: Claude متوقف**\n{API_ALERT_TEXT[kind]}\n"
+                   f"أول فشل اليوم: {st['first'][kind]} نيويورك ({st['counts'][kind]} محاولة).")
+            st["sent"].append(kind)
+        os.makedirs(os.path.dirname(path), exist_ok=True)
+        json.dump(st, open(path, "w", encoding="utf-8"), ensure_ascii=False)
+        return due
+    except Exception as x:  # noqa: BLE001
+        print("تنبيه فشل Claude:", type(x).__name__)
+        return False
 
 
 def load_state():

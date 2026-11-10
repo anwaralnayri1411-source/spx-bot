@@ -498,6 +498,7 @@ def ask_claude(prompt, now, schema=None, system=None, model=None, kind="decide")
                                    output_config={"effort": "medium", "format": {"type": "json_schema", "schema": schema}})
     except Exception as e:  # noqa: BLE001
         print("فشل الطلب:", type(e).__name__, e)
+        an.api_failed(e, kind)
         return None
     u = {"input": getattr(r.usage, "input_tokens", 0) or 0, "output": getattr(r.usage, "output_tokens", 0) or 0}
     new = not os.path.exists(USAGE)
