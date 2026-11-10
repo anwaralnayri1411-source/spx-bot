@@ -952,3 +952,8 @@ id,time,project,tag,sym,root,side,strike,exp,entry,spot,edge,strength
 20261110T1127|stocks|open_same_dir|BA|PUT|170|2026-11-20,2026-11-10T11:27-05:00,stocks,open_same_dir,BA,BA,PUT,170.0,2026-11-20,3.24,171.87,5.5,8.0
 20261110T1127|stocks|open_same_dir|XOM|PUT|162.5|2026-11-13,2026-11-10T11:27-05:00,stocks,open_same_dir,XOM,XOM,PUT,162.5,2026-11-13,1.79,163.58,5.5,7.5
 20261110T1127|stocks|open_same_dir|AAPL|CALL|350|2026-11-16,2026-11-10T11:27-05:00,stocks,open_same_dir,AAPL,AAPL,CALL,350.0,2026-11-16,2.75,347.04,4.5,7.5
+20261110T1142|stocks|earn_in_life|DIS|CALL|120|2026-11-27,2026-11-10T11:42-05:00,stocks,earn_in_life,DIS,DIS,CALL,120.0,2026-11-27,3.43,118.08,4.5,6.5
+20261110T1142|stocks|open_same_dir|MSTR|PUT|118|2026-11-13,2026-11-10T11:42-05:00,stocks,open_same_dir,MSTR,MSTR,PUT,118.0,2026-11-13,3.4,120.42,7.0,8.9
+20261110T1142|stocks|open_same_dir|AAPL|CALL|350|2026-11-16,2026-11-10T11:42-05:00,stocks,open_same_dir,AAPL,AAPL,CALL,350.0,2026-11-16,2.87,347.33,4.5,7.5
+20261110T1142|stocks|open_same_dir|BA|PUT|170|2026-11-20,2026-11-10T11:42-05:00,stocks,open_same_dir,BA,BA,PUT,170.0,2026-11-20,3.33,171.67,4.5,7.5
+20261110T1142|stocks|open_same_dir|XOM|PUT|162.5|2026-11-13,2026-11-10T11:42-05:00,stocks,open_same_dir,XOM,XOM,PUT,162.5,2026-11-13,1.44,164.12,4.5,7.2
