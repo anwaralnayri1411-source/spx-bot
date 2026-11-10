@@ -428,6 +428,39 @@
    "time": "2026-11-09T11:47-05:00",
    "price": null,
    "qty": null
+  },
+  "AMZN:CALL:2026-11-16:275|2026-11-10": {
+   "mode": "watch",
+   "ticker": "AMZN",
+   "side": "CALL",
+   "exp": "2026-11-16",
+   "strike": 275.0,
+   "day": "2026-11-10",
+   "time": "2026-11-10T10:15-05:00",
+   "price": null,
+   "qty": null
+  },
+  "MSFT:CALL:2026-11-13:550|2026-11-10": {
+   "mode": "watch",
+   "ticker": "MSFT",
+   "side": "CALL",
+   "exp": "2026-11-13",
+   "strike": 550.0,
+   "day": "2026-11-10",
+   "time": "2026-11-10T10:15-05:00",
+   "price": null,
+   "qty": null
+  },
+  "NVDA:PUT:2026-11-13:170|2026-11-10": {
+   "mode": "watch",
+   "ticker": "NVDA",
+   "side": "PUT",
+   "exp": "2026-11-13",
+   "strike": 170.0,
+   "day": "2026-11-10",
+   "time": "2026-11-10T10:15-05:00",
+   "price": null,
+   "qty": null
   }
  }
 }
