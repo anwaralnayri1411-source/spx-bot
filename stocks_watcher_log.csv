@@ -3371,3 +3371,7 @@ time,pos_id,ticker,side,event,detail,entry,val,pnl,spot,need,tdays,advice,reason
 2026-11-09T15:49-05:00,SOFI:CALL:2026-11-27:16.5,SOFI,CALL,macro,against/strong/medium: Inflation expected to remain stubborn in CPI's October reading (DXY:) - Seeking Alpha,1.03,0.97,-0.0583,16.91,0.0367,15,فكّر بالخروج,خبر ضد العقد
 2026-11-09T15:49-05:00,UBER:CALL:2026-11-27:70,UBER,CALL,macro,against/weak/medium: Inflation expected to remain stubborn in CPI's October reading (DXY:) - Seeking Alpha,2.06,2.8,0.3592,71.24,0.0115,15,أبقِ,خبر ضد العقد لكن تأثيره محدود، راقب
 2026-11-09T15:58-05:00,MSTR:PUT:2026-11-13:120,MSTR,PUT,news,against/medium: Amundi Boosts Strategy (MSTR) Stake 44% To $291 Million As Shares Slide - Bitcoin Magazine,2.93,2.43,-0.1706,125.94,0.0704,5,فكّر بالخروج,خبر ضد العقد
+2026-11-10T09:31-05:00,CVX:PUT:2026-11-13:210@2026-11-06,CVX,PUT,contract,+44%,2.82,4.07,0.4433,208.12,0.0045,4,أبقِ,لا جديد يغيّر فكرة الصفقة
+2026-11-10T09:31-05:00,AAPL:CALL:2026-11-16:352.5,AAPL,CALL,contract,+29%,3.55,4.58,0.2901,353.005,0.0086,5,أبقِ,لا جديد يغيّر فكرة الصفقة
+2026-11-10T09:31-05:00,SOFI:CALL:2026-11-27:16.5,SOFI,CALL,stock,-3.81% منذ الدخول,1.03,0.59,-0.4272,16.305,0.0751,14,الأفضل الخروج,العقد تجاوز الوقف (-43%) | السهم يتحرك ضدك
+2026-11-10T09:31-05:00,SOFI:CALL:2026-11-27:16.5,SOFI,CALL,contract,-43%,1.03,0.59,-0.4272,16.305,0.0751,14,الأفضل الخروج,العقد تجاوز الوقف (-43%) | السهم يتحرك ضدك

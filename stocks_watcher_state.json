@@ -4189,7 +4189,8 @@
    "news:european markets close on firm note as oil prices fall sharply",
    "news:us stocks recover more of last week s losses as oil prices swing lower national news 2news com",
    "news:brent crashes 7 on iran peace hopes despite fresh saudi pipeline attack",
-   "news:crude oil prices plummet as iran peace optimism climbs"
+   "news:crude oil prices plummet as iran peace optimism climbs",
+   "up0.25"
   ],
   "PFE:PUT:2026-11-20:30": [
    "down-0.15",
@@ -4198,7 +4199,8 @@
    "sharp@2026-11-09T11:37-05:00"
   ],
   "AAPL:CALL:2026-11-16:352.5": [
-   "down-0.15"
+   "down-0.15",
+   "up0.25"
   ],
   "BA:PUT:2026-11-20:172.5": [
    "down-0.15",
@@ -4212,7 +4214,9 @@
    "stock1",
    "down-0.15",
    "news:sofi ceo calls q3 exceptional as 2027 guide lands at 0 90 a share",
-   "sharp@2026-11-09T15:43-05:00"
+   "sharp@2026-11-09T15:43-05:00",
+   "stock3",
+   "down-0.3"
   ],
   "UBER:CALL:2026-11-27:70": [
    "news:uber posts strong q3 with 18 revenue growth an",
@@ -4223,7 +4227,7 @@
  },
  "stock_level": {
   "F:CALL:2026-11-20:11.5": 2,
-  "SOFI:CALL:2026-11-27:16.5": 1
+  "SOFI:CALL:2026-11-27:16.5": 3
  },
  "seen_macro": [
   "yen gains after boj holds rates dollar slips",
