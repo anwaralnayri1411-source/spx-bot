@@ -4199,12 +4199,6 @@
    "news:fda approval for hympavzi issued to pfizer inc",
    "sharp@2026-11-09T11:37-05:00"
   ],
-  "AAPL:CALL:2026-11-16:352.5": [
-   "down-0.15",
-   "up0.25",
-   "sharp@2026-11-10T09:55-05:00",
-   "down-0.3"
-  ],
   "BA:PUT:2026-11-20:172.5": [
    "down-0.15",
    "up0.25",
@@ -4219,7 +4213,12 @@
    "up0.25",
    "news:mcdonald s and uber expand their delivery parternship mcd nyse",
    "sharp@2026-11-10T09:45-05:00"
-  ]
+  ],
+  "AMZN:CALL:2026-11-16:275": [],
+  "MSFT:CALL:2026-11-13:550@2026-11-10": [
+   "down-0.15"
+  ],
+  "NVDA:PUT:2026-11-13:170": []
  },
  "stock_level": {
   "F:CALL:2026-11-20:11.5": 2
@@ -4834,7 +4833,6 @@
   "CVX:PUT:2026-11-13:210@2026-11-06": 211.865,
   "PFE:PUT:2026-11-20:30": 29.355,
   "BA:PUT:2026-11-20:172.5": 173.55,
-  "UBER:CALL:2026-11-27:70": 70.045,
-  "AAPL:CALL:2026-11-16:352.5": 348.43
+  "UBER:CALL:2026-11-27:70": 70.045
  }
 }
