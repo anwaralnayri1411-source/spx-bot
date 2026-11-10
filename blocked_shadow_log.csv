@@ -133,3 +133,4 @@ id,project,tag,sym,side,strike,exp,entry_time,entry,edge,strength,out,out_time,o
 20261109T1250|spx|same_contract_open|SPY|CALL|754|2026-11-10,spx,same_contract_open,SPY,CALL,754.0,2026-11-10,2026-11-09T12:50-05:00,2.55,5.0,7.5,tp,2026-11-09T15:27-05:00,0.506,0.506,29
 20261109T1127|stocks|open_same_dir|MSTR|PUT|122|2026-11-13,stocks,open_same_dir,MSTR,PUT,122.0,2026-11-13,2026-11-09T11:27-05:00,3.17,3.5,6.7,tp,2026-11-10T09:32-05:00,0.719,0.719,51
 20261109T1550|spx|late_entry|SPY|CALL|755|2026-11-10,spx,late_entry,SPY,CALL,755.0,2026-11-10,2026-11-09T15:50-05:00,2.53,5.0,6.0,stop,2026-11-10T09:32-05:00,-0.885,0.0,3
+20261109T1012|stocks|open_same_dir|XOM|PUT|160|2026-11-20,stocks,open_same_dir,XOM,PUT,160.0,2026-11-20,2026-11-09T10:12-05:00,2.4,4.5,6.5,tp,2026-11-10T09:37-05:00,0.517,0.517,66
