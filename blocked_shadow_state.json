@@ -14,8 +14,8 @@
    "strength": "5.7",
    "occ": "DIS261127C00120000",
    "peak_pnl": 0.254,
-   "close_pnl": 0.045,
-   "quotes": 213,
+   "close_pnl": 0.068,
+   "quotes": 214,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -34,8 +34,8 @@
    "strength": "5.7",
    "occ": "DIS261127C00120000",
    "peak_pnl": 0.15,
-   "close_pnl": -0.041,
-   "quotes": 155,
+   "close_pnl": -0.021,
+   "quotes": 156,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -54,8 +54,8 @@
    "strength": "7.6",
    "occ": "DIS261127C00120000",
    "peak_pnl": 0.086,
-   "close_pnl": -0.063,
-   "quotes": 83,
+   "close_pnl": -0.043,
+   "quotes": 84,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -74,8 +74,8 @@
    "strength": "8.0",
    "occ": "BA261120P00170000",
    "peak_pnl": 0.08,
-   "close_pnl": -0.326,
-   "quotes": 83,
+   "close_pnl": -0.352,
+   "quotes": 84,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -94,8 +94,8 @@
    "strength": "6.7",
    "occ": "WMT261127C00130000",
    "peak_pnl": 0.0,
-   "close_pnl": -0.323,
-   "quotes": 58,
+   "close_pnl": -0.337,
+   "quotes": 59,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -114,8 +114,8 @@
    "strength": "5.2",
    "occ": "SPY261112C00757000",
    "peak_pnl": 0.421,
-   "close_pnl": 0.369,
-   "quotes": 13,
+   "close_pnl": 0.391,
+   "quotes": 14,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -134,8 +134,8 @@
    "strength": "8.0",
    "occ": "BA261120P00172500",
    "peak_pnl": 0.077,
-   "close_pnl": 0.042,
-   "quotes": 11,
+   "close_pnl": 0.007,
+   "quotes": 12,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -155,7 +155,7 @@
    "occ": "HOOD261127P00080000",
    "peak_pnl": 0.0,
    "close_pnl": -0.238,
-   "quotes": 11,
+   "quotes": 12,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -174,8 +174,28 @@
    "strength": "5.4",
    "occ": "COIN261120P00125000",
    "peak_pnl": 0.0,
-   "close_pnl": -0.276,
-   "quotes": 11,
+   "close_pnl": -0.288,
+   "quotes": 12,
+   "out": "",
+   "out_time": "",
+   "out_pnl": ""
+  },
+  {
+   "id": "20261111T1112|stocks|btc_against|MSTR|PUT|115|2026-11-20",
+   "project": "stocks",
+   "tag": "btc_against",
+   "sym": "MSTR",
+   "side": "PUT",
+   "strike": 115.0,
+   "exp": "2026-11-20",
+   "entry": 2.85,
+   "entry_time": "2026-11-11T11:12-05:00",
+   "edge": "4.0",
+   "strength": "6.5",
+   "occ": "MSTR261120P00115000",
+   "peak_pnl": 0.0,
+   "close_pnl": -0.06,
+   "quotes": 1,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -1646,7 +1666,10 @@
   "20261111T1055|spx|repeat_side|SPY|CALL|759|2026-11-12",
   "20261111T1100|spx|repeat_side|SPX|CALL|7625|2026-11-11",
   "20261111T1100|spx|repeat_side|SPY|CALL|759|2026-11-12",
-  "20261111T1057|stocks|open_same_dir|BA|PUT|172.5|2026-11-20"
+  "20261111T1057|stocks|open_same_dir|BA|PUT|172.5|2026-11-20",
+  "20261111T1112|stocks|btc_against|HOOD|PUT|80|2026-11-27",
+  "20261111T1112|stocks|btc_against|MSTR|PUT|115|2026-11-20",
+  "20261111T1112|stocks|open_same_dir|BA|PUT|172.5|2026-11-20"
  ],
  "last": {
   "spx|CALL|SPY": "2026-11-11T10:05-05:00",
@@ -1744,6 +1767,7 @@
   "stocks|WMT|CALL|2026-11-10": "2026-11-10T12:27-05:00",
   "stocks|BA|PUT|2026-11-11": "2026-11-11T10:12-05:00",
   "stocks|HOOD|PUT|2026-11-11": "2026-11-11T10:12-05:00",
-  "stocks|COIN|PUT|2026-11-11": "2026-11-11T10:12-05:00"
+  "stocks|COIN|PUT|2026-11-11": "2026-11-11T10:12-05:00",
+  "stocks|MSTR|PUT|2026-11-11": "2026-11-11T11:12-05:00"
  }
 }
