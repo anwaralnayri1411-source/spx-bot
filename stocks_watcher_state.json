@@ -993,7 +993,9 @@
    "m a news data center cooler omen ai spirits up 16m aquatic labs acquisition",
    "shopify shop faces q3 earnings tomorrow here s what analysts expect",
    "musk says tesla to extend cybertruck production through summer 2027 tsla nasdaq",
-   "tesla stock nasdaq tsla gains despite cybercab troubles with jeremy clarkson"
+   "tesla stock nasdaq tsla gains despite cybercab troubles with jeremy clarkson",
+   "sbm offshore reports share repurchases under eur227 million program",
+   "netcad reports november 11 share buyback total reaches 742 535"
   ],
   "XOM:CALL": [
    "trump uses defense act as fuel prices surge",
@@ -2243,7 +2245,8 @@
    "1000 invested in apple 10 years ago would be worth this much today",
    "apple slides 4 as ternus calls memory pricing unprecedented despite a record 114 5 billion quarter",
    "this apple analyst turns bullish here are top 5 upgrades for wednesday",
-   "why apple stock looks like a safe haven after the midterms"
+   "why apple stock looks like a safe haven after the midterms",
+   "what s going on with apple stock wednesday"
   ],
   "BA:PUT": [
    "boeing nyse ba sets new 52 week low on disappointing earnings",
@@ -2294,7 +2297,8 @@
    "embraer flies into buy zone after earnings here s how boeing airbus compare",
    "archer aviation achr gets 3 bullish analyst ratings after q3 earnings but 2 price targets drop",
    "new spacex price target as we add it to the portfolio",
-   "boeing stock drops 25 6 in 3 months should you exercise caution"
+   "boeing stock drops 25 6 in 3 months should you exercise caution",
+   "boeing s 737 max deliveries fall to lowest monthly total since november 2025"
   ],
   "NVDA:PUT": [
    "nvidia stock is set for its worst month in a year time to buy the dip",
@@ -2562,12 +2566,6 @@
    "metropal reports board responsibility statement on consolidated financials"
   ],
   "XOM:PUT": [
-   "gasoline prices set for major cut in t rkiye after global oil prices plunge",
-   "stock markets diverge oil prices steady tracking trump and ai",
-   "oil and gas prices ease after donald trump s defeat castell n warns over iran conflict how 21 outlets framed it",
-   "oil prices fall below 103 as democrats win congress and trump signals no new iran strikes",
-   "oil extends slide after plunging 8 on hopes to end us iran war",
-   "canadian natural beats profit estimates on higher oil prices output",
    "rising oil prices cap india bond rally traders cash in gains",
    "gold hits 2 week high as dollar yields oil fall after us midterms",
    "5 reasons why oil prices may stay strong in 2027",
@@ -2961,7 +2959,13 @@
    "eog s 8 dividend raise is a bet on surviving any oil cycle",
    "midday need to know oil prices rebound chip stocks rally more spy nysearca",
    "us oil and gas stocks rise as crude prices climb on iran tensions",
-   "oil up 2 as iran official says country will keep enriched nuclear material"
+   "oil up 2 as iran official says country will keep enriched nuclear material",
+   "no magic wand for bringing down energy prices",
+   "ethanol group calls governors rfs waiver request absurd urges epa to deny it",
+   "heating costs will rise 7 on average this winter",
+   "germany bets big on natural gas to keep the lights on",
+   "crude is back at 80 in the gulf but refined products are stuck at 35",
+   "us refineries run at 94 5 capacity yet diesel and heating oil stocks fall as winter arrives"
   ],
   "MSFT:CALL": [
    "forget the 12 month squeeze microsoft is primed for an explosive ai payoff",
@@ -3000,12 +3004,6 @@
    "dow rallies over 1 000 points and nasdaq gains 2 5 as stocks rebound"
   ],
   "CVX:PUT": [
-   "big oil scores 56 billion windfall on spiking fuel prices",
-   "north sea oil plunge deepens as traders weigh iran de escalation",
-   "us midterms how markets are reacting to democrats congressional gains",
-   "jpmorgan sees global oil market return to surplus",
-   "oil stocks chevron cvx marathon mpc and exxon mobil xom take a beating on midterm results",
-   "asx set to jump as wall street soars trump media tesla spacex tumble oil prices slump",
    "canada s trade surplus widens as oil gold drive record exports",
    "vance admits gop lost election because of war global oil prices plunge more than 10 in a single day wti falls below 90",
    "u s oil plunges below 90 as vance blames iran war for gop losses",
@@ -3399,7 +3397,13 @@
    "eog s 8 dividend raise is a bet on surviving any oil cycle",
    "midday need to know oil prices rebound chip stocks rally more spy nysearca",
    "us oil and gas stocks rise as crude prices climb on iran tensions",
-   "oil up 2 as iran official says country will keep enriched nuclear material"
+   "oil up 2 as iran official says country will keep enriched nuclear material",
+   "no magic wand for bringing down energy prices",
+   "ethanol group calls governors rfs waiver request absurd urges epa to deny it",
+   "heating costs will rise 7 on average this winter",
+   "germany bets big on natural gas to keep the lights on",
+   "crude is back at 80 in the gulf but refined products are stuck at 35",
+   "us refineries run at 94 5 capacity yet diesel and heating oil stocks fall as winter arrives"
   ],
   "JPM:CALL": [
    "which profit leader pays the most with yields between 0 31 and 2 32 bank of america nyse bac exxon mobil nyse xom johnso",
@@ -4004,7 +4008,9 @@
   "MSFT:PUT": [
    "why is microsoft stock sliding today",
    "ai data center demand revives microsoft after selling pressure",
-   "what s going on with microsoft stock wednesday"
+   "what s going on with microsoft stock wednesday",
+   "this number tells me the microsoft data center selloff is excessive prompting me to buy",
+   "microsoft stocks decline 2 5 as 1 billion anthropic stake tests partner rival balance"
   ],
   "INTC:CALL": [
    "intel intc stock recovers 25 as coreweave earnings boost chip stocks"
@@ -4204,7 +4210,8 @@
    "news:boeing to cut 5 of commercial airplane staff d",
    "sharp@2026-11-09T14:41-05:00",
    "news:boeing to cut 5 of commercial airplane workforce",
-   "news:susquehanna reiterates positive rating on boeing stock at 250"
+   "news:susquehanna reiterates positive rating on boeing stock at 250",
+   "news:boeing s 737 max deliveries fall to lowest monthly total since november 2025"
   ],
   "UBER:CALL:2026-11-27:70": [
    "news:uber posts strong q3 with 18 revenue growth an",
@@ -4237,7 +4244,8 @@
    "news:this apple analyst turns bullish here are top 5 upgrades for wednesday"
   ],
   "MSFT:PUT:2026-11-18:500": [
-   "down-0.15"
+   "down-0.15",
+   "news:microsoft stocks decline 2 5 as 1 billion anthropic stake tests partner rival balance"
   ],
   "TSLA:CALL:2026-11-16:402.5": [],
   "INTC:CALL:2026-11-27:65": []
@@ -4247,9 +4255,6 @@
   "NFLX:PUT:2026-11-27:63": 1
  },
  "seen_macro": [
-  "what monday s futures rebound means as midterms and apple earnings near",
-  "why penny stock inovio pharmaceuticals ino is skyrocketing over 200 today and how much upside wall street sees from here",
-  "these 9 words from kevin warsh about interest rates should worry every investor",
   "how the bank of canada rate hike could affect your finances according to our experts",
   "trump s tariffs are on the ballot in michigan",
   "my new dispatch article on the legal case against trump s section 338 tariffs targeting canadian imports",
@@ -4846,7 +4851,10 @@
   "rupiah exchange rate today november 12 2026 us dollar at rp18 149 bi jisdor hits rp18 154",
   "oil prices gain as iran war uncertainty weighs on market sentiment",
   "gold struggles below 4 050 as fed rate hike bets boost us dollar",
-  "solana could dip to 74 as fed rate hike odds hit 99"
+  "solana could dip to 74 as fed rate hike odds hit 99",
+  "us inflation pushes fed toward further interest rate hikes",
+  "inflation weighs on gold as copper draws support from shortages",
+  "family fights are good when setting interest rates"
  ],
  "sharp": {
   "XOM:PUT:2026-11-13:165": 165.35,
