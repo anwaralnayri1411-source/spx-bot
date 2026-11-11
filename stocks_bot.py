@@ -36,6 +36,8 @@ WATCHLIST = {
     "COIN": ("Coinbase", "btc"), "MSTR": ("MicroStrategy", "btc"), "HOOD": ("Robinhood", "btc"),
     "LMT": ("Lockheed Martin", "geo"),
 }
+# حجب الكسر غير الثابت والملاحقة (H-CONFLUENCE): فُعّل 11/11/2026 ثم أُوقف 12/11/2026 بقرار المستخدم بعد أن تبيّن أنه لا يميّز التوصيات السيئة
+BH_STOCK_BLOCK = False
 CONTRACT_MIN_USD = 80
 CONTRACT_MAX_USD = 350   # كان 200 حتى 25/10/2026؛ رُفع بطلب المستخدم (الحد الأدنى 80 باقٍ)
 MIN_OI = 500                # أقل مراكز مفتوحة (أو حجم تداول MIN_VOL)
@@ -1617,7 +1619,7 @@ def analyze(force):
         if not contracts:
             watch.append((tk, f"اتجاه {side} لكن لا عقد مناسب بسعر ${CONTRACT_MIN_USD}-${CONTRACT_MAX_USD}"))
             continue
-        bh_why = _bh_stock(t, s, side, S, n)   # H-CONFLUENCE: كسر غير ثابت أو ملاحقة (مفعّل بقرار المستخدم 11/11/2026)
+        bh_why = _bh_stock(t, s, side, S, n) if BH_STOCK_BLOCK else None   # H-CONFLUENCE: أُوقف 12/11/2026 بقرار المستخدم
         if bh_why:
             watch.append((tk, bh_why))
             blocked.append({"tag": "breakhold", "ticker": tk, "side": side, "edge": edge, "strength": s["strength"], "S": S,
