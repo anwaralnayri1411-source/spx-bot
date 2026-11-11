@@ -1038,3 +1038,4 @@ id,time,project,tag,sym,root,side,strike,exp,entry,spot,edge,strength
 20261111T1027|stocks|open_same_dir|COIN|PUT|125|2026-11-20,2026-11-11T10:27-05:00,stocks,open_same_dir,COIN,COIN,PUT,125.0,2026-11-20,2.54,134.12,4.5,6.2
 20261111T1042|stocks|open_same_dir|BA|PUT|172.5|2026-11-20,2026-11-11T10:42-05:00,stocks,open_same_dir,BA,BA,PUT,172.5,2026-11-20,3.44,173.19,5.5,8.0
 20261111T1042|stocks|open_same_dir|HOOD|PUT|80|2026-11-27,2026-11-11T10:42-05:00,stocks,open_same_dir,HOOD,HOOD,PUT,80.0,2026-11-27,2.57,84.31,3.5,5.9
+20261111T1057|stocks|open_same_dir|BA|PUT|172.5|2026-11-20,2026-11-11T10:57-05:00,stocks,open_same_dir,BA,BA,PUT,172.5,2026-11-20,3.32,173.31,5.5,8.0
