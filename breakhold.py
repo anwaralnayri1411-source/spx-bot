@@ -124,3 +124,25 @@ def event_text(evt):
     lv = f"{evt['level']:,.0f}"
     where = lv if evt["name"] == lv else f"{evt['name']} ({lv})"
     return f"{KIND_AR[evt['kind']]} عند {where} ← {DIR[evt['kind']]}"
+
+
+def fvg_zone(highs, lows, side, look=6):
+    """آخر فجوة قيمة 5د في جهة side ضمن آخر look شموع: (أسفل، أعلى) أو None.
+    صاعدة: أدنى الشمعة k > أعلى الشمعة k−2. هابطة: أعلى الشمعة k < أدنى الشمعة k−2."""
+    n = len(highs)
+    for k in range(n - 1, max(1, n - look) - 1, -1):
+        if k < 2:
+            break
+        if side == "CALL" and lows[k] > highs[k - 2]:
+            return (highs[k - 2], lows[k])
+        if side == "PUT" and highs[k] < lows[k - 2]:
+            return (highs[k], lows[k - 2])
+    return None
+
+
+def fvg_touch(zone, side, hi, lo, close):
+    """الشمعة المنتهية لمست المنطقة وأغلقت داخلها أو في جهة الصفقة."""
+    bot, top = zone
+    if side == "CALL":
+        return lo <= top and close >= bot
+    return hi >= bot and close <= top

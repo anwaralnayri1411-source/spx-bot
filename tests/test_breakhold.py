@@ -86,3 +86,12 @@ def test_direction_points_orb_needs_hold():
     held = ob.direction_points(dict(c, orb_hold="up"))
     assert old[0] - pend[0] == 1.5 and held[0] == old[0]
     assert any("دون ثبات" in r[3] for r in pend[2])
+
+
+def test_fvg_zone_and_touch():
+    highs = [10, 11, 12, 15, 16]
+    lows = [9, 10, 11.5, 13, 15]
+    assert bh.fvg_zone(highs, lows, "CALL") == (12, 15)          # k=4: أدنى 15 > أعلى k−2 (12)
+    assert bh.fvg_zone(highs, lows, "PUT") is None
+    assert bh.fvg_touch((12, 15), "CALL", 16, 14.5, 15.2) and not bh.fvg_touch((12, 15), "CALL", 17, 15.5, 16)
+    assert bh.fvg_zone([20, 19, 15, 14], [19, 18, 14, 13], "PUT") == (14, 18)
