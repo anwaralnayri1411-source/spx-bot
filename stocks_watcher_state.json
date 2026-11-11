@@ -352,7 +352,9 @@
    "visa stock gains fresh growth signals from stable october trends",
    "india rewrites entire visa system these are the nine categories that survived",
    "visa stock enters fiscal 2027 with a broader growth mix",
-   "nayax nyax surpasses q3 earnings estimates"
+   "nayax nyax surpasses q3 earnings estimates",
+   "v maintained by bernstein price target raised to 486",
+   "can visa s monad integration boost its stablecoin strategy"
   ],
   "PLTR:CALL": [
    "palantir sees ark invest reduce position and uk fund review pltr remains under pressure",
@@ -995,7 +997,9 @@
    "musk says tesla to extend cybertruck production through summer 2027 tsla nasdaq",
    "tesla stock nasdaq tsla gains despite cybercab troubles with jeremy clarkson",
    "sbm offshore reports share repurchases under eur227 million program",
-   "netcad reports november 11 share buyback total reaches 742 535"
+   "netcad reports november 11 share buyback total reaches 742 535",
+   "tesla tsla forms special committee to review possible all stock merger",
+   "tesla stock tsla pops as musk delays cybertruck shutdown"
   ],
   "XOM:CALL": [
    "trump uses defense act as fuel prices surge",
@@ -2246,7 +2250,8 @@
    "apple slides 4 as ternus calls memory pricing unprecedented despite a record 114 5 billion quarter",
    "this apple analyst turns bullish here are top 5 upgrades for wednesday",
    "why apple stock looks like a safe haven after the midterms",
-   "what s going on with apple stock wednesday"
+   "what s going on with apple stock wednesday",
+   "apple iphone 18 pro wait times near zero ubs data aapl nasdaq"
   ],
   "BA:PUT": [
    "boeing nyse ba sets new 52 week low on disappointing earnings",
@@ -2566,10 +2571,6 @@
    "metropal reports board responsibility statement on consolidated financials"
   ],
   "XOM:PUT": [
-   "rising oil prices cap india bond rally traders cash in gains",
-   "gold hits 2 week high as dollar yields oil fall after us midterms",
-   "5 reasons why oil prices may stay strong in 2027",
-   "how governor becerra can tackle unfair gas prices without sacrificing environmental progress the equation",
    "oil prices and uk mortgage costs",
    "the u s oil sector s role in restraining prices",
    "midterms fallout sees oil prices face biggest weekly drop since covid",
@@ -2965,7 +2966,11 @@
    "heating costs will rise 7 on average this winter",
    "germany bets big on natural gas to keep the lights on",
    "crude is back at 80 in the gulf but refined products are stuck at 35",
-   "us refineries run at 94 5 capacity yet diesel and heating oil stocks fall as winter arrives"
+   "us refineries run at 94 5 capacity yet diesel and heating oil stocks fall as winter arrives",
+   "qantas expects 2 63 billion first half fuel bill amid elevated oil prices",
+   "morning business report gas prices fall below 4 as americans face rising debt and holiday shopping scams",
+   "gas prices dip below 4 but inflation remains stubbornly high",
+   "vitol s venezuela oil windfall traced to trader s ties to jd vance"
   ],
   "MSFT:CALL": [
    "forget the 12 month squeeze microsoft is primed for an explosive ai payoff",
@@ -3004,11 +3009,6 @@
    "dow rallies over 1 000 points and nasdaq gains 2 5 as stocks rebound"
   ],
   "CVX:PUT": [
-   "canada s trade surplus widens as oil gold drive record exports",
-   "vance admits gop lost election because of war global oil prices plunge more than 10 in a single day wti falls below 90",
-   "u s oil plunges below 90 as vance blames iran war for gop losses",
-   "oil crashes 9 as trump and vance blame iran war for midterm rout",
-   "oil prices sink as u s midterms raise market hopes for middle east solution",
    "oil tumbles below 100 on post election peace hopes",
    "trump declares iran wants a settlement asap amid dropping oil prices",
    "chevron cvx stock could be 40 undervalued after record q3 profit",
@@ -3403,7 +3403,12 @@
    "heating costs will rise 7 on average this winter",
    "germany bets big on natural gas to keep the lights on",
    "crude is back at 80 in the gulf but refined products are stuck at 35",
-   "us refineries run at 94 5 capacity yet diesel and heating oil stocks fall as winter arrives"
+   "us refineries run at 94 5 capacity yet diesel and heating oil stocks fall as winter arrives",
+   "best oil stocks to watch today november 11th",
+   "qantas expects 2 63 billion first half fuel bill amid elevated oil prices",
+   "morning business report gas prices fall below 4 as americans face rising debt and holiday shopping scams",
+   "gas prices dip below 4 but inflation remains stubbornly high",
+   "vitol s venezuela oil windfall traced to trader s ties to jd vance"
   ],
   "JPM:CALL": [
    "which profit leader pays the most with yields between 0 31 and 2 32 bank of america nyse bac exxon mobil nyse xom johnso",
@@ -4003,14 +4008,18 @@
    "broadcom remains a strong buy despite rising ri",
    "why is broadcom stock avgo up today",
    "amd broadcom intel marvell technology and micron stocks trade up what you need to know",
-   "broadcom stocks climb 5 18 as goldman calls chips oversold and anthropic stake lands"
+   "broadcom stocks climb 5 18 as goldman calls chips oversold and anthropic stake lands",
+   "prediction 2 stocks that will be worth more than amazon 5 years from now",
+   "nvidia amd and broadcom lead ai stock rally as coreweave results ease spending fears"
   ],
   "MSFT:PUT": [
    "why is microsoft stock sliding today",
    "ai data center demand revives microsoft after selling pressure",
    "what s going on with microsoft stock wednesday",
    "this number tells me the microsoft data center selloff is excessive prompting me to buy",
-   "microsoft stocks decline 2 5 as 1 billion anthropic stake tests partner rival balance"
+   "microsoft stocks decline 2 5 as 1 billion anthropic stake tests partner rival balance",
+   "microsoft fixes overzealous outlook security issue microsoft stock nasdaq msft slips",
+   "microsoft stock suddenly has an anthropic problem"
   ],
   "INTC:CALL": [
    "intel intc stock recovers 25 as coreweave earnings boost chip stocks"
@@ -4227,7 +4236,8 @@
   "V:CALL:2026-11-13:427.5": [
    "down-0.15",
    "down-0.3",
-   "stock1"
+   "stock1",
+   "news:v maintained by bernstein price target raised to 486"
   ],
   "NFLX:PUT:2026-11-27:63": [
    "down-0.15",
@@ -4237,7 +4247,8 @@
    "down-0.15",
    "news:broadcom shares climb 5 as ai demand signals and anthropic stake lift chip stocks",
    "up0.25",
-   "news:broadcom stocks climb 5 18 as goldman calls chips oversold and anthropic stake lands"
+   "news:broadcom stocks climb 5 18 as goldman calls chips oversold and anthropic stake lands",
+   "news:nvidia amd and broadcom lead ai stock rally as coreweave results ease spending fears"
   ],
   "AAPL:CALL:2026-11-16:355": [
    "news:apple slides 4 as ternus calls memory pricing unprecedented despite a record 114 5 billion quarter",
@@ -4255,10 +4266,6 @@
   "NFLX:PUT:2026-11-27:63": 1
  },
  "seen_macro": [
-  "how the bank of canada rate hike could affect your finances according to our experts",
-  "trump s tariffs are on the ballot in michigan",
-  "my new dispatch article on the legal case against trump s section 338 tariffs targeting canadian imports",
-  "us stock market today dow spikes 400 points s p nasdaq rebound on cooler oil nvidia amazon gain",
   "trade setup for nov 3 nifty bulls eye 23 600 breakout as oil reprieve supports case for sustained rebound",
   "5 stocks favored by brokers amid the prevalent market turbulence",
   "wall st rises as oil falls heading into us midterm elections more earnings",
@@ -4854,7 +4861,11 @@
   "solana could dip to 74 as fed rate hike odds hit 99",
   "us inflation pushes fed toward further interest rate hikes",
   "inflation weighs on gold as copper draws support from shortages",
-  "family fights are good when setting interest rates"
+  "family fights are good when setting interest rates",
+  "japan airport terminal tse 9706 stock may be overvalued on current earnings",
+  "the commodities feed oil slides on easing middle east tensions",
+  "intel s turnaround could rewrite the stock s story",
+  "wall street rebounds on a quieter day as the bond market is closed"
  ],
  "sharp": {
   "XOM:PUT:2026-11-13:165": 165.35,
