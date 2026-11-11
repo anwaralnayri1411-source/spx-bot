@@ -1061,3 +1061,6 @@ id,time,project,tag,sym,root,side,strike,exp,entry,spot,edge,strength
 20261111T1342|stocks|earn_in_life|DIS|CALL|121|2026-11-27,2026-11-11T13:42-05:00,stocks,earn_in_life,DIS,DIS,CALL,121.0,2026-11-27,3.33,119.24,3.5,5.7
 20261111T1357|stocks|earn_in_life|DIS|CALL|121|2026-11-27,2026-11-11T13:57-05:00,stocks,earn_in_life,DIS,DIS,CALL,121.0,2026-11-27,3.35,119.17,3.5,5.7
 20261111T1357|stocks|btc_against|MSTR|PUT|115|2026-11-20,2026-11-11T13:57-05:00,stocks,btc_against,MSTR,MSTR,PUT,115.0,2026-11-20,3.03,122.69,4.5,7.0
+20261111T1412|stocks|earn_in_life|DIS|CALL|121|2026-11-27,2026-11-11T14:12-05:00,stocks,earn_in_life,DIS,DIS,CALL,121.0,2026-11-27,3.47,119.29,3.5,5.4
+20261111T1412|stocks|btc_against|MSTR|PUT|115|2026-11-20,2026-11-11T14:12-05:00,stocks,btc_against,MSTR,MSTR,PUT,115.0,2026-11-20,3.22,121.91,4.5,7.0
+20261111T1412|stocks|open_same_dir|V|CALL|430|2026-11-20,2026-11-11T14:12-05:00,stocks,open_same_dir,V,V,CALL,430.0,2026-11-20,3.26,424.12,4.5,7.0
