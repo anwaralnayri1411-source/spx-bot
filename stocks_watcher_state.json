@@ -2234,7 +2234,8 @@
    "apple nasdaq aapl ceo ternus privately drives siri agent push despite carefully measured public stance",
    "apple starts charging 49 99 for extra ai usage",
    "1000 invested in apple 10 years ago would be worth this much today",
-   "apple slides 4 as ternus calls memory pricing unprecedented despite a record 114 5 billion quarter"
+   "apple slides 4 as ternus calls memory pricing unprecedented despite a record 114 5 billion quarter",
+   "this apple analyst turns bullish here are top 5 upgrades for wednesday"
   ],
   "BA:PUT": [
    "boeing nyse ba sets new 52 week low on disappointing earnings",
@@ -2552,12 +2553,6 @@
    "metropal reports board responsibility statement on consolidated financials"
   ],
   "XOM:PUT": [
-   "la oc gas prices fall again",
-   "us midterm elections crude cools but iran war risks keeps markets guessing",
-   "oil prices drop below 100 as midterms fuel hope for an end to the iran war",
-   "oil dips 8 as investors bet on us iran negotiations",
-   "from iran to trade how the us midterms impact the rest of the world",
-   "we re assuming 3 50 per gallon for gas wes moss prices 20 years of driving as pumps hit 4 27",
    "crude oil prices plummet in hopes of a quick end to iran war",
    "oil prices are in freefall now that the democratic sweep is rewriting the iran playbook",
    "us stocks surge and the dow soars 1 500 points as oil prices tumble following the midterm elections",
@@ -2951,7 +2946,13 @@
    "petrobras results disappoint",
    "saudi crude output jumps 26 as riyadh reports near pre war production",
    "brent rises 2 a barrel as uncertainty persists over iran ukraine peace talks",
-   "commodities oil rebounds as geopolitical risks linger"
+   "commodities oil rebounds as geopolitical risks linger",
+   "fed rate hike debate persists among influencers on x despite fall in oil prices",
+   "fed officials consider faster hikes as higher prices seep into broader economy daily sabah",
+   "gold and silver prices rebounded following cpi induced selling while tensions in the strait of hormuz pushed crude oil p",
+   "highpeak energy oil cut rebounds in q3 2026 rating upgrade nasdaq hpk",
+   "gas prices could be 1 lower on thanksgiving but still the highest on holiday ever",
+   "winter is coming can democrats succeed in chilling soaring energy prices"
   ],
   "MSFT:CALL": [
    "forget the 12 month squeeze microsoft is primed for an explosive ai payoff",
@@ -2990,12 +2991,6 @@
    "dow rallies over 1 000 points and nasdaq gains 2 5 as stocks rebound"
   ],
   "CVX:PUT": [
-   "oil prices tumble below 100 on post election peace hopes",
-   "us stocks surge and the dow soars 1 500 points as brent oil s price drops below 95 per barrel",
-   "chevron corp stock cvx moved down by 4 02 on nov 4 what signal does it send",
-   "oil prices plunge 9 after us midterms vance remarks as israeli stocks tumble",
-   "u s consumers confront the highest gas prices ever on an election day",
-   "fire shuts equinor s visund platform in norwegian north sea",
    "sugar prices pressured by weakness in crude oil",
    "riverside county gas prices drop again",
    "what trump s midterm defeat means for iran and oil prices",
@@ -3389,7 +3384,13 @@
    "saudi crude output jumps 26 as riyadh reports near pre war production",
    "chevron stock faces governance transition ahead of january handover",
    "brent rises 2 a barrel as uncertainty persists over iran ukraine peace talks",
-   "commodities oil rebounds as geopolitical risks linger"
+   "commodities oil rebounds as geopolitical risks linger",
+   "fed rate hike debate persists among influencers on x despite fall in oil prices",
+   "fed officials consider faster hikes as higher prices seep into broader economy daily sabah",
+   "gold and silver prices rebounded following cpi induced selling while tensions in the strait of hormuz pushed crude oil p",
+   "highpeak energy oil cut rebounds in q3 2026 rating upgrade nasdaq hpk",
+   "gas prices could be 1 lower on thanksgiving but still the highest on holiday ever",
+   "winter is coming can democrats succeed in chilling soaring energy prices"
   ],
   "JPM:CALL": [
    "which profit leader pays the most with yields between 0 31 and 2 32 bank of america nyse bac exxon mobil nyse xom johnso",
@@ -3864,7 +3865,10 @@
    "near protocol price prediction can talos fuel a wedge breakout",
    "cryptocurrencies price prediction xrp bitcoin cryptos american wrap 11 november",
    "investor james lavish says bitcoin could reach as much as 500 000 by mid 2029",
-   "bitcoin price slides near 73k as analyst flags 65k risk"
+   "bitcoin price slides near 73k as analyst flags 65k risk",
+   "jefferies sees 53 upside in riot platforms and the reason has nothing to do with bitcoin",
+   "bitcoin long liquidations hit 25 2m as price d",
+   "bitcoin dips below 74k with risks of falling t"
   ],
   "SOFI:PUT": [
    "nasdaq ceo adena friedman says 23 hour trading starts dec 6 what it means for your retirement money",
@@ -3932,7 +3936,8 @@
    "uber uber stock gets fair value trim after analysts rework targets",
    "uber technologies stock faces leadership transition as hazelbaker exits",
    "doordash stock faces new pressure as amazon adds uber eats to prime",
-   "the uber stock correction provides a good entry opportunity with ample revenue growth drivers"
+   "the uber stock correction provides a good entry opportunity with ample revenue growth drivers",
+   "doordash stock faces amazon uber eats challenge after prime launch"
   ],
   "GOOGL:CALL": [
    "alphabet tpu sales and gemini enterprise are reshaping the bull case nasdaq goog",
@@ -3973,9 +3978,13 @@
    "broadcom cheaper to own one of the best stories on the market nasdaq avgo",
    "what is going on with broadcom stock on wednesday",
    "broadcom shares climb 5 as ai demand signals and anthropic stake lift chip stocks",
-   "broadcom remains a strong buy despite rising ri"
+   "broadcom remains a strong buy despite rising ri",
+   "why is broadcom stock avgo up today",
+   "amd broadcom intel marvell technology and micron stocks trade up what you need to know"
   ],
-  "MSFT:PUT": []
+  "MSFT:PUT": [
+   "why is microsoft stock sliding today"
+  ]
  },
  "fired": {
   "SNAP:PUT:2026-11-20:6": [
@@ -4068,7 +4077,9 @@
    "news:oil prices rebound as hormuz shipping risks persist",
    "news:oil prices rebound as iran tensions cloud prospects for peace deal co1 com commodity",
    "news:saudi crude output jumps 26 as riyadh reports near pre war production",
-   "news:brent rises 2 a barrel as uncertainty persists over iran ukraine peace talks"
+   "news:brent rises 2 a barrel as uncertainty persists over iran ukraine peace talks",
+   "news:fed officials consider faster hikes as higher prices seep into broader economy daily sabah",
+   "news:gold and silver prices rebounded following cpi induced selling while tensions in the strait of hormuz pushed crude oil p"
   ],
   "CVX:PUT:2026-11-13:210@2026-11-06": [
    "news:the iran war isn t over but oil traders are already pricing in peace",
@@ -4152,7 +4163,9 @@
    "news:oil prices rose after iran said uranium would stay home",
    "news:saudi crude output jumps 26 as riyadh reports near pre war production",
    "news:brent rises 2 a barrel as uncertainty persists over iran ukraine peace talks",
-   "news:commodities oil rebounds as geopolitical risks linger"
+   "news:commodities oil rebounds as geopolitical risks linger",
+   "news:fed officials consider faster hikes as higher prices seep into broader economy daily sabah",
+   "news:gold and silver prices rebounded following cpi induced selling while tensions in the strait of hormuz pushed crude oil p"
   ],
   "PFE:PUT:2026-11-20:30": [
    "down-0.15",
@@ -4191,14 +4204,8 @@
    "news:broadcom shares climb 5 as ai demand signals and anthropic stake lift chip stocks"
   ],
   "AAPL:CALL:2026-11-16:355": [
-   "news:apple slides 4 as ternus calls memory pricing unprecedented despite a record 114 5 billion quarter"
-  ],
-  "MSTR:PUT:2026-11-20:110": [
-   "sharp@2026-11-11T10:35-05:00",
-   "sharp@2026-11-11T10:36-05:00",
-   "stock1",
-   "down-0.15",
-   "news:bitcoin price slides near 73k as analyst flags 65k risk"
+   "news:apple slides 4 as ternus calls memory pricing unprecedented despite a record 114 5 billion quarter",
+   "news:this apple analyst turns bullish here are top 5 upgrades for wednesday"
   ],
   "MSFT:PUT:2026-11-18:500": [
    "down-0.15"
@@ -4206,16 +4213,9 @@
  },
  "stock_level": {
   "V:CALL:2026-11-13:427.5": 1,
-  "SNAP:PUT:2026-11-20:6": 1,
-  "MSTR:PUT:2026-11-20:110": 1
+  "SNAP:PUT:2026-11-20:6": 1
  },
  "seen_macro": [
-  "milan stock market extends gains awaiting wall street banks and cement makers up a2a and iren down",
-  "why the bull market may be changing not ending",
-  "us midterm elections 2026 3 market risks investors should watch as democrats lead in prediction markets",
-  "us stocks open higher as ai trade steadies oil falls",
-  "ocbc cuts gold price forecasts to us 4 250 on fed tightening fears",
-  "tesla samsung challenge trump s new vietnam tariffs report",
   "canadian energy stocks fall as oil prices retreat on easing middle east tensions",
   "oracle upgraded reddit downgraded wall street s top analyst calls",
   "what 10 000 invested in this magnificent seven stock could be worth by 2030",
@@ -4809,7 +4809,13 @@
   "wall street futures rise as coreweave earnings support technology stocks ahead of us market open dow jones s p nasdaq",
   "nvidia downgraded mercury systems upgraded wall street s top analyst calls",
   "us stocks are higher technology leads while financials lag",
-  "why is the stock market up today s p 500 rises as nvidia and coreweave rally"
+  "why is the stock market up today s p 500 rises as nvidia and coreweave rally",
+  "nikkei 225 rises for third straight day to 61 248 as ai chip stocks rebound despite u s inflation worries",
+  "nvidia is now down more than 25 in 30 days this wall street desk predicts 205 returns",
+  "wall street is cooling on jensen huang s nvidia but history says don t give up on the stock just yet",
+  "goldman sachs gs tells investors to prepare for higher interest rates",
+  "us treasury futures retreat as markets see more fed hikes",
+  "gold struggles below 4 050 as fed rate hike bets intensify"
  ],
  "sharp": {
   "SNAP:PUT:2026-11-20:6": 5.295,
@@ -4817,7 +4823,6 @@
   "CVX:PUT:2026-11-13:210@2026-11-06": 211.865,
   "PFE:PUT:2026-11-20:30": 29.355,
   "BA:PUT:2026-11-20:172.5": 173.55,
-  "UBER:CALL:2026-11-27:70": 69.47,
-  "MSTR:PUT:2026-11-20:110": 123.01
+  "UBER:CALL:2026-11-27:70": 69.47
  }
 }
