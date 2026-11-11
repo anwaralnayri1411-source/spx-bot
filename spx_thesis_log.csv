@@ -1,4 +1,6 @@
 id,entry,entry_spot,max_adverse_pct,peak_pnl,final_pnl,current_rule,suspect_stale_price,thesis_0.15,thesis_0.25,thesis_0.35
-SPY:PUT:750:2026-11-11,3.01,751.42,0.656,1.023,-0.927,no stop,False,stop 09:45 pnl -89%,stop 09:45 pnl -89%,stop 09:45 pnl -89%
-SPY:PUT:747:2026-11-11,3.19,747.32,1.196,0.304,-0.978,stop 14:50,False,stop 14:10 pnl -37%,stop 14:50 pnl -50%,stop 15:50 pnl -61%
-SPY:PUT:746:2026-11-11,2.92,746.32,1.318,0.12,-0.966,stop 14:10,False,stop 13:55 pnl -30%,stop 14:10 pnl -44%,stop 14:10 pnl -44%
+SPY:PUT:750:2026-11-11,3.01,751.42,0.656,1.023,-0.934,no stop,False,stop 09:45 pnl -89%,stop 09:45 pnl -89%,stop 09:45 pnl -89%
+SPY:PUT:747:2026-11-11,3.19,747.32,1.208,0.304,-0.969,stop 14:50,False,stop 14:10 pnl -37%,stop 14:50 pnl -50%,stop 15:50 pnl -61%
+SPY:PUT:746:2026-11-11,2.92,746.32,1.345,0.12,-0.983,stop 14:10,False,stop 13:55 pnl -30%,stop 14:10 pnl -44%,stop 14:10 pnl -44%
+SPX:CALL:7615:2026-11-11,3.94,7585.66,-0.005,-0.081,-0.081,no stop,False,لم يُفعَّل,لم يُفعَّل,لم يُفعَّل
+SPY:CALL:757:2026-11-12,2.42,756.26,-0.007,-0.008,-0.008,no stop,False,لم يُفعَّل,لم يُفعَّل,لم يُفعَّل
