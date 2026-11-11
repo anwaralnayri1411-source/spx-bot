@@ -72,6 +72,7 @@ SPY_TARGET_DELTA, SPY_MIN_DELTA, SPY_MAX_SPREAD = 0.45, 0.30, 0.10
 DECAY_MIN_AGE, DECAY_LOSS, DECAY_MAX_ADVERSE = 60, 0.20, 0.0015
 GIVEBACK = 0.50                      # بعد بلوغ الهدف: تنبيه إذا تراجع الربح لنصف أعلى ربح
 LOG_FILE = "zero_dte_log.csv"
+BH_PENDING = "breakhold_pending.json"   # الإصدار 19: توصية حدث تنتظر عودة السعر إلى الفجوة
 BH_LOG = "breakhold_live_log.csv"    # كل فحص: جهة البوت القديم (بلا الكسر والثبات) والجديد، للمراجعة بعد 15 يوم تداول
 
 NY = ZoneInfo("America/New_York")
@@ -1075,7 +1076,7 @@ def analyze(force):
     except Exception as ex:
         data_gaps.note("spx", "vix_day", ex)
     c.update({k: bf[k] for k in ("orb", "day_hl", "range1h", "pivots", "pd_hl")})
-    bh_closes, bh_mins = _closed_today(ix, n)
+    bh_closes, bh_mins, bh_highs, bh_lows = _closed_today(ix, n)
     c["orb_hold"] = bh.orb_hold(bh_closes, c["orb"]) if c["orb"] else None
     bh_evt = None
     if len(bh_closes) >= 3:
@@ -1117,8 +1118,6 @@ def analyze(force):
     news_half = shock["level"] >= 3
     if edge < MIN_EDGE and not bh_mode:
         reasons.append(f"لا اتجاه واضح (صعود {bull:.1f} مقابل هبوط {bear:.1f}).")
-    if not is_test and market_day(n):
-        _bh_log(n, S, old_side, side if not reasons else None, bh_evt, bh_mode, c["orb_hold"], reasons)
 
     contracts = []
     REJ.clear()
@@ -1149,7 +1148,8 @@ def analyze(force):
     return {"c": c, "shock": shock, "heads": heads, "events": events, "rows": rows, "bull": bull, "bear": bear,
             "edge": edge, "side": side, "strength": strength, "reasons": reasons, "contracts": contracts,
             "exp": exp, "is_test": is_test, "today": today, "block_tags": block_tags,
-            "blocked_contracts": blocked_contracts, "news_half": news_half, "bh_evt": bh_evt, "bh_mode": bh_mode}
+            "blocked_contracts": blocked_contracts, "news_half": news_half, "bh_evt": bh_evt, "bh_mode": bh_mode,
+            "old_side": old_side, "bh_bars": (bh_closes, bh_highs, bh_lows), "_pick": (ch, T)}
 
 
 def _closed_today(ix, n):
@@ -1158,10 +1158,62 @@ def _closed_today(ix, n):
         day = ix[ix.index.date == ix.index[-1].date()]
         end = day.index + pd.Timedelta(minutes=5)
         day = day[end <= pd.Timestamp(n)]
-        return [float(x) for x in day["Close"].values], [int(t.hour * 60 + t.minute) for t in day.index]
+        return ([float(x) for x in day["Close"].values], [int(t.hour * 60 + t.minute) for t in day.index],
+                [float(x) for x in day["High"].values], [float(x) for x in day["Low"].values])
     except Exception as e:  # noqa: BLE001
         data_gaps.note("spx", "breakhold_bars", e)
-        return [], []
+        return [], [], [], []
+
+
+def _bh_pending(n, value=None, clear=False):
+    """قراءة/كتابة توصية الحدث المنتظرة عند الفجوة. القراءة ترجع None إن كانت من يوم آخر أو أقدم من bh.FVG_WAIT دقيقة."""
+    try:
+        if clear or value is not None:
+            json.dump(value or {}, open(BH_PENDING, "w", encoding="utf-8"), ensure_ascii=False)
+            return value
+        p = json.load(open(BH_PENDING, encoding="utf-8"))
+        if not p or p.get("date") != n.date().isoformat():
+            return None
+        return p if (n.hour * 60 + n.minute) - p["m"] <= bh.FVG_WAIT else None
+    except Exception:  # noqa: BLE001
+        return None
+
+
+def apply_fvg(a, n):
+    """الإصدار 19: توصية يحددها حدث تنتظر عودة السعر إلى فجوة القيمة في جهتها، أو تُرسل عند لمسها. يعدّل a في مكانه."""
+    closes, highs, lows = a["bh_bars"]
+    if not closes:
+        return
+    pend = _bh_pending(n)
+    if pend:
+        zone = tuple(pend["zone"])
+        if bh.fvg_touch(zone, pend["side"], highs[-1], lows[-1], closes[-1]):
+            _bh_pending(n, clear=True)
+            side = pend["side"]
+            a.update(side=side, strength=pend["strength"], bh_mode=pend["mode"], bh_evt=pend["evt"], fvg=zone)
+            a["reasons"] = [r for r in a["reasons"] if not r.startswith("لا اتجاه واضح")]
+            if not a["reasons"]:
+                ch, T = a["_pick"]
+                a["contracts"] = _pick_all(side, ch, a["c"]["S"], T, a["c"], a["exp"])
+                if a.get("news_half"):
+                    for k in a["contracts"]:
+                        k["half"] = True
+                if not a["contracts"]:
+                    a["reasons"].append(f"لا توجد عقود {side} مناسبة عند لمس الفجوة الآن.")
+            else:
+                a["contracts"] = []
+        else:
+            a["contracts"] = []
+            a["reasons"].append(f"⏳ انتظار عودة السعر إلى الفجوة {zone[0]:,.0f}–{zone[1]:,.0f} لدخول {pend['side']} "
+                                f"(حتى {(pend['m'] + bh.FVG_WAIT) // 60:02d}:{(pend['m'] + bh.FVG_WAIT) % 60:02d}).")
+        return
+    if a.get("bh_mode") and a["contracts"] and not a["reasons"]:
+        zone = bh.fvg_zone(highs, lows, a["side"])
+        if zone:
+            _bh_pending(n, {"date": n.date().isoformat(), "m": n.hour * 60 + n.minute, "side": a["side"], "zone": list(zone),
+                            "strength": a["strength"], "mode": a["bh_mode"], "evt": a["bh_evt"]})
+            a["contracts"] = []
+            a["reasons"].append(f"⏳ {bh.event_text(a['bh_evt'])}؛ ننتظر عودة السعر إلى الفجوة {zone[0]:,.0f}–{zone[1]:,.0f} للدخول بسعر أفضل.")
 
 
 def _bh_log(n, S, old_side, new_side, evt, mode, orb_hold, reasons):
@@ -1473,7 +1525,7 @@ def signal_message(a):
     if a.get("news_half"):
         L.append("⚠️ <b>أخبار مرتفعة المخاطر:</b> " + esc("، ".join(a["shock"]["flags"][:2])) + ". الكمية المقترحة نصف المعتاد (عقد واحد على الأقل)؛ خفّف حجمك.")
         L.append("")
-    L += bh_lines(a, side)
+    L += bh_lines(a, side) + fvg_line(a)
     if a.get("addon"):
         pv = a["addon"]
         L.append(f"➕ <b>إضافة على رابح:</b> عقد {side} السابق ({pv['strike']:,.0f}، {pv['time'][11:16]}) بلغ الهدف والقوة مستمرة. "
@@ -1485,7 +1537,7 @@ def signal_message(a):
     if c["age"] >= 5:
         L.append(age_note(c["age"]))
     L.append("⚠️ <i>تعليمي وليست توصية. أقصى خسارة هي سعر العقد.</i>")
-    L.append(f"🕒 {stamp()} | SPX إصدار 18")
+    L.append(f"🕒 {stamp()} | SPX إصدار 19")
     return "\n".join(L)
 
 
@@ -1536,6 +1588,12 @@ def bh_lines(a, side):
     return [f"📐 <b>كسر ثابت:</b> {esc(bh.event_text(a['bh_evt']))}.", ""]
 
 
+def fvg_line(a):
+    """سطر الدخول بعد عودة السعر إلى الفجوة (الإصدار 19)، وإلا []."""
+    z = a.get("fvg")
+    return [f"🎯 <b>دخول بعد عودة السعر إلى الفجوة</b> {z[0]:,.0f}–{z[1]:,.0f}.", ""] if z else []
+
+
 def send_signal(a):
     """توصية SPX: صورة بطاقة العقد مع تذكرة مختصرة. وعند تعذر الصورة نرسل النص الكامل."""
     side, S, c = a["side"], a["c"]["S"], a["c"]
@@ -1555,7 +1613,7 @@ def send_signal(a):
     alt_sep = bool(alt) and sym != ALT_SYMBOL      # بطاقة SPY منفصلة (لا تكرار إن كان العقد الرئيسي هو SPY نفسه)
     if alt_sep:
         cap.append("↳ توصية SPY منفصلة في الرد التالي")
-    cap += [x for x in bh_lines(a, side) if x]
+    cap += [x for x in bh_lines(a, side) + fvg_line(a) if x]
     if a.get("addon"):
         pv = a["addon"]
         cap.append(f"➕ <b>إضافة على رابح:</b> عقد {side} السابق ({pv['strike']:,.0f}، {pv['time'][11:16]}) بلغ الهدف.")
@@ -1573,7 +1631,7 @@ def send_signal(a):
         sub = (f"انتهاء {kexp} (تجريبي)" if a["is_test"] else ("انتهاء اليوم" if kexp == a["exp"] else f"انتهاء {kexp}")) + f" · {sym} {k0.get('spot', S):,.0f}"
         png = cards.contract_card("entry", f"{root_sym(k0)} {k0['strike']:,.0f} {side}", sub, k0["price"], None,
                                   k0["price"], k0["price"] * (1 - STOP_LOSS), k0["price"] * (1 + TAKE_PROFIT),
-                                  badge=f"{side} {dot}", foot=f"{stamp()} | SPX إصدار 18")
+                                  badge=f"{side} {dot}", foot=f"{stamp()} | SPX إصدار 19")
         mid = send_photo(png, "\n".join(cap))
         if mid:
             if alt_sep:
@@ -2215,6 +2273,13 @@ def run_once(force=False):
             state["paused_sent"] = True
             send_telegram(f"⛔ <b>توقف إشارات SPX اليوم</b> #خطة\n{MAX_DAILY_STOPS} إشارات بلغت الوقف اليوم. "
                           "نوقف الجديد حمايةً من التوالي في الخسارة، ونواصل متابعة المفتوح.")
+    if not force and not a["is_test"]:
+        try:
+            apply_fvg(a, n)
+        except Exception as e:
+            print("تعذر تطبيق دخول الفجوة:", e)
+        _bh_log(n, a["c"]["S"], a.get("old_side"), a["side"] if a["contracts"] else None, a.get("bh_evt"), a.get("bh_mode", ""),
+                a["c"].get("orb_hold"), a["reasons"])
     has_signal = bool(a["contracts"])
     if has_signal:
         _live_prices(a)

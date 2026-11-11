@@ -1479,6 +1479,22 @@ def shadow_log(n, scored, finalists_flow, spy5, spy_up):
                               "vol_ratio", "rsi"], rows)
 
 
+def _bh_stock(t, s, side, S, n):
+    """سبب حجب «الكسر غير الثابت أو الملاحقة» أو None. أي فشل في البيانات = لا حجب."""
+    try:
+        import breakhold as bh
+        info = s["info"]
+        cl = info["closes"]
+        prev_close = float(cl.iloc[-2]) if cl.index[-1].date() == n.date() else float(cl.iloc[-1])
+        m = t.history(period="1d", interval="5m")
+        m.index = m.index.tz_convert(ob.NY)
+        m = m[(m.index.date == n.date()) & (m.index + pd.Timedelta(minutes=5) <= pd.Timestamp(n))]
+        return bh.stock_block(side, float(S), info["hi20"], info["lo20"], prev_close, [float(x) for x in m["Close"].values])
+    except Exception as e:  # noqa: BLE001
+        print("تعذر فحص الكسر والثبات:", getattr(t, "ticker", ""), type(e).__name__)
+        return None
+
+
 def analyze(force):
     n = ob.now_ny()
     today = n.date()
@@ -1600,6 +1616,12 @@ def analyze(force):
             s["strength"] = round(0.5 * min(10.0, abs(edge) * 1.1) + 0.5 * contracts[0]["score"], 1)
         if not contracts:
             watch.append((tk, f"اتجاه {side} لكن لا عقد مناسب بسعر ${CONTRACT_MIN_USD}-${CONTRACT_MAX_USD}"))
+            continue
+        bh_why = _bh_stock(t, s, side, S, n)   # H-CONFLUENCE: كسر غير ثابت أو ملاحقة (مفعّل بقرار المستخدم 11/11/2026)
+        if bh_why:
+            watch.append((tk, bh_why))
+            blocked.append({"tag": "breakhold", "ticker": tk, "side": side, "edge": edge, "strength": s["strength"], "S": S,
+                            "contracts": contracts})       # يُتابَع بصمت للمقارنة بالمرسل
             continue
         why_block = paper_block(tk, side, dates, contracts[0], mv)   # H-PAPER R1/R2
         if why_block:

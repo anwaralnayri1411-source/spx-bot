@@ -95,3 +95,32 @@ def test_fvg_zone_and_touch():
     assert bh.fvg_zone(highs, lows, "PUT") is None
     assert bh.fvg_touch((12, 15), "CALL", 16, 14.5, 15.2) and not bh.fvg_touch((12, 15), "CALL", 17, 15.5, 16)
     assert bh.fvg_zone([20, 19, 15, 14], [19, 18, 14, 13], "PUT") == (14, 18)
+
+
+def test_stock_block():
+    assert bh.stock_block("CALL", 101, 100, 90, 99, [99, 101]) is not None            # كسر اليوم بلا ثبات
+    assert bh.stock_block("CALL", 101, 100, 90, 100.5, [101]) is None                  # ثابت من أمس
+    assert "ملاحقة" in bh.stock_block("PUT", 95, 100, 90, 98, [97, 95])                # −3% بلا كسر
+    assert bh.stock_block("PUT", 97.5, 100, 90, 98, [98, 97.5]) is None                # حركة صغيرة
+    assert bh.stock_block("PUT", 89, 100, 90, 89.5, [89]) is None                      # كسر ثابت من أمس يسمح بالملاحقة
+
+
+def test_apply_fvg_waits_then_enters(tmp_path, monkeypatch):
+    import options_bot as ob
+    from datetime import datetime
+    monkeypatch.setattr(ob, "BH_PENDING", str(tmp_path / "p.json"))
+    monkeypatch.setattr(ob, "_pick_all", lambda side, ch, S, T, c, exp: [{"strike": 7520.0, "price": 4.0}])
+    evt = {"kind": "hold_up", "level": 7500.0, "name": "7,500", "key": False, "i": 9}
+    a = {"side": "CALL", "strength": 6.0, "bh_mode": "flip", "bh_evt": evt, "contracts": [{"x": 1}], "reasons": [],
+         "bh_bars": ([7490, 7495, 7505, 7510], [7492, 7497, 7508, 7512], [7488, 7493, 7502, 7506]),
+         "c": {"S": 7510.0}, "exp": "2026-11-12", "_pick": (None, None)}
+    n1 = datetime(2026, 11, 12, 13, 45, tzinfo=ob.NY)
+    ob.apply_fvg(a, n1)
+    assert a["contracts"] == [] and "ننتظر عودة السعر إلى الفجوة" in a["reasons"][0]          # فجوة 7497–7506
+    b = dict(a, side="PUT", bh_mode="", contracts=[], reasons=["لا اتجاه واضح"],
+             bh_bars=([7505, 7503, 7501], [7508, 7506, 7504], [7503, 7501, 7499]), c={"S": 7501.0})
+    ob.apply_fvg(b, datetime(2026, 11, 12, 13, 55, tzinfo=ob.NY))
+    assert b["side"] == "CALL" and b["contracts"] and b["fvg"] == (7497, 7506) and b["reasons"] == []
+    c = dict(a, contracts=[], reasons=[])
+    ob.apply_fvg(c, datetime(2026, 11, 12, 14, 0, tzinfo=ob.NY))      # الانتظار انتهى بالدخول: لا شيء معلق
+    assert c["reasons"] == []

@@ -15,6 +15,8 @@ EVENT_FROM_M = 10 * 60   # لا أحداث تقلب الجهة قبل 10:00
 PLACE_FROM_M = 10 * 60 + 30
 EDGE = 0.30              # الثلث الأخير تقريباً من مدى اليوم
 MIN_RANGE = 15.0         # مدى أصغر من هذا: لا شرط مكان
+FVG_WAIT = 60            # الإصدار 19: أقصى انتظار لعودة السعر إلى الفجوة (دقيقة)
+STOCK_CHASE, STOCK_HOLD = 0.015, 24   # الشركات: حركة اليوم للملاحقة، وشموع 5د للثبات داخل اليوم (ساعتان)
 ROUND = 50
 
 DIR = {"hold_up": "CALL", "fail_down": "CALL", "hold_down": "PUT", "fail_up": "PUT"}
@@ -124,6 +126,22 @@ def event_text(evt):
     lv = f"{evt['level']:,.0f}"
     where = lv if evt["name"] == lv else f"{evt['name']} ({lv})"
     return f"{KIND_AR[evt['kind']]} عند {where} ← {DIR[evt['kind']]}"
+
+
+def stock_block(side, S, hi20, lo20, prev_close, today_closes, hold=STOCK_HOLD, chase=STOCK_CHASE):
+    """بوت الشركات: سبب الحجب (نص) إن كانت التوصية كسراً غير ثابت لأعلى/أدنى 20 يوماً في جهتها، أو ملاحقة بلا كسر ثابت؛ وإلا None."""
+    L = hi20 if side == "CALL" else lo20
+    beyond = (lambda x: x > L) if side == "CALL" else (lambda x: x < L)
+    last = today_closes[-hold:]
+    unheld = beyond(S) and not beyond(prev_close) and not (len(last) == hold and all(beyond(x) for x in last))
+    held = beyond(S) and not unheld
+    move = S / prev_close - 1
+    word = "أعلى" if side == "CALL" else "أدنى"
+    if unheld:
+        return f"كسر {word} 20 يوماً ({L:,.2f}) لم يثبت بعد؛ ننتظر إغلاق يوم أو ساعتين خلفه"
+    if (move >= chase if side == "CALL" else move <= -chase) and not held:
+        return f"ملاحقة: السهم تحرك {move * 100:+.1f}% اليوم في جهة التوصية بلا كسر ثابت"
+    return None
 
 
 def fvg_zone(highs, lows, side, look=6):
