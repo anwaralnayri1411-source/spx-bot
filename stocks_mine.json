@@ -527,6 +527,17 @@
    "time": "2026-11-11T10:14-05:00",
    "price": null,
    "qty": null
+  },
+  "MSFT:PUT:2026-11-18:500|2026-11-11": {
+   "mode": "watch",
+   "ticker": "MSFT",
+   "side": "PUT",
+   "exp": "2026-11-18",
+   "strike": 500.0,
+   "day": "2026-11-11",
+   "time": "2026-11-11T11:03-05:00",
+   "price": null,
+   "qty": null
   }
  }
 }
