@@ -141,3 +141,24 @@ def test_flow_30_and_log_columns(tmp_path, monkeypatch):
     ob._bh_log(n, 7600.0, "CALL", "PUT", None, "", None, [])
     head = (tmp_path / "bh" / "log.csv").read_text(encoding="utf-8").splitlines()[0]
     assert "flow_lean" in head and len(list((tmp_path / "bh").glob("log_old_*.csv"))) == 1
+
+
+def test_flow_confirm_needs_both(tmp_path):
+    import gzip
+    import options_bot as ob
+    from datetime import datetime
+    n = datetime(2026, 11, 11, 11, 10, tzinfo=ob.NY)
+    f = tmp_path / "flow.csv"
+    f.write_text("date,time,call_prem,put_prem,net_delta\n2026-11-11,11:00,5000000,1000000,9\n", encoding="utf-8")
+    raw = tmp_path / "raw"
+    raw.mkdir()
+    rows = "time,side,delta,iv\n10:40,C,0.4,0.20\n10:40,P,-0.4,0.25\n11:05,C,0.4,0.23\n11:05,P,-0.4,0.24\n"
+    with gzip.open(raw / "2026-11-11.csv.gz", "wt", encoding="utf-8") as g:
+        g.write(rows)
+    up, dn = {"kind": "hold_up"}, {"kind": "fail_up"}
+    r = ob.flow_confirm(n, up, str(f), str(raw))
+    assert r["ok"] and r["lean"] == 4000000 and abs(r["tilt"] - 0.04) < 1e-9          # كول +0.03، بوت −0.01
+    assert not ob.flow_confirm(n, dn, str(f), str(raw))["ok"]                           # PUT والتدفق للكول
+    assert not ob.flow_confirm(n, up, str(f), str(tmp_path / "none"))["ok"]             # بلا لقطات: لا تأكيد
+    a = {"side": "CALL", "bh_flow": r}
+    assert "التدفق يؤكد" in ob.flow_line(a)[0] and ob.flow_line({"side": "CALL", "bh_flow": {"ok": False}}) == []
