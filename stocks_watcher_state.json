@@ -301,7 +301,8 @@
    "netflix s video podcast push is far from over",
    "netflix price increases are no longer providing unchecked upside downgrade nflx",
    "ernest wong s top picks for oct 28 2026",
-   "netflix nflx stock may be a loser this year but you can still scalp profits from it"
+   "netflix nflx stock may be a loser this year but you can still scalp profits from it",
+   "3 unstoppable nasdaq 100 stocks to buy in november"
   ],
   "AVGO:PUT": [
    "3 artificial intelligence ai stocks that look like great buys right now",
@@ -2558,9 +2559,6 @@
    "metropal reports board responsibility statement on consolidated financials"
   ],
   "XOM:PUT": [
-   "toyota conocophillips on deck thursday as auto demand oil prices face test",
-   "oil prices fall on vance s post midterms iran war repudiation",
-   "brazil biodiesel outlook b16 mandate likely delayed until august 2027 as diesel subsidies and el ni o raise i",
    "oil plunges as election shifts iran outlook",
    "exxonmobil corporation xom stock sold by pzena investment management llc",
    "iran reports more tanker fires in strait of hormuz",
@@ -2957,7 +2955,10 @@
    "is the debasement trade over",
    "crude oil prices jump on elusive peace prospects in the middle east",
    "a 1 000 exxon stake from five years ago is now worth 3 231 and shares are up more than a third in 2026",
-   "here s what could happen to the bp share price if oil prices fall another 20"
+   "here s what could happen to the bp share price if oil prices fall another 20",
+   "daily oil price november 9 2026",
+   "occidental petroleum unveils bold 6 billion debt plan",
+   "eog s 8 dividend raise is a bet on surviving any oil cycle"
   ],
   "MSFT:CALL": [
    "forget the 12 month squeeze microsoft is primed for an explosive ai payoff",
@@ -2996,9 +2997,6 @@
    "dow rallies over 1 000 points and nasdaq gains 2 5 as stocks rebound"
   ],
   "CVX:PUT": [
-   "tracking u s state and county gas prices in maps and charts updated daily",
-   "stocks rise as democrats flip control of congress",
-   "oil prices plunge as trump s midterm defeat raises hopes of peace",
    "ten oversold energy stocks as oil prices slide after u s midterm elections uso nysearca",
    "ten oversold energy stocks as oil prices slide after u s midterm elections",
    "china s rail line into central asia is set for 2031",
@@ -3395,7 +3393,10 @@
    "chevron cvx could be 76 below fair value as q3 earnings reset valuation",
    "is the debasement trade over",
    "crude oil prices jump on elusive peace prospects in the middle east",
-   "here s what could happen to the bp share price if oil prices fall another 20"
+   "here s what could happen to the bp share price if oil prices fall another 20",
+   "daily oil price november 9 2026",
+   "occidental petroleum unveils bold 6 billion debt plan",
+   "eog s 8 dividend raise is a bet on surviving any oil cycle"
   ],
   "JPM:CALL": [
    "which profit leader pays the most with yields between 0 31 and 2 32 bank of america nyse bac exxon mobil nyse xom johnso",
@@ -3946,7 +3947,10 @@
    "doordash stock faces amazon uber eats challenge after prime launch",
    "musk cybercab will do a majority of all passenger miles uber s tiny margin is the target",
    "uber technologies stock hazelbaker set to join openai in december",
-   "sa analyst upgrades downgrades meta uber evgo orcl sp500"
+   "sa analyst upgrades downgrades meta uber evgo orcl sp500",
+   "google could buy uber to challenge tesla robotaxis columnist says alphabet nasdaq googl",
+   "delivery hero stock uber tender event resets bond terms",
+   "google could buy uber to win the robotaxi wars reuters columnist argues"
   ],
   "GOOGL:CALL": [
    "alphabet tpu sales and gemini enterprise are reshaping the bull case nasdaq goog",
@@ -3989,12 +3993,14 @@
    "broadcom shares climb 5 as ai demand signals and anthropic stake lift chip stocks",
    "broadcom remains a strong buy despite rising ri",
    "why is broadcom stock avgo up today",
-   "amd broadcom intel marvell technology and micron stocks trade up what you need to know"
+   "amd broadcom intel marvell technology and micron stocks trade up what you need to know",
+   "broadcom stocks climb 5 18 as goldman calls chips oversold and anthropic stake lands"
   ],
   "MSFT:PUT": [
    "why is microsoft stock sliding today",
    "ai data center demand revives microsoft after selling pressure"
-  ]
+  ],
+  "INTC:CALL": []
  },
  "fired": {
   "XOM:PUT:2026-11-13:165": [
@@ -4205,11 +4211,14 @@
    "stock1"
   ],
   "NFLX:PUT:2026-11-27:63": [
-   "down-0.15"
+   "down-0.15",
+   "stock1"
   ],
   "AVGO:CALL:2026-11-16:365": [
    "down-0.15",
-   "news:broadcom shares climb 5 as ai demand signals and anthropic stake lift chip stocks"
+   "news:broadcom shares climb 5 as ai demand signals and anthropic stake lift chip stocks",
+   "up0.25",
+   "news:broadcom stocks climb 5 18 as goldman calls chips oversold and anthropic stake lands"
   ],
   "AAPL:CALL:2026-11-16:355": [
    "news:apple slides 4 as ternus calls memory pricing unprecedented despite a record 114 5 billion quarter",
@@ -4217,14 +4226,15 @@
   ],
   "MSFT:PUT:2026-11-18:500": [
    "down-0.15"
-  ]
+  ],
+  "TSLA:CALL:2026-11-16:402.5": [],
+  "INTC:CALL:2026-11-27:65": []
  },
  "stock_level": {
-  "V:CALL:2026-11-13:427.5": 1
+  "V:CALL:2026-11-13:427.5": 1,
+  "NFLX:PUT:2026-11-27:63": 1
  },
  "seen_macro": [
-  "us dollar forecast nordea warns rising debt costs could weigh",
-  "stock market today oil slides on middle east hopes as wall street rebounds gold price gains 2",
   "stock market today nov 2 2026 dow rises ahead of apple s earnings report",
   "what monday s futures rebound means as midterms and apple earnings near",
   "why penny stock inovio pharmaceuticals ino is skyrocketing over 200 today and how much upside wall street sees from here",
@@ -4822,7 +4832,9 @@
   "fed s goolsbee calls inflation report borderline disturbing as central bank weighs more hikes",
   "dollar rises to 19 month high on fed rate hike bets",
   "dollar advances as markets price in december fed rate hike",
-  "rupiah exchange rate today november 12 2026 us dollar at rp18 149 bi jisdor hits rp18 154"
+  "rupiah exchange rate today november 12 2026 us dollar at rp18 149 bi jisdor hits rp18 154",
+  "oil prices gain as iran war uncertainty weighs on market sentiment",
+  "gold struggles below 4 050 as fed rate hike bets boost us dollar"
  ],
  "sharp": {
   "XOM:PUT:2026-11-13:165": 165.35,
