@@ -26,6 +26,7 @@ import yfinance as yf
 import data_gaps   # تسجيل فجوات البيانات فقط (لا يغيّر أي قرار)
 import breakhold as bh   # «الكسر والثبات» (H-BREAKHOLD، مفعّل بقرار المستخدم 11/11/2026)
 import bhvote as bv      # لوحة تأكيد الكسر بتصويت المجموعات (H-BHVOTE، الإصدار 21)
+import livewalls as lw   # الجدران الحية من حجم اليوم (H-LIVEWALLS، الإصدار 22)
 
 # ====================== الإعدادات ======================
 SYMBOL = "^SPX"             # يمكنك تغييره إلى "SPY"
@@ -1055,6 +1056,7 @@ def analyze(force):
         c["map"] = liquidity_map(t, S, map_exps)
     except Exception:
         c["map"] = None
+    apply_live_walls(c, n, S)
 
     # ----- مؤشرات إضافية (كل واحد اختياري: إن فشل جلبه يُتجاهل) -----
     c["es"] = c["vix_day"] = c["orb"] = c["pd_hl"] = c["pc"] = None
@@ -1177,6 +1179,37 @@ def analyze(force):
             "bh_flow": bh_flow, "bh_evt_raw": bh_evt_raw, "bh_vote": bh_vote}
 
 
+def apply_live_walls(c, n, S, df=None):
+    """الإصدار 22: الجدار الحي (أكبر حجم اليوم) يحل محل جدار العقود المفتوحة متى توفرت لقطات؛ القديم يبقى في oi_*."""
+    try:
+        live = lw.summary(lw.load(n.date().isoformat()) if df is None else df, S, n.strftime("%H:%M"))
+    except Exception as e:  # noqa: BLE001
+        print("الجدران الحية:", type(e).__name__, e)
+        live = None
+    c["live_walls"] = live
+    if not live:
+        return
+    m = c["map"] if c.get("map") else {"put_wall": None, "call_wall": None, "gex": 0.0}
+    m["oi_call_wall"], m["oi_put_wall"] = m.get("call_wall"), m.get("put_wall")
+    if live.get("call"):
+        m["call_wall"] = live["call"]["wall"]
+    if live.get("put"):
+        m["put_wall"] = live["put"]["wall"]
+    c["map"] = m
+
+
+def hourly_card(n, a, state, sender=None):
+    """بطاقة خريطة السيولة الحية مرة في الساعة 10:00–15:00 (الإصدار 22). يرجع True إن أُرسلت."""
+    live = a["c"].get("live_walls")
+    key = f"{n.date().isoformat()} {n.hour:02d}"
+    if not live or not (10 <= n.hour <= 15) or state.get("lw_hour") == key:
+        return False
+    state["lw_hour"] = key
+    side = a["side"] if a["contracts"] else None
+    (sender or send_telegram)(lw.card(live, a["c"]["S"], side, f"{ry_time(n.hour, n.minute)} الرياض"))
+    return True
+
+
 SCREENS_LOG = os.path.join(os.getenv("SPXBOT_DATA", "/opt/spxbot/data"), "screens", "log.csv")
 
 
@@ -1231,8 +1264,10 @@ def vote_board(n, c, evt, shock, ix, mins, flow, screens=None):
     L = evt["level"]
     rnd = [(float(k), f"{k:,.0f}") for k in (round(L / bh.ROUND) * bh.ROUND,)]
     stack_cands = key + piv + rnd + bv.fib_levels(c.get("day_hl")) + ([(c["vwap_spx"], "VWAP")] if c.get("vwap_spx") else [])
-    walls = [(m["call_wall"][0], "جدار الكول")] if m.get("call_wall") else []
-    walls += [(m["put_wall"][0], "جدار البوت")] if m.get("put_wall") else []
+    live = c.get("live_walls") or {}
+    frag = lambda k: (live.get(k) or {}).get("state") == "fragile"      # الإصدار 22: الجدار الهش لا يُعدّ مستوى معاكساً
+    walls = [(m["call_wall"][0], "جدار الكول")] if m.get("call_wall") and not frag("call") else []
+    walls += [(m["put_wall"][0], "جدار البوت")] if m.get("put_wall") and not frag("put") else []
     opp_cands = walls + key + piv
     opp = bv.nearest_opp(side, S, opp_cands)
     lv = bv.levels_vote(L, stack_cands, S, opp)
@@ -1693,7 +1728,7 @@ def signal_message(a):
     if c["age"] >= 5:
         L.append(age_note(c["age"]))
     L.append("⚠️ <i>تعليمي وليست توصية. أقصى خسارة هي سعر العقد.</i>")
-    L.append(f"🕒 {stamp()} | SPX إصدار 21")
+    L.append(f"🕒 {stamp()} | SPX إصدار 22")
     return "\n".join(L)
 
 
@@ -1807,7 +1842,7 @@ def send_signal(a):
         sub = (f"انتهاء {kexp} (تجريبي)" if a["is_test"] else ("انتهاء اليوم" if kexp == a["exp"] else f"انتهاء {kexp}")) + f" · {sym} {k0.get('spot', S):,.0f}"
         png = cards.contract_card("entry", f"{root_sym(k0)} {k0['strike']:,.0f} {side}", sub, k0["price"], None,
                                   k0["price"], k0["price"] * (1 - STOP_LOSS), k0["price"] * (1 + TAKE_PROFIT),
-                                  badge=f"{side} {dot}", foot=f"{stamp()} | SPX إصدار 21")
+                                  badge=f"{side} {dot}", foot=f"{stamp()} | SPX إصدار 22")
         mid = send_photo(png, "\n".join(cap))
         if mid:
             if alt_sep:
@@ -2470,6 +2505,10 @@ def run_once(force=False):
                 a.get("bh_mode", "") or ("unconfirmed" if a.get("bh_evt_raw") else ""),
                 a["c"].get("orb_hold"), a["reasons"], (a.get("bh_flow") or {}).get("tilt"),
                 (a.get("bh_flow") or {}).get("ok") if a.get("bh_evt_raw") else None, a.get("bh_vote"))
+        try:
+            hourly_card(n, a, state)
+        except Exception as e:  # noqa: BLE001
+            print("بطاقة الخريطة:", type(e).__name__, e)
     has_signal = bool(a["contracts"])
     if has_signal:
         _live_prices(a)
