@@ -72,8 +72,10 @@ SPY_TARGET_DELTA, SPY_MIN_DELTA, SPY_MAX_SPREAD = 0.45, 0.30, 0.10
 DECAY_MIN_AGE, DECAY_LOSS, DECAY_MAX_ADVERSE = 60, 0.20, 0.0015
 GIVEBACK = 0.50                      # بعد بلوغ الهدف: تنبيه إذا تراجع الربح لنصف أعلى ربح
 LOG_FILE = "zero_dte_log.csv"
-BH_PENDING = "breakhold_pending.json"   # الإصدار 19: توصية حدث تنتظر عودة السعر إلى الفجوة
-BH_LOG = "breakhold_live_log.csv"    # كل فحص: جهة البوت القديم (بلا الكسر والثبات) والجديد، للمراجعة بعد 15 يوم تداول
+# خارج git: مهمة التشغيل تمسح الملفات غير المتتبعة في مجلدها كل تشغيل (إصلاح 11/11/2026)
+BH_DIR = os.path.join(os.getenv("SPXBOT_DATA", "/opt/spxbot/data"), "breakhold")
+BH_PENDING = os.path.join(BH_DIR, "breakhold_pending.json")   # الإصدار 19: توصية حدث تنتظر عودة السعر إلى الفجوة
+BH_LOG = os.path.join(BH_DIR, "breakhold_live_log.csv")    # كل فحص: جهة البوت القديم (بلا الكسر والثبات) والجديد، للمراجعة بعد 15 يوم تداول
 
 NY = ZoneInfo("America/New_York")
 RY = ZoneInfo("Asia/Riyadh")
@@ -1169,6 +1171,7 @@ def _bh_pending(n, value=None, clear=False):
     """قراءة/كتابة توصية الحدث المنتظرة عند الفجوة. القراءة ترجع None إن كانت من يوم آخر أو أقدم من bh.FVG_WAIT دقيقة."""
     try:
         if clear or value is not None:
+            os.makedirs(os.path.dirname(BH_PENDING) or ".", exist_ok=True)
             json.dump(value or {}, open(BH_PENDING, "w", encoding="utf-8"), ensure_ascii=False)
             return value
         p = json.load(open(BH_PENDING, encoding="utf-8"))
@@ -1224,6 +1227,7 @@ def _bh_log(n, S, old_side, new_side, evt, mode, orb_hold, reasons):
                "new_side": new_side or "", "mode": mode, "event": evt["kind"] if evt else "",
                "level": round(evt["level"], 2) if evt else "", "level_name": evt["name"] if evt else "",
                "orb_hold": orb_hold or "", "blocked": " | ".join(r[:60] for r in reasons)}
+        os.makedirs(os.path.dirname(BH_LOG) or ".", exist_ok=True)
         new = not os.path.exists(BH_LOG)
         with open(BH_LOG, "a", encoding="utf-8", newline="") as f:
             w = csv.DictWriter(f, fieldnames=list(row))
