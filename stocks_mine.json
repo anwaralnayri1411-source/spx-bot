@@ -494,6 +494,39 @@
    "time": "2026-11-10T14:44-05:00",
    "price": null,
    "qty": null
+  },
+  "AAPL:CALL:2026-11-16:355|2026-11-11": {
+   "mode": "watch",
+   "ticker": "AAPL",
+   "side": "CALL",
+   "exp": "2026-11-16",
+   "strike": 355.0,
+   "day": "2026-11-11",
+   "time": "2026-11-11T10:13-05:00",
+   "price": null,
+   "qty": null
+  },
+  "NVDA:PUT:2026-11-16:170|2026-11-11": {
+   "mode": "watch",
+   "ticker": "NVDA",
+   "side": "PUT",
+   "exp": "2026-11-16",
+   "strike": 170.0,
+   "day": "2026-11-11",
+   "time": "2026-11-11T10:13-05:00",
+   "price": null,
+   "qty": null
+  },
+  "MSTR:PUT:2026-11-20:110|2026-11-11": {
+   "mode": "watch",
+   "ticker": "MSTR",
+   "side": "PUT",
+   "exp": "2026-11-20",
+   "strike": 110.0,
+   "day": "2026-11-11",
+   "time": "2026-11-11T10:14-05:00",
+   "price": null,
+   "qty": null
   }
  }
 }
