@@ -164,3 +164,59 @@ def fvg_touch(zone, side, hi, lo, close):
     if side == "CALL":
         return lo <= top and close >= bot
     return hi >= bot and close <= top
+
+
+# ====================== H-BHVOTE (الإصدار 21): إعادة الاختبار والفشل الجديد ======================
+RETEST_TOL = 5.0         # إغلاق معاكس حتى 5 نقاط = إعادة اختبار لا فشل؛ ولمس المستوى حتى 5 نقاط
+RETEST_BARS = 12         # نافذة إعادة الاختبار بعد شمعة الكسر (ساعة)
+DIR.update({"retest_up": "CALL", "retest_down": "PUT"})
+KIND_AR.update({"retest_up": "كسر للأعلى وإعادة اختبار ناجحة", "retest_down": "كسر للأسفل وإعادة اختبار ناجحة"})
+
+
+def events2(closes, highs, lows, lvls, start=0, tol=RETEST_TOL, window=RETEST_BARS):
+    """أحداث الإصدار 21 (H-BHVOTE): ثبات كما في events، والفشل (رئيسية فقط، قبل الثبات) = إغلاق معاكس أبعد من tol
+    أو إغلاقان معاكسان متتاليان، وإعادة الاختبار (كل المستويات) = (أ) إغلاق معاكس واحد ≤ tol قبل الثبات ثم إغلاق في
+    جهة الكسر بـBUF، أو (ب) بعد الثبات: ابتعاد إغلاق أكثر من tol ثم لمس المستوى حتى tol ثم إغلاق في جهة الكسر بـBUF.
+    يرجع [{kind, level, name, key, i, bi}] حيث bi شمعة الكسر."""
+    out = []
+    n = len(closes)
+    for L, name, key in lvls:
+        s0 = max(1, start if name.endswith("أول 30 دقيقة") else 1)
+        for i in range(s0, n):
+            up = closes[i - 1] <= L and closes[i] > L + BUF
+            dn = closes[i - 1] >= L and closes[i] < L - BUF
+            if not (up or dn):
+                continue
+            g = 1 if up else -1
+            base = {"level": L, "name": name, "key": key, "bi": i}
+            held, opp_run, had_opp, away, touched = False, 0, False, False, False
+            for j in range(i + 1, min(i + 1 + window, n)):
+                c = (closes[j] - L) * g                  # المسافة في جهة الكسر (موجبة = في جهته)
+                if not held:
+                    if c < 0:
+                        opp_run += 1
+                        if c < -tol or opp_run >= 2:
+                            if key:
+                                out.append(dict(base, kind="fail_up" if up else "fail_down", i=j))
+                            break
+                        continue
+                    if (opp_run or had_opp) and c > BUF:             # (أ) إغلاق معاكس واحد صغير ثم عودة: إعادة اختبار
+                        out.append(dict(base, kind="retest_up" if up else "retest_down", i=j))
+                        break
+                    had_opp = had_opp or opp_run > 0
+                    opp_run = 0
+                    away = away or c > tol
+                    if not had_opp and j == i + HOLD:
+                        held = True
+                        out.append(dict(base, kind="hold_up" if up else "hold_down", i=j))
+                    continue
+                ext = (lows[j] - L) if up else (L - highs[j])   # أقرب نقطة من المستوى في الشمعة
+                if away and ext <= tol:
+                    touched = True
+                if touched and c > BUF:
+                    out.append(dict(base, kind="retest_up" if up else "retest_down", i=j))
+                    break
+                away = away or c > tol
+                if c < 0:
+                    break                                 # عاد عبر المستوى بعد الثبات: ينتهي هذا الكسر (الكسر المعاكس يُرصد وحده)
+    return sorted(out, key=lambda e: (e["i"], e["key"]))

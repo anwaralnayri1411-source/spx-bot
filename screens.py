@@ -44,6 +44,9 @@ def readings(a=None, flow=None, eng=None, fade=None, ai=None, falcon=None, heavy
         for name, bull, bear, *_ in a.get("rows") or []:
             out[name] = sgn(bull - bear)
         out["خلاصة بوت SPX"] = {"CALL": 1, "PUT": -1}.get(a.get("side"), 0)
+        mh = (a.get("c") or {}).get("macd")
+        if mh is not None:
+            out["MACD 5د"] = sgn(mh)          # H-BHVOTE: شاشة جديدة 11/11/2026
         lvl = (a.get("shock") or {}).get("level")
         if lvl:
             out["صدمة الأخبار"] = -1 if lvl >= 2 else 0

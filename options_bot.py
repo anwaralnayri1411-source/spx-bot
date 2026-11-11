@@ -25,6 +25,7 @@ import yfinance as yf
 
 import data_gaps   # تسجيل فجوات البيانات فقط (لا يغيّر أي قرار)
 import breakhold as bh   # «الكسر والثبات» (H-BREAKHOLD، مفعّل بقرار المستخدم 11/11/2026)
+import bhvote as bv      # لوحة تأكيد الكسر بتصويت المجموعات (H-BHVOTE، الإصدار 21)
 
 # ====================== الإعدادات ======================
 SYMBOL = "^SPX"             # يمكنك تغييره إلى "SPY"
@@ -1023,6 +1024,7 @@ def analyze(force):
             # بشموع ياهو هذا يساوي حرفياً الشرط السابق (إغلاق SPY > VWAP).
             c["vwap_spx"] = vwap * bf_y["S"] / float(fl["Close"].iloc[-1]) if bf_y else vwap * S / float(fl["Close"].iloc[-1])
             c["above_vwap"] = bool(fl["Close"].iloc[-1] > vwap) if ix is ix_y else bool(S > c["vwap_spx"])
+            c["spy_vol"] = {int(t.hour * 60 + t.minute): float(v) for t, v in fl["Volume"].items()}
         else:
             data_gaps.note("spx", "vwap_no_volume")   # يبقى above_vwap=True الافتراضي (سلوك قائم، نقيس تكراره)
     except Exception as ex:
@@ -1083,11 +1085,21 @@ def analyze(force):
     bh_evt = None
     if len(bh_closes) >= 3:
         lv = bh.levels(c["orb"], c["pd_hl"], min(bh_closes), max(bh_closes))
-        bh_evt = bh.latest(bh.events(bh_closes, lv, start=6), len(bh_closes), bh_mins)
-    bh_flow = flow_confirm(n, bh_evt)          # الإصدار 20: الحدث لا يُعتمد إلا بتأكيد التدفق
+        bh_evt = bh.latest(bh.events2(bh_closes, bh_highs, bh_lows, lv, start=6), len(bh_closes), bh_mins)   # الإصدار 21
+    bh_flow = flow_confirm(n, bh_evt)          # شرط الإصدار 20: يُسجَّل للمقارنة فقط
+    try:
+        c["macd"] = bv.macd_hist([float(x) for x in ix["Close"].dropna().values])
+    except Exception:  # noqa: BLE001
+        c["macd"] = None
     bh_evt_raw = bh_evt
-    if bh_evt and not bh_flow["ok"]:
-        bh_evt = None
+    bh_vote = None
+    if bh_evt:
+        try:
+            bh_vote = vote_board(n, c, bh_evt, shock, ix, bh_mins, bh_flow)
+        except Exception as e:  # noqa: BLE001
+            print("لوحة التأكيد:", type(e).__name__, e)
+        if not bh_vote or bh_vote["score"] < bh_vote["thr"]:    # الإصدار 21: التصويت بدل شرط التدفق
+            bh_evt = None
     try:
         cv = float(pd.to_numeric(ch.calls["volume"], errors="coerce").fillna(0).sum())
         pv = float(pd.to_numeric(ch.puts["volume"], errors="coerce").fillna(0).sum())
@@ -1124,6 +1136,12 @@ def analyze(force):
     news_half = shock["level"] >= 3
     if edge < MIN_EDGE and not bh_mode:
         reasons.append(f"لا اتجاه واضح (صعود {bull:.1f} مقابل هبوط {bear:.1f}).")
+    if bh_mode and bh_vote:
+        rr_v = bv.rr(S, bh_evt["level"], bv.nearest_opp(side, S, bh_vote["opp_cands"]))
+        bh_vote["rr"] = rr_v
+        if rr_v and not rr_v[2]:
+            reasons.append(f"العائد أقل من {bv.RR_MIN:g} ضعف المخاطرة: الهدف {rr_v[0]:,.0f} نقطة إلى أقرب مستوى معاكس "
+                           f"والوقف {rr_v[1]:,.0f} نقطة خلف المستوى المكسور؛ ننتظر سعراً أفضل (إعادة اختبار).")
 
     contracts = []
     REJ.clear()
@@ -1156,7 +1174,77 @@ def analyze(force):
             "exp": exp, "is_test": is_test, "today": today, "block_tags": block_tags,
             "blocked_contracts": blocked_contracts, "news_half": news_half, "bh_evt": bh_evt, "bh_mode": bh_mode,
             "old_side": old_side, "bh_bars": (bh_closes, bh_highs, bh_lows), "_pick": (ch, T),
-            "bh_flow": bh_flow, "bh_evt_raw": bh_evt_raw}
+            "bh_flow": bh_flow, "bh_evt_raw": bh_evt_raw, "bh_vote": bh_vote}
+
+
+SCREENS_LOG = os.path.join(os.getenv("SPXBOT_DATA", "/opt/spxbot/data"), "screens", "log.csv")
+
+
+def screens_now(n, path=None, max_age=12):
+    """{شاشة: +1/0/−1} من آخر لقطة في سجل الشاشات خلال max_age دقيقة، أو {}."""
+    try:
+        p = path or SCREENS_LOG
+        with open(p, "rb") as f:
+            f.seek(0, 2)
+            f.seek(max(0, f.tell() - 60000))
+            tail = f.read().decode("utf-8", "ignore").splitlines()[1:]
+        rows = [r.split(",") for r in tail if r.count(",") >= 3]
+        if not rows:
+            return {}
+        t_last = rows[-1][0]
+        when = datetime.fromisoformat(t_last)
+        if (n - when).total_seconds() / 60 > max_age:
+            return {}
+        return {r[2]: int(float(r[3])) for r in rows if r[0] == t_last}
+    except Exception:  # noqa: BLE001
+        return {}
+
+
+def vote_board(n, c, evt, shock, ix, mins, flow, screens=None):
+    """لوحة تأكيد الكسر (H-BHVOTE): {groups, score, thr, dtype, members, opp_cands, stack}."""
+    side = bh.DIR[evt["kind"]]
+    g = 1 if side == "CALL" else -1
+    S = c["S"]
+    sc = screens_now(n) if screens is None else screens
+    rv = None
+    if c.get("spy_vol") and evt.get("bi") is not None and evt["bi"] < len(mins):
+        rv = bv.rel_volume([c["spy_vol"].get(m) for m in mins], evt["bi"])
+    lean, dlt = flow_30(n)
+    leaders = c.get("leaders") or {}
+    heavy = sc.get("الشركات الثقيلة")
+    if heavy is None and leaders:
+        heavy = bv.sgn(leaders.get("day"), 0.15)
+    members = {
+        "الاتجاه": [(1 if c["above_vwap"] else -1) if c.get("vwap") else 0, bv.sgn(c["ema9"] - c["ema21"]), bv.sgn(c.get("macd")),
+                    g if rv is not None and rv >= bv.RVOL_MIN else 0],
+        "المال": [bv.sgn(lean), bv.sgn(dlt), bv.sgn((flow or {}).get("tilt"))],
+        "السوق الأوسع": [bv.sgn(c.get("es"), 0.001), heavy or 0, -bv.sgn(c.get("vix_day"), 0.01)],
+        "الأخبار والآراء": [-1 if (shock or {}).get("level", 0) >= 2 else 0, sc.get("الصقر", 0), sc.get("المتداول الذكي", 0), sc.get("محرك MGT", 0)],
+    }
+    orb, pdh, m = c.get("orb"), c.get("pd_hl"), c.get("map") or {}
+    key = []
+    if orb:
+        key += [(orb[0], "أعلى أول 30 دقيقة"), (orb[1], "أدنى أول 30 دقيقة")]
+    if pdh:
+        key += [(pdh[0], "أعلى أمس"), (pdh[1], "أدنى أمس")]
+    piv = [(p, nm) for p, nm in (c.get("pivots") or [])]
+    L = evt["level"]
+    rnd = [(float(k), f"{k:,.0f}") for k in (round(L / bh.ROUND) * bh.ROUND,)]
+    stack_cands = key + piv + rnd + bv.fib_levels(c.get("day_hl")) + ([(c["vwap_spx"], "VWAP")] if c.get("vwap_spx") else [])
+    walls = [(m["call_wall"][0], "جدار الكول")] if m.get("call_wall") else []
+    walls += [(m["put_wall"][0], "جدار البوت")] if m.get("put_wall") else []
+    opp_cands = walls + key + piv
+    opp = bv.nearest_opp(side, S, opp_cands)
+    lv = bv.levels_vote(L, stack_cands, S, opp)
+    try:
+        adx_v = bv.adx([float(x) for x in ix["High"].values], [float(x) for x in ix["Low"].values], [float(x) for x in ix["Close"].values])
+    except Exception:  # noqa: BLE001
+        adx_v = None
+    dtype = bv.day_type(m.get("gex"), adx_v, orb, S)
+    thr = bv.threshold(dtype, n.hour * 60 + n.minute)
+    groups, score = bv.vote(side, members, lv)
+    return {"groups": groups, "score": score, "thr": thr, "dtype": dtype, "members": members, "opp_cands": opp_cands,
+            "stack": bv.stacked(L, stack_cands), "rvol": rv, "adx": adx_v, "rr": None}
 
 
 def _closed_today(ix, n):
@@ -1271,7 +1359,7 @@ def flow_30(n, path=None):
         return None, None
 
 
-def _bh_log(n, S, old_side, new_side, evt, mode, orb_hold, reasons, tilt=None, flow_ok=None):
+def _bh_log(n, S, old_side, new_side, evt, mode, orb_hold, reasons, tilt=None, flow_ok=None, vote=None):
     """سطر لكل فحص: جهة البوت القديم والجديد والحدث وتدفق آخر 30 دقيقة. تسجيل فقط؛ لا يرمي أبداً."""
     try:
         import csv
@@ -1281,6 +1369,10 @@ def _bh_log(n, S, old_side, new_side, evt, mode, orb_hold, reasons, tilt=None, f
                "level": round(evt["level"], 2) if evt else "", "level_name": evt["name"] if evt else "",
                "orb_hold": orb_hold or "", "flow_lean": "" if lean is None else lean, "flow_delta": "" if dlt is None else dlt,
                "iv_tilt": "" if tilt is None else tilt, "flow_ok": "" if flow_ok is None else int(bool(flow_ok)),
+               "vote_score": vote["score"] if vote else "", "vote_thr": vote["thr"] if vote else "",
+               "day_type": vote["dtype"] if vote else "",
+               "vote_groups": ";".join(f"{k}:{v:+d}" for k, v in vote["groups"].items()) if vote else "",
+               "rr": "" if not vote or not vote.get("rr") else f"{vote['rr'][0]}/{vote['rr'][1]}",
                "blocked": " | ".join(r[:60] for r in reasons)}
         os.makedirs(os.path.dirname(BH_LOG) or ".", exist_ok=True)
         if os.path.exists(BH_LOG):
@@ -1601,7 +1693,7 @@ def signal_message(a):
     if c["age"] >= 5:
         L.append(age_note(c["age"]))
     L.append("⚠️ <i>تعليمي وليست توصية. أقصى خسارة هي سعر العقد.</i>")
-    L.append(f"🕒 {stamp()} | SPX إصدار 20")
+    L.append(f"🕒 {stamp()} | SPX إصدار 21")
     return "\n".join(L)
 
 
@@ -1648,8 +1740,8 @@ def bh_lines(a, side):
     if a["bh_mode"] == "flip":
         opp = "PUT" if side == "CALL" else "CALL"
         return [f"🔁 <b>انقلاب الاتجاه:</b> {esc(bh.event_text(a['bh_evt']))}. "
-                f"إن كانت لديك صفقة {opp} مفتوحة على الأداة نفسها فأغلقها قبل الدخول.", ""] + flow_line(a)
-    return [f"📐 <b>كسر ثابت:</b> {esc(bh.event_text(a['bh_evt']))}.", ""] + flow_line(a)
+                f"إن كانت لديك صفقة {opp} مفتوحة على الأداة نفسها فأغلقها قبل الدخول.", ""] + vote_line(a)
+    return [f"📐 <b>كسر مؤكد:</b> {esc(bh.event_text(a['bh_evt']))}.", ""] + vote_line(a)
 
 
 def flow_line(a):
@@ -1659,6 +1751,17 @@ def flow_line(a):
         return []
     who = "الكول" if a["side"] == "CALL" else "البوت"
     return [f"💹 <b>التدفق يؤكد:</b> مال {who} الصافي آخر 30د {abs(f['lean']) / 1e6:,.1f} مليون$، وأسعار {who} تتضخم أكثر.", ""]
+
+
+def vote_line(a):
+    """سطر لوحة التأكيد (الإصدار 21)."""
+    v = a.get("bh_vote")
+    if not v:
+        return []
+    out = f"🗳️ <b>لوحة التأكيد:</b> {esc(bv.vote_text(v['groups'], v['score'], v['thr'], v['dtype']))}"
+    if len(v.get("stack") or []) >= 2:
+        out += f"\n📏 مستوى متراكم: {esc('، '.join(v['stack']))}"
+    return [out, ""]
 
 
 def fvg_line(a):
@@ -1704,7 +1807,7 @@ def send_signal(a):
         sub = (f"انتهاء {kexp} (تجريبي)" if a["is_test"] else ("انتهاء اليوم" if kexp == a["exp"] else f"انتهاء {kexp}")) + f" · {sym} {k0.get('spot', S):,.0f}"
         png = cards.contract_card("entry", f"{root_sym(k0)} {k0['strike']:,.0f} {side}", sub, k0["price"], None,
                                   k0["price"], k0["price"] * (1 - STOP_LOSS), k0["price"] * (1 + TAKE_PROFIT),
-                                  badge=f"{side} {dot}", foot=f"{stamp()} | SPX إصدار 20")
+                                  badge=f"{side} {dot}", foot=f"{stamp()} | SPX إصدار 21")
         mid = send_photo(png, "\n".join(cap))
         if mid:
             if alt_sep:
@@ -2354,7 +2457,7 @@ def run_once(force=False):
         _bh_log(n, a["c"]["S"], a.get("old_side"), a["side"] if a["contracts"] else None, a.get("bh_evt") or a.get("bh_evt_raw"),
                 a.get("bh_mode", "") or ("unconfirmed" if a.get("bh_evt_raw") else ""),
                 a["c"].get("orb_hold"), a["reasons"], (a.get("bh_flow") or {}).get("tilt"),
-                (a.get("bh_flow") or {}).get("ok") if a.get("bh_evt_raw") else None)
+                (a.get("bh_flow") or {}).get("ok") if a.get("bh_evt_raw") else None, a.get("bh_vote"))
     has_signal = bool(a["contracts"])
     if has_signal:
         _live_prices(a)
