@@ -70,10 +70,25 @@ def test_evaluate_stop_closes_the_position_once():
     assert again == []                                         # بعد الإقفال لا تنبيهات جديدة
 
 
-def test_evaluate_take_profit_closes_with_plus_fifty():
+def test_evaluate_take_profit_closes_at_plus_hundred():
     p = open_pos()
-    _, new = sb.evaluate(p, NOW, {"val": 2.2, "spr": 0.05, "iv": 0.3}, 121.5, 768.0)         # +54%
-    assert kinds(new) == ["tp"] and p["closed"] == {"kind": "tp", "time": p["closed"]["time"], "pnl": sb.TAKE_PROFIT}
+    _, new = sb.evaluate(p, NOW, {"val": 2.2, "spr": 0.05, "iv": 0.3}, 121.5, 768.0)         # +54%: لا هدف بعد (E3)
+    assert "tp" not in kinds(new) and not sb.is_closed(p)
+    _, new = sb.evaluate(p, NOW, {"val": 2.9, "spr": 0.05, "iv": 0.3}, 123.0, 768.0)         # +103%
+    assert kinds(new) == ["tp"] and p["closed"]["kind"] == "tp" and p["closed"]["pnl"] >= sb.EXIT_TP
+
+
+def test_evaluate_stock_stop_not_contract_stop():
+    p = open_pos()
+    _, new = sb.evaluate(p, NOW, {"val": 0.80, "spr": 0.05, "iv": 0.3}, 118.5, 768.0)        # العقد −44% والسهم −0.3%
+    assert "stop" not in kinds(new) and not sb.is_closed(p)
+
+
+def test_evaluate_time_stop_near_expiry():
+    p = open_pos(exp="2026-10-23")
+    late = datetime(2026, 10, 20, 15, 50, tzinfo=NY)
+    _, new = sb.evaluate(p, late, {"val": 1.5, "spr": 0.05, "iv": 0.3}, 119.0, 768.0)
+    assert "time" in kinds(new) and p["closed"]["kind"] == "time"
 
 
 def test_evaluate_no_loss_alert_in_first_half_hour():

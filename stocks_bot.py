@@ -56,8 +56,13 @@ MIN_TDAYS = 3               # أقل مدة للعقد بأيام التداول
 MAX_DTE = 14                # أبعد انتهاء (أيام تقويمية)
 MAX_Z = 1.0                 # أقصى بُعد للتعادل عن السعر بوحدات الحركة المتوقعة (كان 1.8)
 MIN_HIST_PROB = 0.10        # أقل احتمال تاريخي لبلوغ التعادل خلال مدة العقد
-TAKE_PROFIT = 0.50
+TAKE_PROFIT = 0.50          # القاعدة القديمة (للظلال والسجلات القديمة)
 STOP_LOSS = 0.40
+# خروج E3 (H-SEXIT، مفعّل بقرار المستخدم 12/11/2026): وقف على السهم، هدف +100%، وقف زمني قبل الانتهاء بأسبوع
+EXIT_TP = 1.00
+STOCK_STOP = 0.015
+TIME_STOP_DAYS = 7
+TIME_STOP_AT = (15, 45)
 WINDOW_START = (10, 0)      # بتوقيت نيويورك
 WINDOW_END = (15, 30)
 STATE_FILE = "stocks_state.json"
@@ -956,8 +961,8 @@ def _yahoo_quote(t, p, cache):
     return {"val": val, "spr": spr, "iv": iv if iv >= 0.05 else None}
 
 
-SEVERITY = ["stop", "exp_final", "broken", "market", "chance", "giveback", "tp", "warn", "exp_today", "overnight"]
-ALERT_ICON = {"stop": "🛑", "exp_final": "⏰", "broken": "⚠️", "market": "🌐", "chance": "📉",
+SEVERITY = ["stop", "time", "exp_final", "broken", "market", "chance", "giveback", "tp", "warn", "exp_today", "overnight"]
+ALERT_ICON = {"stop": "🛑", "time": "⏰", "exp_final": "⏰", "broken": "⚠️", "market": "🌐", "chance": "📉",
               "giveback": "🔔", "tp": "✅", "warn": "🟠", "exp_today": "⏳", "overnight": "⏳"}
 
 
@@ -1013,19 +1018,25 @@ def evaluate(p, n, q, spot, spy_spot):
         changed = True
 
     if live and mature:
-        if pnl <= -STOP_LOSS:
-            fire("stop", f"وصل وقف الخسارة (-{STOP_LOSS * 100:.0f}%). الخروج يحدّ الخسارة. لا تعزّز عقداً خاسراً.")
+        if mv is not None and mv <= -STOCK_STOP:
+            fire("stop", f"وقف السهم: تحرك السهم {abs(mv) * 100:.1f}% ضد اتجاهك منذ التوصية (الحد {STOCK_STOP * 100:.1f}%). "
+                         f"اخرج الآن؛ قيمة العقد ≈ ${val * 100:,.0f} ({pnl * 100:+.0f}%). لا تعزّز عقداً خاسراً.")
             p["status"] = "stopped"
-            p["closed"] = {"kind": "stop", "time": n.isoformat(timespec="minutes"), "pnl": -STOP_LOSS}
+            p["closed"] = {"kind": "stop", "time": n.isoformat(timespec="minutes"), "pnl": round(pnl, 4)}
             changed = True
         elif pnl <= -WARN_LOSS:
-            fire("warn", f"العقد نزل {abs(pnl) * 100:.0f}%. وقف الخسارة عند -{STOP_LOSS * 100:.0f}%.")
-    if live and pnl >= TAKE_PROFIT:
-        lock = TAKE_PROFIT * entry * 100
-        fire("tp", f"وصل هدف الربح (+{TAKE_PROFIT * 100:.0f}%). الصفقة مقفلة بالقاعدة: ربح ≈ +${lock:,.0f} للعقد. "
+            fire("warn", f"العقد نزل {abs(pnl) * 100:.0f}%. الوقف على السهم: الخروج إن تحرك {STOCK_STOP * 100:.1f}% ضدك منذ التوصية.")
+    if live and pnl >= EXIT_TP:
+        lock = pnl * entry * 100
+        fire("tp", f"وصل هدف الربح (+{EXIT_TP * 100:.0f}%). الصفقة مقفلة بالقاعدة: ربح ≈ +${lock:,.0f} للعقد. "
                    "أنهِ صفقتك، وسأواصل رصد العقد بصمت للدراسة.")
         p["status"] = "tp"
-        p["closed"] = {"kind": "tp", "time": n.isoformat(timespec="minutes"), "pnl": TAKE_PROFIT}
+        p["closed"] = {"kind": "tp", "time": n.isoformat(timespec="minutes"), "pnl": round(pnl, 4)}
+        changed = True
+    if live and mature and not is_closed(p) and dte <= TIME_STOP_DAYS and hm >= TIME_STOP_AT:
+        fire("time", f"وقف زمني: بقي {dte} يوم للانتهاء. اخرج قبل الإغلاق؛ قيمة العقد ≈ ${val * 100:,.0f} ({pnl * 100:+.0f}%).")
+        p["status"] = "time"
+        p["closed"] = {"kind": "time", "time": n.isoformat(timespec="minutes"), "pnl": round(pnl, 4)}
         changed = True
     if live and mature and mv is not None:
         thr = ADVERSE_SHORT if dte <= 2 else ADVERSE_LONG
@@ -1117,7 +1128,7 @@ def send_alerts(blocks):
             continue
         top = next(k for k in SEVERITY if k in [x for x, _ in new])
         name = f"{p['ticker']} {p['strike']:,.1f} {p['side']}"
-        stop_p, tp_p = p["entry"] * (1 - STOP_LOSS), p["entry"] * (1 + TAKE_PROFIT)
+        stop_p, tp_p = p["entry"] * (1 - STOP_LOSS), p["entry"] * (1 + EXIT_TP)
         mid = None
         try:
             import cards
@@ -1226,7 +1237,7 @@ def _open_line(p, info):
     return (f"{ico} <b>{ob.esc(p['ticker'])} {p['side']}</b> {p['strike']:,.1f} | {date_ar(p['exp'])}: "
             f"${p['entry'] * 100:,.0f} ← ${info['val'] * 100:,.0f} (<b>{pn * 100:+.0f}%</b>) | دخلت {p['time'][5:10]} "
             f"| أعلى {p.get('peak', 0) * 100:+.0f}% | يتبقى {info['dte']} يوم | "
-            f"هدف ${p['entry'] * (1 + TAKE_PROFIT) * 100:,.0f} · وقف ${p['entry'] * (1 - STOP_LOSS) * 100:,.0f}")
+            f"هدف ${p['entry'] * (1 + EXIT_TP) * 100:,.0f} · {stock_stop_text(p['side'], p.get('entry_spot'))}")
 
 
 def _my_line(p, info, m):
@@ -1296,7 +1307,7 @@ def day_report(rows, n, title="🌇 <b>الشركات — تقرير اليوم<
         L.append("لا عقود نشطة الآن.")
     if opened:
         L.append(f"العائم على الورق: <b>{floating:+,.0f}$</b> (بسعر الوسط، لو بعت الآن)")
-    L += ["", f"⚠️ <i>المقفل بقاعدة الهدف +{TAKE_PROFIT * 100:.0f}% / الوقف −{STOP_LOSS * 100:.0f}%: قيمة نظرية، "
+    L += ["", f"⚠️ <i>المقفل بقاعدة الهدف +{EXIT_TP * 100:.0f}% / وقف السهم {STOCK_STOP * 100:.1f}% / الخروج قبل الانتهاء بأسبوع: قيمة نظرية، "
               "فالفحص كل نصف ساعة وقد يفوتنا أعلى سعر حقيقي ويختلف سعر تنفيذك.</i>", short_footer()]
     return "\n".join(L)
 
@@ -1709,19 +1720,20 @@ def event_warning(k):
         return ""
 
 
+def stock_stop_text(side, spot):
+    """نص وقف السهم (قاعدة E3) بمستواه إن عُرف سعر الدخول."""
+    if not spot:
+        return f"وقف إن تحرك السهم {STOCK_STOP * 100:.1f}% ضدك"
+    lvl = spot * (1 - STOCK_STOP) if side == "CALL" else spot * (1 + STOCK_STOP)
+    return f"وقف السهم {'تحت' if side == 'CALL' else 'فوق'} {lvl:,.2f} ({STOCK_STOP * 100:.1f}% ضدك)"
+
+
 def stock_levels(i, k):
-    """سطرا الخروج مع مستوى السهم التقريبي (نموذج بلاك-شولز، افتراض احتفاظ يوم واحد)."""
-    tp, sl = f"+${k['cost'] * TAKE_PROFIT:,.0f}", f"-${k['cost'] * STOP_LOSS:,.0f}"
-    try:
-        kk = {"strike": k["strike"], "price": k["price"], "spot": i["S"], "iv": k["iv"],
-              "T": max(k.get("dte", 1), 0.5) / 365}
-        lv = ob.index_levels(kk, i["side"], hold_min=1440)
-        if lv:
-            return [f"├ 🎯 <b>خروج بربح</b> {tp} ← السهم ≈ {lv[0]:,.2f}",
-                    f"└ 🛑 <b>خروج بخسارة</b> {sl} ← السهم ≈ {lv[1]:,.2f}"]
-    except Exception:
-        pass
-    return [f"├ 🎯 <b>خروج بربح</b> {tp}", f"└ 🛑 <b>خروج بخسارة</b> {sl}"]
+    """سطرا الخروج (قاعدة E3): الهدف +100% بمستوى السهم التقريبي، والوقف على السهم نفسه."""
+    tp = f"+${k['cost'] * EXIT_TP:,.0f}"
+    sl = stock_stop_text(i["side"], i.get("S"))
+    tail = " | وخروج قبل الانتهاء بأسبوع" if k.get("dte", 99) > TIME_STOP_DAYS else " | وخروج آخر جلسة اليوم إن لم يتحقق الهدف أو الوقف"
+    return [f"├ 🎯 <b>خروج بربح</b> {tp}", f"└ 🛑 <b>{sl}</b>{tail}"]
 
 
 def quote_line(k, now=None):
@@ -1764,7 +1776,7 @@ def idea_caption(i):
         *ob.night_news_lines(side, i["ticker"]),
         *ob.heavy_lines(side, i["ticker"]),
         lv[0], lv[1],
-        f"💰 أقصى خسارة ≈ ${k['cost'] * STOP_LOSS:,.0f}",
+        "💰 الوقف على السهم، فالخسارة عنده متغيرة؛ وأقصى خسارة نظرية = سعر العقد",
         "⚠️ <i>تعليمي وليست توصية. لا تلاحق السعر فوق +10%.</i>"])
 
 
@@ -1807,7 +1819,7 @@ def send_ideas(a, ideas):
         mid = None
         try:
             import cards
-            stop_p, tp_p = k["price"] * (1 - STOP_LOSS), k["price"] * (1 + TAKE_PROFIT)
+            stop_p, tp_p = k["price"] * (1 - STOP_LOSS), k["price"] * (1 + EXIT_TP)
             png = cards.contract_card("entry", f"{i['ticker']} {k['strike']:,.1f} {side}",
                                       f"انتهاء {date_ar(k['exp'])} · السهم {i['S']:,.2f}", k["price"], None,
                                       k["price"], stop_p, tp_p, badge=f"{side} {'🟢' if side == 'CALL' else '🔴'}",
@@ -1891,7 +1903,7 @@ def details_message(a, ideas, log_line):
             L.append(f"• {ob.esc(tk)}: {ob.esc(why)}")
     L += ["", "🛠️ <b>إدارة الصفقة (اقتراح)</b>",
           "• عقد واحد لكل فكرة، وأقصى خسارة = سعر العقد",
-          f"• جني الربح +{TAKE_PROFIT * 100:.0f}% ووقف الخسارة -{STOP_LOSS * 100:.0f}%",
+          f"• جني الربح +{EXIT_TP * 100:.0f}%، ووقف إن تحرك السهم {STOCK_STOP * 100:.1f}% ضدك، والخروج قبل الانتهاء بأسبوع",
           "• لا تدخل قبل إعلان أرباح إلا إذا كنت تقبل الخسارة الكاملة",
           "", f"📒 <b>السجل</b>: {ob.esc(log_line)}", "",
           "⚠️ <i>الأخبار والتدفق مقاييس تقريبية من بيانات مجانية متأخرة. أسهم الشركات قد تتحرك بخبر مفاجئ ضد توقعك، "
