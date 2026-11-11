@@ -1042,3 +1042,5 @@ id,time,project,tag,sym,root,side,strike,exp,entry,spot,edge,strength
 20261111T1112|stocks|btc_against|HOOD|PUT|80|2026-11-27,2026-11-11T11:12-05:00,stocks,btc_against,HOOD,HOOD,PUT,80.0,2026-11-27,2.58,84.36,3.5,6.2
 20261111T1112|stocks|btc_against|MSTR|PUT|115|2026-11-20,2026-11-11T11:12-05:00,stocks,btc_against,MSTR,MSTR,PUT,115.0,2026-11-20,2.85,123.31,4.0,6.5
 20261111T1112|stocks|open_same_dir|BA|PUT|172.5|2026-11-20,2026-11-11T11:12-05:00,stocks,open_same_dir,BA,BA,PUT,172.5,2026-11-20,3.41,173.06,5.5,8.0
+20261111T1127|stocks|btc_against|MSTR|PUT|115|2026-11-20,2026-11-11T11:27-05:00,stocks,btc_against,MSTR,MSTR,PUT,115.0,2026-11-20,2.63,123.92,4.0,6.2
+20261111T1127|stocks|open_same_dir|BA|PUT|172.5|2026-11-20,2026-11-11T11:27-05:00,stocks,open_same_dir,BA,BA,PUT,172.5,2026-11-20,3.09,173.44,5.5,8.0
