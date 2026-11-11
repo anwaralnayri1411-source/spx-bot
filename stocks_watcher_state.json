@@ -2584,10 +2584,6 @@
    "metropal reports board responsibility statement on consolidated financials"
   ],
   "XOM:PUT": [
-   "european gas prices drop on iran deal hopes after u s midterms",
-   "soybean oil prices fall in brazil and argentina amid sharp decline in crude oil futures",
-   "stocks soar as oil prices plummet following midterm results",
-   "conocophillips q3 2026 earnings more than double on higher prices",
    "bitcoin price trades near 79 600 as oil rebounds and bank of england hikes rates",
    "bailey speech latest fall in oil prices is positive news",
    "texas gov elect gina hinojosa plans to take on record high diesel prices amid geopolitical instability",
@@ -2983,7 +2979,11 @@
    "exxonmobil xom stock may be 24 undervalued despite venezuela oil deal",
    "crude oil prices finish higher as progress stalls in us iran peace talks",
    "stock market today dow jones nasdaq s p 500 rally on november 11 2026 oil rises gold slips",
-   "midday need to know oil prices rebound chip stocks rally more"
+   "midday need to know oil prices rebound chip stocks rally more",
+   "russian crude oil prices jump on china india demand",
+   "see how gas prices are easing across the u s",
+   "gas prices fall over 3 cents in one day as drivers see post election relief",
+   "daily oil price november 11 2026"
   ],
   "MSFT:CALL": [
    "forget the 12 month squeeze microsoft is primed for an explosive ai payoff",
@@ -3022,10 +3022,6 @@
    "dow rallies over 1 000 points and nasdaq gains 2 5 as stocks rebound"
   ],
   "CVX:PUT": [
-   "oil prices plunge over 9 as jd vance blames iran war for gop losses in us midterm elections hindustan times",
-   "us airline stocks climb as crude oil prices drop over 3 by investing com",
-   "oil prices plunge after vance post on iran war",
-   "northwest european diesel margins fall over 4 on oil price drop",
    "chevron stocks move lower refining supplies most of the profit increase",
    "treasuries advance as traders eye us votes refinancing plans",
    "occidental petroleum solid q3 earnings may overshadow the preferred redemption hang oxy",
@@ -3421,7 +3417,11 @@
    "trgp q3 earnings beat on permian growth and higher fees",
    "crude oil prices finish higher as progress stalls in us iran peace talks",
    "stock market today dow jones nasdaq s p 500 rally on november 11 2026 oil rises gold slips",
-   "midday need to know oil prices rebound chip stocks rally more"
+   "midday need to know oil prices rebound chip stocks rally more",
+   "russian crude oil prices jump on china india demand",
+   "see how gas prices are easing across the u s",
+   "gas prices fall over 3 cents in one day as drivers see post election relief",
+   "daily oil price november 11 2026"
   ],
   "JPM:CALL": [
    "which profit leader pays the most with yields between 0 31 and 2 32 bank of america nyse bac exxon mobil nyse xom johnso",
@@ -4144,7 +4144,8 @@
    "news:oil prices pick up as market mulls over prospects for middle east settlement",
    "news:iran reportedly attacked shipping navigation systems in oman oil prices are climbing",
    "news:heating costs will surge this winter due to iran war with heating oil prices spiking as much as 70",
-   "news:crude oil prices finish higher as progress stalls in us iran peace talks"
+   "news:crude oil prices finish higher as progress stalls in us iran peace talks",
+   "news:russian crude oil prices jump on china india demand"
   ],
   "CVX:PUT:2026-11-13:210@2026-11-06": [
    "news:the iran war isn t over but oil traders are already pricing in peace",
@@ -4241,7 +4242,8 @@
    "news:oil prices pick up as market mulls over prospects for middle east settlement",
    "news:iran reportedly attacked shipping navigation systems in oman oil prices are climbing",
    "news:heating costs will surge this winter due to iran war with heating oil prices spiking as much as 70",
-   "news:crude oil prices finish higher as progress stalls in us iran peace talks"
+   "news:crude oil prices finish higher as progress stalls in us iran peace talks",
+   "news:russian crude oil prices jump on china india demand"
   ],
   "PFE:PUT:2026-11-20:30": [
    "down-0.15",
@@ -4292,12 +4294,15 @@
    "news:broadcom stocks climb 5 18 as goldman calls chips oversold and anthropic stake lands",
    "news:nvidia amd and broadcom lead ai stock rally as coreweave results ease spending fears",
    "sharp@2026-11-11T14:19-05:00",
-   "down-0.3"
+   "down-0.3",
+   "stock1",
+   "sharp@2026-11-11T15:55-05:00"
   ],
   "AAPL:CALL:2026-11-16:355": [
    "news:apple slides 4 as ternus calls memory pricing unprecedented despite a record 114 5 billion quarter",
    "news:this apple analyst turns bullish here are top 5 upgrades for wednesday",
-   "news:apple s aapl iphone duo is in short supply heading into the holidays says ubs"
+   "news:apple s aapl iphone duo is in short supply heading into the holidays says ubs",
+   "up0.25"
   ],
   "MSFT:PUT:2026-11-18:500": [
    "down-0.15",
@@ -4310,11 +4315,10 @@
  },
  "stock_level": {
   "V:CALL:2026-11-13:427.5": 1,
-  "NFLX:PUT:2026-11-27:63": 1
+  "NFLX:PUT:2026-11-27:63": 1,
+  "AVGO:CALL:2026-11-16:365": 1
  },
  "seen_macro": [
-  "gbp usd price forecast gbp usd 1 3423 hits highest since mid september as boe hike to 4 00 priced above 90 1 3475 breako",
-  "labour bureau prepares to revise cpi iw base year expand coverage",
   "helmerich payne dht holdings vitesse energy highpeak energy and borr drilling shares plummet what you need to know",
   "what ai investment means for the fed s fight against inflation",
   "surprising us iran peace talks gold and silver surge oil prices fall",
@@ -4912,7 +4916,9 @@
   "mexico says crackdown on asian steel shipments is paying off as us tariff talks advance",
   "stock market today dow jones nasdaq s p 500 rally on november 11 2026 oil rises gold slips",
   "pound forecast gbp usd nears 1 33 as fed eyes bigger rate hike",
-  "bitcoin rebounds above 74 000 as cryptocurrencies recover despite fed tightening concerns"
+  "bitcoin rebounds above 74 000 as cryptocurrencies recover despite fed tightening concerns",
+  "wall street sees 282 upside for archer stock but cuts targets",
+  "inflation continues to challenge u s economy"
  ],
  "sharp": {
   "XOM:PUT:2026-11-13:165": 165.35,
@@ -4920,6 +4926,6 @@
   "PFE:PUT:2026-11-20:30": 29.355,
   "BA:PUT:2026-11-20:172.5": 173.55,
   "UBER:CALL:2026-11-27:70": 69.47,
-  "AVGO:CALL:2026-11-16:365": 349.47
+  "AVGO:CALL:2026-11-16:365": 344.485
  }
 }
