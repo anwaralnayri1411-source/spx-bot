@@ -82,6 +82,7 @@ def test_vote_board_and_screens(tmp_path, monkeypatch):
     assert sc == {"الصقر": 1, "محرك MGT": 1}
     assert ob.screens_now(datetime(2026, 11, 11, 13, 0, tzinfo=ob.NY), str(log)) == {}
     monkeypatch.setattr(ob, "flow_30", lambda n, path=None: (-21e6, -9e5))
+    monkeypatch.setattr(ob, "market_internals", lambda: {})
     idx = pd.date_range("2026-11-11 09:30", periods=40, freq="5min", tz=ob.NY)
     cl = [7580 + i for i in range(40)]
     ix = pd.DataFrame({"High": [x + 1 for x in cl], "Low": [x - 1 for x in cl], "Close": cl}, index=idx)

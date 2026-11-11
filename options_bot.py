@@ -46,7 +46,12 @@ MIN_EDGE = 3.0              # أقل فرق بين نقاط الصعود وال�
 MIN_CONTRACT_SCORE = 5.0    # أقل درجة للعقد
 MAX_CONTRACTS = 3           # عدد العقود المعروضة
 TAKE_PROFIT = 0.50          # جني الربح عند +50% من سعر الدخول
-STOP_LOSS = 0.40            # وقف الخسارة عند -40%
+STOP_LOSS = 0.40            # وقف الخسارة عند -40% (للصفقات بلا وقف هيكلي)
+HARD_STOP = 0.70            # H-PRO1: أقصى خسارة للعقد حين يكون الوقف بالهيكل
+STRUCT_PAD, STRUCT_MIN, STRUCT_MAX = 5.0, 0.0008, 0.006   # الوقف خلف المستوى بـ5 نقاط؛ المسافة محصورة 0.08%–0.6%
+STRUCT_MIN_AGE = 5          # دقائق قبل تفعيل الوقف الهيكلي
+EM_CHASE = 0.80             # H-PRO1: لا دخول بعد قطع 80% من النطاق المتوقع في جهة التوصية
+SECTORS = ("XLK", "XLF", "XLV", "XLY", "XLC", "XLI", "XLP", "XLE", "XLU", "XLB", "XLRE")
 REPEAT_MINUTES = 90         # لا نكرر نفس الاتجاه قبل هذه المدة
 ADDON_MAX = 3               # H-ADDON: أقصى توصيات SPX بالاتجاه نفسه في اليوم حين يُرفع منع التكرار بعد بلوغ الهدف
 RISK_BUDGET_USD = 150       # أقصى خسارة تقبلها في الصفقة الواحدة عند الوقف (عدّلها حسب حسابك)
@@ -1083,6 +1088,10 @@ def analyze(force):
         data_gaps.note("spx", "vix_day", ex)
     c.update({k: bf[k] for k in ("orb", "day_hl", "range1h", "pivots", "pd_hl")})
     bh_closes, bh_mins, bh_highs, bh_lows = _closed_today(ix, n)
+    try:
+        c["day_open"] = float(ix[ix.index.date == ix.index[-1].date()]["Open"].iloc[0])
+    except Exception:  # noqa: BLE001
+        c["day_open"] = None
     c["orb_hold"] = bh.orb_hold(bh_closes, c["orb"]) if c["orb"] else None
     bh_evt = None
     if len(bh_closes) >= 3:
@@ -1138,6 +1147,9 @@ def analyze(force):
     news_half = shock["level"] >= 3
     if edge < MIN_EDGE and not bh_mode:
         reasons.append(f"لا اتجاه واضح (صعود {bull:.1f} مقابل هبوط {bear:.1f}).")
+    em_b = em_block(c, side, bh_evt)
+    if em_b:
+        reasons.append(em_b)
     if bh_mode and bh_vote:
         rr_v = bv.rr(S, bh_evt["level"], bv.nearest_opp(side, S, bh_vote["opp_cands"]))
         bh_vote["rr"] = rr_v
@@ -1187,15 +1199,117 @@ def apply_live_walls(c, n, S, df=None):
         print("الجدران الحية:", type(e).__name__, e)
         live = None
     c["live_walls"] = live
+    try:
+        raw = lw.load(n.date().isoformat()) if df is None else df
+        c["em"] = lw.expected_move(raw)
+        vg = lw.vol_gex(raw, S, n.strftime("%H:%M"))
+    except Exception:  # noqa: BLE001
+        c["em"], vg = None, None
+    if vg is not None and c.get("map"):
+        c["map"]["oi_gex"] = c["map"].get("gex", 0.0)
+        c["map"]["gex"] = c["map"]["oi_gex"] + vg          # الإصدار 23: GEX أمس + حجم اليوم
     if not live:
         return
-    m = c["map"] if c.get("map") else {"put_wall": None, "call_wall": None, "gex": 0.0}
+    m = c["map"] if c.get("map") else {"put_wall": None, "call_wall": None, "gex": vg or 0.0}
     m["oi_call_wall"], m["oi_put_wall"] = m.get("call_wall"), m.get("put_wall")
     if live.get("call"):
         m["call_wall"] = live["call"]["wall"]
     if live.get("put"):
         m["put_wall"] = live["put"]["wall"]
     c["map"] = m
+
+
+def em_block(c, side, evt=None):
+    """سبب منع الملاحقة إن قطع السعر ≥ EM_CHASE من النطاق المتوقع في جهة التوصية (إلا إعادة الاختبار)، وإلا None."""
+    em, o = c.get("em"), c.get("day_open")
+    if not em or not o or (evt and evt["kind"].startswith("retest")):
+        return None
+    mv = (c["S"] - o) * (1 if side == "CALL" else -1)
+    if mv >= EM_CHASE * em[1]:
+        return (f"ملاحقة: السعر قطع {mv / em[1] * 100:.0f}% من النطاق المتوقع لليوم (±{em[1]:,.0f} نقطة) في جهة {side}؛ "
+                "المساحة الباقية قليلة، ننتظر ارتداداً أو إعادة اختبار.")
+    return None
+
+
+_INTERNALS = {}
+
+
+def market_internals():
+    """{رمز: تغيّر منذ افتتاح اليوم} للقطاعات وRSP وQQQ وIWM من شموع 5د، مرة لكل تشغيل؛ {} عند الفشل."""
+    if "v" in _INTERNALS:
+        return _INTERNALS["v"]
+    out = {}
+    try:
+        syms = list(SECTORS) + ["RSP", "QQQ", "IWM"]
+        d = yf.download(syms, period="1d", interval="5m", progress=False, group_by="ticker", threads=True)
+        for s in syms:
+            try:
+                x = d[s].dropna()
+                if len(x):
+                    out[s] = float(x["Close"].iloc[-1] / x["Open"].iloc[0] - 1)
+            except Exception:  # noqa: BLE001
+                pass
+    except Exception as e:  # noqa: BLE001
+        data_gaps.note("spx", "internals", e)
+    _INTERNALS["v"] = out
+    return out
+
+
+def internals_votes(x):
+    """[اتساع القطاعات، RSP، أغلبية QQQ وIWM] كإشارات +1/−1/0."""
+    if not x:
+        return []
+    ups = sum(1 for s in SECTORS if x.get(s, 0) > 0.0005)
+    dns = sum(1 for s in SECTORS if x.get(s, 0) < -0.0005)
+    br = 1 if ups - dns >= 3 else (-1 if dns - ups >= 3 else 0)
+    return [br, bv.sgn(x.get("RSP"), 0.0005), bv.maj([bv.sgn(x.get("QQQ"), 0.0005), bv.sgn(x.get("IWM"), 0.0005)])]
+
+
+def struct_stop(c, side, evt=None):
+    """(خط الوقف بمستوى SPX، المسافة كنسبة) من أقرب مستوى خلف السعر (H-PRO1)، أو None."""
+    S = c["S"]
+    cands = []
+    if evt:
+        cands.append((evt["level"], "المستوى المكسور"))
+    m = c.get("map") or {}
+    w = m.get("put_wall") if side == "CALL" else m.get("call_wall")
+    if w:
+        cands.append((w[0], "الجدار"))
+    for k in ("orb", "pd_hl"):
+        if c.get(k):
+            cands += [(c[k][0], k), (c[k][1], k)]
+    if c.get("vwap_spx"):
+        cands.append((c["vwap_spx"], "VWAP"))
+    cands += [(p, nm) for p, nm in (c.get("pivots") or [])]
+    lvl = bv.nearest_opp("PUT" if side == "CALL" else "CALL", S, cands, min_gap=3.0)
+    if not lvl:
+        return None
+    line = lvl[0] - STRUCT_PAD if side == "CALL" else lvl[0] + STRUCT_PAD
+    frac = min(max(abs(S - line) / S, STRUCT_MIN), STRUCT_MAX)
+    line = S * (1 - frac) if side == "CALL" else S * (1 + frac)
+    return round(line, 2), round(frac, 5)
+
+
+def attach_struct(a):
+    """يضع الوقف الهيكلي على كل عقد في التوصية (k["struct"] = (خط SPX، النسبة))."""
+    st = struct_stop(a["c"], a["side"], a.get("bh_evt"))
+    a["struct"] = st
+    for k in a.get("contracts") or []:
+        if st:
+            k["struct"] = st
+
+
+def stop_price(k):
+    return k["price"] * (1 - (HARD_STOP if k.get("struct") else STOP_LOSS))
+
+
+def struct_text(k, sym, side):
+    """نص خط الوقف بسعر الأداة نفسها."""
+    line, frac = k["struct"]
+    sp = k.get("spot") or line
+    lv = sp * (1 - frac) if side == "CALL" else sp * (1 + frac)
+    f = f"{lv:,.2f}" if sym == "SPY" else f"{lv:,.0f}"
+    return f"إغلاق {sym} {'تحت' if side == 'CALL' else 'فوق'} {f} (خلف المستوى)، أو −{HARD_STOP * 100:.0f}% من العقد كحد أقصى"
 
 
 def hourly_card(n, a, state, sender=None):
@@ -1251,7 +1365,7 @@ def vote_board(n, c, evt, shock, ix, mins, flow, screens=None):
         "الاتجاه": [(1 if c["above_vwap"] else -1) if c.get("vwap") else 0, bv.sgn(c["ema9"] - c["ema21"]), bv.sgn(c.get("macd")),
                     g if rv is not None and rv >= bv.RVOL_MIN else 0],
         "المال": [bv.sgn(lean), bv.sgn(dlt), bv.sgn((flow or {}).get("tilt"))],
-        "السوق الأوسع": [bv.sgn(c.get("es"), 0.001), heavy or 0, -bv.sgn(c.get("vix_day"), 0.01)],
+        "السوق الأوسع": [bv.sgn(c.get("es"), 0.001), heavy or 0, -bv.sgn(c.get("vix_day"), 0.01)] + internals_votes(market_internals()),
         "الأخبار والآراء": [-1 if (shock or {}).get("level", 0) >= 2 else 0, sc.get("الصقر", 0), sc.get("المتداول الذكي", 0), sc.get("محرك MGT", 0)],
     }
     orb, pdh, m = c.get("orb"), c.get("pd_hl"), c.get("map") or {}
@@ -1623,12 +1737,14 @@ def instrument_block(sym, ks, side, S_idx):
     if lv:
         f = (lambda x: f"{x:,.2f}") if sym == "SPY" else (lambda x: f"{x:,.0f}")
         L.append(f"├ 🎯 <b>خروج بربح</b> <b>{tp_p:.2f}</b> (+{TAKE_PROFIT * 100:.0f}%) ← {sym} ≈ {f(lv[0])}")
-        L.append(f"├ 🛑 <b>خروج بخسارة</b> <b>{sl_p:.2f}</b> (-{STOP_LOSS * 100:.0f}%) ← {sym} ≈ {f(lv[1])}")
-        if max(abs(lv[0] - sp), abs(lv[1] - sp)) / sp < 0.0012:
+        L.append(f"├ 🛑 <b>الوقف:</b> {struct_text(k0, sym, side)}" if k0.get("struct") else
+                 f"├ 🛑 <b>خروج بخسارة</b> <b>{sl_p:.2f}</b> (-{STOP_LOSS * 100:.0f}%) ← {sym} ≈ {f(lv[1])}")
+        if not k0.get("struct") and max(abs(lv[0] - sp), abs(lv[1] - sp)) / sp < 0.0012:
             warn = "⚠️ الهدف والوقف قريبان جداً (أقل من 0.12%): الضوضاء العادية قد تضرب الوقف أولاً."
     else:
         L.append(f"├ 🎯 <b>خروج بربح</b> <b>{tp_p:.2f}</b> (+{TAKE_PROFIT * 100:.0f}%)")
-        L.append(f"├ 🛑 <b>خروج بخسارة</b> <b>{sl_p:.2f}</b> (-{STOP_LOSS * 100:.0f}%)")
+        L.append(f"├ 🛑 <b>الوقف:</b> {struct_text(k0, sym, side)}" if k0.get("struct") else
+                 f"├ 🛑 <b>خروج بخسارة</b> <b>{sl_p:.2f}</b> (-{STOP_LOSS * 100:.0f}%)")
     L.append(f"└ 💰 أقصى خسارة ≈ ${q * per:,.0f} | رأس المال ≈ ${q * k0['cost']:,.0f}")
     if warn:
         L.append(warn)
@@ -1716,7 +1832,7 @@ def signal_message(a):
     if a.get("news_half"):
         L.append("⚠️ <b>أخبار مرتفعة المخاطر:</b> " + esc("، ".join(a["shock"]["flags"][:2])) + ". الكمية المقترحة نصف المعتاد (عقد واحد على الأقل)؛ خفّف حجمك.")
         L.append("")
-    L += bh_lines(a, side) + fvg_line(a)
+    L += bh_lines(a, side) + fvg_line(a) + em_line(a)
     if a.get("addon"):
         pv = a["addon"]
         L.append(f"➕ <b>إضافة على رابح:</b> عقد {side} السابق ({pv['strike']:,.0f}، {pv['time'][11:16]}) بلغ الهدف والقوة مستمرة. "
@@ -1728,7 +1844,7 @@ def signal_message(a):
     if c["age"] >= 5:
         L.append(age_note(c["age"]))
     L.append("⚠️ <i>تعليمي وليست توصية. أقصى خسارة هي سعر العقد.</i>")
-    L.append(f"🕒 {stamp()} | SPX إصدار 22")
+    L.append(f"🕒 {stamp()} | SPX إصدار 23")
     return "\n".join(L)
 
 
@@ -1759,7 +1875,7 @@ def ticket_lines(sym, k0, side, exp=None):
     return [f"✅ <b>الدخول:</b> {root_sym(k0)} {k0['strike']:,.0f} {side} ×{q}" + (f" | 🗓 ينتهي {exp_label(exp)}" if exp else ""),
             f"💵 بسعر حتى <b>{k0['price']:.2f}</b> | تكلفة <b>${k0['cost']:,.0f}</b> للعقد",
             f"🎯 الهدف <b>{tp_p:.2f}</b> (+{TAKE_PROFIT * 100:.0f}%){tp_t}",
-            f"🛑 الوقف <b>{sl_p:.2f}</b> (-{STOP_LOSS * 100:.0f}%){sl_t}",
+            (f"🛑 الوقف: {struct_text(k0, sym, side)}" if k0.get("struct") else f"🛑 الوقف <b>{sl_p:.2f}</b> (-{STOP_LOSS * 100:.0f}%){sl_t}"),
             f"💰 أقصى خسارة ≈ ${q * per:,.0f}"] + (
         ["⚠️ الهدف والوقف قريبان جداً: الضوضاء قد تضرب الوقف أولاً."]
         if lv and max(abs(lv[0] - k0.get("spot", lv[0])), abs(lv[1] - k0.get("spot", lv[1]))) / k0.get("spot", lv[0]) < 0.0012 else []) + (
@@ -1797,6 +1913,17 @@ def vote_line(a):
     if len(v.get("stack") or []) >= 2:
         out += f"\n📏 مستوى متراكم: {esc('، '.join(v['stack']))}"
     return [out, ""]
+
+
+def em_line(a):
+    """سطر النطاق المتوقع وما قطعه السعر منه (الإصدار 23)."""
+    c = a["c"]
+    em, o = c.get("em"), c.get("day_open")
+    if not em or not o:
+        return []
+    mv = c["S"] - o
+    return [f"📏 <b>النطاق المتوقع اليوم:</b> ±{em[1]:,.0f} نقطة؛ السعر قطع {abs(mv) / em[1] * 100:.0f}% منه "
+            f"{'صعوداً' if mv > 0 else 'هبوطاً'} من الافتتاح {o:,.0f}.", ""]
 
 
 def fvg_line(a):
@@ -1841,8 +1968,8 @@ def send_signal(a):
         kexp = k0.get("exp", a["exp"])
         sub = (f"انتهاء {kexp} (تجريبي)" if a["is_test"] else ("انتهاء اليوم" if kexp == a["exp"] else f"انتهاء {kexp}")) + f" · {sym} {k0.get('spot', S):,.0f}"
         png = cards.contract_card("entry", f"{root_sym(k0)} {k0['strike']:,.0f} {side}", sub, k0["price"], None,
-                                  k0["price"], k0["price"] * (1 - STOP_LOSS), k0["price"] * (1 + TAKE_PROFIT),
-                                  badge=f"{side} {dot}", foot=f"{stamp()} | SPX إصدار 22")
+                                  k0["price"], stop_price(k0), k0["price"] * (1 + TAKE_PROFIT),
+                                  badge=f"{side} {dot}", foot=f"{stamp()} | SPX إصدار 23")
         mid = send_photo(png, "\n".join(cap))
         if mid:
             if alt_sep:
@@ -1865,7 +1992,7 @@ def send_alt_card(a, ka, side, dot, reply_to=None):
             "⚠️ <i>تعليمي وليست توصية.</i>"]
         png = cards.contract_card("entry", f"{root_sym(ka)} {ka['strike']:,.0f} {side}",
                                   f"انتهاء {ka.get('exp', a['exp'])} · {ka.get('sym', ALT_SYMBOL)} {ka.get('spot', 0):,.0f}", ka["price"], None,
-                                  ka["price"], ka["price"] * (1 - STOP_LOSS), ka["price"] * (1 + TAKE_PROFIT),
+                                  ka["price"], stop_price(ka), ka["price"] * (1 + TAKE_PROFIT),
                                   badge=f"{root_sym(ka)} {dot}", foot=f"{stamp()} | SPX إصدار 17")
         send_photo(png, "\n".join(x for x in cap if x), reply_to=reply_to)
     except Exception as e:
@@ -1881,7 +2008,7 @@ def send_ndx_card(a, kn, side, dot, reply_to=None):
             "⚠️ <i>تعليمي وليست توصية.</i>"]
         png = cards.contract_card("entry", f"{root_sym(kn)} {kn['strike']:,.0f} {side}",
                                   f"انتهاء {a['exp']} · NDX {kn.get('spot', 0):,.0f}", kn["price"], None,
-                                  kn["price"], kn["price"] * (1 - STOP_LOSS), kn["price"] * (1 + TAKE_PROFIT),
+                                  kn["price"], stop_price(kn), kn["price"] * (1 + TAKE_PROFIT),
                                   badge=f"NDXP {dot}", foot=f"{stamp()} | SPX إصدار 17")
         send_photo(png, "\n".join(cap), reply_to=reply_to)
     except Exception as e:
@@ -2047,7 +2174,8 @@ def add_positions(n, a):
         P["positions"].append({"id": pid, "sym": sym, "root": root_sym(k), "side": a["side"], "strike": float(k["strike"]),
                                "exp": kexp, "entry": round(float(k["price"]), 2), "qty": q,
                                "time": n.isoformat(timespec="minutes"), "entry_spot": round(k.get("spot", a["c"]["S"]), 2),
-                               "status": "open", "peak": 0.0, "alerts": {}, "news_half": bool(k.get("half"))})
+                               "status": "open", "peak": 0.0, "alerts": {}, "news_half": bool(k.get("half")),
+                               "struct_frac": (k.get("struct") or (None, None))[1]})
         if k.get("price_src"):
             P["positions"][-1].update(entry_src=k["price_src"], entry_yahoo=round(float(k.get("yahoo_price", k["price"])), 2))
         _live_entry(P["positions"][-1])
@@ -2225,7 +2353,17 @@ def eval_position(p, n, val, spot):
     # بعد الهدف: الصفقة رابحة ومغلقة بالقاعدة، والمتابعة صامتة (لا وقف ولا تراجع ولا آخر 30 دقيقة) بطلب المستخدم 2/11/2026؛
     # الحالة تبقى "tp" والتتبع في spx_track يستمر لقياس ما بعد الهدف.
     live = p["status"] == "open"
-    if live and age >= MIN_AGE_MIN and pnl <= -STOP_LOSS:
+    if live and p.get("struct_frac"):
+        adverse = None
+        if spot and p.get("entry_spot"):
+            adverse = (p["entry_spot"] - spot) / p["entry_spot"] if p["side"] == "CALL" else (spot - p["entry_spot"]) / p["entry_spot"]
+        if age >= STRUCT_MIN_AGE and adverse is not None and adverse >= p["struct_frac"]:
+            fire("stop", f"كسر السعر خط الوقف خلف المستوى ({spot:,.2f}). الخروج يحدّ الخسارة.")
+            p["status"] = "stopped"
+        elif pnl <= -HARD_STOP:
+            fire("stop", f"وصل الوقف الأقصى (-{HARD_STOP * 100:.0f}% من العقد). الخروج يحدّ الخسارة.")
+            p["status"] = "stopped"
+    elif live and age >= MIN_AGE_MIN and pnl <= -STOP_LOSS:
         fire("stop", f"وصل وقف الخسارة (-{STOP_LOSS * 100:.0f}%). الخروج يحدّ الخسارة.")
         p["status"] = "stopped"
     if live and pnl >= TAKE_PROFIT:
@@ -2505,6 +2643,10 @@ def run_once(force=False):
                 a.get("bh_mode", "") or ("unconfirmed" if a.get("bh_evt_raw") else ""),
                 a["c"].get("orb_hold"), a["reasons"], (a.get("bh_flow") or {}).get("tilt"),
                 (a.get("bh_flow") or {}).get("ok") if a.get("bh_evt_raw") else None, a.get("bh_vote"))
+        try:
+            attach_struct(a)
+        except Exception as e:  # noqa: BLE001
+            print("الوقف الهيكلي:", type(e).__name__, e)
         try:
             hourly_card(n, a, state)
         except Exception as e:  # noqa: BLE001

@@ -22,7 +22,7 @@ def load(day, path=None):
     """لقطات اليوم أو None."""
     try:
         p = os.path.join(path or raw_dir(), f"{day}.csv.gz")
-        df = pd.read_csv(p, usecols=["time", "side", "strike", "volume", "bid", "ask", "last"], dtype={"time": str})
+        df = pd.read_csv(p, usecols=["time", "side", "strike", "volume", "gamma", "delta", "bid", "ask", "last"], dtype={"time": str})
         return df if len(df) else None
     except Exception:  # noqa: BLE001
         return None
@@ -137,3 +137,34 @@ def card(lw, S, side=None, t_label=""):
         L.append(f"🤖 جهة البوت الآن: {side}")
     L += ["", "<i>معلومات من حجم اليوم لا توصية؛ الشراء تقدير، والإغلاق الحقيقي يظهر صباح الغد.</i>"]
     return "\n".join(L)
+
+
+def expected_move(df):
+    """(السترايك، النطاق المتوقع بالنقاط، الوقت) من أول لقطة: كول + بوت (المنتصف) عند السترايك الأقرب لدلتا 0.5 (H-PRO1)."""
+    if df is None or "delta" not in df:
+        return None
+    t0 = min(df["time"])
+    snap = df[df["time"] == t0]
+    c = snap[(snap["side"] == "C") & snap["delta"].notna()]
+    if not len(c):
+        return None
+    K = float(c.loc[(c["delta"] - 0.5).abs().idxmin(), "strike"])
+    mid = lambda r: (float(r["bid"]) + float(r["ask"])) / 2 if r["bid"] > 0 and r["ask"] > 0 else float(r["last"])
+    cr, pr = snap[(snap["side"] == "C") & (snap["strike"] == K)], snap[(snap["side"] == "P") & (snap["strike"] == K)]
+    if not len(cr) or not len(pr):
+        return None
+    em = mid(cr.iloc[0]) + mid(pr.iloc[0])
+    return (K, round(em, 2), t0) if em > 0 else None
+
+
+def vol_gex(df, S, hhmm):
+    """(Σ حجم الكول × غاما − Σ حجم البوت × غاما) × 100 × S² × 0.01 من آخر لقطة ≤ hhmm، أو None (H-PRO1)."""
+    if df is None or "gamma" not in df:
+        return None
+    ts = [t for t in set(df["time"]) if t <= hhmm]
+    if not ts:
+        return None
+    snap = df[df["time"] == max(ts)]
+    g = (snap["volume"].fillna(0) * snap["gamma"].fillna(0))
+    net = float(g[snap["side"] == "C"].sum() - g[snap["side"] == "P"].sum())
+    return net * 100 * S * S * 0.01
