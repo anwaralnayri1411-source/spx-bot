@@ -1219,15 +1219,36 @@ def apply_fvg(a, n):
             a["reasons"].append(f"⏳ {bh.event_text(a['bh_evt'])}؛ ننتظر عودة السعر إلى الفجوة {zone[0]:,.0f}–{zone[1]:,.0f} للدخول بسعر أفضل.")
 
 
+def flow_30(n, path=None):
+    """(علاوة الكول الصافية − البوت، صافي الدلتا) في آخر 30 دقيقة من لقطات مراقب السيولة، أو (None، None). H-BHFLOW، تسجيل فقط."""
+    try:
+        fl = pd.read_csv(path or FLOW_LOG, dtype={"time": str})
+        g = fl[(fl["date"] == n.date().isoformat()) & (fl["time"] <= n.strftime("%H:%M"))
+               & (fl["time"] > (n - timedelta(minutes=30)).strftime("%H:%M"))]
+        if not len(g):
+            return None, None
+        return (round(float(g["call_prem"].fillna(0).sum() - g["put_prem"].fillna(0).sum()), 0),
+                round(float(g["net_delta"].fillna(0).sum()), 0))
+    except Exception:  # noqa: BLE001
+        return None, None
+
+
 def _bh_log(n, S, old_side, new_side, evt, mode, orb_hold, reasons):
-    """سطر لكل فحص: جهة البوت القديم والجديد والحدث. تسجيل فقط؛ لا يرمي أبداً."""
+    """سطر لكل فحص: جهة البوت القديم والجديد والحدث وتدفق آخر 30 دقيقة. تسجيل فقط؛ لا يرمي أبداً."""
     try:
         import csv
+        lean, dlt = flow_30(n)
         row = {"time": n.isoformat(timespec="minutes"), "S": round(float(S), 2), "old_side": old_side or "",
                "new_side": new_side or "", "mode": mode, "event": evt["kind"] if evt else "",
                "level": round(evt["level"], 2) if evt else "", "level_name": evt["name"] if evt else "",
-               "orb_hold": orb_hold or "", "blocked": " | ".join(r[:60] for r in reasons)}
+               "orb_hold": orb_hold or "", "flow_lean": "" if lean is None else lean, "flow_delta": "" if dlt is None else dlt,
+               "blocked": " | ".join(r[:60] for r in reasons)}
         os.makedirs(os.path.dirname(BH_LOG) or ".", exist_ok=True)
+        if os.path.exists(BH_LOG):
+            with open(BH_LOG, encoding="utf-8") as f:
+                head = f.readline().strip().split(",")
+            if head != list(row):           # تغيّرت الأعمدة: نحفظ القديم باسم آخر ونبدأ ملفاً جديداً
+                os.replace(BH_LOG, BH_LOG.replace(".csv", f"_old_{n:%Y%m%d%H%M}.csv"))
         new = not os.path.exists(BH_LOG)
         with open(BH_LOG, "a", encoding="utf-8", newline="") as f:
             w = csv.DictWriter(f, fieldnames=list(row))

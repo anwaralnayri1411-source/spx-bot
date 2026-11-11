@@ -124,3 +124,20 @@ def test_apply_fvg_waits_then_enters(tmp_path, monkeypatch):
     c = dict(a, contracts=[], reasons=[])
     ob.apply_fvg(c, datetime(2026, 11, 12, 14, 0, tzinfo=ob.NY))      # الانتظار انتهى بالدخول: لا شيء معلق
     assert c["reasons"] == []
+
+
+def test_flow_30_and_log_columns(tmp_path, monkeypatch):
+    import options_bot as ob
+    from datetime import datetime
+    f = tmp_path / "flow.csv"
+    f.write_text("date,time,call_prem,put_prem,net_delta\n2026-11-11,10:30,100,50,5\n2026-11-11,10:50,200,400,-7\n2026-11-11,11:20,9,9,9\n", encoding="utf-8")
+    n = datetime(2026, 11, 11, 11, 0, tzinfo=ob.NY)
+    assert ob.flow_30(n, str(f)) == (-200.0, -7.0)
+    assert ob.flow_30(n, str(tmp_path / "none.csv")) == (None, None)
+    monkeypatch.setattr(ob, "BH_LOG", str(tmp_path / "bh" / "log.csv"))
+    monkeypatch.setattr(ob, "FLOW_LOG", str(f))
+    (tmp_path / "bh").mkdir()
+    (tmp_path / "bh" / "log.csv").write_text("time,S\nx,1\n", encoding="utf-8")     # ملف بأعمدة قديمة
+    ob._bh_log(n, 7600.0, "CALL", "PUT", None, "", None, [])
+    head = (tmp_path / "bh" / "log.csv").read_text(encoding="utf-8").splitlines()[0]
+    assert "flow_lean" in head and len(list((tmp_path / "bh").glob("log_old_*.csv"))) == 1
