@@ -991,7 +991,9 @@
    "midday fly by s p warns on meta s credit marvell to acquire lumentum",
    "fans release tesla roadster themed browser game tesla stock nasdaq tsla gains",
    "m a news data center cooler omen ai spirits up 16m aquatic labs acquisition",
-   "shopify shop faces q3 earnings tomorrow here s what analysts expect"
+   "shopify shop faces q3 earnings tomorrow here s what analysts expect",
+   "musk says tesla to extend cybertruck production through summer 2027 tsla nasdaq",
+   "tesla stock nasdaq tsla gains despite cybercab troubles with jeremy clarkson"
   ],
   "XOM:CALL": [
    "trump uses defense act as fuel prices surge",
@@ -2240,7 +2242,8 @@
    "apple starts charging 49 99 for extra ai usage",
    "1000 invested in apple 10 years ago would be worth this much today",
    "apple slides 4 as ternus calls memory pricing unprecedented despite a record 114 5 billion quarter",
-   "this apple analyst turns bullish here are top 5 upgrades for wednesday"
+   "this apple analyst turns bullish here are top 5 upgrades for wednesday",
+   "why apple stock looks like a safe haven after the midterms"
   ],
   "BA:PUT": [
    "boeing nyse ba sets new 52 week low on disappointing earnings",
@@ -2559,9 +2562,6 @@
    "metropal reports board responsibility statement on consolidated financials"
   ],
   "XOM:PUT": [
-   "oil plunges as election shifts iran outlook",
-   "exxonmobil corporation xom stock sold by pzena investment management llc",
-   "iran reports more tanker fires in strait of hormuz",
    "gasoline prices set for major cut in t rkiye after global oil prices plunge",
    "stock markets diverge oil prices steady tracking trump and ai",
    "oil and gas prices ease after donald trump s defeat castell n warns over iran conflict how 21 outlets framed it",
@@ -2958,7 +2958,10 @@
    "here s what could happen to the bp share price if oil prices fall another 20",
    "daily oil price november 9 2026",
    "occidental petroleum unveils bold 6 billion debt plan",
-   "eog s 8 dividend raise is a bet on surviving any oil cycle"
+   "eog s 8 dividend raise is a bet on surviving any oil cycle",
+   "midday need to know oil prices rebound chip stocks rally more spy nysearca",
+   "us oil and gas stocks rise as crude prices climb on iran tensions",
+   "oil up 2 as iran official says country will keep enriched nuclear material"
   ],
   "MSFT:CALL": [
    "forget the 12 month squeeze microsoft is primed for an explosive ai payoff",
@@ -2997,9 +3000,6 @@
    "dow rallies over 1 000 points and nasdaq gains 2 5 as stocks rebound"
   ],
   "CVX:PUT": [
-   "ten oversold energy stocks as oil prices slide after u s midterm elections uso nysearca",
-   "ten oversold energy stocks as oil prices slide after u s midterm elections",
-   "china s rail line into central asia is set for 2031",
    "big oil scores 56 billion windfall on spiking fuel prices",
    "north sea oil plunge deepens as traders weigh iran de escalation",
    "us midterms how markets are reacting to democrats congressional gains",
@@ -3396,7 +3396,10 @@
    "here s what could happen to the bp share price if oil prices fall another 20",
    "daily oil price november 9 2026",
    "occidental petroleum unveils bold 6 billion debt plan",
-   "eog s 8 dividend raise is a bet on surviving any oil cycle"
+   "eog s 8 dividend raise is a bet on surviving any oil cycle",
+   "midday need to know oil prices rebound chip stocks rally more spy nysearca",
+   "us oil and gas stocks rise as crude prices climb on iran tensions",
+   "oil up 2 as iran official says country will keep enriched nuclear material"
   ],
   "JPM:CALL": [
    "which profit leader pays the most with yields between 0 31 and 2 32 bank of america nyse bac exxon mobil nyse xom johnso",
@@ -3950,7 +3953,9 @@
    "sa analyst upgrades downgrades meta uber evgo orcl sp500",
    "google could buy uber to challenge tesla robotaxis columnist says alphabet nasdaq googl",
    "delivery hero stock uber tender event resets bond terms",
-   "google could buy uber to win the robotaxi wars reuters columnist argues"
+   "google could buy uber to win the robotaxi wars reuters columnist argues",
+   "alphabet urged to buy uber in 180 billion robotaxi play as waymo ties loosen",
+   "4 industrials stocks with whale alerts in today s session"
   ],
   "GOOGL:CALL": [
    "alphabet tpu sales and gemini enterprise are reshaping the bull case nasdaq goog",
@@ -3998,9 +4003,12 @@
   ],
   "MSFT:PUT": [
    "why is microsoft stock sliding today",
-   "ai data center demand revives microsoft after selling pressure"
+   "ai data center demand revives microsoft after selling pressure",
+   "what s going on with microsoft stock wednesday"
   ],
-  "INTC:CALL": []
+  "INTC:CALL": [
+   "intel intc stock recovers 25 as coreweave earnings boost chip stocks"
+  ]
  },
  "fired": {
   "XOM:PUT:2026-11-13:165": [
@@ -4089,7 +4097,9 @@
    "news:fed officials consider faster hikes as higher prices seep into broader economy daily sabah",
    "news:gold and silver prices rebounded following cpi induced selling while tensions in the strait of hormuz pushed crude oil p",
    "news:brent jumps nearly 3 as iran denies any talks with washington",
-   "news:crude oil prices jump on elusive peace prospects in the middle east"
+   "news:crude oil prices jump on elusive peace prospects in the middle east",
+   "news:us oil and gas stocks rise as crude prices climb on iran tensions",
+   "news:oil up 2 as iran official says country will keep enriched nuclear material"
   ],
   "CVX:PUT:2026-11-13:210@2026-11-06": [
    "news:the iran war isn t over but oil traders are already pricing in peace",
@@ -4177,7 +4187,9 @@
    "news:fed officials consider faster hikes as higher prices seep into broader economy daily sabah",
    "news:gold and silver prices rebounded following cpi induced selling while tensions in the strait of hormuz pushed crude oil p",
    "news:brent jumps nearly 3 as iran denies any talks with washington",
-   "news:crude oil prices jump on elusive peace prospects in the middle east"
+   "news:crude oil prices jump on elusive peace prospects in the middle east",
+   "news:us oil and gas stocks rise as crude prices climb on iran tensions",
+   "news:oil up 2 as iran official says country will keep enriched nuclear material"
   ],
   "PFE:PUT:2026-11-20:30": [
    "down-0.15",
@@ -4235,7 +4247,6 @@
   "NFLX:PUT:2026-11-27:63": 1
  },
  "seen_macro": [
-  "stock market today nov 2 2026 dow rises ahead of apple s earnings report",
   "what monday s futures rebound means as midterms and apple earnings near",
   "why penny stock inovio pharmaceuticals ino is skyrocketing over 200 today and how much upside wall street sees from here",
   "these 9 words from kevin warsh about interest rates should worry every investor",
@@ -4834,7 +4845,8 @@
   "dollar advances as markets price in december fed rate hike",
   "rupiah exchange rate today november 12 2026 us dollar at rp18 149 bi jisdor hits rp18 154",
   "oil prices gain as iran war uncertainty weighs on market sentiment",
-  "gold struggles below 4 050 as fed rate hike bets boost us dollar"
+  "gold struggles below 4 050 as fed rate hike bets boost us dollar",
+  "solana could dip to 74 as fed rate hike odds hit 99"
  ],
  "sharp": {
   "XOM:PUT:2026-11-13:165": 165.35,
