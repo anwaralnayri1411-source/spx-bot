@@ -2235,6 +2235,18 @@ def position_message(p, val, pnl, spot, text, kind, src=""):
     return "\n".join(L)
 
 
+HALT_OVERRIDE = os.path.join(os.getenv("SPXBOT_DATA", "/opt/spxbot/data"), "spx_halt_override.txt")
+
+
+def halt_lifted(n, path=None):
+    """رفع حد الخسارة اليومي ليوم بعينه بقرار المستخدم: الملف يحوي تاريخ اليوم (YYYY-MM-DD)."""
+    try:
+        with open(path or HALT_OVERRIDE, encoding="utf-8") as f:
+            return n.date().isoformat() in f.read().split()
+    except Exception:  # noqa: BLE001
+        return False
+
+
 def stops_today(n):
     """عدد إشارات اليوم (بوقت إرسال مختلف) التي بلغ أي عقد منها الوقف."""
     try:
@@ -2441,7 +2453,7 @@ def run_once(force=False):
         state = {"date": today_s, "last_side": state.get("last_side"), "last_time": state.get("last_time"),
                  "report_sent": False, "runs": 0, "best_edge": 0.0, "signals": 0, "summary_sent": False,
                  "reason_counts": {}}
-    if not force and stops_today(n) >= MAX_DAILY_STOPS and a["contracts"]:
+    if not force and stops_today(n) >= MAX_DAILY_STOPS and a["contracts"] and not halt_lifted(n):
         a["block_tags"], a["blocked_contracts"] = ["daily_stop"], list(a["contracts"])   # لظل الحجب (تسجيل فقط)
         a["contracts"] = []
         a["reasons"].append(f"⛔ حد الخسارة اليومي: {MAX_DAILY_STOPS} إشارات بلغت الوقف اليوم، فتوقفت الإشارات الجديدة.")

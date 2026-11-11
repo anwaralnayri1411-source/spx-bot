@@ -102,3 +102,12 @@ def test_screens_macd_reading():
     import screens
     rd = screens.readings({"rows": [], "side": "CALL", "c": {"macd": -0.3}})
     assert rd["MACD 5د"] == -1
+
+
+def test_halt_lifted(tmp_path):
+    import options_bot as ob
+    f = tmp_path / "o.txt"
+    f.write_text("2026-11-11\n", encoding="utf-8")
+    assert ob.halt_lifted(datetime(2026, 11, 11, 14, 0, tzinfo=ob.NY), str(f))
+    assert not ob.halt_lifted(datetime(2026, 11, 12, 14, 0, tzinfo=ob.NY), str(f))
+    assert not ob.halt_lifted(datetime(2026, 11, 11, 14, 0, tzinfo=ob.NY), str(tmp_path / "none"))
