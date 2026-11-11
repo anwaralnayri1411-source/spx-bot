@@ -143,3 +143,4 @@ id,project,tag,sym,side,strike,exp,entry_time,entry,edge,strength,out,out_time,o
 20261109T1327|stocks|open_same_dir|INTC|PUT|55|2026-11-27,stocks,open_same_dir,INTC,PUT,55.0,2026-11-27,2026-11-09T13:27-05:00,2.25,3.5,6.2,stop,2026-11-11T09:32-05:00,-0.56,0.089,101
 20261110T1012|stocks|open_same_dir|AAPL|CALL|350|2026-11-13,stocks,open_same_dir,AAPL,CALL,350.0,2026-11-13,2026-11-10T10:12-05:00,2.43,4.5,7.5,tp,2026-11-11T09:32-05:00,0.905,0.905,65
 20261110T1012|stocks|open_same_dir|CVX|PUT|202.5|2026-11-20,stocks,open_same_dir,CVX,PUT,202.5,2026-11-20,2026-11-10T10:12-05:00,2.26,3.5,5.9,stop,2026-11-11T09:32-05:00,-0.42,0.15,65
+20261110T1012|stocks|open_same_dir|XOM|PUT|162.5|2026-11-13,stocks,open_same_dir,XOM,PUT,162.5,2026-11-13,2026-11-10T10:12-05:00,1.68,5.5,7.5,stop,2026-11-11T09:37-05:00,-0.423,0.131,66
