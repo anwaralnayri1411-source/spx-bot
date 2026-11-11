@@ -356,7 +356,8 @@
    "v maintained by bernstein price target raised to 486",
    "can visa s monad integration boost its stablecoin strategy",
    "visa adds monad to stablecoin settlement options",
-   "sanford c bernstein issues positive forecast for visa nyse v stock price"
+   "sanford c bernstein issues positive forecast for visa nyse v stock price",
+   "visa v added monad to its stablecoin settlement network"
   ],
   "PLTR:CALL": [
    "palantir sees ark invest reduce position and uk fund review pltr remains under pressure",
@@ -1002,7 +1003,8 @@
    "netcad reports november 11 share buyback total reaches 742 535",
    "tesla tsla forms special committee to review possible all stock merger",
    "tesla stock tsla pops as musk delays cybertruck shutdown",
-   "tesla robotaxi overtakes waymo in texas with 1 302 registered vehicles"
+   "tesla robotaxi overtakes waymo in texas with 1 302 registered vehicles",
+   "tesla turned 1 000 into 30 078 in a decade without ever paying a cash dividend"
   ],
   "XOM:CALL": [
    "trump uses defense act as fuel prices surge",
@@ -2582,9 +2584,6 @@
    "metropal reports board responsibility statement on consolidated financials"
   ],
   "XOM:PUT": [
-   "euro edges lower as oil prices rise",
-   "forex euro edges lower as oil prices rise",
-   "gas prices could be lowered after oil markets fall post november midterm",
    "european gas prices drop on iran deal hopes after u s midterms",
    "soybean oil prices fall in brazil and argentina amid sharp decline in crude oil futures",
    "stocks soar as oil prices plummet following midterm results",
@@ -2981,7 +2980,10 @@
    "ethanol industry warns epa waivers could threaten u s farmers and raise gas prices",
    "burnham heads to cop31 torn between cheaper power and net zero",
    "exxon vs chevron 45 and 39 straight years of raises which oil dividend wins the next decade",
-   "exxonmobil xom stock may be 24 undervalued despite venezuela oil deal"
+   "exxonmobil xom stock may be 24 undervalued despite venezuela oil deal",
+   "crude oil prices finish higher as progress stalls in us iran peace talks",
+   "stock market today dow jones nasdaq s p 500 rally on november 11 2026 oil rises gold slips",
+   "midday need to know oil prices rebound chip stocks rally more"
   ],
   "MSFT:CALL": [
    "forget the 12 month squeeze microsoft is primed for an explosive ai payoff",
@@ -3020,10 +3022,6 @@
    "dow rallies over 1 000 points and nasdaq gains 2 5 as stocks rebound"
   ],
   "CVX:PUT": [
-   "us airline stocks climb as crude oil prices drop over 3",
-   "oil prices at near three week high as us iran peace hopes fade",
-   "oil prices drop sharply on volatile post election trading",
-   "brent crude falls more than 8 to near 95 as european gas prices slide",
    "oil prices plunge over 9 as jd vance blames iran war for gop losses in us midterm elections hindustan times",
    "us airline stocks climb as crude oil prices drop over 3 by investing com",
    "oil prices plunge after vance post on iran war",
@@ -3419,7 +3417,11 @@
    "why is gasoline suddenly under 4 a gallon",
    "ethanol industry warns epa waivers could threaten u s farmers and raise gas prices",
    "burnham heads to cop31 torn between cheaper power and net zero",
-   "exxon vs chevron 45 and 39 straight years of raises which oil dividend wins the next decade"
+   "exxon vs chevron 45 and 39 straight years of raises which oil dividend wins the next decade",
+   "trgp q3 earnings beat on permian growth and higher fees",
+   "crude oil prices finish higher as progress stalls in us iran peace talks",
+   "stock market today dow jones nasdaq s p 500 rally on november 11 2026 oil rises gold slips",
+   "midday need to know oil prices rebound chip stocks rally more"
   ],
   "JPM:CALL": [
    "which profit leader pays the most with yields between 0 31 and 2 32 bank of america nyse bac exxon mobil nyse xom johnso",
@@ -4011,7 +4013,8 @@
    "fda approval for hympavzi issued to pfizer inc",
    "will bristol myers growth brands offset eliquis headwinds",
    "moderna stock jumped 10 in 5 sessions take profits or buy more",
-   "americans fill prescriptions every month and 90 000 across these 3 drugmakers pays 3 650 a year"
+   "americans fill prescriptions every month and 90 000 across these 3 drugmakers pays 3 650 a year",
+   "democratic senators probe gifts to rfk jr from large donor to his presidential campaign pfe nyse"
   ],
   "AVGO:CALL": [
    "broadcom s ai chip revenue grows fast but risks and valuation concerns keep cautious investors at bay",
@@ -4036,7 +4039,8 @@
    "this number tells me the microsoft data center selloff is excessive prompting me to buy",
    "microsoft stocks decline 2 5 as 1 billion anthropic stake tests partner rival balance",
    "microsoft fixes overzealous outlook security issue microsoft stock nasdaq msft slips",
-   "microsoft stock suddenly has an anthropic problem"
+   "microsoft stock suddenly has an anthropic problem",
+   "evercore plays down microsoft 365 disruption fears after anthropic s claude sheets launch not yet a substitute for excel"
   ],
   "INTC:CALL": [
    "intel intc stock recovers 25 as coreweave earnings boost chip stocks",
@@ -4139,7 +4143,8 @@
    "news:eia sees brent near 100 bbl through yearend 2026 as middle east supply constraints persist",
    "news:oil prices pick up as market mulls over prospects for middle east settlement",
    "news:iran reportedly attacked shipping navigation systems in oman oil prices are climbing",
-   "news:heating costs will surge this winter due to iran war with heating oil prices spiking as much as 70"
+   "news:heating costs will surge this winter due to iran war with heating oil prices spiking as much as 70",
+   "news:crude oil prices finish higher as progress stalls in us iran peace talks"
   ],
   "CVX:PUT:2026-11-13:210@2026-11-06": [
    "news:the iran war isn t over but oil traders are already pricing in peace",
@@ -4235,7 +4240,8 @@
    "news:eia sees brent near 100 bbl through yearend 2026 as middle east supply constraints persist",
    "news:oil prices pick up as market mulls over prospects for middle east settlement",
    "news:iran reportedly attacked shipping navigation systems in oman oil prices are climbing",
-   "news:heating costs will surge this winter due to iran war with heating oil prices spiking as much as 70"
+   "news:heating costs will surge this winter due to iran war with heating oil prices spiking as much as 70",
+   "news:crude oil prices finish higher as progress stalls in us iran peace talks"
   ],
   "PFE:PUT:2026-11-20:30": [
    "down-0.15",
@@ -4271,11 +4277,13 @@
    "down-0.3",
    "stock1",
    "news:v maintained by bernstein price target raised to 486",
-   "news:visa adds monad to stablecoin settlement options"
+   "news:visa adds monad to stablecoin settlement options",
+   "news:visa v added monad to its stablecoin settlement network"
   ],
   "NFLX:PUT:2026-11-27:63": [
    "down-0.15",
-   "stock1"
+   "stock1",
+   "down-0.3"
   ],
   "AVGO:CALL:2026-11-16:365": [
    "down-0.15",
@@ -4296,7 +4304,8 @@
    "news:microsoft stocks decline 2 5 as 1 billion anthropic stake tests partner rival balance"
   ],
   "TSLA:CALL:2026-11-16:402.5": [
-   "news:tesla robotaxi overtakes waymo in texas with 1 302 registered vehicles"
+   "news:tesla robotaxi overtakes waymo in texas with 1 302 registered vehicles",
+   "down-0.15"
   ]
  },
  "stock_level": {
@@ -4304,10 +4313,6 @@
   "NFLX:PUT:2026-11-27:63": 1
  },
  "seen_macro": [
-  "user",
-  "fed chair kevin warsh is cutting the number of rate setting votes",
-  "markets news and analysis",
-  "one magnificent 7 stock could have a massive ai opportunity by 2028",
   "gbp usd price forecast gbp usd 1 3423 hits highest since mid september as boe hike to 4 00 priced above 90 1 3475 breako",
   "labour bureau prepares to revise cpi iw base year expand coverage",
   "helmerich payne dht holdings vitesse energy highpeak energy and borr drilling shares plummet what you need to know",
@@ -4903,7 +4908,11 @@
   "natural gas dips as traders take profits oil p",
   "higher rates and industry tailwinds 3 major regional banks to watch",
   "economists say fed could go overboard on rate hikes after hot october inflation report",
-  "2 45pm markets update"
+  "2 45pm markets update",
+  "mexico says crackdown on asian steel shipments is paying off as us tariff talks advance",
+  "stock market today dow jones nasdaq s p 500 rally on november 11 2026 oil rises gold slips",
+  "pound forecast gbp usd nears 1 33 as fed eyes bigger rate hike",
+  "bitcoin rebounds above 74 000 as cryptocurrencies recover despite fed tightening concerns"
  ],
  "sharp": {
   "XOM:PUT:2026-11-13:165": 165.35,
