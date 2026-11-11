@@ -1,6 +1,21 @@
 {
- "cash": 5889.0,
- "positions": [],
+ "cash": 4569.0,
+ "positions": [
+  {
+   "id": "1111-1331-SPX-CALL-7635",
+   "symbol": "SPXW  261111C07635000",
+   "under": "SPX",
+   "side": "CALL",
+   "strike": 7635.0,
+   "expiry": "2026-11-11",
+   "qty": 1,
+   "entry": 13.2,
+   "time": "2026-11-11T13:31-05:00",
+   "stop": 9.5,
+   "target": 17.5,
+   "invalidation": "إلغاء الفكرة إذا أغلق SPX دون 7620 أو تراجع تحت VWAP (7637) مع ارتفاع VIX، أو إذا انعكس الزخم وتراجعت القياديات تحت النصف."
+  }
+ ],
  "closed": [
   {
    "id": "1105-0946-PUT-757",
@@ -376,8 +391,8 @@
    "pnl": 430.0
   }
  ],
- "decisions": 86,
+ "decisions": 87,
  "report_day": "2026-11-10",
  "day": "2026-11-11",
- "decisions_today": 15
+ "decisions_today": 16
 }
