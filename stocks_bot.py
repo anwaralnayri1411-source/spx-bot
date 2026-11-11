@@ -60,7 +60,11 @@ TAKE_PROFIT = 0.50          # القاعدة القديمة (للظلال وال
 STOP_LOSS = 0.40
 # خروج E3 (H-SEXIT، مفعّل بقرار المستخدم 12/11/2026): وقف على السهم، هدف +100%، وقف زمني قبل الانتهاء بأسبوع
 EXIT_TP = 1.00
-STOCK_STOP = 0.015
+STOCK_STOP = 0.015                  # الوقف الاحتياطي حين لا مستوى هيكلي
+STRUCT_PAD, STRUCT_MIN, STRUCT_MAX, STRUCT_GAP = 0.003, 0.008, 0.04, 0.003   # H-PRO2: الوقف خلف المستوى
+EM_CHASE = 0.80                     # H-PRO2: لا ملاحقة بعد 80% من النطاق المتوقع لليوم
+MIN_FALLBACK_DTE = 8                # H-PRO2: العقود الاحتياطية (القاعدة القديمة) لا تقل عن 8 أيام
+MKT_AGAINST_SECTORS = 8             # H-PRO2: 8 قطاعات من 11 ضد العقد + القيادة ضده = حجب
 TIME_STOP_DAYS = 7
 TIME_STOP_AT = (15, 45)
 WINDOW_START = (10, 0)      # بتوقيت نيويورك
@@ -186,7 +190,9 @@ def tech_points(df, spy5, drv, completed_vol):
         pts["bear"] = max(0.0, pts["bear"] - 1)
         why.append(("bull", f"السعر ممتد {abs(ext) * 100:.0f}% تحت متوسط 20 يوماً، خطر مطاردة القاع"))
     info = {"S": S, "sma20": sma20, "sma50": sma50, "rsi": rsi, "ret5": ret5, "rv": rv, "vr": vr,
-            "hi20": hi20, "lo20": lo20, "closes": c}
+            "hi20": hi20, "lo20": lo20, "closes": c, "prev_close": float(c.iloc[-2]),
+            "pdh": float(df["High"].iloc[-2]), "pdl": float(df["Low"].iloc[-2]),
+            "thi": float(df["High"].iloc[-1]), "tlo": float(df["Low"].iloc[-1])}
     return pts["bull"], pts["bear"], why, info
 
 
@@ -801,6 +807,8 @@ def add_position(P, n, idea, spy_px):
         p["id"] = f"{p['id']}@{n.date().isoformat()}"   # نفس العقد بعد إقفاله: صفقة جديدة
     if k.get("price_src"):
         p.update(entry_src=k["price_src"], entry_yahoo=round(float(k.get("yahoo_price", k["price"])), 2))
+    if idea.get("stop"):
+        p["stop_frac"] = idea["stop"][1]           # H-PRO2: الوقف بالهيكل
     if k.get("spr") is not None:
         p["entry_spr"] = round(float(k["spr"]), 3)    # فرق الشراء/البيع عند الدخول: لدراسة أثره على النتيجة (لا يغيّر قراراً)
     ctx = _entry_ctx(idea, k, n)
@@ -1018,14 +1026,15 @@ def evaluate(p, n, q, spot, spy_spot):
         changed = True
 
     if live and mature:
-        if mv is not None and mv <= -STOCK_STOP:
-            fire("stop", f"وقف السهم: تحرك السهم {abs(mv) * 100:.1f}% ضد اتجاهك منذ التوصية (الحد {STOCK_STOP * 100:.1f}%). "
+        stop = p.get("stop_frac") or STOCK_STOP
+        if mv is not None and mv <= -stop:
+            fire("stop", f"وقف السهم: تحرك السهم {abs(mv) * 100:.1f}% ضد اتجاهك منذ التوصية وكسر خط الوقف (الحد {stop * 100:.1f}%). "
                          f"اخرج الآن؛ قيمة العقد ≈ ${val * 100:,.0f} ({pnl * 100:+.0f}%). لا تعزّز عقداً خاسراً.")
             p["status"] = "stopped"
             p["closed"] = {"kind": "stop", "time": n.isoformat(timespec="minutes"), "pnl": round(pnl, 4)}
             changed = True
         elif pnl <= -WARN_LOSS:
-            fire("warn", f"العقد نزل {abs(pnl) * 100:.0f}%. الوقف على السهم: الخروج إن تحرك {STOCK_STOP * 100:.1f}% ضدك منذ التوصية.")
+            fire("warn", f"العقد نزل {abs(pnl) * 100:.0f}%. الوقف على السهم: الخروج إن تحرك {(p.get('stop_frac') or STOCK_STOP) * 100:.1f}% ضدك منذ التوصية.")
     if live and pnl >= EXIT_TP:
         lock = pnl * entry * 100
         fire("tp", f"وصل هدف الربح (+{EXIT_TP * 100:.0f}%). الصفقة مقفلة بالقاعدة: ربح ≈ +${lock:,.0f} للعقد. "
@@ -1237,7 +1246,7 @@ def _open_line(p, info):
     return (f"{ico} <b>{ob.esc(p['ticker'])} {p['side']}</b> {p['strike']:,.1f} | {date_ar(p['exp'])}: "
             f"${p['entry'] * 100:,.0f} ← ${info['val'] * 100:,.0f} (<b>{pn * 100:+.0f}%</b>) | دخلت {p['time'][5:10]} "
             f"| أعلى {p.get('peak', 0) * 100:+.0f}% | يتبقى {info['dte']} يوم | "
-            f"هدف ${p['entry'] * (1 + EXIT_TP) * 100:,.0f} · {stock_stop_text(p['side'], p.get('entry_spot'))}")
+            f"هدف ${p['entry'] * (1 + EXIT_TP) * 100:,.0f} · {stock_stop_text(p['side'], p.get('entry_spot'), p.get('stop_frac'))}")
 
 
 def _my_line(p, info, m):
@@ -1621,7 +1630,8 @@ def analyze(force):
             continue
         S = intraday_price(t, s["info"]["S"])
         new = pick_next(side, _live_chains(get_chains_next(t, today), side, S), S, s["info"]["rv"], s["info"]["closes"])
-        old = pick_contracts(side, _live_chains(chains, side, S), S, s["info"]["rv"], s["info"]["closes"])
+        old = [k for k in (pick_contracts(side, _live_chains(chains, side, S), S, s["info"]["rv"], s["info"]["closes"]) or [])
+               if k.get("dte", 99) >= MIN_FALLBACK_DTE]           # H-PRO2: العقود ≤7 أيام مصدر الخسارة
         # القاعدة الجديدة أولاً؛ وإن لم تجد عقداً ضمن السعر (أسهم غالية جداً أو رخيصة جداً) تبقى القاعدة القديمة كما كانت
         contracts = new or old
         _rule_compare(tk, side, new, old)
@@ -1636,14 +1646,14 @@ def analyze(force):
             blocked.append({"tag": "breakhold", "ticker": tk, "side": side, "edge": edge, "strength": s["strength"], "S": S,
                             "contracts": contracts})       # يُتابَع بصمت للمقارنة بالمرسل
             continue
-        why_block = paper_block(tk, side, dates, contracts[0], mv)   # H-PAPER R1/R2
+        why_block = paper_block(tk, side, dates, contracts[0], mv) or pro_block(tk, side, S, s["info"], contracts[0], mv)
         if why_block:
             tag, txt = why_block
             watch.append((tk, txt))
             blocked.append({"tag": tag, "ticker": tk, "side": side, "edge": edge, "strength": s["strength"], "S": S,
                             "contracts": contracts})       # يُتابَع بصمت للمقارنة بالمرسل
             continue
-        s.update(S=S, contracts=contracts)
+        s.update(S=S, contracts=contracts, stop=struct_stop(side, S, s["info"]))
         ideas.append(s)
     ideas.sort(key=lambda x: -x["strength"])
     kept, cnt = [], {"CALL": 0, "PUT": 0}
@@ -1720,18 +1730,20 @@ def event_warning(k):
         return ""
 
 
-def stock_stop_text(side, spot):
-    """نص وقف السهم (قاعدة E3) بمستواه إن عُرف سعر الدخول."""
+def stock_stop_text(side, spot, frac=None):
+    """نص وقف السهم بمستواه إن عُرف سعر الدخول؛ frac من الوقف الهيكلي (H-PRO2) وإلا 1.5%."""
+    fr = frac or STOCK_STOP
+    tag = " خلف المستوى" if frac else ""
     if not spot:
-        return f"وقف إن تحرك السهم {STOCK_STOP * 100:.1f}% ضدك"
-    lvl = spot * (1 - STOCK_STOP) if side == "CALL" else spot * (1 + STOCK_STOP)
-    return f"وقف السهم {'تحت' if side == 'CALL' else 'فوق'} {lvl:,.2f} ({STOCK_STOP * 100:.1f}% ضدك)"
+        return f"وقف إن تحرك السهم {fr * 100:.1f}% ضدك"
+    lvl = spot * (1 - fr) if side == "CALL" else spot * (1 + fr)
+    return f"وقف السهم {'تحت' if side == 'CALL' else 'فوق'} {lvl:,.2f} ({fr * 100:.1f}% ضدك{tag})"
 
 
 def stock_levels(i, k):
     """سطرا الخروج (قاعدة E3): الهدف +100% بمستوى السهم التقريبي، والوقف على السهم نفسه."""
     tp = f"+${k['cost'] * EXIT_TP:,.0f}"
-    sl = stock_stop_text(i["side"], i.get("S"))
+    sl = stock_stop_text(i["side"], i.get("S"), (i.get("stop") or (None, None))[1])
     tail = " | وخروج قبل الانتهاء بأسبوع" if k.get("dte", 99) > TIME_STOP_DAYS else " | وخروج آخر جلسة اليوم إن لم يتحقق الهدف أو الوقف"
     return [f"├ 🎯 <b>خروج بربح</b> {tp}", f"└ 🛑 <b>{sl}</b>{tail}"]
 
@@ -1914,6 +1926,50 @@ def details_message(a, ideas, log_line):
 # ====================== التشغيل ======================
 BTC_LINKED = ("COIN", "MSTR", "HOOD", "SOFI", "TSLA")
 BTC_TH = 0.005
+
+
+def struct_stop(side, S, info):
+    """(خط الوقف، المسافة كنسبة) من أقرب مستوى خلف السعر (H-PRO2)، أو None."""
+    keys = ("pdl", "tlo", "lo20", "sma20", "sma50", "pdh", "thi", "hi20")
+    lv = [info.get(k) for k in keys if info.get(k)]
+    if side == "CALL":
+        below = [x for x in lv if x < S * (1 - STRUCT_GAP)]
+        if not below:
+            return None
+        line = max(below) * (1 - STRUCT_PAD)
+    else:
+        above = [x for x in lv if x > S * (1 + STRUCT_GAP)]
+        if not above:
+            return None
+        line = min(above) * (1 + STRUCT_PAD)
+    frac = min(max(abs(S - line) / S, STRUCT_MIN), STRUCT_MAX)
+    return round(S * (1 - frac) if side == "CALL" else S * (1 + frac), 2), round(frac, 4)
+
+
+def em_day(S, k):
+    """النطاق المتوقع لليوم بالدولار من IV العقد: S × IV ÷ √252، أو None."""
+    try:
+        iv = float(k["em_iv"]) / math.sqrt(max(float(k["dte"]), 0.5) / 365)
+        return S * iv / math.sqrt(252) if iv > 0 else None
+    except Exception:  # noqa: BLE001
+        return None
+
+
+def pro_block(tk, side, S, info, k, moves):
+    """H-PRO2: (الوسم، السبب) لحجب الملاحقة بعد 80% من النطاق المتوقع، أو السوق كله ضد العقد؛ وإلا None."""
+    em, pc = em_day(S, k), info.get("prev_close")
+    if em and pc:
+        mvd = (S - pc) * (1 if side == "CALL" else -1)
+        if mvd >= EM_CHASE * em:
+            return "chase_em", f"ملاحقة: السهم قطع {mvd / em * 100:.0f}% من نطاقه المتوقع اليوم (±${em:,.2f})"
+    try:
+        import market_context as mc
+        ctx = mc.read(moves, tk, side)
+    except Exception:  # noqa: BLE001
+        ctx = {}
+    if ctx.get("lead") == -1 and ctx.get("n_sec") and ctx["n_sec"] - ctx.get("breadth", 0) >= MKT_AGAINST_SECTORS:
+        return "market_against", f"السوق ضد {side}: القيادة عكسه و{ctx['n_sec'] - ctx['breadth']} قطاعات من {ctx['n_sec']} ضده"
+    return None
 
 
 def paper_block(tk, side, dates, k, moves):

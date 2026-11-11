@@ -42,7 +42,8 @@ LABELS = {"late_entry": "بعد وقت آخر دخول", "report_day": "يوم �
           "news_risk": "مخاطر أخبار مرتفعة (مستوى 3)", "news_weak": "أخبار مستوى 2 خفّضت الفرق",
           "daily_stop": "حد الخسارة اليومي", "repeat_side": "تكرار نفس الاتجاه (قبل 90 د)",
           "market_warning": "تحذير سوق (لا Call)", "same_side_cap": "سقف الاتجاه الواحد", "max_ideas_cap": "سقف 3 أفكار",
-          "open_same_dir": "مركز مفتوح بنفس الاتجاه", "breakhold": "كسر غير ثابت أو ملاحقة"}
+          "open_same_dir": "مركز مفتوح بنفس الاتجاه", "breakhold": "كسر غير ثابت أو ملاحقة",
+          "chase_em": "ملاحقة بعد 80% من النطاق المتوقع", "market_against": "السوق كله ضد العقد"}
 _SPX_PREFIX = (("بعد وقت آخر دخول", "late_entry"), ("صدور ", "report_day"), ("حدث كبير اليوم", "event_day"),
                ("مخاطر الأخبار", "news_risk"), ("⛔ حد الخسارة اليومي", "daily_stop"))
 WEAK_PREFIX = "لا اتجاه واضح"
