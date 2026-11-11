@@ -2579,11 +2579,6 @@
    "metropal reports board responsibility statement on consolidated financials"
   ],
   "XOM:PUT": [
-   "oil prices dip after elections",
-   "oil prices drop as virginia challenges proposed changes to 2030 census",
-   "gas oil prices fall after elections",
-   "interest rates could go significantly higher if oil prices keep climbing even if the iran war ends soon",
-   "conocophillips beats estimates on higher oil prices raises dividend",
    "video stocks soar as oil prices plummet following midterm results abc news",
    "india s ongc posts higher q2 profit as surge in crude prices lifts margins",
    "more boe s bailey we would have raised rates today even if we d known of the recent fall in crude oil prices",
@@ -2978,7 +2973,12 @@
    "could falling gas prices stop the fed from hiking interest rates",
    "eia sees brent near 100 bbl through yearend 2026 as middle east supply constraints persist",
    "why falling gas prices won t solve the inflation problem",
-   "canadian heavy crude rebounds amid cheaper tanker costs"
+   "canadian heavy crude rebounds amid cheaper tanker costs",
+   "gas prices estimate rises for 2027 though consumers could still see relief from pain at the pump eia",
+   "oil prices pick up as market mulls over prospects for middle east settlement",
+   "canadian heavy crude prices recover as tanker shipping costs decline co1 com commodity",
+   "sugar prices rise as strength in crude oil spurs short covering",
+   "murphy oil draws boycott call over israeli gas licenses"
   ],
   "MSFT:CALL": [
    "forget the 12 month squeeze microsoft is primed for an explosive ai payoff",
@@ -3017,11 +3017,6 @@
    "dow rallies over 1 000 points and nasdaq gains 2 5 as stocks rebound"
   ],
   "CVX:PUT": [
-   "crude oil prices fall what the u s midterms mean for brent",
-   "oil prices plunge 10 as us midterm results raise hopes of iran war s end",
-   "jetblue surges 14 as oil prices slide american airlines and delta gain 7",
-   "while wall street is obsessing over crude oil prices i m staying far away these 2 etfs show why",
-   "oil in 9 freefall as analysts presume iran war will be stopped by u s democrat takeover",
    "trump blames oil prices gop candidates for midterm loss",
    "oil prices tumble after midterm elections and iran war developments",
    "oil s war premium is leaking out fast and the midterms just sped it up",
@@ -3416,7 +3411,12 @@
    "could falling gas prices stop the fed from hiking interest rates",
    "eia sees brent near 100 bbl through yearend 2026 as middle east supply constraints persist",
    "why falling gas prices won t solve the inflation problem",
-   "canadian heavy crude rebounds amid cheaper tanker costs"
+   "canadian heavy crude rebounds amid cheaper tanker costs",
+   "gas prices estimate rises for 2027 though consumers could still see relief from pain at the pump eia",
+   "oil prices pick up as market mulls over prospects for middle east settlement",
+   "canadian heavy crude prices recover as tanker shipping costs decline co1 com commodity",
+   "sugar prices rise as strength in crude oil spurs short covering",
+   "murphy oil draws boycott call over israeli gas licenses"
   ],
   "JPM:CALL": [
    "which profit leader pays the most with yields between 0 31 and 2 32 bank of america nyse bac exxon mobil nyse xom johnso",
@@ -4019,7 +4019,10 @@
    "broadcom stocks climb 5 18 as goldman calls chips oversold and anthropic stake lands",
    "prediction 2 stocks that will be worth more than amazon 5 years from now",
    "nvidia amd and broadcom lead ai stock rally as coreweave results ease spending fears",
-   "broadcom inc share price avgo rns news articles quotes charts nasdaq avgo"
+   "broadcom inc share price avgo rns news articles quotes charts nasdaq avgo",
+   "aws ceo matt garman says ai inference isn t even 1 of what it will become amzn stock is 1 of 3 stocks to buy",
+   "technology stocks to keep an eye on november 11th",
+   "s p 500 most active stocks on nov 11 2026 semiconductor and tech names dominate"
   ],
   "MSFT:PUT": [
    "why is microsoft stock sliding today",
@@ -4031,7 +4034,9 @@
    "microsoft stock suddenly has an anthropic problem"
   ],
   "INTC:CALL": [
-   "intel intc stock recovers 25 as coreweave earnings boost chip stocks"
+   "intel intc stock recovers 25 as coreweave earnings boost chip stocks",
+   "intel stocks climb 5 23 as softbank reveals 7 4 billion raised against intel shares",
+   "intel stock nasdaq intc jumps 8 on robotics plans"
   ]
  },
  "fired": {
@@ -4126,7 +4131,8 @@
    "news:oil up 2 as iran official says country will keep enriched nuclear material",
    "news:crude prices recover as shipping attacks complicate iran peace efforts",
    "news:european gas prices rebound on iran war uncertainty",
-   "news:eia sees brent near 100 bbl through yearend 2026 as middle east supply constraints persist"
+   "news:eia sees brent near 100 bbl through yearend 2026 as middle east supply constraints persist",
+   "news:oil prices pick up as market mulls over prospects for middle east settlement"
   ],
   "CVX:PUT:2026-11-13:210@2026-11-06": [
    "news:the iran war isn t over but oil traders are already pricing in peace",
@@ -4219,7 +4225,8 @@
    "news:oil up 2 as iran official says country will keep enriched nuclear material",
    "news:crude prices recover as shipping attacks complicate iran peace efforts",
    "news:european gas prices rebound on iran war uncertainty",
-   "news:eia sees brent near 100 bbl through yearend 2026 as middle east supply constraints persist"
+   "news:eia sees brent near 100 bbl through yearend 2026 as middle east supply constraints persist",
+   "news:oil prices pick up as market mulls over prospects for middle east settlement"
   ],
   "PFE:PUT:2026-11-20:30": [
    "down-0.15",
@@ -4265,7 +4272,8 @@
    "news:broadcom shares climb 5 as ai demand signals and anthropic stake lift chip stocks",
    "up0.25",
    "news:broadcom stocks climb 5 18 as goldman calls chips oversold and anthropic stake lands",
-   "news:nvidia amd and broadcom lead ai stock rally as coreweave results ease spending fears"
+   "news:nvidia amd and broadcom lead ai stock rally as coreweave results ease spending fears",
+   "sharp@2026-11-11T14:19-05:00"
   ],
   "AAPL:CALL:2026-11-16:355": [
    "news:apple slides 4 as ternus calls memory pricing unprecedented despite a record 114 5 billion quarter",
@@ -4281,7 +4289,9 @@
   "INTC:CALL:2026-11-27:65": [
    "stock1",
    "sharp@2026-11-11T14:10-05:00",
-   "down-0.15"
+   "down-0.15",
+   "news:intel stocks climb 5 23 as softbank reveals 7 4 billion raised against intel shares",
+   "news:intel stock nasdaq intc jumps 8 on robotics plans"
   ]
  },
  "stock_level": {
@@ -4290,9 +4300,6 @@
   "INTC:CALL:2026-11-27:65": 1
  },
  "seen_macro": [
-  "federal reserve cuts rate setting votes raising risk of slower borrowing relief",
-  "us dollar falls to five week low as oil prices retreat ahead of midterm elections",
-  "the reckoning nobody wants to discuss ai wall street political power and the illusion of infinite growth",
   "wall st rises as oil falls heading into us midterm elections",
   "dow rises 1 oil sinks 7 on iran peace hopes stock market today",
   "user",
@@ -4889,7 +4896,10 @@
   "asx set to fall ai stocks drive wall street higher",
   "us backed lithium americas hit by rising costs on trump tariffs",
   "bitcoin price slips below 74 000 as inflation shock sets up a 70 000 showdown",
-  "inflation spreads across economy putting pressure on fed to accelerate rate hikes"
+  "inflation spreads across economy putting pressure on fed to accelerate rate hikes",
+  "industrial metals advance as copper and aluminum gain despite stronger dollar",
+  "natural gas dips as traders take profits oil p",
+  "higher rates and industry tailwinds 3 major regional banks to watch"
  ],
  "sharp": {
   "XOM:PUT:2026-11-13:165": 165.35,
@@ -4897,6 +4907,7 @@
   "PFE:PUT:2026-11-20:30": 29.355,
   "BA:PUT:2026-11-20:172.5": 173.55,
   "UBER:CALL:2026-11-27:70": 69.47,
-  "INTC:CALL:2026-11-27:65": 62.71
+  "INTC:CALL:2026-11-27:65": 62.71,
+  "AVGO:CALL:2026-11-16:365": 349.47
  }
 }
