@@ -66,3 +66,23 @@ def test_levels_include_round_fifties():
     lv = bh.levels((7530, 7490), (7577, 7480), 7470, 7544)
     names = [n for _, n, _ in lv]
     assert "أعلى أول 30 دقيقة" in names and "7,500" in names and "7,550" in names
+
+
+def test_apply_flip_confirm_and_weak_edge():
+    assert bh.apply("PUT", 9.0, {"kind": "hold_up"}) == ("CALL", 6.0, "flip")
+    assert bh.apply("CALL", 9.0, {"kind": "hold_up"}) == ("CALL", 9.0, "confirm")
+    assert bh.apply(None, 2.0, {"kind": "fail_up"}) == ("PUT", 6.0, "confirm")
+    assert bh.apply("PUT", 4.5, None) == ("PUT", 4.5, "")
+
+
+def test_direction_points_orb_needs_hold():
+    import options_bot as ob
+    from datetime import datetime
+    c = {"n": datetime(2026, 11, 10, 13, 0, tzinfo=ob.NY), "S": 7540.0, "sma20": 7600, "sma50": 7650, "ema9": 1, "ema21": 2, "above_vwap": False, "r30": 0.0, "gap": None,
+         "map": None, "vix": 18, "vpct": 50, "max_pain": None, "es": None, "leaders": None, "orb": (7530.0, 7490.0),
+         "vix_day": None, "pc": None, "pd_hl": None}
+    old = ob.direction_points(dict(c))
+    pend = ob.direction_points(dict(c, orb_hold=None))
+    held = ob.direction_points(dict(c, orb_hold="up"))
+    assert old[0] - pend[0] == 1.5 and held[0] == old[0]
+    assert any("دون ثبات" in r[3] for r in pend[2])

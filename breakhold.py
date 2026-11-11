@@ -104,6 +104,20 @@ def place_block(side, S, day_hl, evt, minute):
     return None
 
 
+EVENT_STRENGTH = 6.0     # أقل قوة لتوصية يحددها حدث كسر/ثبات
+
+
+def apply(side, strength, evt):
+    """(الجهة، القوة، النوع) بعد الحدث الحديث: '' بلا حدث، 'flip' إن قلب الجهة، 'confirm' إن أكدها.
+    side قد يكون None (فرق النقاط دون الحد)؛ الحدث يحدد الجهة عندها."""
+    if not evt:
+        return side, strength, ""
+    new = DIR[evt["kind"]]
+    if side is not None and new != side:
+        return new, EVENT_STRENGTH, "flip"
+    return new, max(strength if side == new else 0.0, EVENT_STRENGTH), "confirm"
+
+
 def event_text(evt):
     if not evt:
         return ""

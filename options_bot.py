@@ -24,6 +24,7 @@ import requests
 import yfinance as yf
 
 import data_gaps   # تسجيل فجوات البيانات فقط (لا يغيّر أي قرار)
+import breakhold as bh   # «الكسر والثبات» (H-BREAKHOLD، مفعّل بقرار المستخدم 11/11/2026)
 
 # ====================== الإعدادات ======================
 SYMBOL = "^SPX"             # يمكنك تغييره إلى "SPY"
@@ -71,6 +72,7 @@ SPY_TARGET_DELTA, SPY_MIN_DELTA, SPY_MAX_SPREAD = 0.45, 0.30, 0.10
 DECAY_MIN_AGE, DECAY_LOSS, DECAY_MAX_ADVERSE = 60, 0.20, 0.0015
 GIVEBACK = 0.50                      # بعد بلوغ الهدف: تنبيه إذا تراجع الربح لنصف أعلى ربح
 LOG_FILE = "zero_dte_log.csv"
+BH_LOG = "breakhold_live_log.csv"    # كل فحص: جهة البوت القديم (بلا الكسر والثبات) والجديد، للمراجعة بعد 15 يوم تداول
 
 NY = ZoneInfo("America/New_York")
 RY = ZoneInfo("Asia/Riyadh")
@@ -568,7 +570,10 @@ def direction_points(c):
         else:
             rows.append(("القياديات", 0, 0, txt + " (محايد)"))
     orb = c.get("orb")
-    if orb:
+    if orb and "orb_hold" in c and c["orb_hold"] is None and not (orb[1] <= c["S"] <= orb[0]):
+        # H-BREAKHOLD: خارج النطاق دون ثبات (أقل من 3 إغلاقات 5د متتالية خارجه) فلا صوت بعد
+        rows.append(("نطاق أول 30 دقيقة", 0, 0, f"{'فوق الأعلى' if c['S'] > orb[0] else 'تحت الأدنى'} دون ثبات بعد ({orb[1]:,.0f} - {orb[0]:,.0f})"))
+    elif orb:
         if c["S"] > orb[0]:
             rows.append(("نطاق أول 30 دقيقة", 1.5, 0, f"اخترق الأعلى {orb[0]:,.0f}"))
         elif c["S"] < orb[1]:
@@ -1070,6 +1075,12 @@ def analyze(force):
     except Exception as ex:
         data_gaps.note("spx", "vix_day", ex)
     c.update({k: bf[k] for k in ("orb", "day_hl", "range1h", "pivots", "pd_hl")})
+    bh_closes, bh_mins = _closed_today(ix, n)
+    c["orb_hold"] = bh.orb_hold(bh_closes, c["orb"]) if c["orb"] else None
+    bh_evt = None
+    if len(bh_closes) >= 3:
+        lv = bh.levels(c["orb"], c["pd_hl"], min(bh_closes), max(bh_closes))
+        bh_evt = bh.latest(bh.events(bh_closes, lv, start=6), len(bh_closes), bh_mins)
     try:
         cv = float(pd.to_numeric(ch.calls["volume"], errors="coerce").fillna(0).sum())
         pv = float(pd.to_numeric(ch.puts["volume"], errors="coerce").fillna(0).sum())
@@ -1086,6 +1097,11 @@ def analyze(force):
         edge = max(edge - 1.0, 0)
     side = "CALL" if bull > bear else "PUT"
     strength = min(10.0, edge * 1.5)
+    c_old = {k: v for k, v in c.items() if k != "orb_hold"}
+    ob_, os_, _ = direction_points(c_old)
+    old_side = ("CALL" if ob_ > os_ else "PUT") if abs(ob_ - os_) - (1.0 if shock["level"] == 2 else 0) >= MIN_EDGE else None
+    side, strength, bh_mode = bh.apply(side if edge >= MIN_EDGE else None, strength, bh_evt)
+    side = side or ("CALL" if bull > bear else "PUT")
 
     # ----- شروط المنع -----
     if market_day(n) and no_entry(n) <= (n.hour, n.minute) <= session_end(n):   # يشمل دقيقة الإغلاق (16:00): كانت تفلت (2/11/2026)
@@ -1099,8 +1115,10 @@ def analyze(force):
             reasons.append(f"حدث كبير اليوم: {nm}. التقلب يصعب توقعه.")
     # منذ 31/10/2026 (بقرار المستخدم، H-NEWSHALF في CLAUDE.md): صدمة مستوى 3 لا تمنع؛ التوصية بنصف الكمية مع تحذير
     news_half = shock["level"] >= 3
-    if edge < MIN_EDGE:
+    if edge < MIN_EDGE and not bh_mode:
         reasons.append(f"لا اتجاه واضح (صعود {bull:.1f} مقابل هبوط {bear:.1f}).")
+    if not is_test and market_day(n):
+        _bh_log(n, S, old_side, side if not reasons else None, bh_evt, bh_mode, c["orb_hold"], reasons)
 
     contracts = []
     REJ.clear()
@@ -1131,7 +1149,37 @@ def analyze(force):
     return {"c": c, "shock": shock, "heads": heads, "events": events, "rows": rows, "bull": bull, "bear": bear,
             "edge": edge, "side": side, "strength": strength, "reasons": reasons, "contracts": contracts,
             "exp": exp, "is_test": is_test, "today": today, "block_tags": block_tags,
-            "blocked_contracts": blocked_contracts, "news_half": news_half}
+            "blocked_contracts": blocked_contracts, "news_half": news_half, "bh_evt": bh_evt, "bh_mode": bh_mode}
+
+
+def _closed_today(ix, n):
+    """(إغلاقات شموع 5د المنتهية اليوم، دقائق بدايتها) لقاعدة الكسر والثبات. الشمعة الجارية لا تُحسب."""
+    try:
+        day = ix[ix.index.date == ix.index[-1].date()]
+        end = day.index + pd.Timedelta(minutes=5)
+        day = day[end <= pd.Timestamp(n)]
+        return [float(x) for x in day["Close"].values], [int(t.hour * 60 + t.minute) for t in day.index]
+    except Exception as e:  # noqa: BLE001
+        data_gaps.note("spx", "breakhold_bars", e)
+        return [], []
+
+
+def _bh_log(n, S, old_side, new_side, evt, mode, orb_hold, reasons):
+    """سطر لكل فحص: جهة البوت القديم والجديد والحدث. تسجيل فقط؛ لا يرمي أبداً."""
+    try:
+        import csv
+        row = {"time": n.isoformat(timespec="minutes"), "S": round(float(S), 2), "old_side": old_side or "",
+               "new_side": new_side or "", "mode": mode, "event": evt["kind"] if evt else "",
+               "level": round(evt["level"], 2) if evt else "", "level_name": evt["name"] if evt else "",
+               "orb_hold": orb_hold or "", "blocked": " | ".join(r[:60] for r in reasons)}
+        new = not os.path.exists(BH_LOG)
+        with open(BH_LOG, "a", encoding="utf-8", newline="") as f:
+            w = csv.DictWriter(f, fieldnames=list(row))
+            if new:
+                w.writeheader()
+            w.writerow(row)
+    except Exception as e:  # noqa: BLE001
+        print("سجل الكسر والثبات:", type(e).__name__)
 
 
 # ====================== الكمية والمستويات والخطة ======================
@@ -1425,6 +1473,7 @@ def signal_message(a):
     if a.get("news_half"):
         L.append("⚠️ <b>أخبار مرتفعة المخاطر:</b> " + esc("، ".join(a["shock"]["flags"][:2])) + ". الكمية المقترحة نصف المعتاد (عقد واحد على الأقل)؛ خفّف حجمك.")
         L.append("")
+    L += bh_lines(a, side)
     if a.get("addon"):
         pv = a["addon"]
         L.append(f"➕ <b>إضافة على رابح:</b> عقد {side} السابق ({pv['strike']:,.0f}، {pv['time'][11:16]}) بلغ الهدف والقوة مستمرة. "
@@ -1436,7 +1485,7 @@ def signal_message(a):
     if c["age"] >= 5:
         L.append(age_note(c["age"]))
     L.append("⚠️ <i>تعليمي وليست توصية. أقصى خسارة هي سعر العقد.</i>")
-    L.append(f"🕒 {stamp()} | SPX إصدار 17")
+    L.append(f"🕒 {stamp()} | SPX إصدار 18")
     return "\n".join(L)
 
 
@@ -1476,6 +1525,17 @@ def ticket_lines(sym, k0, side, exp=None):
         [f"📡 {SRC_NOTE[k0['price_src']]}"] if k0.get("price_src") in SRC_NOTE else [])
 
 
+def bh_lines(a, side):
+    """سطر سبب التوصية حين يحددها كسر ثابت أو فشل ثبات (H-BREAKHOLD)، وإلا []."""
+    if not (a.get("bh_mode") and a.get("bh_evt")):
+        return []
+    if a["bh_mode"] == "flip":
+        opp = "PUT" if side == "CALL" else "CALL"
+        return [f"🔁 <b>انقلاب الاتجاه:</b> {esc(bh.event_text(a['bh_evt']))}. "
+                f"إن كانت لديك صفقة {opp} مفتوحة على الأداة نفسها فأغلقها قبل الدخول.", ""]
+    return [f"📐 <b>كسر ثابت:</b> {esc(bh.event_text(a['bh_evt']))}.", ""]
+
+
 def send_signal(a):
     """توصية SPX: صورة بطاقة العقد مع تذكرة مختصرة. وعند تعذر الصورة نرسل النص الكامل."""
     side, S, c = a["side"], a["c"]["S"], a["c"]
@@ -1495,6 +1555,7 @@ def send_signal(a):
     alt_sep = bool(alt) and sym != ALT_SYMBOL      # بطاقة SPY منفصلة (لا تكرار إن كان العقد الرئيسي هو SPY نفسه)
     if alt_sep:
         cap.append("↳ توصية SPY منفصلة في الرد التالي")
+    cap += [x for x in bh_lines(a, side) if x]
     if a.get("addon"):
         pv = a["addon"]
         cap.append(f"➕ <b>إضافة على رابح:</b> عقد {side} السابق ({pv['strike']:,.0f}، {pv['time'][11:16]}) بلغ الهدف.")
@@ -1512,7 +1573,7 @@ def send_signal(a):
         sub = (f"انتهاء {kexp} (تجريبي)" if a["is_test"] else ("انتهاء اليوم" if kexp == a["exp"] else f"انتهاء {kexp}")) + f" · {sym} {k0.get('spot', S):,.0f}"
         png = cards.contract_card("entry", f"{root_sym(k0)} {k0['strike']:,.0f} {side}", sub, k0["price"], None,
                                   k0["price"], k0["price"] * (1 - STOP_LOSS), k0["price"] * (1 + TAKE_PROFIT),
-                                  badge=f"{side} {dot}", foot=f"{stamp()} | SPX إصدار 17")
+                                  badge=f"{side} {dot}", foot=f"{stamp()} | SPX إصدار 18")
         mid = send_photo(png, "\n".join(cap))
         if mid:
             if alt_sep:
