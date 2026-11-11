@@ -121,4 +121,6 @@ def apply(side, strength, evt):
 def event_text(evt):
     if not evt:
         return ""
-    return f"{KIND_AR[evt['kind']]} عند {evt['name']} ({evt['level']:,.0f}) ← {DIR[evt['kind']]}"
+    lv = f"{evt['level']:,.0f}"
+    where = lv if evt["name"] == lv else f"{evt['name']} ({lv})"
+    return f"{KIND_AR[evt['kind']]} عند {where} ← {DIR[evt['kind']]}"
