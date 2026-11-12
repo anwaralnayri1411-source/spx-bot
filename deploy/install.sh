@@ -61,7 +61,7 @@ rule_c|Mon..Fri *-*-* 21:40:00
 ai_trader|Mon..Fri *-*-* 14..21:01/5:00
 mgt_shadow|*-*-* *:*:30
 mgt_lab|*-*-* *:*:05
-stocks_lab|Mon..Fri *-*-* 14..21:01/5:30
+stocks_lab|Mon..Fri *-*-* 13..21:01/5:30
 falcon|Mon..Fri *-*-* 14..21:*:20
 screens|Mon..Fri *-*-* 14..21:04/5:40
 screens_night|*-*-* *:07/15:50
