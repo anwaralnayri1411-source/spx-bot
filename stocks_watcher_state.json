@@ -3029,13 +3029,6 @@
    "dow rallies over 1 000 points and nasdaq gains 2 5 as stocks rebound"
   ],
   "CVX:PUT": [
-   "dow jones forecast stocks surge on gridlock bets as oil prices retreat",
-   "uae weighs plans for third strait of hormuz bypass pipeline",
-   "asx set to soar as wall street rallies trump media tesla spacex tumble oil prices slump",
-   "la oc gas prices fall again",
-   "us midterm elections crude cools but iran war risks keeps markets guessing",
-   "oil prices drop below 100 as midterms fuel hope for an end to the iran war",
-   "oil dips 8 as investors bet on us iran negotiations",
    "from iran to trade how the us midterms impact the rest of the world",
    "we re assuming 3 50 per gallon for gas wes moss prices 20 years of driving as pumps hit 4 27",
    "crude oil prices plummet in hopes of a quick end to iran war",
@@ -3428,7 +3421,14 @@
    "daily oil price november 11 2026",
    "nvidia stock plunge weighs on wall street while oil prices swing",
    "eia raises 2026 2027 oil price forecasts yet again",
-   "a drop for nvidia s stock weighs on the us market while oil prices swing"
+   "a drop for nvidia s stock weighs on the us market while oil prices swing",
+   "sharp swings for nvidia and oil prices weigh on wall street",
+   "chevron q3 earnings surge on strong refining is the stock a buy now",
+   "eu imports of russian lng top 2025 value ahead of january ban",
+   "oil shock outweighs semiconductor boom s consumption effect",
+   "oil prices are so high that co2 emissions from fossil fuels are dropping",
+   "running on empty diesel price volatility puts pressure on trucking industry",
+   "oil still above 85 eog up 41 in a year is the stock still a buy"
   ],
   "JPM:CALL": [
    "which profit leader pays the most with yields between 0 31 and 2 32 bank of america nyse bac exxon mobil nyse xom johnso",
@@ -3989,7 +3989,8 @@
    "doordash stock faces fresh pressure from amazon uber eats deal",
    "bill ackman s next 13f is due monday here s what to watch",
    "doordash sinks 10 in a week as amazon gives prime members free uber eats delivery",
-   "uber technologies stock expands into parking across 15 us cities"
+   "uber technologies stock expands into parking across 15 us cities",
+   "doordash stock faces fresh pressure as uber eats expands prime"
   ],
   "GOOGL:CALL": [
    "alphabet tpu sales and gemini enterprise are reshaping the bull case nasdaq goog",
@@ -4100,26 +4101,16 @@
    "down-0.3"
   ],
   "CVX:PUT:2026-11-20:210": [
-   "news:eia raises 2026 2027 oil price forecasts yet again"
-  ]
+   "news:eia raises 2026 2027 oil price forecasts yet again",
+   "news:sharp swings for nvidia and oil prices weigh on wall street"
+  ],
+  "AMZN:CALL:2026-11-20:275": [],
+  "AAPL:CALL:2026-11-27:365": []
  },
  "stock_level": {
   "PFE:PUT:2026-11-20:30": 1
  },
  "seen_macro": [
-  "gold falls 0 81 silver slips 2 06 check 24k 22k rates in mumbai delhi bengaluru",
-  "wall street mixed as voters head to polls for midterm elections",
-  "apple drops with most of wall street but gains for other big tech stocks cushion the blow",
-  "federal reserve holds rates as december decision comes into focus",
-  "gabby asare otchere darko writes connecting africa s wallets unlocking africa s trade smartly",
-  "indonesia s financial system remains stable minister says",
-  "stock market after midterm elections 10 things to know",
-  "ultra short bonds may be better bets than cash",
-  "us midterm elections what could they mean for the us dollar",
-  "fed chair kevin warsh s new plan could change how often us borrowers see interest rate relief",
-  "dow futures plunge 290 points 5 things to know before wall street opens",
-  "if you invest 10 000 in palantir today here s what it could be worth by 2030",
-  "section 301 investigations up as congress eyes trade authority",
   "as iran conflict drags on fund managers see rising upside risk in energy markets",
   "gold s bounce off 3 870 isn t a bottom yet",
   "why is gold falling despite inflation gold s role as an inflation hedge in 2026",
@@ -4706,7 +4697,20 @@
   "rbi rate hike in december sbi now expects just 25 bps despite inflation crossing 6",
   "food inflation spikes to 8 94 in oct",
   "goldman sachs stock faces later fed cuts as forecast shifts",
-  "wall street mixed as nvidia ceo jensen huang resigns"
+  "wall street mixed as nvidia ceo jensen huang resigns",
+  "retail inflation hits 6 09 in october crosses rbi s upper tolerance limit",
+  "today s current mortgage rates november 12 2026",
+  "inflation breaches rbi s tolerance band",
+  "oil prices fall as geopolitical tensions ease",
+  "president trump faces new challenges in negotiations with china",
+  "trump threatens to double tariffs on mexico over migrants",
+  "fed s hammack signals support for gradual rate hike path",
+  "nvidia s leadership crisis is dragging the s p 500 lower here s what else is moving",
+  "gold slumps 3 below 3 900 what is causing the continued decline in gold prices",
+  "given no choice by trump canada embraces asia to save auto heartland squeezed by u s tariffs",
+  "october inflation and the fed",
+  "jensen huang s nvidia future hangs by a thread",
+  "employers keep hiring but pay isn t keeping up with inflation"
  ],
  "sharp": {
   "PFE:PUT:2026-11-20:30": 29.355,
