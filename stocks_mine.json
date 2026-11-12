@@ -560,6 +560,28 @@
    "time": "2026-11-12T10:43-05:00",
    "price": null,
    "qty": null
+  },
+  "CVX:PUT:2026-11-20:210|2026-11-12": {
+   "mode": "watch",
+   "ticker": "CVX",
+   "side": "PUT",
+   "exp": "2026-11-20",
+   "strike": 210.0,
+   "day": "2026-11-12",
+   "time": "2026-11-12T11:11-05:00",
+   "price": null,
+   "qty": null
+  },
+  "MSTR:PUT:2026-11-20:110|2026-11-12": {
+   "mode": "watch",
+   "ticker": "MSTR",
+   "side": "PUT",
+   "exp": "2026-11-20",
+   "strike": 110.0,
+   "day": "2026-11-12",
+   "time": "2026-11-12T11:13-05:00",
+   "price": null,
+   "qty": null
   }
  }
 }
