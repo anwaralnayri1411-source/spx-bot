@@ -1,6 +1,21 @@
 {
- "cash": 5209.0,
- "positions": [],
+ "cash": 4727.0,
+ "positions": [
+  {
+   "id": "1112-1401-SPY-PUT-758",
+   "symbol": "SPY   261113P00758000",
+   "under": "SPY",
+   "side": "PUT",
+   "strike": 758.0,
+   "expiry": "2026-11-13",
+   "qty": 2,
+   "entry": 2.41,
+   "time": "2026-11-12T14:01-05:00",
+   "stop": 1.7,
+   "target": 3.6,
+   "invalidation": "إذا استعاد SPX 7625 فوق VWAP ونقطة الانقلاب واستمرت الغاما الصافية موجبة، أو إذا أغلق SPY فوق 760 فالفكرة ملغاة وأخرج فوراً."
+  }
+ ],
  "closed": [
   {
    "id": "1105-0946-PUT-757",
@@ -412,8 +427,8 @@
    "after_last": 0.47
   }
  ],
- "decisions": 112,
+ "decisions": 113,
  "report_day": "2026-11-11",
  "day": "2026-11-12",
- "decisions_today": 17
+ "decisions_today": 18
 }
