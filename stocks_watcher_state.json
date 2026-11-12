@@ -1417,9 +1417,6 @@
    "jpmorgan chase nyse jpm lifts interest income outlook as lending offsets trading slowdown"
   ],
   "COIN:PUT": [
-   "bitcoin near 80 8k as fed holds rates two officials seek hike",
-   "glassnode sees bitcoin testing 78k as etf buying support fades",
-   "jason calacanis bleak bitcoin prediction draws 3m in rival bets but he won t bite",
    "bearish options flow identified in coinbase with shares down 1 2",
    "jpmorgan coca cola dell also say no to okx ice tokenized stock trading plan",
    "btc price on oct 28 2026 at 4pm edt crypto prediction market",
@@ -1816,7 +1813,10 @@
    "bitcoin etf outflows continue as crypto prices sink",
    "bitcoin drops 9 in 30 days nearing key suppor",
    "btc price range on nov 12 2026 at 3pm est crypto prediction market",
-   "bitcoin price falls below 72k as nvidia stock plunges"
+   "bitcoin price falls below 72k as nvidia stock plunges",
+   "buy bitcoin stocks strategy coinbase miners",
+   "bitcoin and ethereum sink to 3 month lows but a bigger crypto selloff may be ahead",
+   "monero price xmr at its lowest since mid october"
   ],
   "HOOD:PUT": [
    "long term bitcoin holders face losses on 4m btc bought above 85k risking sell off if price nears that level again",
@@ -2340,7 +2340,8 @@
    "boeing stock nyse ba may be in line for gains in next few years falls in short term",
    "defense stocks to follow now november 12th",
    "chui s r l purchases first capital ordinary shares",
-   "advini and invivo propose acquisition of bonne nouvelle and mythique brands"
+   "advini and invivo propose acquisition of bonne nouvelle and mythique brands",
+   "horoz lojistik approves share buyback program"
   ],
   "NVDA:PUT": [
    "nvidia stock is set for its worst month in a year time to buy the dip",
@@ -3951,7 +3952,11 @@
    "bitcoin price falls below 72k as nvidia stock plunges",
    "bitcoin has fallen below what recent buyers paid 14 times since 2016 how often did btc recover within 2 weeks",
    "bitcoin long liquidations hit 41 41m in one ho",
-   "btc price range on nov 12 2026 at 3pm est crypto prediction market"
+   "btc price range on nov 12 2026 at 3pm est crypto prediction market",
+   "buy bitcoin stocks strategy coinbase miners",
+   "bitcoin and ethereum sink to 3 month lows but a bigger crypto selloff may be ahead",
+   "europe s largest asset manager doubles down on microstrategy amid msci setback",
+   "monero price xmr at its lowest since mid october"
   ],
   "SOFI:PUT": [
    "nasdaq ceo adena friedman says 23 hour trading starts dec 6 what it means for your retirement money",
@@ -4153,7 +4158,8 @@
   ],
   "AMZN:CALL:2026-11-20:275": [
    "sharp@2026-11-12T11:36-05:00",
-   "news:amazon stocks gain as anthropic ipo puts 271 8 billion value on stake"
+   "news:amazon stocks gain as anthropic ipo puts 271 8 billion value on stake",
+   "down-0.15"
   ],
   "AAPL:CALL:2026-11-27:365": [
    "down-0.15",
@@ -4171,22 +4177,19 @@
    "news:why is bitcoin down today bitcoin price hits 12 week low as msci drops strategy",
    "news:bitcoin price today btc usd falls near 71 000 after jensen huang resigns as nvidia ceo and etf outflows",
    "news:bitcoin price falls below 72k as nvidia stock plunges",
-   "news:bitcoin long liquidations hit 41 41m in one ho"
+   "news:bitcoin long liquidations hit 41 41m in one ho",
+   "news:bitcoin and ethereum sink to 3 month lows but a bigger crypto selloff may be ahead",
+   "news:europe s largest asset manager doubles down on microstrategy amid msci setback"
   ],
   "COIN:PUT:2026-11-20:125": [
-   "news:bitcoin price falls below 72k as nvidia stock plunges"
+   "news:bitcoin price falls below 72k as nvidia stock plunges",
+   "news:bitcoin and ethereum sink to 3 month lows but a bigger crypto selloff may be ahead"
   ]
  },
  "stock_level": {
   "PFE:PUT:2026-11-20:30": 1
  },
  "seen_macro": [
-  "how market position shapes credit card interest rates",
-  "how election losses will alter the politics of trump s tariffs",
-  "wall st futures jump as democrats sweep midterms",
-  "stock futures rebound as wall street confronts the blue tsunami threat to the ai boom",
-  "midterm elections deliver a blue wave the stock market sees green",
-  "democratic sweep adds new twist to markets iran ai and debt worries",
   "psx soars nearly 4 000 points in euphoric rally",
   "apple profit forecast hits tech sector oil prices rise",
   "trump s midterm rebuke gives trading partners room to resist",
@@ -4780,7 +4783,13 @@
   "wall st recovers as energy shares climb nvidia woes deepen",
   "federal reserve rate hikes and market impact insights for spy i",
   "fed s daly warns ai is fueling inflation sees more rate hikes ahead",
-  "ai capital buildout raising housing funding costs fed s schmid"
+  "ai capital buildout raising housing funding costs fed s schmid",
+  "wall street models lag structural reality prompting me to add an overvalued apple",
+  "us fed sets aside october 2027 meeting for policy strategy talks",
+  "federal reserve warns ai infrastructure boom is driving up housing construction and financing costs",
+  "ai stock market bubble could burst if interest rates rise top investor warns",
+  "fed to skip rate vote at october 2027 meeting under warsh plan",
+  "fed s daly says more rate hikes likely needed to fight inflation"
  ],
  "sharp": {
   "PFE:PUT:2026-11-20:30": 29.355,
