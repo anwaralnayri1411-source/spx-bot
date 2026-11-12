@@ -1418,10 +1418,6 @@
    "jpmorgan chase nyse jpm lifts interest income outlook as lending offsets trading slowdown"
   ],
   "COIN:PUT": [
-   "bitcoin price climbs above 81 000 on binance hitting 81 280 in spot trading",
-   "coinbase vs interactive brokers which financial stock has more long term upside",
-   "fed holds rates but dissent keeps bitcoin gold and tech stocks under pressure",
-   "bitcoin price before the fed decision btc near 81 000",
    "pepe soars 17 daily did justin sun fuel the pump",
    "federal reserve holds key interest rates",
    "sk hynix inc tokenized stock coinbase price skhyc price today live chart usd converter market capitalization",
@@ -1817,7 +1813,11 @@
    "bitcoin price prediction btc closes the week below 75 500",
    "adam back says bitcoin could reach 1 million by late 2028 what would have to happen first",
    "can bitcoin hit 1 million chatgpt ai predicts when and how",
-   "coinbase global inc coin stock forecasts"
+   "coinbase global inc coin stock forecasts",
+   "why is crypto crashing 560 billion wiped out as bitcoin price falls below 72k",
+   "could xrp be the next bitcoin",
+   "btc to php bitcoin price in philippine peso",
+   "bitcoin price breaks below 72k as 656m liquidation bloodbath hits crypto"
   ],
   "HOOD:PUT": [
    "long term bitcoin holders face losses on 4m btc bought above 85k risking sell off if price nears that level again",
@@ -3560,9 +3560,6 @@
    "snap tumbles 11 as user growth miss and sluggish ad sales overshadow return to profit pinterest dips meta holds steady"
   ],
   "MSTR:PUT": [
-   "bitcoin price suddenly plunges to 76k as hourly liquidations near 600m",
-   "bitcoin price crashes 5 below 76 000 amid tech rout",
-   "ethereum price prediction 2040 eth outlook",
    "bitcoin price crashes 5 below 75 000 amid tech rout",
    "bitcoin price today btc holds 80 500 as options fear fades and buyers back pepeto",
    "bitcoin price crashes over 5 to 76 000 as tech rout wipes out leveraged longs",
@@ -3959,7 +3956,10 @@
    "bitcoin price prediction btc closes the week below 75 500",
    "btc price range on nov 12 2026 at 2pm est crypto prediction market",
    "adam back says bitcoin could reach 1 million by late 2028 what would have to happen first",
-   "can bitcoin hit 1 million chatgpt ai predicts when and how"
+   "can bitcoin hit 1 million chatgpt ai predicts when and how",
+   "why is crypto crashing 560 billion wiped out as bitcoin price falls below 72k",
+   "could xrp be the next bitcoin",
+   "btc to php bitcoin price in philippine peso"
   ],
   "SOFI:PUT": [
    "nasdaq ceo adena friedman says 23 hour trading starts dec 6 what it means for your retirement money",
@@ -4047,7 +4047,8 @@
    "uber technologies stock expands parking reach across 15 us cities",
    "prosus n v prosy stock price news quote and history",
    "uber jumps 7 on 20 bookings growth we have more demand than we have supply",
-   "tractor supply joins uber marketplace expanding on demand shopping across rural and suburban america"
+   "tractor supply joins uber marketplace expanding on demand shopping across rural and suburban america",
+   "the supreme court says uber s manager was an employee and his 3 000 stock options count too"
   ],
   "GOOGL:CALL": [
    "alphabet tpu sales and gemini enterprise are reshaping the bull case nasdaq goog",
@@ -4183,11 +4184,14 @@
    "news:bitcoin price falls below 72k as nvidia stock plunges",
    "news:bitcoin long liquidations hit 41 41m in one ho",
    "news:bitcoin and ethereum sink to 3 month lows but a bigger crypto selloff may be ahead",
-   "news:europe s largest asset manager doubles down on microstrategy amid msci setback"
+   "news:europe s largest asset manager doubles down on microstrategy amid msci setback",
+   "news:why is crypto crashing 560 billion wiped out as bitcoin price falls below 72k"
   ],
   "COIN:PUT:2026-11-20:125": [
    "news:bitcoin price falls below 72k as nvidia stock plunges",
-   "news:bitcoin and ethereum sink to 3 month lows but a bigger crypto selloff may be ahead"
+   "news:bitcoin and ethereum sink to 3 month lows but a bigger crypto selloff may be ahead",
+   "news:why is crypto crashing 560 billion wiped out as bitcoin price falls below 72k",
+   "news:bitcoin price breaks below 72k as 656m liquidation bloodbath hits crypto"
   ]
  },
  "stock_level": {
@@ -4195,14 +4199,6 @@
   "UBER:CALL:2026-11-27:70": 1
  },
  "seen_macro": [
-  "us stock market today s p 500 futures edge up on jobs data inflation test",
-  "circle stock drops crcl cuts 5 of staff as falling interest rates squeeze stablecoin reserve income",
-  "a song sung blue nope this was the hallelujah chorus sung blue",
-  "rivian car buyers are driving a wall street rethink on the stock",
-  "us midterms investor focus shifts to west asia global trade",
-  "gold price today spot gold climbs 2 74 to 4 035 after us adp jobs data",
-  "midterm losses unlikely to soften trump s trade stance towards india experts",
-  "trump midterm setback gives asia trade partners leverage",
   "stock market today dow eyes 2 jump as amd earnings ease ai spending fears",
   "stock market today global markets rebound",
   "us oil prices fall below 93 as markets react to midterm election results",
@@ -4794,7 +4790,15 @@
   "2028 isn t over a case against republican defeatism",
   "fed forced to confront case for bigger and faster rate rises",
   "2 50pm markets update",
-  "ftse 100 set for softer open as sticky us inflation lifts rate fears"
+  "ftse 100 set for softer open as sticky us inflation lifts rate fears",
+  "inflation stays hot 3 financial stocks to watch as fed rate risks rise",
+  "silver tumbles over 3 as fed rate hike bets fuel us dollar rally talkmarkets",
+  "wall street slashes d wave stock targets by up to 55",
+  "it s still a historically low fire economy and the trend in the unemployment rate is still downward talkmarkets",
+  "fed interest rate odds traders see 87 chance of quarter point hike in december",
+  "fed s daly says more rate hikes needed to cool inflation",
+  "rates come down again but remain over 7",
+  "dow 0 40 s p 500 0 29 nasdaq 0 31 brent oil"
  ],
  "sharp": {
   "PFE:PUT:2026-11-20:30": 29.355,
