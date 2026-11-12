@@ -1,0 +1,423 @@
+//@version=6
+// ============================================================================
+// عين السوق | هيكل السوق SMC  (H-SMC، المرحلة 2 — للمراجعة البصرية، ليس توصية)
+// نفس تعريفات smc.py:
+//   • القمة/القاع يظهر فقط بعد n شموع تؤكده (لا نظر للأمام).
+//   • BOS = إغلاق فوق أعلى قمة لم تُكسر (صعود) / تحت أدنى قاع (هبوط).
+//   • القاع المحمي = أدنى قاع بين القمة المكسورة وشمعة الكسر. MSS = إغلاق تحته (لا الذيل).
+//   • OB = آخر شمعة معاكسة عند منبع الساق، مع الكسر فقط. يُختبر عند 50%، ويُلغى بالإغلاق خلفه.
+//   • FVG: قوية = ذيل يلمس والإغلاق خارجها، عادية = إغلاق داخلها، ضعيفة = إغلاق خلفها (تُحذف).
+//   • EQH/EQL = قمتان/قاعان بفرق ≤ 0.1×ATR. سويب = ذيل يتجاوز والإغلاق يرجع.
+//   • IDM = أول قاع مؤكد بعد BOS صاعد (والعكس)، ويُعلَّم عند أخذه.
+//   • Premium/Discount = منتصف النطاق من المحمي إلى أبعد سعر منذه.
+// ============================================================================
+indicator("عين السوق | هيكل SMC", overlay = true, max_boxes_count = 300, max_lines_count = 300, max_labels_count = 300, max_bars_back = 1000)
+
+n       = input.int(3, "تأكيد القمة/القاع (شموع)", minval = 1, maxval = 10)
+eqMult  = input.float(0.1, "تسامح EQH/EQL × ATR", step = 0.05)
+htf     = input.timeframe("60", "الفريم الأكبر للاتجاه")
+showFvg = input.bool(true, "إظهار FVG")
+showOb  = input.bool(true, "إظهار Order Block")
+showEq  = input.bool(true, "إظهار EQH/EQL والسويب")
+showPd  = input.bool(true, "إظهار خط التوازن 50%")
+showIdm = input.bool(true, "إظهار IDM")
+maxFvg  = input.int(20, "أقصى عدد FVG فعّالة", minval = 1, maxval = 100)
+
+cUp   = color.new(color.teal, 0)
+cDn   = color.new(color.red, 0)
+atr14 = ta.atr(14)
+
+// ---------------------------------------------------------------------------
+// أداة: أدنى قاع / أعلى قمة من شمعة fromIdx حتى الآن (مع موقعه)
+f_lowest(int fromIdx) =>
+    float lo = low
+    int li = bar_index
+    int span = math.min(bar_index - fromIdx, 900)
+    for k = 0 to span
+        if low[k] < lo
+            lo := low[k]
+            li := bar_index - k
+    [lo, li]
+
+f_highest(int fromIdx) =>
+    float hi = high
+    int hix = bar_index
+    int span = math.min(bar_index - fromIdx, 900)
+    for k = 0 to span
+        if high[k] > hi
+            hi := high[k]
+            hix := bar_index - k
+    [hi, hix]
+
+// ---------------------------------------------------------------------------
+// اتجاه مختصر لاستعماله في الفريم الأكبر (نفس منطق BOS/MSS بلا رسم)
+f_trend(int len) =>
+    var int tr = 0
+    var float shP = na
+    var int shI = na
+    var bool shB = true
+    var float slP = na
+    var int slI = na
+    var bool slB = true
+    var float prot = na
+    var int protI = na
+    float ph = ta.pivothigh(high, len, len)
+    float pl = ta.pivotlow(low, len, len)
+    if not na(ph)
+        if na(shP) or shB or ph > shP
+            shP := ph
+            shI := bar_index - len
+            shB := false
+    if not na(pl)
+        if na(slP) or slB or pl < slP
+            slP := pl
+            slI := bar_index - len
+            slB := false
+    if tr == 1
+        if close < prot
+            [hv, hi] = f_highest(protI)
+            tr := -1
+            prot := hv
+            protI := hi
+            slB := true
+        else if not shB and close > shP
+            [lv, li] = f_lowest(shI)
+            prot := lv
+            protI := li
+            shB := true
+    else if tr == -1
+        if close > prot
+            [lv, li] = f_lowest(protI)
+            tr := 1
+            prot := lv
+            protI := li
+            shB := true
+        else if not slB and close < slP
+            [hv, hi] = f_highest(slI)
+            prot := hv
+            protI := hi
+            slB := true
+    else
+        if not shB and close > shP
+            [lv, li] = f_lowest(shI)
+            tr := 1
+            prot := lv
+            protI := li
+            shB := true
+        else if not slB and close < slP
+            [hv, hi] = f_highest(slI)
+            tr := -1
+            prot := hv
+            protI := hi
+            slB := true
+    tr
+
+// اتجاه الفريم الأكبر من شموع مكتملة فقط: [1] مع lookahead_on = بلا نظر للأمام
+htfTrend = request.security(syminfo.tickerid, htf, f_trend(n)[1], lookahead = barmerge.lookahead_on)
+
+// ---------------------------------------------------------------------------
+// حالة الهيكل في الفريم الحالي
+var int   trend = 0
+var float shPx = na
+var int   shIdx = na
+var bool  shBroken = true
+var float slPx = na
+var int   slIdx = na
+var bool  slBroken = true
+var float protPx = na
+var int   protIdx = na
+var line  protLine = na
+var float rangeExt = na          // أبعد سعر منذ المحمي (للتوازن)
+
+// IDM
+var int   idmDir = 0
+var int   idmAfter = na
+var float idmPx = na
+var bool  idmOpen = false
+var line  idmLine = na
+
+// سيولة القمم/القيعان المؤكدة المفتوحة
+var array<float> liqHi = array.new<float>()
+var array<int>   liqHiI = array.new<int>()
+var array<float> liqLo = array.new<float>()
+var array<int>   liqLoI = array.new<int>()
+
+// FVG فعّالة
+var array<box>   fvgBox = array.new<box>()
+var array<int>   fvgDir = array.new<int>()
+var array<bool>  fvgTouched = array.new<bool>()
+
+// OB فعّالة
+var array<box>   obBox = array.new<box>()
+var array<int>   obDir = array.new<int>()
+var array<bool>  obTested = array.new<bool>()
+
+ph = ta.pivothigh(high, n, n)
+pl = ta.pivotlow(low, n, n)
+
+// ---- 1) تأكيد القمة/القاع + EQH/EQL + IDM
+if not na(ph)
+    int pi = bar_index - n
+    float tol = eqMult * atr14
+    if showEq and array.size(liqHi) > 0
+        for k = array.size(liqHi) - 1 to 0
+            if pi - array.get(liqHiI, k) <= 60 and math.abs(array.get(liqHi, k) - ph) <= tol
+                line.new(array.get(liqHiI, k), array.get(liqHi, k), pi, ph, color = color.orange, style = line.style_dotted, width = 2)
+                label.new(pi, ph, "EQH", style = label.style_none, textcolor = color.orange, size = size.small, yloc = yloc.abovebar)
+                break
+    array.push(liqHi, ph)
+    array.push(liqHiI, pi)
+    if array.size(liqHi) > 40
+        array.shift(liqHi)
+        array.shift(liqHiI)
+    if na(shPx) or shBroken or ph > shPx
+        shPx := ph
+        shIdx := pi
+        shBroken := false
+    if showIdm and idmDir == -1 and na(idmPx) and pi > idmAfter
+        idmPx := ph
+        idmOpen := true
+        idmLine := line.new(pi, ph, bar_index, ph, color = color.gray, style = line.style_dashed)
+        label.new(pi, ph, "IDM", style = label.style_label_down, color = color.new(color.gray, 70), textcolor = color.white, size = size.tiny)
+
+if not na(pl)
+    int pj = bar_index - n
+    float tol2 = eqMult * atr14
+    if showEq and array.size(liqLo) > 0
+        for k = array.size(liqLo) - 1 to 0
+            if pj - array.get(liqLoI, k) <= 60 and math.abs(array.get(liqLo, k) - pl) <= tol2
+                line.new(array.get(liqLoI, k), array.get(liqLo, k), pj, pl, color = color.orange, style = line.style_dotted, width = 2)
+                label.new(pj, pl, "EQL", style = label.style_none, textcolor = color.orange, size = size.small, yloc = yloc.belowbar)
+                break
+    array.push(liqLo, pl)
+    array.push(liqLoI, pj)
+    if array.size(liqLo) > 40
+        array.shift(liqLo)
+        array.shift(liqLoI)
+    if na(slPx) or slBroken or pl < slPx
+        slPx := pl
+        slIdx := pj
+        slBroken := false
+    if showIdm and idmDir == 1 and na(idmPx) and pj > idmAfter
+        idmPx := pl
+        idmOpen := true
+        idmLine := line.new(pj, pl, bar_index, pl, color = color.gray, style = line.style_dashed)
+        label.new(pj, pl, "IDM", style = label.style_label_up, color = color.new(color.gray, 70), textcolor = color.white, size = size.tiny)
+
+// ---- 2) الكسر بالإغلاق
+int   evDir = 0
+bool  evMss = false
+float evLevel = na
+int   evFrom = na
+int   origin = na
+
+if trend == 1
+    if close < protPx
+        [hv, hix] = f_highest(protIdx)
+        evDir := -1
+        evMss := true
+        evLevel := protPx
+        evFrom := protIdx
+        origin := hix
+        slBroken := true
+    else if not shBroken and close > shPx
+        [lv, lix] = f_lowest(shIdx)
+        evDir := 1
+        evLevel := shPx
+        evFrom := shIdx
+        origin := lix
+        shBroken := true
+else if trend == -1
+    if close > protPx
+        [lv, lix] = f_lowest(protIdx)
+        evDir := 1
+        evMss := true
+        evLevel := protPx
+        evFrom := protIdx
+        origin := lix
+        shBroken := true
+    else if not slBroken and close < slPx
+        [hv, hix] = f_highest(slIdx)
+        evDir := -1
+        evLevel := slPx
+        evFrom := slIdx
+        origin := hix
+        slBroken := true
+else
+    if not shBroken and close > shPx
+        [lv, lix] = f_lowest(shIdx)
+        evDir := 1
+        evLevel := shPx
+        evFrom := shIdx
+        origin := lix
+        shBroken := true
+    else if not slBroken and close < slPx
+        [hv, hix] = f_highest(slIdx)
+        evDir := -1
+        evLevel := slPx
+        evFrom := slIdx
+        origin := hix
+        slBroken := true
+
+if evDir != 0
+    int off = bar_index - origin
+    // FVG في ساق الكسر؟ (درس 14: كسر بلا FVG ضعيف)
+    bool disp = false
+    for k = 0 to math.max(off - 1, 0)
+        if evDir == 1 and low[k] > high[k + 2]
+            disp := true
+        if evDir == -1 and high[k] < low[k + 2]
+            disp := true
+    color ec = evDir == 1 ? cUp : cDn
+    line.new(evFrom, evLevel, bar_index, evLevel, color = ec, style = evMss ? line.style_solid : line.style_dashed, width = evMss ? 2 : 1)
+    label.new(bar_index, evLevel, (evMss ? "MSS" : "BOS") + (disp ? "" : " ⚠"), style = evDir == 1 ? label.style_label_down : label.style_label_up,
+              color = color.new(ec, 20), textcolor = color.white, size = size.small,
+              tooltip = disp ? "الكسر ترك FVG في ساقه" : "كسر بلا FVG في ساقه = ضعيف (درس 14)")
+    trend := evDir
+    protPx := evDir == 1 ? low[off] : high[off]
+    protIdx := origin
+    rangeExt := evDir == 1 ? high : low
+    line.delete(protLine)
+    protLine := line.new(origin, protPx, bar_index + 5, protPx, color = color.new(ec, 0), width = 2, extend = extend.right)
+    // OB: آخر شمعة معاكسة عند منبع الساق (حتى 5 شموع قبله)
+    int kOb = off
+    for k = off to math.min(off + 5, 900)
+        if (evDir == 1 and close[k] < open[k]) or (evDir == -1 and close[k] > open[k])
+            kOb := k
+            break
+    float obTop = evDir == 1 ? high[kOb] : math.max(high[kOb], high[off])
+    float obBot = evDir == 1 ? math.min(low[kOb], low[off]) : low[kOb]
+    if showOb
+        array.push(obBox, box.new(bar_index - kOb, obTop, bar_index, obBot, border_color = ec, bgcolor = color.new(ec, 80), extend = extend.right,
+                                  text = evMss ? "OB (MSS)" : "OB", text_color = ec, text_size = size.tiny, text_halign = text.align_left))
+        array.push(obDir, evDir)
+        array.push(obTested, false)
+    // IDM جديد ينتظر أول قمة/قاع بعد الكسر
+    if not na(idmLine)
+        line.delete(idmLine)
+    idmDir := evDir
+    idmAfter := bar_index
+    idmPx := na
+    idmOpen := false
+
+// امتداد النطاق للتوازن
+if trend == 1
+    rangeExt := math.max(nz(rangeExt, high), high)
+if trend == -1
+    rangeExt := math.min(nz(rangeExt, low), low)
+eqLine = trend == 0 ? na : (protPx + rangeExt) / 2
+plot(showPd ? eqLine : na, "التوازن 50%", color = color.new(color.purple, 30), style = plot.style_linebr, linewidth = 1)
+
+// ---- 3) FVG: رصد وتحديث
+if showFvg
+    if array.size(fvgBox) > 0
+        for k = array.size(fvgBox) - 1 to 0
+            box b = array.get(fvgBox, k)
+            int d = array.get(fvgDir, k)
+            float top = box.get_top(b)
+            float bot = box.get_bottom(b)
+            bool touch = d == 1 ? low <= top : high >= bot
+            if touch and box.get_left(b) < bar_index - 2
+                bool weak = d == 1 ? close < bot : close > top
+                bool strong = d == 1 ? close > top : close < bot
+                if weak
+                    box.delete(b)
+                    array.remove(fvgBox, k)
+                    array.remove(fvgDir, k)
+                    array.remove(fvgTouched, k)
+                else if not array.get(fvgTouched, k)
+                    array.set(fvgTouched, k, true)
+                    color fc = d == 1 ? cUp : cDn
+                    box.set_bgcolor(b, color.new(fc, strong ? 55 : 82))
+                    box.set_text(b, strong ? "FVG قوية" : "FVG عادية")
+    if low > high[2]
+        array.push(fvgBox, box.new(bar_index - 2, low, bar_index, high[2], border_color = color.new(cUp, 60), bgcolor = color.new(cUp, 88),
+                                   extend = extend.right, text = "FVG", text_color = cUp, text_size = size.tiny, text_halign = text.align_right))
+        array.push(fvgDir, 1)
+        array.push(fvgTouched, false)
+    else if high < low[2]
+        array.push(fvgBox, box.new(bar_index - 2, low[2], bar_index, high, border_color = color.new(cDn, 60), bgcolor = color.new(cDn, 88),
+                                   extend = extend.right, text = "FVG", text_color = cDn, text_size = size.tiny, text_halign = text.align_right))
+        array.push(fvgDir, -1)
+        array.push(fvgTouched, false)
+    while array.size(fvgBox) > maxFvg
+        box.delete(array.shift(fvgBox))
+        array.shift(fvgDir)
+        array.shift(fvgTouched)
+
+// ---- 4) OB: اختبار 50% أو كسر بالإغلاق
+if showOb and array.size(obBox) > 0
+    for k = array.size(obBox) - 1 to 0
+        box b = array.get(obBox, k)
+        if box.get_left(b) >= bar_index - 1
+            continue
+        int d = array.get(obDir, k)
+        float top = box.get_top(b)
+        float bot = box.get_bottom(b)
+        float mid = (top + bot) / 2
+        bool broken = d == 1 ? close < bot : close > top
+        if broken
+            box.set_right(b, bar_index)
+            box.set_extend(b, extend.none)
+            box.set_bgcolor(b, color.new(color.gray, 88))
+            box.set_border_color(b, color.new(color.gray, 60))
+            array.remove(obBox, k)
+            array.remove(obDir, k)
+            array.remove(obTested, k)
+        else if not array.get(obTested, k) and (d == 1 ? low <= mid : high >= mid)
+            array.set(obTested, k, true)
+            label.new(bar_index, d == 1 ? low : high, "50%", style = d == 1 ? label.style_label_up : label.style_label_down,
+                      color = color.new(d == 1 ? cUp : cDn, 40), textcolor = color.white, size = size.tiny)
+    while array.size(obBox) > 12
+        array.shift(obBox)
+        array.shift(obDir)
+        array.shift(obTested)
+
+// ---- 5) السويب على القمم/القيعان المؤكدة
+if showEq
+    if array.size(liqHi) > 0
+        for k = array.size(liqHi) - 1 to 0
+            float px = array.get(liqHi, k)
+            if array.get(liqHiI, k) < bar_index - n and high > px
+                if close <= px
+                    label.new(bar_index, high, "سويب", style = label.style_label_down, color = color.new(color.orange, 20), textcolor = color.white, size = size.tiny)
+                array.remove(liqHi, k)
+                array.remove(liqHiI, k)
+    if array.size(liqLo) > 0
+        for k = array.size(liqLo) - 1 to 0
+            float px = array.get(liqLo, k)
+            if array.get(liqLoI, k) < bar_index - n and low < px
+                if close >= px
+                    label.new(bar_index, low, "سويب", style = label.style_label_up, color = color.new(color.orange, 20), textcolor = color.white, size = size.tiny)
+                array.remove(liqLo, k)
+                array.remove(liqLoI, k)
+
+// ---- 6) IDM مأخوذ
+if showIdm and idmOpen and not na(idmPx)
+    line.set_x2(idmLine, bar_index)
+    bool taken = idmDir == 1 ? low < idmPx : high > idmPx
+    if taken
+        label.new(bar_index, idmPx, "IDM ✓", style = idmDir == 1 ? label.style_label_up : label.style_label_down,
+                  color = color.new(color.gray, 30), textcolor = color.white, size = size.tiny, tooltip = "الاستدراج أُخذ")
+        idmOpen := false
+
+// ---------------------------------------------------------------------------
+// لوحة الحالة
+var table tb = table.new(position.top_right, 2, 5, bgcolor = color.new(color.black, 30), border_width = 1)
+f_tr(int t) => t == 1 ? "صاعد" : t == -1 ? "هابط" : "غير محدد"
+f_col(int t) => t == 1 ? cUp : t == -1 ? cDn : color.gray
+if barstate.islast
+    table.cell(tb, 0, 0, "الفريم الأكبر (" + htf + ")", text_color = color.white, text_size = size.small)
+    table.cell(tb, 1, 0, f_tr(nz(htfTrend)), text_color = f_col(nz(htfTrend)), text_size = size.small)
+    table.cell(tb, 0, 1, "الفريم الحالي", text_color = color.white, text_size = size.small)
+    table.cell(tb, 1, 1, f_tr(trend), text_color = f_col(trend), text_size = size.small)
+    table.cell(tb, 0, 2, "المحمي", text_color = color.white, text_size = size.small)
+    table.cell(tb, 1, 2, na(protPx) ? "-" : str.tostring(protPx, format.mintick), text_color = color.white, text_size = size.small)
+    table.cell(tb, 0, 3, "المنطقة", text_color = color.white, text_size = size.small)
+    table.cell(tb, 1, 3, na(eqLine) ? "-" : close > eqLine ? "غالية (Premium)" : "رخيصة (Discount)", text_color = color.white, text_size = size.small)
+    table.cell(tb, 0, 4, "التوافق", text_color = color.white, text_size = size.small)
+    bool al = trend != 0 and trend == nz(htfTrend)
+    table.cell(tb, 1, 4, al ? "متوافق ✓" : "غير متوافق", text_color = al ? color.lime : color.gray, text_size = size.small)
+
+alertcondition(evDir == 1 and evMss, "MSS صاعد", "MSS صاعد على {{ticker}}")
+alertcondition(evDir == -1 and evMss, "MSS هابط", "MSS هابط على {{ticker}}")
