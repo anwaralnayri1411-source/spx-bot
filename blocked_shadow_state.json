@@ -14,8 +14,8 @@
    "strength": "5.7",
    "occ": "DIS261127C00120000",
    "peak_pnl": 0.264,
-   "close_pnl": 0.183,
-   "quotes": 288,
+   "close_pnl": 0.122,
+   "quotes": 289,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -34,8 +34,8 @@
    "strength": "5.7",
    "occ": "DIS261127C00120000",
    "peak_pnl": 0.159,
-   "close_pnl": 0.086,
-   "quotes": 230,
+   "close_pnl": 0.029,
+   "quotes": 231,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -54,8 +54,8 @@
    "strength": "7.6",
    "occ": "DIS261127C00120000",
    "peak_pnl": 0.133,
-   "close_pnl": 0.061,
-   "quotes": 158,
+   "close_pnl": 0.006,
+   "quotes": 159,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -74,8 +74,8 @@
    "strength": "6.7",
    "occ": "WMT261127C00130000",
    "peak_pnl": 0.049,
-   "close_pnl": -0.135,
-   "quotes": 133,
+   "close_pnl": -0.149,
+   "quotes": 134,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -94,8 +94,8 @@
    "strength": "8.0",
    "occ": "BA261120P00172500",
    "peak_pnl": 0.077,
-   "close_pnl": -0.303,
-   "quotes": 86,
+   "close_pnl": -0.279,
+   "quotes": 87,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -114,8 +114,8 @@
    "strength": "5.7",
    "occ": "HOOD261127P00080000",
    "peak_pnl": 0.143,
-   "close_pnl": -0.238,
-   "quotes": 86,
+   "close_pnl": -0.241,
+   "quotes": 87,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -135,7 +135,7 @@
    "occ": "DIS261127C00121000",
    "peak_pnl": 0.009,
    "close_pnl": -0.101,
-   "quotes": 61,
+   "quotes": 62,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -154,8 +154,8 @@
    "strength": "7.0",
    "occ": "V261120C00430000",
    "peak_pnl": 0.301,
-   "close_pnl": 0.144,
-   "quotes": 42,
+   "close_pnl": 0.209,
+   "quotes": 43,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -174,8 +174,8 @@
    "strength": "6.9",
    "occ": "NFLX261127P00063000",
    "peak_pnl": 0.0,
-   "close_pnl": -0.163,
-   "quotes": 14,
+   "close_pnl": -0.196,
+   "quotes": 15,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -194,8 +194,8 @@
    "strength": "5.7",
    "occ": "TSLA261120C00415000",
    "peak_pnl": 0.037,
-   "close_pnl": -0.026,
-   "quotes": 14,
+   "close_pnl": -0.011,
+   "quotes": 15,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -214,8 +214,8 @@
    "strength": "7.5",
    "occ": "BA261120P00170000",
    "peak_pnl": 0.066,
-   "close_pnl": -0.259,
-   "quotes": 14,
+   "close_pnl": -0.265,
+   "quotes": 15,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -234,8 +234,8 @@
    "strength": "7.0",
    "occ": "AAPL261127C00365000",
    "peak_pnl": 0.0,
-   "close_pnl": -0.08,
-   "quotes": 11,
+   "close_pnl": -0.074,
+   "quotes": 12,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -254,8 +254,8 @@
    "strength": "6.2",
    "occ": "AMZN261127C00280000",
    "peak_pnl": 0.045,
-   "close_pnl": -0.075,
-   "quotes": 11,
+   "close_pnl": -0.171,
+   "quotes": 12,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -274,8 +274,8 @@
    "strength": "5.7",
    "occ": "DIS261127C00124000",
    "peak_pnl": 0.0,
-   "close_pnl": -0.051,
-   "quotes": 5,
+   "close_pnl": -0.047,
+   "quotes": 6,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -1878,7 +1878,8 @@
   "20261112T1057|stocks|earn_in_life|DIS|CALL|124|2026-11-27",
   "20261112T1057|stocks|open_same_dir|BA|PUT|172.5|2026-11-20",
   "20261112T1112|stocks|chase_em|AMZN|CALL|280|2026-11-27",
-  "20261112T1112|stocks|open_same_dir|BA|PUT|172.5|2026-11-20"
+  "20261112T1112|stocks|open_same_dir|BA|PUT|172.5|2026-11-20",
+  "20261112T1127|stocks|open_same_dir|BA|PUT|172.5|2026-11-20"
  ],
  "last": {
   "spx|CALL|SPY": "2026-11-11T14:40-05:00",
