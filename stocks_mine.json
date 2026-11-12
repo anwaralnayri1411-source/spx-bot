@@ -538,6 +538,28 @@
    "time": "2026-11-11T11:03-05:00",
    "price": null,
    "qty": null
+  },
+  "AAPL:CALL:2026-11-27:365|2026-11-12": {
+   "mode": "watch",
+   "ticker": "AAPL",
+   "side": "CALL",
+   "exp": "2026-11-27",
+   "strike": 365.0,
+   "day": "2026-11-12",
+   "time": "2026-11-12T10:43-05:00",
+   "price": null,
+   "qty": null
+  },
+  "AMZN:CALL:2026-11-20:275|2026-11-12": {
+   "mode": "watch",
+   "ticker": "AMZN",
+   "side": "CALL",
+   "exp": "2026-11-20",
+   "strike": 275.0,
+   "day": "2026-11-12",
+   "time": "2026-11-12T10:43-05:00",
+   "price": null,
+   "qty": null
   }
  }
 }
