@@ -79,7 +79,10 @@
    "meta amzn stocks jump as jpmorgan picks pair over alphabet sees stronger ai returns cloud growth",
    "amazon aws just confirmed bill ackman s 50 margin thesis nasdaq amzn",
    "amazon stock rises amzn ahead of a leo rocket launch to expand satellite internet services",
-   "investor ruchir sharma warns of ai stock bubble amid rising rates amazon amzn fairly valued"
+   "investor ruchir sharma warns of ai stock bubble amid rising rates amazon amzn fairly valued",
+   "alphabet climbs 3 as nvidia s leadership shake up puts google s ai chips in the spotlight microsoft gains 2 amazon ticks",
+   "amazon stocks gain as anthropic ipo puts 271 8 billion value on stake",
+   "what is going on with amazon stock on thursday"
   ],
   "WMT:CALL": [
    "walmart slashes membership fees with this new bundle",
@@ -2264,7 +2267,9 @@
    "apple s aapl iphone duo is in short supply heading into the holidays says ubs",
    "apple stock called safe haven hits record high",
    "drama notable only by its absence why investors love apple nasdaq aapl",
-   "trump floats apple chairman tim cook as jensen huang s successor"
+   "trump floats apple chairman tim cook as jensen huang s successor",
+   "apple inc aapl stock price news quote history",
+   "what is going on with apple stock on thursday"
   ],
   "BA:PUT": [
    "boeing nyse ba sets new 52 week low on disappointing earnings",
@@ -2330,7 +2335,8 @@
    "boeing stock stays in focus as susquehanna keeps 250 us dollar target",
    "analysts are bullish on these industrial goods stocks boeing ba core main cnm",
    "boeing s deal losses are coming into sharper view",
-   "boeing layoffs raise new fears about its financial future"
+   "boeing layoffs raise new fears about its financial future",
+   "boeing stock nyse ba may be in line for gains in next few years falls in short term"
   ],
   "NVDA:PUT": [
    "nvidia stock is set for its worst month in a year time to buy the dip",
@@ -3932,7 +3938,11 @@
    "bitcoin price below 72 000 why btc is falling today",
    "why is bitcoin down today bitcoin price hits 12 week low as msci drops strategy",
    "u s dollar swings are playing a bigger role in bitcoin price moves",
-   "bitcoin price slides below 72k as jensen huang exits nvidia is 68 000 next"
+   "bitcoin price slides below 72k as jensen huang exits nvidia is 68 000 next",
+   "stablecoin supply is shrinking at the fastest pace since june 2022 what happened to bitcoin the last time",
+   "ethereum price crash can ethereum price today hold the 2 000 support",
+   "tsmc employee data leak hackers demand 3 bitcoin as 46 000 records surface",
+   "bitcoin price today btc usd falls near 71 000 after jensen huang resigns as nvidia ceo and etf outflows"
   ],
   "SOFI:PUT": [
    "nasdaq ceo adena friedman says 23 hour trading starts dec 6 what it means for your retirement money",
@@ -4133,7 +4143,8 @@
    "news:tractor supply joins uber marketplace expanding on demand shopping across rural and suburban america"
   ],
   "AMZN:CALL:2026-11-20:275": [
-   "sharp@2026-11-12T11:36-05:00"
+   "sharp@2026-11-12T11:36-05:00",
+   "news:amazon stocks gain as anthropic ipo puts 271 8 billion value on stake"
   ],
   "AAPL:CALL:2026-11-27:365": [
    "down-0.15",
@@ -4148,18 +4159,14 @@
    "news:bitcoin price breaks below 72k as 656m liquidation bloodbath hits crypto",
    "news:crypto news today bitcoin loses 72k as 550b vanishes from cryptocurrency market",
    "news:bitcoin price slips below usd 72 000 as etf outflows persist",
-   "news:why is bitcoin down today bitcoin price hits 12 week low as msci drops strategy"
+   "news:why is bitcoin down today bitcoin price hits 12 week low as msci drops strategy",
+   "news:bitcoin price today btc usd falls near 71 000 after jensen huang resigns as nvidia ceo and etf outflows"
   ]
  },
  "stock_level": {
   "PFE:PUT:2026-11-20:30": 1
  },
  "seen_macro": [
-  "bloomberg intelligence official global aviation industry faces tough test from fuel interest rates",
-  "2026 iran war oil explained united states israel strait of hormuz map conflict",
-  "us job openings jump in september layoffs lowest in 1 1 2 years",
-  "franklin templeton s perkins sees crypto moving beyond rates",
-  "gold s october correction was overdone commerzbank",
   "3 stocks that did well the last time the fed raised rates aggressively",
   "bitcoin price outlook falling oil fuels recovery hopes bitcoinist com",
   "stock market today nov 4 2026 nasdaq climbs as democrats take house and senate",
@@ -4754,7 +4761,12 @@
   "stock market midday nov 12 nvidia ceo resigns amd surges as wall street edges higher",
   "in a policy switch the fed says its october 2027 meeting will not see a vote on interest rates",
   "u s dollar swings are playing a bigger role in bitcoin price moves",
-  "mortgage rates hit seven week low as fed hike threat grows"
+  "mortgage rates hit seven week low as fed hike threat grows",
+  "us home sales fall to lowest level since 2010 as mortgage rates soar",
+  "the bond market now has an even bigger fear than ai fallout",
+  "asx set to slide nvidia dives to weigh on wall street trump sends oil higher",
+  "gold price crashes below 3 900 as fed rate hike bets overwhelm safe haven demand",
+  "federal reserve to forgo rate decision at october 2027 meeting"
  ],
  "sharp": {
   "PFE:PUT:2026-11-20:30": 29.355,
