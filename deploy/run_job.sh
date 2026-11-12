@@ -262,6 +262,11 @@ main() {
       cmds=("$py mgt_lab.py")
       files=""
       msg="mgt lab" ;;
+    stocks_lab)
+      group=stocks-lab; envs="TG ALPACA LQ TASTY"   # مختبر تطوّر الشركات (H-STOCKLAB): 12 نسخة ورقية على 6 أسهم كل 5 دقائق، لا git، تقرير لـTELEGRAM_CHAT_ID وحده
+      cmds=("$py stocks_lab.py")
+      files=""
+      msg="stocks lab" ;;
     mgt_shadow)
       group=mgt-shadow; envs="TG ALPACA LQ TASTY"   # ظل MGT (H-MGTCLONE): كل دقيقة في الجلستين، البيانات في SPXBOT_DATA/mgt_shadow (لا git)، تقرير الجلسة لـTELEGRAM_CHAT_ID وحده
       cmds=("$py mgt_shadow.py")
