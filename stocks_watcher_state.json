@@ -2321,7 +2321,9 @@
    "nvidia stock nvda plunges over jensen huang s second affair but history shows stock rallies post ceo scandals",
    "500 invested in boeing today could be worth this much in 3 years",
    "boeing ba stock still looks undervalued with earnings in focus",
-   "what happens to a stock when the ceo quits 9 exits"
+   "what happens to a stock when the ceo quits 9 exits",
+   "boeing stock stays in focus as susquehanna keeps 250 us dollar target",
+   "analysts are bullish on these industrial goods stocks boeing ba core main cnm"
   ],
   "NVDA:PUT": [
    "nvidia stock is set for its worst month in a year time to buy the dip",
@@ -3027,9 +3029,6 @@
    "dow rallies over 1 000 points and nasdaq gains 2 5 as stocks rebound"
   ],
   "CVX:PUT": [
-   "chevron stocks move lower refining supplies most of the profit increase",
-   "treasuries advance as traders eye us votes refinancing plans",
-   "occidental petroleum solid q3 earnings may overshadow the preferred redemption hang oxy",
    "dow jones forecast stocks surge on gridlock bets as oil prices retreat",
    "uae weighs plans for third strait of hormuz bypass pipeline",
    "asx set to soar as wall street rallies trump media tesla spacex tumble oil prices slump",
@@ -3426,7 +3425,10 @@
    "russian crude oil prices jump on china india demand",
    "see how gas prices are easing across the u s",
    "gas prices fall over 3 cents in one day as drivers see post election relief",
-   "daily oil price november 11 2026"
+   "daily oil price november 11 2026",
+   "nvidia stock plunge weighs on wall street while oil prices swing",
+   "eia raises 2026 2027 oil price forecasts yet again",
+   "a drop for nvidia s stock weighs on the us market while oil prices swing"
   ],
   "JPM:CALL": [
    "which profit leader pays the most with yields between 0 31 and 2 32 bank of america nyse bac exxon mobil nyse xom johnso",
@@ -4026,7 +4028,8 @@
    "democratic senators probe gifts to rfk jr from large donor to his presidential campaign pfe nyse",
    "pfizer pfe lists 20 holdings entries totaling 164m",
    "bernstein reiterates pfizer stock rating after earnings beat by investing com",
-   "bernstein reiterates pfizer stock rating after earnings beat"
+   "bernstein reiterates pfizer stock rating after earnings beat",
+   "pfizer secures up to 1 5b funding from blackstone for obesity program"
   ],
   "AVGO:CALL": [
    "broadcom s ai chip revenue grows fast but risks and valuation concerns keep cautious investors at bay",
@@ -4069,7 +4072,8 @@
    "stock1",
    "down-0.3",
    "news:bernstein reiterates pfizer stock rating after earnings beat by investing com",
-   "news:bernstein reiterates pfizer stock rating after earnings beat"
+   "news:bernstein reiterates pfizer stock rating after earnings beat",
+   "news:pfizer secures up to 1 5b funding from blackstone for obesity program"
   ],
   "BA:PUT:2026-11-20:172.5": [
    "down-0.15",
@@ -4092,20 +4096,17 @@
    "sharp@2026-11-10T11:16-05:00",
    "down-0.15",
    "news:uber technologies stock faces leadership transition as hazelbaker exits",
-   "news:doordash stock faces new pressure as amazon adds uber eats to prime"
+   "news:doordash stock faces new pressure as amazon adds uber eats to prime",
+   "down-0.3"
+  ],
+  "CVX:PUT:2026-11-20:210": [
+   "news:eia raises 2026 2027 oil price forecasts yet again"
   ]
  },
  "stock_level": {
   "PFE:PUT:2026-11-20:30": 1
  },
  "seen_macro": [
-  "us stocks drift in mixed early trading on wall street as apple falls",
-  "rklb stock s next big breakthrough could change its long term growth outlook",
-  "stock market today dow s p 500 futures fall as amd earnings and us elections put wall street on edge",
-  "four corners s2026 the president vs the fed four corners",
-  "republicans could pay political price for surging oil prices in us midterms",
-  "u s stocks drift in mixed early trading on wall street as apple falls",
-  "us midterm elections dow falls nearly 200 points s p 500 and nasdaq edge higher as polls begin",
   "gold falls 0 81 silver slips 2 06 check 24k 22k rates in mumbai delhi bengaluru",
   "wall street mixed as voters head to polls for midterm elections",
   "apple drops with most of wall street but gains for other big tech stocks cushion the blow",
@@ -4698,7 +4699,14 @@
   "greenback zooms on bets u s can absorb higher rates",
   "wall street s next blockbuster stock split could come from this chip equipment giant",
   "fed s hammack says more restrictive rates are needed",
-  "trump tariffs backfire as canada warns of damage to us economy"
+  "trump tariffs backfire as canada warns of damage to us economy",
+  "us inflation shifts market outlook what lies ahead for bond yields dollar and gold",
+  "experts reveal true fears for stock market and it s not nvidia saga",
+  "wall street set to dip as nvidia storm continues treasury yields bob at 5",
+  "rbi rate hike in december sbi now expects just 25 bps despite inflation crossing 6",
+  "food inflation spikes to 8 94 in oct",
+  "goldman sachs stock faces later fed cuts as forecast shifts",
+  "wall street mixed as nvidia ceo jensen huang resigns"
  ],
  "sharp": {
   "PFE:PUT:2026-11-20:30": 29.355,
