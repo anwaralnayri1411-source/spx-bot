@@ -3029,11 +3029,6 @@
    "dow rallies over 1 000 points and nasdaq gains 2 5 as stocks rebound"
   ],
   "CVX:PUT": [
-   "from iran to trade how the us midterms impact the rest of the world",
-   "we re assuming 3 50 per gallon for gas wes moss prices 20 years of driving as pumps hit 4 27",
-   "crude oil prices plummet in hopes of a quick end to iran war",
-   "oil prices are in freefall now that the democratic sweep is rewriting the iran playbook",
-   "us stocks surge and the dow soars 1 500 points as oil prices tumble following the midterm elections",
    "cbot soybeans set 11 week low under pressure from weak oil prices",
    "delta vs united could falling oil prices set the stage for an airline stock comeback in 2027",
    "brent crude oil price falls below 100 a barrel on hopes of iran peace deal following democrats midterm v",
@@ -3428,7 +3423,12 @@
    "oil shock outweighs semiconductor boom s consumption effect",
    "oil prices are so high that co2 emissions from fossil fuels are dropping",
    "running on empty diesel price volatility puts pressure on trucking industry",
-   "oil still above 85 eog up 41 in a year is the stock still a buy"
+   "oil still above 85 eog up 41 in a year is the stock still a buy",
+   "who is really paying for the data center boom",
+   "dow jones top energy headlines at 11 am et oil prices rebound as trump questions need for iran deal u s",
+   "wall street steadies after absorbing big swings for nvidia s stock and oil prices",
+   "home heating oil faces 70 price increase",
+   "occidental petroleum stock and 2 oil names tied to rates and crude prices"
   ],
   "JPM:CALL": [
    "which profit leader pays the most with yields between 0 31 and 2 32 bank of america nyse bac exxon mobil nyse xom johnso",
@@ -3906,7 +3906,10 @@
    "bitcoin price slides near 73k as analyst flags 65k risk",
    "jefferies sees 53 upside in riot platforms and the reason has nothing to do with bitcoin",
    "bitcoin long liquidations hit 25 2m as price d",
-   "bitcoin dips below 74k with risks of falling t"
+   "bitcoin dips below 74k with risks of falling t",
+   "bitcoin falls below 72k as etfs record 1 44b outflows in 5 days",
+   "has bitcoin bear market started",
+   "bitcoin fell to 71 800 after nvidia ceo jensen huang resigned is that why btc hit its lowest price since august"
   ],
   "SOFI:PUT": [
    "nasdaq ceo adena friedman says 23 hour trading starts dec 6 what it means for your retirement money",
@@ -3990,7 +3993,9 @@
    "bill ackman s next 13f is due monday here s what to watch",
    "doordash sinks 10 in a week as amazon gives prime members free uber eats delivery",
    "uber technologies stock expands into parking across 15 us cities",
-   "doordash stock faces fresh pressure as uber eats expands prime"
+   "doordash stock faces fresh pressure as uber eats expands prime",
+   "uber technologies stock expands parking reach across 15 us cities",
+   "prosus n v prosy stock price news quote and history"
   ],
   "GOOGL:CALL": [
    "alphabet tpu sales and gemini enterprise are reshaping the bull case nasdaq goog",
@@ -4102,20 +4107,19 @@
   ],
   "CVX:PUT:2026-11-20:210": [
    "news:eia raises 2026 2027 oil price forecasts yet again",
-   "news:sharp swings for nvidia and oil prices weigh on wall street"
+   "news:sharp swings for nvidia and oil prices weigh on wall street",
+   "down-0.15"
   ],
   "AMZN:CALL:2026-11-20:275": [],
-  "AAPL:CALL:2026-11-27:365": []
+  "AAPL:CALL:2026-11-27:365": [],
+  "MSTR:PUT:2026-11-20:110@2026-11-12": [
+   "news:bitcoin falls below 72k as etfs record 1 44b outflows in 5 days"
+  ]
  },
  "stock_level": {
   "PFE:PUT:2026-11-20:30": 1
  },
  "seen_macro": [
-  "as iran conflict drags on fund managers see rising upside risk in energy markets",
-  "gold s bounce off 3 870 isn t a bottom yet",
-  "why is gold falling despite inflation gold s role as an inflation hedge in 2026",
-  "rupee extends gains for third day settles at 94 75 against the dollar",
-  "bitcoin faces fifth weekly loss as us midterms weigh in",
   "prediction this artificial intelligence ai software stock will outperform palantir according to wall street hint it s si",
   "today the crypto market is in motion bitcoin is being nudge",
   "why is the us stock market split as americans vote in",
@@ -4710,7 +4714,12 @@
   "given no choice by trump canada embraces asia to save auto heartland squeezed by u s tariffs",
   "october inflation and the fed",
   "jensen huang s nvidia future hangs by a thread",
-  "employers keep hiring but pay isn t keeping up with inflation"
+  "employers keep hiring but pay isn t keeping up with inflation",
+  "solana news wall street giant dtcc to expand tokenization to blockchain in 2027",
+  "cpi pushes rate hike odds to 100 but hikes aren t the main concern nysearca spy",
+  "us dollar almost unchanged after reaching 19 month high rate divergence in focus",
+  "greer calls nvidia structurally important backs keeping ai technology with us allies",
+  "a trader just placed a 11k bet on a 50 bps fed rate increase in december 2026"
  ],
  "sharp": {
   "PFE:PUT:2026-11-20:30": 29.355,
