@@ -27,6 +27,7 @@ import data_gaps   # تسجيل فجوات البيانات فقط (لا يغي�
 import breakhold as bh   # «الكسر والثبات» (H-BREAKHOLD، مفعّل بقرار المستخدم 11/11/2026)
 import bhvote as bv      # لوحة تأكيد الكسر بتصويت المجموعات (H-BHVOTE، الإصدار 21)
 import livewalls as lw   # الجدران الحية من حجم اليوم (H-LIVEWALLS، الإصدار 22)
+import exitplan as ep    # خطة الخروج والاحتفاظ بالرابحة (H-EXITPLAN، الإصدار 24)
 
 # ====================== الإعدادات ======================
 SYMBOL = "^SPX"             # يمكنك تغييره إلى "SPY"
@@ -77,6 +78,7 @@ SPY_TARGET_DELTA, SPY_MIN_DELTA, SPY_MAX_SPREAD = 0.45, 0.30, 0.10
 # نصيحة التآكل (عقود الأيام التالية): بعد ساعة، خسارة ≥ 20% والسعر لم يتحرك ضد الصفقة أكثر من 0.15%
 # (أي أن الخسارة من مرور الوقت لا من الاتجاه) → رسالة واحدة تنصح بالخروج.
 DECAY_MIN_AGE, DECAY_LOSS, DECAY_MAX_ADVERSE = 60, 0.20, 0.0015
+RUNNER_CLOSE = (15, 30)              # H-EXITPLAN: الباقي يُغلق 15:30 من يوم الدخول دائماً
 GIVEBACK = 0.50                      # بعد بلوغ الهدف: تنبيه إذا تراجع الربح لنصف أعلى ربح
 LOG_FILE = "zero_dte_log.csv"
 # خارج git: مهمة التشغيل تمسح الملفات غير المتتبعة في مجلدها كل تشغيل (إصلاح 11/11/2026)
@@ -1844,7 +1846,7 @@ def signal_message(a):
     if c["age"] >= 5:
         L.append(age_note(c["age"]))
     L.append("⚠️ <i>تعليمي وليست توصية. أقصى خسارة هي سعر العقد.</i>")
-    L.append(f"🕒 {stamp()} | SPX إصدار 23")
+    L.append(f"🕒 {stamp()} | SPX إصدار 24")
     return "\n".join(L)
 
 
@@ -1969,7 +1971,7 @@ def send_signal(a):
         sub = (f"انتهاء {kexp} (تجريبي)" if a["is_test"] else ("انتهاء اليوم" if kexp == a["exp"] else f"انتهاء {kexp}")) + f" · {sym} {k0.get('spot', S):,.0f}"
         png = cards.contract_card("entry", f"{root_sym(k0)} {k0['strike']:,.0f} {side}", sub, k0["price"], None,
                                   k0["price"], stop_price(k0), k0["price"] * (1 + TAKE_PROFIT),
-                                  badge=f"{side} {dot}", foot=f"{stamp()} | SPX إصدار 23")
+                                  badge=f"{side} {dot}", foot=f"{stamp()} | SPX إصدار 24")
         mid = send_photo(png, "\n".join(cap))
         if mid:
             if alt_sep:
@@ -2353,10 +2355,12 @@ def eval_position(p, n, val, spot):
     # بعد الهدف: الصفقة رابحة ومغلقة بالقاعدة، والمتابعة صامتة (لا وقف ولا تراجع ولا آخر 30 دقيقة) بطلب المستخدم 2/11/2026؛
     # الحالة تبقى "tp" والتتبع في spx_track يستمر لقياس ما بعد الهدف.
     live = p["status"] == "open"
+    adverse = None
+    if spot and p.get("entry_spot"):
+        adverse = (p["entry_spot"] - spot) / p["entry_spot"] if p["side"] == "CALL" else (spot - p["entry_spot"]) / p["entry_spot"]
+    if live:
+        ep.track(p, pnl, adverse)
     if live and p.get("struct_frac"):
-        adverse = None
-        if spot and p.get("entry_spot"):
-            adverse = (p["entry_spot"] - spot) / p["entry_spot"] if p["side"] == "CALL" else (spot - p["entry_spot"]) / p["entry_spot"]
         if age >= STRUCT_MIN_AGE and adverse is not None and adverse >= p["struct_frac"]:
             fire("stop", f"كسر السعر خط الوقف خلف المستوى ({spot:,.2f}). الخروج يحدّ الخسارة.")
             p["status"] = "stopped"
@@ -2367,7 +2371,11 @@ def eval_position(p, n, val, spot):
         fire("stop", f"وصل وقف الخسارة (-{STOP_LOSS * 100:.0f}%). الخروج يحدّ الخسارة.")
         p["status"] = "stopped"
     if live and pnl >= TAKE_PROFIT:
-        fire("tp", f"وصل هدف الربح (+{TAKE_PROFIT * 100:.0f}%). فكّر بجني الربح أو ارفع وقفك إلى سعر دخولك.")
+        if ep.eligible(p, p.get("struct_frac")):      # H-EXITPLAN: بِع النصف واترك الباقي بوقف مرحلي
+            fire("tp", ep.tp_text(pnl, entry))
+            p["runner"] = ep.start(pnl, n.isoformat(timespec="minutes"))
+        else:
+            fire("tp", f"وصل هدف الربح (+{TAKE_PROFIT * 100:.0f}%). العقد اقترب من الوقف قبل الهدف، فالقاعدة: بِع الكل الآن.")
         p["status"] = "tp"
     live = live and p["status"] == "open"
     if (live and p["status"] == "open" and p.get("exp", "") > p["time"][:10] and age >= DECAY_MIN_AGE and pnl <= -DECAY_LOSS
@@ -2384,6 +2392,10 @@ def eval_position(p, n, val, spot):
             fire("exp_final", "آخر 30 دقيقة: داخل المال، وSPX تسوية نقدية فلا أسهم. بِعه الآن إن أردت تثبيت الربح.")
         else:
             fire("exp_final", "آخر 30 دقيقة: خارج المال وسينتهي بلا قيمة إن لم يتحرك السعر. بِعه الآن لاسترداد ما بقي.")
+    rn = p.get("runner")
+    if rn and rn.get("open") and p["status"] == "tp" and not any(k == "tp" for k, _ in new):
+        new += ep.step(rn, pnl, entry, n.isoformat(timespec="minutes"),
+                       time_exit=hm >= RUNNER_CLOSE or n.date().isoformat() > p["time"][:10])
     # اختصار: عند الوقف تنبيه واحد فقط
     if any(k == "stop" for k, _ in new):
         new = [x for x in new if x[0] == "stop"]
@@ -2391,7 +2403,7 @@ def eval_position(p, n, val, spot):
 
 
 def position_message(p, val, pnl, spot, text, kind, src=""):
-    icon = {"stop": "🛑", "tp": "🟢", "giveback": "📉", "exp_final": "⏰", "decay": "⏳"}.get(kind, "📈")
+    icon = {"stop": "🛑", "tp": "🟢", "giveback": "📉", "exp_final": "⏰", "decay": "⏳", "lock": "🔒", "runner_exit": "🏁"}.get(kind, "📈")
     pl = (val - p["entry"]) * 100 * p.get("qty", 1)
     head = {"stop": "وصل الوقف", "tp": "وصل الهدف", "giveback": "الربح يتراجع", "exp_final": "ينتهي اليوم",
             "decay": "العقد يتآكل"}.get(kind, "تحرّك سعر العقد")
@@ -2436,9 +2448,12 @@ def follow_payload(p, val, pnl, spot, text, kind, src=""):
     note = f" · {SRC_NOTE[src]}" if src in SRC_NOTE else ""
     pl = (val - p["entry"]) * 100 * p.get("qty", 1)
     head = {"stop": "🛑 وصل الوقف", "tp": "🎯 وصل الهدف", "giveback": "📉 الربح يتراجع",
-            "exp_final": "⏰ ينتهي اليوم", "decay": "⏳ العقد يتآكل"}.get(kind, "📈 تحرّك سعر العقد")
+            "exp_final": "⏰ ينتهي اليوم", "decay": "⏳ العقد يتآكل", "lock": "🔒 ارفع وقف الباقي",
+            "runner_exit": "🏁 أغلق الباقي"}.get(kind, "📈 تحرّك سعر العقد")
     name = f"{p['root']} {p['strike']:,.0f} {p['side']}"
     stop_p, tp_p = p["entry"] * (1 - STOP_LOSS), p["entry"] * (1 + TAKE_PROFIT)
+    if p.get("runner"):
+        stop_p = ep.px(p["entry"], p["runner"]["lock"])      # وقف النصف الباقي
     cap = ["📌 <b>متابعة</b> #متابعة", f"{head}: <b>{name}</b>",
            f"💵 دخول <b>{p['entry']:.2f}</b> ← الآن <b>{val:.2f}</b> | <b>{pnl * 100:+.0f}%</b> ({pl:+,.0f}$ على ×{p.get('qty', 1)})",
            f"🛑 الوقف {stop_p:.2f} | 🎯 الهدف {tp_p:.2f}", text,
@@ -2472,6 +2487,12 @@ def daily_report_items(n):
         e, q, pk = p["entry"], p.get("qty", 1), p.get("peak", 0.0)
         if pk >= TAKE_PROFIT:
             status, ex, pnl = "tp", e * (1 + TAKE_PROFIT), TAKE_PROFIT * e * 100 * q
+            rn = p.get("runner")
+            if rn:      # H-EXITPLAN: نصف بالهدف ونصف بخروج الباقي (أو بقيمته الآن إن لم يخرج)
+                g = ep.total(rn)
+                if g is None:
+                    g = 0.5 * rn["half_pnl"] + 0.5 * (last.get(p["id"], e) / e - 1)
+                ex, pnl = e * (1 + g), g * e * 100 * q
         elif p["status"] == "stopped":
             status, ex, pnl = "stop", e * (1 - STOP_LOSS), -STOP_LOSS * e * 100 * q
         else:

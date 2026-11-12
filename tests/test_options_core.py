@@ -175,8 +175,9 @@ def test_silent_after_target():
     ob.eval_position(p, NOON, 3.2, 7720.0)                                # بلغ الهدف، القمة +60%
     _, new = ob.eval_position(p, NOON, 2.3, 7712.0)                       # تراجع إلى +15%: لا رسالة
     assert new == []
-    _, new = ob.eval_position(p, NOON, 1.0, 7690.0)                       # نزل حتى −50%: لا رسالة وقف، تبقى رابحة
-    assert new == [] and p["status"] == "tp" and p["peak"] == pytest.approx(0.6)
+    _, new = ob.eval_position(p, NOON, 1.0, 7690.0)                       # نزل حتى −50%: لا وقف، والباقي (H-EXITPLAN) يخرج مرة واحدة
+    assert [k for k, _ in new] == ["runner_exit"] and p["status"] == "tp" and p["peak"] == pytest.approx(0.6)
+    assert ob.eval_position(p, NOON, 0.9, 7689.0)[1] == []
     late = datetime.fromisoformat("2026-10-19T15:35-04:00")
     assert ob.eval_position(p, late, 1.0, 7690.0)[1] == []                # ولا تنبيه آخر 30 دقيقة
 

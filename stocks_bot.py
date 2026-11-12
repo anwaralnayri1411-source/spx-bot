@@ -19,6 +19,7 @@ import yfinance as yf
 
 import data_gaps   # تسجيل فجوات البيانات فقط (لا يغيّر أي قرار)
 import options_bot as ob
+import exitplan as ep    # خطة الخروج والاحتفاظ بالرابحة (H-EXITPLAN)
 import macro_events as mev
 
 # ====================== الإعدادات ======================
@@ -969,8 +970,8 @@ def _yahoo_quote(t, p, cache):
     return {"val": val, "spr": spr, "iv": iv if iv >= 0.05 else None}
 
 
-SEVERITY = ["stop", "time", "exp_final", "broken", "market", "chance", "giveback", "tp", "warn", "exp_today", "overnight"]
-ALERT_ICON = {"stop": "🛑", "time": "⏰", "exp_final": "⏰", "broken": "⚠️", "market": "🌐", "chance": "📉",
+SEVERITY = ["stop", "runner_exit", "lock", "time", "exp_final", "broken", "market", "chance", "giveback", "tp", "warn", "exp_today", "overnight"]
+ALERT_ICON = {"stop": "🛑", "runner_exit": "🏁", "lock": "🔒", "time": "⏰", "exp_final": "⏰", "broken": "⚠️", "market": "🌐", "chance": "📉",
               "giveback": "🔔", "tp": "✅", "warn": "🟠", "exp_today": "⏳", "overnight": "⏳"}
 
 
@@ -1025,6 +1026,8 @@ def evaluate(p, n, q, spot, spy_spot):
         p["last_at"] = n.isoformat(timespec="minutes")
         changed = True
 
+    if live:
+        ep.track(p, pnl, -mv if mv is not None else None)
     if live and mature:
         stop = p.get("stop_frac") or STOCK_STOP
         if mv is not None and mv <= -stop:
@@ -1035,10 +1038,14 @@ def evaluate(p, n, q, spot, spy_spot):
             changed = True
         elif pnl <= -WARN_LOSS:
             fire("warn", f"العقد نزل {abs(pnl) * 100:.0f}%. الوقف على السهم: الخروج إن تحرك {(p.get('stop_frac') or STOCK_STOP) * 100:.1f}% ضدك منذ التوصية.")
-    if live and pnl >= EXIT_TP:
+    if live and pnl >= EXIT_TP and ep.eligible(p, p.get("stop_frac") or STOCK_STOP):
+        fire("tp", ep.tp_text(pnl, entry))          # H-EXITPLAN: نصف الآن والباقي بوقف مرحلي
+        p["runner"] = ep.start(pnl, n.isoformat(timespec="minutes"))
+    elif live and pnl >= EXIT_TP:
         lock = pnl * entry * 100
         fire("tp", f"وصل هدف الربح (+{EXIT_TP * 100:.0f}%). الصفقة مقفلة بالقاعدة: ربح ≈ +${lock:,.0f} للعقد. "
-                   "أنهِ صفقتك، وسأواصل رصد العقد بصمت للدراسة.")
+                   "العقد اقترب من الوقف قبل الهدف، فالقاعدة: بِع الكل الآن.")
+    if live and pnl >= EXIT_TP:
         p["status"] = "tp"
         p["closed"] = {"kind": "tp", "time": n.isoformat(timespec="minutes"), "pnl": round(pnl, 4)}
         changed = True
@@ -1069,6 +1076,13 @@ def evaluate(p, n, q, spot, spy_spot):
                               f"إن أردت استرداد ما بقي (≈ ${val * 100:,.0f}) فبِعه قبل الإغلاق.")
     if dte == 1 and live and hm >= (15, 30) and pnl < TAKE_PROFIT:
         fire("overnight", "ينتهي غداً: إن لم يتحرك السهم لصالحك سيفقد جزءاً من قيمته الليلة.")
+    rn = p.get("runner")
+    if rn and rn.get("open") and not live and not any(k == "tp" for k, _ in new):
+        new += ep.step(rn, pnl, entry, n.isoformat(timespec="minutes"),
+                       time_exit=dte <= TIME_STOP_DAYS and hm >= TIME_STOP_AT)
+        if not rn["open"] and p.get("closed"):
+            p["closed"]["pnl"] = ep.total(rn)      # النتيجة المختلطة: نصف بالهدف ونصف بالباقي
+        changed = True
     # اختصار التنبيهات: عند بلوغ الوقف تنبيه واحد فقط، وبعده صمت.
     # وقبل الوقف لا يصلك أكثر من تنبيه هبوط واحد للعقد (الأشد فقط).
     if any(k == "stop" for k, _ in new):
