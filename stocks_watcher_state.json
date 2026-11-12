@@ -83,7 +83,8 @@
    "alphabet climbs 3 as nvidia s leadership shake up puts google s ai chips in the spotlight microsoft gains 2 amazon ticks",
    "amazon stocks gain as anthropic ipo puts 271 8 billion value on stake",
    "what is going on with amazon stock on thursday",
-   "amzn stock vs goog stock which is the better buy today"
+   "amzn stock vs goog stock which is the better buy today",
+   "amazon com inc amzn stock price news quote and history"
   ],
   "WMT:CALL": [
    "walmart slashes membership fees with this new bundle",
@@ -1417,11 +1418,6 @@
    "jpmorgan chase nyse jpm lifts interest income outlook as lending offsets trading slowdown"
   ],
   "COIN:PUT": [
-   "bearish options flow identified in coinbase with shares down 1 2",
-   "jpmorgan coca cola dell also say no to okx ice tokenized stock trading plan",
-   "btc price on oct 28 2026 at 4pm edt crypto prediction market",
-   "jason calacanis bets bitcoin will never hit a n",
-   "bitcoin could hit 1 6m by 2036 with 34 3 annu",
    "bitcoin price climbs above 81 000 on binance hitting 81 280 in spot trading",
    "coinbase vs interactive brokers which financial stock has more long term upside",
    "fed holds rates but dissent keeps bitcoin gold and tech stocks under pressure",
@@ -1816,7 +1812,12 @@
    "bitcoin price falls below 72k as nvidia stock plunges",
    "buy bitcoin stocks strategy coinbase miners",
    "bitcoin and ethereum sink to 3 month lows but a bigger crypto selloff may be ahead",
-   "monero price xmr at its lowest since mid october"
+   "monero price xmr at its lowest since mid october",
+   "are those selling bitcoin making a big mistake stacks founder makes noteworthy bull market statement",
+   "bitcoin price prediction btc closes the week below 75 500",
+   "adam back says bitcoin could reach 1 million by late 2028 what would have to happen first",
+   "can bitcoin hit 1 million chatgpt ai predicts when and how",
+   "coinbase global inc coin stock forecasts"
   ],
   "HOOD:PUT": [
    "long term bitcoin holders face losses on 4m btc bought above 85k risking sell off if price nears that level again",
@@ -3559,10 +3560,6 @@
    "snap tumbles 11 as user growth miss and sluggish ad sales overshadow return to profit pinterest dips meta holds steady"
   ],
   "MSTR:PUT": [
-   "bitcoin price outlook for november",
-   "crypto rally may change the case for cleanspark stock",
-   "sky price eyes 0 085 as quarterly net revenue rises 11 8",
-   "plante moran advisors boosts bitcoin etf holdings by 70 to 42m",
    "bitcoin price suddenly plunges to 76k as hourly liquidations near 600m",
    "bitcoin price crashes 5 below 76 000 amid tech rout",
    "ethereum price prediction 2040 eth outlook",
@@ -3956,7 +3953,13 @@
    "buy bitcoin stocks strategy coinbase miners",
    "bitcoin and ethereum sink to 3 month lows but a bigger crypto selloff may be ahead",
    "europe s largest asset manager doubles down on microstrategy amid msci setback",
-   "monero price xmr at its lowest since mid october"
+   "monero price xmr at its lowest since mid october",
+   "greenland energy company glnd stock price news quote and history",
+   "are those selling bitcoin making a big mistake stacks founder makes noteworthy bull market statement",
+   "bitcoin price prediction btc closes the week below 75 500",
+   "btc price range on nov 12 2026 at 2pm est crypto prediction market",
+   "adam back says bitcoin could reach 1 million by late 2028 what would have to happen first",
+   "can bitcoin hit 1 million chatgpt ai predicts when and how"
   ],
   "SOFI:PUT": [
    "nasdaq ceo adena friedman says 23 hour trading starts dec 6 what it means for your retirement money",
@@ -4154,7 +4157,8 @@
    "news:doordash stock faces new pressure as amazon adds uber eats to prime",
    "down-0.3",
    "news:uber jumps 7 on 20 bookings growth we have more demand than we have supply",
-   "news:tractor supply joins uber marketplace expanding on demand shopping across rural and suburban america"
+   "news:tractor supply joins uber marketplace expanding on demand shopping across rural and suburban america",
+   "stock1"
   ],
   "AMZN:CALL:2026-11-20:275": [
    "sharp@2026-11-12T11:36-05:00",
@@ -4187,13 +4191,10 @@
   ]
  },
  "stock_level": {
-  "PFE:PUT:2026-11-20:30": 1
+  "PFE:PUT:2026-11-20:30": 1,
+  "UBER:CALL:2026-11-27:70": 1
  },
  "seen_macro": [
-  "psx soars nearly 4 000 points in euphoric rally",
-  "apple profit forecast hits tech sector oil prices rise",
-  "trump s midterm rebuke gives trading partners room to resist",
-  "trump s midterm drubbing could give trade partners room to resist",
   "us stock market today s p 500 futures edge up on jobs data inflation test",
   "circle stock drops crcl cuts 5 of staff as falling interest rates squeeze stablecoin reserve income",
   "a song sung blue nope this was the hallelujah chorus sung blue",
@@ -4789,7 +4790,11 @@
   "federal reserve warns ai infrastructure boom is driving up housing construction and financing costs",
   "ai stock market bubble could burst if interest rates rise top investor warns",
   "fed to skip rate vote at october 2027 meeting under warsh plan",
-  "fed s daly says more rate hikes likely needed to fight inflation"
+  "fed s daly says more rate hikes likely needed to fight inflation",
+  "2028 isn t over a case against republican defeatism",
+  "fed forced to confront case for bigger and faster rate rises",
+  "2 50pm markets update",
+  "ftse 100 set for softer open as sticky us inflation lifts rate fears"
  ],
  "sharp": {
   "PFE:PUT:2026-11-20:30": 29.355,
