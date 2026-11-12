@@ -35,6 +35,7 @@ EXIT_AT_BID = True          # نقيس قيمة العقد للخروج بسعر
 MAX_DAILY_STOPS = 2         # بعد هذا العدد من الإشارات التي بلغت الوقف في اليوم نوقف إشارات SPX الجديدة
 NDX_SYMBOL = "^NDX"         # ناسداك 100 (NDXP): نفس اتجاه SPX بعقود أرخص بعيدة عن السعر (اتركها "" لتعطيلها)
 NDX_MIN_OI, NDX_MIN_VOL, NDX_MAX_SPREAD = 20, 50, 0.35   # سيولته أقل من SPX فنخفف الشروط
+NDX_MIN_USD, NDX_MAX_USD = 300, 1500   # H-NDXPRICE (12–13/11/2026): عقد NDXP أغلى؛ حد 400$ كان يرفض كل عقوده
 ALT_SYMBOL = "SPY"          # أداة بديلة: خيارات SPY بنفس الاتجاه (اتركها "" لتعطيلها)
 FLOW_SYMBOL = "SPY"         # لحساب VWAP (المؤشر نفسه بلا حجم تداول)
 NEWS_SYMBOL = "SPY"
@@ -641,10 +642,11 @@ def spxw_rows(df):
     return df
 
 
-def pick_contracts(side, df, S, T, vix, min_oi=None, min_vol=None, max_spr=None):
+def pick_contracts(side, df, S, T, vix, min_oi=None, min_vol=None, max_spr=None, usd=None):
     min_oi = MIN_OI if min_oi is None else min_oi
     min_vol = MIN_VOL if min_vol is None else min_vol
     max_spr = MAX_SPREAD if max_spr is None else max_spr
+    lo_usd, hi_usd = usd or (CONTRACT_MIN_USD, CONTRACT_MAX_USD)
     cand = df[(df["strike"] > S) & (df["strike"] <= S * 1.025)] if side == "CALL" \
         else df[(df["strike"] < S) & (df["strike"] >= S * 0.975)]
     out = []
@@ -657,7 +659,7 @@ def pick_contracts(side, df, S, T, vix, min_oi=None, min_vol=None, max_spr=None)
         else:
             price, spr = last, None
         cost = price * 100
-        if not (CONTRACT_MIN_USD <= cost <= CONTRACT_MAX_USD):
+        if not (lo_usd <= cost <= hi_usd):
             _rej("سعر خارج النطاق")
             continue
         oi = 0 if pd.isna(r.get("openInterest")) else float(r["openInterest"])
@@ -901,7 +903,7 @@ def _pick_all(side, ch, S, T, c, exp):
                 Sn = float(hn.iloc[-1]) if len(hn) else float(tn.history(period="5d")["Close"].dropna().iloc[-1])
                 Sn = _live_spot(NDX_SYMBOL, Sn)
                 nd = pick_contracts(side, _live_chain(chn.calls if side == "CALL" else chn.puts, Sn), Sn, T, c["vix"],
-                                    NDX_MIN_OI, NDX_MIN_VOL, NDX_MAX_SPREAD)
+                                    NDX_MIN_OI, NDX_MIN_VOL, NDX_MAX_SPREAD, usd=(NDX_MIN_USD, NDX_MAX_USD))
                 for k in nd[:1]:
                     k["sym"], k["spot"] = "NDX", Sn
                     contracts.append(k)
@@ -1697,7 +1699,7 @@ def plan_message(a, plan, update=False, status=None):
     L += ["", "📡 عند توفر إشارة أرسل لك العقد (السترايك والسعر والكمية) مع مستويات المؤشر.",
           "⚠️ <i>المستويات وشروطها قواعد ثابتة لم تُختبر تاريخياً. عمر آخر شمعة"
           f" ~{c['age']:.0f} دقيقة، والبوت يفحص كل 5 دقائق بالشموع اللحظية (منذ 2/11).</i>",
-          f"🕒 {stamp()} | SPX إصدار 17"]
+          f"🕒 {stamp()} | SPX إصدار 24"]
     return "\n".join(L)
 
 
@@ -1995,7 +1997,7 @@ def send_alt_card(a, ka, side, dot, reply_to=None):
         png = cards.contract_card("entry", f"{root_sym(ka)} {ka['strike']:,.0f} {side}",
                                   f"انتهاء {ka.get('exp', a['exp'])} · {ka.get('sym', ALT_SYMBOL)} {ka.get('spot', 0):,.0f}", ka["price"], None,
                                   ka["price"], stop_price(ka), ka["price"] * (1 + TAKE_PROFIT),
-                                  badge=f"{root_sym(ka)} {dot}", foot=f"{stamp()} | SPX إصدار 17")
+                                  badge=f"{root_sym(ka)} {dot}", foot=f"{stamp()} | SPX إصدار 24")
         send_photo(png, "\n".join(x for x in cap if x), reply_to=reply_to)
     except Exception as e:
         print("تعذر إنشاء بطاقة SPY:", e)
@@ -2011,7 +2013,7 @@ def send_ndx_card(a, kn, side, dot, reply_to=None):
         png = cards.contract_card("entry", f"{root_sym(kn)} {kn['strike']:,.0f} {side}",
                                   f"انتهاء {a['exp']} · NDX {kn.get('spot', 0):,.0f}", kn["price"], None,
                                   kn["price"], stop_price(kn), kn["price"] * (1 + TAKE_PROFIT),
-                                  badge=f"NDXP {dot}", foot=f"{stamp()} | SPX إصدار 17")
+                                  badge=f"NDXP {dot}", foot=f"{stamp()} | SPX إصدار 24")
         send_photo(png, "\n".join(cap), reply_to=reply_to)
     except Exception as e:
         print("تعذر إنشاء بطاقة NDXP:", e)
@@ -2034,7 +2036,7 @@ def summary_message(state):
         for r, cnt in sorted(rc.items(), key=lambda x: -x[1])[:3]:
             L.append(f"• {esc(r)} ({cnt} مرة)")
     L += ["", "💡 لا إشارة = لا صفقة، والانتظار قرار سليم.",
-          f"🕒 {stamp()} | SPX إصدار 17"]
+          f"🕒 {stamp()} | SPX إصدار 24"]
     return "\n".join(L)
 
 
@@ -2416,7 +2418,7 @@ def position_message(p, val, pnl, spot, text, kind, src=""):
     L.append(text)
     L.append(f"🛑 الوقف {p['entry'] * (1 - STOP_LOSS):.2f} | ✅ الجني {p['entry'] * (1 + TAKE_PROFIT):.2f}")
     note = f" · {SRC_NOTE[src]}" if src in SRC_NOTE else ""
-    L.append(f"⚠️ القرار قرارك | 🕒 {stamp()}{note} | SPX إصدار 17")
+    L.append(f"⚠️ القرار قرارك | 🕒 {stamp()}{note} | SPX إصدار 24")
     return "\n".join(L)
 
 
@@ -2461,7 +2463,7 @@ def follow_payload(p, val, pnl, spot, text, kind, src=""):
     when = f"ينتهي {exp_label(p.get('exp') or now_ny().date().isoformat())}"
     args = (("follow", name, (when + (f" · {p['sym']} {spot:,.0f}" if spot else "")), val, pnl,
              p["entry"], stop_p, tp_p), {"now": val, "badge": head,
-                                         "foot": f"وقت الرصد {stamp()}{note} | SPX إصدار 17"})
+                                         "foot": f"وقت الرصد {stamp()}{note} | SPX إصدار 24"})
     return (args, "\n".join(cap), full)
 
 

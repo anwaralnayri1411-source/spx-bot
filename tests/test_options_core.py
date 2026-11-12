@@ -126,6 +126,16 @@ def test_rejects_too_expensive_wide_spread_and_illiquid():
     assert {"سعر خارج النطاق", "فرق الشراء/البيع واسع", "سيولة ضعيفة"} <= set(ob.REJ)
 
 
+def test_ndx_price_band_only_for_ndxp():
+    # H-NDXPRICE: عقد NDXP بـ8.90 (890$) مرفوض بالحد العام، مقبول بنطاق NDXP
+    df = chain([(28620, 8.1, 8.9, 8.6, 30, 200, 0.2)])
+    assert ob.pick_contracts("CALL", df, 28500.0, 0.01, 18.0, ob.NDX_MIN_OI, ob.NDX_MIN_VOL, ob.NDX_MAX_SPREAD) == []
+    out = ob.pick_contracts("CALL", df, 28500.0, 0.01, 18.0, ob.NDX_MIN_OI, ob.NDX_MIN_VOL, ob.NDX_MAX_SPREAD,
+                            usd=(ob.NDX_MIN_USD, ob.NDX_MAX_USD))
+    assert out and out[0]["cost"] == 890.0
+    assert (ob.CONTRACT_MIN_USD, ob.CONTRACT_MAX_USD) == (100, 400)      # SPX/SPY بلا تغيير
+
+
 def test_put_side_picks_strikes_below_spot():
     df = chain([good_row(7690, 2.0), good_row(7710, 2.0)])
     out = ob.pick_contracts("PUT", df, 7700.0, 0.01, 18.0)
