@@ -3921,7 +3921,11 @@
    "btc price on november 13 4 59pm utc",
    "bitcoin price forecast btc usd 71 393 82 700 upside target on huang exit 1 44b etf outflows",
    "msci is removing strategy holder of 850 364 bitcoin from its indexes will saylor have to sell btc",
-   "bitcoin price prediction 50b futures exposure raises liquidation risk below 72k"
+   "bitcoin price prediction 50b futures exposure raises liquidation risk below 72k",
+   "near price drops to 8 week low as long liquidations mount",
+   "bitcoin price breaks below 72k as 656m liquidation bloodbath hits crypto",
+   "top 3 risks that could trigger crypto market in the next 36 hours",
+   "crypto news today bitcoin loses 72k as 550b vanishes from cryptocurrency market"
   ],
   "SOFI:PUT": [
    "nasdaq ceo adena friedman says 23 hour trading starts dec 6 what it means for your retirement money",
@@ -4008,7 +4012,8 @@
    "doordash stock faces fresh pressure as uber eats expands prime",
    "uber technologies stock expands parking reach across 15 us cities",
    "prosus n v prosy stock price news quote and history",
-   "uber jumps 7 on 20 bookings growth we have more demand than we have supply"
+   "uber jumps 7 on 20 bookings growth we have more demand than we have supply",
+   "tractor supply joins uber marketplace expanding on demand shopping across rural and suburban america"
   ],
   "GOOGL:CALL": [
    "alphabet tpu sales and gemini enterprise are reshaping the bull case nasdaq goog",
@@ -4117,29 +4122,30 @@
    "news:uber technologies stock faces leadership transition as hazelbaker exits",
    "news:doordash stock faces new pressure as amazon adds uber eats to prime",
    "down-0.3",
-   "news:uber jumps 7 on 20 bookings growth we have more demand than we have supply"
+   "news:uber jumps 7 on 20 bookings growth we have more demand than we have supply",
+   "news:tractor supply joins uber marketplace expanding on demand shopping across rural and suburban america"
   ],
   "AMZN:CALL:2026-11-20:275": [
    "sharp@2026-11-12T11:36-05:00"
   ],
   "AAPL:CALL:2026-11-27:365": [
-   "down-0.15"
+   "down-0.15",
+   "down-0.3"
   ],
   "MSTR:PUT:2026-11-20:110@2026-11-12": [
    "news:bitcoin falls below 72k as etfs record 1 44b outflows in 5 days",
    "news:bitcoin slides toward 71k as nvidia stock tumbles after huang steps down",
    "sharp@2026-11-12T11:57-05:00",
    "news:msci is removing strategy holder of 850 364 bitcoin from its indexes will saylor have to sell btc",
-   "up0.25"
+   "up0.25",
+   "news:bitcoin price breaks below 72k as 656m liquidation bloodbath hits crypto",
+   "news:crypto news today bitcoin loses 72k as 550b vanishes from cryptocurrency market"
   ]
  },
  "stock_level": {
   "PFE:PUT:2026-11-20:30": 1
  },
  "seen_macro": [
-  "nextpower stock climbs as strong q2 sparks wall street forecast divide",
-  "green card update judge freezes reopening of 2027 us diversity visa lottery",
-  "us strikes iran amid trump s peace talks claim causing mixed signals for oil markets",
   "asx set to slide tech stocks boost wall street",
   "how wall street analysts think the midterms could affect the stock market",
   "oil prices remain steady as china covid worries outweigh supply concerns",
@@ -4736,7 +4742,10 @@
   "silver tumbles over 3 as hot us inflation boosts fed hike bets",
   "s p 500 nasdaq fall as nvidia ceo s exit rattles ai stocks",
   "exclusive bank of mexico rate cuts sends wrong message says deputy governor heath",
-  "orthodox jewish couple behind 100 million furniture business say trump s tariff policies left them disappointed"
+  "orthodox jewish couple behind 100 million furniture business say trump s tariff policies left them disappointed",
+  "gold is falling on hot inflation but can the fed keep raising rates",
+  "your family s bills are still rising but the government can t tell you by how much",
+  "pound to dollar forecast hawkish fed drives sterling to november lows"
  ],
  "sharp": {
   "PFE:PUT:2026-11-20:30": 29.355,
