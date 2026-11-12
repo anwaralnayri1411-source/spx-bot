@@ -82,7 +82,8 @@
    "investor ruchir sharma warns of ai stock bubble amid rising rates amazon amzn fairly valued",
    "alphabet climbs 3 as nvidia s leadership shake up puts google s ai chips in the spotlight microsoft gains 2 amazon ticks",
    "amazon stocks gain as anthropic ipo puts 271 8 billion value on stake",
-   "what is going on with amazon stock on thursday"
+   "what is going on with amazon stock on thursday",
+   "amzn stock vs goog stock which is the better buy today"
   ],
   "WMT:CALL": [
    "walmart slashes membership fees with this new bundle",
@@ -1416,8 +1417,6 @@
    "jpmorgan chase nyse jpm lifts interest income outlook as lending offsets trading slowdown"
   ],
   "COIN:PUT": [
-   "btc whale opens 94 6m short before fomc does he know something",
-   "btc cost basis quantile bands indicator by thescalpingant",
    "bitcoin near 80 8k as fed holds rates two officials seek hike",
    "glassnode sees bitcoin testing 78k as etf buying support fades",
    "jason calacanis bleak bitcoin prediction draws 3m in rival bets but he won t bite",
@@ -1815,7 +1814,9 @@
    "hyperliquid fell 16 in a week and dropped to no 10 on the crypto rankings could hype reach 100 before 2027",
    "bitcoin ripe for a squeeze as options traders raise odds of sub 70 000 christmas",
    "bitcoin etf outflows continue as crypto prices sink",
-   "bitcoin drops 9 in 30 days nearing key suppor"
+   "bitcoin drops 9 in 30 days nearing key suppor",
+   "btc price range on nov 12 2026 at 3pm est crypto prediction market",
+   "bitcoin price falls below 72k as nvidia stock plunges"
   ],
   "HOOD:PUT": [
    "long term bitcoin holders face losses on 4m btc bought above 85k risking sell off if price nears that level again",
@@ -2336,7 +2337,10 @@
    "analysts are bullish on these industrial goods stocks boeing ba core main cnm",
    "boeing s deal losses are coming into sharper view",
    "boeing layoffs raise new fears about its financial future",
-   "boeing stock nyse ba may be in line for gains in next few years falls in short term"
+   "boeing stock nyse ba may be in line for gains in next few years falls in short term",
+   "defense stocks to follow now november 12th",
+   "chui s r l purchases first capital ordinary shares",
+   "advini and invivo propose acquisition of bonne nouvelle and mythique brands"
   ],
   "NVDA:PUT": [
    "nvidia stock is set for its worst month in a year time to buy the dip",
@@ -3942,7 +3946,12 @@
    "stablecoin supply is shrinking at the fastest pace since june 2022 what happened to bitcoin the last time",
    "ethereum price crash can ethereum price today hold the 2 000 support",
    "tsmc employee data leak hackers demand 3 bitcoin as 46 000 records surface",
-   "bitcoin price today btc usd falls near 71 000 after jensen huang resigns as nvidia ceo and etf outflows"
+   "bitcoin price today btc usd falls near 71 000 after jensen huang resigns as nvidia ceo and etf outflows",
+   "litecoin fell below 50 and sits 88 under its all time high twice as far as bitcoin will ltc ever go back up",
+   "bitcoin price falls below 72k as nvidia stock plunges",
+   "bitcoin has fallen below what recent buyers paid 14 times since 2016 how often did btc recover within 2 weeks",
+   "bitcoin long liquidations hit 41 41m in one ho",
+   "btc price range on nov 12 2026 at 3pm est crypto prediction market"
   ],
   "SOFI:PUT": [
    "nasdaq ceo adena friedman says 23 hour trading starts dec 6 what it means for your retirement money",
@@ -4160,18 +4169,18 @@
    "news:crypto news today bitcoin loses 72k as 550b vanishes from cryptocurrency market",
    "news:bitcoin price slips below usd 72 000 as etf outflows persist",
    "news:why is bitcoin down today bitcoin price hits 12 week low as msci drops strategy",
-   "news:bitcoin price today btc usd falls near 71 000 after jensen huang resigns as nvidia ceo and etf outflows"
+   "news:bitcoin price today btc usd falls near 71 000 after jensen huang resigns as nvidia ceo and etf outflows",
+   "news:bitcoin price falls below 72k as nvidia stock plunges",
+   "news:bitcoin long liquidations hit 41 41m in one ho"
+  ],
+  "COIN:PUT:2026-11-20:125": [
+   "news:bitcoin price falls below 72k as nvidia stock plunges"
   ]
  },
  "stock_level": {
   "PFE:PUT:2026-11-20:30": 1
  },
  "seen_macro": [
-  "3 stocks that did well the last time the fed raised rates aggressively",
-  "bitcoin price outlook falling oil fuels recovery hopes bitcoinist com",
-  "stock market today nov 4 2026 nasdaq climbs as democrats take house and senate",
-  "trump s midterm defeat reshapes us politics and global economy",
-  "cenovus posts higher third quarter profit on record production",
   "how market position shapes credit card interest rates",
   "how election losses will alter the politics of trump s tariffs",
   "wall st futures jump as democrats sweep midterms",
@@ -4766,7 +4775,12 @@
   "the bond market now has an even bigger fear than ai fallout",
   "asx set to slide nvidia dives to weigh on wall street trump sends oil higher",
   "gold price crashes below 3 900 as fed rate hike bets overwhelm safe haven demand",
-  "federal reserve to forgo rate decision at october 2027 meeting"
+  "federal reserve to forgo rate decision at october 2027 meeting",
+  "silver tumbles over 3 as fed rate hike bets fuel us dollar rally",
+  "wall st recovers as energy shares climb nvidia woes deepen",
+  "federal reserve rate hikes and market impact insights for spy i",
+  "fed s daly warns ai is fueling inflation sees more rate hikes ahead",
+  "ai capital buildout raising housing funding costs fed s schmid"
  ],
  "sharp": {
   "PFE:PUT:2026-11-20:30": 29.355,
