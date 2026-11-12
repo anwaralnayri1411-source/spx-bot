@@ -1097,3 +1097,5 @@ id,time,project,tag,sym,root,side,strike,exp,entry,spot,edge,strength
 20261112T1057|stocks|chase_em|NFLX|PUT|63|2026-11-27,2026-11-12T10:57-05:00,stocks,chase_em,NFLX,NFLX,PUT,63.0,2026-11-27,1.48,63.28,4.5,7.5
 20261112T1057|stocks|earn_in_life|DIS|CALL|124|2026-11-27,2026-11-12T10:57-05:00,stocks,earn_in_life,DIS,DIS,CALL,124.0,2026-11-27,2.15,119.24,4.5,5.7
 20261112T1057|stocks|open_same_dir|BA|PUT|172.5|2026-11-20,2026-11-12T10:57-05:00,stocks,open_same_dir,BA,BA,PUT,172.5,2026-11-20,2.47,174.2,4.5,7.5
+20261112T1112|stocks|chase_em|AMZN|CALL|280|2026-11-27,2026-11-12T11:12-05:00,stocks,chase_em,AMZN,AMZN,CALL,280.0,2026-11-27,3.43,270.57,6.5,7.8
+20261112T1112|stocks|open_same_dir|BA|PUT|172.5|2026-11-20,2026-11-12T11:12-05:00,stocks,open_same_dir,BA,BA,PUT,172.5,2026-11-20,2.09,175.06,4.5,7.5
