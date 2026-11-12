@@ -1418,7 +1418,6 @@
    "jpmorgan chase nyse jpm lifts interest income outlook as lending offsets trading slowdown"
   ],
   "COIN:PUT": [
-   "pepe soars 17 daily did justin sun fuel the pump",
    "federal reserve holds key interest rates",
    "sk hynix inc tokenized stock coinbase price skhyc price today live chart usd converter market capitalization",
    "how listed stocks are impacted by bitcoin weekend moves",
@@ -1817,7 +1816,8 @@
    "why is crypto crashing 560 billion wiped out as bitcoin price falls below 72k",
    "could xrp be the next bitcoin",
    "btc to php bitcoin price in philippine peso",
-   "bitcoin price breaks below 72k as 656m liquidation bloodbath hits crypto"
+   "bitcoin price breaks below 72k as 656m liquidation bloodbath hits crypto",
+   "us a largest miner mara sold 1 1 billion of bitcoin in six weeks it says it will sell more"
   ],
   "HOOD:PUT": [
    "long term bitcoin holders face losses on 4m btc bought above 85k risking sell off if price nears that level again",
@@ -3560,8 +3560,6 @@
    "snap tumbles 11 as user growth miss and sluggish ad sales overshadow return to profit pinterest dips meta holds steady"
   ],
   "MSTR:PUT": [
-   "bitcoin price crashes 5 below 75 000 amid tech rout",
-   "bitcoin price today btc holds 80 500 as options fear fades and buyers back pepeto",
    "bitcoin price crashes over 5 to 76 000 as tech rout wipes out leveraged longs",
    "bitcoinfallsbelow 77 000 community insights market sentiment binance square",
    "bitcoin drops to 76k amid 600m crypto liquida",
@@ -3959,7 +3957,9 @@
    "can bitcoin hit 1 million chatgpt ai predicts when and how",
    "why is crypto crashing 560 billion wiped out as bitcoin price falls below 72k",
    "could xrp be the next bitcoin",
-   "btc to php bitcoin price in philippine peso"
+   "btc to php bitcoin price in philippine peso",
+   "btc to eur bitcoin price in euro",
+   "us a largest miner mara sold 1 1 billion of bitcoin in six weeks it says it will sell more"
   ],
   "SOFI:PUT": [
    "nasdaq ceo adena friedman says 23 hour trading starts dec 6 what it means for your retirement money",
@@ -4048,7 +4048,8 @@
    "prosus n v prosy stock price news quote and history",
    "uber jumps 7 on 20 bookings growth we have more demand than we have supply",
    "tractor supply joins uber marketplace expanding on demand shopping across rural and suburban america",
-   "the supreme court says uber s manager was an employee and his 3 000 stock options count too"
+   "the supreme court says uber s manager was an employee and his 3 000 stock options count too",
+   "uber technologies inc uber stock forecasts"
   ],
   "GOOGL:CALL": [
    "alphabet tpu sales and gemini enterprise are reshaping the bull case nasdaq goog",
@@ -4185,13 +4186,15 @@
    "news:bitcoin long liquidations hit 41 41m in one ho",
    "news:bitcoin and ethereum sink to 3 month lows but a bigger crypto selloff may be ahead",
    "news:europe s largest asset manager doubles down on microstrategy amid msci setback",
-   "news:why is crypto crashing 560 billion wiped out as bitcoin price falls below 72k"
+   "news:why is crypto crashing 560 billion wiped out as bitcoin price falls below 72k",
+   "news:us a largest miner mara sold 1 1 billion of bitcoin in six weeks it says it will sell more"
   ],
   "COIN:PUT:2026-11-20:125": [
    "news:bitcoin price falls below 72k as nvidia stock plunges",
    "news:bitcoin and ethereum sink to 3 month lows but a bigger crypto selloff may be ahead",
    "news:why is crypto crashing 560 billion wiped out as bitcoin price falls below 72k",
-   "news:bitcoin price breaks below 72k as 656m liquidation bloodbath hits crypto"
+   "news:bitcoin price breaks below 72k as 656m liquidation bloodbath hits crypto",
+   "news:us a largest miner mara sold 1 1 billion of bitcoin in six weeks it says it will sell more"
   ]
  },
  "stock_level": {
@@ -4199,9 +4202,6 @@
   "UBER:CALL:2026-11-27:70": 1
  },
  "seen_macro": [
-  "stock market today dow eyes 2 jump as amd earnings ease ai spending fears",
-  "stock market today global markets rebound",
-  "us oil prices fall below 93 as markets react to midterm election results",
   "oil market weighs next stage in iran conflict after midterms",
   "share market today nifty 50 bank nifty nov 04 2026",
   "sti index sti charts data and news",
@@ -4798,7 +4798,10 @@
   "fed interest rate odds traders see 87 chance of quarter point hike in december",
   "fed s daly says more rate hikes needed to cool inflation",
   "rates come down again but remain over 7",
-  "dow 0 40 s p 500 0 29 nasdaq 0 31 brent oil"
+  "dow 0 40 s p 500 0 29 nasdaq 0 31 brent oil",
+  "gold weakens after elevated us inflation and federal reserve comments raise interest rate hike expectations",
+  "us treasuries drop as hot inflation backs december rate bets",
+  "fed s daly signals potential for more rate hikes amid rising inflation pressures"
  ],
  "sharp": {
   "PFE:PUT:2026-11-20:30": 29.355,
