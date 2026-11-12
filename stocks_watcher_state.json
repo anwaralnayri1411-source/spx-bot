@@ -77,7 +77,8 @@
    "did trump threaten to jail anthropic ceo dario amodei clues mount after new interview",
    "why amazon amzn stock is up today",
    "meta amzn stocks jump as jpmorgan picks pair over alphabet sees stronger ai returns cloud growth",
-   "amazon aws just confirmed bill ackman s 50 margin thesis nasdaq amzn"
+   "amazon aws just confirmed bill ackman s 50 margin thesis nasdaq amzn",
+   "amazon stock rises amzn ahead of a leo rocket launch to expand satellite internet services"
   ],
   "WMT:CALL": [
    "walmart slashes membership fees with this new bundle",
@@ -2260,7 +2261,9 @@
    "apple s aapl foldable iphone duo is in short supply heading into the holidays says ubs",
    "why apple stock fell despite a record quarter",
    "apple s aapl iphone duo is in short supply heading into the holidays says ubs",
-   "apple stock called safe haven hits record high"
+   "apple stock called safe haven hits record high",
+   "drama notable only by its absence why investors love apple nasdaq aapl",
+   "trump floats apple chairman tim cook as jensen huang s successor"
   ],
   "BA:PUT": [
    "boeing nyse ba sets new 52 week low on disappointing earnings",
@@ -2324,7 +2327,8 @@
    "boeing ba stock still looks undervalued with earnings in focus",
    "what happens to a stock when the ceo quits 9 exits",
    "boeing stock stays in focus as susquehanna keeps 250 us dollar target",
-   "analysts are bullish on these industrial goods stocks boeing ba core main cnm"
+   "analysts are bullish on these industrial goods stocks boeing ba core main cnm",
+   "boeing s deal losses are coming into sharper view"
   ],
   "NVDA:PUT": [
    "nvidia stock is set for its worst month in a year time to buy the dip",
@@ -3913,7 +3917,11 @@
    "bitcoin fell to 71 800 after nvidia ceo jensen huang resigned is that why btc hit its lowest price since august",
    "bitcoin slides toward 71k as nvidia stock tumbles after huang steps down",
    "bitcoin price dips below 72 000 trading at 7",
-   "bitcoin price analysis can btc hold 70k after a brutal 10k weekly drop"
+   "bitcoin price analysis can btc hold 70k after a brutal 10k weekly drop",
+   "btc price on november 13 4 59pm utc",
+   "bitcoin price forecast btc usd 71 393 82 700 upside target on huang exit 1 44b etf outflows",
+   "msci is removing strategy holder of 850 364 bitcoin from its indexes will saylor have to sell btc",
+   "bitcoin price prediction 50b futures exposure raises liquidation risk below 72k"
   ],
   "SOFI:PUT": [
    "nasdaq ceo adena friedman says 23 hour trading starts dec 6 what it means for your retirement money",
@@ -4120,22 +4128,15 @@
   "MSTR:PUT:2026-11-20:110@2026-11-12": [
    "news:bitcoin falls below 72k as etfs record 1 44b outflows in 5 days",
    "news:bitcoin slides toward 71k as nvidia stock tumbles after huang steps down",
-   "sharp@2026-11-12T11:57-05:00"
+   "sharp@2026-11-12T11:57-05:00",
+   "news:msci is removing strategy holder of 850 364 bitcoin from its indexes will saylor have to sell btc",
+   "up0.25"
   ]
  },
  "stock_level": {
   "PFE:PUT:2026-11-20:30": 1
  },
  "seen_macro": [
-  "wall street braces for midterm uncertainty as futures diverge",
-  "treasuries fall amid oil price swings strong job openings data",
-  "a democratic congress could curb the iran war but not trump s tariffs former ambassador says",
-  "why a midterm mauling for trump will not bring asia trade relief",
-  "gold turns lower again as volatile oil prices keep traders cautious",
-  "silver hits 1 year low price on tuesday as gold also falls",
-  "wall street the day after which indicators to watch closely after the midterms",
-  "billionaire wall street pessimists are predicting an epic stock market crash will wipe out 80 of your 401 k",
-  "stronger us factory activity complicates bitcoin s hopes for lower rates",
   "nextpower stock climbs as strong q2 sparks wall street forecast divide",
   "green card update judge freezes reopening of 2027 us diversity visa lottery",
   "us strikes iran amid trump s peace talks claim causing mixed signals for oil markets",
@@ -4726,7 +4727,16 @@
   "investors rotate into defensive funds etfs to consider",
   "gold slips to fresh yearly low as fed hike bets build and us stocks slide",
   "trump s canada tariffs backfire as firm flees texas and us costs soar",
-  "fed faces tougher inflation fight as pressure builds for more rate hikes"
+  "fed faces tougher inflation fight as pressure builds for more rate hikes",
+  "oil gains after early drop as geopolitical risks support market",
+  "u s 10 year treasury tops 5 on expectations of higher interest rates",
+  "the bond market now has an even bigger fear than the ai fallout",
+  "fed s hammack backs gradual rate hikes as ai spending fuels sticky inflation",
+  "the average us 30 year mortgage rate falls to 7 11 this week its fourth straight decline",
+  "silver tumbles over 3 as hot us inflation boosts fed hike bets",
+  "s p 500 nasdaq fall as nvidia ceo s exit rattles ai stocks",
+  "exclusive bank of mexico rate cuts sends wrong message says deputy governor heath",
+  "orthodox jewish couple behind 100 million furniture business say trump s tariff policies left them disappointed"
  ],
  "sharp": {
   "PFE:PUT:2026-11-20:30": 29.355,
