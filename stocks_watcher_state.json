@@ -78,7 +78,8 @@
    "why amazon amzn stock is up today",
    "meta amzn stocks jump as jpmorgan picks pair over alphabet sees stronger ai returns cloud growth",
    "amazon aws just confirmed bill ackman s 50 margin thesis nasdaq amzn",
-   "amazon stock rises amzn ahead of a leo rocket launch to expand satellite internet services"
+   "amazon stock rises amzn ahead of a leo rocket launch to expand satellite internet services",
+   "investor ruchir sharma warns of ai stock bubble amid rising rates amazon amzn fairly valued"
   ],
   "WMT:CALL": [
    "walmart slashes membership fees with this new bundle",
@@ -2328,7 +2329,8 @@
    "what happens to a stock when the ceo quits 9 exits",
    "boeing stock stays in focus as susquehanna keeps 250 us dollar target",
    "analysts are bullish on these industrial goods stocks boeing ba core main cnm",
-   "boeing s deal losses are coming into sharper view"
+   "boeing s deal losses are coming into sharper view",
+   "boeing layoffs raise new fears about its financial future"
   ],
   "NVDA:PUT": [
    "nvidia stock is set for its worst month in a year time to buy the dip",
@@ -3925,7 +3927,12 @@
    "near price drops to 8 week low as long liquidations mount",
    "bitcoin price breaks below 72k as 656m liquidation bloodbath hits crypto",
    "top 3 risks that could trigger crypto market in the next 36 hours",
-   "crypto news today bitcoin loses 72k as 550b vanishes from cryptocurrency market"
+   "crypto news today bitcoin loses 72k as 550b vanishes from cryptocurrency market",
+   "bitcoin price slips below usd 72 000 as etf outflows persist",
+   "bitcoin price below 72 000 why btc is falling today",
+   "why is bitcoin down today bitcoin price hits 12 week low as msci drops strategy",
+   "u s dollar swings are playing a bigger role in bitcoin price moves",
+   "bitcoin price slides below 72k as jensen huang exits nvidia is 68 000 next"
   ],
   "SOFI:PUT": [
    "nasdaq ceo adena friedman says 23 hour trading starts dec 6 what it means for your retirement money",
@@ -4139,17 +4146,15 @@
    "news:msci is removing strategy holder of 850 364 bitcoin from its indexes will saylor have to sell btc",
    "up0.25",
    "news:bitcoin price breaks below 72k as 656m liquidation bloodbath hits crypto",
-   "news:crypto news today bitcoin loses 72k as 550b vanishes from cryptocurrency market"
+   "news:crypto news today bitcoin loses 72k as 550b vanishes from cryptocurrency market",
+   "news:bitcoin price slips below usd 72 000 as etf outflows persist",
+   "news:why is bitcoin down today bitcoin price hits 12 week low as msci drops strategy"
   ]
  },
  "stock_level": {
   "PFE:PUT:2026-11-20:30": 1
  },
  "seen_macro": [
-  "asx set to slide tech stocks boost wall street",
-  "how wall street analysts think the midterms could affect the stock market",
-  "oil prices remain steady as china covid worries outweigh supply concerns",
-  "oil slides nearly 3 as trump signals scrapping 4 billion us aid to israel us stock futures recover",
   "bloomberg intelligence official global aviation industry faces tough test from fuel interest rates",
   "2026 iran war oil explained united states israel strait of hormuz map conflict",
   "us job openings jump in september layoffs lowest in 1 1 2 years",
@@ -4745,7 +4750,11 @@
   "orthodox jewish couple behind 100 million furniture business say trump s tariff policies left them disappointed",
   "gold is falling on hot inflation but can the fed keep raising rates",
   "your family s bills are still rising but the government can t tell you by how much",
-  "pound to dollar forecast hawkish fed drives sterling to november lows"
+  "pound to dollar forecast hawkish fed drives sterling to november lows",
+  "stock market midday nov 12 nvidia ceo resigns amd surges as wall street edges higher",
+  "in a policy switch the fed says its october 2027 meeting will not see a vote on interest rates",
+  "u s dollar swings are playing a bigger role in bitcoin price moves",
+  "mortgage rates hit seven week low as fed hike threat grows"
  ],
  "sharp": {
   "PFE:PUT:2026-11-20:30": 29.355,
