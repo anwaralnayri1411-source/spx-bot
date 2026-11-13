@@ -615,6 +615,17 @@
    "time": "2026-11-13T10:16-05:00",
    "price": null,
    "qty": null
+  },
+  "SOFI:PUT:2026-12-04:15.5|2026-11-13": {
+   "mode": "watch",
+   "ticker": "SOFI",
+   "side": "PUT",
+   "exp": "2026-12-04",
+   "strike": 15.5,
+   "day": "2026-11-13",
+   "time": "2026-11-13T10:46-05:00",
+   "price": null,
+   "qty": null
   }
  }
 }
