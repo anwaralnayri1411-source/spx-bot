@@ -117,3 +117,124 @@ def test_after_exit_tracking():
     assert c["after_hi"] == 5.0 and c["after_hi_t"] == "10:00" and "after_hi" not in old
     assert ml.after_rows(st, "2026-11-05")[0]["after_hi"] == 5.0
     assert "+200$" in ml.left_text(st["variants"][0], "2026-11-05")
+
+
+# ====================== H-TRENDPB: النسخ الثابتة s0–s3 ======================
+import pandas as pd  # noqa: E402
+
+D = "2026-11-05"
+
+
+def _st5(events, fvgs, N, zone):
+    return {"events": events, "fvgs": fvgs, "N": N, "pd": {"zone": zone}}
+
+
+def _ctx(st5=None, h1="up", m5=None, orng=None):
+    idx = pd.date_range("2026-11-05 09:30", periods=12, freq="5min", tz=ml.NY)
+    return {"st5": st5, "h1_trend": h1, "m5": m5 if m5 is not None else pd.DataFrame({"c": range(12)}, index=idx), "or": orng}
+
+
+def test_strat_variants_fixed_and_outside_evolution():
+    sv = ml.strat_variants(D)
+    assert [v["vid"] for v in sv] == ["s0", "s1", "s2", "s3"] and all(v["pinned"] for v in sv)
+    assert sv[0]["params"] == ml.V9 and all(v["params"] == dict(ml.V9, exit="struct") for v in sv[1:])
+    st = {"gen": 1, "variants": ml.initial_variants(D), "strat": sv}
+    for v in st["variants"]:
+        v["closed"] = [{"tdate": D, "usd": -500.0}] * 3
+    ml.evolve(st, D, random.Random(1))
+    assert [v["vid"] for v in st["strat"]] == ["s0", "s1", "s2", "s3"]          # التطور لا يمس النسخ الثابتة
+    assert len(ml.all_variants(st)) == 16
+    assert "s3" in ml.strat_text(st, D) and "دخول الهيكل" in ml.strat_text(st, D)
+
+
+def test_manage_struct_half_runner_and_exits():
+    p = dict(ml.V9, exit="struct")
+    e = {"entry": 5.0, "tdate": D}
+    assert ml.manage_struct(e, p, 1.9, N) == (True, "وقف") and e["usd"] == -310.0
+    e = {"entry": 5.0, "tdate": D}
+    assert ml.manage_struct(e, p, 10.0, N) == (False, "") and e["half"] and e["half_usd"] == 250.0
+    assert ml.manage_struct(e, p, 16.0, N) == (False, "") and e["sl"] == 7.5      # قمة +220% ← الوقف +50%
+    closed, why = ml.manage_struct(e, p, 7.4, N)
+    assert closed and why == "وقف مرحلي" and e["usd"] == round(250 + 0.5 * 240, 2)
+    e = {"entry": 5.0, "tdate": D}
+    ml.manage_struct(e, p, 10.0, N)
+    assert ml.manage_struct(e, p, 9.0, N, broken=True) == (True, "كسر الهيكل") and e["usd"] == 450.0
+    e = {"entry": 5.0, "tdate": D}
+    assert ml.manage_struct(e, p, 4.0, N.replace(hour=15, minute=45)) == (True, "وقت")
+    e = {"entry": 5.0, "tdate": D}
+    assert ml.manage_struct(e, p, 4.0, N, broken=True) == (False, "")             # الكسر يخص الباقي فقط
+
+
+def test_structure_broken_only_after_entry():
+    t = pd.Timestamp("2026-11-05 11:00", tz=ml.NY)
+    st5 = {"events": [{"dir": "down", "t": t}]}
+    assert ml.structure_broken({"st5": st5}, "CALL", "2026-11-05T11:02-05:00")     # الشمعة أُغلقت 11:05 بعد الدخول
+    assert not ml.structure_broken({"st5": st5}, "CALL", "2026-11-05T11:10-05:00")
+    assert not ml.structure_broken({"st5": st5}, "PUT", "2026-11-05T10:00-05:00")
+    assert not ml.structure_broken(None, "CALL", "2026-11-05T10:00-05:00")
+
+
+def test_day_filter_window_chop_and_events():
+    idx = pd.date_range("2026-11-05 09:30", periods=12, freq="5min", tz=ml.NY)
+    trend = pd.DataFrame({"c": [100, 101, 102, 101, 102, 103, 104, 105, 106, 107, 108, 109]}, index=idx)
+    chop = pd.DataFrame({"c": [100, 101, 102, 101, 102, 103, 104, 99, 97, 101, 100, 100]}, index=idx)
+    assert not ml.chop_day(_ctx(m5=trend, orng=(103.5, 99.5)))
+    assert ml.chop_day(_ctx(m5=chop, orng=(103.5, 99.5)))
+    ok = _ctx(m5=trend, orng=(103.5, 99.5))
+    assert ml.day_ok(ok, N.replace(hour=10, minute=30)) and not ml.day_ok(ok, N.replace(hour=9, minute=55))
+    assert not ml.day_ok(ok, N.replace(hour=14, minute=31))
+    assert ml.near_event(datetime(2026, 12, 9, 13, 30, tzinfo=ml.NY))                 # قبل قرار الفيدرالي 14:00
+    assert ml.near_event(datetime(2026, 12, 9, 14, 10, tzinfo=ml.NY))
+    assert not ml.near_event(datetime(2026, 12, 9, 14, 20, tzinfo=ml.NY))
+    assert not ml.near_event(datetime(2026, 11, 13, 10, 30, tzinfo=ml.NY))             # PPI 08:30 انتهت نافذته
+
+
+def test_smc_setup_needs_every_condition():
+    p = dict(ml.V9)
+    ev = {"dir": "up", "kind": "MSS", "fvg": True, "i": 8, "origin": 4}
+    f = {"dir": "up", "i": 6, "touch_i": 11, "touch": "strong", "ce": 101.25}
+    good = _ctx(_st5([ev], [f], 12, "discount"))
+    su = ml.smc_setup(good, "CALL", 4, 20, p)
+    assert su and su["kind"] == "MSS" and su["ce"] == 101.25
+    assert ml.smc_setup(good, "CALL", 3, 20, p) is None                               # الأصوات أقل من 4
+    assert ml.smc_setup(good, "PUT", -4, 20, p) is None
+    assert ml.smc_setup(_ctx(_st5([ev], [f], 12, "discount"), h1="down"), "CALL", 4, 20, p) is None
+    assert ml.smc_setup(_ctx(_st5([ev], [f], 12, "premium")), "CALL", 4, 20, p) is None
+    assert ml.smc_setup(_ctx(_st5([dict(ev, fvg=False)], [f], 12, "discount")), "CALL", 4, 20, p) is None
+    assert ml.smc_setup(_ctx(_st5([ev], [dict(f, touch="normal")], 12, "discount")), "CALL", 4, 20, p) is None
+    assert ml.smc_setup(_ctx(_st5([ev], [dict(f, touch_i=10)], 12, "discount")), "CALL", 4, 20, p) is None
+    assert ml.smc_setup(_ctx(_st5([ev], [dict(f, i=3)], 12, "discount")), "CALL", 4, 20, p) is None   # فجوة خارج ساق الكسر
+
+
+def test_strat_wants_one_direction_cap_and_once():
+    sv = {v["vid"]: v for v in ml.strat_variants(D)}
+    now = N.replace(hour=10, minute=30)
+    ctx = _ctx(_st5([{"dir": "up", "kind": "BOS", "fvg": True, "i": 8, "origin": 4}],
+                    [{"dir": "up", "i": 6, "touch_i": 11, "touch": "strong", "ce": 1.0}], 12, "discount"), orng=(50, -5))
+    s0 = sv["s0"]
+    assert ml.strat_wants(s0, None, now, "CALL", 4, 20, 7700, D, True)[0]
+    assert not ml.strat_wants(s0, None, now, "CALL", 4, 20, 7700, D, False)[0]      # بلا شمعة جديدة ولا مركز
+    s0["open"].append({"side": "PUT", "tdate": D, "t": "1", "S": 7700})
+    assert not ml.strat_wants(s0, None, now, "CALL", 4, 20, 7700, D, True)[0]       # لا CALL مع PUT مفتوح
+    assert not ml.strat_wants(sv["s2"], ctx, N.replace(hour=9, minute=50), "CALL", 4, 20, 7700, D, True)[0]
+    assert ml.strat_wants(sv["s2"], ctx, now, "CALL", 4, 20, 7700, D, True)[0]
+    s3 = sv["s3"]
+    ok, trig, su = ml.strat_wants(s3, ctx, now, "CALL", 4, 20, 7700, D, True)
+    assert ok and trig == "BOS"
+    s3["open"].append({"side": "CALL", "tdate": D, "t": "x", "S": 7700, "setup": su["key"]})
+    assert not ml.strat_wants(s3, ctx, now, "CALL", 4, 20, 7700, D, True)[0]        # الإعداد نفسه مرة واحدة
+    s3["open"] = [{"side": "CALL", "tdate": D, "t": str(i), "S": 7700, "setup": f"k{i}"} for i in range(3)]
+    assert not ml.strat_wants(s3, dict(ctx), now, "CALL", 4, 20, 7700, D, True)[0]  # السقف 3 في اليوم
+
+
+def test_strat_ctx_on_minute_bars():
+    import numpy as np
+    idx = pd.date_range("2026-11-04 09:30", "2026-11-05 11:00", freq="1min", tz=ml.NY)
+    px = 7600 + np.cumsum(np.sin(np.arange(len(idx)) / 37.0) * 0.8 + 0.05)
+    m1 = pd.DataFrame({"o": px, "h": px + 0.6, "l": px - 0.6, "c": px + 0.1, "v": 100.0}, index=idx)
+    now = datetime(2026, 11, 5, 11, 0, tzinfo=ml.NY)
+    ctx = ml.strat_ctx(m1, now)
+    assert len(ctx["m5"]) == 18 and ctx["m5"].index[0].hour == 9                     # شموع اليوم المكتملة فقط
+    assert ctx["or"] and ctx["or"][0] >= ctx["or"][1] and ctx["st5"] is not None
+    assert ctx["h1_trend"] in ("up", "down", None)
+    ml.chop_day(ctx), ml.day_ok(ctx, now)

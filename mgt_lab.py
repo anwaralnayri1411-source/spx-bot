@@ -16,6 +16,7 @@ from datetime import date, datetime, timedelta
 import pandas as pd
 
 import mgt_shadow as ms
+import smc
 
 NY = ms.NY
 DIR = os.path.join(os.getenv("SPXBOT_DATA", "/opt/spxbot/data"), "mgt_lab")
@@ -180,7 +181,7 @@ def manage_late(e, p, bid, expiry):
 
 def track_after(st, qs, now):
     """أعلى عرض بلغه عقد كل صفقة مغلقة بعد خروجها. قياس فقط."""
-    for v in st["variants"]:
+    for v in all_variants(st):
         for c in v["closed"]:
             q = qs.get(c.get("symbol"))
             if q and "exit_px" in c and q["bid"] > c.get("after_hi", 0):
@@ -188,13 +189,13 @@ def track_after(st, qs, now):
 
 
 def tracked_symbols(st, day):
-    return {c["symbol"] for v in st["variants"] for c in v["closed"] if "exit_px" in c and c["tdate"] >= day}
+    return {c["symbol"] for v in all_variants(st) for c in v["closed"] if "exit_px" in c and c["tdate"] >= day}
 
 
 def after_rows(st, day):
     return [{"vid": v["vid"], "tdate": c["tdate"], "t": c["t"], "side": c["side"], "strike": c["strike"], "entry": c["entry"],
              "exit": c["exit_px"], "exit_t": c.get("exit_t"), "after_hi": c.get("after_hi"), "after_hi_t": c.get("after_hi_t"), "usd": c["usd"]}
-            for v in st["variants"] for c in v["closed"] if c["tdate"] == day and "exit_px" in c]
+            for v in all_variants(st) for c in v["closed"] if c["tdate"] == day and "exit_px" in c]
 
 
 def left_text(v, day):
@@ -203,12 +204,161 @@ def left_text(v, day):
     return f"\n   بعد الخروج بلغت عقودها أعلى من سعر بيعها بمتوسط {sum(x) / len(x):+,.0f}$ للعقد" if x else ""
 
 
+# ====================== استراتيجية «استمرار الترند بعد التصحيح» (H-TRENDPB) ======================
+# نسخ ثابتة لا تدخل التطور: كل نسخة تضيف شيئاً واحداً على سابقتها (التسجيل في CLAUDE.md 13/11/2026).
+V9 = {"score": 4, "adx": 15, "price": 5.0, "stop": 0.6, "exit": "tp100", "ladder": 10, "cap": 12, "sess": "rth", "trig": "any"}
+STRAT = [("s0", 0), ("s1", 1), ("s2", 2), ("s3", 3)]          # المستوى: 1 خروج الهيكل، 2 فلتر اليوم، 3 دخول الهيكل
+STRAT_NAMES = {"s0": "v9 مجمّدة", "s1": "+ خروج يتبع الهيكل", "s2": "+ فلتر نوع اليوم", "s3": "+ دخول الهيكل (MSS ثم FVG)"}
+S_FIRST, S_LAST, S_FORCE = ms.dtime(10, 0), ms.dtime(14, 30), ms.dtime(15, 45)
+S3_CAP, SMC_N = 3, 3
+
+
+def strat_variants(day):
+    return [{"vid": vid, "born": day, "level": lvl, "pinned": True, "open": [], "closed": [],
+             "params": {**V9, "exit": "struct" if lvl >= 1 else "tp100"}} for vid, lvl in STRAT]
+
+
+def all_variants(st):
+    return st["variants"] + st.get("strat", [])
+
+
+def manage_struct(e, p, bid, now, broken=False):
+    """خروج s1–s3: وقف كامل قبل +100%؛ عنده بيع النصف ووقف الباقي على الدخول ثم مراحل؛ والباقي يخرج بكسر الهيكل أو 15:45."""
+    E = e["entry"]
+    e["peak"] = max(e.get("peak", E), bid)
+    force = now.date().isoformat() >= e["tdate"] and now.time() >= S_FORCE
+    if not e.get("half"):
+        if bid <= E * (1 - p["stop"]):
+            e["usd"] = round((bid - E) * 100, 2)
+            return True, "وقف"
+        if bid >= 2 * E:
+            e["half"], e["half_usd"], e["sl"] = True, 0.5 * (bid - E) * 100, E
+            return False, ""
+        if force:
+            e["usd"] = round((bid - E) * 100, 2)
+            return True, "وقت"
+        return False, ""
+    sl = e.get("sl", E)
+    why = "وقف مرحلي" if bid <= sl else ("كسر الهيكل" if broken else ("وقت" if force else ""))
+    if why:
+        e["usd"] = round(e["half_usd"] + 0.5 * (bid - E) * 100, 2)
+        return True, why
+    g = e["peak"] / E - 1
+    sl = max(sl, E)
+    if g >= 2:
+        sl = max(sl, 1.5 * E)
+    if g >= 3:
+        sl = max(sl, 0.6 * e["peak"])
+    e["sl"] = sl
+    return False, ""
+
+
+def _ohlc(df):
+    return df.rename(columns={"o": "Open", "h": "High", "l": "Low", "c": "Close"})
+
+
+def strat_ctx(m1, now):
+    """هيكل 5د للجلسة الرسمية وهيكل الساعة ونطاق الافتتاح، من شموع مكتملة فقط."""
+    m5 = ms.resample(m1, "5min")
+    m5 = m5[m5.index + pd.Timedelta(minutes=5) <= now]
+    rth = m5[(m5.index >= datetime.combine(now.date(), ms.RTH_START, NY)) & (m5.index.date == now.date())]
+    h1 = ms.resample(m1, "60min")
+    h1 = h1[h1.index + pd.Timedelta(minutes=60) <= now]
+    st5 = smc.analyze(_ohlc(rth), n=SMC_N) if len(rth) >= 2 * SMC_N + 1 else None
+    sth = smc.analyze(_ohlc(h1), n=SMC_N) if len(h1) >= 2 * SMC_N + 1 else None
+    orng = rth[rth.index < datetime.combine(now.date(), S_FIRST, NY)]
+    return {"m5": rth, "st5": st5, "h1_trend": sth["trend"] if sth else None,
+            "or": (float(orng["h"].max()), float(orng["l"].min())) if len(orng) == 6 else None}
+
+
+def structure_broken(ctx, side, since):
+    """هل أغلقت شمعة 5د بعد `since` خلف المستوى المحمي ضد الجهة (MSS أو BOS معاكس)؟"""
+    st5 = ctx and ctx.get("st5")
+    if not st5:
+        return False
+    against = "down" if side == "CALL" else "up"
+    t0 = pd.Timestamp(since)
+    return any(ev["dir"] == against and pd.Timestamp(ev["t"]) + pd.Timedelta(minutes=5) > t0 for ev in st5["events"])
+
+
+def chop_day(ctx):
+    """يوم تذبذب: إغلاقات 5د بعد 10:00 تجاوزت قمة نطاق الافتتاح وقاعه كليهما."""
+    if not ctx.get("or"):
+        return False
+    hi, lo = ctx["or"]
+    after = ctx["m5"][[t >= S_FIRST for t in ctx["m5"].index.time]]["c"]
+    return bool((after > hi).any() and (after < lo).any())
+
+
+def near_event(now):
+    import macro_events as me
+    name = me.EVENTS.get(now.date().isoformat())
+    if not name:
+        return False
+    hh, mm = map(int, me.time_of(name).split(":"))
+    at = datetime.combine(now.date(), ms.dtime(hh, mm), NY)
+    return at - timedelta(hours=1) <= now <= at + timedelta(minutes=15)
+
+
+def day_ok(ctx, now):
+    """فلتر نوع اليوم (s2، s3): النافذة الزمنية، لا تذبذب، بعيداً عن الأخبار."""
+    return S_FIRST <= now.time() <= S_LAST and not chop_day(ctx) and not near_event(now)
+
+
+def smc_setup(ctx, side, total, adx_v, p):
+    """إعداد s3 على آخر شمعة 5د مكتملة، أو None: الساعة مع الجهة، آخر كسر معها ترك FVG، لمسة قوية الآن، خصم/غلاء، أصوات ≥4."""
+    st5, d = ctx.get("st5"), ("up" if side == "CALL" else "down")
+    if not st5 or ctx.get("h1_trend") != d or side_for(p, total, adx_v) != side or not st5["events"]:
+        return None
+    ev = st5["events"][-1]
+    if ev["dir"] != d or not ev["fvg"]:
+        return None
+    last = st5["N"] - 1
+    f = next((f for f in st5["fvgs"] if f["dir"] == d and ev["origin"] < f["i"] <= ev["i"]
+              and f.get("touch_i") == last and f["touch"] == "strong"), None)
+    zone = (st5.get("pd") or {}).get("zone")
+    if not f or zone != ("discount" if d == "up" else "premium"):
+        return None
+    return {"key": f"{ctx['m5'].index[ev['i']].isoformat()}|{f['i']}", "kind": ev["kind"], "ce": round(f["ce"], 2)}
+
+
+def strat_wants(v, ctx, now, side, total, adx_v, S, tdate, new_bar):
+    """هل تدخل النسخة الثابتة الآن في هذه الجهة؟ يرجع (نعم/لا، الزناد، الإعداد)."""
+    p, lvl = v["params"], v["level"]
+    if any(e["side"] != side for e in v["open"]):                  # اتجاه واحد (الشرط الشرعي)
+        return False, None, None
+    if lvl >= 2 and not day_ok(ctx, now):
+        return False, None, None
+    if lvl == 3:
+        today = [e for e in v["open"] + v["closed"] if e["tdate"] == tdate]
+        if not new_bar or len(today) >= S3_CAP:
+            return False, None, None
+        su = smc_setup(ctx, side, total, adx_v, p)
+        if not su or any(e.get("setup") == su["key"] for e in today):
+            return False, None, None
+        return True, su["kind"], su
+    if side_for(p, total, adx_v) != side or not can_add(v, side, S, tdate):
+        return False, None, None
+    has = any(e["side"] == side and e["tdate"] == tdate for e in v["open"] + v["closed"])
+    return bool(new_bar or has), ("ladder" if has else "any"), None
+
+
+def strat_text(st, day):
+    L = ["", "📐 **الاستراتيجية (s0←s3، ثابتة):**"]
+    for v in st.get("strat", []):
+        s_d, n_d = score(v, [day])
+        s_all, n_all = sum(c["usd"] for c in v["closed"]), len(v["closed"])
+        L.append(f"- {v['vid']} {STRAT_NAMES[v['vid']]}: اليوم {s_d:+,.0f}$ ({n_d}) · المجموع {s_all:+,.0f}$ ({n_all})")
+    return "\n".join(L)
+
+
 # ====================== التشغيل ======================
 def load_state(day):
     try:
         st = json.load(open(STATE, encoding="utf-8"))
     except Exception:  # noqa: BLE001
         st = {"gen": 1, "variants": initial_variants(day), "last_bar": None, "evolve_day": ""}
+    st.setdefault("strat", strat_variants(day))
     ensure_exits(st)
     return st
 
@@ -288,7 +438,7 @@ def read_engine(now, sess, last_bar):
     lines = ms.mml_lines(S, ms.octave(float(m1["h"].max() - m1["l"].min())))
     hit = {sd: ms.crossed_line(float(done5["c"].iloc[-2]), float(done5["c"].iloc[-1]), lines, sd) if new_bar else None
            for sd in ("CALL", "PUT")}
-    return {"S": S, "total": total, "det": det, "new_bar": new_bar, "bar": bar, "hit": hit}
+    return {"S": S, "total": total, "det": det, "new_bar": new_bar, "bar": bar, "hit": hit, "m1": m1}
 
 
 def main(argv):
@@ -297,18 +447,29 @@ def main(argv):
     day = now.date().isoformat()
     st = load_state(day)
     # 1) إدارة المفتوح لكل النسخ
-    syms = sorted({e["symbol"] for v in st["variants"] for e in v["open"]} | (tracked_symbols(st, day) if now.time() <= ms.RTH_END else set()))
+    syms = sorted({e["symbol"] for v in all_variants(st) for e in v["open"]} | (tracked_symbols(st, day) if now.time() <= ms.RTH_END else set()))
     if syms:
         try:
             qs = {q["symbol"]: q for q in ms.quotes(syms)}
         except Exception as e:  # noqa: BLE001
             print("أسعار:", e)
             qs = {}
-        for v in st["variants"]:
+        ctx = None
+        if any(e.get("half") for v in st.get("strat", []) for e in v["open"]):
+            try:
+                ctx = strat_ctx(spx_m1()[0], now)
+            except Exception as e:  # noqa: BLE001
+                print("هيكل:", e)
+        for v in all_variants(st):
             keep = []
             for e in v["open"]:
                 q = qs.get(e["symbol"])
-                closed, why = manage(e, v["params"], q["bid"], now) if q else (False, "")
+                if not q:
+                    closed, why = False, ""
+                elif v["params"]["exit"] == "struct":
+                    closed, why = manage_struct(e, v["params"], q["bid"], now, structure_broken(ctx, e["side"], e["t"]))
+                else:
+                    closed, why = manage(e, v["params"], q["bid"], now)
                 if closed:
                     e["exit_px"], e["exit_t"] = q["bid"], now.strftime("%H:%M")
                     v["closed"].append(e)
@@ -319,7 +480,7 @@ def main(argv):
         track_after(st, qs, now)
     # 2) التطور والتقرير بعد الجلسة
     if now.weekday() < 5 and now.time() >= ms.REPORT_AT and st.get("evolve_day") != day and \
-            any(c["tdate"] == day for v in st["variants"] for c in v["closed"]):
+            any(c["tdate"] == day for v in all_variants(st) for c in v["closed"]):
         board = leaderboard(st, day)
         os.makedirs(DIR, exist_ok=True)
         rows = after_rows(st, day)
@@ -329,7 +490,7 @@ def main(argv):
         ensure_exits(st)
         with open(GENS, "a", encoding="utf-8") as f:
             f.write(gen_txt + "\n\n")
-        msg = board + "\n\n" + changes_text(st)
+        msg = board + "\n" + strat_text(st, day) + "\n\n" + changes_text(st)
         print(msg)
         if not no_send:
             import analyst as an
@@ -377,6 +538,35 @@ def main(argv):
                           "symbol": k["symbol"], "entry": k["ask"], "S": round(S, 2), "score": total, "adx": round(det["adx"], 1),
                           "trigger": "mml" if hit[sd] else ("ladder" if has else "any"), "peak": k["ask"]})
         print("دخول", v["vid"], sd, k["strike"], k["ask"])
+    # 4) النسخ الثابتة للاستراتيجية (H-TRENDPB): الجلسة الرسمية فقط
+    if sess == "rth" and (now.time() <= ms.RTH_LAST_ENTRY or force):
+        try:
+            sctx = strat_ctx(eng["m1"], now)
+        except Exception as e:  # noqa: BLE001
+            print("هيكل:", e)
+            sctx = None
+        for v in st.get("strat", []):
+            if sctx is None and v["level"] >= 2:
+                continue
+            for sd in ("CALL", "PUT"):
+                ok, trig, su = strat_wants(v, sctx, now, sd, total, det["adx"], S, tdate, new_bar)
+                if not ok:
+                    continue
+                if chain is None:
+                    try:
+                        chain = ms.chain(date.fromisoformat(tdate), S)
+                    except Exception as e:  # noqa: BLE001
+                        print("السلسلة:", e)
+                        chain = []
+                k = pick(chain, sd, S, v["params"]["price"])
+                if not k:
+                    continue
+                v["open"].append({"t": now.isoformat(timespec="minutes"), "sess": sess, "tdate": tdate, "side": sd,
+                                  "strike": k["strike"], "symbol": k["symbol"], "entry": k["ask"], "S": round(S, 2),
+                                  "score": total, "adx": round(det["adx"], 1), "trigger": trig, "peak": k["ask"],
+                                  **({"setup": su["key"], "ce": su["ce"]} if su else {})})
+                print("دخول", v["vid"], sd, k["strike"], k["ask"], trig)
+                break
     save(st)
 
 
