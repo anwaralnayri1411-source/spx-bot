@@ -1440,11 +1440,6 @@
    "jpmorgan chase nyse jpm lifts interest income outlook as lending offsets trading slowdown"
   ],
   "COIN:PUT": [
-   "coinbase downgraded to sell equivalent at morgan stanley on downside risk to earnings coin nasdaq",
-   "morgan stanley turns bearish on coinbase halves price target to 120 and cuts rating to underweight",
-   "bitcoin near usd 78 000 will us midterm elections determine its next move",
-   "strategy buys 811 btc for 65 5m holdings reach 849 327 bitcoin",
-   "strategy bitcoin purchase today saylor orange hint stirs buy guesses",
    "what mattered most in coinbase s latest quarter",
    "strategy s bitcoin bet just produced a monster quarter here s the bigger question",
    "tokenized stocks from robinhood binance and coinbase attract 130 5m in defi deposits",
@@ -1839,7 +1834,12 @@
    "bitcoin price on friday the 13th is 60 000 next",
    "bitcoin crash falling knife or buy the dip",
    "bitcoin vs gold 1 btc now buys only 18 ounces of gold",
-   "ethereum price prediction foundation sells etfs bleed"
+   "ethereum price prediction foundation sells etfs bleed",
+   "dormant bitcoin wallets wake up after 16 years moving 6 9 million",
+   "bitcoin falls below 70 000 to reach lowest since august",
+   "twenty one capital s 1 billion bitcoin profit falls 60 as btc price drops",
+   "dogecoin price prediction where will dogecoin be in 2027",
+   "franklin bitcoin etf 3q 2026 10 q summary"
   ],
   "HOOD:PUT": [
    "long term bitcoin holders face losses on 4m btc bought above 85k risking sell off if price nears that level again",
@@ -4264,11 +4264,13 @@
    "news:coinbase strengthens crypto custody with national trust launch",
    "news:bitcoin drops to 67 000 what happens next key comments from bloomberg analyst eric balchunas",
    "news:bitcoin plunges to 68 000 as anthropic ipo frenzy adds to market jitters",
-   "news:bitcoin price slides to the 200 week moving average after us producer prices"
+   "news:bitcoin price slides to the 200 week moving average after us producer prices",
+   "news:bitcoin falls below 70 000 to reach lowest since august"
   ],
   "AAPL:CALL:2026-11-27:365@2026-11-13": [
    "news:apple climbs as inflation surprise raises bond yields and weighs on tech valuations",
-   "down-0.15"
+   "down-0.15",
+   "down-0.3"
   ],
   "RIVN:PUT:2026-12-04:13": [
    "sharp@2026-11-13T11:36-05:00",
@@ -4290,13 +4292,6 @@
   "SOFI:PUT:2026-12-04:15.5": 1
  },
  "seen_macro": [
-  "boe joins the rate hike club australia may be done already",
-  "here s what the democratic election rout could mean for the u s economy",
-  "incompetence threatens federal reserve independence",
-  "crude oil dxy outlook geopolitical risks halt sell offs in the dollar and oil",
-  "bank of canada s rate hike puts inflation first as growth faces a choppy end to 2026",
-  "barkin sees interest rate hikes ahead but at a gradual pace",
-  "stock market mixed day after wall street s post midterm rally dji",
   "fiis pour rs 15 000 crore into indian stocks in biggest single day buying over a year",
   "barkin expects gradual further federal reserve rate increases",
   "broadcom stock could be approaching a major turning point here s the price target",
@@ -4889,7 +4884,14 @@
   "don t hike rates us treasury secretary bessent warns fed against rate increase amid iran war",
   "waller floats prospect of larger december interest rate hike",
   "near gains while higher inflation prompts caution over possible us rate increases and borrowing costs",
-  "why bessent is pushing back against a possible fed rate hike"
+  "why bessent is pushing back against a possible fed rate hike",
+  "if you d invested 1 000 in exxonmobil 1 year ago here s how much you d have today",
+  "trump and xi can reopen trade but for whom",
+  "why micron sandisk and sk hynix stocks are sinking friday and what wall street sees next",
+  "gold steadies above 3 880 but heads for 4 4 weekly loss as rate cut odds fade",
+  "em stocks eye first weekly gain since september as tech rebounds",
+  "the world braces as trump s canada tariff stand off escalates mcgeever",
+  "gold set for worst week since june as fed rate hike bets batter bullion"
  ],
  "sharp": {
   "PFE:PUT:2026-11-20:30": 29.355,
