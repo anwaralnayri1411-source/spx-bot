@@ -442,3 +442,4 @@ time,kind,model,input,output,usd,status
 2026-11-13T04:34:04-05:00,classify,claude-haiku-5-5,1160,460,0.00035,end_turn
 2026-11-13T05:04:02-05:00,classify,claude-haiku-5-5,1406,1070,0.00068,end_turn
 2026-11-13T05:34:03-05:00,classify,claude-haiku-5-5,1303,538,0.0004,end_turn
+2026-11-13T06:04:02-05:00,classify,claude-haiku-5-5,1395,772,0.00053,end_turn
