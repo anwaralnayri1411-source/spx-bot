@@ -238,7 +238,7 @@
  "out_above": null,
  "below_alerted": false,
  "last_err": "2026-11-12T10:53:02+00:00",
- "last_daily": null,
+ "last_daily": "2026-11-13",
  "stopped": false,
  "rng": 0.1,
  "ncells": 20
