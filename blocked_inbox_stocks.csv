@@ -1215,3 +1215,6 @@ id,time,project,tag,sym,root,side,strike,exp,entry,spot,edge,strength
 20261113T1457|stocks|chase_em|HOOD|PUT|77|2026-11-27,2026-11-13T14:57-05:00,stocks,chase_em,HOOD,HOOD,PUT,77.0,2026-11-27,3.32,78.34,6.5,8.3
 20261113T1457|stocks|open_same_dir|MSTR|PUT|105|2026-11-27,2026-11-13T14:57-05:00,stocks,open_same_dir,MSTR,MSTR,PUT,105.0,2026-11-27,3.38,112.26,9.0,9.9
 20261113T1457|stocks|open_same_dir|BA|PUT|165|2026-11-27,2026-11-13T14:57-05:00,stocks,open_same_dir,BA,BA,PUT,165.0,2026-11-27,1.69,170.84,5.5,7.8
+20261113T1512|stocks|chase_em|HOOD|PUT|77|2026-11-27,2026-11-13T15:12-05:00,stocks,chase_em,HOOD,HOOD,PUT,77.0,2026-11-27,3.29,78.48,5.5,7.8
+20261113T1512|stocks|open_same_dir|MSTR|PUT|105|2026-11-27,2026-11-13T15:12-05:00,stocks,open_same_dir,MSTR,MSTR,PUT,105.0,2026-11-27,3.28,112.62,7.5,8.9
+20261113T1512|stocks|open_same_dir|BA|PUT|170|2026-11-27,2026-11-13T15:12-05:00,stocks,open_same_dir,BA,BA,PUT,170.0,2026-11-27,3.29,171.19,5.5,8.0
