@@ -326,7 +326,8 @@
    "should you pick disney stock over its media rivals",
    "netflix stock nbcuniversal speculation puts m a in focus",
    "gtn vs nflx which stock is the better value option",
-   "3 undervalued stocks with up to 50 dcf upside"
+   "3 undervalued stocks with up to 50 dcf upside",
+   "netflix split its stock 10 for 1 one year ago and 1 000 invested right after is now worth 568"
   ],
   "AVGO:PUT": [
    "3 artificial intelligence ai stocks that look like great buys right now",
@@ -1435,8 +1436,6 @@
    "jpmorgan chase nyse jpm lifts interest income outlook as lending offsets trading slowdown"
   ],
   "COIN:PUT": [
-   "weekly engine 118 by axel adler jr adler insight",
-   "bitcoin price steadies near usd 78 000 after binance hack",
    "bitcoin surpasses 78 000 on binance marking a key price milestone",
    "near price prediction token slides 3 as 1 billion in leveraged positions faces pressure",
    "crypto markets predict xrp price for november 30",
@@ -1834,7 +1833,9 @@
    "bitcoin hits 12 week low as fed rate fears undo most of summer rally",
    "bitcoin coinbase premium stays negative for 51 days as us demand lags",
    "bitcoin price today negative funding rates signal growing bearish bets as btc nears 68k",
-   "bitcoin s june low may mark cycle bottom amid l"
+   "bitcoin s june low may mark cycle bottom amid l",
+   "bitcoin falls below 70 000 for the first time since august what happened to the crypto market",
+   "bitcoin flashes historic buy signal analyst urges investors not to panic"
   ],
   "HOOD:PUT": [
    "long term bitcoin holders face losses on 4m btc bought above 85k risking sell off if price nears that level again",
@@ -2293,7 +2294,8 @@
    "apple climbs as inflation surprise raises bond yields and weighs on tech valuations",
    "apple a downgrade to hold would be a wise move before q1 nasdaq aapl",
    "aapl is trading at a premium at 36 15x p e is the stock still a hold",
-   "what could still send apple stock higher"
+   "what could still send apple stock higher",
+   "sa analyst upgrades downgrades nvda aapl smci tsla sp500"
   ],
   "BA:PUT": [
    "boeing nyse ba sets new 52 week low on disappointing earnings",
@@ -2367,7 +2369,8 @@
    "horoz lojistik approves share buyback program",
    "etfs are net sellers of boeing ba on nov 11",
    "brokers suggest investing in boeing ba read this before placing a bet",
-   "boeing ba lands a leading role in new global uav market report"
+   "boeing ba lands a leading role in new global uav market report",
+   "amazon stock amzn rises as the company prepares for a leo satellite launch today"
   ],
   "NVDA:PUT": [
    "nvidia stock is set for its worst month in a year time to buy the dip",
@@ -4082,7 +4085,8 @@
    "doordash stock rosenblatt cuts target to 210 us dollars",
    "uber says us drivers license data stolen in data breach",
    "uber technologies stock uber adds parking for commuters",
-   "uber flags exposure of personal records in third party security breach uber nyse"
+   "uber flags exposure of personal records in third party security breach uber nyse",
+   "capital group cuts tesla to smallest since early 2025 lifts uber to high"
   ],
   "GOOGL:CALL": [
    "alphabet tpu sales and gemini enterprise are reshaping the bull case nasdaq goog",
@@ -4203,7 +4207,8 @@
    "stock1",
    "news:uber stock could climb 52 according to citi is the 105 target realistic",
    "news:uber says us drivers license data stolen in data breach",
-   "news:uber flags exposure of personal records in third party security breach uber nyse"
+   "news:uber flags exposure of personal records in third party security breach uber nyse",
+   "news:capital group cuts tesla to smallest since early 2025 lifts uber to high"
   ],
   "COIN:PUT:2026-11-20:125": [
    "news:bitcoin price falls below 72k as nvidia stock plunges",
@@ -4239,14 +4244,16 @@
    "news:bitcoin price falls to 200 week average as us demand fades",
    "news:bitcoin miners lead wall street s crypto sell off why are they falling hardest",
    "news:bitcoin dips below 70k will 455m in liquidations derail btc s price recovery",
-   "news:bitcoin hits 12 week low as fed rate fears undo most of summer rally"
+   "news:bitcoin hits 12 week low as fed rate fears undo most of summer rally",
+   "news:bitcoin falls below 70 000 for the first time since august what happened to the crypto market"
   ],
   "AAPL:CALL:2026-11-27:365@2026-11-13": [
    "news:apple climbs as inflation surprise raises bond yields and weighs on tech valuations",
    "down-0.15"
   ],
   "RIVN:PUT:2026-12-04:13": [
-   "sharp@2026-11-13T11:36-05:00"
+   "sharp@2026-11-13T11:36-05:00",
+   "down-0.15"
   ],
   "NFLX:PUT:2026-11-27:63@2026-11-13": [
    "up0.25"
@@ -4264,7 +4271,6 @@
   "SOFI:PUT:2026-12-04:15.5": 1
  },
  "seen_macro": [
-  "us stock market celebrates democrats sweeping midterm victory as dow jones climbs over 1 500 points oil crashes nearly 9",
   "stock rotation rolls on as chipmakers retreat markets wrap",
   "how the federal reserve emerged as a winner from the us election",
   "global stock markets today november 5 2026",
@@ -4863,7 +4869,8 @@
   "logan says treasury market functioning very well fed needs to strengthen support tools",
   "us stocks mixed dow rebounds 54 points as soft ppi offset by fed rate hike expectations",
   "williams says fed has more work as inflation stays above 2 goal",
-  "how congress might take back its trade powers and limit trump s tariffs"
+  "how congress might take back its trade powers and limit trump s tariffs",
+  "seeking clues to everpure p q3 earnings a peek into wall street projections for key metrics"
  ],
  "sharp": {
   "PFE:PUT:2026-11-20:30": 29.355,
