@@ -1,3 +1,3 @@
 id,entry,entry_spot,max_adverse_pct,peak_pnl,final_pnl,current_rule,suspect_stale_price,thesis_0.15,thesis_0.25,thesis_0.35
-SPY:PUT:756:2026-11-13,2.74,757.38,0.7,1.745,0.81,stop 10:55,False,stop 10:55 pnl -38%,stop 10:55 pnl -38%,stop 11:00 pnl -51%
-SPY:PUT:759:2026-11-13,2.53,759.06,0.057,3.194,2.079,no stop,False,لم يُفعَّل,لم يُفعَّل,لم يُفعَّل
+SPY:PUT:756:2026-11-13,2.74,757.38,0.7,1.745,0.723,stop 10:55,False,stop 10:55 pnl -38%,stop 10:55 pnl -38%,stop 11:00 pnl -51%
+SPY:PUT:759:2026-11-13,2.53,759.06,0.057,3.194,2.016,no stop,False,لم يُفعَّل,لم يُفعَّل,لم يُفعَّل
