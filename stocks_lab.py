@@ -18,6 +18,7 @@ from zoneinfo import ZoneInfo
 import pandas as pd
 
 import bhvote as bv
+import vpflow as vf
 
 NY = ZoneInfo("America/New_York")
 DIR = os.path.join(os.getenv("SPXBOT_DATA", "/opt/spxbot/data"), "stocks_lab")
@@ -277,12 +278,78 @@ def chain(tk, S, buckets, today):
     return rows
 
 
+# ====================== البروفايل والتدفق (H-VPFLOW) ======================
+# نسختان ثابتتان لا تدخلان التطور (التسجيل في CLAUDE.md 14/11/2026): شكل بروفايل السهم أمس ومناطقه، والامتصاص على 5د.
+VP = [("p0", "p0"), ("p1", "p1")]
+VP_NAMES = {"p0": "الشكل + الامتصاص", "p1": "الشكل بلا امتصاص"}
+VP_PARAMS = {"score": 0, "adx": 0, "dte": "3-7", "delta": 0.5, "stop": 0.5, "exit": "levels", "start": "0945", "trig": "vp", "cap": 1}
+VP_FIRST, VP_FRESH = dtime(9, 45), pd.Timedelta(minutes=15)
+
+
+def vp_variants(day):
+    return [{"vid": vid, "born": day, "mode": mode, "pinned": True, "open": [], "closed": [], "params": dict(VP_PARAMS)}
+            for vid, mode in VP]
+
+
+def all_vars(st):
+    return st["variants"] + st.get("vp", [])
+
+
+def vp_wants(st, tk, df, now, tdate):
+    """[(النسخة، المنطقة، الإشارة)] لسهم واحد على آخر الشموع المكتملة."""
+    if now.time() < VP_FIRST or now.time() > LAST_ENTRY:
+        return []
+    d = vf.lower(df)
+    _pf, _shp, zs = vf.plan(d, now.date())
+    if not zs:
+        return []
+    b5 = vf.completed5(d, now)
+    fresh = pd.Timestamp(now) - VP_FRESH - pd.Timedelta(minutes=5)
+    first = pd.Timestamp(datetime.combine(now.date(), VP_FIRST, NY)) - pd.Timedelta(minutes=5)
+    out = []
+    for v in st.get("vp", []):
+        for z in zs:
+            if not can_enter(v, tk, z["side"], tdate):
+                break
+            sig = vf.scan(b5, z, v["mode"], fresh, first)
+            if sig:
+                out.append((v, z, sig))
+                break
+    return out
+
+
+def vp_manage(e, bid, df, now):
+    d = vf.lower(df)
+    b5 = vf.completed5(d, now)
+    px = float(d["c"].dropna().iloc[-1])
+    if e.get("trend"):
+        closed, why = vf.manage_trend(e, bid, vf.struct_broken(b5, e["side"], e["t"]), now, CLOSE_AT, VP_PARAMS["stop"])
+    else:
+        after = b5[b5.index + pd.Timedelta(minutes=5) > pd.Timestamp(e["t"])]
+        c5 = float(after["c"].iloc[-1]) if len(after) else None
+        closed, why = vf.manage_levels(e, bid, px, c5, now, CLOSE_AT, VP_PARAMS["stop"])
+    if closed:
+        e["pnl"] = round(e["ret"] * UNIT, 2)
+    return closed, why
+
+
+def vp_text(st, day):
+    L = ["", "📊 **البروفايل والتدفق (p0/p1، ثابتة):**"]
+    for v in st.get("vp", []):
+        s_d, n_d = score(v, [day])
+        s_all, n_all = sum(c["pnl"] for c in v["closed"]), len(v["closed"])
+        L.append(f"- {v['vid']} {VP_NAMES[v['vid']]}: اليوم {s_d:+,.0f}$ ({n_d}) · المجموع {s_all:+,.0f}$ ({n_all})")
+    return "\n".join(L)
+
+
 # ====================== التقرير والتشغيل ======================
 def load_state(day):
     try:
-        return json.load(open(STATE, encoding="utf-8"))
+        st = json.load(open(STATE, encoding="utf-8"))
     except Exception:  # noqa: BLE001
-        return {"gen": 1, "variants": initial_variants(day), "last_bar": {}, "evolve_day": ""}
+        st = {"gen": 1, "variants": initial_variants(day), "last_bar": {}, "evolve_day": ""}
+    st.setdefault("vp", vp_variants(day))
+    return st
 
 
 def save(st):
@@ -336,7 +403,7 @@ def changes_text(st):
 
 
 def manage_open(st, now):
-    syms = sorted({e["symbol"] for v in st["variants"] for e in v["open"]})
+    syms = sorted({e["symbol"] for v in all_vars(st) for e in v["open"]})
     if not syms:
         return
     try:
@@ -345,11 +412,22 @@ def manage_open(st, now):
     except Exception as ex:  # noqa: BLE001
         print("أسعار:", ex)
         return
-    for v in st["variants"]:
+    vtk = sorted({e["tk"] for v in st.get("vp", []) for e in v["open"]})
+    data = {}
+    if vtk:
+        try:
+            data = bars(vtk)
+        except Exception as ex:  # noqa: BLE001
+            print("شموع:", ex)
+    for v in all_vars(st):
         keep = []
         for e in v["open"]:
             q = qs.get(e["symbol"])
-            closed, why = manage(e, v["params"], q["bid"], now) if q and q["bid"] > 0 else (False, "")
+            if v.get("mode"):
+                ok = q and q["bid"] > 0 and e["tk"] in data
+                closed, why = vp_manage(e, q["bid"], data[e["tk"]], now) if ok else (False, "")
+            else:
+                closed, why = manage(e, v["params"], q["bid"], now) if q and q["bid"] > 0 else (False, "")
             if closed:
                 e["exit_px"], e["exit_t"] = q["bid"], now.strftime("%H:%M")
                 v["closed"].append(e)
@@ -382,10 +460,15 @@ def enter(st, now, force=False):
             sd = side_for(p, sig)
             if sd and now.time() >= start_time(p["start"]) and triggered(p, sig, sd) and can_enter(v, tk, sd, tdate):
                 want.append((v, sd))
-        if not want:
+        try:
+            vpw = vp_wants(st, tk, data[tk], now, tdate)
+        except Exception as ex:  # noqa: BLE001
+            print("بروفايل", tk, ex)
+            vpw = []
+        if not want and not vpw:
             continue
         try:
-            rows = chain(tk, sig["S"], {v["params"]["dte"] for v, _ in want}, day)
+            rows = chain(tk, sig["S"], {v["params"]["dte"] for v, _ in want} | ({VP_PARAMS["dte"]} if vpw else set()), day)
         except Exception as ex:  # noqa: BLE001
             print("السلسلة", tk, ex)
             continue
@@ -398,6 +481,16 @@ def enter(st, now, force=False):
                               "strike": k["strike"], "symbol": k["symbol"], "entry": k["ask"], "S": round(sig["S"], 2),
                               "score": sig["total"], "adx": round(sig["adx"], 1), "trigger": trig, "peak": k["ask"]})
             print("دخول", v["vid"], tk, sd, k["exp"], k["strike"], k["ask"])
+        for v, z, sg in vpw:
+            k = pick(rows, z["side"], VP_PARAMS["dte"], VP_PARAMS["delta"], sig["S"])
+            if not k:
+                continue
+            v["open"].append({"t": now.isoformat(timespec="minutes"), "tdate": tdate, "tk": tk, "side": z["side"], "exp": k["exp"],
+                              "strike": k["strike"], "symbol": k["symbol"], "entry": k["ask"], "S": round(sig["S"], 2),
+                              "score": sig["total"], "adx": round(sig["adx"], 1), "trigger": v["mode"], "peak": k["ask"],
+                              "zone": z["key"], "stop_px": sg["stop"], "t1": z["t1"], "t2": z["t2"], "trend": z["trend"],
+                              "sig_t": sg["t"].isoformat(), "lag": round((pd.Timestamp(now) - sg["t"]).total_seconds() / 60 - 5, 1)})
+            print("دخول", v["vid"], tk, z["key"], k["exp"], k["strike"], k["ask"])
 
 
 def main(argv):
@@ -408,13 +501,13 @@ def main(argv):
     if now.weekday() < 5 and RTH_START <= now.time() <= dtime(16, 30) or force:
         manage_open(st, now)
     if now.weekday() < 5 and now.time() >= REPORT_AT and st.get("evolve_day") != day and \
-            any(c["tdate"] == day for v in st["variants"] for c in v["closed"]):
+            any(c["tdate"] == day for v in all_vars(st) for c in v["closed"]):
         board = leaderboard(st, day)
         gen_txt = evolve(st, day, random.Random("stocks" + day))
         os.makedirs(DIR, exist_ok=True)
         with open(GENS, "a", encoding="utf-8") as f:
             f.write(gen_txt + "\n\n")
-        msg = board + "\n\n" + changes_text(st)
+        msg = board + "\n" + vp_text(st, day) + "\n\n" + changes_text(st)
         print(msg)
         if not no_send:
             import analyst as an

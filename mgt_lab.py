@@ -17,6 +17,7 @@ import pandas as pd
 
 import mgt_shadow as ms
 import smc
+import vpflow as vf
 
 NY = ms.NY
 DIR = os.path.join(os.getenv("SPXBOT_DATA", "/opt/spxbot/data"), "mgt_lab")
@@ -219,7 +220,7 @@ def strat_variants(day):
 
 
 def all_variants(st):
-    return st["variants"] + st.get("strat", [])
+    return st["variants"] + st.get("strat", []) + st.get("vp", [])
 
 
 def manage_struct(e, p, bid, now, broken=False):
@@ -352,6 +353,84 @@ def strat_text(st, day):
     return "\n".join(L)
 
 
+# ====================== البروفايل والتدفق (H-VPFLOW) ======================
+# نسختان ثابتتان (التسجيل في CLAUDE.md 14/11/2026): الشكل والمناطق من بروفايل SPY أمس، والدخول بعقد SPXW نحو 6$.
+VP = [("p0", "p0"), ("p1", "p1")]
+VP_NAMES = {"p0": "الشكل + الامتصاص", "p1": "الشكل بلا امتصاص"}
+VP_PRICE, VP_CAP, VP_STOP = 6.0, 3, 0.6
+VP_FIRST, VP_LAST, VP_FRESH = ms.dtime(9, 45), ms.dtime(15, 0), timedelta(minutes=15)
+
+
+def vp_variants(day):
+    return [{"vid": vid, "born": day, "mode": mode, "pinned": True, "open": [], "closed": [],
+             "params": {**V9, "price": VP_PRICE, "exit": "levels"}} for vid, mode in VP]
+
+
+def spy_m1():
+    """شموع SPY بالدقيقة (5 أيام) من ياهو بالحجم، بأعمدة o,h,l,c,v وتوقيت نيويورك."""
+    import yfinance as yf
+    h = yf.Ticker("SPY").history(period="5d", interval="1m", auto_adjust=False)
+    h.index = h.index.tz_convert(NY)
+    return vf.lower(h)
+
+
+def vp_manage(e, bid, spy, now):
+    """إدارة مركز p0/p1 بمستويات SPY. يرجع (مغلق؟، سبب) ويضع e['usd'] عند الإغلاق."""
+    b5 = vf.completed5(spy, now, "5min")
+    px = float(spy["c"].iloc[-1])
+    if e.get("trend"):
+        closed, why = vf.manage_trend(e, bid, vf.struct_broken(b5, e["side"], e["t"]), now, S_FORCE, VP_STOP)
+    else:
+        after = b5[b5.index + pd.Timedelta(minutes=5) > pd.Timestamp(e["t"])]
+        c5 = float(after["c"].iloc[-1]) if len(after) else None
+        closed, why = vf.manage_levels(e, bid, px, c5, now, S_FORCE, VP_STOP)
+    if closed:
+        e["usd"] = round(e["ret"] * e["entry"] * 100, 2)
+    return closed, why
+
+
+def vp_signals(v, zs, b5, now, tdate):
+    """إشارات النسخة الآن: [(المنطقة، الإشارة)] بالترتيب، مع السقف والمنطقة مرة واحدة والاتجاه الواحد."""
+    today = [e for e in v["open"] + v["closed"] if e["tdate"] == tdate]
+    if len(today) >= VP_CAP:
+        return []
+    fresh = now - VP_FRESH - timedelta(minutes=5)
+    first = datetime.combine(now.date(), VP_FIRST, NY) - timedelta(minutes=5)
+    out = []
+    for z in zs:
+        if any(e.get("zone") == z["key"] for e in today) or any(e["side"] != z["side"] for e in v["open"]):
+            continue
+        sig = vf.scan(b5, z, v["mode"], fresh, first)
+        if sig:
+            out.append((z, sig))
+    return out
+
+
+def vp_morning(spy, day):
+    """رسالة الصباح: شكل أمس ومناطقه لـSPY (مستويات SPY) والأسهم الست."""
+    import stocks_lab as sl
+    pf, shp, zs = vf.plan(spy, day)
+    L = [f"📊 **البروفايل والتدفق · خطة اليوم** · {day.isoformat()}", "شكل جلسة أمس يحدد أين نبحث، والامتصاص يحدد متى (p0).", "",
+         vf.plan_line("SPY (لعقود SPX)", pf, shp, zs)]
+    try:
+        data = sl.bars(sl.TICKERS)
+        for tk in sl.TICKERS:
+            if tk in data:
+                L.append(vf.plan_line(tk, *vf.plan(vf.lower(data[tk]), day)))
+    except Exception as e:  # noqa: BLE001
+        L.append(f"- الشركات: تعذّرت الشموع ({e})")
+    return "\n".join(L)
+
+
+def vp_text(st, day):
+    L = ["", "📊 **البروفايل والتدفق (p0/p1، ثابتة):**"]
+    for v in st.get("vp", []):
+        s_d, n_d = score(v, [day])
+        s_all, n_all = sum(c["usd"] for c in v["closed"]), len(v["closed"])
+        L.append(f"- {v['vid']} {VP_NAMES[v['vid']]}: اليوم {s_d:+,.0f}$ ({n_d}) · المجموع {s_all:+,.0f}$ ({n_all})")
+    return "\n".join(L)
+
+
 # ====================== التشغيل ======================
 def load_state(day):
     try:
@@ -359,6 +438,7 @@ def load_state(day):
     except Exception:  # noqa: BLE001
         st = {"gen": 1, "variants": initial_variants(day), "last_bar": None, "evolve_day": ""}
     st.setdefault("strat", strat_variants(day))
+    st.setdefault("vp", vp_variants(day))
     ensure_exits(st)
     return st
 
@@ -460,12 +540,20 @@ def main(argv):
                 ctx = strat_ctx(spx_m1()[0], now)
             except Exception as e:  # noqa: BLE001
                 print("هيكل:", e)
+        spy = None
+        if any(v["open"] for v in st.get("vp", [])):
+            try:
+                spy = spy_m1()
+            except Exception as e:  # noqa: BLE001
+                print("SPY:", e)
         for v in all_variants(st):
             keep = []
             for e in v["open"]:
                 q = qs.get(e["symbol"])
                 if not q:
                     closed, why = False, ""
+                elif v.get("mode"):
+                    closed, why = vp_manage(e, q["bid"], spy, now) if spy is not None and len(spy) else (False, "")
                 elif v["params"]["exit"] == "struct":
                     closed, why = manage_struct(e, v["params"], q["bid"], now, structure_broken(ctx, e["side"], e["t"]))
                 else:
@@ -490,7 +578,7 @@ def main(argv):
         ensure_exits(st)
         with open(GENS, "a", encoding="utf-8") as f:
             f.write(gen_txt + "\n\n")
-        msg = board + "\n" + strat_text(st, day) + "\n\n" + changes_text(st)
+        msg = board + "\n" + strat_text(st, day) + "\n" + vp_text(st, day) + "\n\n" + changes_text(st)
         print(msg)
         if not no_send:
             import analyst as an
@@ -567,6 +655,45 @@ def main(argv):
                                   **({"setup": su["key"], "ce": su["ce"]} if su else {})})
                 print("دخول", v["vid"], sd, k["strike"], k["ask"], trig)
                 break
+    # 5) البروفايل والتدفق (H-VPFLOW): الجلسة الرسمية فقط
+    if sess == "rth" and (now.time() <= VP_LAST or force):
+        try:
+            spy = spy_m1()
+            _pf, _shp, zs = vf.plan(spy, now.date())
+            b5 = vf.completed5(spy, now, "5min")
+        except Exception as e:  # noqa: BLE001
+            print("بروفايل:", e)
+            spy, zs, b5 = None, [], None
+        if spy is not None and st.get("vp_msg") != day:
+            st["vp_msg"] = day
+            try:
+                txt = vp_morning(spy, now.date())
+                print(txt)
+                if not no_send:
+                    import analyst as an
+                    an.send(txt + "\n\n⚠️ ورقي للدراسة، وليس توصية.", "mgt_lab")
+            except Exception as e:  # noqa: BLE001
+                print("رسالة الصباح:", e)
+        if zs and b5 is not None and (now.time() >= VP_FIRST or force):
+            for v in st.get("vp", []):
+                for z, sig in vp_signals(v, zs, b5, now, tdate):
+                    if chain is None:
+                        try:
+                            chain = ms.chain(date.fromisoformat(tdate), S)
+                        except Exception as e:  # noqa: BLE001
+                            print("السلسلة:", e)
+                            chain = []
+                    k = pick(chain, z["side"], S, VP_PRICE)
+                    if not k:
+                        continue
+                    v["open"].append({"t": now.isoformat(timespec="minutes"), "sess": sess, "tdate": tdate, "side": z["side"],
+                                      "strike": k["strike"], "symbol": k["symbol"], "entry": k["ask"], "S": round(S, 2),
+                                      "score": total, "adx": round(det["adx"], 1), "trigger": v["mode"], "peak": k["ask"],
+                                      "zone": z["key"], "stop_px": sig["stop"], "t1": z["t1"], "t2": z["t2"], "trend": z["trend"],
+                                      "spy": round(float(spy["c"].iloc[-1]), 2), "sig_t": sig["t"].isoformat(),
+                                      "lag": round((now - sig["t"]).total_seconds() / 60 - 5, 1)})
+                    print("دخول", v["vid"], z["key"], k["strike"], k["ask"])
+                    break
     save(st)
 
 
