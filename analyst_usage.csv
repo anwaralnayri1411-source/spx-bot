@@ -11,3 +11,4 @@ time,kind,model,input,output,usd,status
 2026-11-11T16:50:06-05:00,daily,claude-haiku-5-5,6768,3548,0.00245,ok
 2026-11-12T16:50:06-05:00,daily,claude-haiku-5-5,6709,2887,0.00211,ok
 2026-11-13T16:50:05-05:00,daily,claude-haiku-5-5,6065,2659,0.00194,ok
+2026-11-14T04:40:04-05:00,weekly,claude-sonnet-5-5,13678,4000,0.06736,max_tokens
