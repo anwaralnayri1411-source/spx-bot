@@ -637,6 +637,17 @@
    "time": "2026-11-16T10:43-05:00",
    "price": null,
    "qty": null
+  },
+  "PLTR:PUT:2026-11-27:155|2026-11-16": {
+   "mode": "watch",
+   "ticker": "PLTR",
+   "side": "PUT",
+   "exp": "2026-11-27",
+   "strike": 155.0,
+   "day": "2026-11-16",
+   "time": "2026-11-16T11:13-05:00",
+   "price": null,
+   "qty": null
   }
  }
 }
