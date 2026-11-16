@@ -1,6 +1,21 @@
 {
- "cash": 5491.0,
- "positions": [],
+ "cash": 3971.0,
+ "positions": [
+  {
+   "id": "1116-1146-SPX-PUT-7475",
+   "symbol": "SPXW  261116P07475000",
+   "under": "SPX",
+   "side": "PUT",
+   "strike": 7475.0,
+   "expiry": "2026-11-16",
+   "qty": 1,
+   "entry": 15.2,
+   "time": "2026-11-16T11:46-05:00",
+   "stop": 11.0,
+   "target": 22.0,
+   "invalidation": "إذا استقر السعر فوق VWAP ومتوسط 9 دقائق ثم أغلق فوق 7500 بعد الظهر يُلغى الشرط، أو إذا وصل سعر العقد 11.0 يُنفّذ الوقف آلياً"
+  }
+ ],
  "closed": [
   {
    "id": "1105-0946-PUT-757",
@@ -469,8 +484,8 @@
    "pnl": -400.0
   }
  ],
- "decisions": 151,
+ "decisions": 152,
  "report_day": "2026-11-13",
  "day": "2026-11-16",
- "decisions_today": 8
+ "decisions_today": 9
 }
