@@ -342,7 +342,10 @@
    "netflix stock company plans cuts affecting 6 of workforce",
    "netflix stock hits 52 week low at 61 36 usd by investing com",
    "netflix stock hits 52 week low at 61 36 usd",
-   "bill ackman is quietly buying this battered faang giant again netflix nasdaq nflx"
+   "bill ackman is quietly buying this battered faang giant again netflix nasdaq nflx",
+   "netflix stock now trades at a 70 discount to its peak valuation and one number is to blame",
+   "evercore replaces netflix with spotify on top picks list",
+   "evercore replaces netflix with spotify on top picks list by investing com"
   ],
   "AVGO:PUT": [
    "3 artificial intelligence ai stocks that look like great buys right now",
@@ -2316,7 +2319,9 @@
    "nvidia stock s icarus fall isn t over yet but microsoft apple show path to recovery says top strateg",
    "apple targets june 2027 unveiling for ai smart glasses report aapl nasdaq",
    "apple aapl picks core foldable glass supplier for iphone duo",
-   "apple aapl stock forecast price prediction for 2026 2027 2028 2030 2040 and beyond"
+   "apple aapl stock forecast price prediction for 2026 2027 2028 2030 2040 and beyond",
+   "surging inflation keeps apple under pressure by raising funding costs",
+   "federal interest costs surge amid tightening apple inc aapl v"
   ],
   "BA:PUT": [
    "boeing nyse ba sets new 52 week low on disappointing earnings",
@@ -4031,7 +4036,8 @@
    "3 beaten down stocks that could soar in 2027",
    "sofi earnings beat but the bigger surprise may come in 2027 nasdaq sofi",
    "sofi posts best quarter raises outlook stock trades at 17x 2027 earnings guidance",
-   "which of these 6 fintech stocks has the clearest path to profit"
+   "which of these 6 fintech stocks has the clearest path to profit",
+   "sofi technologies slides 3 6 as investors weigh rate pressure against recent strong results"
   ],
   "SNAP:PUT": [
    "snap earnings analysis questions answered and next catalysts",
@@ -4252,7 +4258,9 @@
   "NFLX:PUT:2026-11-27:63@2026-11-13": [
    "up0.25",
    "news:netflix lowers 2026 ad revenue forecast time to hold the stock",
-   "news:netflix stock company plans cuts affecting 6 of workforce"
+   "news:netflix stock company plans cuts affecting 6 of workforce",
+   "news:evercore replaces netflix with spotify on top picks list",
+   "news:evercore replaces netflix with spotify on top picks list by investing com"
   ],
   "SOFI:PUT:2026-12-04:15.5": [
    "sharp@2026-11-13T11:10-05:00",
@@ -4261,7 +4269,10 @@
    "down-0.15",
    "news:sofi posts best quarter raises outlook stock trades at 17x 2027 earnings guidance"
   ],
-  "BAC:PUT:2026-12-04:50": []
+  "BAC:PUT:2026-12-04:50": [],
+  "PLTR:PUT:2026-11-27:155": [
+   "down-0.15"
+  ]
  },
  "stock_level": {
   "UBER:CALL:2026-11-27:70": 1,
@@ -4269,8 +4280,6 @@
   "AAPL:CALL:2026-11-27:365@2026-11-13": 1
  },
  "seen_macro": [
-  "us stock rout pauses as dip buyers offer support markets wrap",
-  "blockbuster october jobs report keeps fed rate hike in play for december",
   "friday s jobs report hiring soars adding 165k payrolls unemployment ticks down",
   "the week ahead us germany inflation cisco earnings",
   "the jobs report just changed the math for retirees here s what a rate hike means for a 67 year old with 400 000 and soci",
@@ -4868,7 +4877,9 @@
   "today s mortgage rates increase to 7 487 nov 16 2026",
   "canada may turn to china as trump s tariffs strain auto industry",
   "s p 500 forecast spx rises despite nvidia s decline",
-  "bahrain s 186 2m treasury bills oversubscribed by 115 as rate climbs to 5 65"
+  "bahrain s 186 2m treasury bills oversubscribed by 115 as rate climbs to 5 65",
+  "morgan stanley sees slower us growth higher rates ahead",
+  "oil futures crude lower as supplies offset rising mideast tensions"
  ],
  "sharp": {
   "UBER:CALL:2026-11-27:70": 69.47,
