@@ -2604,7 +2604,8 @@
    "palantir nasdaq pltr stock price forecast wall street sees upside despite 25 decline from october high",
    "nvidia palantir and tesla are sending shockwaves through wall street with this 53 billion warning",
    "here is what to know beyond why palantir technologies inc pltr is a trending stock",
-   "palantir s commercial ai business just changed the story but it s stock could be too expensive"
+   "palantir s commercial ai business just changed the story but it s stock could be too expensive",
+   "european push to rival palantir pltr in military ai software a"
   ],
   "F:CALL": [
    "ford october u s sales slip as electric vehicle deliveries plunge f nyse",
@@ -4039,7 +4040,9 @@
    "sofi earnings beat but the bigger surprise may come in 2027 nasdaq sofi",
    "sofi posts best quarter raises outlook stock trades at 17x 2027 earnings guidance",
    "which of these 6 fintech stocks has the clearest path to profit",
-   "sofi technologies slides 3 6 as investors weigh rate pressure against recent strong results"
+   "sofi technologies slides 3 6 as investors weigh rate pressure against recent strong results",
+   "10 000 in sofi stock what could it be worth by 2030",
+   "will sofi stock avoid deeper losses amid prevailing seller pressure"
   ],
   "SNAP:PUT": [
    "snap earnings analysis questions answered and next catalysts",
@@ -4223,7 +4226,8 @@
    "rivian may have an unexpected solution to high car prices",
    "lucid sinks 8 despite 1 75 billion saudi lifeline tesla falls 3 rivian dips",
    "the nasdaq has entered a correction here are 3 space and ev stocks i d buy if it turns into a crash",
-   "citi maintains rivian automotive rivn us with hold rating cuts target price to 14 5"
+   "citi maintains rivian automotive rivn us with hold rating cuts target price to 14 5",
+   "two sigma has expanded its bearish rivian put for three straight quarters"
   ]
  },
  "fired": {
@@ -4249,13 +4253,6 @@
    "news:zoox is now available on uber in las vegas",
    "news:uber technologies stock uber secures 66 56 delivery hero stake",
    "news:delivery hero stock uber secures 66 56 after first offer window"
-  ],
-  "AAPL:CALL:2026-11-27:365@2026-11-13": [
-   "news:apple climbs as inflation surprise raises bond yields and weighs on tech valuations",
-   "down-0.15",
-   "down-0.3",
-   "stock1",
-   "news:apple aapl picks core foldable glass supplier for iphone duo"
   ],
   "RIVN:PUT:2026-12-04:13": [
    "sharp@2026-11-13T11:36-05:00",
@@ -4283,17 +4280,9 @@
  },
  "stock_level": {
   "UBER:CALL:2026-11-27:70": 1,
-  "SOFI:PUT:2026-12-04:15.5": 1,
-  "AAPL:CALL:2026-11-27:365@2026-11-13": 1
+  "SOFI:PUT:2026-12-04:15.5": 1
  },
  "seen_macro": [
-  "wall street s script gets flipped by post election rout",
-  "wall street traders wrong footed after bullish equity calls",
-  "stock market today nov 6 2026 nasdaq futures rise following ai tech rout",
-  "3 communication stocks poised to tide over industry challenges",
-  "lighting up your diwali cupid hfcl sterlite tech mtar 10 multibagger stocks that soared over 150 in samvat 2082",
-  "stock market today election results continue to ease market fears",
-  "goldman sachs lowers gold price forecasts amid federal reserve s hawkish stance",
   "october jobs report a strong one and not just a one off",
   "huge october jobs numbers small market reaction eyes still on ai",
   "fed rate hike bets rise after blowout jobs report",
@@ -4886,7 +4875,14 @@
   "fed chair kevin warsh talks ai today how the tech could affect interest rates",
   "us treasury bill yields rise as 3 month and 6 month auction rates hit 4 155 and 4 31",
   "bank of korea significantly increases gold etf holdings amid ongoing iranian geopolitical turmoil key developments in go",
-  "nvidia is gearing up for one of wall street s most anticipated earnings calls in years"
+  "nvidia is gearing up for one of wall street s most anticipated earnings calls in years",
+  "canadian dollar weakens against us dollar amid fed rate hike bets falling oil prices",
+  "wall st falls as nvidia jitters cloud sentiment ahead of results",
+  "life keeps getting pricier inflation mortgages and interest rates pressure families",
+  "ai investment boosts u s growth but raises economic risks",
+  "oil futures crude eases as supplies offset rising mideast tensions",
+  "wall street slides as tech stocks weaken apple faces 358 resistance and monero battles 500",
+  "stock market midday nov 16 nasdaq tumbles as wall street braces for nvidia earnings and bitcoin slides"
  ],
  "sharp": {
   "UBER:CALL:2026-11-27:70": 69.47,
