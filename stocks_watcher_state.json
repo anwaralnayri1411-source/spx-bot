@@ -4278,7 +4278,8 @@
   ],
   "PLTR:PUT:2026-11-27:155": [
    "down-0.15",
-   "up0.25"
+   "up0.25",
+   "sharp@2026-11-16T13:50-05:00"
   ]
  },
  "stock_level": {
@@ -4286,15 +4287,6 @@
   "SOFI:PUT:2026-12-04:15.5": 1
  },
  "seen_macro": [
-  "nasdaq eyes higher open as chips pare losses rate hike fears linger",
-  "us treasuries stumble as strong labor market lifts fed hike bets",
-  "the worldwide sell off for ai stocks halts but other us stocks are still struggling",
-  "solid jobs report leaves inflation markets to settle fed s december call",
-  "wall street s ai crash just hit asia korea halted japan in a bear market",
-  "dow slides nasdaq gains as wall street reels from tech selloff comp ind",
-  "new samvat new hope is the worst over for stocks",
-  "wall street peers into abyss of ai trade as midterms expose risk",
-  "cpi report tuesday will not say how much overall prices rose in a year",
   "jobs report shows hiring accelerated in october abc news",
   "investors try to regain their footing after tech stocks tank",
   "fed rate decision october 2026 is a december hike next",
@@ -4885,11 +4877,21 @@
   "warsh warns of economic risks from ai adoption without offering fresh interest rate signals",
   "higher rates nvidia ceo exit and the ai trade what investors should know",
   "3 reasons to buy xrp before 2027 and 2 reasons to wait",
-  "u s fed chairman warsh grapples with ai s potential economic impact steers clear of its inflation risk"
+  "u s fed chairman warsh grapples with ai s potential economic impact steers clear of its inflation risk",
+  "retail sales and fed minutes put bitcoin s rate outlook back in focus",
+  "fed boss superintelligence will rule good or bad going forward",
+  "gold edges up while high us inflation renews fed rate hike expectations and firm dollar weighs",
+  "trump could ve helped with falling prices far earlier gasbuddy",
+  "dollar tops pln 4 as markets price in december fed rise",
+  "americans credit card debt hits record 1 29 trillion",
+  "european stocks fall german and uk yields rise euro hits 1 year 7 month low on fed rate hike expectations",
+  "west of suez brent lsgo cracks slip on increased oil flows",
+  "us dollar rallies as fed rate risks pressure global markets"
  ],
  "sharp": {
   "UBER:CALL:2026-11-27:70": 69.47,
   "SOFI:PUT:2026-12-04:15.5": 15.475,
-  "RIVN:PUT:2026-12-04:13": 12.58
+  "RIVN:PUT:2026-12-04:13": 12.58,
+  "PLTR:PUT:2026-11-27:155": 161.94
  }
 }
