@@ -4143,7 +4143,10 @@
    "what could uber technologies uber gain from its exclusive canada delivery deal",
    "uber technologies uber earnings compound at nearly double the rate of top line growth",
    "uber technologies stock uber secures 66 56 delivery hero stake",
-   "delivery hero stock uber secures 66 56 after first offer window"
+   "delivery hero stock uber secures 66 56 after first offer window",
+   "uber sits on 80 loss in lucid stake barred from selling until 2027",
+   "in vegas uber aims to end robotaxi crapshoot",
+   "uber stock has one thing left to prove"
   ],
   "GOOGL:CALL": [
    "alphabet tpu sales and gemini enterprise are reshaping the bull case nasdaq goog",
@@ -4261,23 +4264,18 @@
    "down-0.15",
    "news:citi maintains rivian automotive rivn us with hold rating cuts target price to 14 5"
   ],
-  "NFLX:PUT:2026-11-27:63@2026-11-13": [
-   "up0.25",
-   "news:netflix lowers 2026 ad revenue forecast time to hold the stock",
-   "news:netflix stock company plans cuts affecting 6 of workforce",
-   "news:evercore replaces netflix with spotify on top picks list",
-   "news:evercore replaces netflix with spotify on top picks list by investing com"
-  ],
   "SOFI:PUT:2026-12-04:15.5": [
    "sharp@2026-11-13T11:10-05:00",
    "stock1",
    "sharp@2026-11-13T11:33-05:00",
    "down-0.15",
-   "news:sofi posts best quarter raises outlook stock trades at 17x 2027 earnings guidance"
+   "news:sofi posts best quarter raises outlook stock trades at 17x 2027 earnings guidance",
+   "up0.25"
   ],
   "BAC:PUT:2026-12-04:50": [],
   "PLTR:PUT:2026-11-27:155": [
-   "down-0.15"
+   "down-0.15",
+   "up0.25"
   ]
  },
  "stock_level": {
@@ -4285,11 +4283,6 @@
   "SOFI:PUT:2026-12-04:15.5": 1
  },
  "seen_macro": [
-  "october jobs shock seals case for december fed rate hike",
-  "jobs report hiring surges past forecasts but paychecks still lose ground to inflation",
-  "not one analyst rates amazon a sell is wall street right",
-  "kazakhstan s growth to pick up in 2027 despite geopolitical tensions imf says",
-  "imf forecasts kazakhstan s economy to grow by 4 9 in 2027 euronews",
   "us employment report labor market firing on all cylinders",
   "us stock market today why is the nasdaq up 1 while",
   "week ahead us cpi uk gdp and market outlook",
@@ -4884,7 +4877,12 @@
   "play u s dollar s biggest weekly gain in two months with these etfs",
   "morgan stanley s mike wilson is bullish on s p 500 with a 15 upside view for 2027",
   "stock market today nasdaq leads wall street lower at midday",
-  "economic calendar for crypto the dates that move bitcoin"
+  "economic calendar for crypto the dates that move bitcoin",
+  "fed chair kevin warsh speaks live today on ai and tech",
+  "bitcoin shows higher volatility on us inflation and options expiry dates calmer on fed rate decision days in 2026",
+  "gbp usd price forecast gbpusd 1 3200 1 3345 upside target on uk cpi test",
+  "warsh says fed is gaming out how ai could reshape economy",
+  "warsh warns of economic risks from ai adoption without offering fresh interest rate signals"
  ],
  "sharp": {
   "UBER:CALL:2026-11-27:70": 69.47,

@@ -4284,3 +4284,5 @@ time,pos_id,ticker,side,event,detail,entry,val,pnl,spot,need,tdays,advice,reason
 2026-11-16T12:42-05:00,NFLX:PUT:2026-11-27:63@2026-11-13,NFLX,PUT,macro_quiet,with/weak/medium: Stock Market Today: Nasdaq Leads Wall Street Lower at Midday - JournalArta,1.29,2.41,0.8682,61.29,-0.0069,10,أبقِ,الخبر في صالح العقد
 2026-11-16T12:42-05:00,SOFI:PUT:2026-12-04:15.5,SOFI,PUT,macro_quiet,with/weak/medium: Stock Market Today: Nasdaq Leads Wall Street Lower at Midday - JournalArta,0.86,0.96,0.1163,14.9,0.0174,15,أبقِ,الخبر في صالح العقد
 2026-11-16T12:42-05:00,PLTR:PUT:2026-11-27:155,PLTR,PUT,macro_quiet,against/weak/medium: Stock Market Today: Nasdaq Leads Wall Street Lower at Midday - JournalArta,3.15,3.44,0.0921,162.39,0.0649,10,أبقِ,خبر ضد العقد لكن تأثيره محدود، راقب
+2026-11-16T13:12-05:00,SOFI:PUT:2026-12-04:15.5,SOFI,PUT,contract,+26%,0.86,1.08,0.2558,14.82,0.0121,15,أبقِ,لا جديد يغيّر فكرة الصفقة
+2026-11-16T13:12-05:00,PLTR:PUT:2026-11-27:155,PLTR,PUT,contract,+30%,3.15,4.08,0.2952,161.34,0.0588,10,أبقِ,لا جديد يغيّر فكرة الصفقة
