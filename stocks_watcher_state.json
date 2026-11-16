@@ -56,7 +56,8 @@
    "bank of america corporation bac stock university of texas texas am investment management co raises stake",
    "bank of america bac stock 49 42 down 0 68 nov 6",
    "soxx chip etf draws 3 3 billion in october despite 33 monthly drop",
-   "watch markets this week live updates"
+   "watch markets this week live updates",
+   "bank of america moves to settle fake accounts lawsuit what s next"
   ],
   "AMZN:CALL": [
    "starting jan 1 2027 amazon seasonal workers get day one health coverage if they work at least 30 hours a week",
@@ -2321,7 +2322,8 @@
    "apple aapl picks core foldable glass supplier for iphone duo",
    "apple aapl stock forecast price prediction for 2026 2027 2028 2030 2040 and beyond",
    "surging inflation keeps apple under pressure by raising funding costs",
-   "federal interest costs surge amid tightening apple inc aapl v"
+   "federal interest costs surge amid tightening apple inc aapl v",
+   "apple is literally the trade of the year says josh brown for a very simple reason"
   ],
   "BA:PUT": [
    "boeing nyse ba sets new 52 week low on disappointing earnings",
@@ -4135,7 +4137,8 @@
    "zoox is now available on uber in las vegas",
    "what could uber technologies uber gain from its exclusive canada delivery deal",
    "uber technologies uber earnings compound at nearly double the rate of top line growth",
-   "uber technologies stock uber secures 66 56 delivery hero stake"
+   "uber technologies stock uber secures 66 56 delivery hero stake",
+   "delivery hero stock uber secures 66 56 after first offer window"
   ],
   "GOOGL:CALL": [
    "alphabet tpu sales and gemini enterprise are reshaping the bull case nasdaq goog",
@@ -4218,7 +4221,9 @@
   "RIVN:PUT": [
    "ubs thinks rivian stock can hit 17 is it a buy",
    "rivian may have an unexpected solution to high car prices",
-   "lucid sinks 8 despite 1 75 billion saudi lifeline tesla falls 3 rivian dips"
+   "lucid sinks 8 despite 1 75 billion saudi lifeline tesla falls 3 rivian dips",
+   "the nasdaq has entered a correction here are 3 space and ev stocks i d buy if it turns into a crash",
+   "citi maintains rivian automotive rivn us with hold rating cuts target price to 14 5"
   ]
  },
  "fired": {
@@ -4242,7 +4247,8 @@
    "news:capital group cuts tesla to smallest since early 2025 lifts uber to high",
    "news:uber technologies uber reports data breach affecting u s driv",
    "news:zoox is now available on uber in las vegas",
-   "news:uber technologies stock uber secures 66 56 delivery hero stake"
+   "news:uber technologies stock uber secures 66 56 delivery hero stake",
+   "news:delivery hero stock uber secures 66 56 after first offer window"
   ],
   "AAPL:CALL:2026-11-27:365@2026-11-13": [
    "news:apple climbs as inflation surprise raises bond yields and weighs on tech valuations",
@@ -4253,7 +4259,8 @@
   ],
   "RIVN:PUT:2026-12-04:13": [
    "sharp@2026-11-13T11:36-05:00",
-   "down-0.15"
+   "down-0.15",
+   "news:citi maintains rivian automotive rivn us with hold rating cuts target price to 14 5"
   ],
   "NFLX:PUT:2026-11-27:63@2026-11-13": [
    "up0.25",
@@ -4280,17 +4287,6 @@
   "AAPL:CALL:2026-11-27:365@2026-11-13": 1
  },
  "seen_macro": [
-  "friday s jobs report hiring soars adding 165k payrolls unemployment ticks down",
-  "the week ahead us germany inflation cisco earnings",
-  "the jobs report just changed the math for retirees here s what a rate hike means for a 67 year old with 400 000 and soci",
-  "canada inflation watch 3 1 cpi and higher energy costs keep price pressures elevated",
-  "canada jobs shock october employment falls as unemployment rate climbs to 6 7",
-  "blockbuster jobs report gives fed another reason to raise rates in december",
-  "donald trump has taught the world that tariffs are useless",
-  "top cd rates today nov 6 2026 lock in up to up to 5 05",
-  "global stocks plunge amid ai slowdown fears after democrats midterm triumph",
-  "global shares skid after ai worries send wall street tumbling",
-  "us democrats seek republican support to repeal trump s canada tariffs",
   "wall street s script gets flipped by post election rout",
   "wall street traders wrong footed after bullish equity calls",
   "stock market today nov 6 2026 nasdaq futures rise following ai tech rout",
@@ -4879,7 +4875,18 @@
   "s p 500 forecast spx rises despite nvidia s decline",
   "bahrain s 186 2m treasury bills oversubscribed by 115 as rate climbs to 5 65",
   "morgan stanley sees slower us growth higher rates ahead",
-  "oil futures crude lower as supplies offset rising mideast tensions"
+  "oil futures crude lower as supplies offset rising mideast tensions",
+  "beat the market the zacks way vera bradley herc visa in focus",
+  "u s average diesel prices drop below 6 gal for first time since september",
+  "dollar hits highest since april 2025 as fed rate bets lend support",
+  "time for the boc to go back to the drawing board how economists and market bets for rate hikes are reacting to today s c",
+  "commentary warsh s honeymoon period is over",
+  "canada inflation holds steady at 3 1 in october",
+  "iren stock plunges 10 to a one year low here s why and what wall street sees next",
+  "fed chair kevin warsh talks ai today how the tech could affect interest rates",
+  "us treasury bill yields rise as 3 month and 6 month auction rates hit 4 155 and 4 31",
+  "bank of korea significantly increases gold etf holdings amid ongoing iranian geopolitical turmoil key developments in go",
+  "nvidia is gearing up for one of wall street s most anticipated earnings calls in years"
  ],
  "sharp": {
   "UBER:CALL:2026-11-27:70": 69.47,
