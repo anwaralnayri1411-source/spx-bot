@@ -1,6 +1,21 @@
 {
- "cash": 5521.0,
- "positions": [],
+ "cash": 5021.0,
+ "positions": [
+  {
+   "id": "1116-0946-SPY-PUT-749",
+   "symbol": "SPY   261116P00749000",
+   "under": "SPY",
+   "side": "PUT",
+   "strike": 749.0,
+   "expiry": "2026-11-16",
+   "qty": 2,
+   "entry": 2.5,
+   "time": "2026-11-16T09:46-05:00",
+   "stop": 1.75,
+   "target": 3.75,
+   "invalidation": "إلغاء الفكرة إذا ارتد SPY فوق 750 واستقر فوق VWAP، أو إذا تحولت العقود الآجلة ES إلى الإيجابية وانخفض VIX."
+  }
+ ],
  "closed": [
   {
    "id": "1105-0946-PUT-757",
@@ -433,8 +448,8 @@
    "after_last": 4.61
   }
  ],
- "decisions": 143,
+ "decisions": 144,
  "report_day": "2026-11-13",
- "day": "2026-11-13",
- "decisions_today": 24
+ "day": "2026-11-16",
+ "decisions_today": 1
 }
