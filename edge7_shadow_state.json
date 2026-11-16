@@ -1,7 +1,68 @@
 {
- "open": [],
+ "open": [
+  {
+   "entry_time": "2026-11-16T10:05-05:00",
+   "side": "PUT",
+   "role": "bot",
+   "contract": "SPXW261117P07465000",
+   "strike": 7465,
+   "exp": "2026-11-17",
+   "edge": 9.25,
+   "bot_sent": 0,
+   "reasons": "ملاحقة: السعر قطع 84% من النطاق المتوقع لليوم (±55",
+   "spot": 7466.27,
+   "entry": 40.44,
+   "entry_src": "alpaca",
+   "val30": ""
+  },
+  {
+   "entry_time": "2026-11-16T10:05-05:00",
+   "side": "CALL",
+   "role": "opp",
+   "contract": "SPXW261117C07465000",
+   "strike": 7465,
+   "exp": "2026-11-17",
+   "edge": 9.25,
+   "bot_sent": 0,
+   "reasons": "ملاحقة: السعر قطع 84% من النطاق المتوقع لليوم (±55",
+   "spot": 7466.27,
+   "entry": 43.84,
+   "entry_src": "alpaca",
+   "val30": ""
+  },
+  {
+   "entry_time": "2026-11-16T10:05-05:00",
+   "side": "PUT",
+   "role": "spy_bot",
+   "contract": "SPY261117P00745000",
+   "strike": 745,
+   "exp": "2026-11-17",
+   "edge": 9.25,
+   "bot_sent": 0,
+   "reasons": "ملاحقة: السعر قطع 84% من النطاق المتوقع لليوم (±55",
+   "spot": 744.83,
+   "entry": 4.39,
+   "entry_src": "alpaca",
+   "val30": ""
+  },
+  {
+   "entry_time": "2026-11-16T10:05-05:00",
+   "side": "CALL",
+   "role": "spy_opp",
+   "contract": "SPY261117C00745000",
+   "strike": 745,
+   "exp": "2026-11-17",
+   "edge": 9.25,
+   "bot_sent": 0,
+   "reasons": "ملاحقة: السعر قطع 84% من النطاق المتوقع لليوم (±55",
+   "spot": 744.83,
+   "entry": 4.35,
+   "entry_src": "alpaca",
+   "val30": ""
+  }
+ ],
  "last": {
   "CALL": "2026-11-09T10:05-05:00",
-  "PUT": "2026-11-13T12:05-05:00"
+  "PUT": "2026-11-16T10:05-05:00"
  }
 }
