@@ -14,8 +14,8 @@
    "strength": "5.7",
    "occ": "DIS261127C00120000",
    "peak_pnl": 0.264,
-   "close_pnl": 0.09,
-   "quotes": 472,
+   "close_pnl": 0.084,
+   "quotes": 473,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -34,8 +34,8 @@
    "strength": "5.7",
    "occ": "DIS261127C00120000",
    "peak_pnl": 0.159,
-   "close_pnl": 0.0,
-   "quotes": 414,
+   "close_pnl": -0.006,
+   "quotes": 415,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -54,8 +54,8 @@
    "strength": "6.7",
    "occ": "WMT261127C00130000",
    "peak_pnl": 0.409,
-   "close_pnl": 0.208,
-   "quotes": 317,
+   "close_pnl": 0.181,
+   "quotes": 318,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -74,8 +74,8 @@
    "strength": "5.7",
    "occ": "DIS261127C00124000",
    "peak_pnl": 0.0,
-   "close_pnl": -0.186,
-   "quotes": 189,
+   "close_pnl": -0.209,
+   "quotes": 190,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -95,7 +95,7 @@
    "occ": "SOFI261204P00015500",
    "peak_pnl": 0.33,
    "close_pnl": 0.227,
-   "quotes": 126,
+   "quotes": 127,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -114,8 +114,8 @@
    "strength": "6.7",
    "occ": "WMT261127C00132000",
    "peak_pnl": 0.066,
-   "close_pnl": -0.059,
-   "quotes": 104,
+   "close_pnl": -0.056,
+   "quotes": 105,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -134,8 +134,8 @@
    "strength": "7.8",
    "occ": "RIVN261204P00013000",
    "peak_pnl": 0.202,
-   "close_pnl": 0.162,
-   "quotes": 68,
+   "close_pnl": 0.202,
+   "quotes": 69,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -154,8 +154,8 @@
    "strength": "7.9",
    "occ": "HOOD261204P00070000",
    "peak_pnl": 0.374,
-   "close_pnl": 0.266,
-   "quotes": 54,
+   "close_pnl": 0.262,
+   "quotes": 55,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -175,7 +175,7 @@
    "occ": "SOFI261204P00015500",
    "peak_pnl": 0.147,
    "close_pnl": 0.059,
-   "quotes": 54,
+   "quotes": 55,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -194,8 +194,8 @@
    "strength": "7.8",
    "occ": "INTC261204P00055000",
    "peak_pnl": 0.135,
-   "close_pnl": 0.022,
-   "quotes": 54,
+   "close_pnl": 0.044,
+   "quotes": 55,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -214,8 +214,8 @@
    "strength": "7.2",
    "occ": "BA261127P00165000",
    "peak_pnl": 0.482,
-   "close_pnl": 0.482,
-   "quotes": 54,
+   "close_pnl": 0.386,
+   "quotes": 55,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -235,7 +235,7 @@
    "occ": "RIVN261204P00012500",
    "peak_pnl": 0.0,
    "close_pnl": -0.069,
-   "quotes": 54,
+   "quotes": 55,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -254,8 +254,8 @@
    "strength": "6.5",
    "occ": "NFLX261204P00060000",
    "peak_pnl": 0.298,
-   "close_pnl": 0.169,
-   "quotes": 54,
+   "close_pnl": 0.185,
+   "quotes": 55,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -274,8 +274,8 @@
    "strength": "7.0",
    "occ": "BAC261204P00050000",
    "peak_pnl": 0.228,
-   "close_pnl": 0.14,
-   "quotes": 29,
+   "close_pnl": 0.149,
+   "quotes": 30,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -294,8 +294,8 @@
    "strength": "4.4",
    "occ": "V261120C00435000",
    "peak_pnl": 0.0,
-   "close_pnl": -0.262,
-   "quotes": 18,
+   "close_pnl": -0.243,
+   "quotes": 19,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -313,9 +313,9 @@
    "edge": "8.0",
    "strength": "10.0",
    "occ": "SPY261117P00740000",
-   "peak_pnl": 0.057,
-   "close_pnl": 0.057,
-   "quotes": 1,
+   "peak_pnl": 0.141,
+   "close_pnl": 0.141,
+   "quotes": 2,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -2200,7 +2200,8 @@
   "20261116T1457|stocks|chase_em|PLTR|PUT|150|2026-11-27",
   "20261116T1457|stocks|chase_em|BAC|PUT|50|2026-12-04",
   "20261116T1457|stocks|chase_em|INTC|PUT|55|2026-12-04",
-  "20261116T1457|stocks|open_same_dir|RIVN|PUT|12.5|2026-12-04"
+  "20261116T1457|stocks|open_same_dir|RIVN|PUT|12.5|2026-12-04",
+  "20261116T1510|spx|late_entry|SPY|PUT|739|2026-11-17"
  ],
  "last": {
   "spx|CALL|SPY": "2026-11-11T14:40-05:00",
