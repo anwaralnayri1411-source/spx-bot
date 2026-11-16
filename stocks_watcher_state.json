@@ -4044,7 +4044,8 @@
    "which of these 6 fintech stocks has the clearest path to profit",
    "sofi technologies slides 3 6 as investors weigh rate pressure against recent strong results",
    "10 000 in sofi stock what could it be worth by 2030",
-   "will sofi stock avoid deeper losses amid prevailing seller pressure"
+   "will sofi stock avoid deeper losses amid prevailing seller pressure",
+   "sofi wants 5 billion dollar businesses by 2030 here s the road map"
   ],
   "SNAP:PUT": [
    "snap earnings analysis questions answered and next catalysts",
@@ -4272,7 +4273,9 @@
    "news:sofi posts best quarter raises outlook stock trades at 17x 2027 earnings guidance",
    "up0.25"
   ],
-  "BAC:PUT:2026-12-04:50": [],
+  "BAC:PUT:2026-12-04:50": [
+   "up0.25"
+  ],
   "PLTR:PUT:2026-11-27:155": [
    "down-0.15",
    "up0.25"
@@ -4283,9 +4286,6 @@
   "SOFI:PUT:2026-12-04:15.5": 1
  },
  "seen_macro": [
-  "us employment report labor market firing on all cylinders",
-  "us stock market today why is the nasdaq up 1 while",
-  "week ahead us cpi uk gdp and market outlook",
   "nasdaq eyes higher open as chips pare losses rate hike fears linger",
   "us treasuries stumble as strong labor market lifts fed hike bets",
   "the worldwide sell off for ai stocks halts but other us stocks are still struggling",
@@ -4882,7 +4882,10 @@
   "bitcoin shows higher volatility on us inflation and options expiry dates calmer on fed rate decision days in 2026",
   "gbp usd price forecast gbpusd 1 3200 1 3345 upside target on uk cpi test",
   "warsh says fed is gaming out how ai could reshape economy",
-  "warsh warns of economic risks from ai adoption without offering fresh interest rate signals"
+  "warsh warns of economic risks from ai adoption without offering fresh interest rate signals",
+  "higher rates nvidia ceo exit and the ai trade what investors should know",
+  "3 reasons to buy xrp before 2027 and 2 reasons to wait",
+  "u s fed chairman warsh grapples with ai s potential economic impact steers clear of its inflation risk"
  ],
  "sharp": {
   "UBER:CALL:2026-11-27:70": 69.47,
