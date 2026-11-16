@@ -626,6 +626,17 @@
    "time": "2026-11-13T10:46-05:00",
    "price": null,
    "qty": null
+  },
+  "BAC:PUT:2026-12-04:50|2026-11-16": {
+   "mode": "watch",
+   "ticker": "BAC",
+   "side": "PUT",
+   "exp": "2026-12-04",
+   "strike": 50.0,
+   "day": "2026-11-16",
+   "time": "2026-11-16T10:43-05:00",
+   "price": null,
+   "qty": null
   }
  }
 }
