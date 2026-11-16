@@ -337,7 +337,8 @@
    "spotify healthy premium adds despite rich valuation rating upgrade",
    "broadcom avgo us nvidia nvda us netflix nflx us",
    "netflix lowers 2026 ad revenue forecast time to hold the stock",
-   "trump backs a hollywood tax break so movies must stay in america netflix and disney could gain"
+   "trump backs a hollywood tax break so movies must stay in america netflix and disney could gain",
+   "disney is the cheaper stock but home depot pays the bigger dividend which is better for retirees"
   ],
   "AVGO:PUT": [
    "3 artificial intelligence ai stocks that look like great buys right now",
@@ -2309,7 +2310,8 @@
    "apple inc aapl stock acquired by one wealth capital management llc",
    "apple inc aapl stock madrona financial services llc grows position",
    "nvidia stock s icarus fall isn t over yet but microsoft apple show path to recovery says top strateg",
-   "apple targets june 2027 unveiling for ai smart glasses report aapl nasdaq"
+   "apple targets june 2027 unveiling for ai smart glasses report aapl nasdaq",
+   "apple aapl picks core foldable glass supplier for iphone duo"
   ],
   "BA:PUT": [
    "boeing nyse ba sets new 52 week low on disappointing earnings",
@@ -4117,7 +4119,8 @@
    "uber zoox announce zoox s robotaxis available on uber platform in las vegas",
    "uber riders in vegas can now get driverless zoox robotaxi",
    "amazon s zoox robotaxis available in las vegas on uber app amzn nasdaq",
-   "uber technologies uber what is behind the fresh attention"
+   "uber technologies uber what is behind the fresh attention",
+   "zoox is now available on uber in las vegas"
   ],
   "GOOGL:CALL": [
    "alphabet tpu sales and gemini enterprise are reshaping the bull case nasdaq goog",
@@ -4221,12 +4224,15 @@
    "news:uber says us drivers license data stolen in data breach",
    "news:uber flags exposure of personal records in third party security breach uber nyse",
    "news:capital group cuts tesla to smallest since early 2025 lifts uber to high",
-   "news:uber technologies uber reports data breach affecting u s driv"
+   "news:uber technologies uber reports data breach affecting u s driv",
+   "news:zoox is now available on uber in las vegas"
   ],
   "AAPL:CALL:2026-11-27:365@2026-11-13": [
    "news:apple climbs as inflation surprise raises bond yields and weighs on tech valuations",
    "down-0.15",
-   "down-0.3"
+   "down-0.3",
+   "stock1",
+   "news:apple aapl picks core foldable glass supplier for iphone duo"
   ],
   "RIVN:PUT:2026-12-04:13": [
    "sharp@2026-11-13T11:36-05:00",
@@ -4246,29 +4252,10 @@
  },
  "stock_level": {
   "UBER:CALL:2026-11-27:70": 1,
-  "SOFI:PUT:2026-12-04:15.5": 1
+  "SOFI:PUT:2026-12-04:15.5": 1,
+  "AAPL:CALL:2026-11-27:365@2026-11-13": 1
  },
  "seen_macro": [
-  "chip stocks are sinking but this bearish etf is up more than 25",
-  "fed s hammack barkin favor gradual rate hike path to lower inflation",
-  "s p 500 plunges wall street fears circuit breaker just one day after trump celebrated record highs",
-  "stock market meltdown as 2 5trillion is wiped out in wall street bloodbath after democrats midterms victory rally turns ",
-  "dow plunges 1 200 points nasdaq into correction territory after midterm results stock rally",
-  "wall street fear gauge jumps most since liberation day as ai trade stumbles",
-  "us tech shares fall sharply as investors bet on ai slowdown after democrats election triumph",
-  "wall street s fear gauge surges the most since april why traders think it should be even higher",
-  "the energy inflation spillover is imminent",
-  "why is zillow stock falling thursday zillow group nasdaq z",
-  "wall street selloff sends nasdaq down 4 as dow plunges more than 1 000 points",
-  "federal reserve holds interest rates steady as inflation and consumer debt remain concerns",
-  "wall street lunch fear grips the market undefined qcom",
-  "why tech stocks are down today including nvidia spacex amd more",
-  "wall street plunges nasdaq sinks 5 27 and s p 500 falls 4 13 in chip rout",
-  "the fed finds disturbing trend as credit card demand hits 4 year high",
-  "brent crude price rises over 5 as risk appetite returns despite easing geopolitical tensions",
-  "nasdaq set for biggest daily drop in 19 months on fears of ai regulations",
-  "incoming michigan senator ready to work with trump on stupid tariffs",
-  "a wipeout for ai stocks sends wall street reeling and the s p 500 tumbles more than 3 5",
   "oil prices drop to 94 as us congress shifts could ease iran tensions",
   "mortgage rate history 1970s to 2026",
   "cleveland fed s hammack backs restrictive rates amid inflation concerns",
@@ -4848,7 +4835,27 @@
   "trump heads to asia as economic week focuses on consumers national news u s news",
   "will uk inflation rise even further this week",
   "ai stocks weigh on wall street to start the week",
-  "auto market weekly summary"
+  "auto market weekly summary",
+  "amd earnings what wall street missed",
+  "oil prices face pressure from geopolitical tens",
+  "carney says canada could turn to chinese automakers if trump trade talks fail",
+  "markets recover but broader weakness persists",
+  "november u s factory report tests inflation pressure monday as markets price in december rate hike",
+  "map shows us cities where home sellers are cutting prices most",
+  "a testing week ahead for sterling as economic pressures mount",
+  "wall street s ai anxiety deepens",
+  "why are gold and silver prices falling together fed rate bets trigger precious metals selloff make",
+  "sbp projects 3 5 4 5 gdp growth for fy27",
+  "us stock market today nasdaq down over 1 5 as nvidia other ai chip stocks slump dow s p 500 also in red",
+  "gold hits lowest level in over a year amid fed rate hike expectations",
+  "canadian dollar extends decline as mixed cpi data offers little support",
+  "gold prices fall below critical levels as fed rate hike fears deepen what s next",
+  "more drops for nvidia and other ai stocks drag the u s market lower",
+  "duffy pitches 50b air traffic modernization plan",
+  "stocks fall before nvidia earnings anthropic ipo markets wrap",
+  "us inflation and fed rate expectations shift as markets reprice the december policy outlook",
+  "stock market today nasdaq leads wall street lower",
+  "stock market today nasdaq 100 sinks 1 as nvidia faces its first earnings without jensen huang"
  ],
  "sharp": {
   "UBER:CALL:2026-11-27:70": 69.47,
