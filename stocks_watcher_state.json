@@ -338,7 +338,9 @@
    "broadcom avgo us nvidia nvda us netflix nflx us",
    "netflix lowers 2026 ad revenue forecast time to hold the stock",
    "trump backs a hollywood tax break so movies must stay in america netflix and disney could gain",
-   "disney is the cheaper stock but home depot pays the bigger dividend which is better for retirees"
+   "disney is the cheaper stock but home depot pays the bigger dividend which is better for retirees",
+   "netflix stock company plans cuts affecting 6 of workforce",
+   "netflix stock hits 52 week low at 61 36 usd by investing com"
   ],
   "AVGO:PUT": [
    "3 artificial intelligence ai stocks that look like great buys right now",
@@ -4120,7 +4122,9 @@
    "uber riders in vegas can now get driverless zoox robotaxi",
    "amazon s zoox robotaxis available in las vegas on uber app amzn nasdaq",
    "uber technologies uber what is behind the fresh attention",
-   "zoox is now available on uber in las vegas"
+   "zoox is now available on uber in las vegas",
+   "what could uber technologies uber gain from its exclusive canada delivery deal",
+   "uber technologies uber earnings compound at nearly double the rate of top line growth"
   ],
   "GOOGL:CALL": [
    "alphabet tpu sales and gemini enterprise are reshaping the bull case nasdaq goog",
@@ -4240,7 +4244,8 @@
   ],
   "NFLX:PUT:2026-11-27:63@2026-11-13": [
    "up0.25",
-   "news:netflix lowers 2026 ad revenue forecast time to hold the stock"
+   "news:netflix lowers 2026 ad revenue forecast time to hold the stock",
+   "news:netflix stock company plans cuts affecting 6 of workforce"
   ],
   "SOFI:PUT:2026-12-04:15.5": [
    "sharp@2026-11-13T11:10-05:00",
@@ -4256,14 +4261,6 @@
   "AAPL:CALL:2026-11-27:365@2026-11-13": 1
  },
  "seen_macro": [
-  "oil prices drop to 94 as us congress shifts could ease iran tensions",
-  "mortgage rate history 1970s to 2026",
-  "cleveland fed s hammack backs restrictive rates amid inflation concerns",
-  "oct cpi seen at 24 month high of 6 1 fe poll",
-  "jobs report to provide latest snapshot of hiring days after midterms abc news",
-  "prediction the next big ai stock winner could be hiding in plain sight",
-  "oil market jitters markets anxious over geopolitical tension in the middle east",
-  "buy sell or hold friday s top upgrades and downgrades becton dickinson bj s wholesale club cogent communications fervo e",
   "9am markets update",
   "can a near 55 000 jobs print calm spdr s p 500 etf trust nysearca spy today",
   "is 189 000 jobless claims enough to move ishares 20 year treasury bond etf nasdaq tlt",
@@ -4855,7 +4852,15 @@
   "stocks fall before nvidia earnings anthropic ipo markets wrap",
   "us inflation and fed rate expectations shift as markets reprice the december policy outlook",
   "stock market today nasdaq leads wall street lower",
-  "stock market today nasdaq 100 sinks 1 as nvidia faces its first earnings without jensen huang"
+  "stock market today nasdaq 100 sinks 1 as nvidia faces its first earnings without jensen huang",
+  "dollar extends rally as yen stays near two month low",
+  "gold hits one year low as dollar strengthens fed rate bets rise",
+  "sbp projects inflation at 5 7 during fy27",
+  "canadian inflation unchanged in october as underlying pressures remain contained",
+  "us stock market today nasdaq futures slide as nvidia leads ai stock selloff ahead of earnings",
+  "tethys petroleum limited stock faces selling pressure as operational challenges energy market volatility and regulatory ",
+  "the s p 500 is on pace to do something that s only happened 3 times in history",
+  "october inflation steady complicating boc s december call"
  ],
  "sharp": {
   "UBER:CALL:2026-11-27:70": 69.47,
