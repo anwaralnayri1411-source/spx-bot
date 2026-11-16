@@ -57,7 +57,9 @@
    "bank of america bac stock 49 42 down 0 68 nov 6",
    "soxx chip etf draws 3 3 billion in october despite 33 monthly drop",
    "watch markets this week live updates",
-   "bank of america moves to settle fake accounts lawsuit what s next"
+   "bank of america moves to settle fake accounts lawsuit what s next",
+   "top bank stocks to follow today november 16th",
+   "customers at chase wells fargo bofa u s bank report tech issues ap reports"
   ],
   "AMZN:CALL": [
    "starting jan 1 2027 amazon seasonal workers get day one health coverage if they work at least 30 hours a week",
@@ -2607,7 +2609,9 @@
    "palantir s commercial ai business just changed the story but it s stock could be too expensive",
    "european push to rival palantir pltr in military ai software a",
    "palantir technologies pltr sees 330 million nhs contract draw new uk rivals",
-   "is pltr stock a buy or a hold as growth battles a premium valuation"
+   "is pltr stock a buy or a hold as growth battles a premium valuation",
+   "why does palantir stock keep going down",
+   "palantir dips as anthropic ipo nvidia turmoil and rate hike bets rattle tech"
   ],
   "F:CALL": [
    "ford october u s sales slip as electric vehicle deliveries plunge f nyse",
@@ -4233,7 +4237,8 @@
    "lucid sinks 8 despite 1 75 billion saudi lifeline tesla falls 3 rivian dips",
    "the nasdaq has entered a correction here are 3 space and ev stocks i d buy if it turns into a crash",
    "citi maintains rivian automotive rivn us with hold rating cuts target price to 14 5",
-   "two sigma has expanded its bearish rivian put for three straight quarters"
+   "two sigma has expanded its bearish rivian put for three straight quarters",
+   "rivian automotive nasdaq rivn stock price target lowered at citigroup"
   ]
  },
  "fired": {
@@ -4263,7 +4268,8 @@
   "RIVN:PUT:2026-12-04:13": [
    "sharp@2026-11-13T11:36-05:00",
    "down-0.15",
-   "news:citi maintains rivian automotive rivn us with hold rating cuts target price to 14 5"
+   "news:citi maintains rivian automotive rivn us with hold rating cuts target price to 14 5",
+   "news:rivian automotive nasdaq rivn stock price target lowered at citigroup"
   ],
   "SOFI:PUT:2026-12-04:15.5": [
    "sharp@2026-11-13T11:10-05:00",
@@ -4279,7 +4285,8 @@
   "PLTR:PUT:2026-11-27:155": [
    "down-0.15",
    "up0.25",
-   "sharp@2026-11-16T13:50-05:00"
+   "sharp@2026-11-16T13:50-05:00",
+   "news:palantir dips as anthropic ipo nvidia turmoil and rate hike bets rattle tech"
   ]
  },
  "stock_level": {
@@ -4287,11 +4294,6 @@
   "SOFI:PUT:2026-12-04:15.5": 1
  },
  "seen_macro": [
-  "jobs report shows hiring accelerated in october abc news",
-  "investors try to regain their footing after tech stocks tank",
-  "fed rate decision october 2026 is a december hike next",
-  "nasdaq rebounds as chips stocks recover from steep losses",
-  "fed seen sticking to december rate hike after jobs data",
   "oil uscrude price forecast for today tomorrow next week and next 30 days",
   "blowout october payrolls data sets up federal reserve december rate rise",
   "week ahead us inflation uk gdp and political shifts put markets to the test",
@@ -4886,7 +4888,12 @@
   "americans credit card debt hits record 1 29 trillion",
   "european stocks fall german and uk yields rise euro hits 1 year 7 month low on fed rate hike expectations",
   "west of suez brent lsgo cracks slip on increased oil flows",
-  "us dollar rallies as fed rate risks pressure global markets"
+  "us dollar rallies as fed rate risks pressure global markets",
+  "usd cad outlook loonie left behind as us cpi looms",
+  "fed chairman warsh grapples with ai s potential economic impact steers clear of its inflation risk",
+  "brent crude weakens as intensified supply risk and geopolitical tensions heighten market uncertainty",
+  "fed chair kevin warsh says ai boom could help sustain substantially higher us growth",
+  "gold drops to more than one year low as us dollar marches higher"
  ],
  "sharp": {
   "UBER:CALL:2026-11-27:70": 69.47,
