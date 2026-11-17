@@ -674,7 +674,8 @@
    "why is intel intc pushing deeper into edge ai and ai security",
    "intel corp stock intc opened up by 5 60 on nov 11 a full analysis",
    "etf repositioning coincides with intel stock moving higher amid volatile trading",
-   "marvell and intel rally 7 as coreweave s results reignite the ai chip trade taiwan semiconductor climbs 4"
+   "marvell and intel rally 7 as coreweave s results reignite the ai chip trade taiwan semiconductor climbs 4",
+   "intel extends slide as nvidia trims stake 25 shareholder suit adds pressure"
   ],
   "CVX:CALL": [
    "stocks see continued downward pressure from ai anxiety and oil prices",
@@ -1464,9 +1465,6 @@
    "jpmorgan chase nyse jpm lifts interest income outlook as lending offsets trading slowdown"
   ],
   "COIN:PUT": [
-   "bitcoin price outlook for november",
-   "crypto rally may change the case for cleanspark stock",
-   "sky price eyes 0 085 as quarterly net revenue rises 11 8",
    "agentic coin price agc price live charts and marketcap coinbase netherlands",
    "plante moran advisors boosts bitcoin etf holdings by 70 to 42m",
    "bitcoin price suddenly plunges to 76k as hourly liquidations near 600m",
@@ -1863,12 +1861,12 @@
    "claude ai predicts what bitcoin and ethereum could be worth by 2030",
    "people are chucking stuff like gold and bitcoin as rising inflation leads investors to seek yield",
    "bitcoin price forecast recovery to 100k or a drop to 30k",
-   "hong kong property firm international business settlement sells 300 bitcoin to finance planned acquisition"
+   "hong kong property firm international business settlement sells 300 bitcoin to finance planned acquisition",
+   "ripple xrp news franklin s xrp fund needs 76 to break even",
+   "mark zuckerberg s meta ai predicts a privacy coin boom xmr price to the moon",
+   "s p tsx venture composite bitcoin treasury corporation tsxv btct why investors are watching the next catalyst small cap "
   ],
   "HOOD:PUT": [
-   "cryptocurrencies price prediction altcoins bitcoin cryptos american wrap 29 october",
-   "bitcoin etf inflows return while bitcoin price trades near usd 81 000",
-   "why higher rates aren t hurting bitcoin",
    "bitcoin bulls eye 95k price while options bears quietly load up",
    "bitcoin price briefly nears 82k but bears warn of a drop toward 76k",
    "bitcoin dips below 81 000 on binance dropping 0 23 in 15 minutes on oct 29",
@@ -2265,7 +2263,10 @@
    "bitcoin drops 9 in 30 days nearing key suppor",
    "bitcoin price forecast recovery to 100k or a drop to 30k",
    "hong kong property firm international business settlement sells 300 bitcoin to finance planned acquisition",
-   "ripple xrp news franklin s xrp fund needs 76 to break even"
+   "ripple xrp news franklin s xrp fund needs 76 to break even",
+   "robinhood markets stock evercore cuts target to usd 100",
+   "mark zuckerberg s meta ai predicts a privacy coin boom xmr price to the moon",
+   "s p tsx venture composite bitcoin treasury corporation tsxv btct why investors are watching the next catalyst small cap "
   ],
   "AAPL:CALL": [
    "loop capital lowers apple stock price target on iphone shipment concerns",
@@ -3635,8 +3636,6 @@
    "snap tumbles 11 as user growth miss and sluggish ad sales overshadow return to profit pinterest dips meta holds steady"
   ],
   "MSTR:PUT": [
-   "american bitcoin corp reports 126m q3 profit d",
-   "crypto stocks mstr crcl hood slide after us midterm btc falls below 77k",
    "core scientific plans to exit bitcoin mining by the end of 2026",
    "sui price drops 9 5 in a day the levels sui must hold now",
    "bitcoin btc price falls below 76k as ai stock rout hit strategy mstr coinbase coin circle crcl",
@@ -4034,7 +4033,9 @@
    "the cost of a 70 000 bitcoin hedge more than doubled in a day",
    "bitcoin crashes to 67 500 top reasons why btc price is failing to recover above 70 000",
    "twenty one capital reports us 1 09b bitcoin gain and us 102 8m cash",
-   "tether backed twenty one capital reports 1 09 billion q3 net income on bitcoin gains"
+   "tether backed twenty one capital reports 1 09 billion q3 net income on bitcoin gains",
+   "ripple xrp news franklin s xrp fund needs 76 to break even",
+   "s p tsx venture composite bitcoin treasury corporation tsxv btct why investors are watching the next catalyst small cap "
   ],
   "SOFI:PUT": [
    "nasdaq ceo adena friedman says 23 hour trading starts dec 6 what it means for your retirement money",
@@ -4062,7 +4063,8 @@
    "10 000 in sofi stock what could it be worth by 2030",
    "will sofi stock avoid deeper losses amid prevailing seller pressure",
    "sofi wants 5 billion dollar businesses by 2030 here s the road map",
-   "upstart sinks 14 in a week sofi falls 11 as yields jump macro is putting pressure"
+   "upstart sinks 14 in a week sofi falls 11 as yields jump macro is putting pressure",
+   "best growth stocks"
   ],
   "SNAP:PUT": [
    "snap earnings analysis questions answered and next catalysts",
@@ -4292,20 +4294,33 @@
    "news:palantir dips as anthropic ipo nvidia turmoil and rate hike bets rattle tech",
    "news:palantir to retain uk health service data contract until 2029 pltr nasdaq"
   ],
-  "HOOD:PUT:2026-11-27:70": [],
+  "HOOD:PUT:2026-11-27:70": [
+   "up0.25",
+   "news:robinhood markets stock evercore cuts target to usd 100",
+   "sharp@2026-11-17T11:03-05:00"
+  ],
   "NFLX:PUT:2026-12-04:60": [],
-  "BA:PUT:2026-11-27:165": [],
-  "INTC:PUT:2026-11-27:53": [],
-  "COIN:PUT:2026-11-27:110": [],
-  "MSTR:PUT:2026-11-27:95": []
+  "BA:PUT:2026-11-27:165": [
+   "up0.25"
+  ],
+  "INTC:PUT:2026-11-27:53": [
+   "news:intel extends slide as nvidia trims stake 25 shareholder suit adds pressure",
+   "up0.25",
+   "sharp@2026-11-17T11:01-05:00"
+  ],
+  "COIN:PUT:2026-11-27:110": [
+   "up0.25",
+   "sharp@2026-11-17T11:00-05:00"
+  ],
+  "MSTR:PUT:2026-11-27:95": [
+   "up0.25",
+   "sharp@2026-11-17T11:02-05:00"
+  ]
  },
  "stock_level": {
   "SOFI:PUT:2026-12-04:15.5": 1
  },
  "seen_macro": [
-  "wall street under pressure ai concerns and a strong labor market complicate the outlook",
-  "us urges china to meet rare earths agriculture commitments ahead of trump xi meetings",
-  "bessent greer raise concerns on china trade deal actions",
   "fed s daly says more rate hikes likely needed to tame prices",
   "october cpi forecasts show inflation softening but december rate hike still looks likely",
   "us gas prices surge 40 to 4 15 amid iran conflict",
@@ -4902,12 +4917,19 @@
   "us stock futures mixed as nasdaq looks to recover while dow faces pressure from home depot dow jones s p wall street",
   "stock market today s p 500 struggles ahead of nvidia earnings after 2 trillion stock rout",
   "share market today nifty 50 bank nifty nov 17 2026",
-  "wall street stabilizes after another ai selloff ahead of nvidia earnings"
+  "wall street stabilizes after another ai selloff ahead of nvidia earnings",
+  "fed s musalem says several rate hikes likely needed before spring 2027",
+  "us stock futures fall as nvidia earnings and fed rate outlook weigh on markets",
+  "trump s asia talks put u s soybean exports and china trade in the spotlight"
  ],
  "sharp": {
   "SOFI:PUT:2026-12-04:15.5": 15.475,
   "RIVN:PUT:2026-12-04:13": 12.58,
   "PLTR:PUT:2026-11-27:155": 161.94,
-  "BAC:PUT:2026-12-04:50": 50.12
+  "BAC:PUT:2026-12-04:50": 50.12,
+  "COIN:PUT:2026-11-27:110": 116.58,
+  "INTC:PUT:2026-11-27:53": 53.755,
+  "MSTR:PUT:2026-11-27:95": 99.76,
+  "HOOD:PUT:2026-11-27:70": 68.635
  }
 }
