@@ -60,7 +60,11 @@
    "bank of america moves to settle fake accounts lawsuit what s next",
    "top bank stocks to follow today november 16th",
    "customers at chase wells fargo bofa u s bank report tech issues ap reports",
-   "jpmorgan bofa wells fargo other banks trade lower amid user reports indicating problems"
+   "jpmorgan bofa wells fargo other banks trade lower amid user reports indicating problems",
+   "bank of america corporation bac stock acquired by hightower advisors llc",
+   "bank of america vs jpmorgan chase which financial stock is a better buy for 2027",
+   "berkshire hathaway raised its delta air lines stake 12 and cut bank of america holding",
+   "quant ratings on berkshire hathaway s top holdings aapl axp ko googl bac aapl nasdaq"
   ],
   "AMZN:CALL": [
    "starting jan 1 2027 amazon seasonal workers get day one health coverage if they work at least 30 hours a week",
@@ -4162,7 +4166,8 @@
    "saudi arabia s pif maintains stake in uber spacex in q3",
    "uber now touts 10 billion cash not trip growth",
    "burq earns premier partner in the uber partner network",
-   "uber eats and kohl s team up to make holiday shopping easier with nationwide on demand delivery"
+   "uber eats and kohl s team up to make holiday shopping easier with nationwide on demand delivery",
+   "robotaxi launch might change the case for investing in uber stock uber"
   ],
   "GOOGL:CALL": [
    "alphabet tpu sales and gemini enterprise are reshaping the bull case nasdaq goog",
@@ -4251,33 +4256,13 @@
    "two sigma has expanded its bearish rivian put for three straight quarters",
    "rivian automotive nasdaq rivn stock price target lowered at citigroup",
    "rivian automotive nasdaq rivn stock keeps neutral rating at da davidson",
-   "rivn maintains rating by citigroup price target lowered to 1"
+   "rivn maintains rating by citigroup price target lowered to 1",
+   "analysts offer insights on consumer cyclical companies rivian automotive rivn and sharkninja inc sn",
+   "is rivian automotive rivn undervalued as it launches also and delays the r2",
+   "rivian automotive nasdaq rivn given new 20 00 price target at stonex"
   ]
  },
  "fired": {
-  "UBER:CALL:2026-11-27:70": [
-   "news:uber posts strong q3 with 18 revenue growth an",
-   "news:uber to power mcdonald s app deliveries as partnership widens",
-   "up0.25",
-   "news:mcdonald s and uber expand their delivery parternship mcd nyse",
-   "sharp@2026-11-10T09:45-05:00",
-   "sharp@2026-11-10T11:16-05:00",
-   "down-0.15",
-   "news:uber technologies stock faces leadership transition as hazelbaker exits",
-   "news:doordash stock faces new pressure as amazon adds uber eats to prime",
-   "down-0.3",
-   "news:uber jumps 7 on 20 bookings growth we have more demand than we have supply",
-   "news:tractor supply joins uber marketplace expanding on demand shopping across rural and suburban america",
-   "stock1",
-   "news:uber stock could climb 52 according to citi is the 105 target realistic",
-   "news:uber says us drivers license data stolen in data breach",
-   "news:uber flags exposure of personal records in third party security breach uber nyse",
-   "news:capital group cuts tesla to smallest since early 2025 lifts uber to high",
-   "news:uber technologies uber reports data breach affecting u s driv",
-   "news:zoox is now available on uber in las vegas",
-   "news:uber technologies stock uber secures 66 56 delivery hero stake",
-   "news:delivery hero stock uber secures 66 56 after first offer window"
-  ],
   "RIVN:PUT:2026-12-04:13": [
    "sharp@2026-11-13T11:36-05:00",
    "down-0.15",
@@ -4294,7 +4279,8 @@
    "up0.25"
   ],
   "BAC:PUT:2026-12-04:50": [
-   "up0.25"
+   "up0.25",
+   "sharp@2026-11-17T09:55-05:00"
   ],
   "PLTR:PUT:2026-11-27:155": [
    "down-0.15",
@@ -4305,12 +4291,9 @@
   ]
  },
  "stock_level": {
-  "UBER:CALL:2026-11-27:70": 1,
   "SOFI:PUT:2026-12-04:15.5": 1
  },
  "seen_macro": [
-  "unemployment rises in october with the third straight monthly jobs decline",
-  "dow jones stock market today dow recovers after crash as wall street reassesses fed outlook",
   "us labor market regains ground as job growth surges unemployment rate falls to 4 1",
   "us tech stock rout is the ai bubble bursting",
   "why clean energy fuels clne stock is trading up today",
@@ -4908,12 +4891,14 @@
   "fed rate hike odds hit 90 what could happen to bitcoin and crypto in december",
   "why gold is trending today the dollar federal reserve expectations and safe haven demand collide",
   "are u really threatening to play china off the u s trump trade adviser asks pm carney",
-  "stock market today nvidia s 26 plunge puts wall street on edge ahead of earnings tonight"
+  "stock market today nvidia s 26 plunge puts wall street on edge ahead of earnings tonight",
+  "bitcoin nears 65k as strong us jobs data stirs fed rate hike concerns",
+  "us stock market today dow sheds 330 points nasdaq s p 500 in red as wall street stays under pressure"
  ],
  "sharp": {
-  "UBER:CALL:2026-11-27:70": 69.47,
   "SOFI:PUT:2026-12-04:15.5": 15.475,
   "RIVN:PUT:2026-12-04:13": 12.58,
-  "PLTR:PUT:2026-11-27:155": 161.94
+  "PLTR:PUT:2026-11-27:155": 161.94,
+  "BAC:PUT:2026-12-04:50": 50.12
  }
 }
