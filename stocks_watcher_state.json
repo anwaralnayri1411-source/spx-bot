@@ -1474,11 +1474,6 @@
    "jpmorgan chase nyse jpm lifts interest income outlook as lending offsets trading slowdown"
   ],
   "COIN:PUT": [
-   "keel keel sells entire bitcoin treasury for 192m will sell new coins daily",
-   "bitcoin falls with risk off sentiment the price is testing a key swing area target",
-   "why is bitcoin price crashing today btc usd falls toward 76 000 amid stock market sell off and 370 mill",
-   "keel stock hits 14 month low q3 report reveals firm sold all its bitcoin but has no data center leases yet",
-   "btc price on nov 5 2026 at 1pm est crypto prediction market",
    "bitcoin tumbles below 77 000 as post election stock rally fades",
    "bitcoin falls below 77 000 as chip stocks crash",
    "btc price on november 6 4 59pm utc",
@@ -1873,13 +1868,14 @@
    "why us states are banning crypto atms as scam losses surge",
    "xrp news today whales pull 127 million from binance as price holds below 1",
    "important pi network news and pi price update november 17",
-   "options traders show moderately bearish sentiment on coinbase c"
+   "options traders show moderately bearish sentiment on coinbase c",
+   "bitcoin price prediction what is the most likely scenario for 2028",
+   "why nvidia earnings and the anthropic ipo could mean new trouble for bitcoin",
+   "grayscale says to buy the dip in bitcoin",
+   "wirex announces launch of tokenized stocks issued by coinbase",
+   "strategy is down 28 in a month can mstr stock hit cantor fitzgerald s 208 target by 2030"
   ],
   "HOOD:PUT": [
-   "explained binance was hacked why is bitcoin falling",
-   "the impact of the binance hack is unlikely to last long",
-   "robinhood markets stock weighs record q3 revenue against earnings pressure",
-   "truist cuts robinhood stock price target to 123 on lower revenue",
    "here s how big bitcoin traders responded after the binance hack hit",
    "bitcoin price after the binance hack and options expiry",
    "why is bitcoin down today 5 reasons btc can t break 80 000 despite 40 trillion us debt",
@@ -2275,7 +2271,11 @@
    "hood stock price crashes 7 35 as robinhood insider fraud case adds to selling pressure",
    "why us states are banning crypto atms as scam losses surge",
    "xrp news today whales pull 127 million from binance as price holds below 1",
-   "important pi network news and pi price update november 17"
+   "important pi network news and pi price update november 17",
+   "bitcoin price prediction what is the most likely scenario for 2028",
+   "why nvidia earnings and the anthropic ipo could mean new trouble for bitcoin",
+   "grayscale says to buy the dip in bitcoin",
+   "strategy is down 28 in a month can mstr stock hit cantor fitzgerald s 208 target by 2030"
   ],
   "AAPL:CALL": [
    "loop capital lowers apple stock price target on iphone shipment concerns",
@@ -2420,7 +2420,8 @@
    "amazon stock amzn rises as the company prepares for a leo satellite launch today",
    "boeing ba lands record 737 10 order following a fair value debate",
    "vulcan failure grounds ula rocket raises risks for amazon s satellite rollout ba nyse",
-   "grandma wants a tesla tesla stock nasdaq tsla notches up during increase in elder popularity"
+   "grandma wants a tesla tesla stock nasdaq tsla notches up during increase in elder popularity",
+   "5 industrials stocks with whale alerts in today s session"
   ],
   "NVDA:PUT": [
    "nvidia stock is set for its worst month in a year time to buy the dip",
@@ -3648,10 +3649,6 @@
    "snap tumbles 11 as user growth miss and sluggish ad sales overshadow return to profit pinterest dips meta holds steady"
   ],
   "MSTR:PUT": [
-   "bitcoin s 378 million short squeeze faded under 80 000 is it already over",
-   "uniswap price prediction november 2026 can uni reach 9 or fall to 6 50 in november",
-   "trump price slides 13 as trump media moves 343m btc",
-   "btc price range on nov 5 2026 at 4pm est prediction market",
    "dogecoin price on nov 5 2026 at 4pm est prediction market",
    "strategy sinks 9 as bitcoin tumbles below 76 000 and tech sells off",
    "xrp price prediction wall street s 28 target hinges on supply shock",
@@ -4047,7 +4044,11 @@
    "ark sold 85m in nvidia shares before q3 earnings",
    "why us states are banning crypto atms as scam losses surge",
    "xrp news today whales pull 127 million from binance as price holds below 1",
-   "important pi network news and pi price update november 17"
+   "important pi network news and pi price update november 17",
+   "bitcoin price prediction what is the most likely scenario for 2028",
+   "why nvidia earnings and the anthropic ipo could mean new trouble for bitcoin",
+   "grayscale says to buy the dip in bitcoin",
+   "strategy is down 28 in a month can mstr stock hit cantor fitzgerald s 208 target by 2030"
   ],
   "SOFI:PUT": [
    "nasdaq ceo adena friedman says 23 hour trading starts dec 6 what it means for your retirement money",
@@ -4077,7 +4078,10 @@
    "sofi wants 5 billion dollar businesses by 2030 here s the road map",
    "upstart sinks 14 in a week sofi falls 11 as yields jump macro is putting pressure",
    "best growth stocks",
-   "investors poured 2 billion into this bitcoin etf as it lost a quarter of its value this year"
+   "investors poured 2 billion into this bitcoin etf as it lost a quarter of its value this year",
+   "is xrp a good investment right now below 1",
+   "sofi stock outlook bearish momentum dominates with risk toward 13 51 support",
+   "strategy is down 28 in a month can mstr stock hit cantor fitzgerald s 208 target by 2030"
   ],
   "SNAP:PUT": [
    "snap earnings analysis questions answered and next catalysts",
@@ -4310,7 +4314,8 @@
    "news:evercore isi s 100 target says robinhood s selloff went too far",
    "news:goldman sachs doubles bitcoin etf holdings",
    "news:robinhood stock slides what s going on",
-   "news:hood stock price crashes 7 35 as robinhood insider fraud case adds to selling pressure"
+   "news:hood stock price crashes 7 35 as robinhood insider fraud case adds to selling pressure",
+   "news:why nvidia earnings and the anthropic ipo could mean new trouble for bitcoin"
   ],
   "NFLX:PUT:2026-12-04:60": [
    "up0.25",
@@ -4348,8 +4353,6 @@
   "SOFI:PUT:2026-12-04:15.5": 1
  },
  "seen_macro": [
-  "1 growth stock down 40 to buy hand over fist in november according to wall street",
-  "nvidia palantir and tesla are sending shockwaves through wall street with this 53 billion warning",
   "october cpi report what the inflation data is expected to show",
   "vietnam s 140 billion u s surplus isn t driven by illegal transshipment says ex ambassador marc knapper",
   "us israeli war on iran deepens america s housing affordability crisis",
@@ -4947,7 +4950,9 @@
   "markets price a 95 4 chance of a quarter point fed hike in december",
   "cme stock is wall street bullish or bearish",
   "st louis fed s musalem says four more rate hikes may be needed in coming months",
-  "us democratic senator introduces bill to end china s trade status ahead of trump xi meeting"
+  "us democratic senator introduces bill to end china s trade status ahead of trump xi meeting",
+  "cautious trader dumps millions ahead of nov 18 fomc minutes release",
+  "dow slides 1 4 as salesforce leads software rout before anthropic ipo stock market today"
  ],
  "sharp": {
   "SOFI:PUT:2026-12-04:15.5": 15.475,
