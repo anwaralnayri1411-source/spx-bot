@@ -14,8 +14,8 @@
    "strength": "6.7",
    "occ": "WMT261127C00130000",
    "peak_pnl": 0.409,
-   "close_pnl": 0.205,
-   "quotes": 394,
+   "close_pnl": 0.219,
+   "quotes": 395,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -34,8 +34,8 @@
    "strength": "6.7",
    "occ": "WMT261127C00132000",
    "peak_pnl": 0.066,
-   "close_pnl": -0.045,
-   "quotes": 181,
+   "close_pnl": -0.056,
+   "quotes": 182,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -54,8 +54,8 @@
    "strength": "7.8",
    "occ": "RIVN261204P00013000",
    "peak_pnl": 0.283,
-   "close_pnl": 0.283,
-   "quotes": 145,
+   "close_pnl": 0.192,
+   "quotes": 146,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -75,7 +75,7 @@
    "occ": "SOFI261204P00015500",
    "peak_pnl": 0.441,
    "close_pnl": 0.353,
-   "quotes": 131,
+   "quotes": 132,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -94,8 +94,8 @@
    "strength": "6.7",
    "occ": "RIVN261204P00012500",
    "peak_pnl": 0.057,
-   "close_pnl": -0.011,
-   "quotes": 131,
+   "close_pnl": -0.057,
+   "quotes": 132,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -114,8 +114,8 @@
    "strength": "6.3",
    "occ": "WMT261204C00135000",
    "peak_pnl": 0.0,
-   "close_pnl": -0.116,
-   "quotes": 59,
+   "close_pnl": -0.139,
+   "quotes": 60,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -134,8 +134,8 @@
    "strength": "7.8",
    "occ": "BAC261204P00050000",
    "peak_pnl": 0.243,
-   "close_pnl": 0.049,
-   "quotes": 59,
+   "close_pnl": -0.007,
+   "quotes": 60,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -154,8 +154,8 @@
    "strength": "7.5",
    "occ": "RIVN261204P00012500",
    "peak_pnl": 0.057,
-   "close_pnl": -0.011,
-   "quotes": 59,
+   "close_pnl": -0.057,
+   "quotes": 60,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -174,8 +174,8 @@
    "strength": "9.2",
    "occ": "HOOD261204P00065000",
    "peak_pnl": 0.125,
-   "close_pnl": -0.044,
-   "quotes": 53,
+   "close_pnl": -0.105,
+   "quotes": 54,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -194,8 +194,8 @@
    "strength": "8.0",
    "occ": "INTC261127P00053000",
    "peak_pnl": 0.101,
-   "close_pnl": -0.058,
-   "quotes": 53,
+   "close_pnl": -0.097,
+   "quotes": 54,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -214,8 +214,8 @@
    "strength": "6.9",
    "occ": "SOFI261204P00014500",
    "peak_pnl": 0.0,
-   "close_pnl": -0.071,
-   "quotes": 48,
+   "close_pnl": -0.141,
+   "quotes": 49,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -234,8 +234,8 @@
    "strength": "8.9",
    "occ": "NFLX261204P00060000",
    "peak_pnl": 0.03,
-   "close_pnl": -0.03,
-   "quotes": 42,
+   "close_pnl": -0.051,
+   "quotes": 43,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -254,8 +254,8 @@
    "strength": "10.0",
    "occ": "SPY261118P00729000",
    "peak_pnl": 0.253,
-   "close_pnl": -0.048,
-   "quotes": 29,
+   "close_pnl": -0.117,
+   "quotes": 30,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -274,8 +274,8 @@
    "strength": "6.7",
    "occ": "PFE261204P00029000",
    "peak_pnl": 0.0,
-   "close_pnl": -0.106,
-   "quotes": 28,
+   "close_pnl": -0.064,
+   "quotes": 29,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -294,8 +294,8 @@
    "strength": "10.0",
    "occ": "SPY261118P00725000",
    "peak_pnl": 0.0,
-   "close_pnl": -0.315,
-   "quotes": 6,
+   "close_pnl": -0.39,
+   "quotes": 7,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -314,8 +314,8 @@
    "strength": "8.6",
    "occ": "F261204P00012000",
    "peak_pnl": 0.0,
-   "close_pnl": -0.075,
-   "quotes": 4,
+   "close_pnl": -0.188,
+   "quotes": 5,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -2385,7 +2385,8 @@
   "20261117T1527|stocks|chase_em|PFE|PUT|29|2026-12-04",
   "20261117T1527|stocks|market_warning|WMT|CALL|133|2026-12-04",
   "20261117T1527|stocks|open_same_dir|RIVN|PUT|12.5|2026-12-04",
-  "20261117T1527|stocks|open_same_dir|BAC|PUT|49|2026-12-04"
+  "20261117T1527|stocks|open_same_dir|BAC|PUT|49|2026-12-04",
+  "20261117T1535|spx|late_entry|SPY|PUT|730|2026-11-18"
  ],
  "last": {
   "spx|CALL|SPY": "2026-11-11T14:40-05:00",
