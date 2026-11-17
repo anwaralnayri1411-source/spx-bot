@@ -14,8 +14,8 @@
    "strength": "6.7",
    "occ": "WMT261127C00130000",
    "peak_pnl": 0.409,
-   "close_pnl": 0.076,
-   "quotes": 346,
+   "close_pnl": 0.104,
+   "quotes": 347,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -34,8 +34,8 @@
    "strength": "6.7",
    "occ": "WMT261127C00132000",
    "peak_pnl": 0.066,
-   "close_pnl": -0.192,
-   "quotes": 133,
+   "close_pnl": -0.126,
+   "quotes": 134,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -54,8 +54,8 @@
    "strength": "7.8",
    "occ": "RIVN261204P00013000",
    "peak_pnl": 0.222,
-   "close_pnl": 0.121,
-   "quotes": 97,
+   "close_pnl": 0.081,
+   "quotes": 98,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -74,8 +74,8 @@
    "strength": "6.9",
    "occ": "SOFI261204P00015500",
    "peak_pnl": 0.441,
-   "close_pnl": 0.324,
-   "quotes": 83,
+   "close_pnl": 0.314,
+   "quotes": 84,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -95,7 +95,7 @@
    "occ": "RIVN261204P00012500",
    "peak_pnl": 0.057,
    "close_pnl": -0.046,
-   "quotes": 83,
+   "quotes": 84,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -113,9 +113,9 @@
    "edge": "4.5",
    "strength": "6.5",
    "occ": "NFLX261204P00060000",
-   "peak_pnl": 0.371,
-   "close_pnl": 0.371,
-   "quotes": 83,
+   "peak_pnl": 0.403,
+   "close_pnl": 0.403,
+   "quotes": 84,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -134,8 +134,8 @@
    "strength": "6.3",
    "occ": "WMT261204C00135000",
    "peak_pnl": 0.0,
-   "close_pnl": -0.194,
-   "quotes": 11,
+   "close_pnl": -0.19,
+   "quotes": 12,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -154,8 +154,8 @@
    "strength": "7.8",
    "occ": "BAC261204P00050000",
    "peak_pnl": 0.201,
-   "close_pnl": 0.062,
-   "quotes": 11,
+   "close_pnl": 0.083,
+   "quotes": 12,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -175,7 +175,7 @@
    "occ": "RIVN261204P00012500",
    "peak_pnl": 0.057,
    "close_pnl": -0.046,
-   "quotes": 11,
+   "quotes": 12,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -194,8 +194,8 @@
    "strength": "9.2",
    "occ": "HOOD261204P00065000",
    "peak_pnl": 0.068,
-   "close_pnl": -0.054,
-   "quotes": 5,
+   "close_pnl": -0.017,
+   "quotes": 6,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -214,8 +214,28 @@
    "strength": "8.0",
    "occ": "INTC261127P00053000",
    "peak_pnl": 0.101,
-   "close_pnl": -0.105,
-   "quotes": 5,
+   "close_pnl": -0.083,
+   "quotes": 6,
+   "out": "",
+   "out_time": "",
+   "out_pnl": ""
+  },
+  {
+   "id": "20261117T1112|stocks|chase_em|SOFI|PUT|14.5|2026-12-04",
+   "project": "stocks",
+   "tag": "chase_em",
+   "sym": "SOFI",
+   "side": "PUT",
+   "strike": 14.5,
+   "exp": "2026-12-04",
+   "entry": 0.85,
+   "entry_time": "2026-11-17T11:12-05:00",
+   "edge": "3.5",
+   "strength": "6.9",
+   "occ": "SOFI261204P00014500",
+   "peak_pnl": 0.0,
+   "close_pnl": -0.129,
+   "quotes": 1,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -2149,7 +2169,13 @@
   "20261117T1057|stocks|earn_in_life|DIS|CALL|120|2026-12-04",
   "20261117T1057|stocks|earn_in_life|WMT|CALL|133|2026-12-04",
   "20261117T1057|stocks|open_same_dir|RIVN|PUT|12.5|2026-12-04",
-  "20261117T1057|stocks|open_same_dir|BAC|PUT|49|2026-12-04"
+  "20261117T1057|stocks|open_same_dir|BAC|PUT|49|2026-12-04",
+  "20261117T1112|stocks|chase_em|HOOD|PUT|65|2026-12-04",
+  "20261117T1112|stocks|chase_em|SOFI|PUT|14.5|2026-12-04",
+  "20261117T1112|stocks|earn_in_life|DIS|CALL|120|2026-12-04",
+  "20261117T1112|stocks|earn_in_life|WMT|CALL|133|2026-12-04",
+  "20261117T1112|stocks|open_same_dir|BAC|PUT|49|2026-12-04",
+  "20261117T1112|stocks|open_same_dir|RIVN|PUT|12.5|2026-12-04"
  ],
  "last": {
   "spx|CALL|SPY": "2026-11-11T14:40-05:00",
@@ -2284,6 +2310,7 @@
   "stocks|RIVN|PUT|2026-11-17": "2026-11-17T10:12-05:00",
   "stocks|PLTR|PUT|2026-11-17": "2026-11-17T10:12-05:00",
   "stocks|HOOD|PUT|2026-11-17": "2026-11-17T10:42-05:00",
-  "stocks|INTC|PUT|2026-11-17": "2026-11-17T10:42-05:00"
+  "stocks|INTC|PUT|2026-11-17": "2026-11-17T10:42-05:00",
+  "stocks|SOFI|PUT|2026-11-17": "2026-11-17T11:12-05:00"
  }
 }
