@@ -4460,3 +4460,4 @@ time,pos_id,ticker,side,event,detail,entry,val,pnl,spot,need,tdays,advice,reason
 2026-11-17T14:41-05:00,MSTR:PUT:2026-11-27:95,MSTR,PUT,news,"with/medium: Bitcoin drops to $62,000 as trader losses hit 2... - Pluang",3.1,4.97,0.6032,96.9,0.0516,9,أبقِ,الخبر في صالح العقد
 2026-11-17T14:46-05:00,COIN:PUT:2026-11-27:110,COIN,PUT,news,"with/medium: Bitcoin Falls Below $70,000. Here's Where It Could Finish the Year - Yahoo Finance",2.32,3.14,0.3534,116.52,0.0759,9,أبقِ,الخبر في صالح العقد
 2026-11-17T14:46-05:00,MSTR:PUT:2026-11-27:95,MSTR,PUT,news,"with/medium: Bitcoin Falls Below $70,000. Here's Where It Could Finish the Year - Yahoo Finance",3.1,4.92,0.5871,96.98,0.0524,9,أبقِ,الخبر في صالح العقد
+2026-11-17T14:57-05:00,NFLX:PUT:2026-12-04:60,NFLX,PUT,news,against/medium: Netflix (NFLX) and SAG-AFTRA Reach Preliminary Contract Agreemen - GuruFocus,1.43,1.88,0.3147,59.615,0.0175,14,فكّر بالخروج,احمِ ربحك الحالي | خبر ضد العقد
