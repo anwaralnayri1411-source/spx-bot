@@ -2614,7 +2614,10 @@
    "why does palantir stock keep going down",
    "palantir dips as anthropic ipo nvidia turmoil and rate hike bets rattle tech",
    "palantir faces european competition as defence ministries seek independence while pltr stock heads to 150",
-   "cathie wood just sold 11 8 million of palantir stock"
+   "cathie wood just sold 11 8 million of palantir stock",
+   "palantir pltr sees 117 4 million in net etf buying on nov 13",
+   "palantir raised guidance 3 times this year 1 number explains why the stock fell",
+   "palantir to retain uk health service data contract until 2029 pltr nasdaq"
   ],
   "F:CALL": [
    "ford october u s sales slip as electric vehicle deliveries plunge f nyse",
@@ -4052,7 +4055,8 @@
    "sofi technologies slides 3 6 as investors weigh rate pressure against recent strong results",
    "10 000 in sofi stock what could it be worth by 2030",
    "will sofi stock avoid deeper losses amid prevailing seller pressure",
-   "sofi wants 5 billion dollar businesses by 2030 here s the road map"
+   "sofi wants 5 billion dollar businesses by 2030 here s the road map",
+   "upstart sinks 14 in a week sofi falls 11 as yields jump macro is putting pressure"
   ],
   "SNAP:PUT": [
    "snap earnings analysis questions answered and next catalysts",
@@ -4155,7 +4159,10 @@
    "uber sits on 80 loss in lucid stake barred from selling until 2027",
    "in vegas uber aims to end robotaxi crapshoot",
    "uber stock has one thing left to prove",
-   "saudi arabia s pif maintains stake in uber spacex in q3"
+   "saudi arabia s pif maintains stake in uber spacex in q3",
+   "uber now touts 10 billion cash not trip growth",
+   "burq earns premier partner in the uber partner network",
+   "uber eats and kohl s team up to make holiday shopping easier with nationwide on demand delivery"
   ],
   "GOOGL:CALL": [
    "alphabet tpu sales and gemini enterprise are reshaping the bull case nasdaq goog",
@@ -4293,7 +4300,8 @@
    "down-0.15",
    "up0.25",
    "sharp@2026-11-16T13:50-05:00",
-   "news:palantir dips as anthropic ipo nvidia turmoil and rate hike bets rattle tech"
+   "news:palantir dips as anthropic ipo nvidia turmoil and rate hike bets rattle tech",
+   "news:palantir to retain uk health service data contract until 2029 pltr nasdaq"
   ]
  },
  "stock_level": {
@@ -4301,27 +4309,6 @@
   "SOFI:PUT:2026-12-04:15.5": 1
  },
  "seen_macro": [
-  "dht holdings dht stock trades down here is why",
-  "us treasuries stumble as strong jobs data backs fed hike bets",
-  "canada s economy loses jobs for 3rd consecutive month",
-  "abdul el sayed wants to drop stupid tariffs on canada",
-  "goldman sachs lowered its gold price forecast as fed turns hawkish",
-  "america s economy delivers stunning surprise as 165 000 new jobs offer wall street a lifeline after historic market cras",
-  "wall street rebounds as chip stocks regain their footing",
-  "furniture stocks reverse course as 25 decline in broad wall street sell off",
-  "trump blames democrats for stock market plunge after wall street s worst drop since second quarter of 2025",
-  "samvat 2082 commodities witness sharp volatility as crude surges",
-  "federal reserve rate hike bets strengthen as us jobs growth beats estimates",
-  "breaking us china trade chiefs hold call ahead of trump xi summit in shenzhen",
-  "what the seismic midterm result means for the fed and interest rates",
-  "san francisco fed president daly says higher rates are likely to be needed in inflation fight",
-  "the return of rising rates",
-  "nasdaq rebounds as chip stocks recover from steep losses",
-  "americans are on a treadmill of high inflation and more rate hikes are likely fed s daly says",
-  "us jobs surge 165 000 nearly triple forecasts as fed rate hike odds hit 80",
-  "after the midterm rout can trump change course without giving up tariffs",
-  "fed s daly says more rate increases likely needed to tame prices",
-  "daly says fed rate hike likely despite painful tech stock dive",
   "unemployment rises in october with the third straight monthly jobs decline",
   "dow jones stock market today dow recovers after crash as wall street reassesses fed outlook",
   "us labor market regains ground as job growth surges unemployment rate falls to 4 1",
@@ -4900,7 +4887,28 @@
   "dollar tops pln 4 as euro falls to april 2025 low",
   "fed s hammack reiterates case for slow steady rate hikes bloomberg tv",
   "making globalisation work trump s tariff fiasco could save free trade",
-  "fed s hammack backs slow hikes as inflation broadens"
+  "fed s hammack backs slow hikes as inflation broadens",
+  "tesla s robotaxi push gets wall street cheer barclays sees 20 upside potential in tsla stock",
+  "how the us fed s rate hike hits your stocks bonds gold and silver investments",
+  "health in tech appoints wall street research and capital markets veteran christina r valauri to board of directors",
+  "bitcoin could slide into the 50 000s as fed rate hike bets build wintermute says",
+  "3 wall street predictions for the stock market in 2027",
+  "dollar el sagha exceeds official exchange rate by 75 piast",
+  "stocks wait on nvidia s first results since jensen huang resigned",
+  "job vacancies fall to lowest level outside covid era for 12 years figures show",
+  "gold gains slightly to recover from one year low what s next",
+  "fed s musalem says several rate hikes likely needed by spring",
+  "fed s musalem us likely needs several rate hikes by spring to control inflation",
+  "spacex stock price forecast wall street sees 95 upside after starship upper stage catch",
+  "canada and china strike new trade deal ahead of trump summit",
+  "spacex stock spcx could crush wall street s estimates here s why",
+  "us dollar rally erases liberation day losses as rate expectations rise",
+  "carney and sheinbaum meet at summit in china as both navigate trump s tumult",
+  "9 30am markets update",
+  "fed rate hike odds hit 90 what could happen to bitcoin and crypto in december",
+  "why gold is trending today the dollar federal reserve expectations and safe haven demand collide",
+  "are u really threatening to play china off the u s trump trade adviser asks pm carney",
+  "stock market today nvidia s 26 plunge puts wall street on edge ahead of earnings tonight"
  ],
  "sharp": {
   "UBER:CALL:2026-11-27:70": 69.47,
