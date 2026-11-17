@@ -4462,3 +4462,4 @@ time,pos_id,ticker,side,event,detail,entry,val,pnl,spot,need,tdays,advice,reason
 2026-11-17T14:46-05:00,MSTR:PUT:2026-11-27:95,MSTR,PUT,news,"with/medium: Bitcoin Falls Below $70,000. Here's Where It Could Finish the Year - Yahoo Finance",3.1,4.92,0.5871,96.98,0.0524,9,أبقِ,الخبر في صالح العقد
 2026-11-17T14:57-05:00,NFLX:PUT:2026-12-04:60,NFLX,PUT,news,against/medium: Netflix (NFLX) and SAG-AFTRA Reach Preliminary Contract Agreemen - GuruFocus,1.43,1.88,0.3147,59.615,0.0175,14,فكّر بالخروج,احمِ ربحك الحالي | خبر ضد العقد
 2026-11-17T15:41-05:00,COIN:PUT:2026-11-27:110,COIN,PUT,news,against/medium: Coinbase Launches ChatGPT Trading Tool for Stocks and Crypto - Crypto Economy,2.32,3.16,0.3621,116.07,0.0723,9,فكّر بالخروج,احمِ ربحك الحالي | خبر ضد العقد
+2026-11-17T15:57-05:00,INTC:PUT:2026-11-27:53,INTC,PUT,sharp,-0.90% في 15د,2.22,,,54.76,0.0727,9,فكّر بالخروج,السهم يتحرك ضدك
