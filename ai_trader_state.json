@@ -1,6 +1,21 @@
 {
- "cash": 6291.0,
- "positions": [],
+ "cash": 5136.0,
+ "positions": [
+  {
+   "id": "1117-1016-SPY-PUT-735",
+   "symbol": "SPY   261118P00735000",
+   "under": "SPY",
+   "side": "PUT",
+   "strike": 735.0,
+   "expiry": "2026-11-18",
+   "qty": 3,
+   "entry": 3.85,
+   "time": "2026-11-17T10:16-05:00",
+   "stop": 2.9,
+   "target": 5.8,
+   "invalidation": "إلغاء الفكرة إذا أغلق SPX فوق VWAP وفوق 7420 (إغلاق أمس قرب المتوسط) بحجم، أو إذا استعاد SPY 737 بثبات، عندها أبيع المركز."
+  }
+ ],
  "closed": [
   {
    "id": "1105-0946-PUT-757",
@@ -496,8 +511,8 @@
    "after_last": 63.5
   }
  ],
- "decisions": 169,
+ "decisions": 170,
  "report_day": "2026-11-16",
  "day": "2026-11-17",
- "decisions_today": 2
+ "decisions_today": 3
 }
