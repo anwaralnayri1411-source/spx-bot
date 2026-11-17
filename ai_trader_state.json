@@ -1,6 +1,21 @@
 {
- "cash": 7014.0,
- "positions": [],
+ "cash": 5534.0,
+ "positions": [
+  {
+   "id": "1117-1301-SPX-PUT-7325",
+   "symbol": "SPXW  261117P07325000",
+   "under": "SPX",
+   "side": "PUT",
+   "strike": 7325.0,
+   "expiry": "2026-11-17",
+   "qty": 1,
+   "entry": 14.8,
+   "time": "2026-11-17T13:01-05:00",
+   "stop": 9.5,
+   "target": 22.0,
+   "invalidation": "إذا استعاد SPX مستوى 7340 فوق VWAP وأغلقت ES فوق إغلاق أمس، أو إذا جاءت نتائج إنفيديا إيجابية وأنهت الهبوط، فالفكرة تنتهي ويُغلق المركز."
+  }
+ ],
  "closed": [
   {
    "id": "1105-0946-PUT-757",
@@ -514,8 +529,8 @@
    "pnl": 723.0
   }
  ],
- "decisions": 180,
+ "decisions": 181,
  "report_day": "2026-11-16",
  "day": "2026-11-17",
- "decisions_today": 13
+ "decisions_today": 14
 }
