@@ -4378,3 +4378,12 @@ time,pos_id,ticker,side,event,detail,entry,val,pnl,spot,need,tdays,advice,reason
 2026-11-17T11:01-05:00,INTC:PUT:2026-11-27:53,INTC,PUT,sharp,-1.09% في 15د,2.22,,,53.755,0.0553,9,فكّر بالخروج,السهم يتحرك ضدك
 2026-11-17T11:02-05:00,MSTR:PUT:2026-11-27:95,MSTR,PUT,sharp,-1.06% في 15د,3.1,,,99.76,0.0788,9,فكّر بالخروج,السهم يتحرك ضدك
 2026-11-17T11:03-05:00,HOOD:PUT:2026-11-27:70,HOOD,PUT,sharp,-0.91% في 15د,3.3,,,68.635,0.0282,9,فكّر بالخروج,السهم يتحرك ضدك
+2026-11-17T11:05-05:00,INTC:PUT:2026-11-27:53,INTC,PUT,sharp,-2.57% في 15د,2.22,2.42,0.0901,54.27,0.0643,9,فكّر بالخروج,السهم يتحرك ضدك
+2026-11-17T11:16-05:00,PLTR:PUT:2026-11-27:155,PLTR,PUT,macro_quiet,with/weak/medium: Markets today: U.S. stocks fall again as AI companies keep swinging - BNN Bloomberg,3.15,5.64,0.7905,156.77,0.0314,9,أبقِ,الخبر في صالح العقد
+2026-11-17T11:16-05:00,INTC:PUT:2026-11-27:53,INTC,PUT,macro_quiet,with/weak/medium: Markets today: U.S. stocks fall again as AI companies keep swinging - BNN Bloomberg,2.22,2.49,0.1216,54.085,0.0611,9,أبقِ,الخبر في صالح العقد
+2026-11-17T11:16-05:00,MSTR:PUT:2026-11-27:95,MSTR,PUT,macro_quiet,with/weak/medium: Markets today: U.S. stocks fall again as AI companies keep swinging - BNN Bloomberg,3.1,4.07,0.3129,99.61,0.0774,9,أبقِ,الخبر في صالح العقد
+2026-11-17T11:22-05:00,RIVN:PUT:2026-12-04:13,RIVN,PUT,contract,+29%,0.97,1.25,0.2887,11.95,-0.0067,14,أبقِ,لا جديد يغيّر فكرة الصفقة
+2026-11-17T11:28-05:00,HOOD:PUT:2026-11-27:70,HOOD,PUT,news,"against/medium: Investors poured $2B into Bitcoin ETF despite a 25% drop this year, showing strong demand amid volatility. - Pluang",3.3,4.4,0.3333,68.27,0.023,9,فكّر بالخروج,احمِ ربحك الحالي | خبر ضد العقد
+2026-11-17T11:28-05:00,COIN:PUT:2026-11-27:110,COIN,PUT,news,"against/medium: Investors poured $2B into Bitcoin ETF despite a 25% drop this year, showing strong demand amid volatility. - Pluang",2.32,3.37,0.4526,115.745,0.0697,9,فكّر بالخروج,احمِ ربحك الحالي | خبر ضد العقد
+2026-11-17T11:34-05:00,NFLX:PUT:2026-12-04:60,NFLX,PUT,contract,+26%,1.43,1.8,0.2587,59.925,0.0226,14,أبقِ,لا جديد يغيّر فكرة الصفقة
+2026-11-17T11:34-05:00,COIN:PUT:2026-11-27:110,COIN,PUT,news,"against/medium: Coinbase Launches ChatGPT Plugin for Trading Stocks, Crypto and Derivatives - CoinGape",2.32,3.5,0.5086,115.385,0.0668,9,فكّر بالخروج,احمِ ربحك الحالي | خبر ضد العقد
