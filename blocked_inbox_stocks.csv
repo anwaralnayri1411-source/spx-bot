@@ -1360,3 +1360,8 @@ id,time,project,tag,sym,root,side,strike,exp,entry,spot,edge,strength
 20261117T1012|stocks|open_same_dir|BAC|PUT|50|2026-12-04,2026-11-17T10:12-05:00,stocks,open_same_dir,BAC,BAC,PUT,50.0,2026-12-04,1.44,49.8,5.5,7.8
 20261117T1012|stocks|open_same_dir|RIVN|PUT|12.5|2026-12-04,2026-11-17T10:12-05:00,stocks,open_same_dir,RIVN,RIVN,PUT,12.5,2026-12-04,0.87,12.21,5.5,7.5
 20261117T1012|stocks|open_same_dir|PLTR|PUT|150|2026-11-27,2026-11-17T10:12-05:00,stocks,open_same_dir,PLTR,PLTR,PUT,150.0,2026-11-27,2.86,159.19,4.5,6.0
+20261117T1027|stocks|earn_in_life|DIS|CALL|122|2026-11-27,2026-11-17T10:27-05:00,stocks,earn_in_life,DIS,DIS,CALL,122.0,2026-11-27,2.08,121.44,8.0,9.4
+20261117T1027|stocks|earn_in_life|WMT|CALL|135|2026-12-04,2026-11-17T10:27-05:00,stocks,earn_in_life,WMT,WMT,CALL,135.0,2026-12-04,2.22,128.37,5.5,6.3
+20261117T1027|stocks|open_same_dir|RIVN|PUT|12.5|2026-12-04,2026-11-17T10:27-05:00,stocks,open_same_dir,RIVN,RIVN,PUT,12.5,2026-12-04,0.94,12.04,5.5,7.5
+20261117T1027|stocks|open_same_dir|BAC|PUT|50|2026-12-04,2026-11-17T10:27-05:00,stocks,open_same_dir,BAC,BAC,PUT,50.0,2026-12-04,1.42,49.83,4.5,7.2
+20261117T1027|stocks|open_same_dir|PLTR|PUT|150|2026-11-27,2026-11-17T10:27-05:00,stocks,open_same_dir,PLTR,PLTR,PUT,150.0,2026-11-27,3.25,158.12,3.5,6.2
