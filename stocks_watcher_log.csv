@@ -4635,3 +4635,4 @@ time,pos_id,ticker,side,event,detail,entry,val,pnl,spot,need,tdays,advice,reason
 2026-11-18T12:32-05:00,INTC:PUT:2026-11-27:53,INTC,PUT,sharp,-2.07% في 15د,2.22,,,55.21,0.0802,8,فكّر بالخروج,السهم يتحرك ضدك
 2026-11-18T12:39-05:00,HOOD:PUT:2026-11-27:70,HOOD,PUT,news,"with/high: Fed Governor Waller Suggests 50 Basis Point Hike, Bitcoin Drops Below $63,000 - KuCoin",3.3,3.38,0.0242,69.45,0.0396,8,أبقِ,الخبر في صالح العقد
 2026-11-18T12:39-05:00,BA:PUT:2026-11-27:165,BA,PUT,news,"against/medium: Boeing, GE Aerospace Lead Trump's $17B-Plus Asia Deals With $12B Aircraft Sale — Vertiv, Panasonic Also In Focus - Stocktwits",2.7,3.86,0.4296,163.845,0.0094,8,فكّر بالخروج,احمِ ربحك الحالي | خبر ضد العقد
+2026-11-18T12:52-05:00,HOOD:PUT:2026-11-27:70,HOOD,PUT,news,"with/medium: Bitcoin Nears $62,000 as Citi Cuts Its Forecast - The Defiant",3.3,3.45,0.0455,69.195,0.0361,8,أبقِ,الخبر في صالح العقد

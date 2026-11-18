@@ -117,7 +117,9 @@
    "amazon stock amzn rises as the company prepares for a leo satellite launch today",
    "59 analysts rate amazon a buy here s where the stock could go",
    "amazon stock moves higher what s going on",
-   "amazon and alphabet will own over 28 of anthropic after its ipo here s what that means for their stocks"
+   "amazon and alphabet will own over 28 of anthropic after its ipo here s what that means for their stocks",
+   "amazon amzn and google googl boosted by anthropic investments",
+   "amazon amzn stock gains as 150 billion opportunity emerges"
   ],
   "WMT:CALL": [
    "walmart slashes membership fees with this new bundle",
@@ -1913,16 +1915,6 @@
    "bitcoin drops 2 26 in four hours to 62 802 am"
   ],
   "HOOD:PUT": [
-   "robinhood sinks 12 sofi tumbles 9 affirm drops 8 as bitcoin slides and democratic congress weighs on fintech",
-   "bitcoin falls over 5 as sell off breaks 80 000 support",
-   "uniswap price drops 10 7 why uni falls harder than bitcoin",
-   "btc price on nov 5 2026 at 3pm est crypto prediction market",
-   "robinhood stock plunges as bitcoin dips after elections",
-   "keel infrastructure dumps entire bitcoin treasury for 192m as mining exit accelerates",
-   "solana price prediction sol tests its 200 day line",
-   "bitcoin price tumbles below 77 000 in tech stock selloff",
-   "bitcoin tops 80k as whales accumulate 60 000 btc",
-   "trump s 27 9 rsi signals oversold conditions but trend stays bearish",
    "trending industry today robinhood leads losses in prediction market stocks",
    "mstr bmnr crcl coin stocks tumble double digits as bitcoin breaks below 76k wiping out over 1b crypto bets",
    "stellar price below the 200 day line what counts now",
@@ -2312,7 +2304,17 @@
    "bitcoin falls over 50 from its 2025 peak trad",
    "got anthropic ipo shares on robinhood sell within 30 days and you could be banned from future ipos for tw",
    "fed governor waller suggests 50 basis point hike bitcoin drops below 63 000",
-   "new york state pension fund boosts strategy mstr stake by more than 10"
+   "new york state pension fund boosts strategy mstr stake by more than 10",
+   "bitcoin has spent six days oversold what would make a bounce convincing",
+   "bitcoin in turmoil strategy sees its strc collapse a new warning signal",
+   "near protocol jumps 3 91 after token issuance cut to 1 6",
+   "bitcoin price rises above 63 000 on binance u",
+   "bitcoin nears 62 000 as citi cuts its forecast",
+   "xrp price was worth less than a penny when gta 5 launched could gta 6 see it hit 100",
+   "bitcoin price rises 1 24 in one hour to 63 31",
+   "bitcoin price rises 1 58 amid 7 97m in short position liquidations in one hour",
+   "korean analyst mignolet outlines the worst case scenario for bitcoin 40 000",
+   "btc price range on nov 18 2026 at 2pm est prediction market"
   ],
   "AAPL:CALL": [
    "loop capital lowers apple stock price target on iphone shipment concerns",
@@ -4338,7 +4340,8 @@
    "analysts offer insights on consumer cyclical companies rivian automotive rivn and sharkninja inc sn",
    "is rivian automotive rivn undervalued as it launches also and delays the r2",
    "rivian automotive nasdaq rivn given new 20 00 price target at stonex",
-   "rivian stock falls off a cliff"
+   "rivian stock falls off a cliff",
+   "rivian margin expansion is now a major catalyst for p s expansion nasdaq rivn"
   ],
   "F:PUT": [
    "dz bank upgrades ford to buy but cuts its tp",
@@ -4407,7 +4410,8 @@
    "news:bitcoin stocks wobble as fed s waller talks of shock 50 point rate hike",
    "news:bitcoin falls over 50 from its 2025 peak trad",
    "sharp@2026-11-18T12:32-05:00",
-   "news:fed governor waller suggests 50 basis point hike bitcoin drops below 63 000"
+   "news:fed governor waller suggests 50 basis point hike bitcoin drops below 63 000",
+   "news:bitcoin nears 62 000 as citi cuts its forecast"
   ],
   "NFLX:PUT:2026-12-04:60": [
    "up0.25",
@@ -4447,9 +4451,6 @@
   "F:PUT:2026-12-04:12": 1
  },
  "seen_macro": [
-  "iren stock why wall street remains bullish after q1 even as microsoft takes a tougher line",
-  "wall street rallies as ai stocks attempt a comeback",
-  "even this blue wave probably won t wash tariffs away",
   "oil s next move could be abrupt as peace talks stall and supply remains constrained",
   "amd stock rises on google cloud deal wall street upgrade",
   "fed s barkin says policy direction clear needs careful pace",
@@ -5046,7 +5047,10 @@
   "3pm markets update",
   "mark carney sets trump showdown in china canada pm sets one condition amid tariff war",
   "stock market midday nov 18 nvidia doubles revenue but wall street s sell off continues",
-  "do wall street analysts like old dominion freight line stock"
+  "do wall street analysts like old dominion freight line stock",
+  "xi urges open trade putin criticises sanctions as trump lands in china",
+  "usdcad trades to the highest level for the year and going back to april 2025",
+  "structural features of the global food system can amplify geopolitical events and undermine food security"
  ],
  "sharp": {
   "SOFI:PUT:2026-12-04:15.5": 15.475,
