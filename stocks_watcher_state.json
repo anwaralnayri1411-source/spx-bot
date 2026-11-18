@@ -116,7 +116,8 @@
    "amazon ai bet getting riskier nasdaq amzn",
    "amazon stock amzn rises as the company prepares for a leo satellite launch today",
    "59 analysts rate amazon a buy here s where the stock could go",
-   "amazon stock moves higher what s going on"
+   "amazon stock moves higher what s going on",
+   "amazon and alphabet will own over 28 of anthropic after its ipo here s what that means for their stocks"
   ],
   "WMT:CALL": [
    "walmart slashes membership fees with this new bundle",
@@ -1912,8 +1913,6 @@
    "bitcoin drops 2 26 in four hours to 62 802 am"
   ],
   "HOOD:PUT": [
-   "zcash upgrades tonight bitcoin or zcash which is the better buy for 2027",
-   "crypto crash liquidates 954m in longs and 127m in shorts",
    "robinhood sinks 12 sofi tumbles 9 affirm drops 8 as bitcoin slides and democratic congress weighs on fintech",
    "bitcoin falls over 5 as sell off breaks 80 000 support",
    "uniswap price drops 10 7 why uni falls harder than bitcoin",
@@ -2311,7 +2310,9 @@
    "cryptoquant says bitcoin is back in a bearish phase but has reached a value zone",
    "bitcoin price today btc to idr rp1 17b",
    "bitcoin falls over 50 from its 2025 peak trad",
-   "got anthropic ipo shares on robinhood sell within 30 days and you could be banned from future ipos for tw"
+   "got anthropic ipo shares on robinhood sell within 30 days and you could be banned from future ipos for tw",
+   "fed governor waller suggests 50 basis point hike bitcoin drops below 63 000",
+   "new york state pension fund boosts strategy mstr stake by more than 10"
   ],
   "AAPL:CALL": [
    "loop capital lowers apple stock price target on iphone shipment concerns",
@@ -2469,7 +2470,8 @@
    "a fund with 1 billion in us equities just bought these 3 stocks",
    "the boeing company ba options chain yahoo finance",
    "can boeing s 737 max certifications accelerate its recovery",
-   "boeing ge aerospace expand digital tracking to combat unapproved parts ba nyse"
+   "boeing ge aerospace expand digital tracking to combat unapproved parts ba nyse",
+   "boeing ge aerospace lead trump s 17b plus asia deals with 12b aircraft sale vertiv panasonic also in focus"
   ],
   "NVDA:PUT": [
    "nvidia stock is set for its worst month in a year time to buy the dip",
@@ -4404,7 +4406,8 @@
    "news:bitcoin drops 2 26 in four hours to 62 802 am",
    "news:bitcoin stocks wobble as fed s waller talks of shock 50 point rate hike",
    "news:bitcoin falls over 50 from its 2025 peak trad",
-   "sharp@2026-11-18T12:32-05:00"
+   "sharp@2026-11-18T12:32-05:00",
+   "news:fed governor waller suggests 50 basis point hike bitcoin drops below 63 000"
   ],
   "NFLX:PUT:2026-12-04:60": [
    "up0.25",
@@ -4413,7 +4416,8 @@
    "news:netflix stock hits 52 week low as ad revenue forecast falls to 2 7b"
   ],
   "BA:PUT:2026-11-27:165": [
-   "up0.25"
+   "up0.25",
+   "news:boeing ge aerospace lead trump s 17b plus asia deals with 12b aircraft sale vertiv panasonic also in focus"
   ],
   "INTC:PUT:2026-11-27:53": [
    "news:intel extends slide as nvidia trims stake 25 shareholder suit adds pressure",
@@ -4443,7 +4447,6 @@
   "F:PUT:2026-12-04:12": 1
  },
  "seen_macro": [
-  "hot u s inflation hasn t cooled off rising consumer prices to keep fed rate hike on track",
   "iren stock why wall street remains bullish after q1 even as microsoft takes a tougher line",
   "wall street rallies as ai stocks attempt a comeback",
   "even this blue wave probably won t wash tariffs away",
@@ -5042,7 +5045,8 @@
   "the fed s next moves come into focus",
   "3pm markets update",
   "mark carney sets trump showdown in china canada pm sets one condition amid tariff war",
-  "stock market midday nov 18 nvidia doubles revenue but wall street s sell off continues"
+  "stock market midday nov 18 nvidia doubles revenue but wall street s sell off continues",
+  "do wall street analysts like old dominion freight line stock"
  ],
  "sharp": {
   "SOFI:PUT:2026-12-04:15.5": 15.475,
