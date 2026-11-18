@@ -1,6 +1,21 @@
 {
- "cash": 4178.0,
- "positions": [],
+ "cash": 2968.0,
+ "positions": [
+  {
+   "id": "1118-1216-SPX-PUT-7300",
+   "symbol": "SPXW  261118P07300000",
+   "under": "SPX",
+   "side": "PUT",
+   "strike": 7300.0,
+   "expiry": "2026-11-18",
+   "qty": 1,
+   "entry": 12.1,
+   "time": "2026-11-18T12:16-05:00",
+   "stop": 7.3,
+   "target": 24.2,
+   "invalidation": "إغلاق السعر فوق VWAP وفوق 7340، أو تحول صافي الدلتا إلى موجب في لقطتين متتاليتين، أو ارتداد مؤكد من جدار 7300 بإغلاق فوقه."
+  }
+ ],
  "closed": [
   {
    "id": "1109-1001-SPY-CALL-747",
@@ -108,9 +123,9 @@
    "after_last": 1.65
   }
  ],
- "decisions": 177,
+ "decisions": 178,
  "report_day": "2026-11-17",
  "start_cash": 3195.0,
  "day": "2026-11-18",
- "decisions_today": 9
+ "decisions_today": 10
 }
