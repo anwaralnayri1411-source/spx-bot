@@ -728,7 +728,12 @@
    "why nvidia just slashed its stake in intel stock by 25",
    "azure database backups can run up to 2 5 times faster with intel technology",
    "intel is down 39 in a month but still up 48 in 2026 can a deeper microsoft azure deal help get intc stock back to 90",
-   "news of further layoffs gives intel stock nasdaq intc no help"
+   "news of further layoffs gives intel stock nasdaq intc no help",
+   "rosen law firm urges intel corporation nasdaq intc stockholders to contact the firm for information about their rights",
+   "microsoft and intel deepen collaboration to deliver differentiated azure infrastructure",
+   "microsoft intel deepen azure partnership amid increasing ai cloud demand",
+   "intel just dropped 39 in a month can extraordinary demand for its server chips bring it back",
+   "why did qualys stock qlys rally 12 today"
   ],
   "CVX:CALL": [
    "stocks see continued downward pressure from ai anxiety and oil prices",
@@ -1920,8 +1925,6 @@
    "bitcoin drops 2 26 in four hours to 62 802 am"
   ],
   "HOOD:PUT": [
-   "bitcoin price prediction can btc smash through 82k after a 5 jump alphapepe readies its v2 ai dex",
-   "is bitcoin a buy under 80 000 we asked chatgpt claude and grok",
    "bitcoin falls as investor risk aversion intensifies following us stock selloff",
    "btc price range on nov 6 2026 at 7am est crypto prediction market",
    "bitcoin drops to 75 700 amid 1 1b crypto liqu",
@@ -2319,7 +2322,9 @@
    "ionic digital iond sells 737 bitcoin to fund data center buildout",
    "trx holds above 0 30 as tron outperforms bitcoin in sell off",
    "major bitcoin bull michael saylor s strc has lost its 100 peg again it dropped to 95",
-   "goldman sachs discloses over 1b in spot bitcoin etf holdings"
+   "goldman sachs discloses over 1b in spot bitcoin etf holdings",
+   "important ripple news and xrp price update november 18",
+   "chainlink link price prediction 2027 every major forecast compared"
   ],
   "AAPL:CALL": [
    "loop capital lowers apple stock price target on iphone shipment concerns",
@@ -4364,7 +4369,8 @@
    "ford motor sees flat 2027 earnings as cost cuts offset 2 billion headwind",
    "ford ships first battery cells using catl technology",
    "ford is officially in the battery business as its first fathom cells ship built on chinese tech",
-   "s p 500 most active stocks on nov 18 aes leads volume freeport mcmoran drops 6 45"
+   "s p 500 most active stocks on nov 18 aes leads volume freeport mcmoran drops 6 45",
+   "ford stock nyse f slips as first catl batteries ship"
   ]
  },
  "fired": {
@@ -4454,7 +4460,9 @@
    "down-0.15",
    "news:intel conducting another round of layoffs report intc nasdaq",
    "sharp@2026-11-18T12:32-05:00",
-   "news:news of further layoffs gives intel stock nasdaq intc no help"
+   "news:news of further layoffs gives intel stock nasdaq intc no help",
+   "news:microsoft and intel deepen collaboration to deliver differentiated azure infrastructure",
+   "news:microsoft intel deepen azure partnership amid increasing ai cloud demand"
   ],
   "F:PUT:2026-12-04:12": [
    "down-0.15",
@@ -4472,14 +4480,6 @@
   "F:PUT:2026-12-04:12": 1
  },
  "seen_macro": [
-  "why is coreweave stock rallying today and what does wall street see next",
-  "9 15am markets update",
-  "us dollar firms as hot inflation hawkish fed talk lift rate hike bets",
-  "as higher prices seep into broader economy fed officials consider faster hikes",
-  "ai whiplash poses major test for wall street s dip buying habit",
-  "what has driven the global rise in long term interest rates",
-  "the fed has to raise rates how fast to go has officials divided",
-  "us stock market today s p 500 futures firm on hot cpi fed repricing",
   "micron and other ai stocks surge as coreweave calms wall street s worst fears",
   "feeling bleu cheesemakers caught in trump s tariff dispute",
   "goolsbee calls us inflation report troubling cnbc",
@@ -5071,7 +5071,15 @@
   "fed minutes higher interest rates needed in december as inflation worries mount national news 2news com",
   "fed minutes show growing unease about the outlook for inflation",
   "couple of policymakers see more than a 25 bp rate hike in december fed minutes",
-  "fed s barr says rate rises likely lie ahead for economy"
+  "fed s barr says rate rises likely lie ahead for economy",
+  "the us dollar index recovers liberation day losses as federal reserve rate hike expectations continue to build",
+  "fed minutes show officials want more rate hikes flag ai buildout as inflation risk",
+  "carney trump not concerned about growing canada trade ties with china",
+  "almost all fed policymakers saw further interest rate hikes as likely",
+  "fed october minutes ai infrastructure buildout pushes up inflation data center financing risks rise",
+  "amid asia trade push canada s carney seizes an opening with trump",
+  "fed s daly emphasizes need for rate hikes but with a measured approach as fed minutes show growing inflation unease",
+  "fed officials expect further interest rate hikes after pausing last month"
  ],
  "sharp": {
   "SOFI:PUT:2026-12-04:15.5": 15.475,
