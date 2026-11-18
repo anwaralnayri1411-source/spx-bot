@@ -74,7 +74,8 @@
    "bank of america corporation bac stock z3 capital partners llc lowers position",
    "bank of america corporation bac stock position lowered by public sector pension investment board",
    "bank of america sees a tech retreat not seen since 2006",
-   "bank of america increased yield and improved risk reward for series hh preferred rating upgrade"
+   "bank of america increased yield and improved risk reward for series hh preferred rating upgrade",
+   "jpmorgan names new cfo is jamie dimon s succession plan taking shape"
   ],
   "AMZN:CALL": [
    "starting jan 1 2027 amazon seasonal workers get day one health coverage if they work at least 30 hours a week",
@@ -1502,11 +1503,6 @@
    "jpmorgan chase nyse jpm lifts interest income outlook as lending offsets trading slowdown"
   ],
   "COIN:PUT": [
-   "bitcoin to 1m before gta 6 10 wild bets traders wagered millions on ahead of launch",
-   "bitcoin selloff eases as investors explore cautious recovery",
-   "bitcoin price holds near usd 76 000 after sharp sell off",
-   "bitcoin nears critical 75k support amid sharp s p 500 and nasdaq drops futures hint at possible market rebound",
-   "understanding the factors that influence the value of bitcoin on the market",
    "bitcoin and ether etfs see 127 6m inflows as p",
    "paraguay bank collapse shows why bitcoin was created as usdt hits premium",
    "current price of bitcoin for nov 6 2026",
@@ -1901,13 +1897,14 @@
    "bitcoin dips amid us spot etf outflows and fed rate hold largest crypto hack unsettles market",
    "as bitcoin consolidates the technical resistance gets closer and closer to the price what next",
    "bitcoin faces a new threat as us prices surge at fastest pace in 38 years",
-   "ionq stock drops 48 in six months as acquisition spending rattles investors"
+   "ionq stock drops 48 in six months as acquisition spending rattles investors",
+   "about eli lilly co tokenized stock coinbase",
+   "btc price on nov 18 2026 at 9am est prediction markets",
+   "citi lowers bitcoin btc target to 99 530 and ethereum eth target to 2 830 explains the reasons",
+   "bitcoin long liquidations hit 13 84m as btc pr",
+   "dogecoin doge price prediction can 0 052 0 06 support trigger a major reversal as bitfinex longs surge"
   ],
   "HOOD:PUT": [
-   "crypto stocks mstr crcl hood slide after us midterm btc falls below 77k",
-   "btc price on november 6 4 59pm utc",
-   "trump media just moved 4 259 bitcoin is it about to sell",
-   "bitcoin drops 3 5 in an hour amid nasdaq chip stock sell off and 560m liquidations",
    "bitcoin is evolving into reliable long term store of value payments use case not as important after 18 years of btc adop",
    "xrp price prediction wall street s 28 target and supply shock",
    "bitcoin tumbles to 76 000 as post election stock rally fades",
@@ -2303,7 +2300,11 @@
    "bitcoin dips amid us spot etf outflows and fed rate hold largest crypto hack unsettles market",
    "as bitcoin consolidates the technical resistance gets closer and closer to the price what next",
    "bitcoin faces a new threat as us prices surge at fastest pace in 38 years",
-   "ionq stock drops 48 in six months as acquisition spending rattles investors"
+   "ionq stock drops 48 in six months as acquisition spending rattles investors",
+   "btc price on nov 18 2026 at 9am est prediction markets",
+   "citi lowers bitcoin btc target to 99 530 and ethereum eth target to 2 830 explains the reasons",
+   "bitcoin long liquidations hit 13 84m as btc pr",
+   "dogecoin doge price prediction can 0 052 0 06 support trigger a major reversal as bitfinex longs surge"
   ],
   "AAPL:CALL": [
    "loop capital lowers apple stock price target on iphone shipment concerns",
@@ -4328,7 +4329,8 @@
    "is rivian automotive rivn undervalued as it launches also and delays the r2",
    "rivian automotive nasdaq rivn given new 20 00 price target at stonex",
    "rivian stock falls off a cliff"
-  ]
+  ],
+  "F:PUT": []
  },
  "fired": {
   "RIVN:PUT:2026-12-04:13": [
@@ -4377,7 +4379,8 @@
    "news:robinhood rebounds toward 70 as mizuho reaffirms 130 target dismissing kalshi stock trading risk",
    "news:bitcoin dips amid us spot etf outflows and fed rate hold largest crypto hack unsettles market",
    "news:bitcoin faces a new threat as us prices surge at fastest pace in 38 years",
-   "sharp@2026-11-18T10:01-05:00"
+   "sharp@2026-11-18T10:01-05:00",
+   "news:citi lowers bitcoin btc target to 99 530 and ethereum eth target to 2 830 explains the reasons"
   ],
   "NFLX:PUT:2026-12-04:60": [
    "up0.25",
@@ -4425,7 +4428,11 @@
    "news:bitcoin s u s spot discount widens amid rising market volatility and lower institutional trading volume",
    "news:bitcoin price trades near 64 000 as fed s waller floats half point hike",
    "news:bitcoin dips amid us spot etf outflows and fed rate hold largest crypto hack unsettles market",
-   "news:bitcoin faces a new threat as us prices surge at fastest pace in 38 years"
+   "news:bitcoin faces a new threat as us prices surge at fastest pace in 38 years",
+   "news:citi lowers bitcoin btc target to 99 530 and ethereum eth target to 2 830 explains the reasons"
+  ],
+  "F:PUT:2026-12-04:12": [
+   "down-0.15"
   ]
  },
  "stock_level": {
@@ -4433,12 +4440,6 @@
   "INTC:PUT:2026-11-27:53": 2
  },
  "seen_macro": [
-  "jensen huang just handed wall street its first 4 5 trillion ceo scandal",
-  "us stock futures rise dow futures lead gains as wall street eyes inflation data ai earnings nvda tsla crwv in focus",
-  "tradingview enables its users to access economic data directly from primary source",
-  "china to suspend additional 24 tariffs on us goods extend trade truce by two months",
-  "gold bulls to bounce back why jpmorgan sees metal touching a record 6 000 by 2026 end",
-  "federal reserve bids 5 5 billion for six month treasury bills as us bond market watches fed activity",
   "as nvidia s stock falls here s what wall street has to say about the jensen huang scandal",
   "wall street strategists say s p 500 correction is likely nearing an end",
   "wall street forecasters say the worst of the stock sell off is over and a new rally is about to kick off",
@@ -5032,7 +5033,13 @@
   "9am markets update",
   "how high must interest rates go to cool inflation possibly 100 basis points or more fed s waller says",
   "loonie caught between weak data and falling oil forecast as of 18 11 2026",
-  "carney meets with trump at apec says canada s trade with china isn t u s president s top concern"
+  "carney meets with trump at apec says canada s trade with china isn t u s president s top concern",
+  "world markets are mixed as ai stocks recover after wall street losses",
+  "wall street prepares for anthropic ipo frenzy despite broader ai stock slump",
+  "anthropic s 90 4 billion ipo brings a reality check for wall street s 8 billion pre ipo etf frenzy",
+  "waller fed must be more aggressive on inflation",
+  "canada weighs chinese investment as us tariffs threaten its auto industry",
+  "fed minutes set to provide further clues on the central bank s hiking pace"
  ],
  "sharp": {
   "SOFI:PUT:2026-12-04:15.5": 15.475,
