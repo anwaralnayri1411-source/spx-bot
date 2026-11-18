@@ -573,3 +573,4 @@ id,time,project,tag,sym,root,side,strike,exp,entry,spot,edge,strength
 20261118T1445|spx|news_weak|SPY|PUT|728|2026-11-19,2026-11-18T14:45-05:00,spx,news_weak,SPY,SPY,PUT,728.0,2026-11-19,3.63,729.91,3.0,3.0
 20261118T1450|spx|news_weak|SPY|PUT|728|2026-11-19,2026-11-18T14:50-05:00,spx,news_weak,SPY,SPY,PUT,728.0,2026-11-19,3.56,729.93,3.0,3.0
 20261118T1455|spx|news_weak|SPY|PUT|729|2026-11-19,2026-11-18T14:55-05:00,spx,news_weak,SPY,SPY,PUT,729.0,2026-11-19,3.93,730.09,3.0,3.0
+20261118T1500|spx|late_entry+news_weak|SPY|PUT|729|2026-11-19,2026-11-18T15:00-05:00,spx,late_entry+news_weak,SPY,SPY,PUT,729.0,2026-11-19,3.83,730.12,3.0,3.0
