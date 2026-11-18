@@ -718,7 +718,8 @@
    "intel conducting another round of layoffs report intc nasdaq",
    "intel intc stock 55 wednesday after nvidia s results bull 60 bear 52",
    "nvidia just cut its intel stake intel is down 40 in a month where s the stock headed",
-   "why nvidia just slashed its stake in intel stock by 25"
+   "why nvidia just slashed its stake in intel stock by 25",
+   "azure database backups can run up to 2 5 times faster with intel technology"
   ],
   "CVX:CALL": [
    "stocks see continued downward pressure from ai anxiety and oil prices",
@@ -1508,9 +1509,6 @@
    "jpmorgan chase nyse jpm lifts interest income outlook as lending offsets trading slowdown"
   ],
   "COIN:PUT": [
-   "coin stock analysis closes at 136 82 down 9 69",
-   "bitcoin price prediction can btc reach 83 500 after england s 4 rate hike as pepeto stakers lock in yield",
-   "bitcoin price goes wild again as us jobs report smashes expectations",
    "bitcoin drops to 75k amid rising volume and fe",
    "bitcoin drops to seven week low amid ai stock s",
    "btc price on nov 6 2026 at 10am est prediction market",
@@ -1907,11 +1905,12 @@
    "bitcoin miners sold half their btc for ai did it pay off",
    "bitcoin price slips as q3 etf buyers sit about 20 underwater",
    "current price of bitcoin for november 18 2026",
-   "why is coinbase stock falling on wednesday"
+   "why is coinbase stock falling on wednesday",
+   "fidelity stays bullish on bitcoin citing its c",
+   "coinbase stock falls amid sustained seller pressure and ongoing negative momentum",
+   "bitcoin drops 2 26 in four hours to 62 802 am"
   ],
   "HOOD:PUT": [
-   "crypto market falls 5 as 1 07b in liquidations hit",
-   "true north strc at par may have funded 284 btc for strategy",
    "trump backed american bitcoin turns a profit as bitcoin rise lifts books",
    "can this popular cryptocurrency hit a price of 1 in 2027 the answer will surprise you",
    "litecoin price falls the 200 day line decides now",
@@ -2309,7 +2308,9 @@
    "robinhood markets stock mizuho keeps outperform rating",
    "bitcoin miners sold half their btc for ai did it pay off",
    "bitcoin price slips as q3 etf buyers sit about 20 underwater",
-   "current price of bitcoin for november 18 2026"
+   "current price of bitcoin for november 18 2026",
+   "fidelity stays bullish on bitcoin citing its c",
+   "bitcoin drops 2 26 in four hours to 62 802 am"
   ],
   "AAPL:CALL": [
    "loop capital lowers apple stock price target on iphone shipment concerns",
@@ -4396,7 +4397,8 @@
    "news:mizuho predicts 91 upside for robinhood stock despite kalshi competition",
    "news:citi cuts bitcoin target 12 to 99 532 as ethereum forecast falls to 2 838",
    "news:bitcoin slides toward 63 000 as nvidia reverses gains and crypto carry returns shrink",
-   "news:robinhood markets stock mizuho keeps outperform rating"
+   "news:robinhood markets stock mizuho keeps outperform rating",
+   "news:bitcoin drops 2 26 in four hours to 62 802 am"
   ],
   "NFLX:PUT:2026-12-04:60": [
    "up0.25",
@@ -4418,40 +4420,6 @@
    "down-0.15",
    "news:intel conducting another round of layoffs report intc nasdaq"
   ],
-  "COIN:PUT:2026-11-27:110": [
-   "up0.25",
-   "sharp@2026-11-17T11:00-05:00",
-   "news:investors poured 2b into bitcoin etf despite a 25 drop this year showing strong demand amid volatility",
-   "news:coinbase launches chatgpt plugin for trading stocks crypto and derivatives",
-   "news:transaction revenue decline sees coinbase stock extend downward price move",
-   "news:bitcoin drops 2 5 as nvidia stock risks new 5 month lows into q3 earnings",
-   "news:goldman sachs doubles bitcoin etf holdings",
-   "news:susquehanna triples bitcoin etf holdings to 622 million in q3",
-   "news:coinbase brings bitcoin trading to chatgpt with new plugin",
-   "news:coinbase global coin launches onchain stock access and shareholder standard",
-   "news:bitcoin drops below 68k 200 week average wint",
-   "news:why bitcoin is crashing hard right now key reasons technical levels and cycle context",
-   "news:bitcoin crashes to 62k as realized losses hit cycle lows",
-   "news:bitcoin drops to 62 000 as trader losses hit 2",
-   "news:bitcoin falls below 70 000 here s where it could finish the year",
-   "news:coinbase launches chatgpt trading tool for stocks and crypto",
-   "news:bitcoin holds near 64k as traders price in 90 odds of a december fed hike",
-   "news:nvidia s strong q3 lifts nasdaq but rising us 10 year yields threaten bitcoin s outlook",
-   "news:bitcoin btc price drops as basis trade dries up and fed minutes loom",
-   "news:bitcoin stays below 65k as rate jitters persist fed minutes awaited",
-   "news:bullish beats revenue estimates as institutional services offset sluggish spot crypto volumes",
-   "news:citi cuts bitcoin price target to 99 532 ethereum to 2 838",
-   "news:bitcoin s u s spot discount widens amid rising market volatility and lower institutional trading volume",
-   "news:bitcoin price trades near 64 000 as fed s waller floats half point hike",
-   "news:bitcoin dips amid us spot etf outflows and fed rate hold largest crypto hack unsettles market",
-   "news:bitcoin faces a new threat as us prices surge at fastest pace in 38 years",
-   "news:citi lowers bitcoin btc target to 99 530 and ethereum eth target to 2 830 explains the reasons",
-   "news:bitcoin erases bessent rally as leverage and liquidity fade",
-   "news:citi lowers 12 month bitcoin price target to 9",
-   "news:bitcoin falls 14 in a week as 62k support comes into focus",
-   "news:citi cuts bitcoin target 12 to 99 532 as ethereum forecast falls to 2 838",
-   "news:bitcoin slides toward 63 000 as nvidia reverses gains and crypto carry returns shrink"
-  ],
   "F:PUT:2026-12-04:12": [
    "down-0.15"
   ],
@@ -4462,8 +4430,6 @@
   "INTC:PUT:2026-11-27:53": 2
  },
  "seen_macro": [
-  "nasdaq 100 jumps 3 as chips rebound nvidia lags most since deepseek stock market today",
-  "will a federal reserve interest rate hike trigger a recession here s what history says",
   "federal reserve s mary daly says more rate hikes are likely",
   "asx set to jump as wall street rallies nvidia tumbles amid chinese spy probe oil falls",
   "brent crude oil futures tumble over 5 to 8 125 per barrel",
@@ -5061,13 +5027,14 @@
   "uk inflation shock keeps markets guessing what the 3 6 cpi reading means for rates",
   "dollar higher as hawkish waller backs aggressive fed action",
   "fed minutes will give insight into the path and size of rate increases ahead",
-  "oil prices fall despite iran attacks as us crude inventories jump 5 28m barrels"
+  "oil prices fall despite iran attacks as us crude inventories jump 5 28m barrels",
+  "meet wall street s reliable high yield dividend stocks 5 companies that pass the yield trap test",
+  "170 years of market history just flashed a 97 bubble warning the last time it was this high was 2007"
  ],
  "sharp": {
   "SOFI:PUT:2026-12-04:15.5": 15.475,
   "RIVN:PUT:2026-12-04:13": 12.58,
   "BAC:PUT:2026-12-04:50": 50.12,
-  "COIN:PUT:2026-11-27:110": 116.58,
   "INTC:PUT:2026-11-27:53": 54.76,
   "HOOD:PUT:2026-11-27:70": 69.285
  }
