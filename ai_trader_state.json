@@ -1,6 +1,21 @@
 {
- "cash": 6314.0,
- "positions": [],
+ "cash": 5812.0,
+ "positions": [
+  {
+   "id": "1118-1031-SPY-PUT-731",
+   "symbol": "SPY   261118P00731000",
+   "under": "SPY",
+   "side": "PUT",
+   "strike": 731.0,
+   "expiry": "2026-11-18",
+   "qty": 2,
+   "entry": 2.51,
+   "time": "2026-11-18T10:31-05:00",
+   "stop": 1.75,
+   "target": 3.6,
+   "invalidation": "إلغاء الفكرة إذا أغلق SPY فوق VWAP وأعلى نطاق أول 30 دقيقة (ما يعادل 7368 على SPX)، واستعاد الزخم 30 دقيقة إيجابيته، أو إذا تحولت نقطة الانقلاب إلى ما دون السعر."
+  }
+ ],
  "closed": [
   {
    "id": "1105-0946-PUT-757",
@@ -538,8 +553,8 @@
    "after_last": 5.1
   }
  ],
- "decisions": 194,
+ "decisions": 195,
  "report_day": "2026-11-17",
  "day": "2026-11-18",
- "decisions_today": 3
+ "decisions_today": 4
 }
