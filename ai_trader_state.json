@@ -1,6 +1,21 @@
 {
- "cash": 6544.0,
- "positions": [],
+ "cash": 5725.0,
+ "positions": [
+  {
+   "id": "1118-1046-SPY-PUT-729",
+   "symbol": "SPY   261118P00729000",
+   "under": "SPY",
+   "side": "PUT",
+   "strike": 729.0,
+   "expiry": "2026-11-18",
+   "qty": 3,
+   "entry": 2.73,
+   "time": "2026-11-18T10:46-05:00",
+   "stop": 2.1,
+   "target": 3.8,
+   "invalidation": "يُلغى الشراء إذا ارتد SPX وأغلق فوق VWAP وتجاوز 7330 مع عودة الغاما الإيجابية، أو إذا تحسن الزخم وعادت EMA9 فوق EMA21 مع تجاوز 7368 أعلى نطاق أول 30 دقيقة."
+  }
+ ],
  "closed": [
   {
    "id": "1105-0946-PUT-757",
@@ -556,8 +571,8 @@
    "pnl": 230.0
   }
  ],
- "decisions": 195,
+ "decisions": 196,
  "report_day": "2026-11-17",
  "day": "2026-11-18",
- "decisions_today": 4
+ "decisions_today": 5
 }
