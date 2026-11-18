@@ -121,7 +121,9 @@
    "amazon amzn and google googl boosted by anthropic investments",
    "amazon amzn stock gains as 150 billion opportunity emerges",
    "amazon com inc stock amzn moved up by 3 28 on nov 18 drivers behind the movement",
-   "should you buy amazon stock before the holiday season"
+   "should you buy amazon stock before the holiday season",
+   "amzn stock rebounds despite ubs downgrade as amazon s anthropic investment could be worth 150 billion",
+   "here s how much you would have made owning amazon com stock in the last 15 years"
   ],
   "WMT:CALL": [
    "walmart slashes membership fees with this new bundle",
@@ -389,7 +391,8 @@
    "as netflix stock hovers near its 52 week low analyst sentiment remains mixed here s why",
    "here s how much 1000 invested in netflix 15 years ago would be worth today",
    "netflix just hit a 52 week low where s the bottom",
-   "netflix stock just closed below 60 for the first time since august 2024 i d buy it now"
+   "netflix stock just closed below 60 for the first time since august 2024 i d buy it now",
+   "this is a dream entry point for netflix stock rating upgrade nasdaq nflx"
   ],
   "AVGO:PUT": [
    "3 artificial intelligence ai stocks that look like great buys right now",
@@ -1925,9 +1928,6 @@
    "bitcoin drops 2 26 in four hours to 62 802 am"
   ],
   "HOOD:PUT": [
-   "bitcoin falls as investor risk aversion intensifies following us stock selloff",
-   "btc price range on nov 6 2026 at 7am est crypto prediction market",
-   "bitcoin drops to 75 700 amid 1 1b crypto liqu",
    "bitcoin btc price prediction 73k support at risk as benjamin cowen warns of nasdaq correction glassnode shows resilience",
    "bitcoin spot demand weak as 80k recovery fades",
    "viabtc s jeff ko on ai infrastructure and bitcoin mining",
@@ -2324,7 +2324,10 @@
    "major bitcoin bull michael saylor s strc has lost its 100 peg again it dropped to 95",
    "goldman sachs discloses over 1b in spot bitcoin etf holdings",
    "important ripple news and xrp price update november 18",
-   "chainlink link price prediction 2027 every major forecast compared"
+   "chainlink link price prediction 2027 every major forecast compared",
+   "lava ceo maredia most of the sellers in bitcoin have run out",
+   "btc price range on nov 18 2026 at 4pm est crypto prediction market",
+   "global stablecoin supply drops 16b amid bitcoi"
   ],
   "AAPL:CALL": [
    "loop capital lowers apple stock price target on iphone shipment concerns",
@@ -4370,7 +4373,10 @@
    "ford ships first battery cells using catl technology",
    "ford is officially in the battery business as its first fathom cells ship built on chinese tech",
    "s p 500 most active stocks on nov 18 aes leads volume freeport mcmoran drops 6 45",
-   "ford stock nyse f slips as first catl batteries ship"
+   "ford stock nyse f slips as first catl batteries ship",
+   "banco santander brasil plans oct 28 release of 3q26 financial statements",
+   "ford yields 5 27 but these 3 auto dividends come with different risks",
+   "new study puts ai bubble chances at 97 here s why"
   ]
  },
  "fired": {
@@ -4471,7 +4477,8 @@
    "stock1"
   ],
   "AMZN:CALL:2026-11-27:272.5": [
-   "up0.25"
+   "up0.25",
+   "news:amzn stock rebounds despite ubs downgrade as amazon s anthropic investment could be worth 150 billion"
   ]
  },
  "stock_level": {
@@ -4480,15 +4487,6 @@
   "F:PUT:2026-12-04:12": 1
  },
  "seen_macro": [
-  "micron and other ai stocks surge as coreweave calms wall street s worst fears",
-  "feeling bleu cheesemakers caught in trump s tariff dispute",
-  "goolsbee calls us inflation report troubling cnbc",
-  "bessent calls for more balanced trade with china ahead of trump xi talks",
-  "want 7 000 in passive income buy these 3 dividend stocks today",
-  "is today a federal holiday what s open closed on veterans day 2026",
-  "us inflation is a reminder to expect volatility",
-  "saudi oil production rebounds close to prewar levels",
-  "interest rates remain top of mind for finance chiefs at 2026 s end",
   "us real estate stocks slide as hotter inflation fuels fed rate hike bets",
   "why goldman sachs is now changing its federal reserve interest rate forecast",
   "oil prices rise 1 as iran refuses to export nuclear material",
@@ -5079,7 +5077,16 @@
   "fed october minutes ai infrastructure buildout pushes up inflation data center financing risks rise",
   "amid asia trade push canada s carney seizes an opening with trump",
   "fed s daly emphasizes need for rate hikes but with a measured approach as fed minutes show growing inflation unease",
-  "fed officials expect further interest rate hikes after pausing last month"
+  "fed officials expect further interest rate hikes after pausing last month",
+  "fed minutes show a bigger interest rate increase is still on the table",
+  "supersized december rate hike could be ahead fed governor",
+  "fed minutes put possible 50 basis point hike on the table",
+  "us federal reserve officials focused on inflation risks at october meeting",
+  "fed minutes show more rate hikes likely as inflation risks persist",
+  "if the u s doesn t want to do a deal we re busy carney says of ongoing trade talks",
+  "tech stocks fall as next week brings big tests for the ai trade markets p m for nov 13",
+  "fed s waller says officials may need to shock with half point rate hike",
+  "fed saw need to keep raising interest rates despite holding steady in october"
  ],
  "sharp": {
   "SOFI:PUT:2026-12-04:15.5": 15.475,
