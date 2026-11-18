@@ -378,7 +378,9 @@
    "robert pattinson the new 007 skydance stock nyse skyd takes a hit",
    "public sector pension investment board buys 377 095 shares of netflix inc nflx",
    "netflix stock hits 52 week low as ad revenue forecast falls to 2 7b",
-   "netflix inc nflx options chain yahoo finance"
+   "netflix inc nflx options chain yahoo finance",
+   "as netflix stock hovers near its 52 week low analyst sentiment remains mixed here s why",
+   "here s how much 1000 invested in netflix 15 years ago would be worth today"
   ],
   "AVGO:PUT": [
    "3 artificial intelligence ai stocks that look like great buys right now",
@@ -713,7 +715,8 @@
    "intel intc stock price prediction rally faces a heavy technical overhang despite stronger trading demand",
    "intel conducting another round of layoffs report intc nasdaq",
    "intel intc stock 55 wednesday after nvidia s results bull 60 bear 52",
-   "nvidia just cut its intel stake intel is down 40 in a month where s the stock headed"
+   "nvidia just cut its intel stake intel is down 40 in a month where s the stock headed",
+   "why nvidia just slashed its stake in intel stock by 25"
   ],
   "CVX:CALL": [
    "stocks see continued downward pressure from ai anxiety and oil prices",
@@ -1503,11 +1506,6 @@
    "jpmorgan chase nyse jpm lifts interest income outlook as lending offsets trading slowdown"
   ],
   "COIN:PUT": [
-   "bitcoin and ether etfs see 127 6m inflows as p",
-   "paraguay bank collapse shows why bitcoin was created as usdt hits premium",
-   "current price of bitcoin for nov 6 2026",
-   "current price of ethereum for nov 6 2026",
-   "pepe price beats crash as stocks lose 3tn why is it rising",
    "two big u s listed bitcoin miners plan major exit for ai",
    "dat checkpoint 62 of 90 firms with disclosed costs face losses strategy up 0 6",
    "major bitcoin btc volatility ripple xrp price collapse and more bits recap nov 6",
@@ -1902,15 +1900,14 @@
    "btc price on nov 18 2026 at 9am est prediction markets",
    "citi lowers bitcoin btc target to 99 530 and ethereum eth target to 2 830 explains the reasons",
    "bitcoin long liquidations hit 13 84m as btc pr",
-   "dogecoin doge price prediction can 0 052 0 06 support trigger a major reversal as bitfinex longs surge"
+   "dogecoin doge price prediction can 0 052 0 06 support trigger a major reversal as bitfinex longs surge",
+   "bitcoin erases bessent rally as leverage and liquidity fade",
+   "arthur hayes says anthropic ipo could trigger bitcoin rally do the numbers agree",
+   "citi lowers 12 month bitcoin price target to 9",
+   "bitcoin falls 14 in a week as 62k support comes into focus",
+   "citi cuts bitcoin target 12 to 99 532 as ethereum forecast falls to 2 838"
   ],
   "HOOD:PUT": [
-   "bitcoin is evolving into reliable long term store of value payments use case not as important after 18 years of btc adop",
-   "xrp price prediction wall street s 28 target and supply shock",
-   "bitcoin tumbles to 76 000 as post election stock rally fades",
-   "bitcoin crash reasons price levels and how to hedge",
-   "ena price falls 10 despite ethena growth as 1 52 target emerges",
-   "bitcoin crashes 6 to 7 week low as us stocks erase election gains",
    "bitcoin news why did bitcoin price fall back to 77k so quickly",
    "bitcoin tumbles below 76 000 as post election stock rally fades",
    "nasdaq crash why chip stocks fell and bitcoin followed",
@@ -2304,7 +2301,13 @@
    "btc price on nov 18 2026 at 9am est prediction markets",
    "citi lowers bitcoin btc target to 99 530 and ethereum eth target to 2 830 explains the reasons",
    "bitcoin long liquidations hit 13 84m as btc pr",
-   "dogecoin doge price prediction can 0 052 0 06 support trigger a major reversal as bitfinex longs surge"
+   "dogecoin doge price prediction can 0 052 0 06 support trigger a major reversal as bitfinex longs surge",
+   "bitcoin erases bessent rally as leverage and liquidity fade",
+   "arthur hayes says anthropic ipo could trigger bitcoin rally do the numbers agree",
+   "citi lowers 12 month bitcoin price target to 9",
+   "bitcoin falls 14 in a week as 62k support comes into focus",
+   "mizuho predicts 91 upside for robinhood stock despite kalshi competition",
+   "citi cuts bitcoin target 12 to 99 532 as ethereum forecast falls to 2 838"
   ],
   "AAPL:CALL": [
    "loop capital lowers apple stock price target on iphone shipment concerns",
@@ -4380,7 +4383,12 @@
    "news:bitcoin dips amid us spot etf outflows and fed rate hold largest crypto hack unsettles market",
    "news:bitcoin faces a new threat as us prices surge at fastest pace in 38 years",
    "sharp@2026-11-18T10:01-05:00",
-   "news:citi lowers bitcoin btc target to 99 530 and ethereum eth target to 2 830 explains the reasons"
+   "news:citi lowers bitcoin btc target to 99 530 and ethereum eth target to 2 830 explains the reasons",
+   "news:bitcoin erases bessent rally as leverage and liquidity fade",
+   "news:citi lowers 12 month bitcoin price target to 9",
+   "news:bitcoin falls 14 in a week as 62k support comes into focus",
+   "news:mizuho predicts 91 upside for robinhood stock despite kalshi competition",
+   "news:citi cuts bitcoin target 12 to 99 532 as ethereum forecast falls to 2 838"
   ],
   "NFLX:PUT:2026-12-04:60": [
    "up0.25",
@@ -4429,24 +4437,22 @@
    "news:bitcoin price trades near 64 000 as fed s waller floats half point hike",
    "news:bitcoin dips amid us spot etf outflows and fed rate hold largest crypto hack unsettles market",
    "news:bitcoin faces a new threat as us prices surge at fastest pace in 38 years",
-   "news:citi lowers bitcoin btc target to 99 530 and ethereum eth target to 2 830 explains the reasons"
+   "news:citi lowers bitcoin btc target to 99 530 and ethereum eth target to 2 830 explains the reasons",
+   "news:bitcoin erases bessent rally as leverage and liquidity fade",
+   "news:citi lowers 12 month bitcoin price target to 9",
+   "news:bitcoin falls 14 in a week as 62k support comes into focus",
+   "news:citi cuts bitcoin target 12 to 99 532 as ethereum forecast falls to 2 838"
   ],
   "F:PUT:2026-12-04:12": [
    "down-0.15"
-  ]
+  ],
+  "AMZN:CALL:2026-11-27:272.5": []
  },
  "stock_level": {
   "SOFI:PUT:2026-12-04:15.5": 1,
   "INTC:PUT:2026-11-27:53": 2
  },
  "seen_macro": [
-  "as nvidia s stock falls here s what wall street has to say about the jensen huang scandal",
-  "wall street strategists say s p 500 correction is likely nearing an end",
-  "wall street forecasters say the worst of the stock sell off is over and a new rally is about to kick off",
-  "more rate hikes are coming as job growth accelerated unemployment fell",
-  "european gas prices edge higher as hormuz shipping attack offsets trump s pause on iran",
-  "strategy stock mstr falls as bitcoin slump persists despite 82m purchase",
-  "bitcoin faces selling pressure despite ai stock recovery amid etf outflows and fed rate hike fears",
   "oil prices hit 10 week low after trump comments on iran",
   "oil prices drop over 5 on hopes of us iran talks",
   "fed s barkin says policy direction clear but needs careful pace",
@@ -5039,7 +5045,14 @@
   "anthropic s 90 4 billion ipo brings a reality check for wall street s 8 billion pre ipo etf frenzy",
   "waller fed must be more aggressive on inflation",
   "canada weighs chinese investment as us tariffs threaten its auto industry",
-  "fed minutes set to provide further clues on the central bank s hiking pace"
+  "fed minutes set to provide further clues on the central bank s hiking pace",
+  "rupee extends rally for 3rd day ends 10 paise higher at 93 41 against us dollar",
+  "transport costs drive inflation up to 3 4",
+  "gold prices fall below 3 800 to 14 month low as fed rate hike fears lift us dollar treasury yields hindustan times",
+  "fed governor christopher waller hints at bigger rate hike",
+  "bloom energy cratered 37 in 6 months three wall street firms each agree that 100 gains are coming",
+  "south african rand hits eight month low on gold fed hike bets",
+  "fed s waller says interest rate hikes may be needed to shock inflation out of the system"
  ],
  "sharp": {
   "SOFI:PUT:2026-12-04:15.5": 15.475,
