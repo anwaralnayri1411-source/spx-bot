@@ -382,7 +382,8 @@
    "netflix stock hits 52 week low as ad revenue forecast falls to 2 7b",
    "netflix inc nflx options chain yahoo finance",
    "as netflix stock hovers near its 52 week low analyst sentiment remains mixed here s why",
-   "here s how much 1000 invested in netflix 15 years ago would be worth today"
+   "here s how much 1000 invested in netflix 15 years ago would be worth today",
+   "netflix just hit a 52 week low where s the bottom"
   ],
   "AVGO:PUT": [
    "3 artificial intelligence ai stocks that look like great buys right now",
@@ -1911,15 +1912,6 @@
    "bitcoin drops 2 26 in four hours to 62 802 am"
   ],
   "HOOD:PUT": [
-   "trump backed american bitcoin turns a profit as bitcoin rise lifts books",
-   "can this popular cryptocurrency hit a price of 1 in 2027 the answer will surprise you",
-   "litecoin price falls the 200 day line decides now",
-   "bitcoin price predictions for november range fr",
-   "american bitcoin corp reports 126m q3 profit d",
-   "core scientific plans to exit bitcoin mining by the end of 2026",
-   "sui price drops 9 5 in a day the levels sui must hold now",
-   "bitcoin btc price falls below 76k as ai stock rout hit strategy mstr coinbase coin circle crcl",
-   "bitcoin falls below 76 000 as tech stock rout weakens crypto market",
    "zcash upgrades tonight bitcoin or zcash which is the better buy for 2027",
    "crypto crash liquidates 954m in longs and 127m in shorts",
    "robinhood sinks 12 sofi tumbles 9 affirm drops 8 as bitcoin slides and democratic congress weighs on fintech",
@@ -2310,7 +2302,16 @@
    "bitcoin price slips as q3 etf buyers sit about 20 underwater",
    "current price of bitcoin for november 18 2026",
    "fidelity stays bullish on bitcoin citing its c",
-   "bitcoin drops 2 26 in four hours to 62 802 am"
+   "bitcoin drops 2 26 in four hours to 62 802 am",
+   "bitcoin steadies after nvidia s earnings beat as 60k bids stand out",
+   "btc to php bitcoin price in philippine peso",
+   "bitcoin stocks wobble as fed s waller talks of shock 50 point rate hike",
+   "btc price on november 19 4 59pm utc",
+   "satoshi ally adam back flags bitcoin s new 68 000 mathematical floor",
+   "cryptoquant says bitcoin is back in a bearish phase but has reached a value zone",
+   "bitcoin price today btc to idr rp1 17b",
+   "bitcoin falls over 50 from its 2025 peak trad",
+   "got anthropic ipo shares on robinhood sell within 30 days and you could be banned from future ipos for tw"
   ],
   "AAPL:CALL": [
    "loop capital lowers apple stock price target on iphone shipment concerns",
@@ -4339,7 +4340,9 @@
   ],
   "F:PUT": [
    "dz bank upgrades ford to buy but cuts its tp",
-   "ford inflation beating dividend yields but underperformance risks persist through fy2027"
+   "ford inflation beating dividend yields but underperformance risks persist through fy2027",
+   "ford motor sees flat 2027 earnings as cost cuts offset 2 billion headwind",
+   "ford ships first battery cells using catl technology"
   ]
  },
  "fired": {
@@ -4398,7 +4401,10 @@
    "news:citi cuts bitcoin target 12 to 99 532 as ethereum forecast falls to 2 838",
    "news:bitcoin slides toward 63 000 as nvidia reverses gains and crypto carry returns shrink",
    "news:robinhood markets stock mizuho keeps outperform rating",
-   "news:bitcoin drops 2 26 in four hours to 62 802 am"
+   "news:bitcoin drops 2 26 in four hours to 62 802 am",
+   "news:bitcoin stocks wobble as fed s waller talks of shock 50 point rate hike",
+   "news:bitcoin falls over 50 from its 2025 peak trad",
+   "sharp@2026-11-18T12:32-05:00"
   ],
   "NFLX:PUT:2026-12-04:60": [
    "up0.25",
@@ -4418,22 +4424,25 @@
    "sharp@2026-11-17T15:57-05:00",
    "stock2",
    "down-0.15",
-   "news:intel conducting another round of layoffs report intc nasdaq"
+   "news:intel conducting another round of layoffs report intc nasdaq",
+   "sharp@2026-11-18T12:32-05:00"
   ],
   "F:PUT:2026-12-04:12": [
-   "down-0.15"
+   "down-0.15",
+   "news:ford motor sees flat 2027 earnings as cost cuts offset 2 billion headwind",
+   "sharp@2026-11-18T12:29-05:00",
+   "stock1"
   ],
-  "AMZN:CALL:2026-11-27:272.5": []
+  "AMZN:CALL:2026-11-27:272.5": [
+   "up0.25"
+  ]
  },
  "stock_level": {
   "SOFI:PUT:2026-12-04:15.5": 1,
-  "INTC:PUT:2026-11-27:53": 2
+  "INTC:PUT:2026-11-27:53": 2,
+  "F:PUT:2026-12-04:12": 1
  },
  "seen_macro": [
-  "federal reserve s mary daly says more rate hikes are likely",
-  "asx set to jump as wall street rallies nvidia tumbles amid chinese spy probe oil falls",
-  "brent crude oil futures tumble over 5 to 8 125 per barrel",
-  "why is the stock market up today 11 9 26",
   "hot u s inflation hasn t cooled off rising consumer prices to keep fed rate hike on track",
   "iren stock why wall street remains bullish after q1 even as microsoft takes a tougher line",
   "wall street rallies as ai stocks attempt a comeback",
@@ -5029,13 +5038,18 @@
   "fed minutes will give insight into the path and size of rate increases ahead",
   "oil prices fall despite iran attacks as us crude inventories jump 5 28m barrels",
   "meet wall street s reliable high yield dividend stocks 5 companies that pass the yield trap test",
-  "170 years of market history just flashed a 97 bubble warning the last time it was this high was 2007"
+  "170 years of market history just flashed a 97 bubble warning the last time it was this high was 2007",
+  "the fed s next moves come into focus",
+  "3pm markets update",
+  "mark carney sets trump showdown in china canada pm sets one condition amid tariff war",
+  "stock market midday nov 18 nvidia doubles revenue but wall street s sell off continues"
  ],
  "sharp": {
   "SOFI:PUT:2026-12-04:15.5": 15.475,
   "RIVN:PUT:2026-12-04:13": 12.58,
   "BAC:PUT:2026-12-04:50": 50.12,
-  "INTC:PUT:2026-11-27:53": 54.76,
-  "HOOD:PUT:2026-11-27:70": 69.285
+  "INTC:PUT:2026-11-27:53": 55.21,
+  "HOOD:PUT:2026-11-27:70": 69.88,
+  "F:PUT:2026-12-04:12": 11.41
  }
 }
