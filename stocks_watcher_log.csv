@@ -4854,3 +4854,19 @@ time,pos_id,ticker,side,event,detail,entry,val,pnl,spot,need,tdays,advice,reason
 2026-11-19T10:58-05:00,BA:PUT:2026-11-27:165,BA,PUT,macro_quiet,"against/weak/medium: Global Stock Market Update: How AI Shocks, Fed Rate Hike Warnings, and Geopolitics Are Reshaping the Economy - News Talk Florida",2.7,4.46,0.6519,161.68,-0.0038,7,أبقِ,خبر ضد العقد لكن تأثيره محدود، راقب
 2026-11-19T11:04-05:00,NVDA:PUT:2026-11-27:145,NVDA,PUT,sharp,-0.76% في 15د,2.21,1.93,-0.1267,153.3,0.0686,7,فكّر بالخروج,السهم يتحرك ضدك
 2026-11-19T11:26-05:00,XOM:PUT:2026-11-27:160,XOM,PUT,news,with/medium: Gas prices take biggest 3-week dive since 2008 - CNN,2.64,2.61,-0.0114,159.66,0.0144,7,أبقِ,الخبر في صالح العقد
+2026-11-19T11:37-05:00,NVDA:PUT:2026-11-27:145,NVDA,PUT,contract,-15%,2.21,1.87,-0.1538,153.625,0.0705,7,أبقِ,الفكرة قائمة لكن العقد -15%؛ التزم بالوقف عند −40%
+2026-11-19T11:48-05:00,XOM:PUT:2026-11-27:160,XOM,PUT,news,against/medium: Crude Oil Prices Edge Higher on Fears of Escalation in US-Iran Conflict - Barchart.com,2.64,2.53,-0.0417,160.155,0.0175,7,فكّر بالخروج,خبر ضد العقد
+2026-11-19T11:52-05:00,RIVN:PUT:2026-12-04:13,RIVN,PUT,macro,against/weak/medium: J.P. Morgan sees Fed rate hikes at next three meetings as inflation persists - Reuters,0.97,1.4,0.4433,11.545,-0.042,12,أبقِ,خبر ضد العقد لكن تأثيره محدود، راقب
+2026-11-19T11:52-05:00,SOFI:PUT:2026-12-04:15.5,SOFI,PUT,macro,with/strong/medium: J.P. Morgan sees Fed rate hikes at next three meetings as inflation persists - Reuters,0.86,1.62,0.8837,14.0,-0.0457,12,أبقِ,الخبر في صالح العقد
+2026-11-19T11:52-05:00,F:PUT:2026-12-04:12,F,PUT,macro,against/weak/medium: J.P. Morgan sees Fed rate hikes at next three meetings as inflation persists - Reuters,0.84,0.77,-0.0833,11.215,0.0049,12,أبقِ,خبر ضد العقد لكن تأثيره محدود، راقب
+2026-11-19T11:52-05:00,AMZN:CALL:2026-11-27:272.5,AMZN,CALL,macro,against/weak/medium: J.P. Morgan sees Fed rate hikes at next three meetings as inflation persists - Reuters,2.79,4.57,0.638,269.99,0.0196,7,أبقِ,خبر ضد العقد لكن تأثيره محدود، راقب
+2026-11-19T11:52-05:00,DIS:CALL:2026-11-27:124,DIS,CALL,macro,against/weak/medium: J.P. Morgan sees Fed rate hikes at next three meetings as inflation persists - Reuters,0.96,0.94,-0.0208,122.15,0.023,7,أبقِ,خبر ضد العقد لكن تأثيره محدود، راقب
+2026-11-19T11:52-05:00,AAPL:CALL:2026-11-27:352.5,AAPL,CALL,macro,against/weak/medium: J.P. Morgan sees Fed rate hikes at next three meetings as inflation persists - Reuters,3.62,3.68,0.0166,349.82,0.018,7,أبقِ,خبر ضد العقد لكن تأثيره محدود، راقب
+2026-11-19T11:52-05:00,NVDA:PUT:2026-11-27:145,NVDA,PUT,macro,against/weak/medium: J.P. Morgan sees Fed rate hikes at next three meetings as inflation persists - Reuters,2.21,1.97,-0.1086,152.84,0.0658,7,أبقِ,خبر ضد العقد لكن تأثيره محدود، راقب
+2026-11-19T11:54-05:00,XOM:PUT:2026-11-27:160,XOM,PUT,news,with/medium: US Sour Crude’s War Premium Vanishes as Supply Surges - Bloomberg.com,2.64,2.49,-0.0568,159.66,0.0144,7,أبقِ,الخبر في صالح العقد
+2026-11-19T11:59-05:00,XOM:PUT:2026-11-27:160,XOM,PUT,news,with/medium: Why Oil Prices Are Falling Despite Strait Of Hormuz Risks - Forbes,2.64,2.49,-0.0568,159.555,0.0138,7,أبقِ,الخبر في صالح العقد
+2026-11-19T12:00-05:00,AMZN:CALL:2026-11-27:272.5,AMZN,CALL,sharp,-1.15% في 15د,2.79,,,266.35,0.0336,7,فكّر بالخروج,السهم يتحرك ضدك
+2026-11-19T12:04-05:00,AMZN:CALL:2026-11-27:272.5,AMZN,CALL,sharp,-2.25% في 15د,2.79,2.66,-0.0466,263.965,0.0429,7,فكّر بالخروج,السهم يتحرك ضدك
+2026-11-19T12:04-05:00,AAPL:CALL:2026-11-27:352.5,AAPL,CALL,sharp,-0.91% في 15د,3.62,2.81,-0.2238,346.62,0.0274,7,فكّر بالخروج,السهم يتحرك ضدك
+2026-11-19T12:04-05:00,AAPL:CALL:2026-11-27:352.5,AAPL,CALL,contract,-22%,3.62,2.81,-0.2238,346.62,0.0274,7,فكّر بالخروج,السهم يتحرك ضدك
+2026-11-19T12:04-05:00,NVDA:PUT:2026-11-27:145,NVDA,PUT,contract,+59%,2.21,3.51,0.5882,148.75,0.0401,7,أبقِ,لا جديد يغيّر فكرة الصفقة
