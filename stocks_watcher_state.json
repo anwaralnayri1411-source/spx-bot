@@ -2442,7 +2442,8 @@
    "apple aapl music radio hits 50 million listeners as audio streaming competition accelerates",
    "apple aapl stock at a crossroads as earnings beat meets key resistance",
    "services franchise and installed base anchor apple s aapl durable earnings growth",
-   "apple aapl board member sells 31 million of company stock"
+   "apple aapl board member sells 31 million of company stock",
+   "tri continental declares fourth quarter distributions and special capital gain"
   ],
   "BA:PUT": [
    "boeing nyse ba sets new 52 week low on disappointing earnings",
@@ -2600,7 +2601,9 @@
    "nvidia broadcom micron stocks erase gains as anthropic goes public",
    "amd shares slide as lisa su sidesteps nvidia turmoil short seller targets china sales",
    "hedge funds increase nvidia nvda stakes despite ceo departure and stock volatility",
-   "amd stock drops after short seller says the chip maker has its own china problems"
+   "amd stock drops after short seller says the chip maker has its own china problems",
+   "amd stock plunges after short seller says the chip maker has its own china problems",
+   "nvidia stocks rise 4 63 as 10 billion anthropic stake lands on ipo day"
   ],
   "AMZN:PUT": [
    "amazon com price target lowered to 300 from 325 at scotiabank",
@@ -2835,12 +2838,6 @@
    "metropal reports board responsibility statement on consolidated financials"
   ],
   "XOM:PUT": [
-   "dow surges and oil prices drop after dem midterm sweep",
-   "india stocks draw biggest foreign inflow in nearly six years as oil falls ai trade cools",
-   "conocophillips beats estimates on higher oil prices raises dividend by reuters",
-   "a wipeout for ai stocks sends wall street reeling and the s p 500 tumbles more than 3",
-   "is suncor still a buy after a blowout quarter or is it too reliant on high oil prices",
-   "oil price predictions why goldman sachs is betting on brent to climb to 140",
    "danon pushes back on accusations israel to blame for oil prices",
    "turkey unveils 500 billion energy plan built on gas solar nuclear",
    "conocophillips reports higher q3 earnings as oil prices support profit growth",
@@ -3234,7 +3231,13 @@
    "stocks slip as anthropic gains on market debut and oil prices rise",
    "canadian dollar strengthens as oil rebounds hawkish fed limits gains",
    "aaa jonesboro gas prices drop 13 cents",
-   "iran war wipes out 2 8 billion barrels of oil supply why are crude prices falling"
+   "iran war wipes out 2 8 billion barrels of oil supply why are crude prices falling",
+   "at apec summit u s china and russia vow to increase oil supply amid global energy transition",
+   "prices at gas pump slowly falling",
+   "exxon s revised 30b rovuma lng plan approved by mozambique s government xom nyse",
+   "trafigura not rushing to alternative marine fuels",
+   "energean posts 54 jump in nine month profit helped by higher oil prices",
+   "aaa texas reports gas prices to continue falling as thanksgiving approaches"
   ],
   "MSFT:CALL": [
    "forget the 12 month squeeze microsoft is primed for an explosive ai payoff",
@@ -3785,12 +3788,6 @@
    "snap tumbles 11 as user growth miss and sluggish ad sales overshadow return to profit pinterest dips meta holds steady"
   ],
   "MSTR:PUT": [
-   "bitcoin price prediction btc crashes toward 75k as etfs lose 430m",
-   "bitcoin tumbles on etf flows liquidations iren leads miner rebound attempt",
-   "bitcoin trades near 75 700 with a slight 0 34 drop over 24 hours on nov 6",
-   "bitcoin s post election rally is fragile susta",
-   "bitcoin price holds near 75 000 after hot october jobs report",
-   "crypto derivatives liquidations reach 1 25 billion in 24 hours",
    "crypto liquidations top 1 billion as bitcoin tests 11 week low",
    "bitcoin futures open interest drops to 52 billion as traders retreat",
    "bitcoin btc looks for direction after market selloff",
@@ -4184,7 +4181,13 @@
    "bitcoin briefly hits 64k after anthropic s 81b ipo then falls back near 62k amid 350m crypto liquidations",
    "dow drops 1 000 points as bitcoin falls 2 6 amid market volatility",
    "btc price range on nov 19 2026 at 2pm est prediction market",
-   "btc price on nov 19 2026 at 2pm est prediction market"
+   "btc price on nov 19 2026 at 2pm est prediction market",
+   "bitcoin price ignores anthropic debut as ant share price dips below 100",
+   "crypto losers of the week avalanche down 17 6",
+   "crypto news dow drops 1 000 points bitcoin slips to 62k",
+   "anthropic pbc coinbase tokenized stock price antc usd live price chart market cap news today",
+   "strategy removed from msci indexes and adds bitcoin mstr remains under pressure",
+   "bitcoin price prediction why kalshi traders are betting on a drop to 60 000"
   ],
   "SOFI:PUT": [
    "nasdaq ceo adena friedman says 23 hour trading starts dec 6 what it means for your retirement money",
@@ -4513,13 +4516,15 @@
    "news:why oil prices are falling despite strait of hormuz risks",
    "news:hormuz strait tanker attacks persist daily despite falling oil prices",
    "news:pr q3 earnings beat on higher output and stronger pricing",
-   "news:iea sees potential for looser oil lng markets after hormuz crisis"
+   "news:iea sees potential for looser oil lng markets after hormuz crisis",
+   "news:exxon s revised 30b rovuma lng plan approved by mozambique s government xom nyse"
   ],
   "DIS:CALL:2026-11-27:124": [
    "down-0.15",
    "down-0.3",
    "sharp@2026-11-19T12:11-05:00",
-   "news:morgan stanley issues positive forecast for walt disney nyse dis stock price"
+   "news:morgan stanley issues positive forecast for walt disney nyse dis stock price",
+   "stock1"
   ],
   "AAPL:CALL:2026-11-27:352.5": [
    "sharp@2026-11-19T12:04-05:00",
@@ -4541,18 +4546,18 @@
    "news:bitcoin btc price holds near 64k but etf money keeps walking out",
    "news:strategy just got dropped from msci s indexes can it keep buying bitcoin",
    "news:bitcoin briefly hits 64k after anthropic s 81b ipo then falls back near 62k amid 350m crypto liquidations",
-   "news:dow drops 1 000 points as bitcoin falls 2 6 amid market volatility"
+   "news:dow drops 1 000 points as bitcoin falls 2 6 amid market volatility",
+   "news:crypto news dow drops 1 000 points bitcoin slips to 62k",
+   "news:strategy removed from msci indexes and adds bitcoin mstr remains under pressure"
   ]
  },
  "stock_level": {
   "F:PUT:2026-12-04:12": 1,
   "MSTR:PUT:2026-11-27:80": 3,
-  "AMZN:CALL:2026-11-27:272.5": 1
+  "AMZN:CALL:2026-11-27:272.5": 1,
+  "DIS:CALL:2026-11-27:124": 1
  },
  "seen_macro": [
-  "higher rates and industry tailwinds 3 major regional banks to watch",
-  "economists say fed could go overboard on rate hikes after hot october inflation report",
-  "2 45pm markets update",
   "mexico says crackdown on asian steel shipments is paying off as us tariff talks advance",
   "stock market today dow jones nasdaq s p 500 rally on november 11 2026 oil rises gold slips",
   "pound forecast gbp usd nears 1 33 as fed eyes bigger rate hike",
@@ -5149,7 +5154,10 @@
   "s p 500 slides anthropic jumps 27 stock market today alphabet nasdaq googl",
   "the santa claus rally will santa deliver a christmas present or a lump of coal",
   "anthropic jumps 27 in record debut s p 500 eyes sixth straight loss stock market today",
-  "bend but not break td report looks at the financial health of canadian households"
+  "bend but not break td report looks at the financial health of canadian households",
+  "a soaring debut for anthropic s stock is not enough to carry wall street and indexes drop",
+  "a strong debut for anthropic s stock is not enough to carry wall street and indexes drop",
+  "australian dollar price forecast technical bounce in the offing"
  ],
  "sharp": {
   "RIVN:PUT:2026-12-04:13": 12.58,
