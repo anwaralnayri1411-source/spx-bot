@@ -1577,7 +1577,8 @@
    "is jpmorgan chase jpm undervalued as bond issuance and earnings strength meet a pullback",
    "chase cardholders can now invest ultimate rewar",
    "jpmorgan chase nyse jpm lifts interest income outlook as lending offsets trading slowdown",
-   "jpm sec form fwp filed by jp morgan chase co"
+   "jpm sec form fwp filed by jp morgan chase co",
+   "jpmorgan chase jpm stock falls as new jall etf debuts with 250m backing"
   ],
   "COIN:PUT": [
    "bitcoin drops to 75k amid rising volume and fe",
@@ -2628,7 +2629,8 @@
    "wedbush lifts nvidia stock nvda price target to 273 here s why",
    "trump bought up to 380k in nvidia stock calls huang exit tragedy nvidia nasdaq nvda",
    "credora analyst warns most tokenized nvidia products are debt claims not shares",
-   "spacex has gone all in with nvidia nvidia s biggest customer is also its biggest stock holding at 19 7b"
+   "spacex has gone all in with nvidia nvidia s biggest customer is also its biggest stock holding at 19 7b",
+   "nvidia the worst is yet to come nasdaq nvda"
   ],
   "AMZN:PUT": [
    "amazon com price target lowered to 300 from 325 at scotiabank",
@@ -2863,11 +2865,6 @@
    "metropal reports board responsibility statement on consolidated financials"
   ],
   "XOM:PUT": [
-   "a cruise ship sold as a forever home left 203 residents in cambodia as iran war fuel costs hit up to 8 000 a cabin",
-   "global oil prices fall below 95 amid shifting political landscape",
-   "dollar weakness and higher crude prices spur short covering in sugar",
-   "murphy oil clears consensus but misses the whisper as oil prices drive earnings and bubale funding questions grow",
-   "gas prices headed lower absent escalation in the middle east",
    "oil prices tumble tesla struggles as u s stocks soar",
    "u s refineries make dramatic shift away from gasoline",
    "will the u s midterm results do anything for oil and gas prices",
@@ -3262,7 +3259,12 @@
    "idaho gas prices fall below 4 mark",
    "idaho gas prices fall below 4 per gallon for first time in months",
    "high diesel gas prices add to financial pressures on michigan farmers",
-   "why is gas getting cheaper"
+   "why is gas getting cheaper",
+   "jonesboro gas prices slide into the 3 30s ahead of thanksgiving travel rush",
+   "attacks pick up after tanker rates plunge these fleet stocks fell hardest",
+   "here s how much you would have made owning exxonmobil holdings stock in the last 5 years",
+   "oil prices rise as tanker disruptions offset surplus supply outlook",
+   "oil market shock keeps costs high for us small businesses even as crude pulls back"
   ],
   "MSFT:CALL": [
    "forget the 12 month squeeze microsoft is primed for an explosive ai payoff",
@@ -3813,11 +3815,6 @@
    "snap tumbles 11 as user growth miss and sluggish ad sales overshadow return to profit pinterest dips meta holds steady"
   ],
   "MSTR:PUT": [
-   "about best buy stove tokenized stock",
-   "brainchain price brain price live charts and marketcap coinbase spain",
-   "moon doge price doge price live charts and marketcap coinbase spain",
-   "bitcoin faces heavy liquidations and volatility after surging past 81k then dropping below key support",
-   "bitcoin price dips under 75k as crypto markets miss tech stock rebound",
    "is xrp a good investment right now at 1 18",
    "bitcoin etfs bleed 430 million as tech rout tests wall street buyers",
    "solana price outlook as btc slips below 76k how much lower could sol go",
@@ -4212,7 +4209,12 @@
    "xrp bulls are losing control could the price crash below 0 90",
    "bitcoin etfs lose 2 89b in november as losses deepen",
    "the billionaire winklevoss twins predict that zcash could hit 5 000 within the next 5 years here s why they re wrong",
-   "ripple ceo blames anthropic ipo for crypto selloff predicts rally"
+   "ripple ceo blames anthropic ipo for crypto selloff predicts rally",
+   "strategy is worth less than its bitcoin trump media may have to sell",
+   "bitcoin news h100 group eyes btc sale to fund share buybacks",
+   "bitcoin price today at 1 40 pm et prediction odds bitcoin",
+   "bitcoin price struggles under 65k as world bank explores usdc rails follow the dollar liquidity",
+   "digi power x adds 42 btc lifting its bitcoin treasury to 259 btc"
   ],
   "SOFI:PUT": [
    "nasdaq ceo adena friedman says 23 hour trading starts dec 6 what it means for your retirement money",
@@ -4493,7 +4495,10 @@
    "marti otel i letmeleri consolidated interim financial statements",
    "ford motor nyse f sets new 12 month low should you sell",
    "first real estate investment terminates westwood plaza sale agreement",
-   "marlin global acquires shares under buyback programme"
+   "marlin global acquires shares under buyback programme",
+   "nuran wireless reports amended series a preferred share terms",
+   "mackenzie realty capital holds annual meeting and elects directors",
+   "nvidia microsoft extend full stack collaboration over intelligent applications"
   ]
  },
  "fired": {
@@ -4543,7 +4548,8 @@
    "news:oil continues downward plummet as iran war reshapes world energy market for the better",
    "news:natural gas wti oil brent oil forecasts oil rebounds as iran intensifies attacks in hormuz",
    "news:dow slides as oil rises after a riyadh attack",
-   "news:gas prices see biggest three week drop in nearly two decades"
+   "news:gas prices see biggest three week drop in nearly two decades",
+   "news:oil prices rise as tanker disruptions offset surplus supply outlook"
   ],
   "AAPL:CALL:2026-11-27:352.5": [
    "sharp@2026-11-19T12:04-05:00",
@@ -4573,7 +4579,8 @@
    "news:bitcoin vs gold price forecast xau hits 14 month low as btc retests 63k on fed rate hike fears",
    "news:bitcoin btc demand hits 2026 low as price retests 62 000",
    "news:monness crespi slaps strategy nasdaq mstr with sell rating and 65 target flagging dilution risk over bitcoin premium",
-   "news:bitcoin etfs lose 2 89b in november as losses deepen"
+   "news:bitcoin etfs lose 2 89b in november as losses deepen",
+   "news:strategy is worth less than its bitcoin trump media may have to sell"
   ],
   "JPM:PUT:2026-11-27:315": [
    "down-0.15"
@@ -4584,9 +4591,6 @@
   "MSTR:PUT:2026-11-27:80": 3
  },
  "seen_macro": [
-  "trump threatens to double tariffs on mexican goods over migrants",
-  "wall street backs away from nvidia as jensen huang uncertainty unfolds what analysts are saying",
-  "new zealand dollar steadies around 0 5550 as us dollar bulls take a break",
   "nvda stock price forecast analysts give multiple downgrades ahead of november 17 earnings amid ceo jensen huang fiasco",
   "the lone bear on walmart stock raises a question wall street can t ignore",
   "why wall street won t pay 1 for this stock despite its 439 million in ethereum",
@@ -5183,7 +5187,10 @@
   "anthropic ipo breaks wall street record with 81 billion offering",
   "anthropic tops spacex with record 2 trillion nasdaq debut",
   "amd is still up 125 this year did today just mark the top for amd stock",
-  "meet wall street s safe passive income dividend stocks 4 companies that keep paying through downturns"
+  "meet wall street s safe passive income dividend stocks 4 companies that keep paying through downturns",
+  "wall street s fear gauge went from 16 61 to 28 18 in a single day in november why it keeps snapping back",
+  "walmart stock falls after earnings beat why wall street wasn t impressed",
+  "2 40pm markets update"
  ],
  "sharp": {
   "RIVN:PUT:2026-12-04:13": 12.58,
