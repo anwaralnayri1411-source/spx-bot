@@ -1,6 +1,21 @@
 {
- "cash": 6187.0,
- "positions": [],
+ "cash": 4627.0,
+ "positions": [
+  {
+   "id": "1119-1346-SPX-PUT-7215",
+   "symbol": "SPXW  261119P07215000",
+   "under": "SPX",
+   "side": "PUT",
+   "strike": 7215.0,
+   "expiry": "2026-11-19",
+   "qty": 1,
+   "entry": 15.6,
+   "time": "2026-11-19T13:46-05:00",
+   "stop": 10.5,
+   "target": 24.0,
+   "invalidation": "إلغاء الفكرة إذا أغلق SPX فوق 7300 أو عاد فوق VWAP وفوق 7286 مع تحسن الطلب على الكول، أو إذا تحولت الغاما إلى موجبة بقوة."
+  }
+ ],
  "closed": [
   {
    "id": "1105-0946-PUT-757",
@@ -601,8 +616,8 @@
    "after_last": 3.85
   }
  ],
- "decisions": 230,
+ "decisions": 231,
  "report_day": "2026-11-18",
  "day": "2026-11-19",
- "decisions_today": 16
+ "decisions_today": 17
 }
