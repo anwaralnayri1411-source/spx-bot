@@ -413,7 +413,8 @@
    "what are netflix stock bears missing",
    "netflix is 48 below its high while guiding to record revenue of 51 1 billion up 13 for 2026",
    "with netflix stock down nearly 46 in the last year michael burry reveals the price he d think about buying",
-   "gta 6 vs sam bankman fried netflix drops ftx series on same day as take two s blockbuster launch"
+   "gta 6 vs sam bankman fried netflix drops ftx series on same day as take two s blockbuster launch",
+   "a billionaire s bet on hollywood puts media and space stocks in focus"
   ],
   "AVGO:PUT": [
    "3 artificial intelligence ai stocks that look like great buys right now",
@@ -2807,13 +2808,6 @@
    "metropal reports board responsibility statement on consolidated financials"
   ],
   "XOM:PUT": [
-   "bailey speech latest fall in oil prices is positive news",
-   "texas gov elect gina hinojosa plans to take on record high diesel prices amid geopolitical instability",
-   "oil prices fall as us election results raise hopes of iran deal",
-   "gas prices could fall below 4 as election results rattle oil markets",
-   "boe hikes rate for first time in 3 years retreating oil prices may allow for more options ahead",
-   "ieefa 67 8 billion in asian lng power projects scrapped or stalled",
-   "ai stocks keep falling as oil prices and bond yields steady following their post election slides",
    "pentagon eyes unprecedented 75 year deal to end china s rare earth stranglehold",
    "european gas drops as us vote spurs hopes for iran resolution",
    "the u s spent 50 years trying to escape oil shocks they still upend elections",
@@ -3206,7 +3200,14 @@
    "see how gas prices are easing across the u s",
    "gas prices fall over 3 cents in one day as drivers see post election relief",
    "daily oil price november 11 2026",
-   "north northamptonshire council announces more heating oil support"
+   "north northamptonshire council announces more heating oil support",
+   "soaring gas prices could add 16 billion to german power cost study shows",
+   "venezuela turns to ai to cut methane leaks",
+   "wti and dow fall as nasdaq holds its bullish rebound",
+   "oil prices rise as middle east supply risks intensify",
+   "u s oil falls 3 2 as iran says mines disabled three tankers near hormuz",
+   "erste group upgrades exxonmobil xom here s what drove it",
+   "gas prices keep dropping as thanksgiving approaches"
   ],
   "MSFT:CALL": [
    "forget the 12 month squeeze microsoft is primed for an explosive ai payoff",
@@ -4200,7 +4201,8 @@
    "hood adds live ipo pricing tools will anthropic drive engagement",
    "hims hers health inc hims stock price news quote history",
    "anthropic ipo investors who flip the stock may face brokerage penalty",
-   "from side quest to financial strategy sofi study reveals how crypto is becoming part of the bigger financial picture"
+   "from side quest to financial strategy sofi study reveals how crypto is becoming part of the bigger financial picture",
+   "affirm just dropped 13 in a week is it time to sell or load up"
   ],
   "SNAP:PUT": [
    "snap earnings analysis questions answered and next catalysts",
@@ -4476,21 +4478,23 @@
    "sharp@2026-11-19T10:03-05:00",
    "sharp@2026-11-19T10:24-05:00"
   ],
-  "XOM:PUT:2026-11-27:160": [],
+  "XOM:PUT:2026-11-27:160": [
+   "news:oil prices rise as middle east supply risks intensify",
+   "news:u s oil falls 3 2 as iran says mines disabled three tankers near hormuz",
+   "news:erste group upgrades exxonmobil xom here s what drove it"
+  ],
   "DIS:CALL:2026-11-27:124": [
-   "down-0.15"
-  ]
+   "down-0.15",
+   "down-0.3"
+  ],
+  "AAPL:CALL:2026-11-27:352.5": [],
+  "NVDA:PUT:2026-11-27:145": []
  },
  "stock_level": {
   "SOFI:PUT:2026-12-04:15.5": 1,
   "F:PUT:2026-12-04:12": 1
  },
  "seen_macro": [
-  "wall street is cooling on jensen huang s nvidia but history says don t give up on the stock just yet",
-  "goldman sachs gs tells investors to prepare for higher interest rates",
-  "us treasury futures retreat as markets see more fed hikes",
-  "gold struggles below 4 050 as fed rate hike bets intensify",
-  "no reason for us to exist 3 time trump voting manufacturer struggling to stay afloat",
   "as higher prices seep into broader economy u s fed officials consider faster hikes",
   "fed s goolsbee calls inflation report borderline disturbing as central bank weighs more hikes",
   "dollar rises to 19 month high on fed rate hike bets",
@@ -5085,7 +5089,12 @@
   "us stock market today nasdaq spikes 2 on anthropic optimism dow surges 230 points",
   "wall st set for higher open on ai optimism ahead of anthropic s market debut",
   "watch live interest rate remains unchanged amid inflation surge",
-  "dario perkins questions remain about an ai market crash and federal reserve rate hikes"
+  "dario perkins questions remain about an ai market crash and federal reserve rate hikes",
+  "wti crude oil experiences volatile session as us inventories surge",
+  "main street capital main draws focus as december rate hike could lift earnings",
+  "wall street rises after anthropic s ipo revives ai stocks at least for now",
+  "anyone forecasting 2027 is forecasting data centers the fed is about to hike into an ai boom it can t cool and main stre",
+  "global stock market update how ai shocks fed rate hike warnings and geopolitics are reshaping the economy"
  ],
  "sharp": {
   "SOFI:PUT:2026-12-04:15.5": 15.475,
