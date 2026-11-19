@@ -81,7 +81,8 @@
    "bank of america corporation bac stock forecasts",
    "bank of america corporation bac stock purchased by independent advisor alliance",
    "bank of america corporation bac stock bought by hartford funds management co llc",
-   "bank of america corporation bac stock holdings increased by ieq capital llc"
+   "bank of america corporation bac stock holdings increased by ieq capital llc",
+   "a 2 6 billion fund dumps these 3 stocks"
   ],
   "AMZN:CALL": [
    "starting jan 1 2027 amazon seasonal workers get day one health coverage if they work at least 30 hours a week",
@@ -271,7 +272,8 @@
    "a new disney wwe mashup has john cena and the new avengers movie working in tandem dis nyse",
    "dis stock layoffs what to know as disney plans more layoffs",
    "disney stock reaches 52 week high at 117 10 by investing com",
-   "disney stock reaches 52 week high at 117 10"
+   "disney stock reaches 52 week high at 117 10",
+   "the walt disney company dis durable earnings growth supports long term compounder thesis"
   ],
   "NFLX:PUT": [
    "djt stock plummets to new lows trump appeal fades as 2026 midterms draw closer",
@@ -2426,7 +2428,9 @@
    "apple aapl stock forecast price prediction for 2026 2027 2028 2030 2040 and beyond",
    "surging inflation keeps apple under pressure by raising funding costs",
    "federal interest costs surge amid tightening apple inc aapl v",
-   "apple is literally the trade of the year says josh brown for a very simple reason"
+   "apple is literally the trade of the year says josh brown for a very simple reason",
+   "apple aapl music radio hits 50 million listeners as audio streaming competition accelerates",
+   "apple aapl stock at a crossroads as earnings beat meets key resistance"
   ],
   "BA:PUT": [
    "boeing nyse ba sets new 52 week low on disappointing earnings",
@@ -2573,7 +2577,9 @@
    "nvidia reveals new robot ai with 95 success rate in tests",
    "commerce dept inquiry into chips transferred to doj after nvidia intervention report nvda nasdaq",
    "prediction after losing over 1 7 trillion in market cap this year nvidia stock will rebound in epic fashion here s why",
-   "nvidia downgraded ahead of report but stock joins ai rebound"
+   "nvidia downgraded ahead of report but stock joins ai rebound",
+   "trump bought up to 265 000 of nvidia stock in september disclosure shows",
+   "riverpark advisors nvidia corp nvda remains central to ai infrastructure build out"
   ],
   "AMZN:PUT": [
    "amazon com price target lowered to 300 from 325 at scotiabank",
@@ -2808,10 +2814,6 @@
    "metropal reports board responsibility statement on consolidated financials"
   ],
   "XOM:PUT": [
-   "pentagon eyes unprecedented 75 year deal to end china s rare earth stranglehold",
-   "european gas drops as us vote spurs hopes for iran resolution",
-   "the u s spent 50 years trying to escape oil shocks they still upend elections",
-   "india to require state utilities to add energy storage capacity",
    "ai stocks fall oil bounces back after blue wave drop",
    "us upstream m a value climbs to 12 6 billion in third quarter enverus says",
    "conocophillips just raised its dividend 11 is the stock a buy",
@@ -3207,7 +3209,11 @@
    "oil prices rise as middle east supply risks intensify",
    "u s oil falls 3 2 as iran says mines disabled three tankers near hormuz",
    "erste group upgrades exxonmobil xom here s what drove it",
-   "gas prices keep dropping as thanksgiving approaches"
+   "gas prices keep dropping as thanksgiving approaches",
+   "new york stock market reverses gains amid rising oil prices yields",
+   "us midterms what s next for oil gas and lng icymi",
+   "wisconsin gas prices down 70 cents per gallon over last month",
+   "gas prices take biggest 3 week dive since 2008"
   ],
   "MSFT:CALL": [
    "forget the 12 month squeeze microsoft is primed for an explosive ai payoff",
@@ -4481,24 +4487,23 @@
   "XOM:PUT:2026-11-27:160": [
    "news:oil prices rise as middle east supply risks intensify",
    "news:u s oil falls 3 2 as iran says mines disabled three tankers near hormuz",
-   "news:erste group upgrades exxonmobil xom here s what drove it"
+   "news:erste group upgrades exxonmobil xom here s what drove it",
+   "news:gas prices take biggest 3 week dive since 2008"
   ],
   "DIS:CALL:2026-11-27:124": [
    "down-0.15",
    "down-0.3"
   ],
   "AAPL:CALL:2026-11-27:352.5": [],
-  "NVDA:PUT:2026-11-27:145": []
+  "NVDA:PUT:2026-11-27:145": [
+   "sharp@2026-11-19T11:04-05:00"
+  ]
  },
  "stock_level": {
   "SOFI:PUT:2026-12-04:15.5": 1,
   "F:PUT:2026-12-04:12": 1
  },
  "seen_macro": [
-  "as higher prices seep into broader economy u s fed officials consider faster hikes",
-  "fed s goolsbee calls inflation report borderline disturbing as central bank weighs more hikes",
-  "dollar rises to 19 month high on fed rate hike bets",
-  "dollar advances as markets price in december fed rate hike",
   "rupiah exchange rate today november 12 2026 us dollar at rp18 149 bi jisdor hits rp18 154",
   "oil prices gain as iran war uncertainty weighs on market sentiment",
   "gold struggles below 4 050 as fed rate hike bets boost us dollar",
@@ -5094,13 +5099,18 @@
   "main street capital main draws focus as december rate hike could lift earnings",
   "wall street rises after anthropic s ipo revives ai stocks at least for now",
   "anyone forecasting 2027 is forecasting data centers the fed is about to hike into an ai boom it can t cool and main stre",
-  "global stock market update how ai shocks fed rate hike warnings and geopolitics are reshaping the economy"
+  "global stock market update how ai shocks fed rate hike warnings and geopolitics are reshaping the economy",
+  "stock market today dow s p 500 nasdaq 100 futures rise as wall street awaits anthropic s listing panw",
+  "not amd not intel this is the chip stock wall street is underestimating",
+  "an early rally for wall street evaporates as the market waits for anthropic s stock to begin trading",
+  "australian dollar technical outlook aud usd 6 plunge tests make or break support at yearly low 11 19 2026"
  ],
  "sharp": {
   "SOFI:PUT:2026-12-04:15.5": 15.475,
   "RIVN:PUT:2026-12-04:13": 12.58,
   "BAC:PUT:2026-12-04:50": 50.12,
   "F:PUT:2026-12-04:12": 11.41,
-  "AMZN:CALL:2026-11-27:272.5": 268.79
+  "AMZN:CALL:2026-11-27:272.5": 268.79,
+  "NVDA:PUT:2026-11-27:145": 153.3
  }
 }
