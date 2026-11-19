@@ -83,7 +83,8 @@
    "bank of america corporation bac stock bought by hartford funds management co llc",
    "bank of america corporation bac stock holdings increased by ieq capital llc",
    "a 2 6 billion fund dumps these 3 stocks",
-   "nike will provide chicago marathon runners with an official training program"
+   "nike will provide chicago marathon runners with an official training program",
+   "dell technologies and draftkings have been highlighted as zacks bull and bear of the day"
   ],
   "AMZN:CALL": [
    "starting jan 1 2027 amazon seasonal workers get day one health coverage if they work at least 30 hours a week",
@@ -141,7 +142,8 @@
    "amazon amzn sees 36 7 million in net etf buying on nov 17",
    "amazon amzn unveils new kindle lineup on 20th anniversary",
    "new york city legislation could upend amazon s delivery model amzn nasdaq",
-   "amazon stock amzn flattens as it threatens to leave new york over mamdani s new delivery bill"
+   "amazon stock amzn flattens as it threatens to leave new york over mamdani s new delivery bill",
+   "can amazon s ad revenue growth continue to underpin the stock s value"
   ],
   "WMT:CALL": [
    "walmart slashes membership fees with this new bundle",
@@ -2585,7 +2587,12 @@
    "nvidia downgraded ahead of report but stock joins ai rebound",
    "trump bought up to 265 000 of nvidia stock in september disclosure shows",
    "riverpark advisors nvidia corp nvda remains central to ai infrastructure build out",
-   "nvidia stock could soar 90 after jensen huang s exit according to one wall street firm is it time to buy"
+   "nvidia stock could soar 90 after jensen huang s exit according to one wall street firm is it time to buy",
+   "hedge funds turn bullish on nvidia in q3 but soros fund cuts exposure",
+   "spacex stock is down nearly 40 from its post ipo highs but nvidia is still loading up",
+   "nvidia is best avoided for now in our view nasdaq nvda",
+   "nvidia is biggest case of industrial espionage in us stock market history says george noble",
+   "nvidia broadcom micron stocks erase gains as anthropic goes public"
   ],
   "AMZN:PUT": [
    "amazon com price target lowered to 300 from 325 at scotiabank",
@@ -2820,9 +2827,6 @@
    "metropal reports board responsibility statement on consolidated financials"
   ],
   "XOM:PUT": [
-   "state news sand transition falling gas prices rising measles cases and more",
-   "more drops for nvidia and other ai chip stocks erase wall street s rally from the day before",
-   "oil prices hit two month low following decisive midterm election results",
    "what to know to start your day",
    "oil prices rise amid uncertainty over the war with iran",
    "gold climbs above 4 100 as falling yields softer labor costs support bullion kitco am report",
@@ -3219,7 +3223,10 @@
    "canadian gas prices fall to 151 4 cents on november 19",
    "us sour crude s war premium vanishes as supply surges",
    "why oil prices are falling despite strait of hormuz risks",
-   "oil futures pick up as middle east risks remain"
+   "oil futures pick up as middle east risks remain",
+   "how energy security is reshaping global investment decisions",
+   "how the oil market could move from famine to glut",
+   "hormuz strait tanker attacks persist daily despite falling oil prices"
   ],
   "MSFT:CALL": [
    "forget the 12 month squeeze microsoft is primed for an explosive ai payoff",
@@ -3770,8 +3777,6 @@
    "snap tumbles 11 as user growth miss and sluggish ad sales overshadow return to profit pinterest dips meta holds steady"
   ],
   "MSTR:PUT": [
-   "about d wave quantum inc",
-   "about o reilly automotive stove tokenized stock",
    "badger sett badger price bbadger price live charts and marketcap coinbase italy",
    "intrepidtoken price int price live charts and marketcap coinbase italy",
    "bitcoin sinks to 11 week low after democratic sweep and wall street crash weekly crypto recap",
@@ -4169,7 +4174,9 @@
    "bitcoin may have hit its current cycle low in j",
    "bitcoin price trades near 64 000 as fed s waller floats half point hike",
    "bitcoin holds 62k support as glassnode risks of further drop how far can it go",
-   "bitcoin dips amid us spot etf outflows and fed rate hold largest crypto hack unsettles market"
+   "bitcoin dips amid us spot etf outflows and fed rate hold largest crypto hack unsettles market",
+   "perplexity ai predicts insane bitcoin price target for 2027",
+   "bitcoin price dips below 63 000 on binance sl"
   ],
   "SOFI:PUT": [
    "nasdaq ceo adena friedman says 23 hour trading starts dec 6 what it means for your retirement money",
@@ -4417,7 +4424,8 @@
    "rivian stock falls off a cliff",
    "rivian margin expansion is now a major catalyst for p s expansion nasdaq rivn",
    "rivian is near its 52 week low will rivn stock hit 10 or 15 first",
-   "rivian automotive inc rivn is attracting investor attention here is what you should know"
+   "rivian automotive inc rivn is attracting investor attention here is what you should know",
+   "what rivian and lucid s latest earnings say about the ev startup race"
   ],
   "F:PUT": [
    "dz bank upgrades ford to buy but cuts its tp",
@@ -4437,7 +4445,9 @@
    "ford begins shipping lfp batteries is f stock a buy now",
    "ford begins using chinese technology in its battery cells",
    "ford stock looks cheap it just got a buy upgrade",
-   "is cars com cars stock undervalued right now"
+   "is cars com cars stock undervalued right now",
+   "a 3 3 billion fund dumps these 3 stocks",
+   "ford motor stock hits 52 week low at 11 1 usd by investing com"
   ]
  },
  "fired": {
@@ -4462,12 +4472,6 @@
    "news:netflix nflx and sag aftra reach preliminary contract agreemen",
    "news:netflix stock hits 52 week low as ad revenue forecast falls to 2 7b"
   ],
-  "BA:PUT:2026-11-27:165": [
-   "up0.25",
-   "news:boeing ge aerospace lead trump s 17b plus asia deals with 12b aircraft sale vertiv panasonic also in focus",
-   "news:boeing ge aerospace headline 17b u s deal push in southeast asia ba nyse",
-   "news:boeing sinks to a 52 week low even as a 12 billion 787 order lands"
-  ],
   "F:PUT:2026-12-04:12": [
    "down-0.15",
    "news:ford motor sees flat 2027 earnings as cost cuts offset 2 billion headwind",
@@ -4483,7 +4487,9 @@
    "sharp@2026-11-19T10:03-05:00",
    "sharp@2026-11-19T10:24-05:00",
    "sharp@2026-11-19T12:00-05:00",
-   "sharp@2026-11-19T12:04-05:00"
+   "sharp@2026-11-19T12:04-05:00",
+   "sharp@2026-11-19T12:19-05:00",
+   "down-0.15"
   ],
   "XOM:PUT:2026-11-27:160": [
    "news:oil prices rise as middle east supply risks intensify",
@@ -4492,11 +4498,13 @@
    "news:gas prices take biggest 3 week dive since 2008",
    "news:crude oil prices edge higher on fears of escalation in us iran conflict",
    "news:us sour crude s war premium vanishes as supply surges",
-   "news:why oil prices are falling despite strait of hormuz risks"
+   "news:why oil prices are falling despite strait of hormuz risks",
+   "news:hormuz strait tanker attacks persist daily despite falling oil prices"
   ],
   "DIS:CALL:2026-11-27:124": [
    "down-0.15",
-   "down-0.3"
+   "down-0.3",
+   "sharp@2026-11-19T12:11-05:00"
   ],
   "AAPL:CALL:2026-11-27:352.5": [
    "sharp@2026-11-19T12:04-05:00",
@@ -4506,18 +4514,22 @@
    "sharp@2026-11-19T11:04-05:00",
    "down-0.15",
    "up0.25"
+  ],
+  "MSTR:PUT:2026-11-27:80": [
+   "stock1",
+   "down-0.15",
+   "stock2",
+   "stock3",
+   "down-0.3",
+   "news:bitcoin price dips below 63 000 on binance sl",
+   "sharp@2026-11-19T12:35-05:00"
   ]
  },
  "stock_level": {
-  "F:PUT:2026-12-04:12": 1
+  "F:PUT:2026-12-04:12": 1,
+  "MSTR:PUT:2026-11-27:80": 3
  },
  "seen_macro": [
-  "solana could dip to 74 as fed rate hike odds hit 99",
-  "us inflation pushes fed toward further interest rate hikes",
-  "inflation weighs on gold as copper draws support from shortages",
-  "family fights are good when setting interest rates",
-  "japan airport terminal tse 9706 stock may be overvalued on current earnings",
-  "the commodities feed oil slides on easing middle east tensions",
   "intel s turnaround could rewrite the stock s story",
   "wall street rebounds on a quieter day as the bond market is closed",
   "why zebra stock is up today",
@@ -5111,14 +5123,22 @@
   "australian dollar technical outlook aud usd 6 plunge tests make or break support at yearly low 11 19 2026",
   "here s why long term investors shouldn t overlook gold etfs",
   "j p morgan sees fed rate hikes at next three meetings as inflation persists",
-  "anthropic valued at over 2 trillion in nasdaq debut"
+  "anthropic valued at over 2 trillion in nasdaq debut",
+  "iea warns hormuz crisis could reshape global energy landscape for decades",
+  "anthropic shares explode on wall street debut as ai giant s total valuation rockets past 2trillion",
+  "anthropic hits 2 trillion in nasdaq debut tops spacex s june listing",
+  "wall st wavers ahead of anthropic market debut",
+  "australian dollar technical outlook aud usd 6 plunge tests make or break support at yearly low",
+  "policymakers want rate hike but disagree on pace"
  ],
  "sharp": {
   "RIVN:PUT:2026-12-04:13": 12.58,
   "BAC:PUT:2026-12-04:50": 50.12,
   "F:PUT:2026-12-04:12": 11.41,
-  "AMZN:CALL:2026-11-27:272.5": 263.965,
+  "AMZN:CALL:2026-11-27:272.5": 261.87,
   "NVDA:PUT:2026-11-27:145": 153.3,
-  "AAPL:CALL:2026-11-27:352.5": 346.62
+  "AAPL:CALL:2026-11-27:352.5": 346.62,
+  "DIS:CALL:2026-11-27:124": 121.09,
+  "MSTR:PUT:2026-11-27:80": 89.92
  }
 }
