@@ -1695,3 +1695,7 @@ id,time,project,tag,sym,root,side,strike,exp,entry,spot,edge,strength
 20261118T1527|stocks|open_same_dir|BAC|PUT|49|2026-12-04,2026-11-18T15:27-05:00,stocks,open_same_dir,BAC,BAC,PUT,49.0,2026-12-04,1.33,48.86,5.0,7.8
 20261118T1527|stocks|open_same_dir|RIVN|PUT|12.5|2026-12-04,2026-11-18T15:27-05:00,stocks,open_same_dir,RIVN,RIVN,PUT,12.5,2026-12-04,0.94,11.86,4.5,7.5
 20261118T1527|stocks|open_same_dir|BA|PUT|160|2026-12-04,2026-11-18T15:27-05:00,stocks,open_same_dir,BA,BA,PUT,160.0,2026-12-04,3.26,163.14,4.0,7.0
+20261119T1012|stocks|chase_em|RIVN|PUT|12|2026-12-04,2026-11-19T10:12-05:00,stocks,chase_em,RIVN,RIVN,PUT,12.0,2026-12-04,0.8,11.54,5.5,7.5
+20261119T1012|stocks|earn_in_life|WMT|CALL|129|2026-12-04,2026-11-19T10:12-05:00,stocks,earn_in_life,WMT,WMT,CALL,129.0,2026-12-04,1.47,125.74,5.5,7.0
+20261119T1012|stocks|open_same_dir|BAC|PUT|49|2026-12-04,2026-11-19T10:12-05:00,stocks,open_same_dir,BAC,BAC,PUT,49.0,2026-12-04,1.24,48.95,5.0,7.5
+20261119T1012|stocks|open_same_dir|AMZN|CALL|280|2026-11-27,2026-11-19T10:12-05:00,stocks,open_same_dir,AMZN,AMZN,CALL,280.0,2026-11-27,2.22,270.89,5.5,7.3
