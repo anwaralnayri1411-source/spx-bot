@@ -616,11 +616,14 @@
    "exit": 24.6,
    "exit_time": "2026-11-19T14:11-05:00",
    "why": "بلغ الهدف الذي حدده (24.00)",
-   "pnl": 900.0
+   "pnl": 900.0,
+   "after_hi": 43.79,
+   "after_lo": 9.1,
+   "after_last": 27.9
   }
  ],
  "decisions": 238,
- "report_day": "2026-11-18",
+ "report_day": "2026-11-19",
  "day": "2026-11-19",
  "decisions_today": 24
 }
