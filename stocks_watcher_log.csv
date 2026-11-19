@@ -4827,3 +4827,15 @@ time,pos_id,ticker,side,event,detail,entry,val,pnl,spot,need,tdays,advice,reason
 2026-11-19T09:46-05:00,HOOD:PUT:2026-11-27:70,HOOD,PUT,sharp,-1.47% في 15د,3.3,,,73.83,0.0966,7,فكّر بالخروج,السهم يتحرك ضدك
 2026-11-19T09:46-05:00,INTC:PUT:2026-11-27:53,INTC,PUT,sharp,-2.68% في 15د,2.22,,,58.98,0.139,7,فكّر بالخروج,السهم يتحرك ضدك
 2026-11-19T09:58-05:00,HOOD:PUT:2026-11-27:70,HOOD,PUT,news,with/medium: Bitcoin ETFs lose $975 million in a week as BTC falls 11% - Crypto News,3.3,1.65,-0.5,73.14,0.0881,7,الأفضل الخروج,العقد تجاوز الوقف (-50%) | السهم يتحرك ضدك
+2026-11-19T10:03-05:00,AMZN:CALL:2026-11-27:272.5,AMZN,CALL,sharp,-0.79% في 15د,2.79,4.8,0.7204,270.93,0.0161,7,فكّر بالخروج,احمِ ربحك الحالي | السهم يتحرك ضدك
+2026-11-19T10:24-05:00,AMZN:CALL:2026-11-27:272.5,AMZN,CALL,sharp,-0.89% في 15د,2.79,,,268.79,0.0242,7,فكّر بالخروج,السهم يتحرك ضدك
+2026-11-19T10:25-05:00,RIVN:PUT:2026-12-04:13,RIVN,PUT,macro_quiet,against/weak/medium: Wall St set for higher open on AI optimism ahead of Anthropic's market debut - Yahoo Finance,0.97,1.27,0.3093,11.415,-0.0539,12,أبقِ,خبر ضد العقد لكن تأثيره محدود، راقب
+2026-11-19T10:25-05:00,SOFI:PUT:2026-12-04:15.5,SOFI,PUT,macro_quiet,against/weak/medium: Wall St set for higher open on AI optimism ahead of Anthropic's market debut - Yahoo Finance,0.86,1.43,0.6628,14.02,-0.0442,12,أبقِ,خبر ضد العقد لكن تأثيره محدود، راقب
+2026-11-19T10:25-05:00,AMZN:CALL:2026-11-27:272.5,AMZN,CALL,macro_quiet,with/weak/medium: Wall St set for higher open on AI optimism ahead of Anthropic's market debut - Yahoo Finance,2.79,4.48,0.6057,269.48,0.0216,7,أبقِ,الخبر في صالح العقد
+2026-11-19T10:25-05:00,RIVN:PUT:2026-12-04:13,RIVN,PUT,macro,with/weak/high: WATCH LIVE | Interest rate remains unchanged amid inflation surge - IOL,0.97,1.27,0.3093,11.415,-0.0539,12,أبقِ,الخبر في صالح العقد
+2026-11-19T10:25-05:00,SOFI:PUT:2026-12-04:15.5,SOFI,PUT,macro,with/weak/high: WATCH LIVE | Interest rate remains unchanged amid inflation surge - IOL,0.86,1.43,0.6628,14.02,-0.0442,12,أبقِ,الخبر في صالح العقد
+2026-11-19T10:25-05:00,BAC:PUT:2026-12-04:50,BAC,PUT,macro,against/weak/high: WATCH LIVE | Interest rate remains unchanged amid inflation surge - IOL,1.09,1.8,0.6514,48.62,-0.006,12,أبقِ,خبر ضد العقد لكن تأثيره محدود، راقب
+2026-11-19T10:25-05:00,AMZN:CALL:2026-11-27:272.5,AMZN,CALL,macro,against/weak/high: WATCH LIVE | Interest rate remains unchanged amid inflation surge - IOL,2.79,4.48,0.6057,269.48,0.0216,7,أبقِ,خبر ضد العقد لكن تأثيره محدود، راقب
+2026-11-19T10:26-05:00,F:PUT:2026-12-04:12,F,PUT,news,against/medium: Ford Stock Looks Cheap. It Just Got a Buy Upgrade. - Barron's,0.84,0.77,-0.0833,11.275,0.0102,12,فكّر بالخروج,خبر ضد العقد
+2026-11-19T10:31-05:00,BA:PUT:2026-11-27:165,BA,PUT,news,against/medium: Boeing Sinks to a 52-Week Low Even as a $12 Billion 787 Order Lands - TIKR.com,2.7,4.4,0.6296,162.105,-0.0012,7,فكّر بالخروج,احمِ ربحك الحالي | خبر ضد العقد
+2026-11-19T10:31-05:00,DIS:CALL:2026-11-27:124,DIS,CALL,contract,-16%,0.96,0.81,-0.1562,121.86,0.0254,7,أبقِ,الفكرة قائمة لكن العقد -16%؛ التزم بالوقف عند −40%
