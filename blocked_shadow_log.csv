@@ -222,3 +222,4 @@ id,project,tag,sym,side,strike,exp,entry_time,entry,edge,strength,out,out_time,o
 20261118T1012|stocks|open_same_dir|MSTR|PUT|85|2026-11-27,stocks,open_same_dir,MSTR,PUT,85.0,2026-11-27,2026-11-18T10:12-05:00,2.42,8.5,7.9,tp,2026-11-19T12:07-05:00,0.893,0.893,93
 20261119T1012|stocks|open_same_dir|AMZN|CALL|280|2026-11-27,stocks,open_same_dir,AMZN,CALL,280.0,2026-11-27,2026-11-19T10:12-05:00,2.22,5.5,7.3,stop,2026-11-19T12:07-05:00,-0.554,0.0,21
 20261119T1027|stocks|btc_against|MSTR|PUT|85|2026-11-27,stocks,btc_against,MSTR,PUT,85.0,2026-11-27,2026-11-19T10:27-05:00,3.0,4.5,6.5,tp,2026-11-19T12:07-05:00,0.527,0.527,18
+20261119T1235|spx|news_weak|SPY|PUT|722|2026-11-20,spx,news_weak,SPY,PUT,722.0,2026-11-20,2026-11-19T12:35-05:00,3.77,3.25,3.4,tp,2026-11-19T13:07-05:00,0.541,0.541,6
