@@ -242,3 +242,4 @@ id,project,tag,sym,side,strike,exp,entry_time,entry,edge,strength,out,out_time,o
 20261119T1212|stocks|open_same_dir|HOOD|PUT|68|2026-11-27,stocks,open_same_dir,HOOD,PUT,68.0,2026-11-27,2026-11-19T12:12-05:00,2.47,3.5,6.9,tp,2026-11-20T10:32-05:00,0.587,0.587,53
 20261119T1027|stocks|btc_against|SOFI|PUT|14.5|2026-12-04,stocks,btc_against,SOFI,PUT,14.5,2026-12-04,2026-11-19T10:27-05:00,0.92,4.0,7.2,tp,2026-11-20T10:42-05:00,0.543,0.543,75
 20261120T1012|stocks|chase_em|NVDA|PUT|130|2026-12-04,stocks,chase_em,NVDA,PUT,130.0,2026-12-04,2026-11-20T10:12-05:00,2.92,6.0,6.8,tp,2026-11-20T10:47-05:00,0.61,0.61,7
+20261118T1012|stocks|open_same_dir|RIVN|PUT|12.5|2026-12-04,stocks,open_same_dir,RIVN,PUT,12.5,2026-12-04,2026-11-18T10:12-05:00,1.07,6.5,8.1,tp,2026-11-20T11:17-05:00,0.514,0.514,156
