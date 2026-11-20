@@ -4503,14 +4503,6 @@
   ]
  },
  "fired": {
-  "RIVN:PUT:2026-12-04:13": [
-   "sharp@2026-11-13T11:36-05:00",
-   "down-0.15",
-   "news:citi maintains rivian automotive rivn us with hold rating cuts target price to 14 5",
-   "news:rivian automotive nasdaq rivn stock price target lowered at citigroup",
-   "news:rivn maintains rating by citigroup price target lowered to 1",
-   "up0.25"
-  ],
   "BAC:PUT:2026-12-04:50": [
    "up0.25",
    "sharp@2026-11-17T09:55-05:00",
@@ -4523,21 +4515,6 @@
    "news:netflix nflx announces additional layoffs in gaming division a",
    "news:netflix nflx and sag aftra reach preliminary contract agreemen",
    "news:netflix stock hits 52 week low as ad revenue forecast falls to 2 7b"
-  ],
-  "F:PUT:2026-12-04:12": [
-   "down-0.15",
-   "news:ford motor sees flat 2027 earnings as cost cuts offset 2 billion headwind",
-   "sharp@2026-11-18T12:29-05:00",
-   "stock1",
-   "news:ford motor nyse f raised to buy at dz bank",
-   "news:ford motor upgraded by dz bank with a new price target",
-   "news:ford stock looks cheap it just got a buy upgrade",
-   "news:ford stock nyse f gets upgrade at dz bank share prices slip",
-   "down-0.3",
-   "stock2",
-   "sharp@2026-11-20T09:45-05:00",
-   "sharp@2026-11-20T09:56-05:00",
-   "stock3"
   ],
   "XOM:PUT:2026-11-27:160": [
    "news:oil prices rise as middle east supply risks intensify",
@@ -4582,14 +4559,16 @@
    "news:bitcoin btc demand hits 2026 low as price retests 62 000",
    "news:monness crespi slaps strategy nasdaq mstr with sell rating and 65 target flagging dilution risk over bitcoin premium",
    "news:bitcoin etfs lose 2 89b in november as losses deepen",
-   "news:strategy is worth less than its bitcoin trump media may have to sell"
+   "news:strategy is worth less than its bitcoin trump media may have to sell",
+   "up0.25"
   ],
   "JPM:PUT:2026-11-27:315": [
-   "down-0.15"
-  ]
+   "down-0.15",
+   "sharp@2026-11-20T10:09-05:00"
+  ],
+  "SOFI:PUT:2026-12-11:14": []
  },
  "stock_level": {
-  "F:PUT:2026-12-04:12": 3,
   "MSTR:PUT:2026-11-27:80": 3
  },
  "seen_macro": [
@@ -5195,11 +5174,10 @@
   "gold hits 14 month low as fed rate hike looms"
  ],
  "sharp": {
-  "RIVN:PUT:2026-12-04:13": 12.58,
   "BAC:PUT:2026-12-04:50": 50.12,
-  "F:PUT:2026-12-04:12": 11.62,
   "AAPL:CALL:2026-11-27:352.5": 346.62,
   "MSTR:PUT:2026-11-27:80": 89.92,
-  "XOM:PUT:2026-11-27:160": 160.21
+  "XOM:PUT:2026-11-27:160": 160.21,
+  "JPM:PUT:2026-11-27:315": 320.66
  }
 }
