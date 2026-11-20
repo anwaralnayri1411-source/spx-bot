@@ -4503,13 +4503,6 @@
   ]
  },
  "fired": {
-  "BAC:PUT:2026-12-04:50": [
-   "up0.25",
-   "sharp@2026-11-17T09:55-05:00",
-   "news:berkshire sells 27 5m bank of america shares should investors worry",
-   "news:bank of america stocks move lower as berkshire cuts stake another 5 7",
-   "news:bank of america stock rbc keeps buy rating targets 60"
-  ],
   "NFLX:PUT:2026-12-04:60": [
    "up0.25",
    "news:netflix nflx announces additional layoffs in gaming division a",
@@ -4564,7 +4557,8 @@
   ],
   "JPM:PUT:2026-11-27:315": [
    "down-0.15",
-   "sharp@2026-11-20T10:09-05:00"
+   "sharp@2026-11-20T10:09-05:00",
+   "up0.25"
   ],
   "SOFI:PUT:2026-12-11:14": []
  },
@@ -5174,7 +5168,6 @@
   "gold hits 14 month low as fed rate hike looms"
  ],
  "sharp": {
-  "BAC:PUT:2026-12-04:50": 50.12,
   "AAPL:CALL:2026-11-27:352.5": 346.62,
   "MSTR:PUT:2026-11-27:80": 89.92,
   "XOM:PUT:2026-11-27:160": 160.21,
