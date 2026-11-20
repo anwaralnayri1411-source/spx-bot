@@ -4532,7 +4532,8 @@
    "news:ford motor nyse f raised to buy at dz bank",
    "news:ford motor upgraded by dz bank with a new price target",
    "news:ford stock looks cheap it just got a buy upgrade",
-   "news:ford stock nyse f gets upgrade at dz bank share prices slip"
+   "news:ford stock nyse f gets upgrade at dz bank share prices slip",
+   "down-0.3"
   ],
   "XOM:PUT:2026-11-27:160": [
    "news:oil prices rise as middle east supply risks intensify",
@@ -4555,12 +4556,6 @@
   "AAPL:CALL:2026-11-27:352.5": [
    "sharp@2026-11-19T12:04-05:00",
    "down-0.15"
-  ],
-  "NVDA:PUT:2026-11-27:145": [
-   "sharp@2026-11-19T11:04-05:00",
-   "down-0.15",
-   "up0.25",
-   "news:wedbush lifts nvidia stock nvda price target to 273 here s why"
   ],
   "MSTR:PUT:2026-11-27:80": [
    "stock1",
@@ -5197,7 +5192,6 @@
   "RIVN:PUT:2026-12-04:13": 12.58,
   "BAC:PUT:2026-12-04:50": 50.12,
   "F:PUT:2026-12-04:12": 11.41,
-  "NVDA:PUT:2026-11-27:145": 153.3,
   "AAPL:CALL:2026-11-27:352.5": 346.62,
   "MSTR:PUT:2026-11-27:80": 89.92
  }
