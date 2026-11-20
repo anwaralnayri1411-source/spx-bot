@@ -4503,12 +4503,6 @@
   ]
  },
  "fired": {
-  "NFLX:PUT:2026-12-04:60": [
-   "up0.25",
-   "news:netflix nflx announces additional layoffs in gaming division a",
-   "news:netflix nflx and sag aftra reach preliminary contract agreemen",
-   "news:netflix stock hits 52 week low as ad revenue forecast falls to 2 7b"
-  ],
   "XOM:PUT:2026-11-27:160": [
    "news:oil prices rise as middle east supply risks intensify",
    "news:u s oil falls 3 2 as iran says mines disabled three tankers near hormuz",
@@ -4528,11 +4522,6 @@
    "news:oil prices rise as tanker disruptions offset surplus supply outlook",
    "sharp@2026-11-20T09:57-05:00",
    "down-0.15"
-  ],
-  "AAPL:CALL:2026-11-27:352.5": [
-   "sharp@2026-11-19T12:04-05:00",
-   "down-0.15",
-   "down-0.3"
   ],
   "MSTR:PUT:2026-11-27:80": [
    "stock1",
@@ -4565,7 +4554,8 @@
    "up0.25",
    "sharp@2026-11-20T11:12-05:00"
   ],
-  "HOOD:PUT:2026-12-04:60": []
+  "HOOD:PUT:2026-12-04:60": [],
+  "UBER:PUT:2026-12-04:65": []
  },
  "stock_level": {
   "MSTR:PUT:2026-11-27:80": 3
@@ -5173,7 +5163,6 @@
   "gold hits 14 month low as fed rate hike looms"
  ],
  "sharp": {
-  "AAPL:CALL:2026-11-27:352.5": 346.62,
   "MSTR:PUT:2026-11-27:80": 89.92,
   "XOM:PUT:2026-11-27:160": 160.21,
   "JPM:PUT:2026-11-27:315": 320.66,
