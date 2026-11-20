@@ -4523,33 +4523,6 @@
    "sharp@2026-11-20T09:57-05:00",
    "down-0.15"
   ],
-  "MSTR:PUT:2026-11-27:80": [
-   "stock1",
-   "down-0.15",
-   "stock2",
-   "stock3",
-   "down-0.3",
-   "news:bitcoin price dips below 63 000 on binance sl",
-   "sharp@2026-11-19T12:35-05:00",
-   "news:bitcoin btc price holds near 64k but etf money keeps walking out",
-   "news:strategy just got dropped from msci s indexes can it keep buying bitcoin",
-   "news:bitcoin briefly hits 64k after anthropic s 81b ipo then falls back near 62k amid 350m crypto liquidations",
-   "news:dow drops 1 000 points as bitcoin falls 2 6 amid market volatility",
-   "news:crypto news dow drops 1 000 points bitcoin slips to 62k",
-   "news:strategy removed from msci indexes and adds bitcoin mstr remains under pressure",
-   "news:bitcoin enters death cross as anthropic ipo fails to lift wall street",
-   "news:bitcoin vs gold price forecast xau hits 14 month low as btc retests 63k on fed rate hike fears",
-   "news:bitcoin btc demand hits 2026 low as price retests 62 000",
-   "news:monness crespi slaps strategy nasdaq mstr with sell rating and 65 target flagging dilution risk over bitcoin premium",
-   "news:bitcoin etfs lose 2 89b in november as losses deepen",
-   "news:strategy is worth less than its bitcoin trump media may have to sell",
-   "up0.25"
-  ],
-  "JPM:PUT:2026-11-27:315": [
-   "down-0.15",
-   "sharp@2026-11-20T10:09-05:00",
-   "up0.25"
-  ],
   "SOFI:PUT:2026-12-11:14": [
    "up0.25",
    "sharp@2026-11-20T11:12-05:00"
@@ -4558,14 +4531,15 @@
    "up0.25",
    "sharp@2026-11-20T13:57-05:00"
   ],
-  "UBER:PUT:2026-12-04:65": [],
+  "UBER:PUT:2026-12-04:65": [
+   "up0.25"
+  ],
   "GOOGL:PUT:2026-12-04:250": [
-   "down-0.15"
+   "down-0.15",
+   "up0.25"
   ]
  },
- "stock_level": {
-  "MSTR:PUT:2026-11-27:80": 3
- },
+ "stock_level": {},
  "seen_macro": [
   "larger series of interest rate hikes are more likely after hot october cpi",
   "trump threatens to double tariffs on mexico if it does not halt migrants",
@@ -5169,9 +5143,7 @@
   "gold hits 14 month low as fed rate hike looms"
  ],
  "sharp": {
-  "MSTR:PUT:2026-11-27:80": 89.92,
   "XOM:PUT:2026-11-27:160": 160.21,
-  "JPM:PUT:2026-11-27:315": 320.66,
   "SOFI:PUT:2026-12-11:14": 13.075,
   "HOOD:PUT:2026-12-04:60": 64.54
  }
