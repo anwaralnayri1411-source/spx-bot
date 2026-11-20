@@ -4533,7 +4533,11 @@
    "news:ford motor upgraded by dz bank with a new price target",
    "news:ford stock looks cheap it just got a buy upgrade",
    "news:ford stock nyse f gets upgrade at dz bank share prices slip",
-   "down-0.3"
+   "down-0.3",
+   "stock2",
+   "sharp@2026-11-20T09:45-05:00",
+   "sharp@2026-11-20T09:56-05:00",
+   "stock3"
   ],
   "XOM:PUT:2026-11-27:160": [
    "news:oil prices rise as middle east supply risks intensify",
@@ -4551,7 +4555,9 @@
    "news:natural gas wti oil brent oil forecasts oil rebounds as iran intensifies attacks in hormuz",
    "news:dow slides as oil rises after a riyadh attack",
    "news:gas prices see biggest three week drop in nearly two decades",
-   "news:oil prices rise as tanker disruptions offset surplus supply outlook"
+   "news:oil prices rise as tanker disruptions offset surplus supply outlook",
+   "sharp@2026-11-20T09:57-05:00",
+   "down-0.15"
   ],
   "AAPL:CALL:2026-11-27:352.5": [
    "sharp@2026-11-19T12:04-05:00",
@@ -4583,7 +4589,7 @@
   ]
  },
  "stock_level": {
-  "F:PUT:2026-12-04:12": 1,
+  "F:PUT:2026-12-04:12": 3,
   "MSTR:PUT:2026-11-27:80": 3
  },
  "seen_macro": [
@@ -5191,8 +5197,9 @@
  "sharp": {
   "RIVN:PUT:2026-12-04:13": 12.58,
   "BAC:PUT:2026-12-04:50": 50.12,
-  "F:PUT:2026-12-04:12": 11.41,
+  "F:PUT:2026-12-04:12": 11.62,
   "AAPL:CALL:2026-11-27:352.5": 346.62,
-  "MSTR:PUT:2026-11-27:80": 89.92
+  "MSTR:PUT:2026-11-27:80": 89.92,
+  "XOM:PUT:2026-11-27:160": 160.21
  }
 }
