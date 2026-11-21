@@ -1942,6 +1942,15 @@ def em_line(a):
             f"{'صعوداً' if mv > 0 else 'هبوطاً'} من الافتتاح {o:,.0f}.", ""]
 
 
+def event_impact_lines(n):
+    """H-NEWSIMPACT (21/11/2026): الأثر التاريخي لحدث اليوم الكبير على SPX (من SPY)، معلومة فقط."""
+    try:
+        import macro_events as mev
+        return [x for x in (mev.impact_line(nm, "SPY", "SPX") for d, nm in mev.between(n.date(), n.date())) if x]
+    except Exception:  # noqa: BLE001
+        return []
+
+
 def fvg_line(a):
     """سطر الدخول بعد عودة السعر إلى الفجوة (الإصدار 19)، وإلا []."""
     z = a.get("fvg")
@@ -1974,6 +1983,7 @@ def send_signal(a):
         cap.append(f"➕ <b>إضافة على رابح:</b> عقد {side} السابق ({pv['strike']:,.0f}، {pv['time'][11:16]}) {how}.")
     cap += [x for x in liquidity_lines(side, S, now_ny()) if x]
     cap += night_news_lines(side)
+    cap += event_impact_lines(now_ny())
     cap += heavy_lines(side)
     cap.append(f"⏰ لا دخول بعد {ry_time(*no_entry(now_ny()))} | 📍 SPX {S:,.1f}")
     nd = groups.get("NDX")

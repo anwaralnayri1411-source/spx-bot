@@ -1733,13 +1733,13 @@ def idea_line(i):
         f"💵 <b>${k['cost']:,.0f}</b> ({k['price']:.2f}) | يحتاج {'+' if call else '-'}{k['need'] * 100:.1f}% | {mark}",
         f"├ 🟢 <b>دخول</b> بسعر حتى <b>{k['price']:.2f}</b> (لا تلاحقه فوق +10%)"
         + (f" · 📡 {ob.SRC_NOTE[k['price_src']]}" if k.get("price_src") in ob.SRC_NOTE else ""),
-    ] + ([w] if (w := event_warning(k)) else []) + stock_levels(i, k))
+    ] + ([w] if (w := event_warning(k, i.get("ticker"))) else []) + stock_levels(i, k))
 
 
-def event_warning(k):
+def event_warning(k, ticker=None):
     """تحذير عرض فقط (لا يغيّر التوصية): خبر اقتصادي كبير بين اليوم وانتهاء العقد."""
     try:
-        return mev.warning_line(ob.now_ny().date(), date.fromisoformat(k["exp"]))
+        return mev.warning_line(ob.now_ny().date(), date.fromisoformat(k["exp"]), ticker)
     except Exception:  # noqa: BLE001
         return ""
 
