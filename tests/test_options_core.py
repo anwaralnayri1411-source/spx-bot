@@ -257,3 +257,42 @@ def test_open_duplicate_blocks_same_open_contract():
     assert ob.open_duplicate(a, {"positions": [{"id": "SPY:CALL:770:2026-11-05", "status": "stopped"}]}) is None
     assert ob.open_duplicate(dict(a, side="PUT"), P) is None
     assert ob.open_duplicate(a, {"positions": [{"id": "SPY:CALL:765:2026-11-05", "status": "open"}]}) is None
+
+
+def test_ndx_checked_even_without_spx_and_rejections_prefixed(monkeypatch):
+    # H-NDXALWAYS: لا عقد SPX ولا SPY، ومع ذلك يُفحص NDXP؛ وأسباب رفضه بـ«NDXP: » دون أن تختلط بعدّاد SPX
+    import pandas as pd
+    monkeypatch.setattr(ob, "ALT_SYMBOL", "")
+    monkeypatch.setattr(ob, "_live_spot", lambda sym, fb: fb)
+    monkeypatch.setattr(ob, "_live_chain", lambda df, S: df)
+    monkeypatch.setattr(ob, "spxw_rows", lambda df: df)
+    calls = []
+
+    def fake_pick(side, df, S, T, vix, *a, **kw):
+        calls.append(kw.get("usd"))
+        ob._rej("سعر خارج النطاق")
+        return [] if kw.get("usd") is None else [{"score": 1.0, "strike": 28000.0}]
+
+    monkeypatch.setattr(ob, "pick_contracts", fake_pick)
+
+    class T:
+        options = ["2026-11-23"]
+
+        def option_chain(self, e):
+            class C:
+                calls = puts = pd.DataFrame()
+            return C()
+
+        def history(self, **k):
+            return pd.DataFrame({"Close": [28000.0]})
+
+    monkeypatch.setattr(ob.yf, "Ticker", lambda s: T())
+
+    class Ch:
+        calls = puts = object()
+
+    ob.REJ.clear()
+    out = ob._pick_all("PUT", Ch(), 7000.0, 0.001, {"vix": 18.0}, "2026-11-23")
+    assert calls == [None, (ob.NDX_MIN_USD, ob.NDX_MAX_USD)]
+    assert [k["sym"] for k in out] == ["NDX"] and out[0]["spot"] == 28000.0
+    assert ob.REJ == {"سعر خارج النطاق": 1, "NDXP: سعر خارج النطاق": 1}

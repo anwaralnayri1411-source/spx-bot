@@ -878,6 +878,20 @@ def log_summary():
 
 
 # ====================== التحليل ======================
+def _ndx_pick(side, df, S, T, vix):
+    """عقود NDXP بشروطه ونطاقه؛ أسباب رفضها تُضاف إلى REJ مسبوقة بـ«NDXP: » دون أن تختلط بعدّاد SPX."""
+    saved = dict(REJ)
+    REJ.clear()
+    try:
+        return pick_contracts(side, df, S, T, vix, NDX_MIN_OI, NDX_MIN_VOL, NDX_MAX_SPREAD, usd=(NDX_MIN_USD, NDX_MAX_USD))
+    finally:
+        mine = dict(REJ)
+        REJ.clear()
+        REJ.update(saved)
+        for k, v in mine.items():
+            REJ["NDXP: " + k] = REJ.get("NDXP: " + k, 0) + v
+
+
 def _pick_all(side, ch, S, T, c, exp):
     """اختيار عقود SPX وSPY وNDXP لاتجاه معيّن (استُخرجت من analyze كما هي، لتستعملها التوصية وظل الحجب بالمنطق نفسه)."""
     Sp = _live_spot(SYMBOL, S)     # الوضع 1: سعر SPX اللحظي لاختيار العقد (الإشارة نفسها من شموع ياهو)
@@ -894,7 +908,7 @@ def _pick_all(side, ch, S, T, c, exp):
         except Exception as e:
             print("تعذر قراءة خيارات", ALT_SYMBOL, e)
         _spy_old_shadow(side, exp, T, c, new)
-    if NDX_SYMBOL and contracts:
+    if NDX_SYMBOL:      # H-NDXALWAYS (21/11/2026): يُفحص دائماً، لا فقط حين يوجد عقد SPX/SPY
         try:
             tn = yf.Ticker(NDX_SYMBOL)
             if exp in list(tn.options):
@@ -902,8 +916,7 @@ def _pick_all(side, ch, S, T, c, exp):
                 hn = tn.history(period="1d", interval="5m")["Close"].dropna()
                 Sn = float(hn.iloc[-1]) if len(hn) else float(tn.history(period="5d")["Close"].dropna().iloc[-1])
                 Sn = _live_spot(NDX_SYMBOL, Sn)
-                nd = pick_contracts(side, _live_chain(chn.calls if side == "CALL" else chn.puts, Sn), Sn, T, c["vix"],
-                                    NDX_MIN_OI, NDX_MIN_VOL, NDX_MAX_SPREAD, usd=(NDX_MIN_USD, NDX_MAX_USD))
+                nd = _ndx_pick(side, _live_chain(chn.calls if side == "CALL" else chn.puts, Sn), Sn, T, c["vix"])
                 for k in nd[:1]:
                     k["sym"], k["spot"] = "NDX", Sn
                     contracts.append(k)
@@ -1978,7 +1991,7 @@ def send_signal(a):
         if mid:
             if alt_sep:
                 send_alt_card(a, alt[0], side, dot, reply_to=mid)
-            if nd:
+            if nd and sym != "NDX":       # NDXP وحده: بطاقته هي الرئيسية، فلا تكرار
                 send_ndx_card(a, nd[0], side, dot, reply_to=mid)
             return mid
     except Exception as e:
