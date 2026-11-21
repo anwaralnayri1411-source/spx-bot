@@ -320,3 +320,12 @@ def test_ndx_checked_even_without_spx_and_rejections_prefixed(monkeypatch):
     assert calls == [None, (ob.NDX_MIN_USD, ob.NDX_MAX_USD)]
     assert [k["sym"] for k in out] == ["NDX"] and out[0]["spot"] == 28000.0
     assert ob.REJ == {"سعر خارج النطاق": 1, "NDXP: سعر خارج النطاق": 1}
+
+
+def test_nth_label_and_same_side_count():
+    n = datetime.fromisoformat("2026-11-20T11:00-05:00")
+    P = {"positions": [{"side": "PUT", "time": "2026-11-20T10:00-05:00"}, {"side": "PUT", "time": "2026-11-20T10:00-05:00"},
+                       {"side": "PUT", "time": "2026-11-20T10:30-05:00"}, {"side": "CALL", "time": "2026-11-20T10:40-05:00"},
+                       {"side": "PUT", "time": "2026-11-19T10:00-05:00"}]}
+    assert ob.same_side_today("PUT", n, P) == 2 and ob.same_side_today("CALL", n, P) == 1
+    assert ob.nth_label(2) == "توصية ثانية في نفس الاتجاه" and "ثالثة" in ob.nth_label(3)

@@ -661,6 +661,35 @@ def blocked_map(P, n):
     return out
 
 
+SECOND_MAX = 3   # H-MOREENTRIES-S: أقصى عقود مفتوحة للسهم بالاتجاه نفسه عند الإضافة على رابح
+
+
+def winner_map(P, n):
+    """{(سهم، اتجاه): {ok، n، ids، last}} للعقود المفتوحة. ok = كلها رابحة (last_pnl > 0) وعددها < SECOND_MAX."""
+    out = {}
+    for p in active_positions(P, n):
+        if is_closed(p):
+            continue
+        w = out.setdefault((p["ticker"], p["side"]), {"ok": True, "n": 0, "ids": set(), "last": None})
+        w["n"] += 1
+        w["ids"].add(pos_id(p["ticker"], p["side"], p["exp"], p["strike"]))
+        w["ok"] = w["ok"] and (p.get("last_pnl") or 0) > 0
+        w["last"] = p
+    for w in out.values():
+        w["ok"] = w["ok"] and w["n"] < SECOND_MAX
+    return out
+
+
+def second_idea(i, w):
+    """يجهّز فكرة الإضافة على رابح: يستبعد العقد المفتوح نفسه، ويضع رقم التوصية. يرجع False إن لم يبقَ عقد مختلف."""
+    alt = [k for k in i["contracts"] if pos_id(i["ticker"], i["side"], k["exp"], k["strike"]) not in w["ids"]]
+    if not alt:
+        return False
+    i["contracts"] = alt
+    i["nth"], i["prev"] = w["n"] + 1, w["last"]
+    return True
+
+
 def pos_id(tk, side, exp, strike):
     return f"{tk}:{side}:{exp}:{float(strike):g}"
 
@@ -1728,7 +1757,8 @@ def idea_line(i):
         flags = " 🚨أرباح"
     mark = tier(k["score"]) + (" 🔥" if k["flow"] >= 1 else "")
     return "\n".join([
-        f"{'🟢' if call else '🔴'} <b>{ob.esc(i['ticker'])}</b> — <b>{'CALL' if call else 'PUT'}</b> | ⭐ {i['strength']:.1f}{flags}",
+        f"{'🟢' if call else '🔴'} <b>{ob.esc(i['ticker'])}</b> — <b>{'CALL' if call else 'PUT'}</b> | ⭐ {i['strength']:.1f}{flags}"
+        + (f" · 🔁 {ob.nth_label(i['nth'])}" if i.get("nth") else ""),
         f"🎯 Strike <b>{k['strike']:,.1f}</b> | 📅 <b>{date_ar(k['exp'])}</b>",
         f"💵 <b>${k['cost']:,.0f}</b> ({k['price']:.2f}) | يحتاج {'+' if call else '-'}{k['need'] * 100:.1f}% | {mark}",
         f"├ 🟢 <b>دخول</b> بسعر حتى <b>{k['price']:.2f}</b> (لا تلاحقه فوق +10%)"
@@ -1794,10 +1824,12 @@ def idea_caption(i):
     lv = [x.replace("├ ", "").replace("└ ", "") for x in stock_levels(i, k)]
     return "\n".join([
         f"🔔 <b>توصية الشركات | {ob.esc(i['ticker'])} {side} {'🟢' if call else '🔴'}</b> | ⭐ {i['strength']:.1f}{flags} #توصية",
+    ] + ([f"🔁 <b>{ob.nth_label(i['nth'])}</b> — العقد السابق ({i['prev']['strike']:,.1f}) رابح "
+          f"{(i['prev'].get('last_pnl') or 0) * 100:+.0f}%"] if i.get("nth") else []) + [
         f"✅ <b>الدخول:</b> {ob.esc(i['ticker'])} {k['strike']:,.1f} {side} | 📅 {date_ar(k['exp'])}",
         f"💵 بسعر حتى <b>{k['price']:.2f}</b> | تكلفة <b>${k['cost']:,.0f}</b> للعقد | يحتاج {'+' if call else '-'}{k['need'] * 100:.1f}%",
         quote_line(k),
-        *([w] if (w := event_warning(k)) else []),
+        *([w] if (w := event_warning(k, i.get("ticker"))) else []),
         *([cl] if (cl := _ctx_line(i)) else []),
         *ob.night_news_lines(side, i["ticker"]),
         *ob.heavy_lines(side, i["ticker"]),
@@ -2042,8 +2074,16 @@ def do_scan(n, force, P):
 
     # لا نكرر التوصية على سهم لديك فيه عقد مفتوح بنفس الاتجاه (منعاً لمضاعفة المخاطرة)
     blocked = blocked_map(P, n)
+    wins = winner_map(P, n)
     new, held = [], []
     for i in a["ideas"]:
+        w = wins.get((i["ticker"], i["side"]))
+        if w and w["ok"]:                # H-MOREENTRIES-S: العقد المفتوح رابح والاتجاه مستمر → توصية ثانية بعقد آخر
+            if second_idea(i, w):
+                new.append(i)
+            else:
+                held.append(_blocked_idea("same_contract_open", i))
+            continue
         if f"{i['ticker']}:{i['side']}" in state["sent"]:
             continue
         if (i["ticker"], i["side"]) in blocked:

@@ -1971,7 +1971,10 @@ def send_signal(a):
     sym = k0.get("sym", SYMBOL).lstrip("^")
     dot = "🟢" if side == "CALL" else "🔴"
     title = "SPX" if sym == "SPX" else f"{sym} (اتجاه SPX)"
-    cap = [f"🔔 <b>توصية {title} | {side} {dot}</b> | ⭐ {a['strength']:.0f}/10 #توصية"] + ticket_lines(sym, k0, side, k0.get("exp", a["exp"]))
+    cap = [f"🔔 <b>توصية {title} | {side} {dot}</b> | ⭐ {a['strength']:.0f}/10 #توصية"]
+    if a.get("nth", 1) > 1:
+        cap.append(f"🔁 <b>{nth_label(a['nth'])}</b>")
+    cap += ticket_lines(sym, k0, side, k0.get("exp", a["exp"]))
     alt = groups.get(ALT_SYMBOL) if ALT_SYMBOL else None
     alt_sep = bool(alt) and sym != ALT_SYMBOL      # بطاقة SPY منفصلة (لا تكرار إن كان العقد الرئيسي هو SPY نفسه)
     if alt_sep:
@@ -2162,6 +2165,21 @@ def addon_after_target(side, n, P=None):
     if not same or len(same) >= ADDON_MAX or any(p["status"] == "open" for p in same) or same[-1]["status"] != "tp":
         return None
     return same[-1]
+
+
+NTH_AR = {2: "ثانية", 3: "ثالثة", 4: "رابعة", 5: "خامسة", 6: "سادسة"}
+
+
+def nth_label(k):
+    """H-MOREENTRIES-S: «توصية ثانية في نفس الاتجاه» وما بعدها."""
+    return f"توصية {NTH_AR.get(k, f'رقم {k}')} في نفس الاتجاه"
+
+
+def same_side_today(side, n, P=None):
+    """عدد توصيات اليوم (أوقات مختلفة) بالاتجاه نفسه، لأي أداة."""
+    P = P if P is not None else load_positions()
+    today = n.date().isoformat()
+    return len({p["time"] for p in P["positions"] if p["side"] == side and p["time"][:10] == today})
 
 
 def repeat_check(side, n, P=None):
@@ -2791,6 +2809,9 @@ def run_once(force=False):
                 a["addon"] = prev
     if has_signal and not recent and not force:
         drop_open_contracts(a)
+        k_prev = same_side_today(a["side"], n)
+        if k_prev:
+            a["nth"] = k_prev + 1
     if has_signal and recent and not force:
         try:   # ظل الحجب: إشارة مكررة قبل REPEAT_MINUTES لم تُرسل (تسجيل فقط)
             import blocked_shadow
