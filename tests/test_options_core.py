@@ -218,7 +218,31 @@ def test_addon_after_target_rules():
     assert ob.addon_after_target("CALL", n, {"positions": [mk("09:45", "tp"), mk("10:30", "open")]}) is None
     assert ob.addon_after_target("CALL", n, {"positions": [mk("09:45", "tp", sym="SPY")]}) is None   # SPX فقط
     assert ob.addon_after_target("PUT", n, {"positions": [mk("09:45", "tp")]}) is None
-    assert ob.addon_after_target("CALL", n, {"positions": [mk("09:45", "tp"), mk("10:05", "tp"), mk("10:40", "tp")]}) is None  # الحد 3
+    six = [mk(f"10:{m:02d}", "tp") for m in range(0, 60, 10)]
+    assert ob.addon_after_target("CALL", n, {"positions": six}) is None   # الحد ADDON_MAX (6 منذ H-MOREENTRIES)
+
+
+def test_repeat_check_and_drop_open():
+    # H-MOREENTRIES: لا منع بالوقت؛ المنع مع عقد مفتوح غير رابح أو بلوغ السقف، والعقد المفتوح نفسه يُستبدل بسترايك آخر
+    n = datetime.fromisoformat("2026-11-20T11:00-05:00")
+    mk = lambda t, st, pnl=None, side="PUT", sym="SPX", k=7100.0: {"id": f"{sym}:{side}:{k:g}:2026-11-20", "sym": sym, "side": side,
+                                                                   "time": f"2026-11-20T{t}-05:00", "status": st, "strike": k,
+                                                                   **({} if pnl is None else {"pnl": pnl})}
+    assert ob.repeat_check("PUT", n, {"positions": []}) == (False, None)
+    assert ob.repeat_check("PUT", n, {"positions": [mk("10:00", "open")]})[0]                 # لم يُقس بعد
+    assert ob.repeat_check("PUT", n, {"positions": [mk("10:00", "open", -0.1)]})[0]           # خاسر: لا تعزيز
+    blk, prev = ob.repeat_check("PUT", n, {"positions": [mk("10:00", "open", 0.3)]})
+    assert not blk and prev["pnl"] == 0.3                                                      # رابح: إضافة بسترايك آخر
+    assert ob.repeat_check("PUT", n, {"positions": [mk("10:00", "stopped")]}) == (False, None)  # أُغلق بوقف: فرصة جديدة مسموحة
+    assert ob.repeat_check("CALL", n, {"positions": [mk("10:00", "open", -0.1)]}) == (False, None)
+    full = {"positions": [mk(f"10:{m:02d}", "tp") for m in range(0, 60, 10)]}
+    assert ob.repeat_check("PUT", n, full)[0]                                                    # السقف
+    a = {"side": "PUT", "exp": "2026-11-20", "contracts": [{"sym": "^SPX", "strike": 7100.0}, {"sym": "^SPX", "strike": 7090.0}]}
+    ob.drop_open_contracts(a, {"positions": [mk("10:00", "open", 0.3)]})
+    assert [k["strike"] for k in a["contracts"]] == [7090.0]
+    b = {"side": "PUT", "exp": "2026-11-20", "contracts": [{"sym": "^SPX", "strike": 7100.0}]}
+    ob.drop_open_contracts(b, {"positions": [mk("10:00", "open", 0.3)]})
+    assert len(b["contracts"]) == 1                                                              # لا بديل: يبقى ويحجبه open_duplicate
 
 
 def test_exp_label_and_ticket_date():

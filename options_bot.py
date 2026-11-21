@@ -55,7 +55,7 @@ STRUCT_MIN_AGE = 5          # دقائق قبل تفعيل الوقف الهيك
 EM_CHASE = 0.80             # H-PRO1: لا دخول بعد قطع 80% من النطاق المتوقع في جهة التوصية
 SECTORS = ("XLK", "XLF", "XLV", "XLY", "XLC", "XLI", "XLP", "XLE", "XLU", "XLB", "XLRE")
 REPEAT_MINUTES = 90         # لا نكرر نفس الاتجاه قبل هذه المدة
-ADDON_MAX = 3               # H-ADDON: أقصى توصيات SPX بالاتجاه نفسه في اليوم حين يُرفع منع التكرار بعد بلوغ الهدف
+ADDON_MAX = 6               # H-ADDON: أقصى توصيات SPX بالاتجاه نفسه في اليوم حين يُرفع منع التكرار بعد بلوغ الهدف
 RISK_BUDGET_USD = 150       # أقصى خسارة تقبلها في الصفقة الواحدة عند الوقف (عدّلها حسب حسابك)
 MAX_QTY = 5                 # سقف عدد العقود المقترح
 TARGET_MAX_EM = 0.25         # أقصى مسافة لهدف الخطة من نقطة الدخول (جزء من الحركة اليومية المتوقعة)
@@ -1140,13 +1140,12 @@ def analyze(force):
     _log_live_bars(n, lb_mode, lb_info, c, bf_other, bull, bear)
     edge = abs(bull - bear)
     reasons = []
-    if shock["level"] == 2:
-        edge = max(edge - 1.0, 0)
+    # H-MOREENTRIES (21/11/2026): أخبار المستوى 2 لا تخصم من الفرق بعد الآن
     side = "CALL" if bull > bear else "PUT"
     strength = min(10.0, edge * 1.5)
     c_old = {k: v for k, v in c.items() if k != "orb_hold"}
     ob_, os_, _ = direction_points(c_old)
-    old_side = ("CALL" if ob_ > os_ else "PUT") if abs(ob_ - os_) - (1.0 if shock["level"] == 2 else 0) >= MIN_EDGE else None
+    old_side = ("CALL" if ob_ > os_ else "PUT") if abs(ob_ - os_) >= MIN_EDGE else None
     side, strength, bh_mode = bh.apply(side if edge >= MIN_EDGE else None, strength, bh_evt)
     side = side or ("CALL" if bull > bear else "PUT")
 
@@ -1155,11 +1154,11 @@ def analyze(force):
         reasons.append("بعد وقت آخر دخول (قرب الإغلاق، والزمن يأكل قيمة العقد بسرعة).")
     if any(d == today for d, _ in events):
         nm = next(nm for d, nm in events if d == today)
-        if nm.startswith("تقرير"):   # CPI/الوظائف 8:30 قبل الافتتاح: نمنع أول 30 دقيقة بعد الافتتاح فقط
-            if (n.hour, n.minute) < (10, 0):
-                reasons.append(f"صدور {nm} اليوم؛ ننتظر ما بعد 10:00 (نيويورك) حتى تهدأ الحركة الأولى.")
-        else:
-            reasons.append(f"حدث كبير اليوم: {nm}. التقلب يصعب توقعه.")
+        if nm.startswith("تقرير"):   # H-MOREENTRIES: تقرير 8:30 قبل الافتتاح: نمنع أول 15 دقيقة بعد الافتتاح فقط
+            if (n.hour, n.minute) < (9, 45):
+                reasons.append(f"صدور {nm} اليوم؛ ننتظر ما بعد 09:45 (نيويورك) حتى تهدأ الحركة الأولى.")
+        elif (13, 45) <= (n.hour, n.minute) < (14, 45):   # H-MOREENTRIES: حول قرار الفيدرالي ومؤتمره فقط، لا اليوم كله
+            reasons.append(f"حدث كبير اليوم: {nm}. ننتظر ما بعد 14:45 (نيويورك) حتى يهدأ التقلب.")
     # منذ 31/10/2026 (بقرار المستخدم، H-NEWSHALF في CLAUDE.md): صدمة مستوى 3 لا تمنع؛ التوصية بنصف الكمية مع تحذير
     news_half = shock["level"] >= 3
     if edge < MIN_EDGE and not bh_mode:
@@ -1971,7 +1970,8 @@ def send_signal(a):
     cap += [x for x in bh_lines(a, side) + fvg_line(a) if x]
     if a.get("addon"):
         pv = a["addon"]
-        cap.append(f"➕ <b>إضافة على رابح:</b> عقد {side} السابق ({pv['strike']:,.0f}، {pv['time'][11:16]}) بلغ الهدف.")
+        how = "بلغ الهدف" if pv.get("status") == "tp" else f"رابح {pv.get('pnl', 0) * 100:+.0f}% والاتجاه مستمر"
+        cap.append(f"➕ <b>إضافة على رابح:</b> عقد {side} السابق ({pv['strike']:,.0f}، {pv['time'][11:16]}) {how}.")
     cap += [x for x in liquidity_lines(side, S, now_ny()) if x]
     cap += night_news_lines(side)
     cap += heavy_lines(side)
@@ -2152,6 +2152,38 @@ def addon_after_target(side, n, P=None):
     if not same or len(same) >= ADDON_MAX or any(p["status"] == "open" for p in same) or same[-1]["status"] != "tp":
         return None
     return same[-1]
+
+
+def repeat_check(side, n, P=None):
+    """H-MOREENTRIES (21/11/2026): (محجوب؟، العقد السابق الرابح للرسالة أو None).
+    محجوب إن وُجد عقد مفتوح اليوم بالاتجاه نفسه (أي أداة) آخر عائده ≤ 0 أو لم يُقس، أو بلغ عدد عقود الاتجاه اليوم ADDON_MAX."""
+    P = P if P is not None else load_positions()
+    today = n.date().isoformat()
+    same = sorted((p for p in P["positions"] if p["side"] == side and p["time"][:10] == today), key=lambda p: p["time"])
+    if len({p["time"] for p in same}) >= ADDON_MAX:
+        return True, None
+    opn = [p for p in same if p.get("status") == "open"]
+    if any(p.get("pnl") is None or p["pnl"] <= 0 for p in opn):
+        return True, None
+    prev = opn[-1] if opn else (same[-1] if same and same[-1]["status"] == "tp" else None)
+    return False, prev
+
+
+def drop_open_contracts(a, P=None):
+    """H-MOREENTRIES: يحذف من المرشحين العقود المفتوحة نفسها، فيُختار سترايك آخر مطابق إن وُجد (لا يحذف آخر عقد لأداته)."""
+    P = P if P is not None else load_positions()
+    live = {p["id"] for p in P["positions"] if p.get("status") == "open"}
+    if not live or not a.get("contracts"):
+        return
+    keep = []
+    for k in a["contracts"]:
+        sym = k.get("sym", SYMBOL).lstrip("^")
+        pid = f"{sym}:{a['side']}:{k['strike']:g}:{k.get('exp', a.get('exp'))}"
+        others = [x for x in a["contracts"] if x.get("sym", SYMBOL).lstrip("^") == sym and x is not k]
+        if pid in live and any(f"{sym}:{a['side']}:{x['strike']:g}:{x.get('exp', a.get('exp'))}" not in live for x in others):
+            continue
+        keep.append(k)
+    a["contracts"] = keep
 
 
 def contract_ids(a):
@@ -2367,6 +2399,7 @@ def eval_position(p, n, val, spot):
             new.append((kind, text))
     if pnl > p.get("peak", 0.0):
         p["peak"] = round(pnl, 3)
+    p["pnl"] = round(pnl, 3)      # H-MOREENTRIES: آخر عائد مقاس (لقرار التوصية التالية بالاتجاه نفسه)
     # بعد الهدف: الصفقة رابحة ومغلقة بالقاعدة، والمتابعة صامتة (لا وقف ولا تراجع ولا آخر 30 دقيقة) بطلب المستخدم 2/11/2026؛
     # الحالة تبقى "tp" والتتبع في spx_track يستمر لقياس ما بعد الهدف.
     live = p["status"] == "open"
@@ -2740,10 +2773,14 @@ def run_once(force=False):
         except Exception:
             recent = False
 
-    prev_tp = addon_after_target(a["side"], n) if (has_signal and recent and not force) else None
-    if prev_tp:          # H-ADDON: العقد السابق بالاتجاه نفسه بلغ الهدف → إضافة على رابح بدل الحجب
-        recent = False
-        a["addon"] = prev_tp
+    if has_signal and recent and not force:   # H-MOREENTRIES: لا منع بالوقت؛ المنع فقط مع عقد مفتوح غير رابح أو بلوغ السقف
+        blk, prev = repeat_check(a["side"], n)
+        if not blk:
+            recent = False
+            if prev:
+                a["addon"] = prev
+    if has_signal and not recent and not force:
+        drop_open_contracts(a)
     if has_signal and recent and not force:
         try:   # ظل الحجب: إشارة مكررة قبل REPEAT_MINUTES لم تُرسل (تسجيل فقط)
             import blocked_shadow
