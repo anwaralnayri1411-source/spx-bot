@@ -28,6 +28,7 @@ import breakhold as bh   # «الكسر والثبات» (H-BREAKHOLD، مفعّ
 import bhvote as bv      # لوحة تأكيد الكسر بتصويت المجموعات (H-BHVOTE، الإصدار 21)
 import livewalls as lw   # الجدران الحية من حجم اليوم (H-LIVEWALLS، الإصدار 22)
 import exitplan as ep    # خطة الخروج والاحتفاظ بالرابحة (H-EXITPLAN، الإصدار 24)
+import day_regime as drg  # أوزان الشاشات حسب نوع اليوم (H-REGIMEW، الإصدار 25)
 
 # ====================== الإعدادات ======================
 SYMBOL = "^SPX"             # يمكنك تغييره إلى "SPY"
@@ -556,7 +557,7 @@ def direction_points(c):
         rows.append(("فجوة الافتتاح", 0, 0.5, f"{gap * 100:+.2f}% عن الإغلاق السابق"))
 
     mp = c["max_pain"]
-    if mp and c["n"].hour >= 13 and abs(c["S"] - mp) / c["S"] > 0.002:
+    if mp and c["n"].hour >= drg.pain_hour(_regime(c)) and abs(c["S"] - mp) / c["S"] > 0.002:
         if c["S"] > mp:
             rows.append(("نقطة الألم", 0, 0.5, f"السعر فوق {mp:,.0f} وقد ينجذب إليها"))
         else:
@@ -618,7 +619,12 @@ def direction_points(c):
         else:
             rows.append(("أمس", 0, 0, f"داخل نطاق أمس {pdh[1]:,.0f} - {pdh[0]:,.0f}"))
 
+    rows = drg.apply(rows, _regime(c))          # H-REGIMEW: وزن كل شاشة حسب نوع اليوم
     return sum(r[1] for r in rows), sum(r[2] for r in rows), rows
+
+
+def _regime(c):
+    return (c.get("regime") or (None,))[0]
 
 
 # ====================== اختيار العقود ======================
@@ -1136,7 +1142,15 @@ def analyze(force):
     except Exception:
         pass
 
+    try:
+        c["regime"] = drg.classify(c)
+    except Exception as e:  # noqa: BLE001
+        print("نوع اليوم:", e)
+        c["regime"] = None
     bull, bear, rows = direction_points(c)
+    if not is_test and not force:
+        b0, r0, _ = direction_points({**c, "regime": None})
+        drg.log(n, c, bull, bear, b0, r0, MIN_EDGE)
     _log_live_bars(n, lb_mode, lb_info, c, bf_other, bull, bear)
     edge = abs(bull - bear)
     reasons = []
@@ -1711,7 +1725,7 @@ def plan_message(a, plan, update=False, status=None):
     L += ["", "📡 عند توفر إشارة أرسل لك العقد (السترايك والسعر والكمية) مع مستويات المؤشر.",
           "⚠️ <i>المستويات وشروطها قواعد ثابتة لم تُختبر تاريخياً. عمر آخر شمعة"
           f" ~{c['age']:.0f} دقيقة، والبوت يفحص كل 5 دقائق بالشموع اللحظية (منذ 2/11).</i>",
-          f"🕒 {stamp()} | SPX إصدار 24"]
+          f"🕒 {stamp()} | SPX إصدار 25"]
     return "\n".join(L)
 
 
@@ -1854,13 +1868,14 @@ def signal_message(a):
         L.append(f"➕ <b>إضافة على رابح:</b> عقد {side} السابق ({pv['strike']:,.0f}، {pv['time'][11:16]}) بلغ الهدف والقوة مستمرة. "
                  "عقد جديد مستقل بهدفه ووقفه.")
         L.append("")
+    L += drg.line(c)
     L += liquidity_lines(side, S, now_ny())
     L.append("ادخل بسعر العقد المذكور أو أقل، ولا تلاحق السعر إن ارتفع العقد أكثر من 10% قبل دخولك. "
              f"⏰ لا دخول بعد {ry_time(*no_entry(now_ny()))}")
     if c["age"] >= 5:
         L.append(age_note(c["age"]))
     L.append("⚠️ <i>تعليمي وليست توصية. أقصى خسارة هي سعر العقد.</i>")
-    L.append(f"🕒 {stamp()} | SPX إصدار 24")
+    L.append(f"🕒 {stamp()} | SPX إصدار 25")
     return "\n".join(L)
 
 
@@ -1999,7 +2014,7 @@ def send_signal(a):
         sub = (f"انتهاء {kexp} (تجريبي)" if a["is_test"] else ("انتهاء اليوم" if kexp == a["exp"] else f"انتهاء {kexp}")) + f" · {sym} {k0.get('spot', S):,.0f}"
         png = cards.contract_card("entry", f"{root_sym(k0)} {k0['strike']:,.0f} {side}", sub, k0["price"], None,
                                   k0["price"], stop_price(k0), k0["price"] * (1 + TAKE_PROFIT),
-                                  badge=f"{side} {dot}", foot=f"{stamp()} | SPX إصدار 24")
+                                  badge=f"{side} {dot}", foot=f"{stamp()} | SPX إصدار 25")
         mid = send_photo(png, "\n".join(cap))
         if mid:
             if alt_sep:
@@ -2023,7 +2038,7 @@ def send_alt_card(a, ka, side, dot, reply_to=None):
         png = cards.contract_card("entry", f"{root_sym(ka)} {ka['strike']:,.0f} {side}",
                                   f"انتهاء {ka.get('exp', a['exp'])} · {ka.get('sym', ALT_SYMBOL)} {ka.get('spot', 0):,.0f}", ka["price"], None,
                                   ka["price"], stop_price(ka), ka["price"] * (1 + TAKE_PROFIT),
-                                  badge=f"{root_sym(ka)} {dot}", foot=f"{stamp()} | SPX إصدار 24")
+                                  badge=f"{root_sym(ka)} {dot}", foot=f"{stamp()} | SPX إصدار 25")
         send_photo(png, "\n".join(x for x in cap if x), reply_to=reply_to)
     except Exception as e:
         print("تعذر إنشاء بطاقة SPY:", e)
@@ -2039,7 +2054,7 @@ def send_ndx_card(a, kn, side, dot, reply_to=None):
         png = cards.contract_card("entry", f"{root_sym(kn)} {kn['strike']:,.0f} {side}",
                                   f"انتهاء {a['exp']} · NDX {kn.get('spot', 0):,.0f}", kn["price"], None,
                                   kn["price"], stop_price(kn), kn["price"] * (1 + TAKE_PROFIT),
-                                  badge=f"NDXP {dot}", foot=f"{stamp()} | SPX إصدار 24")
+                                  badge=f"NDXP {dot}", foot=f"{stamp()} | SPX إصدار 25")
         send_photo(png, "\n".join(cap), reply_to=reply_to)
     except Exception as e:
         print("تعذر إنشاء بطاقة NDXP:", e)
@@ -2062,7 +2077,7 @@ def summary_message(state):
         for r, cnt in sorted(rc.items(), key=lambda x: -x[1])[:3]:
             L.append(f"• {esc(r)} ({cnt} مرة)")
     L += ["", "💡 لا إشارة = لا صفقة، والانتظار قرار سليم.",
-          f"🕒 {stamp()} | SPX إصدار 24"]
+          f"🕒 {stamp()} | SPX إصدار 25"]
     return "\n".join(L)
 
 
@@ -2085,6 +2100,7 @@ def details_message(a, log_line, has_signal):
     L.append(f"⏱️ عمر آخر بيانات: ~{c['age']:.0f} دقيقة")
 
     L += ["", f"🧭 <b>اتجاه اليوم</b>: صعود <b>{a['bull']:.1f}</b> مقابل هبوط <b>{a['bear']:.1f}</b>"]
+    L += [x for x in drg.line(c) if x]
     for label, b, br, note in a["rows"]:
         icon = "🟢" if b > br else ("🔴" if br > b else "⚪")
         L.append(f"{icon} {label}: {esc(note)}")
@@ -2492,7 +2508,7 @@ def position_message(p, val, pnl, spot, text, kind, src=""):
     L.append(text)
     L.append(f"🛑 الوقف {p['entry'] * (1 - STOP_LOSS):.2f} | ✅ الجني {p['entry'] * (1 + TAKE_PROFIT):.2f}")
     note = f" · {SRC_NOTE[src]}" if src in SRC_NOTE else ""
-    L.append(f"⚠️ القرار قرارك | 🕒 {stamp()}{note} | SPX إصدار 24")
+    L.append(f"⚠️ القرار قرارك | 🕒 {stamp()}{note} | SPX إصدار 25")
     return "\n".join(L)
 
 
@@ -2537,7 +2553,7 @@ def follow_payload(p, val, pnl, spot, text, kind, src=""):
     when = f"ينتهي {exp_label(p.get('exp') or now_ny().date().isoformat())}"
     args = (("follow", name, (when + (f" · {p['sym']} {spot:,.0f}" if spot else "")), val, pnl,
              p["entry"], stop_p, tp_p), {"now": val, "badge": head,
-                                         "foot": f"وقت الرصد {stamp()}{note} | SPX إصدار 24"})
+                                         "foot": f"وقت الرصد {stamp()}{note} | SPX إصدار 25"})
     return (args, "\n".join(cap), full)
 
 
