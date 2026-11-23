@@ -57,6 +57,13 @@ EM_CHASE = 0.80             # H-PRO1: لا دخول بعد قطع 80% من ال�
 SECTORS = ("XLK", "XLF", "XLV", "XLY", "XLC", "XLI", "XLP", "XLE", "XLU", "XLB", "XLRE")
 REPEAT_MINUTES = 90         # لا نكرر نفس الاتجاه قبل هذه المدة
 ADDON_MAX = 6               # H-ADDON: أقصى توصيات SPX بالاتجاه نفسه في اليوم حين يُرفع منع التكرار بعد بلوغ الهدف
+HIGH_VIX, HIGH_VIX_MAX_USD = 25, 800   # H-VIXCAP (23/11/2026): سقف عقد SPX يرتفع حين يكون VIX ≥ 25
+
+
+def spx_usd(vix):
+    return (CONTRACT_MIN_USD, HIGH_VIX_MAX_USD if (vix or 0) >= HIGH_VIX else CONTRACT_MAX_USD)
+
+
 RISK_BUDGET_USD = 150       # أقصى خسارة تقبلها في الصفقة الواحدة عند الوقف (عدّلها حسب حسابك)
 MAX_QTY = 5                 # سقف عدد العقود المقترح
 TARGET_MAX_EM = 0.25         # أقصى مسافة لهدف الخطة من نقطة الدخول (جزء من الحركة اليومية المتوقعة)
@@ -915,7 +922,8 @@ def _ndx_pick(side, df, S, T, vix):
 def _pick_all(side, ch, S, T, c, exp):
     """اختيار عقود SPX وSPY وNDXP لاتجاه معيّن (استُخرجت من analyze كما هي، لتستعملها التوصية وظل الحجب بالمنطق نفسه)."""
     Sp = _live_spot(SYMBOL, S)     # الوضع 1: سعر SPX اللحظي لاختيار العقد (الإشارة نفسها من شموع ياهو)
-    contracts = pick_contracts(side, _live_chain(spxw_rows(ch.calls if side == "CALL" else ch.puts), Sp), Sp, T, c["vix"])
+    contracts = pick_contracts(side, _live_chain(spxw_rows(ch.calls if side == "CALL" else ch.puts), Sp), Sp, T, c["vix"],
+                               usd=spx_usd(c["vix"]))
     for k in contracts:
         k["sym"], k["spot"] = SYMBOL, Sp
     contracts.sort(key=lambda x: -x["score"])
@@ -1209,7 +1217,7 @@ def analyze(force):
             for k in contracts:
                 k["half"] = True
         if not contracts:
-            reasons.append(f"لا توجد عقود {('Call' if side == 'CALL' else 'Put')} بسعر ${CONTRACT_MIN_USD}-${CONTRACT_MAX_USD} "
+            reasons.append(f"لا توجد عقود {('Call' if side == 'CALL' else 'Put')} بسعر ${CONTRACT_MIN_USD}-${spx_usd(c['vix'])[1]} "
                            "مع سيولة كافية الآن." + (" [رُفض: " + "، ".join(f"{k} {v}" for k, v in sorted(REJ.items(), key=lambda x: -x[1])) + "]" if REJ else ""))
 
     block_tags, blocked_contracts = [], []

@@ -295,7 +295,7 @@ def test_ndx_checked_even_without_spx_and_rejections_prefixed(monkeypatch):
     def fake_pick(side, df, S, T, vix, *a, **kw):
         calls.append(kw.get("usd"))
         ob._rej("سعر خارج النطاق")
-        return [] if kw.get("usd") is None else [{"score": 1.0, "strike": 28000.0}]
+        return [] if kw.get("usd") != (ob.NDX_MIN_USD, ob.NDX_MAX_USD) else [{"score": 1.0, "strike": 28000.0}]
 
     monkeypatch.setattr(ob, "pick_contracts", fake_pick)
 
@@ -317,7 +317,7 @@ def test_ndx_checked_even_without_spx_and_rejections_prefixed(monkeypatch):
 
     ob.REJ.clear()
     out = ob._pick_all("PUT", Ch(), 7000.0, 0.001, {"vix": 18.0}, "2026-11-23")
-    assert calls == [None, (ob.NDX_MIN_USD, ob.NDX_MAX_USD)]
+    assert calls == [ob.spx_usd(18.0), (ob.NDX_MIN_USD, ob.NDX_MAX_USD)]
     assert [k["sym"] for k in out] == ["NDX"] and out[0]["spot"] == 28000.0
     assert ob.REJ == {"سعر خارج النطاق": 1, "NDXP: سعر خارج النطاق": 1}
 
