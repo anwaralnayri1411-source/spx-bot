@@ -1,6 +1,21 @@
 {
- "cash": 3688.0,
- "positions": [],
+ "cash": 2748.0,
+ "positions": [
+  {
+   "id": "1123-1416-SPX-CALL-7260",
+   "symbol": "SPXW  261123C07260000",
+   "under": "SPX",
+   "side": "CALL",
+   "strike": 7260.0,
+   "expiry": "2026-11-23",
+   "qty": 1,
+   "entry": 9.4,
+   "time": "2026-11-23T14:16-05:00",
+   "stop": 6.6,
+   "target": 13.0,
+   "invalidation": "إغلاق SPX تحت 7230 بعد لقطة ثانية، أو انعكاس صافي الدلتا إلى سالب لقطتين متتاليتين، أو خروج القياديات من الصعود"
+  }
+ ],
  "closed": [
   {
    "id": "1109-1001-SPY-CALL-747",
@@ -129,9 +144,9 @@
    "after_last": 0.25
   }
  ],
- "decisions": 233,
+ "decisions": 234,
  "report_day": "2026-11-20",
  "start_cash": 3195.0,
  "day": "2026-11-23",
- "decisions_today": 18
+ "decisions_today": 19
 }

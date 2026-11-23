@@ -1,6 +1,21 @@
 {
- "cash": 6773.0,
- "positions": [],
+ "cash": 5073.0,
+ "positions": [
+  {
+   "id": "1123-1416-SPX-CALL-7245",
+   "symbol": "SPXW  261123C07245000",
+   "under": "SPX",
+   "side": "CALL",
+   "strike": 7245.0,
+   "expiry": "2026-11-23",
+   "qty": 1,
+   "entry": 17.0,
+   "time": "2026-11-23T14:16-05:00",
+   "stop": 11.0,
+   "target": 25.0,
+   "invalidation": "إلغاء الفكرة إذا أغلق SPX دون 7199 أو خسر VWAP بوضوح، أو إذا لم يتقدم السعر فوق 7260 حتى منتصف الجلسة، أو إذا بلغ العقد الوقف 11.0 قبل ذلك."
+  }
+ ],
  "closed": [
   {
    "id": "1105-0946-PUT-757",
@@ -640,8 +655,8 @@
    "pnl": -314.0
   }
  ],
- "decisions": 256,
+ "decisions": 257,
  "report_day": "2026-11-20",
  "day": "2026-11-23",
- "decisions_today": 18
+ "decisions_today": 19
 }
