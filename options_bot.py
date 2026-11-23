@@ -57,7 +57,7 @@ EM_CHASE = 0.80             # H-PRO1: لا دخول بعد قطع 80% من ال�
 SECTORS = ("XLK", "XLF", "XLV", "XLY", "XLC", "XLI", "XLP", "XLE", "XLU", "XLB", "XLRE")
 REPEAT_MINUTES = 90         # لا نكرر نفس الاتجاه قبل هذه المدة
 ADDON_MAX = 6               # H-ADDON: أقصى توصيات SPX بالاتجاه نفسه في اليوم حين يُرفع منع التكرار بعد بلوغ الهدف
-HIGH_VIX, HIGH_VIX_MAX_USD = 25, 800   # H-VIXCAP (23/11/2026): سقف عقد SPX يرتفع حين يكون VIX ≥ 25
+HIGH_VIX, HIGH_VIX_MAX_USD = 25, 400   # H-VIXCAP أُلغي في اليوم نفسه بقرار المستخدم («لنبقى عند 400 دولار»): السقف 400$ دائماً
 
 
 def spx_usd(vix):

@@ -52,5 +52,5 @@ def test_fit_caption():
 def test_spx_usd_vix_cap():
     import options_bot as ob
     assert ob.spx_usd(18) == (ob.CONTRACT_MIN_USD, ob.CONTRACT_MAX_USD)
-    assert ob.spx_usd(27.7) == (ob.CONTRACT_MIN_USD, 800)
+    assert ob.spx_usd(27.7) == (ob.CONTRACT_MIN_USD, 400)
     assert ob.spx_usd(None)[1] == ob.CONTRACT_MAX_USD
