@@ -259,7 +259,7 @@ main() {
       msg="falcon" ;;
     mgt_lab)
       group=mgt-lab; envs="TG ALPACA LQ TASTY"   # مختبر التطوّر (H-MGTLAB): 12 نسخة ورقية تتطور يومياً، بعد ظل MGT كل دقيقة، لا git، تقرير لـTELEGRAM_CHAT_ID وحده
-      cmds=("$py mgt_lab.py")
+      cmds=("$py mgt_lab.py" "$py v9_live.py"); keepgoing=1   # H-V9LIVE: توصيات s0 حياً لقناة SPX بعد المختبر
       files=""
       msg="mgt lab" ;;
     stocks_lab)

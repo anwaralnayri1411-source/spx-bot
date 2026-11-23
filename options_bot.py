@@ -57,6 +57,7 @@ EM_CHASE = 0.80             # H-PRO1: لا دخول بعد قطع 80% من ال�
 SECTORS = ("XLK", "XLF", "XLV", "XLY", "XLC", "XLI", "XLP", "XLE", "XLU", "XLB", "XLRE")
 REPEAT_MINUTES = 90         # لا نكرر نفس الاتجاه قبل هذه المدة
 ADDON_MAX = 6               # H-ADDON: أقصى توصيات SPX بالاتجاه نفسه في اليوم حين يُرفع منع التكرار بعد بلوغ الهدف
+V9_LIVE = True              # H-V9LIVE (24/11/2026): توصيات SPX من v9_live.py (s0 بسقف 550$)، وتوصيات هذا البوت تُحجب للمقارنة
 HIGH_VIX, HIGH_VIX_MAX_USD = 25, 400   # H-VIXCAP أُلغي في اليوم نفسه بقرار المستخدم («لنبقى عند 400 دولار»): السقف 400$ دائماً
 
 
@@ -2800,6 +2801,15 @@ def run_once(force=False):
         except Exception as e:  # noqa: BLE001
             print("بطاقة الخريطة:", type(e).__name__, e)
     has_signal = bool(a["contracts"])
+    if has_signal and V9_LIVE and not force:   # H-V9LIVE: توصيات SPX من v9_live.py؛ القديمة تُسجَّل في ظل الحجب فقط
+        try:
+            import blocked_shadow
+            blocked_shadow.log_spx(n, a, ["v9_mode"], list(a["contracts"]))
+        except Exception as e:  # noqa: BLE001
+            print("تعذر تسجيل ظل الحجب:", e)
+        a["contracts"] = []
+        a["reasons"].append("🧭 توصيات SPX الآن بقواعد v9 في رسائل منفصلة؛ إشارة البوت القديم سُجّلت للمقارنة فقط.")
+        has_signal = False
     if has_signal:
         _live_prices(a)
     if not force and legacy_slot(n):
