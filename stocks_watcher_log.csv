@@ -5065,3 +5065,4 @@ time,pos_id,ticker,side,event,detail,entry,val,pnl,spot,need,tdays,advice,reason
 2026-11-23T10:26-05:00,GOOGL:PUT:2026-12-04:250,GOOGL,PUT,sharp,-0.83% في 15د,2.75,,,282.92,0.1261,10,فكّر بالخروج,السهم يتحرك ضدك
 2026-11-23T10:32-05:00,UBER:PUT:2026-12-04:65,UBER,PUT,sharp,-1.03% في 15د,1.81,,,65.94,0.0417,10,فكّر بالخروج,السهم يتحرك ضدك
 2026-11-23T10:32-05:00,GOOGL:PUT:2026-12-04:250,GOOGL,PUT,stock,-4.11% منذ الدخول,2.75,,,283.59,0.1281,10,فكّر بالخروج,السهم يتحرك ضدك
+2026-11-23T10:35-05:00,UBER:PUT:2026-12-04:65,UBER,PUT,macro_quiet,against/weak/medium: Gold Price Today Surges Over 4% as Investors Buy the Dip Ahead of Key US Inflation Data - Aktualita.co,1.81,1.3,-0.2818,65.93,0.0416,10,أبقِ,خبر ضد العقد لكن تأثيره محدود، راقب | الفكرة قائمة لكن العقد -28%؛ التزم بالوقف عند −40%
