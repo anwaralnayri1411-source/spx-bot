@@ -54,3 +54,11 @@ def test_spx_usd_vix_cap():
     assert ob.spx_usd(18) == (ob.CONTRACT_MIN_USD, ob.CONTRACT_MAX_USD)
     assert ob.spx_usd(27.7) == (ob.CONTRACT_MIN_USD, 400)
     assert ob.spx_usd(None)[1] == ob.CONTRACT_MAX_USD
+
+
+def test_strength_filter():
+    import options_bot as ob
+    K = [{"delta": 0.09, "score": 9}, {"delta": 0.17, "score": 7}, {"delta": 0.25, "score": 5}]
+    assert [k["delta"] for k in ob.strength_filter(K, {"sig_strong": True})] == [0.25, 0.17, 0.09]
+    assert [k["delta"] for k in ob.strength_filter(K, {})] == [0.17, 0.25]
+    assert [k["delta"] for k in ob.strength_filter(K, {"sig_strong": True, "regime": (drg.CHOP, 0, 2, [])})] == [0.25]

@@ -268,7 +268,7 @@ def test_pick_all_tags_sorts_and_truncates_like_the_original_block(monkeypatch):
     monkeypatch.setattr(ob, "_live_spot", lambda sym, fb: fb)
     monkeypatch.setattr(ob, "_live_chain", lambda df, S: df)
     monkeypatch.setattr(ob, "spxw_rows", lambda df: df)
-    monkeypatch.setattr(ob, "pick_contracts", lambda side, df, S, T, vix, *a, **k: [{"score": 5.0}, {"score": 9.0}, {"score": 7.0}, {"score": 6.0}])
+    monkeypatch.setattr(ob, "pick_contracts", lambda side, df, S, T, vix, *a, **k: [{"score": 5.0, "delta": 0.3}, {"score": 9.0, "delta": 0.3}, {"score": 7.0, "delta": 0.3}, {"score": 6.0, "delta": 0.3}])
 
     class Ch:
         calls = puts = object()

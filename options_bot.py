@@ -919,6 +919,16 @@ def _ndx_pick(side, df, S, T, vix):
             REJ["NDXP: " + k] = REJ.get("NDXP: " + k, 0) + v
 
 
+def strength_filter(contracts, c):
+    """H-STRENGTHPICK (23/11/2026): أدنى دلتا لعقد SPX حسب نوع اليوم وقوة الإشارة؛ والأقرب للسعر أولاً مع الإشارة القوية."""
+    rg, strong = _regime(c), bool(c.get("sig_strong"))
+    floor = 0.20 if rg == drg.CHOP else (0.08 if strong else 0.15)
+    out = [k for k in contracts if k.get("delta", 0) >= floor]
+    if strong and rg != drg.CHOP:
+        out.sort(key=lambda x: -x.get("delta", 0))
+    return out
+
+
 def _pick_all(side, ch, S, T, c, exp):
     """اختيار عقود SPX وSPY وNDXP لاتجاه معيّن (استُخرجت من analyze كما هي، لتستعملها التوصية وظل الحجب بالمنطق نفسه)."""
     Sp = _live_spot(SYMBOL, S)     # الوضع 1: سعر SPX اللحظي لاختيار العقد (الإشارة نفسها من شموع ياهو)
@@ -927,7 +937,9 @@ def _pick_all(side, ch, S, T, c, exp):
     for k in contracts:
         k["sym"], k["spot"] = SYMBOL, Sp
     contracts.sort(key=lambda x: -x["score"])
-    contracts = contracts[:MAX_CONTRACTS]
+    contracts = strength_filter(contracts, c)[:MAX_CONTRACTS]
+    if not contracts:
+        print("رفض SPX:", "، ".join(f"{k} {v}" for k, v in sorted(REJ.items(), key=lambda x: -x[1])) or "لا عقود بدلتا كافية")
     if ALT_SYMBOL:      # توصية SPY منفصلة بقاعدتها (لليوم التالي، دلتا ≈ 0.45)؛ لا تنافس عقود SPX على الدرجة
         new = []
         try:
@@ -1211,6 +1223,7 @@ def analyze(force):
 
     contracts = []
     REJ.clear()
+    c["sig_strong"] = bool(bh_mode) or edge >= 5
     if not reasons:
         contracts = _pick_all(side, ch, S, T, c, exp)
         if news_half:
