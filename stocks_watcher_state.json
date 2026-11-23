@@ -177,7 +177,8 @@
    "use of walmart target in house agents down in october says morgan stanley",
    "walmart stock is wall street bullish or bearish",
    "why investors fled to eli lilly walmart and energy",
-   "can walmart s expanded sparky ai boost holiday shopping and sales"
+   "can walmart s expanded sparky ai boost holiday shopping and sales",
+   "wmt maintained by guggenheim price target raised to 140"
   ],
   "UBER:PUT": [
    "why is hertz htz stock soaring today",
@@ -261,7 +262,10 @@
    "is trending stock uber technologies inc uber a buy now",
    "can shared rides and metro travel make commuters less dependent on personal vehicles uber puts it to the",
    "robotaxis and stock exchanges why bolt s ceo says europe is way behind",
-   "why did uber technologies uber move today"
+   "why did uber technologies uber move today",
+   "uber technologies stock uber adds zoox robotaxi rides in las vegas",
+   "uber dec 2026 83 000 call uber261231c00083000 interactive stock chart yahoo finance",
+   "uber launches connected journeys in delhi to integrate metro with last mile rides one less car experime"
   ],
   "DIS:CALL": [
    "skydance rises 5 as steep post merger slide pauses disney gains 2 netflix slips",
@@ -620,7 +624,14 @@
    "alphabet stock price prediction seller pressure remains as downside risk persists",
    "alphabet inc class a stock googl opened up by 4 63 on nov 23 drivers behind the movement",
    "alphabet inc class c stock goog opened up by 4 22 on nov 23 what investors need to know",
-   "bill ackman wasn t impressed by berkshire s 10 billion alphabet bet they got it at a 6 discount but so what it s now dow"
+   "bill ackman wasn t impressed by berkshire s 10 billion alphabet bet they got it at a 6 discount but so what it s now dow",
+   "camping world holdings inc cwh stock price news quote and history",
+   "cerebras systems inc cbrs stock price news quote and history",
+   "okta inc okta stock price news quote and history",
+   "zoom communications inc zm stock price news quote and history",
+   "li auto inc li stock price news quote and history",
+   "googl goog shareholder alert alphabet inc securities",
+   "meta platforms inc stock meta moved up by 5 96 on nov 23 what signal does it send"
   ],
   "INTC:PUT": [
    "intel stock tumbles ahead of q3 earnings",
@@ -4534,7 +4545,8 @@
    "sharp@2026-11-23T09:50-05:00",
    "sharp@2026-11-23T10:20-05:00",
    "down-0.15",
-   "sharp@2026-11-23T10:32-05:00"
+   "sharp@2026-11-23T10:32-05:00",
+   "news:uber technologies stock uber adds zoox robotaxi rides in las vegas"
   ],
   "GOOGL:PUT:2026-12-04:250": [
    "down-0.15",
@@ -4546,20 +4558,14 @@
    "sharp@2026-11-23T10:26-05:00",
    "stock4"
   ],
-  "WMT:CALL:2026-12-11:128": []
+  "WMT:CALL:2026-12-11:128": [
+   "news:wmt maintained by guggenheim price target raised to 140"
+  ]
  },
  "stock_level": {
   "GOOGL:PUT:2026-12-04:250": 4
  },
  "seen_macro": [
-  "the u s dollar hits a 19 month high as expectations for federal reserve rate hikes continue to intensify",
-  "investors rotate into defensive funds etfs to consider",
-  "gold slips to fresh yearly low as fed hike bets build and us stocks slide",
-  "trump s canada tariffs backfire as firm flees texas and us costs soar",
-  "fed faces tougher inflation fight as pressure builds for more rate hikes",
-  "oil gains after early drop as geopolitical risks support market",
-  "u s 10 year treasury tops 5 on expectations of higher interest rates",
-  "the bond market now has an even bigger fear than the ai fallout",
   "fed s hammack backs gradual rate hikes as ai spending fuels sticky inflation",
   "the average us 30 year mortgage rate falls to 7 11 this week its fourth straight decline",
   "silver tumbles over 3 as hot us inflation boosts fed hike bets",
@@ -5151,7 +5157,15 @@
   "how us fed interest rate moves impact sbi pnb and indian psu bank stocks",
   "gold price today surges over 4 as investors buy the dip ahead of key us inflation data",
   "nvidia poised for biggest one day gain in history of stock market as jensen huang returns",
-  "fed jedi central banking won t stop inflation ts lombard s dario perkins"
+  "fed jedi central banking won t stop inflation ts lombard s dario perkins",
+  "gold rebounds to 3 578 on november 23",
+  "gold and silver prices rebound after biggest weekly fall in 8 months is this the best time to buy",
+  "dollar holds firm against pound as us business surveys keep fed on course",
+  "compare today s mortgage interest rates",
+  "wall street rebounds sharply as nvidia shares surge 30 following huang s reinstatement",
+  "china s boeing opportunity could expand by 250 jets as trump signals fresh aircraft demand",
+  "oil falls on increased middle east flows libyan pipeline restart",
+  "stocks soar as huang s nvidia return fuels ai bets markets wrap"
  ],
  "sharp": {
   "UBER:PUT:2026-12-04:65": 65.94,
