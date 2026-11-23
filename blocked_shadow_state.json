@@ -14,8 +14,8 @@
    "strength": "6.7",
    "occ": "XOM261127P00160000",
    "peak_pnl": 0.39,
-   "close_pnl": 0.263,
-   "quotes": 202,
+   "close_pnl": 0.363,
+   "quotes": 203,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -34,8 +34,8 @@
    "strength": "7.8",
    "occ": "SOFI261211P00013500",
    "peak_pnl": 0.406,
-   "close_pnl": -0.187,
-   "quotes": 97,
+   "close_pnl": -0.167,
+   "quotes": 98,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -54,8 +54,8 @@
    "strength": "7.0",
    "occ": "NFLX261211P00058000",
    "peak_pnl": 0.301,
-   "close_pnl": -0.039,
-   "quotes": 91,
+   "close_pnl": 0.005,
+   "quotes": 92,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -73,9 +73,9 @@
    "edge": "3.5",
    "strength": "6.7",
    "occ": "NFLX261211P00058000",
-   "peak_pnl": 0.0,
-   "close_pnl": -0.039,
-   "quotes": 28,
+   "peak_pnl": 0.005,
+   "close_pnl": 0.005,
+   "quotes": 29,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -93,9 +93,9 @@
    "edge": "3.5",
    "strength": "6.9",
    "occ": "UBER261204P00064000",
-   "peak_pnl": 0.0,
-   "close_pnl": -0.049,
-   "quotes": 28,
+   "peak_pnl": 0.021,
+   "close_pnl": 0.021,
+   "quotes": 29,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -114,8 +114,8 @@
    "strength": "6.5",
    "occ": "XOM261204P00155000",
    "peak_pnl": 0.0,
-   "close_pnl": -0.154,
-   "quotes": 3,
+   "close_pnl": -0.172,
+   "quotes": 4,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -2717,7 +2717,9 @@
   "20261123T1227|stocks|market_against|XOM|PUT|155|2026-12-04",
   "20261123T1227|stocks|market_against|NFLX|PUT|57|2026-12-11",
   "20261123T1227|stocks|market_against|UBER|PUT|64|2026-12-04",
-  "20261123T1235|spx|repeat_side|SPY|CALL|726|2026-11-24"
+  "20261123T1235|spx|repeat_side|SPY|CALL|726|2026-11-24",
+  "20261123T1242|stocks|market_against|NFLX|PUT|57|2026-12-11",
+  "20261123T1242|stocks|market_against|UBER|PUT|63|2026-12-04"
  ],
  "last": {
   "spx|CALL|SPY": "2026-11-23T11:25-05:00",
