@@ -265,7 +265,10 @@
    "why did uber technologies uber move today",
    "uber technologies stock uber adds zoox robotaxi rides in las vegas",
    "uber dec 2026 83 000 call uber261231c00083000 interactive stock chart yahoo finance",
-   "uber launches connected journeys in delhi to integrate metro with last mile rides one less car experime"
+   "uber launches connected journeys in delhi to integrate metro with last mile rides one less car experime",
+   "uber dec 2026 64 000 put uber261231p00064000 interactive stock chart",
+   "delivery hero stock ftse russell switches line after uber tender",
+   "uber logs 212 6m trips in bangladesh over 10 years"
   ],
   "DIS:CALL": [
    "skydance rises 5 as steep post merger slide pauses disney gains 2 netflix slips",
@@ -4560,26 +4563,13 @@
   ],
   "WMT:CALL:2026-12-11:128": [
    "news:wmt maintained by guggenheim price target raised to 140"
-  ]
+  ],
+  "WMT:CALL:2026-12-04:130": []
  },
  "stock_level": {
   "GOOGL:PUT:2026-12-04:250": 4
  },
  "seen_macro": [
-  "fed s hammack backs gradual rate hikes as ai spending fuels sticky inflation",
-  "the average us 30 year mortgage rate falls to 7 11 this week its fourth straight decline",
-  "silver tumbles over 3 as hot us inflation boosts fed hike bets",
-  "s p 500 nasdaq fall as nvidia ceo s exit rattles ai stocks",
-  "exclusive bank of mexico rate cuts sends wrong message says deputy governor heath",
-  "orthodox jewish couple behind 100 million furniture business say trump s tariff policies left them disappointed",
-  "gold is falling on hot inflation but can the fed keep raising rates",
-  "your family s bills are still rising but the government can t tell you by how much",
-  "pound to dollar forecast hawkish fed drives sterling to november lows",
-  "stock market midday nov 12 nvidia ceo resigns amd surges as wall street edges higher",
-  "in a policy switch the fed says its october 2027 meeting will not see a vote on interest rates",
-  "u s dollar swings are playing a bigger role in bitcoin price moves",
-  "mortgage rates hit seven week low as fed hike threat grows",
-  "us home sales fall to lowest level since 2010 as mortgage rates soar",
   "the bond market now has an even bigger fear than ai fallout",
   "asx set to slide nvidia dives to weigh on wall street trump sends oil higher",
   "gold price crashes below 3 900 as fed rate hike bets overwhelm safe haven demand",
@@ -5165,7 +5155,21 @@
   "wall street rebounds sharply as nvidia shares surge 30 following huang s reinstatement",
   "china s boeing opportunity could expand by 250 jets as trump signals fresh aircraft demand",
   "oil falls on increased middle east flows libyan pipeline restart",
-  "stocks soar as huang s nvidia return fuels ai bets markets wrap"
+  "stocks soar as huang s nvidia return fuels ai bets markets wrap",
+  "why is nvidia stock soaring 10 after its brutal wall street collapse",
+  "stock market today dow s p 500 futures surge after tech rout as oil slides",
+  "tesla s autonomy ambitions just got a wall street vote of confidence",
+  "why are dow futures up today stocks bounce after last week s correction",
+  "us stock futures rebound on nov 23 after wall street sell off",
+  "cpi report shows inflation beat in october how fcpi can help",
+  "the fed gets one last big inflation report before its december rate vote",
+  "wall street jumps on huang s return to nvidia nasdaq soars back to 24k comp ind",
+  "has the ai bubble already burst",
+  "gold is falling despite war and rising oil prices why pakistan prices could hit rs350 000",
+  "european gas prices surge 12 in october breaching us 1 000 mark amid supply squeeze and geopolitical tensions",
+  "relief from oil price rollback to take time",
+  "stock market today s p 500 nasdaq jump 5 as nvidia leads ai rally make",
+  "wall street opens sharply higher after the s p 500 s seven day slide"
  ],
  "sharp": {
   "UBER:PUT:2026-12-04:65": 65.94,
