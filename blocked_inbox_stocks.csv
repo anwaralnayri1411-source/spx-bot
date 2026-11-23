@@ -2007,3 +2007,5 @@ id,time,project,tag,sym,root,side,strike,exp,entry,spot,edge,strength
 20261123T1357|stocks|market_against|UBER|PUT|63|2026-12-04,2026-11-23T13:57-05:00,stocks,market_against,UBER,UBER,PUT,63.0,2026-12-04,1.14,64.56,3.5,5.7
 20261123T1357|stocks|market_against|JPM|PUT|310|2026-12-04,2026-11-23T13:57-05:00,stocks,market_against,JPM,JPM,PUT,310.0,2026-12-04,3.47,318.2,4.5,6.5
 20261123T1357|stocks|chase_em|AAPL|CALL|360|2026-12-11,2026-11-23T13:57-05:00,stocks,chase_em,AAPL,AAPL,CALL,360.0,2026-12-11,3.47,348.89,4.5,7.0
+20261123T1412|stocks|market_against|NFLX|PUT|58|2026-12-11,2026-11-23T14:12-05:00,stocks,market_against,NFLX,NFLX,PUT,58.0,2026-12-11,1.87,58.11,5.5,7.8
+20261123T1412|stocks|market_against|UBER|PUT|63|2026-12-04,2026-11-23T14:12-05:00,stocks,market_against,UBER,UBER,PUT,63.0,2026-12-04,1.16,64.59,3.5,6.2
