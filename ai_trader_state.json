@@ -1,6 +1,21 @@
 {
- "cash": 7087.0,
- "positions": [],
+ "cash": 5995.0,
+ "positions": [
+  {
+   "id": "1123-1216-SPY-CALL-724",
+   "symbol": "SPY   261124C00724000",
+   "under": "SPY",
+   "side": "CALL",
+   "strike": 724.0,
+   "expiry": "2026-11-24",
+   "qty": 2,
+   "entry": 5.46,
+   "time": "2026-11-23T12:16-05:00",
+   "stop": 4.3,
+   "target": 7.0,
+   "invalidation": "إلغاء الفكرة إذا أغلق SPY دون 720 (يعني تراجع الكول إلى 4.3 تقريباً)، أو إذا انقلبت علاوة الكول والبوت وتراجع الاتجاه اللحظي تحت VWAP."
+  }
+ ],
  "closed": [
   {
    "id": "1105-0946-PUT-757",
@@ -622,8 +637,8 @@
    "after_last": 27.9
   }
  ],
- "decisions": 248,
+ "decisions": 249,
  "report_day": "2026-11-20",
  "day": "2026-11-23",
- "decisions_today": 10
+ "decisions_today": 11
 }
