@@ -80,7 +80,7 @@ def step(st, v, day, send, after_summary=False):
     if not st.get("init"):                  # أول تشغيل: لا نرسل ما سبق
         st["sent"] = {key(e): None for e in entries}
         st["closed"] = [key(e) for e in v["closed"] if e["tdate"] == day]
-        st["init"] = True
+        st["init"], st["summary_day"] = True, day   # ولا ملخص ليوم لم تُرسل توصياته
         return 0
     out, closed_keys = 0, {key(e) for e in v["closed"]}
     for e in entries:
