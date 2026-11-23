@@ -39,3 +39,11 @@ def test_apply_weights():
 def test_line():
     assert drg.line({}) == []
     assert "اتجاه" in drg.line({"regime": (drg.TREND, 2, 0, ["غاما سالبة"])})[0]
+
+
+def test_fit_caption():
+    import options_bot as ob
+    cap = "\n".join(["عنوان"] + [f"سطر {i} " + "x" * 80 for i in range(30)] + ["⏰ وقت", "⚠️ تنبيه"])
+    out = ob.fit_caption(cap)
+    assert len(out) <= ob.CAPTION_LIMIT and out.startswith("عنوان") and out.endswith("⚠️ تنبيه")
+    assert ob.fit_caption("قصير") == "قصير"

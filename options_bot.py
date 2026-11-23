@@ -236,8 +236,22 @@ def edit_telegram(mid, text):
     return bool(r is not None and r.ok)
 
 
+CAPTION_LIMIT = 1000   # حد تليجرام 1024 حرفاً بعد إزالة الوسوم؛ نقيس النص الخام احتياطاً
+
+
+def fit_caption(caption, limit=CAPTION_LIMIT):
+    """23/11/2026: تعليق أطول من الحد أسقط صورة التوصية. نحذف أسطراً كاملة من قبل السطرين الأخيرين (الوقت والتنبيه)
+    حتى يناسب الحد، فلا ينكسر وسم HTML."""
+    L = caption.split("\n")
+    while len("\n".join(L)) > limit and len(L) > 3:
+        del L[-3]
+    out = "\n".join(L)
+    return out[:limit] if len(out) > limit else out
+
+
 def send_photo(png, caption="", reply_to=None):
     """يرسل صورة PNG مع تعليق قصير. يرجع رقم الرسالة أو None."""
+    caption = fit_caption(caption)
     print("[صورة]", caption)
     log_message(f"[صورة] {caption}")
     if not TOKEN or not CHAT_ID or not png:
