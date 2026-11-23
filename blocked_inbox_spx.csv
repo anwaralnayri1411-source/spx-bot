@@ -602,3 +602,4 @@ id,time,project,tag,sym,root,side,strike,exp,entry,spot,edge,strength
 20261123T1215|spx|same_contract_open|SPY|CALL|727|2026-11-24,2026-11-23T12:15-05:00,spx,same_contract_open,SPY,SPY,CALL,727.0,2026-11-24,3.98,724.12,3.2,4.8
 20261123T1220|spx|repeat_side|SPY|CALL|726|2026-11-24,2026-11-23T12:20-05:00,spx,repeat_side,SPY,SPY,CALL,726.0,2026-11-24,3.87,722.93,3.2,4.8
 20261123T1225|spx|repeat_side|SPY|CALL|726|2026-11-24,2026-11-23T12:25-05:00,spx,repeat_side,SPY,SPY,CALL,726.0,2026-11-24,3.94,723.12,3.2,4.8
+20261123T1235|spx|repeat_side|SPY|CALL|726|2026-11-24,2026-11-23T12:35-05:00,spx,repeat_side,SPY,SPY,CALL,726.0,2026-11-24,4.11,723.61,3.2,4.8
