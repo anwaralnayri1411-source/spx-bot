@@ -14,8 +14,8 @@
    "strength": "6.7",
    "occ": "XOM261127P00160000",
    "peak_pnl": 0.39,
-   "close_pnl": 0.163,
-   "quotes": 210,
+   "close_pnl": 0.151,
+   "quotes": 211,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -35,7 +35,7 @@
    "occ": "SOFI261211P00013500",
    "peak_pnl": 0.406,
    "close_pnl": -0.156,
-   "quotes": 105,
+   "quotes": 106,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -55,7 +55,7 @@
    "occ": "NFLX261211P00058000",
    "peak_pnl": 0.301,
    "close_pnl": -0.158,
-   "quotes": 99,
+   "quotes": 100,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -75,7 +75,7 @@
    "occ": "NFLX261211P00058000",
    "peak_pnl": 0.005,
    "close_pnl": -0.158,
-   "quotes": 36,
+   "quotes": 37,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -95,7 +95,7 @@
    "occ": "UBER261204P00064000",
    "peak_pnl": 0.028,
    "close_pnl": -0.09,
-   "quotes": 36,
+   "quotes": 37,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -114,8 +114,8 @@
    "strength": "6.5",
    "occ": "XOM261204P00155000",
    "peak_pnl": 0.0,
-   "close_pnl": -0.106,
-   "quotes": 11,
+   "close_pnl": -0.132,
+   "quotes": 12,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -134,8 +134,8 @@
    "strength": "6.0",
    "occ": "SPY261124P00717000",
    "peak_pnl": 0.0,
-   "close_pnl": -0.303,
-   "quotes": 6,
+   "close_pnl": -0.268,
+   "quotes": 7,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -154,8 +154,8 @@
    "strength": "4.8",
    "occ": "SPY261124C00726000",
    "peak_pnl": 0.087,
-   "close_pnl": 0.087,
-   "quotes": 3,
+   "close_pnl": 0.042,
+   "quotes": 4,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -175,7 +175,7 @@
    "occ": "JPM261204P00310000",
    "peak_pnl": 0.0,
    "close_pnl": -0.141,
-   "quotes": 3,
+   "quotes": 4,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -2788,7 +2788,10 @@
   "20261123T1312|stocks|market_against|UBER|PUT|63|2026-12-04",
   "20261123T1312|stocks|market_against|JPM|PUT|310|2026-12-04",
   "20261123T1320|spx|daily_stop|SPY|CALL|727|2026-11-24",
-  "20261123T1325|spx|daily_stop|SPY|CALL|727|2026-11-24"
+  "20261123T1325|spx|daily_stop|SPY|CALL|727|2026-11-24",
+  "20261123T1330|spx|daily_stop|SPY|CALL|727|2026-11-24",
+  "20261123T1327|stocks|market_against|NFLX|PUT|58|2026-12-11",
+  "20261123T1327|stocks|market_against|UBER|PUT|64|2026-12-04"
  ],
  "last": {
   "spx|CALL|SPY": "2026-11-23T13:15-05:00",
