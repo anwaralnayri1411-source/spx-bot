@@ -61,25 +61,63 @@ def entry_msg(e, k):
     ])
 
 
-def exit_msg(e):
-    return (f"{exit_kind(e)} · بع SPXW {e['strike']:g} {e['side']} عند {e.get('exit_px', 0):.2f}$ "
+def exit_msg(e, root="SPXW"):
+    return (f"{exit_kind(e)} · بع {root} {e['strike']:g} {e['side']} عند {e.get('exit_px', 0):.2f}$ "
             f"({e.get('exit_t', '')})\nالنتيجة: <b>{e.get('usd', 0):+,.0f}$</b> للعقد #متابعة")
 
 
-def summary_msg(day, rows):
+def mirror_entry_msg(e, root):
+    E = e["entry"]
+    return (f"{'🟢' if e['side'] == 'CALL' else '🔴'} <b>{root} {e['strike']:g} {e['side']}</b> (الجهة نفسها) ينتهي {e['tdate']}\n"
+            f"الدخول {E:.2f}$ = {E * 100:,.0f}$ · 🎯 {2 * E:.2f}$ (+100%) · 🛑 {0.4 * E:.2f}$ (−60%) · دلتا {abs(e.get('delta') or 0):.2f}")
+
+
+def summary_msg(day, rows, extra=None):
     if not rows:
         return f"🧾 <b>v9 اليوم {day}</b>: لا توصيات (لم يتحقق إجماع 4 أصوات مع ADX)."
     w = sum(r["usd"] > 0 for r in rows)
-    return (f"🧾 <b>v9 اليوم {day}</b> #تقرير\n{len(rows)} توصية: {w} رابحة · {len(rows) - w} خاسرة\n"
-            f"النتيجة لعقد واحد من كل توصية: <b>{sum(r['usd'] for r in rows):+,.0f}$</b>")
+    L = [f"🧾 <b>v9 اليوم {day}</b> #تقرير", f"{len(rows)} توصية: {w} رابحة · {len(rows) - w} خاسرة",
+         f"SPX لعقد واحد من كل توصية: <b>{sum(r['usd'] for r in rows):+,.0f}$</b>"]
+    for root, rs in (extra or {}).items():
+        if rs:
+            L.append(f"{root}: <b>{sum(r['usd'] for r in rs):+,.0f}$</b> ({sum(r['usd'] > 0 for r in rs)} من {len(rs)} رابحة)")
+    return "\n".join(L)
 
 
-def step(st, v, day, send, after_summary=False):
+def mkey(v, e):
+    return f"{v['root']}|{key(e)}"
+
+
+def step_mirrors(st, mirrors, day, send):
+    """دخول SPY/NDXP وخروجهما رداً على بطاقة SPX الأم (فقط إن أُرسلت الأم)."""
+    out = 0
+    for v in mirrors:
+        for e in sorted([e for e in v["open"] + v["closed"] if e["tdate"] == day], key=lambda e: e["t"]):
+            kk = mkey(v, e)
+            if kk in st["sent"]:
+                continue
+            par = next((k for k in st["sent"] if k.startswith(f"{e['parent']}|{e['side']}|")), None)
+            if par is None:
+                continue
+            st["sent"][kk] = send(mirror_entry_msg(e, v["root"]), st["sent"][par])
+            out += 1
+        for e in v["closed"]:
+            kk = mkey(v, e)
+            if kk in st["sent"] and kk not in st["closed"]:
+                st["closed"].append(kk)
+                send(exit_msg(e, v["root"]), st["sent"][kk])
+                out += 1
+    return out
+
+
+def step(st, v, day, send, after_summary=False, mirrors=()):
     """منطق صافٍ: يرسل الجديد ويرجع عدد الرسائل. send(text, reply_to) يرجع رقم الرسالة."""
     entries = sorted([e for e in v["open"] + v["closed"] if e["tdate"] == day], key=lambda e: e["t"])
     if not st.get("init"):                  # أول تشغيل: لا نرسل ما سبق
         st["sent"] = {key(e): None for e in entries}
         st["closed"] = [key(e) for e in v["closed"] if e["tdate"] == day]
+        st["sent"].update({mkey(m, e): None for m in mirrors for e in m["open"] + m["closed"] if e["tdate"] == day})
+        st["closed"] += [mkey(m, e) for m in mirrors for e in m["closed"] if e["tdate"] == day]
         st["init"], st["summary_day"] = True, day   # ولا ملخص ليوم لم تُرسل توصياته
         return 0
     out, closed_keys = 0, {key(e) for e in v["closed"]}
@@ -100,14 +138,18 @@ def step(st, v, day, send, after_summary=False):
             st["closed"].append(kk)
             send(exit_msg(e), st["sent"][kk])
             out += 1
+    out += step_mirrors(st, mirrors, day, send)
     if after_summary and st.get("summary_day") != day:
         rows = [e for e in v["closed"] if e["tdate"] == day and key(e) in st["sent"]]
-        send(summary_msg(day, rows), None)
+        extra = {m["root"]: [e for e in m["closed"] if e["tdate"] == day and mkey(m, e) in st["sent"]] for m in mirrors}
+        send(summary_msg(day, rows, extra), None)
         st["summary_day"] = day
         out += 1
     keep = {key(e) for e in v["open"]} | {key(e) for e in v["closed"] if e["tdate"] >= day}
+    keep |= {mkey(m, e) for m in mirrors for e in m["open"] + [c for c in m["closed"] if c["tdate"] >= day]}
     st["sent"] = {k: m for k, m in st["sent"].items() if k in keep}
     st["skipped"] = [k for k in st["skipped"] if k in keep]
+    closed_keys |= {mkey(m, e) for m in mirrors for e in m["closed"]}
     st["closed"] = [k for k in st["closed"] if k in closed_keys and k in st["sent"]]
     return out
 
@@ -131,7 +173,7 @@ def main(argv):
         send = lambda t, r: ob.send_telegram(t, reply_to=r)  # noqa: E731
     st = load()
     after = now.weekday() < 5 and now.time() >= SUMMARY_AT and any(e["tdate"] == day for e in v["closed"])
-    step(st, v, day, send, after)
+    step(st, v, day, send, after, lab.get("mirror", []))
     save(st)
 
 

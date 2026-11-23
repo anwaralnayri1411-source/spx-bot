@@ -51,3 +51,21 @@ def test_cap_550_and_stop_and_summary():
 def test_old_bot_flag_on():
     import options_bot as ob
     assert ob.V9_LIVE is True
+
+
+def test_mirrors_reply_to_spx_card_and_summary():
+    st = {"sent": {}, "closed": [], "skipped": [], "summary_day": "", "init": True}
+    e = _e("10:05", side="CALL", strike=7000, entry=5.0)
+    v = {"open": [e], "closed": []}
+    m = {"root": "SPY", "open": [_e("10:05", side="CALL", strike=701, entry=0.5, delta=0.3, parent=e["t"])], "closed": []}
+    sent = []
+
+    def send(text, reply):
+        sent.append((text, reply))
+        return 100 + len(sent)
+    vl.step(st, v, D, send, mirrors=[m])
+    assert len(sent) == 2 and "SPY 701 CALL" in sent[1][0] and sent[1][1] == 101
+    m["closed"] = [dict(m["open"].pop(), exit_px=1.0, exit_t="10:30", usd=50.0)]
+    v["closed"] = [dict(v["open"].pop(), exit_px=10.0, exit_t="10:30", usd=500.0)]
+    vl.step(st, v, D, send, True, [m])
+    assert "بع SPY 701" in sent[3][0] and sent[3][1] == 102 and "SPY: <b>+50$</b>" in sent[4][0]

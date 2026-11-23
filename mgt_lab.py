@@ -227,8 +227,58 @@ def ensure_strat(st, day):
     st["strat"] += [v for v in strat_variants(day) if v["vid"] not in have]
 
 
+# ====================== مرآة s0 على SPY وNDXP (H-V9LIVE، CLAUDE.md 24/11/2026) ======================
+MIRROR = [("m_spy", "SPY", "SPY", "SPY"), ("m_ndx", "NDX", "NDXP", "NDX")]   # (vid، الأصل للسلسلة، الجذر، رمز السعر)
+
+
+def mirror_variants(day):
+    return [{"vid": vid, "born": day, "under": u, "root": r, "spot": sp, "pinned": True, "open": [], "closed": [],
+             "params": dict(V9)} for vid, u, r, sp in MIRROR]
+
+
+def pick_delta(chain, side, S, delta):
+    """عقد خارج المال في الجهة بدلتا أقرب إلى delta، وعرضه > 0."""
+    ok = [r for r in chain if r.get("side") == side and r["bid"] > 0 and r["ask"] > 0 and
+          ((side == "CALL" and r["strike"] > S) or (side == "PUT" and r["strike"] < S))]
+    return min(ok, key=lambda r: abs(abs(r["delta"]) - abs(delta))) if ok and delta else None
+
+
+def open_mirrors(st, e0, now, chain_fn=None, spot_fn=None):
+    """تفتح المرآتان عقداً في جهة دخول s0 ولحظته. ترجع عدد ما فُتح."""
+    if chain_fn is None:
+        chain_fn = lambda d, S, u, r: ms.chain(d, S, u, r)  # noqa: E731
+    if spot_fn is None:
+        import live_quotes as lq
+        spot_fn = lambda s: lq.spot(s)[0]  # noqa: E731
+    n = 0
+    for v in st.get("mirror", []):
+        try:
+            S = spot_fn(v["spot"])
+            k = pick_delta(chain_fn(date.fromisoformat(e0["tdate"]), S, v["under"], v["root"]), e0["side"], S,
+                           e0.get("delta")) if S else None
+        except Exception as ex:  # noqa: BLE001
+            print("مرآة", v["vid"], ex)
+            k = None
+        if not k:
+            continue
+        v["open"].append({"t": e0["t"], "sess": e0["sess"], "tdate": e0["tdate"], "side": e0["side"], "strike": k["strike"],
+                          "symbol": k["symbol"], "entry": k["ask"], "S": round(S, 2), "score": e0["score"], "adx": e0["adx"],
+                          "trigger": e0["trigger"], "peak": k["ask"], "delta": k["delta"], "parent": e0["t"]})
+        print("دخول", v["vid"], e0["side"], k["strike"], k["ask"])
+        n += 1
+    return n
+
+
+def mirror_text(st, day):
+    L = ["", "🪞 **مرآة v9 (SPY وNDXP):**"]
+    for v in st.get("mirror", []):
+        s_d, n_d = score(v, [day])
+        L.append(f"- {v['root']}: اليوم {s_d:+,.0f}$ ({n_d}) · المجموع {sum(c['usd'] for c in v['closed']):+,.0f}$ ({len(v['closed'])})")
+    return "\n".join(L)
+
+
 def all_variants(st):
-    return st["variants"] + st.get("strat", []) + st.get("vp", [])
+    return st["variants"] + st.get("strat", []) + st.get("vp", []) + st.get("mirror", [])
 
 
 def manage_struct(e, p, bid, now, broken=False):
@@ -447,6 +497,7 @@ def load_state(day):
         st = {"gen": 1, "variants": initial_variants(day), "last_bar": None, "evolve_day": ""}
     st.setdefault("strat", strat_variants(day))
     ensure_strat(st, day)
+    st.setdefault("mirror", mirror_variants(day))
     st.setdefault("vp", vp_variants(day))
     ensure_exits(st)
     return st
@@ -587,7 +638,7 @@ def main(argv):
         ensure_exits(st)
         with open(GENS, "a", encoding="utf-8") as f:
             f.write(gen_txt + "\n\n")
-        msg = board + "\n" + strat_text(st, day) + "\n" + vp_text(st, day) + "\n\n" + changes_text(st)
+        msg = board + "\n" + strat_text(st, day) + mirror_text(st, day) + "\n" + vp_text(st, day) + "\n\n" + changes_text(st)
         print(msg)
         if not no_send:
             import analyst as an
@@ -661,8 +712,10 @@ def main(argv):
                 v["open"].append({"t": now.isoformat(timespec="minutes"), "sess": sess, "tdate": tdate, "side": sd,
                                   "strike": k["strike"], "symbol": k["symbol"], "entry": k["ask"], "S": round(S, 2),
                                   "score": total, "adx": round(det["adx"], 1), "trigger": trig, "peak": k["ask"],
-                                  **({"setup": su["key"], "ce": su["ce"]} if su else {})})
+                                  "delta": k.get("delta"), **({"setup": su["key"], "ce": su["ce"]} if su else {})})
                 print("دخول", v["vid"], sd, k["strike"], k["ask"], trig)
+                if v["vid"] == "s0":
+                    open_mirrors(st, v["open"][-1], now)
                 break
     # 5) البروفايل والتدفق (H-VPFLOW): الجلسة الرسمية فقط
     if sess == "rth" and (now.time() <= VP_LAST or force):

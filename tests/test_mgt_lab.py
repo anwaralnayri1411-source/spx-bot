@@ -243,3 +243,16 @@ def test_strat_ctx_on_minute_bars():
     assert ctx["or"] and ctx["or"][0] >= ctx["or"][1] and ctx["st5"] is not None
     assert ctx["h1_trend"] in ("up", "down", None)
     ml.chop_day(ctx), ml.day_ok(ctx, now)
+
+
+def test_open_mirrors_same_side_by_delta():
+    st = {"mirror": ml.mirror_variants(D)}
+    e0 = {"t": f"{D}T10:00-05:00", "sess": "rth", "tdate": D, "side": "PUT", "score": -4, "adx": 20, "trigger": "any",
+          "delta": -0.3}
+    rows = [{"side": "PUT", "strike": 690.0, "bid": 0.4, "ask": 0.45, "delta": -0.31, "symbol": "P690"},
+            {"side": "PUT", "strike": 680.0, "bid": 0.1, "ask": 0.12, "delta": -0.1, "symbol": "P680"},
+            {"side": "CALL", "strike": 710.0, "bid": 0.4, "ask": 0.45, "delta": 0.3, "symbol": "C710"}]
+    n = ml.open_mirrors(st, e0, None, chain_fn=lambda d, S, u, r: rows, spot_fn=lambda s: 700.0)
+    assert n == 2 and all(v["open"][0]["symbol"] == "P690" and v["open"][0]["side"] == "PUT" for v in st["mirror"])
+    assert ml.open_mirrors({"mirror": ml.mirror_variants(D)}, e0, None, chain_fn=lambda *a: rows, spot_fn=lambda s: None) == 0
+    assert "مرآة" in ml.mirror_text(st, D)

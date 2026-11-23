@@ -300,14 +300,14 @@ def es_bars():
     return h.rename(columns={"Open": "o", "High": "h", "Low": "l", "Close": "c", "Volume": "v"})[["o", "h", "l", "c", "v"]]
 
 
-def chain(tdate, S):
-    """عقود SPXW لتاريخ tdate ضمن ±3% (عرض/طلب/دلتا/تذبذب/اهتمام/حجم) من Tastytrade."""
+def chain(tdate, S, under="SPX", root="SPXW"):
+    """عقود root (SPXW افتراضياً؛ أو SPY أو NDXP) لتاريخ tdate ضمن ±3% (عرض/طلب/دلتا/تذبذب/اهتمام/حجم) من Tastytrade."""
     import live_quotes as lq
     tok = lq._tasty_token()
-    ch = (lq._tasty_req("/option-chains/SPX/nested", token=tok).get("data") or {}).get("items") or []
+    ch = (lq._tasty_req(f"/option-chains/{under}/nested", token=tok).get("data") or {}).get("items") or []
     meta = {}
     for r in ch:
-        if r.get("root-symbol") != "SPXW":
+        if r.get("root-symbol") != root:
             continue
         for e in r.get("expirations") or []:
             if e["expiration-date"] == tdate.isoformat():
