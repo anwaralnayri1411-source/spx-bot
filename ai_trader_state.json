@@ -640,8 +640,8 @@
    "pnl": -314.0
   }
  ],
- "decisions": 255,
+ "decisions": 256,
  "report_day": "2026-11-20",
  "day": "2026-11-23",
- "decisions_today": 17
+ "decisions_today": 18
 }
