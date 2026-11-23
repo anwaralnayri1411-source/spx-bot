@@ -136,14 +136,19 @@ def _ctx(st5=None, h1="up", m5=None, orng=None):
 
 def test_strat_variants_fixed_and_outside_evolution():
     sv = ml.strat_variants(D)
-    assert [v["vid"] for v in sv] == ["s0", "s1", "s2", "s3"] and all(v["pinned"] for v in sv)
-    assert sv[0]["params"] == ml.V9 and all(v["params"] == dict(ml.V9, exit="struct") for v in sv[1:])
+    assert [v["vid"] for v in sv] == ["s0", "s1", "s2", "s3", "s0b"] and all(v["pinned"] for v in sv)
+    assert sv[0]["params"] == ml.V9 and all(v["params"] == dict(ml.V9, exit="struct") for v in sv[1:4])
+    assert sv[4]["params"] == dict(ml.V9, ladder=5, cap=6) and sv[4]["level"] == 0       # v7g7 مجمّدة
     st = {"gen": 1, "variants": ml.initial_variants(D), "strat": sv}
     for v in st["variants"]:
         v["closed"] = [{"tdate": D, "usd": -500.0}] * 3
     ml.evolve(st, D, random.Random(1))
-    assert [v["vid"] for v in st["strat"]] == ["s0", "s1", "s2", "s3"]          # التطور لا يمس النسخ الثابتة
-    assert len(ml.all_variants(st)) == 16
+    assert [v["vid"] for v in st["strat"]] == ["s0", "s1", "s2", "s3", "s0b"]   # التطور لا يمس النسخ الثابتة
+    assert len(ml.all_variants(st)) == 17
+    old = {"strat": [dict(v, closed=[{"tdate": D, "usd": 1.0}]) for v in sv[:4]]}
+    ml.ensure_strat(old, D)
+    assert [v["vid"] for v in old["strat"]] == ["s0", "s1", "s2", "s3", "s0b"] and old["strat"][0]["closed"]
+    assert "v7g7" in ml.strat_text(st, D)
     assert "s3" in ml.strat_text(st, D) and "دخول الهيكل" in ml.strat_text(st, D)
 
 

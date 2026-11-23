@@ -208,15 +208,23 @@ def left_text(v, day):
 # ====================== استراتيجية «استمرار الترند بعد التصحيح» (H-TRENDPB) ======================
 # نسخ ثابتة لا تدخل التطور: كل نسخة تضيف شيئاً واحداً على سابقتها (التسجيل في CLAUDE.md 13/11/2026).
 V9 = {"score": 4, "adx": 15, "price": 5.0, "stop": 0.6, "exit": "tp100", "ladder": 10, "cap": 12, "sess": "rth", "trig": "any"}
-STRAT = [("s0", 0), ("s1", 1), ("s2", 2), ("s3", 3)]          # المستوى: 1 خروج الهيكل، 2 فلتر اليوم، 3 دخول الهيكل
-STRAT_NAMES = {"s0": "v9 مجمّدة", "s1": "+ خروج يتبع الهيكل", "s2": "+ فلتر نوع اليوم", "s3": "+ دخول الهيكل (MSS ثم FVG)"}
+STRAT = [("s0", 0), ("s1", 1), ("s2", 2), ("s3", 3), ("s0b", 0)]   # المستوى: 1 خروج الهيكل، 2 فلتر اليوم، 3 دخول الهيكل
+STRAT_NAMES = {"s0": "v9 مجمّدة", "s1": "+ خروج يتبع الهيكل", "s2": "+ فلتر نوع اليوم", "s3": "+ دخول الهيكل (MSS ثم FVG)",
+               "s0b": "v7g7 مجمّدة (سلّم 5ن×6)"}
+STRAT_PARAMS = {"s0b": {"ladder": 5, "cap": 6}}                    # s0b (24/11/2026): v7g7 بالقيد الشرعي، CLAUDE.md
 S_FIRST, S_LAST, S_FORCE = ms.dtime(10, 0), ms.dtime(14, 30), ms.dtime(15, 45)
 S3_CAP, SMC_N = 3, 3
 
 
 def strat_variants(day):
     return [{"vid": vid, "born": day, "level": lvl, "pinned": True, "open": [], "closed": [],
-             "params": {**V9, "exit": "struct" if lvl >= 1 else "tp100"}} for vid, lvl in STRAT]
+             "params": {**V9, "exit": "struct" if lvl >= 1 else "tp100", **STRAT_PARAMS.get(vid, {})}} for vid, lvl in STRAT]
+
+
+def ensure_strat(st, day):
+    """يضيف النسخ الثابتة الجديدة إلى حالة قديمة دون لمس الموجودة."""
+    have = {v["vid"] for v in st["strat"]}
+    st["strat"] += [v for v in strat_variants(day) if v["vid"] not in have]
 
 
 def all_variants(st):
@@ -438,6 +446,7 @@ def load_state(day):
     except Exception:  # noqa: BLE001
         st = {"gen": 1, "variants": initial_variants(day), "last_bar": None, "evolve_day": ""}
     st.setdefault("strat", strat_variants(day))
+    ensure_strat(st, day)
     st.setdefault("vp", vp_variants(day))
     ensure_exits(st)
     return st
