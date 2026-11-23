@@ -4551,31 +4551,13 @@
    "sharp@2026-11-23T10:32-05:00",
    "news:uber technologies stock uber adds zoox robotaxi rides in las vegas"
   ],
-  "GOOGL:PUT:2026-12-04:250": [
-   "down-0.15",
-   "up0.25",
-   "stock3",
-   "down-0.3",
-   "sharp@2026-11-23T09:55-05:00",
-   "sharp@2026-11-23T09:58-05:00",
-   "sharp@2026-11-23T10:26-05:00",
-   "stock4"
-  ],
   "WMT:CALL:2026-12-11:128": [
    "news:wmt maintained by guggenheim price target raised to 140"
   ],
   "WMT:CALL:2026-12-04:130": []
  },
- "stock_level": {
-  "GOOGL:PUT:2026-12-04:250": 4
- },
+ "stock_level": {},
  "seen_macro": [
-  "the bond market now has an even bigger fear than ai fallout",
-  "asx set to slide nvidia dives to weigh on wall street trump sends oil higher",
-  "gold price crashes below 3 900 as fed rate hike bets overwhelm safe haven demand",
-  "federal reserve to forgo rate decision at october 2027 meeting",
-  "silver tumbles over 3 as fed rate hike bets fuel us dollar rally",
-  "wall st recovers as energy shares climb nvidia woes deepen",
   "federal reserve rate hikes and market impact insights for spy i",
   "fed s daly warns ai is fueling inflation sees more rate hikes ahead",
   "ai capital buildout raising housing funding costs fed s schmid",
@@ -5169,10 +5151,15 @@
   "european gas prices surge 12 in october breaching us 1 000 mark amid supply squeeze and geopolitical tensions",
   "relief from oil price rollback to take time",
   "stock market today s p 500 nasdaq jump 5 as nvidia leads ai rally make",
-  "wall street opens sharply higher after the s p 500 s seven day slide"
+  "wall street opens sharply higher after the s p 500 s seven day slide",
+  "stock market today s p 500 jumps 3 9 and nasdaq 5 8 at the open as vix drops",
+  "wall street surges toward m a record as megadeals defy selloff",
+  "serious u s treasury secretary warning to the fed puts bitcoin and crypto on the brink of a surprise price shock",
+  "ai bubble burst could put fed rate cuts on the table",
+  "stocks soar as nvidia reinstates huang reviving ai trade",
+  "brent crude oil price tumbles about 5 5 as technical breakdowns reinforce bearish sentiment"
  ],
  "sharp": {
-  "UBER:PUT:2026-12-04:65": 65.94,
-  "GOOGL:PUT:2026-12-04:250": 282.92
+  "UBER:PUT:2026-12-04:65": 65.94
  }
 }
