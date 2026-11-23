@@ -2018,3 +2018,6 @@ id,time,project,tag,sym,root,side,strike,exp,entry,spot,edge,strength
 20261123T1457|stocks|market_against|UBER|PUT|62|2026-12-11,2026-11-23T14:57-05:00,stocks,market_against,UBER,UBER,PUT,62.0,2026-12-11,1.27,64.38,4.5,6.2
 20261123T1457|stocks|market_against|XOM|PUT|155|2026-12-04,2026-11-23T14:57-05:00,stocks,market_against,XOM,XOM,PUT,155.0,2026-12-04,2.41,157.59,4.0,7.0
 20261123T1457|stocks|market_against|NFLX|PUT|58|2026-12-11,2026-11-23T14:57-05:00,stocks,market_against,NFLX,NFLX,PUT,58.0,2026-12-11,1.77,58.3,4.5,7.2
+20261123T1512|stocks|chase_em|XOM|PUT|155|2026-12-04,2026-11-23T15:12-05:00,stocks,chase_em,XOM,XOM,PUT,155.0,2026-12-04,2.49,157.3,5.0,7.5
+20261123T1512|stocks|market_against|UBER|PUT|62|2026-12-11,2026-11-23T15:12-05:00,stocks,market_against,UBER,UBER,PUT,62.0,2026-12-11,1.31,64.46,4.0,5.7
+20261123T1512|stocks|market_against|NFLX|PUT|58|2026-12-11,2026-11-23T15:12-05:00,stocks,market_against,NFLX,NFLX,PUT,58.0,2026-12-11,1.83,58.25,4.5,7.2
