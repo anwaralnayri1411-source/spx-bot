@@ -2069,7 +2069,6 @@
    "bitcoin drops 2 26 in four hours to 62 802 am"
   ],
   "HOOD:PUT": [
-   "ethereum whales buy millions in eth as price falls below 2 200",
    "bitcoin falls below 75k testing critical 74",
    "crypto price prediction btc trades near 74 5k as remittix earn brings weekly payouts to the public",
    "bitcoin btc ether prices crash to lowest since august why are cryptocurrencies down",
@@ -2468,7 +2467,8 @@
    "how low can xrp price go in 2026",
    "we ve entered peak fear sky falls",
    "rialto raises 5 million from tandem by offchain and robinhood to build onchain capital markets",
-   "will bitcoin drop below 50 000 before it recovers"
+   "will bitcoin drop below 50 000 before it recovers",
+   "eric trump s bitcoin miner surges 17 after 150 million deal to avoid selling btc"
   ],
   "AAPL:CALL": [
    "loop capital lowers apple stock price target on iphone shipment concerns",
@@ -2951,11 +2951,6 @@
    "metropal reports board responsibility statement on consolidated financials"
   ],
   "XOM:PUT": [
-   "gold price prediction gold rate falls amidst big movement in oil price inflation check experts opinion",
-   "apa q3 earnings beat on strong oil prices and u s output",
-   "global oil prices drop sharply amid reports of potential iran u s peace talks",
-   "oil prices fall nearly 15 ahead of epra fuel price review",
-   "iea sees 4 800 gw of new renewables by 2031",
    "refining bottlenecks keep farm diesel costs historically high",
    "crude oil prices waver on hopes for a diplomatic end to iran war",
    "average la county gas price drops to lowest amount since sept 4",
@@ -3350,7 +3345,12 @@
    "lehigh valley gas prices fall below 4 amid national decline",
    "la orange county gas prices still falling",
    "crude rebounds but growing global supply limits gains",
-   "canada s oilfield services sector is gearing up for a stronger 2027"
+   "canada s oilfield services sector is gearing up for a stronger 2027",
+   "watertown gas prices drop another two cents right before thanksgiving",
+   "oil stocks to follow today november 24th",
+   "bank of canada chief warns of oil passthrough sticky inflation",
+   "bank of canada expects 2nd round of oil linked inflation in 2027 macklem says",
+   "iraq refuses to accept opec assessment of its production capacity"
   ],
   "MSFT:CALL": [
    "forget the 12 month squeeze microsoft is primed for an explosive ai payoff",
@@ -4356,7 +4356,8 @@
    "red cat sinks 9 unusual machines slides 7 ondas drops 4 is the pentagon s reported push to bring in general motors and f",
    "a borr drilling insider raised his stake 22 in one day",
    "apple stock has 3 things going for it in 2027 here s my price target",
-   "the same 10 000 in amd and micron could produce very different results by 2030"
+   "the same 10 000 in amd and micron could produce very different results by 2030",
+   "here s how quickly nvidia could reach 200 following jensen huang s reinstatement as ceo"
   ],
   "SNAP:PUT": [
    "snap earnings analysis questions answered and next catalysts",
@@ -4599,7 +4600,8 @@
   ],
   "T:CALL": [
    "form 8k at t for 24 november by investing com",
-   "cipher digital cifr stock falls 12 5 today"
+   "cipher digital cifr stock falls 12 5 today",
+   "amazon launches 36 satellites to challenge starlink after rocket failure"
   ]
  },
  "fired": {
@@ -4672,10 +4674,6 @@
   "SOFI:PUT:2026-12-11:13": 1
  },
  "seen_macro": [
-  "why are gold and silver prices falling together fed rate bets trigger precious metals selloff make",
-  "sbp projects 3 5 4 5 gdp growth for fy27",
-  "us stock market today nasdaq down over 1 5 as nvidia other ai chip stocks slump dow s p 500 also in red",
-  "gold hits lowest level in over a year amid fed rate hike expectations",
   "canadian dollar extends decline as mixed cpi data offers little support",
   "gold prices fall below critical levels as fed rate hike fears deepen what s next",
   "more drops for nvidia and other ai stocks drag the u s market lower",
@@ -5271,7 +5269,11 @@
   "wall street s 2027 earnings hopes may be dead on arrival unless the fed blinks in december",
   "pound to dollar forecast gbp usd near 1 31 as us yields surge",
   "macklem admits bank of canada offered mixed messaging on core inflation in past",
-  "gold and silver prices decline sharply amidst global economic factors"
+  "gold and silver prices decline sharply amidst global economic factors",
+  "macklem admits boc offered mixed messaging on core inflation in past",
+  "is trump raising tariffs on china again new duties on china the eu and 14 others could come this week",
+  "nvidia anthropic and other ai stocks get back to tumbling and drag the u s market lower",
+  "silver falls below 41 gold drops 2 ahead of us inflation data"
  ],
  "sharp": {
   "UBER:PUT:2026-12-04:65": 65.94,
