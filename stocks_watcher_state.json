@@ -302,7 +302,11 @@
    "uber has committed to buy at least 35 000 lucid vehicles equipped with nuro s driverless system",
    "trump s labor department just made it easier to treat drivers as contractors that s good news for uber",
    "anthropic stock drops below 83 ipo price as day one pop vanishes",
-   "lucid uber edge closer to taking on tesla s robotaxis public launch targeted for q1 2027"
+   "lucid uber edge closer to taking on tesla s robotaxis public launch targeted for q1 2027",
+   "uber nero and lucid take a major step forward with their robotaxi partnership uber nyse",
+   "lucid shares climb as driverless testing partnership with uber begins jkn",
+   "uber lucid nuro begin driverless testing in san francisco",
+   "uber freight makes a very public break with gartner s quadrant"
   ],
   "DIS:CALL": [
    "skydance rises 5 as steep post merger slide pauses disney gains 2 netflix slips",
@@ -2052,8 +2056,6 @@
    "bitcoin drops 2 26 in four hours to 62 802 am"
   ],
   "HOOD:PUT": [
-   "bitcoin drops below 75k top analyst spots a bullish 2023 pattern",
-   "the price of solana just dropped below 100 time to buy the dip",
    "xrp price at nov 9 2026 at 7am est crypto prediction market",
    "oil falls on reported 8 billion us iran hormuz deal what happens to bitcoin",
    "crypto week ahead 5 things that could affect bitcoin price this week",
@@ -2451,7 +2453,9 @@
    "bitcoin price analysis where does the 64 5k rejection leave btc",
    "robinhood is worth less than kalshi s reported 65 billion raise josh brown says no way in real life",
    "explore how frequent crypto trading impacts portfolio performance considering trading fees taxes and market timing and l",
-   "i m down several million kr nur"
+   "i m down several million kr nur",
+   "bitwise bitcoin eth sol to face tsunami of demand in 2027 so why are they dropping",
+   "bitcoin price prediction strategy buys 457 btc amid fear as pepeto presale tops 11 3m"
   ],
   "AAPL:CALL": [
    "loop capital lowers apple stock price target on iphone shipment concerns",
@@ -2934,9 +2938,6 @@
    "metropal reports board responsibility statement on consolidated financials"
   ],
   "XOM:PUT": [
-   "top oil stocks to consider november 5th",
-   "promising energy stocks to consider november 5th",
-   "oil bounces after its worst 3 day drop since 2021 but energy stocks aren t joining in",
    "us and turkmenistan explore new gas routes across the caspian",
    "us dollar nudges higher against the loonie as bond yields fall oil prices jump",
    "arkansas gas prices fall 9 cents to 3 71 a gallon",
@@ -3333,7 +3334,10 @@
    "oil market shock keeps costs high for us small businesses even as crude pulls back",
    "daily oil price november 19 2026",
    "libya and iraq could be the next big headache for oil markets",
-   "home prices rose 2 6 in september even as mortgage rates moved higher"
+   "home prices rose 2 6 in september even as mortgage rates moved higher",
+   "oil prices rise as middle east tensions intensify",
+   "us consumer confidence soars with elections in the rearview mirror and gas prices in decline",
+   "amtrak sets ridership record as rising gas prices encourage americans to travel by rail"
   ],
   "MSFT:CALL": [
    "forget the 12 month squeeze microsoft is primed for an explosive ai payoff",
@@ -4574,7 +4578,8 @@
    "nuran wireless reports amended series a preferred share terms",
    "mackenzie realty capital holds annual meeting and elects directors",
    "nvidia microsoft extend full stack collaboration over intelligent applications"
-  ]
+  ],
+  "T:CALL": []
  },
  "fired": {
   "UBER:PUT:2026-12-04:65": [
@@ -4592,7 +4597,10 @@
    "news:lucid gravity robotaxis begin driverless tests on bay area public roads",
    "news:uber lucid and nuro start driverless robotaxi tests in california",
    "news:uber has committed to buy at least 35 000 lucid vehicles equipped with nuro s driverless system",
-   "news:trump s labor department just made it easier to treat drivers as contractors that s good news for uber"
+   "news:trump s labor department just made it easier to treat drivers as contractors that s good news for uber",
+   "news:uber nero and lucid take a major step forward with their robotaxi partnership uber nyse",
+   "news:lucid shares climb as driverless testing partnership with uber begins jkn",
+   "news:uber lucid nuro begin driverless testing in san francisco"
   ],
   "WMT:CALL:2026-12-11:128": [
    "news:wmt maintained by guggenheim price target raised to 140",
@@ -4606,29 +4614,22 @@
   "WMT:CALL:2026-12-04:131": [
    "up0.25"
   ],
-  "HOOD:PUT:2026-12-04:63": [],
-  "XOM:PUT:2026-12-04:155": [],
+  "HOOD:PUT:2026-12-04:63": [
+   "sharp@2026-11-24T10:34-05:00"
+  ],
+  "XOM:PUT:2026-12-04:155": [
+   "news:oil prices rise as middle east tensions intensify"
+  ],
   "DIS:CALL:2026-12-04:124": [
    "down-0.15"
   ],
-  "SOFI:PUT:2026-12-11:13.5": []
+  "SOFI:PUT:2026-12-11:13.5": [],
+  "T:CALL:2026-12-11:20.5": [
+   "down-0.15"
+  ]
  },
  "stock_level": {},
  "seen_macro": [
-  "wall street looks beyond nvidia s turmoil",
-  "crypto market sees brief relief after cooler us ppi data",
-  "logan says treasury market functioning very well fed needs to strengthen support tools",
-  "us stocks mixed dow rebounds 54 points as soft ppi offset by fed rate hike expectations",
-  "williams says fed has more work as inflation stays above 2 goal",
-  "how congress might take back its trade powers and limit trump s tariffs",
-  "seeking clues to everpure p q3 earnings a peek into wall street projections for key metrics",
-  "stock market midday nov 13 nasdaq plunges as nvidia turmoil deepens and treasury yields hit 5",
-  "fed s daly sees more rate hikes as firms seek to pass on costs",
-  "nebius stock plunges again as wall street slashes targets",
-  "silence by trump s fed chief risks rattling markets as ex insiders sound the alarm nyt",
-  "solana scores major wall street win as dtcc plans to tokenize us securities on sol network",
-  "the fed should not raise 50 basis points in interest rates says goldman sachs s robin brooks",
-  "canadian dollar heads for weekly decline even as investors price in higher odds of boc december rate hike",
   "nvidia crisis senate panel summons jensen huang howard lutnick to testify",
   "wall street forecasters see tumbling corporate earnings hobbling the stock market in 2027",
   "federal reserve cannot combat inflation by holding rates high without risking government financing and private sector ba",
@@ -5214,9 +5215,24 @@
   "us stock market today nasdaq crashes nearly 2 as tech bulls retreat s p 500 dow in red",
   "trump readies new tariffs on china other nations",
   "why is amd stock plunging today despite strong wall street buy ratings",
-  "fed governor cook warns more rate hikes may be needed to curb inflation news and statistics"
+  "fed governor cook warns more rate hikes may be needed to curb inflation news and statistics",
+  "us set to raise tariffs on india china and dozens of other economies over industrial subsidies wsj",
+  "us trade policies reshape grocery and rail markets",
+  "stock market falls as investors weigh new tariff plan for china and eu",
+  "us prepares higher tariffs on china dozens of nations for industrial subsidies report",
+  "india faces fresh us tariff threat as trump prepares to raise duties on 16 nations",
+  "us markets reverse gains nasdaq 100 drops 2 as trump s tariff threat hurt investor sentiments nvidia dips 6 anthropic fa",
+  "stock market today s p 500 and nasdaq fall as nvidia drops 5 5",
+  "today s mortgage rates hold steady at 7 366 nov 24 2026",
+  "trump s jensen huang snapback carries deeper risks",
+  "chinese cars can t cross from canada to u s trump s envoy says",
+  "have robotaxis hit a tipping point wall street and experts are split",
+  "nvidia and other ai stocks fall but the rest of wall street rises with confidence in the us economy",
+  "u s debt and high rates could deepen inflation bitcoin executive says",
+  "india china over two dozen other nations face higher us tariffs over industrial subsidies report"
  ],
  "sharp": {
-  "UBER:PUT:2026-12-04:65": 65.94
+  "UBER:PUT:2026-12-04:65": 65.94,
+  "HOOD:PUT:2026-12-04:63": 65.145
  }
 }
