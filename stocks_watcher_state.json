@@ -315,7 +315,8 @@
    "tesla robotaxi rival starts road tests without a safety monitor",
    "delivery hero investors face final call on uber s 41 50 bid as bond terms rewritten",
    "uber technologies uber partnerships expand as driverless debate keeps valuation in focus",
-   "airbnb vs uber technologies which consumer stock is a better buy for 2027"
+   "airbnb vs uber technologies which consumer stock is a better buy for 2027",
+   "should you buy uber stock for its cash"
   ],
   "DIS:CALL": [
    "skydance rises 5 as steep post merger slide pauses disney gains 2 netflix slips",
@@ -2066,9 +2067,6 @@
    "bitcoin drops 2 26 in four hours to 62 802 am"
   ],
   "HOOD:PUT": [
-   "current price of bitcoin for nov 9 2026",
-   "current price of ethereum for november 9 2026",
-   "strategy s 64 billion bitcoin bet just went underwater",
    "strive buys 29 more bitcoin raising holdings to 43 153 btc",
    "bitcoin price outlook selloff may reach 70 000 support zone",
    "strategy inc s atm update directs 188 3m to buybacks and 81 9m to bitcoin",
@@ -2465,7 +2463,10 @@
    "bitcoin may drop to 43 800 as bear market cont",
    "zcash price drops over 7 amid bitcoin s fall b",
    "us spot bitcoin etfs november outflows reach a monthly record of 4 71 billion",
-   "bitcoin slides amid us tariff nerves as anthropic falls below ipo price"
+   "bitcoin slides amid us tariff nerves as anthropic falls below ipo price",
+   "current price of ethereum for november 24 2026",
+   "current price of bitcoin for november 24 2026",
+   "cardano founder on ada weak price technology does not always translate to market returns"
   ],
   "AAPL:CALL": [
    "loop capital lowers apple stock price target on iphone shipment concerns",
@@ -2948,7 +2949,6 @@
    "metropal reports board responsibility statement on consolidated financials"
   ],
   "XOM:PUT": [
-   "gas prices for 11 06 26 national average down again what will you pay heading into the weekend",
    "the iran war isn t over but oil traders are already pricing in peace",
    "energy aspects slashes forecast of china s november diesel exports",
    "a 5 9 billion fund is betting big on exxonmobil",
@@ -3347,7 +3347,8 @@
    "saudi arabia sees smaller economic slump as more oil reaches market",
    "gas prices drop to the lowest level since march ahead of thanksgiving holiday",
    "current price of oil as of november 24 2026",
-   "canada producer prices rise again in october buoyed by energy products"
+   "canada producer prices rise again in october buoyed by energy products",
+   "lehigh valley gas prices fall below 4 amid national decline"
   ],
   "MSFT:CALL": [
    "forget the 12 month squeeze microsoft is primed for an explosive ai payoff",
@@ -4664,7 +4665,6 @@
   "SOFI:PUT:2026-12-11:13": 1
  },
  "seen_macro": [
-  "auto market weekly summary",
   "amd earnings what wall street missed",
   "oil prices face pressure from geopolitical tens",
   "carney says canada could turn to chinese automakers if trump trade talks fail",
@@ -5263,7 +5263,8 @@
   "trump poised to raise tariffs on eu and china",
   "wall street loved nvidia yesterday today it s buying this 3x bear etf",
   "nvidia stock falls after epic rally on jensen huang s return as ceo",
-  "stock market midday nov 24 nvidia drops 9 as wall street s historic ai rally loses momentum"
+  "stock market midday nov 24 nvidia drops 9 as wall street s historic ai rally loses momentum",
+  "yen gains as tariff fears hit us stocks"
  ],
  "sharp": {
   "UBER:PUT:2026-12-04:65": 65.94,
