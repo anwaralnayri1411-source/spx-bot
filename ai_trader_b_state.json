@@ -1,6 +1,21 @@
 {
- "cash": 3588.0,
- "positions": [],
+ "cash": 3302.0,
+ "positions": [
+  {
+   "id": "1124-1116-SPY-PUT-713",
+   "symbol": "SPY   261124P00713000",
+   "under": "SPY",
+   "side": "PUT",
+   "strike": 713.0,
+   "expiry": "2026-11-24",
+   "qty": 1,
+   "entry": 2.86,
+   "time": "2026-11-24T11:16-05:00",
+   "stop": 2.29,
+   "target": 5.72,
+   "invalidation": "إلغاء الفكرة إذا أغلق SPY فوق 716 أو تحولت علاوة البوت وصافي الدلتا إلى إيجابي في لقطتين متتاليتين، أو خرج السعر من قاع الجلسة نحو الأعلى."
+  }
+ ],
  "closed": [
   {
    "id": "1109-1001-SPY-CALL-747",
@@ -150,9 +165,9 @@
    "after_last": 5.9
   }
  ],
- "decisions": 245,
+ "decisions": 246,
  "report_day": "2026-11-23",
  "start_cash": 3195.0,
  "day": "2026-11-24",
- "decisions_today": 6
+ "decisions_today": 7
 }
