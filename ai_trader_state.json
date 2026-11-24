@@ -1,6 +1,21 @@
 {
- "cash": 5435.0,
- "positions": [],
+ "cash": 4105.0,
+ "positions": [
+  {
+   "id": "1124-1201-SPX-PUT-7140",
+   "symbol": "SPXW  261124P07140000",
+   "under": "SPX",
+   "side": "PUT",
+   "strike": 7140.0,
+   "expiry": "2026-11-24",
+   "qty": 1,
+   "entry": 13.3,
+   "time": "2026-11-24T12:01-05:00",
+   "stop": 9.5,
+   "target": 20.0,
+   "invalidation": "إلغاء الفكرة إذا استعاد SPX VWAP واستقر فوق 7175 مع تدفق شراء كول قوي، أو إذا اخترق 7250 بقوة"
+  }
+ ],
  "closed": [
   {
    "id": "1105-0946-PUT-757",
@@ -718,8 +733,8 @@
    "pnl": -520.0
   }
  ],
- "decisions": 271,
+ "decisions": 272,
  "report_day": "2026-11-23",
  "day": "2026-11-24",
- "decisions_today": 9
+ "decisions_today": 10
 }
