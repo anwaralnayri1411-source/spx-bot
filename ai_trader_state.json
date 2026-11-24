@@ -1,6 +1,21 @@
 {
- "cash": 5923.0,
- "positions": [],
+ "cash": 4727.0,
+ "positions": [
+  {
+   "id": "1124-0946-SPY-PUT-717",
+   "symbol": "SPY   261124P00717000",
+   "under": "SPY",
+   "side": "PUT",
+   "strike": 717.0,
+   "expiry": "2026-11-24",
+   "qty": 4,
+   "entry": 2.99,
+   "time": "2026-11-24T09:46-05:00",
+   "stop": 1.8,
+   "target": 4.5,
+   "invalidation": "إذا أغلق SPY فوق 720 أو تجاوز SPX 7250 (جدار الكول) مع ارتداد ES فوق إغلاق أمس، تُلغى الفكرة"
+  }
+ ],
  "closed": [
   {
    "id": "1105-0946-PUT-757",
@@ -664,8 +679,8 @@
    "after_last": 16.5
   }
  ],
- "decisions": 262,
+ "decisions": 263,
  "report_day": "2026-11-23",
- "day": "2026-11-23",
- "decisions_today": 24
+ "day": "2026-11-24",
+ "decisions_today": 1
 }
