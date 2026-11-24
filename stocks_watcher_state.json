@@ -186,7 +186,10 @@
    "walmart inc 2027 q3 results earnings call presentation nasdaq wmt 2026 11 24",
    "etfs are buying walmart wmt on nov 20",
    "walmart raised its outlook and the stock fell anyway here s the new price target",
-   "target vs walmart which consumer goods stock is a better buy for 2027"
+   "target vs walmart which consumer goods stock is a better buy for 2027",
+   "walmart target anthropic amazon nvidia micron and alphabet are part of zacks earnings preview",
+   "walmart leadership to participate in upcoming investor events",
+   "walmart is near its high guggenheim sees more upside"
   ],
   "UBER:PUT": [
    "why is hertz htz stock soaring today",
@@ -293,7 +296,13 @@
    "musk says tesla is getting ready to return to growth mode here s what analysts expect",
    "uber lucid and nuro start driverless testing for robotaxi service",
    "is monness crespi hardt wrong to give up on tesla wall street still sees 412",
-   "taking on tesla again lucid and its partners begin driverless robo taxi tests"
+   "taking on tesla again lucid and its partners begin driverless robo taxi tests",
+   "lucid gravity robotaxis begin driverless tests on bay area public roads",
+   "uber lucid and nuro start driverless robotaxi tests in california",
+   "uber has committed to buy at least 35 000 lucid vehicles equipped with nuro s driverless system",
+   "trump s labor department just made it easier to treat drivers as contractors that s good news for uber",
+   "anthropic stock drops below 83 ipo price as day one pop vanishes",
+   "lucid uber edge closer to taking on tesla s robotaxis public launch targeted for q1 2027"
   ],
   "DIS:CALL": [
    "skydance rises 5 as steep post merger slide pauses disney gains 2 netflix slips",
@@ -2043,11 +2052,6 @@
    "bitcoin drops 2 26 in four hours to 62 802 am"
   ],
   "HOOD:PUT": [
-   "crypto firms are the only issuers still letting okxice tokenize their stock",
-   "bitcoin price today can btc break 82k before friday s expiry as big buyers back pepeto",
-   "btc price on nov 6 2026 at 3pm est prediction market",
-   "b riley cuts strive enterprises stock price target on btc assumptions",
-   "we asked chatgpt what 430m of bitcoin etf outflows means by month end",
    "bitcoin drops below 75k top analyst spots a bullish 2023 pattern",
    "the price of solana just dropped below 100 time to buy the dip",
    "xrp price at nov 9 2026 at 7am est crypto prediction market",
@@ -2442,7 +2446,12 @@
    "btc price prediction bitcoin s 130k comeback faces a 55k threat as apeing eyes 2027 growth",
    "bitcoin s 5 year return is nearly zero great narratives are fading and what s left is the fed",
    "will bitcoin price bounce back as jensen huang returns as nvidia ceo",
-   "crypto news bitcoin hits 64 000 ether up 7"
+   "crypto news bitcoin hits 64 000 ether up 7",
+   "bitcoin price prediction btc repeats 2015 price action that led to a 9 700 gain",
+   "bitcoin price analysis where does the 64 5k rejection leave btc",
+   "robinhood is worth less than kalshi s reported 65 billion raise josh brown says no way in real life",
+   "explore how frequent crypto trading impacts portfolio performance considering trading fees taxes and market timing and l",
+   "i m down several million kr nur"
   ],
   "AAPL:CALL": [
    "loop capital lowers apple stock price target on iphone shipment concerns",
@@ -2925,8 +2934,6 @@
    "metropal reports board responsibility statement on consolidated financials"
   ],
   "XOM:PUT": [
-   "u s refineries make dramatic shift away from gasoline",
-   "will the u s midterm results do anything for oil and gas prices",
    "top oil stocks to consider november 5th",
    "promising energy stocks to consider november 5th",
    "oil bounces after its worst 3 day drop since 2021 but energy stocks aren t joining in",
@@ -3324,7 +3331,9 @@
    "here s how much you would have made owning exxonmobil holdings stock in the last 5 years",
    "oil prices rise as tanker disruptions offset surplus supply outlook",
    "oil market shock keeps costs high for us small businesses even as crude pulls back",
-   "daily oil price november 19 2026"
+   "daily oil price november 19 2026",
+   "libya and iraq could be the next big headache for oil markets",
+   "home prices rose 2 6 in september even as mortgage rates moved higher"
   ],
   "MSFT:CALL": [
    "forget the 12 month squeeze microsoft is primed for an explosive ai payoff",
@@ -4579,7 +4588,11 @@
    "news:nuro and uber launch driverless testing in san francisco",
    "news:nuro lucid and uber begin driverless robotaxi testing in bay area",
    "news:uber lucid and nuro start driverless testing for robotaxi service",
-   "news:taking on tesla again lucid and its partners begin driverless robo taxi tests"
+   "news:taking on tesla again lucid and its partners begin driverless robo taxi tests",
+   "news:lucid gravity robotaxis begin driverless tests on bay area public roads",
+   "news:uber lucid and nuro start driverless robotaxi tests in california",
+   "news:uber has committed to buy at least 35 000 lucid vehicles equipped with nuro s driverless system",
+   "news:trump s labor department just made it easier to treat drivers as contractors that s good news for uber"
   ],
   "WMT:CALL:2026-12-11:128": [
    "news:wmt maintained by guggenheim price target raised to 140",
@@ -4592,23 +4605,16 @@
   ],
   "WMT:CALL:2026-12-04:131": [
    "up0.25"
-  ]
+  ],
+  "HOOD:PUT:2026-12-04:63": [],
+  "XOM:PUT:2026-12-04:155": [],
+  "DIS:CALL:2026-12-04:124": [
+   "down-0.15"
+  ],
+  "SOFI:PUT:2026-12-11:13.5": []
  },
  "stock_level": {},
  "seen_macro": [
-  "chinese cars can t cross from canada to u s trump s envoy says",
-  "inflation expected to stay high as economists weigh risk of broadening price hikes",
-  "the stock market s bargain bin is secretly stuffed with ai stocks",
-  "trump threatens mexico with tariffs over caravans formed after gop election losses",
-  "us treasury warns against rate hikes during us iran war energy shock",
-  "soybean farmers push for china trade progress and removal of remaining tariffs",
-  "will the fed raise interest rates in december 2026 a hike is widely expected after hot inflation data",
-  "fed s collins says more rate hikes are coming bloomberg television reports",
-  "stocks sway as wall street heads for a winning week after several turbulent days",
-  "fed s collins says higher rates are appropriate soon",
-  "trump xi talks could mean 6 billion of us gas for china",
-  "us producer price index october 2026",
-  "dollar poised for best week in over a month on fed hike bets",
   "wall street looks beyond nvidia s turmoil",
   "crypto market sees brief relief after cooler us ppi data",
   "logan says treasury market functioning very well fed needs to strengthen support tools",
@@ -5195,7 +5201,20 @@
   "new us tariffs imminent trump s plan b on levies to be unveiled as early as today report",
   "gold regains its luster as markets await fed data and rate hike bets fade",
   "bitcoin outlook as trump prepares new tariffs on china and eu",
-  "fitch sets neutral global sovereign rating outlook warns of debt war and ai risks"
+  "fitch sets neutral global sovereign rating outlook warns of debt war and ai risks",
+  "wall street faces a 70 billion bond showdown and consumer confidence test before fed inflation data",
+  "silver retreats as december options expiry and rate expectations weigh on prices",
+  "trump is bringing tariffs back and china will likely get hit hardest wsj",
+  "stock market slides as investors assess fresh tariff concerns spx",
+  "wall st opens lower as nvidia fueled ai rally fades",
+  "us stocks open lower as nvidia reverses 31 jump anthropic slips below ipo price",
+  "us plans to raise tariffs on india china and other major trading partners report",
+  "trump prepares new tariffs on china eu japan",
+  "trump administration may raise tariffs on many countries including india and china report",
+  "us stock market today nasdaq crashes nearly 2 as tech bulls retreat s p 500 dow in red",
+  "trump readies new tariffs on china other nations",
+  "why is amd stock plunging today despite strong wall street buy ratings",
+  "fed governor cook warns more rate hikes may be needed to curb inflation news and statistics"
  ],
  "sharp": {
   "UBER:PUT:2026-12-04:65": 65.94
