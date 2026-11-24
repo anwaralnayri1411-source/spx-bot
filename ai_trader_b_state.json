@@ -165,11 +165,14 @@
    "exit": 1.99,
    "exit_time": "2026-11-24T11:21-05:00",
    "why": "بلغ الوقف الذي حدده (2.29)",
-   "pnl": -87.0
+   "pnl": -87.0,
+   "after_hi": 2.65,
+   "after_lo": 0.03,
+   "after_last": 0.03
   }
  ],
  "decisions": 263,
- "report_day": "2026-11-23",
+ "report_day": "2026-11-24",
  "start_cash": 3195.0,
  "day": "2026-11-24",
  "decisions_today": 24
