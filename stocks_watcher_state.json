@@ -2074,9 +2074,6 @@
    "bitcoin drops 2 26 in four hours to 62 802 am"
   ],
   "HOOD:PUT": [
-   "3 reasons behind bitcoin price s nearly 6 weekly drop",
-   "bitcoin short term holders send 47 025 btc to exchanges at a loss",
-   "bitcoin is repeating a 2023 pattern that started the last bull run analyst claims",
    "bitcoin price drops nearly 8 000 amid stableco",
    "robinhood markets stock heads into wolfe research wealth symposium",
    "cryptocurrencies price prediction bitcoin ripple crypto european wrap 11 november",
@@ -2473,7 +2470,10 @@
    "21shares flags bitcoin s 53 250 realized price level",
    "bitcoin s first real capitulation glassnode says us buyers have vanished",
    "bitcoin traders favor 60 000 puts signaling s",
-   "is the bitcoin bottom in what 5 on chain signals say right now"
+   "is the bitcoin bottom in what 5 on chain signals say right now",
+   "xrp price rejects 1 fib pocket stoch rsi overbought",
+   "bitcoin drops to summer lows amid heavy losses and weak us demand",
+   "21shares flags 53 250 as bitcoin s next downside level"
   ],
   "AAPL:CALL": [
    "loop capital lowers apple stock price target on iphone shipment concerns",
@@ -2956,11 +2956,6 @@
    "metropal reports board responsibility statement on consolidated financials"
   ],
   "XOM:PUT": [
-   "brent oil price benchmark set for biggest weekly drop since 2020",
-   "oil declines on signs of moves toward gulf war de escalation",
-   "maine gas prices continue to fall but remain above 4 a gallon",
-   "sbr lower production and gas prices drove q3 income lower despite stronger oil prices",
-   "sabine royalty trust 3q 2026 10 q summary",
    "energy briefs falling oil prices and iran s latest move",
    "oil heads for steepest weekly decline since 2020 as iran diplomacy hopes grow",
    "produce exports corn imports food prices",
@@ -3355,7 +3350,12 @@
    "winter heating costs expected to rise 8 7 in 2026",
    "invest in the companies behind every oil well for passive income 90 000 across these 3 oilfield service stocks pays more",
    "is this tiny oil giant the real crown jewel of trump s new world order",
-   "average gas prices in philly dip below 4 per gallon for first time since march"
+   "average gas prices in philly dip below 4 per gallon for first time since march",
+   "crude prices sharply higher on concerns over supply disruptions",
+   "marine fuel prices respond differently across european ports study finds",
+   "3 non ai stocks to buy for long term dividends and stability",
+   "gasoline diesel prices drop ahead of thanksgiving travel here s how much houston is paying",
+   "why cheaper crude won t mean cheap gas in 2027"
   ],
   "MSFT:CALL": [
    "forget the 12 month squeeze microsoft is primed for an explosive ai payoff",
@@ -4611,7 +4611,9 @@
    "form 8k at t for 24 november by investing com",
    "cipher digital cifr stock falls 12 5 today",
    "amazon launches 36 satellites to challenge starlink after rocket failure",
-   "liberty global lbtyb stock is down 6 2 today without company news"
+   "liberty global lbtyb stock is down 6 2 today without company news",
+   "top telecom stocks to watch today november 24th",
+   "what could send t mobile stock higher"
   ]
  },
  "fired": {
@@ -4660,7 +4662,8 @@
    "news:bitcoin analysis btc slips below 60k as demand continues to fade",
    "news:bitcoin etfs lose 570m as blackrock s 3 day exodus hits 1 6b",
    "news:bitcoin slips below 60 000 as hash rate posts first annual drop since china ban",
-   "news:bitcoin s first real capitulation glassnode says us buyers have vanished"
+   "news:bitcoin s first real capitulation glassnode says us buyers have vanished",
+   "news:bitcoin drops to summer lows amid heavy losses and weak us demand"
   ],
   "XOM:PUT:2026-12-04:155": [
    "news:oil prices rise as middle east tensions intensify",
@@ -4668,7 +4671,8 @@
    "news:crude prices rebound on reports of attacks on tankers in the strait of hormuz",
    "news:oil prices rose after strait of hormuz attacks but supply fears limited the move",
    "news:oil prices rise on hormuz vessel attacks",
-   "news:oil prices jump as senator hassan probes venezuela deal"
+   "news:oil prices jump as senator hassan probes venezuela deal",
+   "news:crude prices sharply higher on concerns over supply disruptions"
   ],
   "DIS:CALL:2026-12-04:124": [
    "down-0.15"
@@ -4694,9 +4698,6 @@
   "SOFI:PUT:2026-12-11:13": 1
  },
  "seen_macro": [
-  "mortgage rates forecast for 2026 experts predict whether interest rates will drop",
-  "fed chair warsh s true test begins now",
-  "today s mortgage rates increase to 7 487 nov 16 2026",
   "canada may turn to china as trump s tariffs strain auto industry",
   "s p 500 forecast spx rises despite nvidia s decline",
   "bahrain s 186 2m treasury bills oversubscribed by 115 as rate climbs to 5 65",
@@ -5293,7 +5294,10 @@
   "trump tariffs china eu and 14 other economies face new hikes",
   "us consumer confidence jumps to highest level in nearly two years",
   "trump tariff plan could hit europe china and mexico",
-  "us stock market today nasdaq and s p 500 fall as nvidia and ai stocks slide dow gains"
+  "us stock market today nasdaq and s p 500 fall as nvidia and ai stocks slide dow gains",
+  "interest rates are rising in the us europe and japan what it means for pakistan s rupee loans and families",
+  "why sandisk stock plunged today",
+  "micron just hit a 700 ceiling caught a downgrade and is down 10 today is mu a toxic stock or a prime bargain"
  ],
  "sharp": {
   "UBER:PUT:2026-12-04:65": 65.94,
