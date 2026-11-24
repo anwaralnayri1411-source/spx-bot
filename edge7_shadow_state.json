@@ -1,7 +1,68 @@
 {
- "open": [],
+ "open": [
+  {
+   "entry_time": "2026-11-24T10:35-05:00",
+   "side": "PUT",
+   "role": "bot",
+   "contract": "SPXW261125P07180000",
+   "strike": 7180,
+   "exp": "2026-11-25",
+   "edge": 7.0,
+   "bot_sent": 0,
+   "reasons": "العائد أقل من 1.5 ضعف المخاطرة: الهدف 28 نقطة إلى ",
+   "spot": 7181.71,
+   "entry": 55.81,
+   "entry_src": "alpaca",
+   "val30": ""
+  },
+  {
+   "entry_time": "2026-11-24T10:35-05:00",
+   "side": "CALL",
+   "role": "opp",
+   "contract": "SPXW261125C07180000",
+   "strike": 7180,
+   "exp": "2026-11-25",
+   "edge": 7.0,
+   "bot_sent": 0,
+   "reasons": "العائد أقل من 1.5 ضعف المخاطرة: الهدف 28 نقطة إلى ",
+   "spot": 7181.71,
+   "entry": 56.9,
+   "entry_src": "alpaca",
+   "val30": ""
+  },
+  {
+   "entry_time": "2026-11-24T10:35-05:00",
+   "side": "PUT",
+   "role": "spy_bot",
+   "contract": "SPY261125P00717000",
+   "strike": 717,
+   "exp": "2026-11-25",
+   "edge": 7.0,
+   "bot_sent": 0,
+   "reasons": "العائد أقل من 1.5 ضعف المخاطرة: الهدف 28 نقطة إلى ",
+   "spot": 716.62,
+   "entry": 5.98,
+   "entry_src": "alpaca",
+   "val30": ""
+  },
+  {
+   "entry_time": "2026-11-24T10:35-05:00",
+   "side": "CALL",
+   "role": "spy_opp",
+   "contract": "SPY261125C00717000",
+   "strike": 717,
+   "exp": "2026-11-25",
+   "edge": 7.0,
+   "bot_sent": 0,
+   "reasons": "العائد أقل من 1.5 ضعف المخاطرة: الهدف 28 نقطة إلى ",
+   "spot": 716.62,
+   "entry": 5.45,
+   "entry_src": "alpaca",
+   "val30": ""
+  }
+ ],
  "last": {
   "CALL": "2026-11-23T10:35-05:00",
-  "PUT": "2026-11-20T14:05-05:00"
+  "PUT": "2026-11-24T10:35-05:00"
  }
 }
