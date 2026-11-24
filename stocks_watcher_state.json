@@ -2074,8 +2074,6 @@
    "bitcoin drops 2 26 in four hours to 62 802 am"
   ],
   "HOOD:PUT": [
-   "bitcoin price drops nearly 8 000 amid stableco",
-   "robinhood markets stock heads into wolfe research wealth symposium",
    "cryptocurrencies price prediction bitcoin ripple crypto european wrap 11 november",
    "jpmorgan says strategy could face 2 8 billion in forced selling what would that do to the bitcoin price",
    "bitcoin price forecast can btc reclaim 80 000 after 1 3bn in etf outflows",
@@ -2473,7 +2471,9 @@
    "is the bitcoin bottom in what 5 on chain signals say right now",
    "xrp price rejects 1 fib pocket stoch rsi overbought",
    "bitcoin drops to summer lows amid heavy losses and weak us demand",
-   "21shares flags 53 250 as bitcoin s next downside level"
+   "21shares flags 53 250 as bitcoin s next downside level",
+   "mert mumtaz says bitcoin s dominance could be broken speaks about solana zcash and ethereum",
+   "could shiba inu add another zero if bitcoin falls to 50 000"
   ],
   "AAPL:CALL": [
    "loop capital lowers apple stock price target on iphone shipment concerns",
@@ -2956,9 +2956,6 @@
    "metropal reports board responsibility statement on consolidated financials"
   ],
   "XOM:PUT": [
-   "energy briefs falling oil prices and iran s latest move",
-   "oil heads for steepest weekly decline since 2020 as iran diplomacy hopes grow",
-   "produce exports corn imports food prices",
    "u s oil gas drillers see minor uptick as oil prices crash",
    "energy stocks rose even as oil prices slipped",
    "energy reliability is becoming more important than energy politics",
@@ -3355,7 +3352,10 @@
    "marine fuel prices respond differently across european ports study finds",
    "3 non ai stocks to buy for long term dividends and stability",
    "gasoline diesel prices drop ahead of thanksgiving travel here s how much houston is paying",
-   "why cheaper crude won t mean cheap gas in 2027"
+   "why cheaper crude won t mean cheap gas in 2027",
+   "oil prices reportedly rise over 2 as brent settles at 91 40",
+   "gas prices fall ahead of thanksgiving but oklahomans still paying more than last year",
+   "daily oil price november 24 2026"
   ],
   "MSFT:CALL": [
    "forget the 12 month squeeze microsoft is primed for an explosive ai payoff",
@@ -4366,7 +4366,8 @@
    "the argument behind monness crespi hardt s call on sofi sofi",
    "arthur hayes says nvidia s rally is the worst thing for bitcoin is he right",
    "joby aviation drops 7 archer aviation slides 6 as air taxi stocks give back monday s rebound ehang falls 5 ahead of earn",
-   "micron just hit a 700 ceiling caught a downgrade and is down 10 today is mu a toxic stock or a prime bargain"
+   "micron just hit a 700 ceiling caught a downgrade and is down 10 today is mu a toxic stock or a prime bargain",
+   "unusual machines is down 47 in a month can umac stock hit oppenheimer s 30 target by 2030"
   ],
   "SNAP:PUT": [
    "snap earnings analysis questions answered and next catalysts",
@@ -4663,7 +4664,10 @@
    "news:bitcoin etfs lose 570m as blackrock s 3 day exodus hits 1 6b",
    "news:bitcoin slips below 60 000 as hash rate posts first annual drop since china ban",
    "news:bitcoin s first real capitulation glassnode says us buyers have vanished",
-   "news:bitcoin drops to summer lows amid heavy losses and weak us demand"
+   "news:bitcoin drops to summer lows amid heavy losses and weak us demand",
+   "sharp@2026-11-24T15:50-05:00",
+   "stock1",
+   "down-0.15"
   ],
   "XOM:PUT:2026-12-04:155": [
    "news:oil prices rise as middle east tensions intensify",
@@ -4695,11 +4699,10 @@
   ]
  },
  "stock_level": {
-  "SOFI:PUT:2026-12-11:13": 1
+  "SOFI:PUT:2026-12-11:13": 1,
+  "HOOD:PUT:2026-12-04:63": 1
  },
  "seen_macro": [
-  "canada may turn to china as trump s tariffs strain auto industry",
-  "s p 500 forecast spx rises despite nvidia s decline",
   "bahrain s 186 2m treasury bills oversubscribed by 115 as rate climbs to 5 65",
   "morgan stanley sees slower us growth higher rates ahead",
   "oil futures crude lower as supplies offset rising mideast tensions",
@@ -5297,11 +5300,13 @@
   "us stock market today nasdaq and s p 500 fall as nvidia and ai stocks slide dow gains",
   "interest rates are rising in the us europe and japan what it means for pakistan s rupee loans and families",
   "why sandisk stock plunged today",
-  "micron just hit a 700 ceiling caught a downgrade and is down 10 today is mu a toxic stock or a prime bargain"
+  "micron just hit a 700 ceiling caught a downgrade and is down 10 today is mu a toxic stock or a prime bargain",
+  "apple stock has 3 things going for it in 2027 here s my price target",
+  "nasdaq s p 500 fall following monday s nvidia led rally"
  ],
  "sharp": {
   "UBER:PUT:2026-12-04:65": 65.94,
-  "HOOD:PUT:2026-12-04:63": 65.145,
+  "HOOD:PUT:2026-12-04:63": 65.77,
   "SOFI:PUT:2026-12-11:13.5": 12.885,
   "SOFI:PUT:2026-12-11:13": 12.885
  }
