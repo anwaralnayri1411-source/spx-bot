@@ -182,7 +182,11 @@
    "guggenheim raises walmart stock price target on scale and digital strength",
    "walmart stock wmt climbs as it receives a raft of post q3 broker upgrades",
    "costco beat on earnings so why is the street cautious",
-   "walmart inc wmt stock forecasts"
+   "walmart inc wmt stock forecasts",
+   "walmart inc 2027 q3 results earnings call presentation nasdaq wmt 2026 11 24",
+   "etfs are buying walmart wmt on nov 20",
+   "walmart raised its outlook and the stock fell anyway here s the new price target",
+   "target vs walmart which consumer goods stock is a better buy for 2027"
   ],
   "UBER:PUT": [
    "why is hertz htz stock soaring today",
@@ -4566,30 +4570,15 @@
    "news:guggenheim raises walmart stock price target on scale and digital strength",
    "news:walmart stock wmt climbs as it receives a raft of post q3 broker upgrades"
   ],
-  "WMT:CALL:2026-12-04:130": [],
-  "WMT:CALL:2026-12-04:131": []
+  "WMT:CALL:2026-12-04:130": [
+   "up0.25"
+  ],
+  "WMT:CALL:2026-12-04:131": [
+   "up0.25"
+  ]
  },
  "stock_level": {},
  "seen_macro": [
-  "what the blue tsunami means for southeast asia s economies",
-  "3 us brokerage stocks investors are watching as higher rates lift cash income",
-  "3 expensive stocks wall street still loves",
-  "us futures gain with microsoft outage producer prices in focus",
-  "wall street close s p 500 slips 0 35 buy setups in rtx fedex sell setups in doordash crypto gold",
-  "wholesale prices rose 0 3 in october putting annual rate at 6 5 the highest in nearly four years",
-  "cerebras cisco and applied materials 8 key items shaping the stock market friday",
-  "us producer prices rise further in october",
-  "ppi report shows business prices up 6 5 in a year the most since 2022",
-  "us protectionism is a bust mississippi edition",
-  "u s producer inflation hits four year high bolstering fed hike bets",
-  "explainer trade technology and possible putin talks what awaits trump in asia",
-  "last canadian inflation report before december boc meeting",
-  "stock market today nvidia rebounds after huang s exit as treasury yields top 5",
-  "us stocks drift before inflation test of fed bets markets wrap",
-  "world bank global agricultural prices set to rise by 5 3 per cent in 2027",
-  "fuel prices seen easing despite global risks",
-  "fed overhauls 2027 calendar cuts one rate decision nhk world japan news",
-  "u s treasury yields log biggest weekly jump since april 2025",
   "oil futures crude up as geopolitical uncertainty offsets rising exports",
   "today s wholesale price report could tip the fed toward a half point hike",
   "bitcoin slides below us 70 000 as inflation concerns hurt crypto",
@@ -5170,7 +5159,26 @@
   "low yields are frustrating income investors but they don t tell the full story",
   "wall street just put a 1 trillion price on jensen huang as nvidia stock soars 31 after his return as ceo",
   "bofa sees 80 brent in 2027 despite growing oil supply",
-  "stocks are tumbling has the ai bubble finally burst"
+  "stocks are tumbling has the ai bubble finally burst",
+  "oil prices decline amid supply concerns and geopolitical risks",
+  "why did suncor energy tsx su fall 1 201 on november 23 2026",
+  "india dashboard upgrade night light toll satellite enter economy crystal ball",
+  "oil prices fall to near three month lows as rising supply eases market concerns",
+  "bofa raises concerns over greater global energy market vulnerability with low petroleum inventories",
+  "next batch of trump tariffs are coming soon as g 20 looms",
+  "oil prices sink near three month lows despite strait of hormuz risks",
+  "america readies new tariffs on china will bitcoin and stocks sink again",
+  "china halts critical minerals ban to maintain truce with us",
+  "bumpier u s china trade is coming",
+  "exclusive u s prepares to raise tariffs on china and other countries",
+  "us prepares broad tariff hikes on 16 economies including china and eu",
+  "us prepares to raise tariffs on china eu and 14 countries industrial goods may be spared",
+  "white house prepares sweeping new tariffs on china eu and dozens of nations",
+  "trump could restore 2025 era tariff rates as us prepares new trade measures",
+  "trump s tariff war returns us prepares fresh duties on india china and eu",
+  "trump tariffs return china could be hit hardest wsj nvidia nasdaq nvda",
+  "trump administration weighs new wave of global tariffs with china facing potentially steepest rates decision could come ",
+  "india may face higher us tariffs in fresh trade crackdown by trump report"
  ],
  "sharp": {
   "UBER:PUT:2026-12-04:65": 65.94
