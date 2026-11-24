@@ -1,6 +1,21 @@
 {
- "cash": 5005.0,
- "positions": [],
+ "cash": 3765.0,
+ "positions": [
+  {
+   "id": "1124-1401-SPX-PUT-7190",
+   "symbol": "SPXW  261124P07190000",
+   "under": "SPX",
+   "side": "PUT",
+   "strike": 7190.0,
+   "expiry": "2026-11-24",
+   "qty": 1,
+   "entry": 12.4,
+   "time": "2026-11-24T14:01-05:00",
+   "stop": 9.5,
+   "target": 17.5,
+   "invalidation": "أغلاق SPX فوق 7218 (أعلى نطاق أول 30 دقيقة) أو ارتفاع العقد فوق 13.5 مع عودة السعر فوق VWAP، فتُلغى الفكرة."
+  }
+ ],
  "closed": [
   {
    "id": "1105-0946-PUT-757",
@@ -736,8 +751,8 @@
    "pnl": -430.0
   }
  ],
- "decisions": 279,
+ "decisions": 280,
  "report_day": "2026-11-23",
  "day": "2026-11-24",
- "decisions_today": 17
+ "decisions_today": 18
 }
