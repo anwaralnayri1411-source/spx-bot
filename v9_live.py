@@ -84,6 +84,26 @@ def summary_msg(day, rows, extra=None):
     return "\n".join(L)
 
 
+SHORT = {"✅": "هدف", "🛑": "وقف", "⏰": "15:55"}
+
+
+def board_msg(day, root, rows):
+    """لوحة نهاية اليوم لمؤشر واحد: كل صفقة في سطر ثم الإجمالي."""
+    name = "SPX" if root == "SPXW" else root
+    if not rows:
+        return f"📋 <b>لوحة {name} — v9 {day}</b>\nلا صفقات اليوم."
+    rows = sorted(rows, key=lambda e: e["t"])
+    w = sum(r["usd"] > 0 for r in rows)
+    L = [f"📋 <b>لوحة {name} — v9 {day}</b> #تقرير", f"{len(rows)} صفقة: {w} رابحة · {len(rows) - w} خاسرة", ""]
+    for i, e in enumerate(rows, 1):
+        k = exit_kind(e)
+        L.append(f"{i}. {e['t'][11:16]} {'🟢' if e['side'] == 'CALL' else '🔴'} {e['side']} {e['strike']:g} · "
+                 f"{e['entry']:.2f}→{e.get('exit_px', 0):.2f}$ ({e.get('exit_t', '')}) · {k[0]} {SHORT[k[0]]} · "
+                 f"<b>{e.get('usd', 0):+,.0f}$</b>")
+    L += ["", f"الإجمالي لعقد واحد من كل صفقة: <b>{sum(r['usd'] for r in rows):+,.0f}$</b>"]
+    return "\n".join(L)
+
+
 def mkey(v, e):
     return f"{v['root']}|{key(e)}"
 
@@ -141,10 +161,16 @@ def step(st, v, day, send, after_summary=False, mirrors=()):
     out += step_mirrors(st, mirrors, day, send)
     if after_summary and st.get("summary_day") != day:
         rows = [e for e in v["closed"] if e["tdate"] == day and key(e) in st["sent"]]
-        extra = {m["root"]: [e for e in m["closed"] if e["tdate"] == day and mkey(m, e) in st["sent"]] for m in mirrors}
-        send(summary_msg(day, rows, extra), None)
+        if not rows:
+            send(summary_msg(day, []), None)
+            out += 1
+        else:
+            boards = [("SPXW", rows)] + [(m["root"], [e for e in m["closed"] if e["tdate"] == day
+                                                      and mkey(m, e) in st["sent"]]) for m in mirrors]
+            for root, rs in boards:
+                send(board_msg(day, root, rs), None)
+                out += 1
         st["summary_day"] = day
-        out += 1
     keep = {key(e) for e in v["open"]} | {key(e) for e in v["closed"] if e["tdate"] >= day}
     keep |= {mkey(m, e) for m in mirrors for e in m["open"] + [c for c in m["closed"] if c["tdate"] >= day]}
     st["sent"] = {k: m for k, m in st["sent"].items() if k in keep}
