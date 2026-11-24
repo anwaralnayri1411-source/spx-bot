@@ -316,7 +316,9 @@
    "delivery hero investors face final call on uber s 41 50 bid as bond terms rewritten",
    "uber technologies uber partnerships expand as driverless debate keeps valuation in focus",
    "airbnb vs uber technologies which consumer stock is a better buy for 2027",
-   "should you buy uber stock for its cash"
+   "should you buy uber stock for its cash",
+   "moderately bullish activity in uber with shares up 2 19",
+   "uber technologies uber stock gains 2 as retail partnerships expand across north america"
   ],
   "DIS:CALL": [
    "skydance rises 5 as steep post merger slide pauses disney gains 2 netflix slips",
@@ -2067,11 +2069,6 @@
    "bitcoin drops 2 26 in four hours to 62 802 am"
   ],
   "HOOD:PUT": [
-   "strive buys 29 more bitcoin raising holdings to 43 153 btc",
-   "bitcoin price outlook selloff may reach 70 000 support zone",
-   "strategy inc s atm update directs 188 3m to buybacks and 81 9m to bitcoin",
-   "3 us events to watch as inflation and ai earnings test bitcoin",
-   "ethereum below 2 100 eth btc at its lowest since july",
    "ethereum whales buy millions in eth as price falls below 2 200",
    "bitcoin falls below 75k testing critical 74",
    "crypto price prediction btc trades near 74 5k as remittix earn brings weekly payouts to the public",
@@ -2466,7 +2463,12 @@
    "bitcoin slides amid us tariff nerves as anthropic falls below ipo price",
    "current price of ethereum for november 24 2026",
    "current price of bitcoin for november 24 2026",
-   "cardano founder on ada weak price technology does not always translate to market returns"
+   "cardano founder on ada weak price technology does not always translate to market returns",
+   "bitcoin rally to 65 000 daily rsi reset resistance fan and paxg btc outlook news and statistics",
+   "how low can xrp price go in 2026",
+   "we ve entered peak fear sky falls",
+   "rialto raises 5 million from tandem by offchain and robinhood to build onchain capital markets",
+   "will bitcoin drop below 50 000 before it recovers"
   ],
   "AAPL:CALL": [
    "loop capital lowers apple stock price target on iphone shipment concerns",
@@ -2949,9 +2951,6 @@
    "metropal reports board responsibility statement on consolidated financials"
   ],
   "XOM:PUT": [
-   "the iran war isn t over but oil traders are already pricing in peace",
-   "energy aspects slashes forecast of china s november diesel exports",
-   "a 5 9 billion fund is betting big on exxonmobil",
    "gold price prediction gold rate falls amidst big movement in oil price inflation check experts opinion",
    "apa q3 earnings beat on strong oil prices and u s output",
    "global oil prices drop sharply amid reports of potential iran u s peace talks",
@@ -3348,7 +3347,10 @@
    "gas prices drop to the lowest level since march ahead of thanksgiving holiday",
    "current price of oil as of november 24 2026",
    "canada producer prices rise again in october buoyed by energy products",
-   "lehigh valley gas prices fall below 4 amid national decline"
+   "lehigh valley gas prices fall below 4 amid national decline",
+   "la orange county gas prices still falling",
+   "crude rebounds but growing global supply limits gains",
+   "canada s oilfield services sector is gearing up for a stronger 2027"
   ],
   "MSFT:CALL": [
    "forget the 12 month squeeze microsoft is primed for an explosive ai payoff",
@@ -4351,7 +4353,10 @@
    "black friday stock deals 4 great stocks down 30 or more",
    "here s how you can extract a 150 payout from sofi technologies sofi stock s fallout",
    "options traders show mixed sentiment as sofi technologies sofi stock edges lower",
-   "red cat sinks 9 unusual machines slides 7 ondas drops 4 is the pentagon s reported push to bring in general motors and f"
+   "red cat sinks 9 unusual machines slides 7 ondas drops 4 is the pentagon s reported push to bring in general motors and f",
+   "a borr drilling insider raised his stake 22 in one day",
+   "apple stock has 3 things going for it in 2027 here s my price target",
+   "the same 10 000 in amd and micron could produce very different results by 2030"
   ],
   "SNAP:PUT": [
    "snap earnings analysis questions answered and next catalysts",
@@ -4659,20 +4664,14 @@
    "sharp@2026-11-24T12:11-05:00",
    "stock1"
   ],
-  "JPM:PUT:2026-12-04:310": []
+  "JPM:PUT:2026-12-04:310": [
+   "down-0.15"
+  ]
  },
  "stock_level": {
   "SOFI:PUT:2026-12-11:13": 1
  },
  "seen_macro": [
-  "amd earnings what wall street missed",
-  "oil prices face pressure from geopolitical tens",
-  "carney says canada could turn to chinese automakers if trump trade talks fail",
-  "markets recover but broader weakness persists",
-  "november u s factory report tests inflation pressure monday as markets price in december rate hike",
-  "map shows us cities where home sellers are cutting prices most",
-  "a testing week ahead for sterling as economic pressures mount",
-  "wall street s ai anxiety deepens",
   "why are gold and silver prices falling together fed rate bets trigger precious metals selloff make",
   "sbp projects 3 5 4 5 gdp growth for fy27",
   "us stock market today nasdaq down over 1 5 as nvidia other ai chip stocks slump dow s p 500 also in red",
@@ -5264,7 +5263,15 @@
   "wall street loved nvidia yesterday today it s buying this 3x bear etf",
   "nvidia stock falls after epic rally on jensen huang s return as ceo",
   "stock market midday nov 24 nvidia drops 9 as wall street s historic ai rally loses momentum",
-  "yen gains as tariff fears hit us stocks"
+  "yen gains as tariff fears hit us stocks",
+  "us section 301 probe new tariffs on 16 trading partners expected news and statistics",
+  "trump prepares new tariffs on 16 major trading partners",
+  "trump prepares new tariffs after industrial capacity probe",
+  "doha institute holds conference on economics of conflict in mena",
+  "wall street s 2027 earnings hopes may be dead on arrival unless the fed blinks in december",
+  "pound to dollar forecast gbp usd near 1 31 as us yields surge",
+  "macklem admits bank of canada offered mixed messaging on core inflation in past",
+  "gold and silver prices decline sharply amidst global economic factors"
  ],
  "sharp": {
   "UBER:PUT:2026-12-04:65": 65.94,
