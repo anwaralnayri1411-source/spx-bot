@@ -14,8 +14,8 @@
    "strength": "7.8",
    "occ": "SOFI261211P00013500",
    "peak_pnl": 0.406,
-   "close_pnl": -0.115,
-   "quotes": 138,
+   "close_pnl": -0.094,
+   "quotes": 139,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -34,8 +34,8 @@
    "strength": "7.0",
    "occ": "NFLX261211P00058000",
    "peak_pnl": 0.301,
-   "close_pnl": -0.297,
-   "quotes": 132,
+   "close_pnl": -0.373,
+   "quotes": 133,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -54,8 +54,8 @@
    "strength": "6.7",
    "occ": "NFLX261211P00058000",
    "peak_pnl": 0.005,
-   "close_pnl": -0.297,
-   "quotes": 69,
+   "close_pnl": -0.373,
+   "quotes": 70,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -75,7 +75,7 @@
    "occ": "UBER261204P00064000",
    "peak_pnl": 0.069,
    "close_pnl": -0.167,
-   "quotes": 69,
+   "quotes": 70,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -95,7 +95,7 @@
    "occ": "XOM261204P00155000",
    "peak_pnl": 0.07,
    "close_pnl": -0.308,
-   "quotes": 44,
+   "quotes": 45,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -114,8 +114,8 @@
    "strength": "6.2",
    "occ": "JPM261204P00310000",
    "peak_pnl": 0.101,
-   "close_pnl": -0.187,
-   "quotes": 36,
+   "close_pnl": -0.175,
+   "quotes": 37,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -134,8 +134,8 @@
    "strength": "7.0",
    "occ": "AAPL261211C00360000",
    "peak_pnl": 0.334,
-   "close_pnl": 0.334,
-   "quotes": 27,
+   "close_pnl": 0.251,
+   "quotes": 28,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -155,7 +155,7 @@
    "occ": "WMT261211C00130000",
    "peak_pnl": 0.196,
    "close_pnl": 0.196,
-   "quotes": 11,
+   "quotes": 12,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -174,8 +174,8 @@
    "strength": "6.8",
    "occ": "SPY261125P00711000",
    "peak_pnl": 0.0,
-   "close_pnl": -0.147,
-   "quotes": 2,
+   "close_pnl": -0.109,
+   "quotes": 3,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -2830,7 +2830,8 @@
   "20261123T1540|spx|late_entry|SPY|CALL|726|2026-11-24",
   "20261123T1545|spx|late_entry|SPY|CALL|726|2026-11-24",
   "20261124T0945|spx|v9_mode|SPY|PUT|711|2026-11-25",
-  "20261124T0950|spx|v9_mode|SPY|PUT|714|2026-11-25"
+  "20261124T0950|spx|v9_mode|SPY|PUT|714|2026-11-25",
+  "20261124T0955|spx|v9_mode|SPY|PUT|714|2026-11-25"
  ],
  "last": {
   "spx|CALL|SPY": "2026-11-23T15:20-05:00",
