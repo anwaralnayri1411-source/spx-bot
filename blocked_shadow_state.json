@@ -13,9 +13,9 @@
    "edge": "4.5",
    "strength": "7.0",
    "occ": "AAPL261211C00360000",
-   "peak_pnl": 0.464,
-   "close_pnl": 0.464,
-   "quotes": 138,
+   "peak_pnl": 0.493,
+   "close_pnl": 0.493,
+   "quotes": 139,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -34,8 +34,8 @@
    "strength": "9.9",
    "occ": "WMT261204C00132000",
    "peak_pnl": 0.225,
-   "close_pnl": -0.162,
-   "quotes": 108,
+   "close_pnl": -0.144,
+   "quotes": 109,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -55,7 +55,7 @@
    "occ": "SOFI261211P00013000",
    "peak_pnl": 0.447,
    "close_pnl": -0.247,
-   "quotes": 97,
+   "quotes": 98,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -75,7 +75,7 @@
    "occ": "T261211C00020500",
    "peak_pnl": 0.071,
    "close_pnl": 0.049,
-   "quotes": 94,
+   "quotes": 95,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -94,8 +94,8 @@
    "strength": "8.1",
    "occ": "INTC261211P00047000",
    "peak_pnl": 0.11,
-   "close_pnl": -0.311,
-   "quotes": 36,
+   "close_pnl": -0.292,
+   "quotes": 37,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -114,8 +114,8 @@
    "strength": "4.4",
    "occ": "WMT261211C00135000",
    "peak_pnl": 0.0,
-   "close_pnl": -0.374,
-   "quotes": 36,
+   "close_pnl": -0.342,
+   "quotes": 37,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -135,7 +135,7 @@
    "occ": "T261211C00020500",
    "peak_pnl": 0.033,
    "close_pnl": 0.011,
-   "quotes": 36,
+   "quotes": 37,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -154,8 +154,8 @@
    "strength": "7.8",
    "occ": "BAC261211P00048000",
    "peak_pnl": 0.006,
-   "close_pnl": -0.344,
-   "quotes": 36,
+   "close_pnl": -0.35,
+   "quotes": 37,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -174,8 +174,8 @@
    "strength": "6.4",
    "occ": "NFLX261211P00057000",
    "peak_pnl": 0.099,
-   "close_pnl": -0.333,
-   "quotes": 33,
+   "close_pnl": -0.31,
+   "quotes": 34,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -195,7 +195,27 @@
    "occ": "RIVN261211P00011500",
    "peak_pnl": 0.0,
    "close_pnl": -0.369,
-   "quotes": 33,
+   "quotes": 34,
+   "out": "",
+   "out_time": "",
+   "out_pnl": ""
+  },
+  {
+   "id": "20261125T1327|stocks|chase_em|V|CALL|435|2026-12-04",
+   "project": "stocks",
+   "tag": "chase_em",
+   "sym": "V",
+   "side": "CALL",
+   "strike": 435.0,
+   "exp": "2026-12-04",
+   "entry": 2.39,
+   "entry_time": "2026-11-25T13:27-05:00",
+   "edge": "3.5",
+   "strength": "5.7",
+   "occ": "V261204C00435000",
+   "peak_pnl": 0.0,
+   "close_pnl": -0.084,
+   "quotes": 1,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -3012,7 +3032,9 @@
   "20261125T1242|stocks|chase_em|INTC|PUT|50|2026-12-11",
   "20261125T1257|stocks|open_same_dir|T|CALL|20.5|2026-12-11",
   "20261125T1312|stocks|chase_em|INTC|PUT|50|2026-12-11",
-  "20261125T1312|stocks|open_same_dir|T|CALL|20.5|2026-12-11"
+  "20261125T1312|stocks|open_same_dir|T|CALL|20.5|2026-12-11",
+  "20261125T1327|stocks|chase_em|V|CALL|435|2026-12-04",
+  "20261125T1327|stocks|open_same_dir|T|CALL|20.5|2026-12-11"
  ],
  "last": {
   "spx|CALL|SPY": "2026-11-23T15:20-05:00",
@@ -3213,6 +3235,7 @@
   "stocks|RIVN|PUT|2026-11-25": "2026-11-25T10:27-05:00",
   "stocks|UBER|PUT|2026-11-25": "2026-11-25T10:42-05:00",
   "stocks|SOFI|PUT|2026-11-25": "2026-11-25T11:12-05:00",
-  "stocks|AMZN|PUT|2026-11-25": "2026-11-25T11:12-05:00"
+  "stocks|AMZN|PUT|2026-11-25": "2026-11-25T11:12-05:00",
+  "stocks|V|CALL|2026-11-25": "2026-11-25T13:27-05:00"
  }
 }
