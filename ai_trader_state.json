@@ -1,6 +1,21 @@
 {
- "cash": 4807.0,
- "positions": [],
+ "cash": 4189.0,
+ "positions": [
+  {
+   "id": "1125-1116-SPY-PUT-698",
+   "symbol": "SPY   261125P00698000",
+   "under": "SPY",
+   "side": "PUT",
+   "strike": 698.0,
+   "expiry": "2026-11-25",
+   "qty": 2,
+   "entry": 3.09,
+   "time": "2026-11-25T11:16-05:00",
+   "stop": 2.1,
+   "target": 4.2,
+   "invalidation": "إلغاء الفكرة إذا أغلق السعر فوق VWAP واستعاد EMA21 بقوة، أو إذا تجاوز SPX مستوى 7060 مع تحسن في القياديات والـVIX يتراجع."
+  }
+ ],
  "closed": [
   {
    "id": "1105-0946-PUT-757",
@@ -787,8 +802,8 @@
    "pnl": 392.0
   }
  ],
- "decisions": 291,
+ "decisions": 292,
  "report_day": "2026-11-24",
  "day": "2026-11-25",
- "decisions_today": 5
+ "decisions_today": 6
 }
