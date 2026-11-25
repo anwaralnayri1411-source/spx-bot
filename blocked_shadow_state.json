@@ -14,8 +14,8 @@
    "strength": "9.9",
    "occ": "WMT261204C00132000",
    "peak_pnl": 0.225,
-   "close_pnl": -0.09,
-   "quotes": 132,
+   "close_pnl": -0.05,
+   "quotes": 133,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -34,8 +34,8 @@
    "strength": "6.9",
    "occ": "SOFI261211P00013000",
    "peak_pnl": 0.447,
-   "close_pnl": -0.212,
-   "quotes": 121,
+   "close_pnl": -0.247,
+   "quotes": 122,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -55,7 +55,7 @@
    "occ": "T261211C00020500",
    "peak_pnl": 0.071,
    "close_pnl": -0.041,
-   "quotes": 118,
+   "quotes": 119,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -74,8 +74,8 @@
    "strength": "4.4",
    "occ": "WMT261211C00135000",
    "peak_pnl": 0.0,
-   "close_pnl": -0.251,
-   "quotes": 60,
+   "close_pnl": -0.235,
+   "quotes": 61,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -95,7 +95,7 @@
    "occ": "T261211C00020500",
    "peak_pnl": 0.033,
    "close_pnl": -0.076,
-   "quotes": 60,
+   "quotes": 61,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -115,7 +115,7 @@
    "occ": "BAC261211P00048000",
    "peak_pnl": 0.006,
    "close_pnl": -0.325,
-   "quotes": 60,
+   "quotes": 61,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -134,8 +134,8 @@
    "strength": "5.7",
    "occ": "V261204C00435000",
    "peak_pnl": 0.025,
-   "close_pnl": -0.088,
-   "quotes": 24,
+   "close_pnl": -0.038,
+   "quotes": 25,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -154,8 +154,8 @@
    "strength": "7.2",
    "occ": "DIS261204C00127000",
    "peak_pnl": 0.048,
-   "close_pnl": 0.048,
-   "quotes": 16,
+   "close_pnl": 0.0,
+   "quotes": 17,
    "out": "",
    "out_time": "",
    "out_pnl": ""
