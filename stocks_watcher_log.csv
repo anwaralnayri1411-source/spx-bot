@@ -5760,3 +5760,10 @@ time,pos_id,ticker,side,event,detail,entry,val,pnl,spot,need,tdays,advice,reason
 2026-11-25T10:56-05:00,RIVN:PUT:2026-12-11:11.5,RIVN,PUT,stock,-1.23% منذ الدخول,1.0,,,11.135,0.057,13,أبقِ,لا جديد يغيّر فكرة الصفقة
 2026-11-25T10:59-05:00,HOOD:PUT:2026-12-04:63,HOOD,PUT,news,against/medium: Robinhood Markets stock: Wedbush starts coverage with USD 80 target - ad-hoc-news.de,2.58,3.45,0.3372,62.29,0.03,8,فكّر بالخروج,احمِ ربحك الحالي | خبر ضد العقد
 2026-11-25T10:59-05:00,RIVN:PUT:2026-12-11:11.5,RIVN,PUT,news,with/medium: Tesla Slides 6% as EU Delays Vote on Its Self-Driving Software; Rivian and Lucid Drop 4% - 24/7 Wall St.,1.0,0.88,-0.12,11.11,0.0549,13,أبقِ,الخبر في صالح العقد
+2026-11-25T11:04-05:00,SOFI:PUT:2026-12-11:13.5,SOFI,PUT,news,with/medium: SoFi Technologies (NASDAQ:SOFI) Hits New 52-Week Low - Should You Sell? - MarketBeat,1.03,1.42,0.3786,12.225,-0.02,13,أبقِ,الخبر في صالح العقد
+2026-11-25T11:10-05:00,HOOD:PUT:2026-12-04:63,HOOD,PUT,news,"with/medium: Bitcoin slides to $57,300 as crypto market cap hits a two-year low - Crypto Briefing",2.58,3.97,0.5388,61.89,0.0238,8,أبقِ,الخبر في صالح العقد
+2026-11-25T11:16-05:00,HOOD:PUT:2026-12-04:63,HOOD,PUT,news,"with/medium: Bitcoin slides below $59,000, on pace for its worst month since June 2022 - Yahoo Finance",2.58,3.95,0.531,61.71,0.0209,8,أبقِ,الخبر في صالح العقد
+2026-11-25T11:27-05:00,HOOD:PUT:2026-12-04:58,HOOD,PUT,sharp,-0.76% في 15د,1.84,,,62.25,0.0978,8,فكّر بالخروج,السهم يتحرك ضدك
+2026-11-25T11:28-05:00,UBER:PUT:2026-12-04:65,UBER,PUT,news,with/high: US stock market sell-off deepens as AI shares slide - JournalArta,1.81,1.91,0.0552,64.445,0.0195,8,أبقِ,الخبر في صالح العقد
+2026-11-25T11:28-05:00,HOOD:PUT:2026-12-04:63,HOOD,PUT,news,against/medium: Fed Rate Decision: December Hike Odds Top 97% After PCE - Tokenist,2.58,3.68,0.4264,62.185,0.0284,8,فكّر بالخروج,احمِ ربحك الحالي | خبر ضد العقد
+2026-11-25T11:31-05:00,UBER:PUT:2026-12-11:62,UBER,PUT,sharp,-0.75% في 15د,1.38,,,64.46,0.0596,13,فكّر بالخروج,السهم يتحرك ضدك
