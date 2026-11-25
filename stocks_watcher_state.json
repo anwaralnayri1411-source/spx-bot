@@ -203,7 +203,8 @@
    "walmart backed phonepe restarts ipo process eyes up to 15 billion valuation in market debut source says",
    "walmart backed phonepe resumes ipo process seeks up to 15 billion in valuation",
    "walmart inc wmt stock price news quote history",
-   "flipkart ceo steps down after 11 years at walmart s india crown jewel"
+   "flipkart ceo steps down after 11 years at walmart s india crown jewel",
+   "amazon and meta in talks to bring ai shopping agent back to amazon"
   ],
   "UBER:PUT": [
    "why is hertz htz stock soaring today",
@@ -2115,14 +2116,6 @@
    "bitcoin drops 2 26 in four hours to 62 802 am"
   ],
   "HOOD:PUT": [
-   "bitcoin stuck at 64 000 is the anthropic i p o draining crypto",
-   "new bitcoin whales took 579m losses in mid nov",
-   "mara prices ohio power plant debt as bitcoin sales reshape financing strategy",
-   "citi cuts bitcoin price target to 99 532 ethereum to 2 838",
-   "strive s trading value tops jefferies at about 202 million a day",
-   "peso uruguayo price wuyu price live charts and marketcap coinbase argentina",
-   "stonex cuts bitdeer price target to 15 but keeps its buy rating",
-   "clearpool price clear price live charts and marketcap coinbase argentina",
    "bitcoin s u s spot discount widens amid rising market volatility and lower institutional trading volume",
    "bitcoin rejected at 65k as icp jumps 11 market watch",
    "robinhood eyes 130 as mizuho brushes off kalshi s stock trading threat",
@@ -2514,7 +2507,15 @@
    "india faces fresh us tariff threat will the rupee weaken and bitcoin prices rise",
    "bitcoin vs good outlook btc and xau falter after hotter than expected us pce inflation",
    "bitcoin s price drop and mining struggles signa",
-   "strategy is worth 4 billion less than its bitcoin amid liquidity squeeze"
+   "strategy is worth 4 billion less than its bitcoin amid liquidity squeeze",
+   "bitcoin price stuck below 60 000 as galaxy takes back bottom call crypto bulls lose faith",
+   "what will 50 000 dogecoin be worth in 5 years",
+   "global markets bleed trillions as bitcoin gold and wall street tumble",
+   "3 us financial stocks that could benefit if higher rates stick",
+   "bitcoin falls toward 57k amid us tariff fears hot pce data as nasdaq drops 4",
+   "bitcoin hashrate falls 8 with 11m btc in loss 2 reasons bears are watching",
+   "bitcoin falls toward 2 year low rising inflation and higher interest rates are its threats",
+   "bitcoin briefly slips below 58k as hot pce inflation fuels fed rate hike bets"
   ],
   "AAPL:CALL": [
    "loop capital lowers apple stock price target on iphone shipment concerns",
@@ -2997,14 +2998,6 @@
    "metropal reports board responsibility statement on consolidated financials"
   ],
   "XOM:PUT": [
-   "oil falls on unconfirmed report that iran eased hormuz demands",
-   "strength in tech and weakness in crude oil boost stocks",
-   "gas prices decline in michigan here s where prices are cheapest this week",
-   "wall street futures rise as oil prices fall ahead of us inflation data dow jones s p nasdaq",
-   "us stocks rally and recover more of last week s losses as oil prices swing lower national news 2news com",
-   "u s stocks rally and recover more of last week s losses as oil prices swing lower",
-   "houston gas prices fell over election week but not because of politics gasbuddy",
-   "middle east conflict set to push china needle coke prices to three year high",
    "gas prices down 25 cents from a month ago still above 4",
    "tech stocks rally as nvidia stock and oil prices fall alphacheck",
    "us open falling oil prices and dip buying fuel rebound as nvidia falls",
@@ -3396,7 +3389,15 @@
    "exxonmobil xom withheld 20 935 shares for taxes chapman received 124 000 stock units",
    "tanking gas prices could be the setup needed for strong holiday season",
    "wti rebounds toward 84 as lower u s inventory growth supports oil prices",
-   "chattanooga gas prices fall ahead of thanksgiving still higher than last year"
+   "chattanooga gas prices fall ahead of thanksgiving still higher than last year",
+   "we are heading for full meltdown",
+   "irgc navy says mines exploded two oil tankers and an lng carrier in strait of hormuz 6 outlets compared",
+   "oil futures pick up as middle east tensions persist",
+   "la orange county gas prices on downward trend",
+   "falling global tanker rates pull russian oil freight costs to india lower in november",
+   "japex eyes more than 10 000 boe d in norway with goliat deal",
+   "eni and repsol commit 2 billion to venezuela oil and gas expansion",
+   "lower energy prices aren t enough to cool inflation raising pressure on fed"
   ],
   "MSFT:CALL": [
    "forget the 12 month squeeze microsoft is primed for an explosive ai payoff",
@@ -4435,7 +4436,8 @@
    "packers rams thanksgiving eve sofi cannabis rules",
    "trump floats an intel style nvidia stake 10 would cost the government 375 billion",
    "boeing just picked up 60 jets and a 2 8 billion air force deal in 24 hours",
-   "sofi expands smb lending can it drive long term growth"
+   "sofi expands smb lending can it drive long term growth",
+   "hp earnings memory went from 15 to 40 of a pc s parts cost in a year"
   ],
   "SNAP:PUT": [
    "snap earnings analysis questions answered and next catalysts",
@@ -4788,7 +4790,12 @@
    "news:crypto price analysis btc xrp zec hype and sky nov 25 bitcoin closes below 60 000 xrp falls below 0 93 as zcash gives ba",
    "news:bitcoin exchange reserves fall 42 000 btc as price slips below 59k",
    "news:bitcoin price forecast btc usd 37 crash tests yearly low breakdown or bounce",
-   "news:bitcoin vs good outlook btc and xau falter after hotter than expected us pce inflation"
+   "news:bitcoin vs good outlook btc and xau falter after hotter than expected us pce inflation",
+   "news:bitcoin price stuck below 60 000 as galaxy takes back bottom call crypto bulls lose faith",
+   "news:global markets bleed trillions as bitcoin gold and wall street tumble",
+   "news:bitcoin falls toward 57k amid us tariff fears hot pce data as nasdaq drops 4",
+   "news:bitcoin falls toward 2 year low rising inflation and higher interest rates are its threats",
+   "news:bitcoin briefly slips below 58k as hot pce inflation fuels fed rate hike bets"
   ],
   "XOM:PUT:2026-12-04:155": [
    "news:oil prices rise as middle east tensions intensify",
@@ -4816,7 +4823,8 @@
    "news:crude prices climb on escalating attacks on shipping in the middle east",
    "news:trump demands lower gas prices from oil companies chides chevron ceo",
    "news:steady oil prices set for weekly gain as iran war rumbles on",
-   "news:wti rebounds toward 84 as lower u s inventory growth supports oil prices"
+   "news:wti rebounds toward 84 as lower u s inventory growth supports oil prices",
+   "news:irgc navy says mines exploded two oil tankers and an lng carrier in strait of hormuz 6 outlets compared"
   ],
   "DIS:CALL:2026-12-04:124": [
    "down-0.15",
@@ -4827,7 +4835,8 @@
    "sharp@2026-11-24T11:28-05:00",
    "sharp@2026-11-24T12:11-05:00",
    "up0.25",
-   "news:sofi technologies nasdaq sofi hits new 52 week low should you sell"
+   "news:sofi technologies nasdaq sofi hits new 52 week low should you sell",
+   "stock1"
   ],
   "T:CALL:2026-12-11:20.5": [
    "down-0.15",
@@ -4845,64 +4854,27 @@
    "up0.25",
    "sharp@2026-11-25T12:08-05:00"
   ],
-  "HOOD:PUT:2026-12-04:58": [
-   "sharp@2026-11-25T11:27-05:00",
-   "news:bitcoin whales shed about 150 000 btc as price slides 24 5",
-   "news:bitcoin whales shed 150k btc as prices keep falling",
-   "sharp@2026-11-25T12:07-05:00",
-   "down-0.15",
-   "sharp@2026-11-25T12:15-05:00",
-   "stock1",
-   "driver",
-   "sharp@2026-11-25T12:43-05:00"
-  ],
   "BAC:PUT:2026-12-11:48": [
    "sharp@2026-11-25T12:07-05:00",
-   "down-0.15"
-  ],
-  "MSTR:PUT:2026-12-04:67": [
-   "stock1",
    "down-0.15",
-   "news:bitcoin price forecast btc usd 37 crash tests yearly low breakdown or bounce",
-   "stock2",
-   "sharp@2026-11-25T12:35-05:00",
-   "news:bitcoin s price drop and mining struggles signa",
-   "news:strategy is worth 4 billion less than its bitcoin amid liquidity squeeze",
-   "sharp@2026-11-25T12:42-05:00",
-   "stock3"
+   "stock1"
+  ],
+  "INTC:PUT:2026-12-11:50": [
+   "sharp@2026-11-25T13:17-05:00"
+  ],
+  "HOOD:PUT:2026-12-11:60": [
+   "sharp@2026-11-25T13:03-05:00",
+   "sharp@2026-11-25T13:17-05:00"
   ]
  },
  "stock_level": {
   "SOFI:PUT:2026-12-11:13": 1,
   "HOOD:PUT:2026-12-04:63": 1,
-  "HOOD:PUT:2026-12-04:58": 1,
-  "MSTR:PUT:2026-12-04:67": 3,
-  "UBER:PUT:2026-12-04:65": 1
+  "UBER:PUT:2026-12-04:65": 1,
+  "BAC:PUT:2026-12-11:48": 1,
+  "SOFI:PUT:2026-12-11:13.5": 1
  },
  "seen_macro": [
-  "wall street thinks archer aviation stock is a buy here s why i m not so sure",
-  "claude ai predicts what a december fed hike could do to bitcoin",
-  "gold hits one year low as dollar strengthens",
-  "roughed up bond traders eye fedspeak minutes for next move",
-  "nigeria s inflation rate dropped to 14 06 in october nbs",
-  "october cpi shows inflation contained outside of gas prices here s what it means for interest rates",
-  "after the blue tsunami getting rid of trump s tariffs",
-  "bitcoin price reacts to fed rate hikes with vol",
-  "dollar tops pln 4 as euro falls to april 2025 low",
-  "fed s hammack reiterates case for slow steady rate hikes bloomberg tv",
-  "making globalisation work trump s tariff fiasco could save free trade",
-  "fed s hammack backs slow hikes as inflation broadens",
-  "tesla s robotaxi push gets wall street cheer barclays sees 20 upside potential in tsla stock",
-  "how the us fed s rate hike hits your stocks bonds gold and silver investments",
-  "health in tech appoints wall street research and capital markets veteran christina r valauri to board of directors",
-  "bitcoin could slide into the 50 000s as fed rate hike bets build wintermute says",
-  "3 wall street predictions for the stock market in 2027",
-  "dollar el sagha exceeds official exchange rate by 75 piast",
-  "stocks wait on nvidia s first results since jensen huang resigned",
-  "job vacancies fall to lowest level outside covid era for 12 years figures show",
-  "gold gains slightly to recover from one year low what s next",
-  "fed s musalem says several rate hikes likely needed by spring",
-  "fed s musalem us likely needs several rate hikes by spring to control inflation",
   "spacex stock price forecast wall street sees 95 upside after starship upper stage catch",
   "canada and china strike new trade deal ahead of trump summit",
   "spacex stock spcx could crush wall street s estimates here s why",
@@ -5479,7 +5451,30 @@
   "fed s preferred inflation gauge jumps to 3 8 as wall street braces for rate hike",
   "us third quarter economic growth revised sharply higher inflation broadening out",
   "trump proposes new tariffs on china europe and other trade partners",
-  "us stocks plunge again nasdaq drops over 4 intraday nearing last week s low what caused the stock market drop"
+  "us stocks plunge again nasdaq drops over 4 intraday nearing last week s low what caused the stock market drop",
+  "trump unveils new tariffs to fight excess factory capacity undeterred by midterms defeat",
+  "trump administration unveils new tariffs for dozens of countries citing unfair practices",
+  "nasdaq sinks about 4 as ai rout fresh trump tariffs spook wall st",
+  "white house tariffs announced on china vietnam as inflation data comes back hot",
+  "core inflation rose to an annual 3 3 in october",
+  "us plans to hike tariffs on china eu brazil and others over subsidized factories",
+  "trump s new tariffs leave grain markets steady but farm risks persist",
+  "trump administration proposes new tariffs on china eu india and 11 other partners 15 outlets compared",
+  "what to know about trump s new tariff proposal",
+  "trump administration to introduce new tariffs on china eu and 12 other major trading partners",
+  "the average us 30 year mortgage rate eases to 7 21 not far from 2026 high",
+  "silver falls 3 as hot inflation fuels fed rate hike fears",
+  "gold tumbles below 3 500 as fed rate fears trigger fresh sell off",
+  "if the fed raises interest rates multiple times in the coming months here s what billionaire investor david tepper would",
+  "why did the stock market rally today sensex jumps over 1 700 points nifty nears record high on november 25",
+  "how soon trump s new tariffs could hit the economy and your wallet",
+  "trump set to add new sweeping tariffs undeterred by midterms defeat",
+  "average u s 30 year mortgage rate eases to 7 21 not far from 2026 high",
+  "lower inflation us rate cuts may trigger recovery in gold silver prices",
+  "inflation gets worse now the fed has no choice but to raise u s interest rates",
+  "trump proposes new tariffs on 14 trading partners including china and the eu",
+  "nasdaq 100 drops 2 5 on ai credit fears nvidia sinks 7 stock market today",
+  "lower energy prices aren t enough to cool inflation raising pressure on fed"
  ],
  "sharp": {
   "UBER:PUT:2026-12-04:65": 65.94,
@@ -5489,9 +5484,9 @@
   "WMT:CALL:2026-12-11:128": 131.93,
   "WMT:CALL:2026-12-04:130": 131.93,
   "WMT:CALL:2026-12-04:131": 131.93,
-  "HOOD:PUT:2026-12-04:58": 63.82,
   "BAC:PUT:2026-12-11:48": 47.845,
   "JPM:PUT:2026-12-04:310": 313.11,
-  "MSTR:PUT:2026-12-04:67": 75.98
+  "HOOD:PUT:2026-12-11:60": 64.86,
+  "INTC:PUT:2026-12-11:50": 52.5
  }
 }
