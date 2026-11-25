@@ -20,3 +20,4 @@ time,kind,model,input,output,usd,status
 2026-11-21T04:40:04-05:00,weekly,claude-sonnet-5-5,,,,error
 2026-11-23T16:50:06-05:00,daily,claude-haiku-5-5,4113,2939,0.00188,ok
 2026-11-24T16:50:06-05:00,daily,claude-haiku-5-5,5283,2499,0.00178,ok
+2026-11-25T16:50:05-05:00,daily,claude-haiku-5-5,6910,3466,0.00242,ok
