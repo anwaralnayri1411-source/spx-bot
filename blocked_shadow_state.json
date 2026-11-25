@@ -14,8 +14,8 @@
    "strength": "9.9",
    "occ": "WMT261204C00132000",
    "peak_pnl": 0.225,
-   "close_pnl": -0.099,
-   "quotes": 127,
+   "close_pnl": -0.108,
+   "quotes": 128,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -35,7 +35,7 @@
    "occ": "SOFI261211P00013000",
    "peak_pnl": 0.447,
    "close_pnl": -0.306,
-   "quotes": 116,
+   "quotes": 117,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -54,8 +54,8 @@
    "strength": "7.8",
    "occ": "T261211C00020500",
    "peak_pnl": 0.071,
-   "close_pnl": -0.019,
-   "quotes": 113,
+   "close_pnl": -0.023,
+   "quotes": 114,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -74,8 +74,8 @@
    "strength": "4.4",
    "occ": "WMT261211C00135000",
    "peak_pnl": 0.0,
-   "close_pnl": -0.262,
-   "quotes": 55,
+   "close_pnl": -0.251,
+   "quotes": 56,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -94,8 +94,8 @@
    "strength": "5.5",
    "occ": "T261211C00020500",
    "peak_pnl": 0.033,
-   "close_pnl": -0.054,
-   "quotes": 55,
+   "close_pnl": -0.058,
+   "quotes": 56,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -114,8 +114,8 @@
    "strength": "7.8",
    "occ": "BAC261211P00048000",
    "peak_pnl": 0.006,
-   "close_pnl": -0.356,
-   "quotes": 55,
+   "close_pnl": -0.331,
+   "quotes": 56,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -135,7 +135,7 @@
    "occ": "V261204C00435000",
    "peak_pnl": 0.025,
    "close_pnl": -0.084,
-   "quotes": 19,
+   "quotes": 20,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -154,8 +154,8 @@
    "strength": "7.2",
    "occ": "DIS261204C00127000",
    "peak_pnl": 0.0,
-   "close_pnl": -0.097,
-   "quotes": 11,
+   "close_pnl": -0.073,
+   "quotes": 12,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -2994,7 +2994,11 @@
   "20261125T1457|stocks|chase_em|DIS|CALL|125|2026-12-04",
   "20261125T1457|stocks|chase_em|GOOGL|PUT|260|2026-12-04",
   "20261125T1457|stocks|chase_em|V|CALL|435|2026-12-04",
-  "20261125T1457|stocks|open_same_dir|T|CALL|20.5|2026-12-11"
+  "20261125T1457|stocks|open_same_dir|T|CALL|20.5|2026-12-11",
+  "20261125T1512|stocks|chase_em|DIS|CALL|127|2026-12-04",
+  "20261125T1512|stocks|chase_em|GOOGL|PUT|260|2026-12-04",
+  "20261125T1512|stocks|chase_em|V|CALL|435|2026-12-04",
+  "20261125T1512|stocks|open_same_dir|T|CALL|20.5|2026-12-11"
  ],
  "last": {
   "spx|CALL|SPY": "2026-11-23T15:20-05:00",
