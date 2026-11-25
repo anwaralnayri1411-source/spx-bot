@@ -5683,3 +5683,21 @@ time,pos_id,ticker,side,event,detail,entry,val,pnl,spot,need,tdays,advice,reason
 2026-11-25T09:31-05:00,SOFI:PUT:2026-12-11:13.5,SOFI,PUT,contract,+29%,1.03,1.33,0.2913,12.35,-0.0097,13,أبقِ,لا جديد يغيّر فكرة الصفقة
 2026-11-25T09:31-05:00,T:CALL:2026-12-11:20.5,T,CALL,contract,-31%,2.88,1.98,-0.3125,22.94,0.0192,13,فكّر بالخروج,العقد خسر 31% (الوقف عند −40%)
 2026-11-25T09:31-05:00,JPM:PUT:2026-12-04:310,JPM,PUT,contract,+50%,3.25,4.88,0.5015,310.03,0.0106,8,أبقِ,لا جديد يغيّر فكرة الصفقة
+2026-11-25T09:36-05:00,XOM:PUT:2026-12-04:155,XOM,PUT,news,"with/medium: Oil Prices Fall as Traders Weigh Supply Surplus, Gulf Attacks - WSJ",1.88,1.61,-0.1436,158.43,0.0335,8,أبقِ,الخبر في صالح العقد
+2026-11-25T09:36-05:00,SOFI:PUT:2026-12-11:13,SOFI,PUT,contract,+37%,0.83,1.14,0.3735,12.175,0.0004,13,أبقِ,لا جديد يغيّر فكرة الصفقة
+2026-11-25T09:47-05:00,HOOD:PUT:2026-12-04:63,HOOD,PUT,news,"with/medium: Bitcoin Slips Below $59K Ahead Of PCE Report, Heads For Worst Month Since July 2022 - TradingView",2.58,3.83,0.4845,61.73,0.0212,8,أبقِ,الخبر في صالح العقد
+2026-11-25T09:47-05:00,HOOD:PUT:2026-12-04:63,HOOD,PUT,news,"with/medium: Bitcoin price prediction: Can $58,400 hold after $2.6 billion in ETF outflows? - Traders Union",2.58,3.83,0.4845,61.73,0.0212,8,أبقِ,الخبر في صالح العقد
+2026-11-25T09:47-05:00,HOOD:PUT:2026-12-04:63,HOOD,PUT,news,with/medium: BTC Price Slides Again as US PCE Inflation Posts Second-Highest Reading Since Early 2023 - CryptoPotato,2.58,3.83,0.4845,61.73,0.0212,8,أبقِ,الخبر في صالح العقد
+2026-11-25T09:47-05:00,HOOD:PUT:2026-12-04:63,HOOD,PUT,news,"with/medium: Bitcoin falls below $58,000 after hot US inflation data - Crypto Briefing",2.58,3.83,0.4845,61.73,0.0212,8,أبقِ,الخبر في صالح العقد
+2026-11-25T09:47-05:00,XOM:PUT:2026-12-04:155,XOM,PUT,news,with/medium: Oil Prices Ease As Market Surplus Fears Return - Finimize,1.88,1.41,-0.25,158.78,0.0356,8,أبقِ,الخبر في صالح العقد | الفكرة قائمة لكن العقد -25%؛ التزم بالوقف عند −40%
+2026-11-25T09:49-05:00,WMT:CALL:2026-12-11:128,WMT,CALL,sharp,-0.81% في 15د,3.05,,,131.93,-0.0067,13,فكّر بالخروج,السهم يتحرك ضدك
+2026-11-25T09:49-05:00,WMT:CALL:2026-12-04:130,WMT,CALL,sharp,-0.81% في 15د,1.9,,,131.93,-0.0002,8,فكّر بالخروج,السهم يتحرك ضدك
+2026-11-25T09:49-05:00,WMT:CALL:2026-12-04:131,WMT,CALL,sharp,-0.81% في 15د,1.59,,,131.93,0.005,8,فكّر بالخروج,السهم يتحرك ضدك
+2026-11-25T09:53-05:00,HOOD:PUT:2026-12-04:63,HOOD,PUT,news,with/medium: Bitcoin falls below $60k again amid weak demand and selling pressure from investors. - Pluang,2.58,3.81,0.4767,61.87,0.0234,8,أبقِ,الخبر في صالح العقد
+2026-11-25T09:53-05:00,HOOD:PUT:2026-12-04:63,HOOD,PUT,news,with/medium: Bitcoin Price Risks Fall to $53K as It Loses Nvidia Rally Gains: Glassnode - CoinCodex,2.58,3.81,0.4767,61.87,0.0234,8,أبقِ,الخبر في صالح العقد
+2026-11-25T09:53-05:00,HOOD:PUT:2026-12-04:63,HOOD,PUT,news,"with/medium: Bitcoin now: Price falls below $59,000 as volume drops and extreme fear persists - www.tokenpost.com",2.58,3.81,0.4767,61.87,0.0234,8,أبقِ,الخبر في صالح العقد
+2026-11-25T09:53-05:00,HOOD:PUT:2026-12-04:63,HOOD,PUT,news,"with/medium: Bitcoin drops below $59,000 as trading volume f... - Pluang",2.58,3.81,0.4767,61.87,0.0234,8,أبقِ,الخبر في صالح العقد
+2026-11-25T09:53-05:00,HOOD:PUT:2026-12-04:63,HOOD,PUT,news,"with/medium: Bitcoin Drops to $58,000, Ethereum, XRP Slide Down 4% as ANT Loses IPO Price Floor - Benzinga",2.58,3.81,0.4767,61.87,0.0234,8,أبقِ,الخبر في صالح العقد
+2026-11-25T09:53-05:00,HOOD:PUT:2026-12-04:63,HOOD,PUT,news,"with/medium: Bitcoin price tests $58K floor as $107M liquidated, ETFs bleed cash - Seeking Alpha",2.58,3.81,0.4767,61.87,0.0234,8,أبقِ,الخبر في صالح العقد
+2026-11-25T09:59-05:00,HOOD:PUT:2026-12-04:63,HOOD,PUT,news,"with/medium: Bitcoin Price Slumps Below $57,500 as Nasdaq Sinks 4% at Open - Bitcoin Magazine",2.58,3.14,0.2171,63.1,0.0425,8,أبقِ,الخبر في صالح العقد
+2026-11-25T09:59-05:00,XOM:PUT:2026-12-04:155,XOM,PUT,news,against/medium: Oil: Supply recovery offsets disruption risks – ING - www.tmgm.com,1.88,1.46,-0.2234,158.99,0.0369,8,فكّر بالخروج,خبر ضد العقد
