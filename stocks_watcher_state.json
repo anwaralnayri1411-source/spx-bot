@@ -913,7 +913,8 @@
    "meeder asset management inc buys 19 981 shares of intel corporation intc",
    "intel corporation intc stock ieq capital llc grows stake",
    "insiders rarely do this intel s ceo just bought millions in intc stock after the crash",
-   "17 121 shares of intel corporation intc acquired by landscape capital management l l c"
+   "17 121 shares of intel corporation intc acquired by landscape capital management l l c",
+   "intel intc securities class action hagens berman alerts investors to suit after 139b crash"
   ],
   "CVX:CALL": [
    "stocks see continued downward pressure from ai anxiety and oil prices",
@@ -2116,7 +2117,6 @@
    "bitcoin drops 2 26 in four hours to 62 802 am"
   ],
   "HOOD:PUT": [
-   "bitcoin s u s spot discount widens amid rising market volatility and lower institutional trading volume",
    "bitcoin rejected at 65k as icp jumps 11 market watch",
    "robinhood eyes 130 as mizuho brushes off kalshi s stock trading threat",
    "omenx announces 2 million in funding from informed ventures and launches on demand 30 second bitcoin predictions",
@@ -2515,7 +2515,8 @@
    "bitcoin falls toward 57k amid us tariff fears hot pce data as nasdaq drops 4",
    "bitcoin hashrate falls 8 with 11m btc in loss 2 reasons bears are watching",
    "bitcoin falls toward 2 year low rising inflation and higher interest rates are its threats",
-   "bitcoin briefly slips below 58k as hot pce inflation fuels fed rate hike bets"
+   "bitcoin briefly slips below 58k as hot pce inflation fuels fed rate hike bets",
+   "robinhood chain tokenized stocks value by stock chart and live data"
   ],
   "AAPL:CALL": [
    "loop capital lowers apple stock price target on iphone shipment concerns",
@@ -2998,10 +2999,6 @@
    "metropal reports board responsibility statement on consolidated financials"
   ],
   "XOM:PUT": [
-   "gas prices down 25 cents from a month ago still above 4",
-   "tech stocks rally as nvidia stock and oil prices fall alphacheck",
-   "us open falling oil prices and dip buying fuel rebound as nvidia falls",
-   "heads up motorists the department of energy doe has announced an oil price rollback on petroleum products effective tues",
    "baltimore area gas prices dip over past week",
    "dollar retreats as stocks rally and crude oil tumbles",
    "brent oil slides below 96 as hopes of us iran deal grow",
@@ -3397,7 +3394,11 @@
    "falling global tanker rates pull russian oil freight costs to india lower in november",
    "japex eyes more than 10 000 boe d in norway with goliat deal",
    "eni and repsol commit 2 billion to venezuela oil and gas expansion",
-   "lower energy prices aren t enough to cool inflation raising pressure on fed"
+   "lower energy prices aren t enough to cool inflation raising pressure on fed",
+   "oil futures fall for third straight week on supply outlook",
+   "kazakhstan joins iraq in pushing opec for a higher capacity rating",
+   "oil futures rise as middle east shipping risks persist",
+   "natural gas wti oil brent oil forecasts oil rallies as houthis attack saudi arabia s ras tanura refinery"
   ],
   "MSFT:CALL": [
    "forget the 12 month squeeze microsoft is primed for an explosive ai payoff",
@@ -4437,7 +4438,8 @@
    "trump floats an intel style nvidia stake 10 would cost the government 375 billion",
    "boeing just picked up 60 jets and a 2 8 billion air force deal in 24 hours",
    "sofi expands smb lending can it drive long term growth",
-   "hp earnings memory went from 15 to 40 of a pc s parts cost in a year"
+   "hp earnings memory went from 15 to 40 of a pc s parts cost in a year",
+   "anthropic stock has 121 000 holders on solana is it taking buyers from sol"
   ],
   "SNAP:PUT": [
    "snap earnings analysis questions answered and next catalysts",
@@ -4722,7 +4724,9 @@
    "news:uber technologies stock enters driverless bay area testing",
    "news:us stock market sell off deepens as ai shares slide",
    "down-0.3",
-   "stock1"
+   "stock1",
+   "stock2",
+   "sharp@2026-11-25T13:48-05:00"
   ],
   "WMT:CALL:2026-12-11:128": [
    "news:wmt maintained by guggenheim price target raised to 140",
@@ -4824,19 +4828,18 @@
    "news:trump demands lower gas prices from oil companies chides chevron ceo",
    "news:steady oil prices set for weekly gain as iran war rumbles on",
    "news:wti rebounds toward 84 as lower u s inventory growth supports oil prices",
-   "news:irgc navy says mines exploded two oil tankers and an lng carrier in strait of hormuz 6 outlets compared"
-  ],
-  "DIS:CALL:2026-12-04:124": [
-   "down-0.15",
-   "down-0.3",
-   "up0.25"
+   "news:irgc navy says mines exploded two oil tankers and an lng carrier in strait of hormuz 6 outlets compared",
+   "news:oil futures fall for third straight week on supply outlook",
+   "news:oil futures rise as middle east shipping risks persist",
+   "news:natural gas wti oil brent oil forecasts oil rallies as houthis attack saudi arabia s ras tanura refinery"
   ],
   "SOFI:PUT:2026-12-11:13.5": [
    "sharp@2026-11-24T11:28-05:00",
    "sharp@2026-11-24T12:11-05:00",
    "up0.25",
    "news:sofi technologies nasdaq sofi hits new 52 week low should you sell",
-   "stock1"
+   "stock1",
+   "sharp@2026-11-25T13:18-05:00"
   ],
   "T:CALL:2026-12-11:20.5": [
    "down-0.15",
@@ -4847,7 +4850,9 @@
    "down-0.15",
    "sharp@2026-11-24T12:11-05:00",
    "stock1",
-   "up0.25"
+   "up0.25",
+   "sharp@2026-11-25T13:18-05:00",
+   "stock2"
   ],
   "JPM:PUT:2026-12-04:310": [
    "down-0.15",
@@ -4857,32 +4862,33 @@
   "BAC:PUT:2026-12-11:48": [
    "sharp@2026-11-25T12:07-05:00",
    "down-0.15",
-   "stock1"
+   "stock1",
+   "down-0.3"
   ],
   "INTC:PUT:2026-12-11:50": [
-   "sharp@2026-11-25T13:17-05:00"
+   "sharp@2026-11-25T13:17-05:00",
+   "stock1",
+   "down-0.15",
+   "sharp@2026-11-25T13:46-05:00"
   ],
   "HOOD:PUT:2026-12-11:60": [
    "sharp@2026-11-25T13:03-05:00",
-   "sharp@2026-11-25T13:17-05:00"
+   "sharp@2026-11-25T13:17-05:00",
+   "stock1",
+   "down-0.15",
+   "sharp@2026-11-25T13:48-05:00"
   ]
  },
  "stock_level": {
-  "SOFI:PUT:2026-12-11:13": 1,
+  "SOFI:PUT:2026-12-11:13": 2,
   "HOOD:PUT:2026-12-04:63": 1,
-  "UBER:PUT:2026-12-04:65": 1,
+  "UBER:PUT:2026-12-04:65": 2,
   "BAC:PUT:2026-12-11:48": 1,
-  "SOFI:PUT:2026-12-11:13.5": 1
+  "SOFI:PUT:2026-12-11:13.5": 1,
+  "HOOD:PUT:2026-12-11:60": 1,
+  "INTC:PUT:2026-12-11:50": 1
  },
  "seen_macro": [
-  "spacex stock price forecast wall street sees 95 upside after starship upper stage catch",
-  "canada and china strike new trade deal ahead of trump summit",
-  "spacex stock spcx could crush wall street s estimates here s why",
-  "us dollar rally erases liberation day losses as rate expectations rise",
-  "carney and sheinbaum meet at summit in china as both navigate trump s tumult",
-  "9 30am markets update",
-  "fed rate hike odds hit 90 what could happen to bitcoin and crypto in december",
-  "why gold is trending today the dollar federal reserve expectations and safe haven demand collide",
   "are u really threatening to play china off the u s trump trade adviser asks pm carney",
   "stock market today nvidia s 26 plunge puts wall street on edge ahead of earnings tonight",
   "bitcoin nears 65k as strong us jobs data stirs fed rate hike concerns",
@@ -5474,19 +5480,27 @@
   "inflation gets worse now the fed has no choice but to raise u s interest rates",
   "trump proposes new tariffs on 14 trading partners including china and the eu",
   "nasdaq 100 drops 2 5 on ai credit fears nvidia sinks 7 stock market today",
-  "lower energy prices aren t enough to cool inflation raising pressure on fed"
+  "lower energy prices aren t enough to cool inflation raising pressure on fed",
+  "stocks swoon as ai fears spur rush to treasuries markets wrap",
+  "irish whiskey escapes latest trump tariff threat as industry eyes tariff free trade",
+  "trump administration proposes new tariffs up to 20 on china eu and 12 partners after excess capacity probe",
+  "plastics named in new trump manufacturing overcapacity tariffs",
+  "asx eyes gains wall street slumps as ai stocks sink",
+  "the frantic white house push to get jensen huang back",
+  "managing volatility in emerging markets",
+  "new tariffs proposed on 14 trading partners"
  ],
  "sharp": {
-  "UBER:PUT:2026-12-04:65": 65.94,
+  "UBER:PUT:2026-12-04:65": 66.84,
   "HOOD:PUT:2026-12-04:63": 65.77,
-  "SOFI:PUT:2026-12-11:13.5": 12.885,
-  "SOFI:PUT:2026-12-11:13": 12.885,
+  "SOFI:PUT:2026-12-11:13.5": 13.03,
+  "SOFI:PUT:2026-12-11:13": 13.03,
   "WMT:CALL:2026-12-11:128": 131.93,
   "WMT:CALL:2026-12-04:130": 131.93,
   "WMT:CALL:2026-12-04:131": 131.93,
   "BAC:PUT:2026-12-11:48": 47.845,
   "JPM:PUT:2026-12-04:310": 313.11,
-  "HOOD:PUT:2026-12-11:60": 64.86,
-  "INTC:PUT:2026-12-11:50": 52.5
+  "HOOD:PUT:2026-12-11:60": 65.41,
+  "INTC:PUT:2026-12-11:50": 53.25
  }
 }
