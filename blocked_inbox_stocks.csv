@@ -2139,3 +2139,5 @@ id,time,project,tag,sym,root,side,strike,exp,entry,spot,edge,strength
 20261125T1312|stocks|open_same_dir|T|CALL|20.5|2026-12-11,2026-11-25T13:12-05:00,stocks,open_same_dir,T,T,CALL,20.5,2026-12-11,3.0,23.27,7.5,8.6
 20261125T1327|stocks|chase_em|V|CALL|435|2026-12-04,2026-11-25T13:27-05:00,stocks,chase_em,V,V,CALL,435.0,2026-12-04,2.39,424.56,3.5,5.7
 20261125T1327|stocks|open_same_dir|T|CALL|20.5|2026-12-11,2026-11-25T13:27-05:00,stocks,open_same_dir,T,T,CALL,20.5,2026-12-11,2.94,23.3,7.5,8.6
+20261125T1342|stocks|chase_em|V|CALL|435|2026-12-04,2026-11-25T13:42-05:00,stocks,chase_em,V,V,CALL,435.0,2026-12-04,2.64,424.95,3.5,6.7
+20261125T1342|stocks|open_same_dir|T|CALL|20.5|2026-12-11,2026-11-25T13:42-05:00,stocks,open_same_dir,T,T,CALL,20.5,2026-12-11,3.03,23.3,7.5,8.4
