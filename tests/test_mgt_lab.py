@@ -136,20 +136,43 @@ def _ctx(st5=None, h1="up", m5=None, orng=None):
 
 def test_strat_variants_fixed_and_outside_evolution():
     sv = ml.strat_variants(D)
-    assert [v["vid"] for v in sv] == ["s0", "s1", "s2", "s3", "s0b"] and all(v["pinned"] for v in sv)
+    names = ["s0", "s1", "s2", "s3", "s0b", "s0f"]
+    assert [v["vid"] for v in sv] == names and all(v["pinned"] for v in sv)
     assert sv[0]["params"] == ml.V9 and all(v["params"] == dict(ml.V9, exit="struct") for v in sv[1:4])
     assert sv[4]["params"] == dict(ml.V9, ladder=5, cap=6) and sv[4]["level"] == 0       # v7g7 مجمّدة
+    assert sv[5]["params"] == dict(ml.V9, flip=True) and sv[5]["level"] == 0             # H-FLIP
     st = {"gen": 1, "variants": ml.initial_variants(D), "strat": sv}
     for v in st["variants"]:
         v["closed"] = [{"tdate": D, "usd": -500.0}] * 3
     ml.evolve(st, D, random.Random(1))
-    assert [v["vid"] for v in st["strat"]] == ["s0", "s1", "s2", "s3", "s0b"]   # التطور لا يمس النسخ الثابتة
-    assert len(ml.all_variants(st)) == 17
+    assert [v["vid"] for v in st["strat"]] == names   # التطور لا يمس النسخ الثابتة
+    assert len(ml.all_variants(st)) == 18
     old = {"strat": [dict(v, closed=[{"tdate": D, "usd": 1.0}]) for v in sv[:4]]}
     ml.ensure_strat(old, D)
-    assert [v["vid"] for v in old["strat"]] == ["s0", "s1", "s2", "s3", "s0b"] and old["strat"][0]["closed"]
-    assert "v7g7" in ml.strat_text(st, D)
+    assert [v["vid"] for v in old["strat"]] == names and old["strat"][0]["closed"]
+    assert "v7g7" in ml.strat_text(st, D) and "الانقلاب" in ml.strat_text(st, D)
     assert "s3" in ml.strat_text(st, D) and "دخول الهيكل" in ml.strat_text(st, D)
+
+
+def test_flip_closes_all_then_allows_opposite(tmp_path, monkeypatch):
+    monkeypatch.setattr(ml, "DIR", str(tmp_path))
+    monkeypatch.setattr(ml, "TRADES", str(tmp_path / "t.csv"))
+    v = [x for x in ml.strat_variants(D) if x["vid"] == "s0f"][0]
+    e = {"t": f"{D}T09:35", "tdate": D, "side": "PUT", "strike": 6980.0, "symbol": "P1", "entry": 5.1, "S": 7150.0, "peak": 5.1}
+    v["open"] = [dict(e), dict(e, symbol="P2", t=f"{D}T09:40", entry=5.0)]
+    qs = {"P1": {"bid": 3.1}, "P2": {"bid": 3.0}}
+    s0 = [x for x in ml.strat_variants(D) if x["vid"] == "s0"][0]
+    s0["open"] = [dict(e)]
+    assert ml.flip_close(s0, 5, 22, True, qs, N) == 0 and s0["open"]              # s0 لا تنقلب
+    assert ml.flip_close(v, 5, 22, False, qs, N) == 0                              # لا شمعة جديدة
+    assert ml.flip_close(v, 3, 22, True, qs, N) == 0                               # أصوات دون 4
+    assert ml.flip_close(v, 5, 12, True, qs, N) == 0                               # ADX دون 15
+    assert ml.flip_close(v, -5, 22, True, qs, N) == 0                              # الجهة نفسها
+    assert ml.flip_close(v, 5, 22, True, {"P1": qs["P1"]}, N) == 0                 # سعر ناقص
+    assert ml.flip_close(v, 5, 22, True, qs, N) == 2 and v["open"] == []
+    assert [c["usd"] for c in v["closed"]] == [-200.0, -200.0] and all(c["flip"] for c in v["closed"])
+    ok, _, _ = ml.strat_wants(v, None, N, "CALL", 5, 22, 7200.0, D, True)
+    assert ok                                                                       # بعد الإغلاق يدخل الجهة الجديدة
 
 
 def test_manage_struct_half_runner_and_exits():

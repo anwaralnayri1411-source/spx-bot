@@ -208,10 +208,11 @@ def left_text(v, day):
 # ====================== استراتيجية «استمرار الترند بعد التصحيح» (H-TRENDPB) ======================
 # نسخ ثابتة لا تدخل التطور: كل نسخة تضيف شيئاً واحداً على سابقتها (التسجيل في CLAUDE.md 13/11/2026).
 V9 = {"score": 4, "adx": 15, "price": 5.0, "stop": 0.6, "exit": "tp100", "ladder": 10, "cap": 12, "sess": "rth", "trig": "any"}
-STRAT = [("s0", 0), ("s1", 1), ("s2", 2), ("s3", 3), ("s0b", 0)]   # المستوى: 1 خروج الهيكل، 2 فلتر اليوم، 3 دخول الهيكل
+STRAT = [("s0", 0), ("s1", 1), ("s2", 2), ("s3", 3), ("s0b", 0), ("s0f", 0)]   # المستوى: 1 خروج الهيكل، 2 فلتر اليوم، 3 دخول الهيكل
 STRAT_NAMES = {"s0": "v9 مجمّدة", "s1": "+ خروج يتبع الهيكل", "s2": "+ فلتر نوع اليوم", "s3": "+ دخول الهيكل (MSS ثم FVG)",
-               "s0b": "v7g7 مجمّدة (سلّم 5ن×6)"}
-STRAT_PARAMS = {"s0b": {"ladder": 5, "cap": 6}}                    # s0b (24/11/2026): v7g7 بالقيد الشرعي، CLAUDE.md
+               "s0b": "v7g7 مجمّدة (سلّم 5ن×6)", "s0f": "v9 + الانقلاب (إغلاق ثم عكس)"}
+STRAT_PARAMS = {"s0b": {"ladder": 5, "cap": 6},                    # s0b (24/11/2026): v7g7 بالقيد الشرعي، CLAUDE.md
+                "s0f": {"flip": True}}                             # s0f (25/11/2026): H-FLIP، CLAUDE.md
 S_FIRST, S_LAST, S_FORCE = ms.dtime(10, 0), ms.dtime(14, 30), ms.dtime(15, 45)
 S3_CAP, SMC_N = 3, 3
 
@@ -402,6 +403,27 @@ def strat_wants(v, ctx, now, side, total, adx_v, S, tdate, new_bar):
     return bool(new_bar or has), ("ladder" if has else "any"), None
 
 
+def flip_close(v, total, adx_v, new_bar, qs, now):
+    """H-FLIP: عند شمعة جديدة وشرط v9 للجهة المعاكسة تُغلق كل العقود المفتوحة بسعر العرض. يرجع عدد ما أُغلق."""
+    if not v["params"].get("flip") or not new_bar or not v["open"]:
+        return 0
+    sd = side_for(v["params"], total, adx_v)
+    if not sd or all(e["side"] == sd for e in v["open"]) or any(not qs.get(e["symbol"]) for e in v["open"]):
+        return 0
+    n = 0
+    for e in v["open"]:
+        bid = qs[e["symbol"]]["bid"]
+        e["peak"] = max(e.get("peak", e["entry"]), bid)
+        e["usd"] = round((bid - e["entry"]) * 100, 2)
+        e["exit_px"], e["exit_t"], e["flip"] = bid, now.strftime("%H:%M"), True
+        v["closed"].append(e)
+        log_trade(v, e, "انقلاب")
+        n += 1
+    v["open"] = []
+    print("انقلاب", v["vid"], "أُغلق", n, "←", sd)
+    return n
+
+
 def strat_text(st, day):
     L = ["", "📐 **الاستراتيجية (s0←s3، ثابتة):**"]
     for v in st.get("strat", []):
@@ -588,6 +610,7 @@ def main(argv):
     st = load_state(day)
     # 1) إدارة المفتوح لكل النسخ
     syms = sorted({e["symbol"] for v in all_variants(st) for e in v["open"]} | (tracked_symbols(st, day) if now.time() <= ms.RTH_END else set()))
+    qs = {}
     if syms:
         try:
             qs = {q["symbol"]: q for q in ms.quotes(syms)}
@@ -696,6 +719,7 @@ def main(argv):
         for v in st.get("strat", []):
             if sctx is None and v["level"] >= 2:
                 continue
+            flip_close(v, total, det["adx"], new_bar, qs, now)
             for sd in ("CALL", "PUT"):
                 ok, trig, su = strat_wants(v, sctx, now, sd, total, det["adx"], S, tdate, new_bar)
                 if not ok:
