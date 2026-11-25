@@ -1,6 +1,21 @@
 {
- "cash": 4415.0,
- "positions": [],
+ "cash": 3687.0,
+ "positions": [
+  {
+   "id": "1125-1001-SPY-PUT-702",
+   "symbol": "SPY   261125P00702000",
+   "under": "SPY",
+   "side": "PUT",
+   "strike": 702.0,
+   "expiry": "2026-11-25",
+   "qty": 2,
+   "entry": 3.64,
+   "time": "2026-11-25T10:01-05:00",
+   "stop": 2.8,
+   "target": 5.5,
+   "invalidation": "إلغاء الفكرة إذا استعاد SPY 705 بثبات مع تراجع VIX وارتفاع ES، أو إذا تحول الزخم 30 دقيقة إلى صعود قوي وعادت القياديات للصعود."
+  }
+ ],
  "closed": [
   {
    "id": "1105-0946-PUT-757",
@@ -769,8 +784,8 @@
    "after_last": 2.95
   }
  ],
- "decisions": 287,
+ "decisions": 288,
  "report_day": "2026-11-24",
  "day": "2026-11-25",
- "decisions_today": 1
+ "decisions_today": 2
 }
