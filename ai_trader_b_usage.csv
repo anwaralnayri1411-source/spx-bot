@@ -298,3 +298,4 @@ time,kind,model,input,output,usd,status
 2026-11-25T15:31:03-05:00,decide,claude-haiku-5-5,34514,1738,0.00432,end_turn
 2026-11-25T16:01:03-05:00,review,claude-sonnet-5-5,11983,671,0.03068,end_turn
 2026-11-26T09:46:03-05:00,decide,claude-haiku-5-5,6687,1615,0.00148,end_turn
+2026-11-26T10:01:03-05:00,decide,claude-haiku-5-5,6692,2139,0.00174,end_turn
