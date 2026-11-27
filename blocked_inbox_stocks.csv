@@ -2178,3 +2178,4 @@ id,time,project,tag,sym,root,side,strike,exp,entry,spot,edge,strength
 20261127T1057|stocks|chase_em|CVX|CALL|220|2026-12-18,2026-11-27T10:57-05:00,stocks,chase_em,CVX,CVX,CALL,220.0,2026-12-18,3.28,214.0,3.5,6.7
 20261127T1057|stocks|open_same_dir|WMT|CALL|134|2026-12-18,2026-11-27T10:57-05:00,stocks,open_same_dir,WMT,WMT,CALL,134.0,2026-12-18,2.19,132.13,3.5,6.4
 20261127T1112|stocks|open_same_dir|WMT|CALL|133|2026-12-18,2026-11-27T11:12-05:00,stocks,open_same_dir,WMT,WMT,CALL,133.0,2026-12-18,2.49,132.02,4.5,7.5
+20261127T1127|stocks|open_same_dir|WMT|CALL|133|2026-12-18,2026-11-27T11:27-05:00,stocks,open_same_dir,WMT,WMT,CALL,133.0,2026-12-18,2.44,132.02,4.5,7.5
