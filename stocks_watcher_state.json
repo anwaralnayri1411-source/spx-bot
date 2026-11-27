@@ -1322,7 +1322,11 @@
    "georgia voters to decide fate of 17 billion data center megaproject",
    "can chevron nyse cvx protect its dividend as energy markets reset",
    "the reasons behind the rebound in oil prices following three weeks of falls",
-   "how cenovus low cost assets and integrated model support resilience"
+   "how cenovus low cost assets and integrated model support resilience",
+   "crude prices retreat on possible increase in opec crude output",
+   "strait of hormuz flashpoint iran claims five tankers hit naval mines in 48 hours as oil prices jump",
+   "sheetz cuts gas prices as shell 7 eleven offer savings for holidays",
+   "charts of the week oil prices could swing alberta s deficit to surplus"
   ],
   "TSLA:CALL": [
    "tesla stock consolidates after potential tesla spacex merger exploration increases uncertainty",
@@ -2735,7 +2739,8 @@
    "form 144 apple aapl us officer proposes to sell 19 59 million in common stocks",
    "apple stock outperforms nvidia by 30 2 percentage points in november as ai selloff puts iphone maker on tr",
    "apple faces countersuit from openai for stealing trade secrets ft",
-   "apple stock price hits one year high at 358 54 in friday trading"
+   "apple stock price hits one year high at 358 54 in friday trading",
+   "openai accuses apple of pressuring suppliers to avoid working with it"
   ],
   "BA:PUT": [
    "boeing nyse ba sets new 52 week low on disappointing earnings",
@@ -4956,16 +4961,15 @@
    "down-0.15",
    "news:oil prices rebound as shipping risks persist",
    "news:oil prices rise over attacks on tanker saudi aramco refinery",
-   "news:the reasons behind the rebound in oil prices following three weeks of falls"
+   "news:the reasons behind the rebound in oil prices following three weeks of falls",
+   "news:crude prices retreat on possible increase in opec crude output",
+   "news:strait of hormuz flashpoint iran claims five tankers hit naval mines in 48 hours as oil prices jump"
   ]
  },
  "stock_level": {
   "UBER:PUT:2026-12-04:65": 3
  },
  "seen_macro": [
-  "reserve bank keeps interest rates unchanged amid south africa s rand crashing to its worst level in months",
-  "oil prices steady as supply surplus outlook offsets middle east tensions",
-  "us stock market today s p 500 futures climb on tech strength and hawkish fed signals",
   "anthropic pays wall street banks 550 million on record 107 3 billion ipo",
   "traders are betting on interest rates staying high for years",
   "nvidia reports faster growth says jensen huang won t return as ceo",
@@ -5562,7 +5566,10 @@
   "stock market today",
   "usd to eur forecast can the us dollar reach parity with the euro in 2027",
   "costco wholesale nasdaq cost stock price forecast wall street weighs valuation risks",
-  "wall street rallies as battered ai stocks rebound"
+  "wall street rallies as battered ai stocks rebound",
+  "bitcoin s macro trend shifts in 2026 amid rising us interest rate expectations",
+  "michigan minimum wage to track inflation from 2028",
+  "u s market closes sharply higher to end volatile week on wall street"
  ],
  "sharp": {
   "UBER:PUT:2026-12-04:65": 66.84,
