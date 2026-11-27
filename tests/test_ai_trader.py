@@ -26,6 +26,9 @@ def test_validate_buy_budget_and_cap():
     why, q = at.validate_buy(st, MENU, _dec()["buy"], N, {})
     assert why is None and q == 2                         # 30% من 2,000 = 600$ ← عقدان بـ300$
     assert at.validate_buy(st, MENU, dict(_dec()["buy"], symbol="X"), N, {})[0] == "العقد ليس في القائمة"
+    padded = [dict(MENU[0], symbol="SPY   261130C00728000")] + MENU[1:]
+    assert at.find_row(padded, "SPY 261130C00728000") is padded[0]          # مسافة واحدة بدل الحشو
+    assert at.find_row(padded, "spy261130c00728000") is padded[0] and at.find_row(padded, "") is None
     late = N.replace(hour=15, minute=20)
     assert at.validate_buy(st, MENU, _dec()["buy"], late, {})[0] == "لا شراء بعد 15:15"
 

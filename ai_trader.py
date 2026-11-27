@@ -178,10 +178,16 @@ def equity(st, marks):
     return st["cash"] + sum(p["qty"] * 100 * marks.get(p["symbol"], {}).get("bid", p["entry"]) for p in st["positions"])
 
 
+def find_row(menu, sym):
+    """صف العقد من القائمة مع تجاهل المسافات: رموز Tastytrade محشوة (SPY   261130C…) والنموذج قد يكتبها بمسافة واحدة."""
+    k = (sym or "").replace(" ", "").upper()
+    return next((r for r in menu if r["symbol"].replace(" ", "").upper() == k), None) if k else None
+
+
 def validate_buy(st, menu, buy, now, marks):
     """(None، كمية) إن صح الشراء، أو (سبب الرفض، 0)."""
-    sym, qty = (buy.get("symbol") or "").strip(), int(buy.get("qty") or 0)
-    row = next((r for r in menu if r["symbol"] == sym), None)
+    qty = int(buy.get("qty") or 0)
+    row = find_row(menu, buy.get("symbol"))
     if row is None:
         return "العقد ليس في القائمة", 0
     if now.time() > LAST_BUY:
@@ -546,7 +552,7 @@ def execute(st, d, menu, marks, now, spot, no_send):
                 done.append(sid)
         return None, 0, bool(done), ("باع " + ", ".join(done)) if done else "لا مركز مطابق للبيع"
     if d["action"] == "شراء":
-        row = next((r for r in menu if r["symbol"] == (d["buy"].get("symbol") or "").strip()), None)
+        row = find_row(menu, d["buy"].get("symbol"))
         why, qty = validate_buy(st, menu, d["buy"], now, marks)
         if why:
             send(f"🤖 المتداول الذكي أراد الشراء ({d['buy'].get('symbol')}) لكن الكود رفض: {why}", no_send)
