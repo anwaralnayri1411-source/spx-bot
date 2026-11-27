@@ -576,17 +576,20 @@
    "trough": -0.1977,
    "adv_max": 0.01934,
    "runner": {
-    "open": true,
+    "open": false,
     "half_pnl": 1.0,
     "lock": 1.0,
     "peak": 2.814,
     "stage": 2,
-    "t": "2026-11-19T11:57-05:00"
+    "t": "2026-11-19T11:57-05:00",
+    "exit_pnl": 1.4651,
+    "exit_t": "2026-11-27T15:57-05:00",
+    "why": "time"
    },
    "closed": {
     "kind": "tp",
     "time": "2026-11-19T11:57-05:00",
-    "pnl": 1.0
+    "pnl": 1.2326
    },
    "peak_after": 2.814,
    "peak_after_at": "2026-11-25T10:27-05:00"
@@ -1640,12 +1643,13 @@
    "entry_spy": 701.71,
    "strength": 7.0,
    "earn": "2027-02-03",
-   "status": "open",
+   "status": "time",
    "peak": 0.508,
    "alerts": {
     "market": "2026-11-23T09:57-05:00",
     "warn": "2026-11-25T12:12-05:00",
-    "broken": "2026-11-25T12:57-05:00"
+    "broken": "2026-11-25T12:57-05:00",
+    "time": "2026-11-27T15:57-05:00"
    },
    "entry_src": "alpaca",
    "entry_yahoo": 1.81,
@@ -1672,7 +1676,12 @@
    "last_pnl": -0.685,
    "last_at": "2026-11-27T13:12-05:00",
    "trough": -0.7238,
-   "adv_max": 0.03009
+   "adv_max": 0.03009,
+   "closed": {
+    "kind": "time",
+    "time": "2026-11-27T15:57-05:00",
+    "pnl": -0.6851
+   }
   },
   {
    "id": "GOOGL:PUT:2026-12-04:250",
@@ -1786,10 +1795,11 @@
    "entry_spy": 723.91,
    "strength": 8.0,
    "earn": "2027-02-18",
-   "status": "open",
+   "status": "time",
    "peak": 0.995,
    "alerts": {
-    "market": "2026-11-24T10:27-05:00"
+    "market": "2026-11-24T10:27-05:00",
+    "time": "2026-11-27T15:57-05:00"
    },
    "entry_src": "alpaca",
    "entry_yahoo": 1.92,
@@ -1817,7 +1827,12 @@
    "last_pnl": 0.868,
    "last_at": "2026-11-27T13:12-05:00",
    "trough": -0.1421,
-   "adv_max": 0.00256
+   "adv_max": 0.00256,
+   "closed": {
+    "kind": "time",
+    "time": "2026-11-27T15:57-05:00",
+    "pnl": 0.8684
+   }
   },
   {
    "id": "WMT:CALL:2026-12-04:131",
@@ -1831,10 +1846,11 @@
    "entry_spy": 722.47,
    "strength": 8.0,
    "earn": "2027-02-18",
-   "status": "open",
+   "status": "time",
    "peak": 0.931,
    "alerts": {
-    "market": "2026-11-24T10:27-05:00"
+    "market": "2026-11-24T10:27-05:00",
+    "time": "2026-11-27T15:57-05:00"
    },
    "entry_src": "alpaca",
    "entry_yahoo": 1.58,
@@ -1859,10 +1875,15 @@
     "m_breadth": 9
    },
    "entry_live": 1.57,
-   "last_pnl": 0.805,
-   "last_at": "2026-11-27T15:27-05:00",
+   "last_pnl": 0.881,
+   "last_at": "2026-11-27T15:57-05:00",
    "trough": -0.0881,
-   "adv_max": 0.00031
+   "adv_max": 0.00031,
+   "closed": {
+    "kind": "time",
+    "time": "2026-11-27T15:57-05:00",
+    "pnl": 0.8805
+   }
   },
   {
    "id": "HOOD:PUT:2026-12-04:63",
@@ -2018,17 +2039,20 @@
    "trough": -0.3596,
    "adv_max": 0.0009,
    "runner": {
-    "open": true,
+    "open": false,
     "half_pnl": 1.0614,
     "lock": 1.0,
     "peak": 2.0789,
     "stage": 2,
-    "t": "2026-11-25T13:27-05:00"
+    "t": "2026-11-25T13:27-05:00",
+    "exit_pnl": 1.9825,
+    "exit_t": "2026-11-27T15:57-05:00",
+    "why": "time"
    },
    "closed": {
     "kind": "tp",
     "time": "2026-11-25T13:27-05:00",
-    "pnl": 1.0614
+    "pnl": 1.5219
    },
    "peak_after": 2.079,
    "peak_after_at": "2026-11-27T09:57-05:00"
@@ -2376,8 +2400,8 @@
     "m_driver_al": 1
    },
    "entry_live": 1.84,
-   "last_pnl": -0.81,
-   "last_at": "2026-11-27T15:27-05:00",
+   "last_pnl": -0.826,
+   "last_at": "2026-11-27T15:57-05:00",
    "trough": -0.2663,
    "adv_max": 0.01818,
    "closed": {
