@@ -409,7 +409,9 @@
    "uber secures 87 13 of delivery hero shares mo",
    "uber takeover bid for delivery hero clears key shareholder hurdle",
    "microstrategy mstr stock price today",
-   "uber in alice springs but no airport pick ups yet"
+   "uber in alice springs but no airport pick ups yet",
+   "uber moves closer to delivery hero acquisition with 87 stake",
+   "bitcoin slips below 60 000 as month long crypto slump deepens"
   ],
   "DIS:CALL": [
    "skydance rises 5 as steep post merger slide pauses disney gains 2 netflix slips",
@@ -1275,7 +1277,12 @@
    "iran turns to russia for nuclear power as iaea oversight falters",
    "pump prices dropping but we re paying more than last year",
    "crude prices erase early gains as iraq pushes opec for higher output",
-   "oil surge pushes indonesia to mull first subsidized fuel price hike in years"
+   "oil surge pushes indonesia to mull first subsidized fuel price hike in years",
+   "white house pressured iraq venezuela to leave opec in bid to curb world oil prices report",
+   "middle east tensions drive crude oil prices upward",
+   "conocophillips is up more than 40 this year and 1 000 from five years ago is worth more than 2 000",
+   "a smaller weaker opec could reduce global oil prices bob mcnally argues",
+   "oil gains lift uae stocks amid gulf supply disruption fears"
   ],
   "TSLA:CALL": [
    "tesla stock consolidates after potential tesla spacex merger exploration increases uncertainty",
@@ -4845,7 +4852,8 @@
    "news:uber moves closer to massive 14 8 billion takeover",
    "news:uber secures 87 of delivery hero shares after offer period",
    "news:uber technologies stock uber secures 87 13 of delivery hero",
-   "news:uber secures 87 13 of delivery hero shares mo"
+   "news:uber secures 87 13 of delivery hero shares mo",
+   "news:uber moves closer to delivery hero acquisition with 87 stake"
   ],
   "WMT:CALL:2026-12-11:128": [
    "news:wmt maintained by guggenheim price target raised to 140",
@@ -4884,21 +4892,16 @@
    "down-0.15"
   ],
   "F:CALL:2026-12-18:11.82": [],
-  "CVX:CALL:2026-12-18:220": []
+  "CVX:CALL:2026-12-18:220": [
+   "news:white house pressured iraq venezuela to leave opec in bid to curb world oil prices report",
+   "news:middle east tensions drive crude oil prices upward",
+   "news:oil gains lift uae stocks amid gulf supply disruption fears"
+  ]
  },
  "stock_level": {
   "UBER:PUT:2026-12-04:65": 3
  },
  "seen_macro": [
-  "amid asia trade push canada s carney seizes an opening with trump",
-  "fed s daly emphasizes need for rate hikes but with a measured approach as fed minutes show growing inflation unease",
-  "fed officials expect further interest rate hikes after pausing last month",
-  "fed minutes show a bigger interest rate increase is still on the table",
-  "supersized december rate hike could be ahead fed governor",
-  "fed minutes put possible 50 basis point hike on the table",
-  "us federal reserve officials focused on inflation risks at october meeting",
-  "fed minutes show more rate hikes likely as inflation risks persist",
-  "if the u s doesn t want to do a deal we re busy carney says of ongoing trade talks",
   "tech stocks fall as next week brings big tests for the ai trade markets p m for nov 13",
   "fed s waller says officials may need to shock with half point rate hike",
   "fed saw need to keep raising interest rates despite holding steady in october",
@@ -5489,7 +5492,16 @@
   "republicans rethink tariffs giving democrats an opening to challenge trump abc news",
   "two december events could determine whether the us stock market ends 2026 in recovery",
   "gold rebounds above 3 660 what fed rate hike bets mean next",
-  "why is shopify stock surging on friday"
+  "why is shopify stock surging on friday",
+  "binance is hiring wall street ipo experts preparing for on chain ipos",
+  "u s stocks rise and keep wall street on track to close out an erratic week with big gains",
+  "december federal reserve rate expectations shape global markets",
+  "stock market today dow gains 344 points s p 500 up 0 66 and nasdaq rises 0 82 as tech rebounds",
+  "high inflation has puts us fed s credibility on the line",
+  "trump embraces xi then renews tariff pressure on china",
+  "is tsmc tsm a buy as wall street analysts look optimistic",
+  "stocks rise and keep wall street on track to close out an erratic week with big gains",
+  "today s mortgage rates 30 year fixed averages 7 21 while buyers turn to adjustable loans"
  ],
  "sharp": {
   "UBER:PUT:2026-12-04:65": 66.84,
