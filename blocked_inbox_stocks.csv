@@ -2170,3 +2170,4 @@ id,time,project,tag,sym,root,side,strike,exp,entry,spot,edge,strength
 20261127T1012|stocks|chase_em|SNAP|CALL|4.5|2026-12-11,2026-11-27T10:12-05:00,stocks,chase_em,SNAP,SNAP,CALL,4.5,2026-12-11,0.86,5.26,4.5,7.5
 20261127T1012|stocks|open_same_dir|WMT|CALL|133|2026-12-18,2026-11-27T10:12-05:00,stocks,open_same_dir,WMT,WMT,CALL,133.0,2026-12-18,2.58,131.9,4.0,7.0
 20261127T1012|stocks|open_same_dir|F|CALL|11.82|2026-12-18,2026-11-27T10:12-05:00,stocks,open_same_dir,F,F,CALL,11.82,2026-12-18,0.86,12.23,4.5,7.0
+20261127T1027|stocks|open_same_dir|F|CALL|11.82|2026-12-18,2026-11-27T10:27-05:00,stocks,open_same_dir,F,F,CALL,11.82,2026-12-18,0.86,12.29,4.5,7.5
