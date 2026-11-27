@@ -34,8 +34,8 @@
    "strength": "7.2",
    "occ": "DIS261204C00127000",
    "peak_pnl": 0.427,
-   "close_pnl": 0.427,
-   "quotes": 59,
+   "close_pnl": 0.355,
+   "quotes": 60,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -55,7 +55,7 @@
    "occ": "SNAP261211C00004500",
    "peak_pnl": 0.0,
    "close_pnl": -0.209,
-   "quotes": 34,
+   "quotes": 35,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -114,8 +114,8 @@
    "strength": "7.2",
    "occ": "CVX261218C00220000",
    "peak_pnl": 0.0,
-   "close_pnl": -0.257,
-   "quotes": 25,
+   "close_pnl": -0.246,
+   "quotes": 26,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -135,7 +135,7 @@
    "occ": "PLTR261211C00185000",
    "peak_pnl": 0.192,
    "close_pnl": 0.015,
-   "quotes": 28,
+   "quotes": 29,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -154,8 +154,8 @@
    "strength": "8.1",
    "occ": "DIS261218C00129000",
    "peak_pnl": 0.0,
-   "close_pnl": -0.111,
-   "quotes": 22,
+   "close_pnl": -0.121,
+   "quotes": 23,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -175,7 +175,7 @@
    "occ": "SPY261130C00728000",
    "peak_pnl": 0.145,
    "close_pnl": 0.122,
-   "quotes": 14,
+   "quotes": 15,
    "out": "",
    "out_time": "",
    "out_pnl": ""
