@@ -15,7 +15,7 @@
    "occ": "WMT261204C00132000",
    "peak_pnl": 0.225,
    "close_pnl": -0.144,
-   "quotes": 137,
+   "quotes": 138,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -34,8 +34,8 @@
    "strength": "4.4",
    "occ": "WMT261211C00135000",
    "peak_pnl": 0.0,
-   "close_pnl": -0.332,
-   "quotes": 65,
+   "close_pnl": -0.305,
+   "quotes": 66,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -54,8 +54,8 @@
    "strength": "5.7",
    "occ": "V261204C00435000",
    "peak_pnl": 0.042,
-   "close_pnl": -0.075,
-   "quotes": 29,
+   "close_pnl": -0.1,
+   "quotes": 30,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -73,9 +73,9 @@
    "edge": "4.5",
    "strength": "7.2",
    "occ": "DIS261204C00127000",
-   "peak_pnl": 0.258,
-   "close_pnl": 0.185,
-   "quotes": 21,
+   "peak_pnl": 0.274,
+   "close_pnl": 0.274,
+   "quotes": 22,
    "out": "",
    "out_time": "",
    "out_pnl": ""
