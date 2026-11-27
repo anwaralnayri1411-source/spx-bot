@@ -1616,8 +1616,8 @@
     "m_driver_al": 1
    },
    "entry_live": 1.97,
-   "last_pnl": -0.738,
-   "last_at": "2026-11-27T13:12-05:00",
+   "last_pnl": -0.743,
+   "last_at": "2026-11-27T14:12-05:00",
    "trough": -0.4455,
    "adv_max": 0.03805,
    "closed": {
@@ -1859,8 +1859,8 @@
     "m_breadth": 9
    },
    "entry_live": 1.57,
-   "last_pnl": 0.881,
-   "last_at": "2026-11-27T13:57-05:00",
+   "last_pnl": 0.805,
+   "last_at": "2026-11-27T14:12-05:00",
    "trough": -0.0881,
    "adv_max": 0.00031
   },
@@ -2223,8 +2223,8 @@
     "m_breadth": 2
    },
    "entry_live": 3.28,
-   "last_pnl": -0.72,
-   "last_at": "2026-11-27T13:27-05:00",
+   "last_pnl": -0.738,
+   "last_at": "2026-11-27T14:12-05:00",
    "trough": -0.5969,
    "adv_max": 0.01508,
    "closed": {
@@ -2429,8 +2429,8 @@
     "m_breadth": 6
    },
    "entry_live": 1.62,
-   "last_pnl": -0.548,
-   "last_at": "2026-11-27T13:12-05:00",
+   "last_pnl": -0.529,
+   "last_at": "2026-11-27T14:12-05:00",
    "trough": -0.5287,
    "adv_max": 0.02899,
    "closed": {
