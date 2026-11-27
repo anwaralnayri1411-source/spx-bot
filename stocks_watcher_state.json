@@ -415,7 +415,8 @@
    "uber moves closer to delivery hero acquisition with 87 stake",
    "bitcoin slips below 60 000 as month long crypto slump deepens",
    "amazon stock price today",
-   "bynd pton w lyft uber stock prices quote comparison yahoo finance"
+   "bynd pton w lyft uber stock prices quote comparison yahoo finance",
+   "uber stock price edges up to 66 88 on four day streak"
   ],
   "DIS:CALL": [
    "skydance rises 5 as steep post merger slide pauses disney gains 2 netflix slips",
@@ -1290,7 +1291,11 @@
    "ai investment endures as experts highlight power communications infrastructure",
    "soaring fuel prices threaten to push more airlines into bankruptcy",
    "gold s biggest challenge is no longer the fed says economist robin brooks we are back to oil as the principal risk facto",
-   "the oil glut everyone expected is looking increasingly elusive"
+   "the oil glut everyone expected is looking increasingly elusive",
+   "stocks rise and keep wall street on track to close out an erratic week with big gains",
+   "opec faces growing pressure as iraq pushes for higher quota",
+   "oil gas prices fall as brent trims weekly gains ahead of opec meeting",
+   "oil price uncertainty as negotiations continue energy news top headlines commentaries features events"
   ],
   "TSLA:CALL": [
    "tesla stock consolidates after potential tesla spacex merger exploration increases uncertainty",
@@ -4905,15 +4910,14 @@
   "CVX:CALL:2026-12-18:220": [
    "news:white house pressured iraq venezuela to leave opec in bid to curb world oil prices report",
    "news:middle east tensions drive crude oil prices upward",
-   "news:oil gains lift uae stocks amid gulf supply disruption fears"
+   "news:oil gains lift uae stocks amid gulf supply disruption fears",
+   "news:oil gas prices fall as brent trims weekly gains ahead of opec meeting"
   ]
  },
  "stock_level": {
   "UBER:PUT:2026-12-04:65": 3
  },
  "seen_macro": [
-  "bitcoin falls below 63k as fed signals more rate hikes",
-  "gold price falls as fed hike odds jump and gld iau etf outflows surge",
   "was buying thanksgiving dinner in philadelphia cheaper 50 years ago not when you account for inflation",
   "why gold is losing its shine even as middle east burns",
   "pakistan stock exchange gains nearly 700 points in midday trading",
@@ -5511,7 +5515,9 @@
   "as trump targets 14 major economies with new tariffs china s 203 billion export surge into africa presents a new economi",
   "gold s biggest challenge is no longer the fed says economist robin brooks we are back to oil as the principal risk facto",
   "hot october cpi strengthens the case for further fed tightening",
-  "macro strategist greg faranello talks factors determining fed s rate timeline"
+  "macro strategist greg faranello talks factors determining fed s rate timeline",
+  "why is the us stock market rising today dow s p 500 and nasdaq open higher as ai stocks rebound on black friday but nvid",
+  "new england economic conditions through november 19 2026"
  ],
  "sharp": {
   "UBER:PUT:2026-12-04:65": 66.84,
