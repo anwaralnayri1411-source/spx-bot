@@ -15,7 +15,7 @@
    "occ": "WMT261204C00132000",
    "peak_pnl": 0.225,
    "close_pnl": 0.0,
-   "quotes": 178,
+   "quotes": 179,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -75,7 +75,7 @@
    "occ": "WMT261218C00133000",
    "peak_pnl": 0.155,
    "close_pnl": 0.155,
-   "quotes": 34,
+   "quotes": 35,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -135,7 +135,7 @@
    "occ": "PLTR261211C00185000",
    "peak_pnl": 0.192,
    "close_pnl": 0.015,
-   "quotes": 32,
+   "quotes": 33,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -175,7 +175,7 @@
    "occ": "SPY261130C00728000",
    "peak_pnl": 0.145,
    "close_pnl": 0.122,
-   "quotes": 18,
+   "quotes": 19,
    "out": "",
    "out_time": "",
    "out_pnl": ""
