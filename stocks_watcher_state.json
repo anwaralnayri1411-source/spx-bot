@@ -416,7 +416,9 @@
    "bitcoin slips below 60 000 as month long crypto slump deepens",
    "amazon stock price today",
    "bynd pton w lyft uber stock prices quote comparison yahoo finance",
-   "uber stock price edges up to 66 88 on four day streak"
+   "uber stock price edges up to 66 88 on four day streak",
+   "alphabet stock price today",
+   "spx technologies stock edges up 0 95 as s p 500 gains 1 24"
   ],
   "DIS:CALL": [
    "skydance rises 5 as steep post merger slide pauses disney gains 2 netflix slips",
@@ -1295,7 +1297,9 @@
    "stocks rise and keep wall street on track to close out an erratic week with big gains",
    "opec faces growing pressure as iraq pushes for higher quota",
    "oil gas prices fall as brent trims weekly gains ahead of opec meeting",
-   "oil price uncertainty as negotiations continue energy news top headlines commentaries features events"
+   "oil price uncertainty as negotiations continue energy news top headlines commentaries features events",
+   "russian crude loses pricing power in china as january premiums halve",
+   "the risk of opec fracture is rising 4 countries have left the alliance can trump push venezuela and iraq out too"
   ],
   "TSLA:CALL": [
    "tesla stock consolidates after potential tesla spacex merger exploration increases uncertainty",
@@ -4828,7 +4832,10 @@
    "5 best dividend stocks of 2026",
    "cowboys week 12 stock report javonte williams ceedee lamb rise in 39 38 loss to eagles",
    "can at t nyse t turn the market rebound into lasting momentum",
-   "spacex stock spcx moved up by 3 49 on nov 27 drivers behind the movement"
+   "spacex stock spcx moved up by 3 49 on nov 27 drivers behind the movement",
+   "spacex stock rises baron sees ai opportunity moffett challenges wireless narrative",
+   "is t mobile stock s next big thing already here",
+   "atex stock jumps after spacex reportedly eyes 900 mhz spectrum for direct to device expansion alternative target nn clim"
   ]
  },
  "fired": {
@@ -4911,14 +4918,14 @@
    "news:white house pressured iraq venezuela to leave opec in bid to curb world oil prices report",
    "news:middle east tensions drive crude oil prices upward",
    "news:oil gains lift uae stocks amid gulf supply disruption fears",
-   "news:oil gas prices fall as brent trims weekly gains ahead of opec meeting"
+   "news:oil gas prices fall as brent trims weekly gains ahead of opec meeting",
+   "down-0.15"
   ]
  },
  "stock_level": {
   "UBER:PUT:2026-12-04:65": 3
  },
  "seen_macro": [
-  "was buying thanksgiving dinner in philadelphia cheaper 50 years ago not when you account for inflation",
   "why gold is losing its shine even as middle east burns",
   "pakistan stock exchange gains nearly 700 points in midday trading",
   "carney wants china s business china wants canada s silence",
@@ -5517,7 +5524,8 @@
   "hot october cpi strengthens the case for further fed tightening",
   "macro strategist greg faranello talks factors determining fed s rate timeline",
   "why is the us stock market rising today dow s p 500 and nasdaq open higher as ai stocks rebound on black friday but nvid",
-  "new england economic conditions through november 19 2026"
+  "new england economic conditions through november 19 2026",
+  "trump s new tariffs threaten to reignite us china trade tensions"
  ],
  "sharp": {
   "UBER:PUT:2026-12-04:65": 66.84,
