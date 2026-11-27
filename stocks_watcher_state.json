@@ -423,7 +423,8 @@
    "palantir stock price jumps nearly 5 in four day rally",
    "why uber stock is moving today",
    "palantir stock jumps nearly 5 as four day rally outpaces s p 500",
-   "uber technologies financial position cash debt and equity overview"
+   "uber technologies financial position cash debt and equity overview",
+   "uber secures approximately 87 13 of delivery hero shares"
   ],
   "DIS:CALL": [
    "skydance rises 5 as steep post merger slide pauses disney gains 2 netflix slips",
@@ -462,7 +463,8 @@
    "why should walt disney stock holders watch one rising number",
    "disney stock hits 52 week high at 123 40",
    "entertainment stocks to research november 25th",
-   "disney dis officer sonia coleman proposes selling 3 759 shares valued at about 472 000"
+   "disney dis officer sonia coleman proposes selling 3 759 shares valued at about 472 000",
+   "dis stock hits one year high as disney shares rise"
   ],
   "NFLX:PUT": [
    "djt stock plummets to new lows trump appeal fades as 2026 midterms draw closer",
@@ -1311,7 +1313,13 @@
    "oil prices rise over attacks on tanker saudi aramco refinery",
    "stocks jump to close out an erratic week that was also wall street s best in more than a year",
    "oil prices are again rising here s why",
-   "it bank heavyweights drag markets down 1 amid rising crude oil prices"
+   "it bank heavyweights drag markets down 1 amid rising crude oil prices",
+   "us urges venezuela and iraq to quit opec seeking greater influence over global oil supplies",
+   "they are rising but have not yet crossed the 100 mark what is happening to oil prices",
+   "stocks jump to end an erratic week that was wall street s best in over a year",
+   "georgia voters to decide fate of 17 billion data center megaproject",
+   "can chevron nyse cvx protect its dividend as energy markets reset",
+   "the reasons behind the rebound in oil prices following three weeks of falls"
   ],
   "TSLA:CALL": [
    "tesla stock consolidates after potential tesla spacex merger exploration increases uncertainty",
@@ -4851,7 +4859,9 @@
    "spacex stock spcx moved up by 3 49 on nov 27 drivers behind the movement",
    "spacex stock rises baron sees ai opportunity moffett challenges wireless narrative",
    "is t mobile stock s next big thing already here",
-   "atex stock jumps after spacex reportedly eyes 900 mhz spectrum for direct to device expansion alternative target nn clim"
+   "atex stock jumps after spacex reportedly eyes 900 mhz spectrum for direct to device expansion alternative target nn clim",
+   "spacex s wireless expansion could make anterix s spectrum worth billions",
+   "top telecom stocks to watch now november 27th"
   ]
  },
  "fired": {
@@ -4937,15 +4947,14 @@
    "news:oil gas prices fall as brent trims weekly gains ahead of opec meeting",
    "down-0.15",
    "news:oil prices rebound as shipping risks persist",
-   "news:oil prices rise over attacks on tanker saudi aramco refinery"
+   "news:oil prices rise over attacks on tanker saudi aramco refinery",
+   "news:the reasons behind the rebound in oil prices following three weeks of falls"
   ]
  },
  "stock_level": {
   "UBER:PUT:2026-12-04:65": 3
  },
  "seen_macro": [
-  "jpmorgan sees fed raising rates three times by next year",
-  "us treasury yields rise as fed minutes flag ai inflation risks waller backs bigger december rate hike hindustan times",
   "bitcoin etfs see 2 89b outflows as fed s walle",
   "bangladesh pakistan s lng imports to rise 70 by 2035 iea",
   "wti oil attempts to return above 83 00 as geopolitical tensions grow",
@@ -5543,7 +5552,9 @@
   "the goods balance of trade is negative 149 5 billion approaching largest ever",
   "u s stock market today 3 strong black friday gains",
   "republican lawmakers signal openness to reviewing trump s tariff policies",
-  "anthropic back above its 83 ipo price what could move the stock next"
+  "anthropic back above its 83 ipo price what could move the stock next",
+  "canadian dollar draws support from boc rate hike bets jobs data in focus",
+  "economic rundown stronger growth a brighter consumer outlook and stubborn cost pressures"
  ],
  "sharp": {
   "UBER:PUT:2026-12-04:65": 66.84,
