@@ -15,7 +15,7 @@
    "occ": "WMT261204C00132000",
    "peak_pnl": 0.225,
    "close_pnl": 0.0,
-   "quotes": 186,
+   "quotes": 187,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -55,7 +55,7 @@
    "occ": "SNAP261211C00004500",
    "peak_pnl": 0.0,
    "close_pnl": -0.209,
-   "quotes": 42,
+   "quotes": 43,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -75,7 +75,7 @@
    "occ": "WMT261218C00133000",
    "peak_pnl": 0.155,
    "close_pnl": 0.155,
-   "quotes": 42,
+   "quotes": 43,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -135,7 +135,7 @@
    "occ": "PLTR261211C00185000",
    "peak_pnl": 0.192,
    "close_pnl": 0.015,
-   "quotes": 44,
+   "quotes": 45,
    "out": "",
    "out_time": "",
    "out_pnl": ""
