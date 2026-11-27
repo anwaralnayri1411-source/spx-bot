@@ -293,3 +293,4 @@ id,project,tag,sym,side,strike,exp,entry_time,entry,edge,strength,out,out_time,o
 20261124T1112|stocks|chase_em|SOFI|PUT|13|2026-12-11,stocks,chase_em,SOFI,PUT,13.0,2026-12-11,2026-11-24T11:12-05:00,0.85,3.5,6.9,stop,2026-11-27T09:32-05:00,-0.506,0.447,126
 20261124T1127|stocks|chase_em|T|CALL|20.5|2026-12-11,stocks,chase_em,T,CALL,20.5,2026-12-11,2026-11-24T11:27-05:00,2.66,5.0,7.8,stop,2026-11-27T09:32-05:00,-0.466,0.071,123
 20261125T1012|stocks|market_warning|T|CALL|20.5|2026-12-11,stocks,market_warning,T,CALL,20.5,2026-12-11,2026-11-25T10:12-05:00,2.76,5.0,5.5,stop,2026-11-27T09:32-05:00,-0.486,0.033,65
+20261125T1012|stocks|market_warning|WMT|CALL|135|2026-12-11,stocks,market_warning,WMT,CALL,135.0,2026-12-11,2026-11-25T10:12-05:00,1.87,4.0,4.4,stop,2026-11-27T10:32-05:00,-0.406,0.0,76
