@@ -2186,3 +2186,4 @@ id,time,project,tag,sym,root,side,strike,exp,entry,spot,edge,strength
 20261127T1157|stocks|open_same_dir|WMT|CALL|134|2026-12-18,2026-11-27T11:57-05:00,stocks,open_same_dir,WMT,WMT,CALL,134.0,2026-12-18,2.26,132.39,4.5,7.0
 20261127T1212|stocks|chase_em|PLTR|CALL|185|2026-12-11,2026-11-27T12:12-05:00,stocks,chase_em,PLTR,PLTR,CALL,185.0,2026-12-11,2.71,171.85,5.5,7.5
 20261127T1212|stocks|open_same_dir|WMT|CALL|134|2026-12-18,2026-11-27T12:12-05:00,stocks,open_same_dir,WMT,WMT,CALL,134.0,2026-12-18,2.36,132.71,4.5,7.0
+20261127T1227|stocks|open_same_dir|WMT|CALL|134|2026-12-18,2026-11-27T12:27-05:00,stocks,open_same_dir,WMT,WMT,CALL,134.0,2026-12-18,2.42,132.72,4.5,7.0
