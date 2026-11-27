@@ -35,7 +35,7 @@
    "occ": "DIS261204C00127000",
    "peak_pnl": 0.427,
    "close_pnl": 0.355,
-   "quotes": 67,
+   "quotes": 68,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -135,7 +135,7 @@
    "occ": "PLTR261211C00185000",
    "peak_pnl": 0.192,
    "close_pnl": 0.015,
-   "quotes": 49,
+   "quotes": 50,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -155,7 +155,7 @@
    "occ": "DIS261218C00129000",
    "peak_pnl": 0.0,
    "close_pnl": -0.121,
-   "quotes": 30,
+   "quotes": 31,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -175,7 +175,7 @@
    "occ": "SPY261130C00728000",
    "peak_pnl": 0.145,
    "close_pnl": 0.122,
-   "quotes": 36,
+   "quotes": 37,
    "out": "",
    "out_time": "",
    "out_pnl": ""
