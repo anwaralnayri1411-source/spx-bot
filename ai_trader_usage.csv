@@ -353,3 +353,4 @@ time,kind,model,input,output,usd,status
 2026-11-27T14:16:03-05:00,decide,claude-haiku-5-5,12828,3087,0.00283,end_turn
 2026-11-27T14:31:04-05:00,decide,claude-haiku-5-5,12612,2868,0.0027,end_turn
 2026-11-27T14:46:03-05:00,decide,claude-haiku-5-5,12620,3070,0.0028,end_turn
+2026-11-27T15:01:03-05:00,decide,claude-haiku-5-5,12627,2214,0.00237,end_turn
