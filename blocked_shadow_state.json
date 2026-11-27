@@ -14,8 +14,8 @@
    "strength": "9.9",
    "occ": "WMT261204C00132000",
    "peak_pnl": 0.225,
-   "close_pnl": 0.009,
-   "quotes": 171,
+   "close_pnl": -0.005,
+   "quotes": 172,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -34,8 +34,8 @@
    "strength": "7.2",
    "occ": "DIS261204C00127000",
    "peak_pnl": 0.427,
-   "close_pnl": 0.315,
-   "quotes": 55,
+   "close_pnl": 0.266,
+   "quotes": 56,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -54,8 +54,8 @@
    "strength": "6.8",
    "occ": "SPY261130C00726000",
    "peak_pnl": 0.478,
-   "close_pnl": 0.378,
-   "quotes": 27,
+   "close_pnl": 0.295,
+   "quotes": 28,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -74,8 +74,8 @@
    "strength": "7.5",
    "occ": "SNAP261211C00004500",
    "peak_pnl": 0.0,
-   "close_pnl": -0.151,
-   "quotes": 27,
+   "close_pnl": -0.198,
+   "quotes": 28,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -93,9 +93,9 @@
    "edge": "4.0",
    "strength": "7.0",
    "occ": "WMT261218C00133000",
-   "peak_pnl": 0.116,
-   "close_pnl": 0.116,
-   "quotes": 27,
+   "peak_pnl": 0.151,
+   "close_pnl": 0.151,
+   "quotes": 28,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -134,8 +134,8 @@
    "strength": "7.2",
    "occ": "CVX261218C00220000",
    "peak_pnl": 0.0,
-   "close_pnl": -0.159,
-   "quotes": 21,
+   "close_pnl": -0.182,
+   "quotes": 22,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -154,8 +154,8 @@
    "strength": "6.0",
    "occ": "PLTR261211C00185000",
    "peak_pnl": 0.192,
-   "close_pnl": -0.019,
-   "quotes": 21,
+   "close_pnl": -0.031,
+   "quotes": 22,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -174,8 +174,8 @@
    "strength": "8.1",
    "occ": "DIS261218C00129000",
    "peak_pnl": 0.0,
-   "close_pnl": -0.065,
-   "quotes": 18,
+   "close_pnl": -0.121,
+   "quotes": 19,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -194,8 +194,28 @@
    "strength": "7.9",
    "occ": "SPY261130C00728000",
    "peak_pnl": 0.071,
-   "close_pnl": 0.02,
-   "quotes": 7,
+   "close_pnl": -0.079,
+   "quotes": 8,
+   "out": "",
+   "out_time": "",
+   "out_pnl": ""
+  },
+  {
+   "id": "20261127T1240|spx|late_entry|NDX|CALL|26590|2026-11-27",
+   "project": "spx",
+   "tag": "late_entry",
+   "sym": "NDX",
+   "side": "CALL",
+   "strike": 26590.0,
+   "exp": "2026-11-27",
+   "entry": 14.92,
+   "entry_time": "2026-11-27T12:40-05:00",
+   "edge": "5.0",
+   "strength": "7.5",
+   "occ": "NDXP261127C26590000",
+   "peak_pnl": 0.0,
+   "close_pnl": -0.443,
+   "quotes": 1,
    "out": "",
    "out_time": "",
    "out_pnl": ""
@@ -3080,7 +3100,10 @@
   "20261127T1225|spx|late_entry|SPY|CALL|729|2026-11-30",
   "20261127T1230|spx|late_entry|SPY|CALL|729|2026-11-30",
   "20261127T1227|stocks|open_same_dir|WMT|CALL|134|2026-12-18",
-  "20261127T1235|spx|late_entry|SPY|CALL|729|2026-11-30"
+  "20261127T1235|spx|late_entry|SPY|CALL|729|2026-11-30",
+  "20261127T1240|spx|late_entry|SPX|CALL|7285|2026-11-27",
+  "20261127T1240|spx|late_entry|SPY|CALL|728|2026-11-30",
+  "20261127T1240|spx|late_entry|NDX|CALL|26590|2026-11-27"
  ],
  "last": {
   "spx|CALL|SPY": "2026-11-27T12:00-05:00",
@@ -3289,7 +3312,7 @@
   "stocks|F|CALL|2026-11-27": "2026-11-27T10:12-05:00",
   "stocks|CVX|CALL|2026-11-27": "2026-11-27T10:42-05:00",
   "stocks|PLTR|CALL|2026-11-27": "2026-11-27T10:42-05:00",
-  "spx|CALL|NDX": "2026-11-27T11:00-05:00",
+  "spx|CALL|NDX": "2026-11-27T12:40-05:00",
   "stocks|DIS|CALL|2026-11-27": "2026-11-27T10:57-05:00"
  }
 }
